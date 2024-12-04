@@ -1,10 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~react-toastify/dist/ReactToastify.min.css";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --toastify-color-light: #000000cc;
+  --toastify-text-color-light: #ffffff;
+  --toastify-text-color-dark: #ffffff;
+  --toastify-toast-bd-radius: 40px;
+  --toastify-toast-min-height: 44px;
+  --toastify-toast-width: none;
+  --toastify-icon-color-success: #6795fa;
+  --toastify-font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +29,80 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+.invitation-toast {
+  width: 350px;
+  display: flex;
+  align-items: center;
+  background-color: #0a0a0a;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  border-radius: 10px !important;
+}
+
+.invitation-toast-body > div:first-child {
+  width: 20px !important;
+  margin-inline-end: 6px !important;
+}
+.invitation-toast-body > div > svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.Toastify__toast-icon {
+  margin-inline-end: 8px;
+}
+.Toastify__toast-body {
+  display: flex;
+  align-items: center;
+  flex: 0 0 1;
+  width: full;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: calc(14px * -0.03);
+  margin: 0;
+  padding: 0;
+}
+.Toastify__toast-icon {
+  width: 24px;
+}
+.Toastify__toast-body > div {
+  align-items: center;
+  width: full;
+}
+.Toastify__toast-body > div:first-child {
+  margin-inline-end: 8px;
+}
+
+.Toastify__toast-body > div > svg {
+  width: 24px;
+  height: 24px;
+}
+
+.Toastify__toast {
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* Internet Explorer */
+    scrollbar-width: none; /* Firefox */
   }
 }
