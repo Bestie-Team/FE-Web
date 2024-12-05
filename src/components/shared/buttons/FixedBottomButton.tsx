@@ -9,11 +9,13 @@ interface FixedBottomButtonProps {
   onClick: () => void;
   disabled?: boolean;
   className?: string;
+  color?: string;
 }
 
 export default function FixedBottomButton({
   label,
   onClick,
+  color,
   className,
   disabled,
 }: FixedBottomButtonProps) {
@@ -33,6 +35,7 @@ export default function FixedBottomButton({
   return createPortal(
     <div className={buttonWrapperStyle}>
       <Button
+        color={color}
         onClick={onClick}
         disabled={true}
         className={clsx(
@@ -51,4 +54,4 @@ export default function FixedBottomButton({
 }
 
 const buttonStyle = `max-w-full min-w-[350px] py-[18px] text-center font-bold text-[white] rounded-full cursor-pointer `;
-const buttonWrapperStyle = `p-5 bg-white animate-slide-up`;
+const buttonWrapperStyle = `px-[20px] pb-[10px] pt-[12px] mb-[34px] bg-white animate-slide-up`;

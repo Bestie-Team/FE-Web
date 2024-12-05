@@ -58,4 +58,4 @@ export function DotIcon({
   );
 }
 
-const textStyle = "w-[28px] h-[39px] flex items-center text-T4";
+const textStyle = "h-[39px] pt-[10px] pb-[8px] flex items-center text-T4";

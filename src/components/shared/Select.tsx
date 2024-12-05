@@ -73,7 +73,7 @@ const people = [
   },
 ];
 
-export default function LightySelect() {
+export default function LSelect() {
   const [selected, setSelected] = useState(people[0]);
   const selectWidth = "!w-[99px]";
   return (

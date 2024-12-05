@@ -2,28 +2,30 @@ import React, { useState } from "react";
 import TabButton from "./TabButton";
 
 export default function TabBar() {
-  const [activeTab, setActiveTab] = useState("전체");
+  const [activeTab, setActiveTab] = useState("피드");
   console.log(activeTab);
   return (
     <div className={tabContainerStyle}>
       <div className={tabWrapperStyle}>
         <TabButton
-          title="전체"
+          title="피드"
           className="cursor-pointer"
-          onClick={() => setActiveTab("전체")}
-          current={activeTab === "전체"}
+          onClick={() => setActiveTab("피드")}
+          current={activeTab === "피드"}
           fresh={true}
         />
         <TabButton
-          title="요청"
+          title="모아보기"
           className="cursor-pointer"
-          onClick={() => setActiveTab("요청")}
-          current={activeTab === "요청"}
+          onClick={() => setActiveTab("모아보기")}
+          current={activeTab === "모아보기"}
           fresh={true}
         />
         <div
-          className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ${
-            activeTab === "전체" ? "translate-x-0" : "translate-x-[48px]"
+          className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+            activeTab === "피드"
+              ? "translate-x-0"
+              : "w-[53px] translate-x-[48px]"
           }`}
         ></div>
       </div>

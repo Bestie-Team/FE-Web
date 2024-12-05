@@ -7,18 +7,7 @@ import MailIcon from "./icons/MailIcon";
 import { DotIcon } from "./tab/TabButton";
 import LightyLetterLogo from "./icons/LightyLetterLogo";
 
-export function Header({ pageName }: { pageName: string }) {
-  return (
-    <div className={clsx(headerWrapperStyle, "text-T1")}>
-      <span>{pageName}</span>
-      <div className="w-[44px] h-[44px] py-[10px] pr-[20px]">
-        <EmptySquareIcon />
-      </div>
-    </div>
-  );
-}
-
-export function HeaderWithButton({
+export function Header({
   pageName,
   square,
 }: {
@@ -27,7 +16,34 @@ export function HeaderWithButton({
 }) {
   return (
     <div
-      className={clsx(headerWrapperStyle, "text-T4 gap-[6px] pl-[0px]")}
+      className={clsx(
+        headerWrapperStyle,
+        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
+      )}
+    >
+      <span>{pageName}</span>
+      {square && (
+        <div className="w-[44px] h-[44px] py-[10px] pr-[20px]">
+          <EmptySquareIcon />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function HeaderTransparent({
+  pageName,
+  square,
+}: {
+  pageName: string;
+  square?: boolean;
+}) {
+  return (
+    <div
+      className={clsx(
+        headerWrapperStyle,
+        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px] gap-[6px] pl-[0px]"
+      )}
       style={{ backgroundColor: "transparent" }}
     >
       <div className="w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px]">
@@ -43,7 +59,7 @@ export function HeaderWithButton({
   );
 }
 
-export function HeaderTransparent() {
+export function HeaderTransparentWithLogo() {
   return (
     <div
       style={{ zIndex: 9999 }}
@@ -64,4 +80,4 @@ export function HeaderTransparent() {
 }
 
 const headerWrapperStyle =
-  "fixed min-w-[390px] w-full flex justify-between items-center h-[48px] pl-[20px] bg-grayscale-500 ";
+  "z-10 fixed min-w-[390px] w-full flex justify-between items-center h-[97px] pt-[49px] pl-[20px] bg-base-white";

@@ -1,16 +1,50 @@
+import { useState } from "react";
 import { PlusButtonSmall } from "./buttons/PlusButton";
+import Image from "next/image";
 
 export default function AddPhoto() {
+  const [image, setImage] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setImage(event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <div className="w-[84px] h-[84px] p-[4.67] cursor-pointer">
-      <div className="relative w-[74.67px] h-[74.67px] flex justify-center items-center rounded-full bg-grayscale-50">
-        <PhotoIcon />
-        <PlusButtonSmall className="absolute bottom-0 right-0" />
+    <label className="w-[84px]" htmlFor="fileInput">
+      <div className={uploadContainerStyle}>
+        <div className={imageWrapperStyle}>
+          {image && (
+            <Image
+              src={image}
+              alt="upload_image"
+              width={74.67}
+              height={74.67}
+              className="object-cover"
+            />
+          )}
+          <PhotoIcon />
+        </div>
+        <PlusButtonSmall className="absolute bottom-[4.33px] right-[4.33px]" />
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </div>
-    </div>
+    </label>
   );
 }
-
 function PhotoIcon() {
   return (
     <svg
@@ -30,3 +64,9 @@ function PhotoIcon() {
     </svg>
   );
 }
+
+const imageWrapperStyle =
+  "w-[74.67px] h-[74.67px] flex justify-center items-center rounded-full bg-grayscale-50 overflow-hidden";
+
+const uploadContainerStyle =
+  "relative flex w-[84px] h-[84px] p-[4.67px] cursor-pointer";

@@ -5,7 +5,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
   --toastify-color-light: #000000cc;
   --toastify-text-color-light: #ffffff;
   --toastify-text-color-dark: #ffffff;
@@ -26,6 +26,11 @@
   }
 }
 
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -34,6 +39,11 @@ body {
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
+
+.react-select__indicator-separator {
+  display: none;
+}
+
 .invitation-toast {
   width: 350px;
   display: flex;

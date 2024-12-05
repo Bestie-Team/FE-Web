@@ -23,9 +23,9 @@ const PlusButtonStyle =
 
 export function PlusButtonSmall({ className }: { className?: string }) {
   return (
-    <Button className={clsx(PlusButtonStyleSmall, className)}>
+    <div className={clsx(PlusButtonStyleSmall, className)}>
       <PlusIcon width="13.71" height="13.71" />
-    </Button>
+    </div>
   );
 }
 

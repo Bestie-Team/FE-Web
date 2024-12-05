@@ -5,11 +5,26 @@ import HomeIcon from "./icons/HomeIcon";
 import StarsIcon from "./icons/StarsIcon";
 import UserIcon from "./icons/UserIcon";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function NavBar() {
   const isActive = false;
 
-  return (
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
+  const $portalRoot = document.getElementById("root-portal");
+  if ($portalRoot == null) return null;
+
+  return createPortal(
     <div className={NavBarWrapperStyle}>
       <Button className={iconWrapperStyle}>
         <HomeIcon />
@@ -35,11 +50,12 @@ export default function NavBar() {
           alt="profileImage"
         />
       </Button>
-    </div>
+    </div>,
+    $portalRoot
   );
 }
 
 const NavBarWrapperStyle =
-  "w-[390px] flex justify-between px-[12px] py-[4px] pb-[16px] border-t-[1px] border-grayscale-10 mx-auto";
+  "fixed bottom-0 bg-base-white w-full max-w-[430px] flex justify-between px-[12px] py-[4px] pb-[16px] border-t-[1px] border-grayscale-10 mx-auto";
 
-const iconWrapperStyle = "flex justify-center h-[44px] items-center";
+const iconWrapperStyle = "flex justify-center w-[64px] h-[44px] items-center";

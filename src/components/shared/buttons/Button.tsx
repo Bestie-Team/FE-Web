@@ -8,9 +8,11 @@ interface ButtonProps {
   disabled?: boolean;
   children: React.ReactNode;
   onClick?: () => void;
+  color?: string;
 }
 
 const BaseButton = ({
+  color,
   className,
   disabled,
   children,
@@ -18,6 +20,9 @@ const BaseButton = ({
 }: ButtonProps) => {
   return (
     <button
+      style={{
+        backgroundColor: color,
+      }}
       className={clsx("cursor-pointer", className)}
       disabled={disabled}
       onClick={onClick}

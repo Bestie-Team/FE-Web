@@ -2,7 +2,6 @@
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import PlusButton from "../components/shared/buttons/PlusButton";
 import NavBar from "../components/shared/NavBar";
-import LightySelect from "@/components/shared/Select";
 import Toast from "@/components/toasts/Toast";
 import RoundChip from "@/components/shared/chips/RoundChip";
 import { InvitationToast } from "@/components/toasts/InvitationToast";
@@ -12,6 +11,7 @@ import Spacing from "@/components/shared/Spacing";
 import TabBar from "@/components/shared/tab/TabBar";
 import Tooltip from "@/components/shared/tootlips/Tooltip";
 import AddPhoto from "@/components/shared/AddPhoto";
+import LightySelect from "../components/shared/filter";
 
 export default function Home() {
   return (
@@ -37,11 +37,12 @@ export default function Home() {
         </div>
         <NavBar />
         <AddPhoto />
+        {/* <LSelect /> */}
         <LightySelect />
         <Spacing size={28} />
         <SearchInput />
-        <Input />
-        <TabBar /> //툴팁방향별아이콘지정해주어야함
+        <Input value="lighty" onChange={() => {}} />
+        <TabBar />
         <Tooltip
           title="안녕?"
           direction="right"
