@@ -11,22 +11,19 @@ export default function FeedPage() {
   const items = [1, 2, 3];
   return (
     <div>
-      <div className="relative">
-        <TabBar />
-        <FilterBar />
-        {items.length > 0 ? (
-          <Flex direction="column">
-            <MemoryCard />
-            <MemoryCard />
-            <MemoryCard />
-            <MemoryCard />
-          </Flex>
-        ) : (
-          <NoFeed />
-        )}
-        <NavBar />
-        <PlusButton className="!absolute !bottom-0" />
-      </div>
+      <TabBar />
+      <FilterBar />
+      {items.length > 0 ? (
+        <Flex direction="column">
+          <MemoryCard />
+          <MemoryCard />
+          <MemoryCard />
+          <MemoryCard />
+        </Flex>
+      ) : (
+        <NoFeed />
+      )}
+      <NavBar />
     </div>
   );
 }

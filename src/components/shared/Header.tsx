@@ -80,4 +80,4 @@ export function HeaderTransparentWithLogo() {
 }
 
 const headerWrapperStyle =
-  "z-10 fixed min-w-[390px] w-full flex justify-between items-center h-[97px] pt-[49px] pl-[20px] bg-base-white";
+  "z-10 fixed min-w-[320px] w-full flex justify-between items-center h-[97px] pt-[49px] pl-[20px] bg-base-white";

@@ -33,5 +33,5 @@ export default function TabBar() {
   );
 }
 
-const tabContainerStyle = "w-[390px] pl-[20px]";
+const tabContainerStyle = "max-w-[430px] pl-[20px]";
 const tabWrapperStyle = "relative flex gap-[16px]";

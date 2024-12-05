@@ -7,6 +7,7 @@ import UserIcon from "./icons/UserIcon";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import PlusButton from "./buttons/PlusButton";
 
 export default function NavBar() {
   const isActive = false;
@@ -50,6 +51,7 @@ export default function NavBar() {
           alt="profileImage"
         />
       </Button>
+      <PlusButton className="absolute bottom-[80px] right-[16px] z-10" />
     </div>,
     $portalRoot
   );

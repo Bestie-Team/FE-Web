@@ -28,12 +28,14 @@ export default function FilterBar() {
         options={yearOptions}
         selected={selectedYear}
         setSelected={setSelectedYear}
+        borderColor="#E9E9E9"
       />
       <LightySelect
         options={orderOptions}
         selected={selectedOrder}
         setSelected={setSelectedOrder}
         borderColor="white"
+        width="fit"
       />
     </div>
   );

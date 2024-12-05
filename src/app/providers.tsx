@@ -23,7 +23,7 @@ export const NextLayout = ({ children }: Props) => {
   return (
     <>
       {header()}
-      <div className="w-[430px] mx-auto">{children}</div>
+      <div className="max-w-[430px] mx-auto">{children}</div>
     </>
   );
 };

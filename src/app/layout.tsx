@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${pretendard.variable} antialiased h-screen`}>
         <div
-          className="w-[430px] fixed left-0 right-0 bottom-0 mx-auto flex justify-center z-10"
+          className="fixed left-0 right-0 bottom-0 mx-auto flex justify-center z-10"
           id="root-portal"
         ></div>
         <NextLayout>{children}</NextLayout>

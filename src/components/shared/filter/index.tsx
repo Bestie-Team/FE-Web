@@ -7,12 +7,14 @@ interface SelectProps {
   selected: OptionType | null;
   setSelected: Dispatch<SetStateAction<OptionType | null>>;
   borderColor?: string;
+  width?: string;
 }
 export default function LightySelect({
   options,
   selected,
   setSelected,
   borderColor,
+  width,
 }: SelectProps) {
   const styles: StylesConfig = {
     menu: (baseStyles) => ({
@@ -36,7 +38,7 @@ export default function LightySelect({
           borderColor: "white",
         },
         "& > div": {
-          width: "99px",
+          width: width ?? "99px",
           fontWeight: 500,
           color: "#0A0A0A",
           fontSize: "13px",
@@ -69,10 +71,10 @@ export default function LightySelect({
       paddingRight: "12px",
       borderRadius: "12px",
       borderWidth: "1.4px",
-      borderColor: state.isFocused ? "#E9E9E9" : borderColor || "#E9E9E9",
+      borderColor: state.isFocused ? borderColor : borderColor || "#E9E9E9",
       boxShadow: state.isFocused ? "none" : "none", // react-select는 boxShadow로 outline을 표현
       "&:hover": {
-        borderColor: state.isFocused ? "#E9E9E9" : borderColor || "#E9E9E9",
+        borderColor: state.isFocused ? borderColor : borderColor || "#E9E9E9",
         cursor: "pointer",
       },
       "& > div:first-child": {
