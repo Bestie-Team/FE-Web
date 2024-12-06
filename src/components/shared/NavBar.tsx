@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PlusButton from "./buttons/PlusButton";
+import Tooltip from "./tootlips/Tooltip";
 
 export default function NavBar() {
   const isActive = false;
@@ -52,6 +53,7 @@ export default function NavBar() {
         />
       </Button>
       <PlusButton className="absolute bottom-[80px] right-[16px] z-10" />
+      <Tooltip direction="right" closeButton={true} title={"안녕하세요"} />
     </div>,
     $portalRoot
   );

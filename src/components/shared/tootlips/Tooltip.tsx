@@ -1,4 +1,3 @@
-import React from "react";
 import CloseIcon from "../icons/CloseIcon";
 import clsx from "clsx";
 
@@ -20,30 +19,21 @@ export default function Tooltip({
       className={clsx(tooltipWrapperStyle, className)}
       style={{ backgroundColor: color }}
     >
-      <span>{title}</span>
+      <span className="flex-none">{title}</span>
       {closeButton && (
         <CloseIcon className="cursor-pointer" width="16" height="16" />
       )}
-      <BottomDirIcon color={color} />
+      {direction === "bottom" && <BottomDirIcon color={color} />}
+      {direction === "top" && <TopDirIcon color={color} />}
+      {direction === "topLeft" && <TopLeftDirIcon color={color} />}
+      {direction === "topRight" && <TopRightDirIcon color={color} />}
+      {direction === "left" && <LeftDirIcon color={color} />}
+      {direction === "right" && <RightDirIcon color={color} />}
     </div>
   );
 }
 
 const tooltipWrapperStyle = `z-5 relative w-fit flex items-center justify-between gap-[12px] text-base-white text-C1 px-[16px] py-[12px] rounded-[12px] bg-grayscale-900`;
-
-// const directionCommonStyle = "bg-grayscale-900 absolute transform w-0 h-0 ";
-// const bottomDirectionStyle =
-//   "-translate-x-1/2 left-1/2 -bottom-[6px] border-t-[6px] border-t-grayscale-300 border-x-[6px] border-x-transparent";
-// const topDirectionStyle =
-//   "-top-[6px] left-1/2 -translate-x-1/2 border-b-[6px] border-b-grayscale-900 border-x-[6px] border-x-transparent";
-// const topLeftDirectionStyle =
-//   "-top-[6px] left-[25px] -translate-x-1/2 border-b-[6px] border-b-grayscale-900 border-x-[6px] border-x-transparent";
-// const topRightDirectionStyle =
-//   "-top-[6px] right-[12px] -translate-x-1/2 border-b-[6px] border-b-grayscale-900 border-x-[6px] border-x-transparent";
-// const rightDirectionStyle =
-//   "top-1/2 -right-[6px] -translate-y-1/2 border-l-[6px] border-l-grayscale-900 border-y-[6px] border-y-transparent";
-// const leftDirectionStyle =
-//   "top-1/2 -left-[6px] -translate-y-1/2 border-r-[6px] border-r-grayscale-900 border-y-[6px] border-y-transparent";
 
 function BottomDirIcon({
   width,
@@ -97,6 +87,74 @@ function TopDirIcon({
       width={width || "49"}
       height={height || "9"}
       className="absolute -top-[9px] left-1/2 -translate-x-1/2 "
+      viewBox="0 0 49 9"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="break" clipPath="url(#clip0_15_2497)">
+        <path
+          id="Polygon 1"
+          d="M24.4394 3.25173C24.7378 2.91609 25.2622 2.91609 25.5606 3.25173L31 9.3711H19L24.4394 3.25173Z"
+          fill={color ?? "#0A0A0A"} // apply fill directly
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_15_2497">
+          <rect width="48" height="9" fill="white" transform="translate(0.5)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+function TopRightDirIcon({
+  width,
+  height,
+  color,
+}: {
+  width?: string;
+  height?: string;
+  color?: string;
+}) {
+  return (
+    <svg
+      width={width || "49"}
+      height={height || "9"}
+      className="absolute -top-[9px] right-1/4 translate-x-1/2 "
+      viewBox="0 0 49 9"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="break" clipPath="url(#clip0_15_2497)">
+        <path
+          id="Polygon 1"
+          d="M24.4394 3.25173C24.7378 2.91609 25.2622 2.91609 25.5606 3.25173L31 9.3711H19L24.4394 3.25173Z"
+          fill={color ?? "#0A0A0A"} // apply fill directly
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_15_2497">
+          <rect width="48" height="9" fill="white" transform="translate(0.5)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+function TopLeftDirIcon({
+  width,
+  height,
+  color,
+}: {
+  width?: string;
+  height?: string;
+  color?: string;
+}) {
+  return (
+    <svg
+      width={width || "49"}
+      height={height || "9"}
+      className="absolute -top-[9px] left-1/4 -translate-x-1/2 "
       viewBox="0 0 49 9"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,6 @@
 import { toast, ToastContainer } from "react-toastify";
-import CloseIcon from "../shared/icons/CloseIcon";
-import MailIcon from "../shared/icons/MailIcon";
+import CloseIcon from "../icons/CloseIcon";
+import MailIcon from "../icons/MailIcon";
 
 export function InvitationToast() {
   const notify = (comment: string) => {

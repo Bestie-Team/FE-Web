@@ -1,7 +1,6 @@
 "use client";
 import MemoryCard from "@/components/feed/MemoryCard";
 import NoFeed from "@/components/feed/NoFeed";
-import PlusButton from "@/components/shared/buttons/PlusButton";
 import FilterBar from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import NavBar from "@/components/shared/NavBar";
