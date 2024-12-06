@@ -1,6 +1,6 @@
 import { toast, ToastContainer } from "react-toastify";
-import SuccessIcon from "../shared/icons/SuccessIcon";
-import AlarmIcon from "../shared/icons/AlarmIcon";
+import SuccessIcon from "../icons/SuccessIcon";
+import AlarmIcon from "../icons/AlarmIcon";
 
 export default function Toast({
   comment,

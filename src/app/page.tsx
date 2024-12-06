@@ -2,9 +2,9 @@
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import PlusButton from "../components/shared/buttons/PlusButton";
 import NavBar from "../components/shared/NavBar";
-import Toast from "@/components/toasts/Toast";
+import Toast from "@/components/shared/toasts/Toast";
 import RoundChip from "@/components/shared/chips/RoundChip";
-import { InvitationToast } from "@/components/toasts/InvitationToast";
+import { InvitationToast } from "@/components/shared/toasts/InvitationToast";
 import Input from "@/components/shared/inputs/Input";
 import SearchInput from "@/components/shared/inputs/SearchBar";
 import Spacing from "@/components/shared/Spacing";
@@ -37,7 +37,6 @@ export default function Home() {
         </div>
         <NavBar />
         <AddPhoto />
-        {/* <LSelect /> */}
         <LightySelect />
         <Spacing size={28} />
         <SearchInput />
