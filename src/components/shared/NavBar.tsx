@@ -53,7 +53,13 @@ export default function NavBar() {
         />
       </Button>
       <PlusButton className="absolute bottom-[80px] right-[16px] z-10" />
-      <Tooltip direction="right" closeButton={true} title={"안녕하세요"} />
+      <div className="absolute bottom-[84px] right-[74px] z-14">
+        <Tooltip
+          direction="right"
+          closeButton={true}
+          title={"추억 피드를 등록해보세요!"}
+        />
+      </div>
     </div>,
     $portalRoot
   );

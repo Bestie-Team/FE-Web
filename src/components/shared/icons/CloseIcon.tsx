@@ -2,18 +2,21 @@ export default function CloseIcon({
   className,
   width,
   height,
+  onClick,
 }: {
   className?: string;
   width?: string;
   height?: string;
+  onClick: () => void;
 }) {
   return (
     <svg
+      onClick={onClick}
       className={className}
       width={width ?? "20"}
       height={height ?? "20"}
       viewBox="0 0 20 20"
-      fill="none"
+      fill="white"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g id="icon">

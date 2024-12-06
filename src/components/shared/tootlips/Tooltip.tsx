@@ -1,3 +1,4 @@
+import { useState } from "react";
 import CloseIcon from "../icons/CloseIcon";
 import clsx from "clsx";
 
@@ -14,14 +15,24 @@ export default function Tooltip({
   title?: string;
   closeButton: boolean;
 }) {
+  const [closeClicked, setCloseClicked] = useState(false);
+
+  const onButtonClick = () => {
+    setCloseClicked(true);
+  };
   return (
     <div
-      className={clsx(tooltipWrapperStyle, className)}
+      className={clsx(tooltipWrapperStyle, className, closeClicked && "hidden")}
       style={{ backgroundColor: color }}
     >
       <span className="flex-none">{title}</span>
       {closeButton && (
-        <CloseIcon className="cursor-pointer" width="16" height="16" />
+        <CloseIcon
+          onClick={onButtonClick}
+          className="flex-none cursor-pointer"
+          width="16"
+          height="16"
+        />
       )}
       {direction === "bottom" && <BottomDirIcon color={color} />}
       {direction === "top" && <TopDirIcon color={color} />}
@@ -33,7 +44,7 @@ export default function Tooltip({
   );
 }
 
-const tooltipWrapperStyle = `z-5 relative w-fit flex items-center justify-between gap-[12px] text-base-white text-C1 px-[16px] py-[12px] rounded-[12px] bg-grayscale-900`;
+const tooltipWrapperStyle = `z-10 relative flex items-center justify-between gap-[12px] text-base-white text-C1 px-[16px] py-[12px] rounded-[12px] bg-grayscale-900`;
 
 function BottomDirIcon({
   width,
@@ -188,7 +199,7 @@ function LeftDirIcon({
     <svg
       width={width}
       height={height}
-      className="top-1/2 -left-[8px] -translate-y-1/2 "
+      className="absolute top-1/2 -left-[8px] -translate-y-1/2 "
       viewBox="0 0 9 48"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -234,7 +245,7 @@ function RightDirIcon({
         <path
           id="Polygon 1"
           d="M5.74827 23.9394C6.08391 24.2378 6.08391 24.7622 5.74827 25.0606L-0.3711 30.5L-0.3711 18.5L5.74827 23.9394Z"
-          fill={color}
+          fill={color ?? "red"}
         />
       </g>
       <defs>
