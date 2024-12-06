@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PlusButton from "./buttons/PlusButton";
 import Tooltip from "./tootlips/Tooltip";
+import BottomSheet from "./BottomSheet";
 
 export default function NavBar() {
   const isActive = false;
@@ -60,6 +61,7 @@ export default function NavBar() {
           title={"추억 피드를 등록해보세요!"}
         />
       </div>
+      <BottomSheet />
     </div>,
     $portalRoot
   );
