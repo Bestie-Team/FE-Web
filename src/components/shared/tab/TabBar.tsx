@@ -3,7 +3,7 @@ import TabButton from "./TabButton";
 
 export default function TabBar() {
   const [activeTab, setActiveTab] = useState("피드");
-  console.log(activeTab);
+
   return (
     <div className={tabContainerStyle}>
       <div className={tabWrapperStyle}>

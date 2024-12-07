@@ -6,6 +6,8 @@
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
+  --dimmed-zindex: 100;
+  --bottomSheet-zindex: 101;
   --toastify-color-light: #000000cc;
   --toastify-text-color-light: #ffffff;
   --toastify-text-color-dark: #ffffff;

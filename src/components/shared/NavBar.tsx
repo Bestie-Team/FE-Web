@@ -8,6 +8,8 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import PlusButton from "./buttons/PlusButton";
+import Tooltip from "./tootlips/Tooltip";
+import BottomSheet from "./BottomSheet";
 
 export default function NavBar() {
   const isActive = false;
@@ -52,6 +54,14 @@ export default function NavBar() {
         />
       </Button>
       <PlusButton className="absolute bottom-[80px] right-[16px] z-10" />
+      <div className="absolute bottom-[84px] right-[74px] z-14">
+        <Tooltip
+          direction="right"
+          closeButton={true}
+          title={"추억 피드를 등록해보세요!"}
+        />
+      </div>
+      <BottomSheet />
     </div>,
     $portalRoot
   );
