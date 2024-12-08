@@ -49,6 +49,7 @@ const config: Config = {
         sm: "0px 0px 16px 0px #0000001f",
         md: "0px 0px 16px 0px #0000001f",
         lg: "0px 0px 16px 0px #0000001f",
+        custom: "0px 0px 12px 0px #0000001F",
       },
       colors: {
         background: "var(--background)",
@@ -136,11 +137,31 @@ const config: Config = {
       },
       animation: {
         "slide-up": "slide-up 0.5s ease-in-out forwards",
+        slideIn: "slideIn 0.3s ease-in-out",
+        slideOut: "slideOut 0.3s ease-in-out",
+        fadeIn: "fadeIn 0.3s ease-in",
+        fadeOut: "fadeOut 0.3s ease-out",
       },
       keyframes: {
         "slide-up": {
           "0%": { transform: "translateY(100%)" },
           "100%": { transform: "translateY(0)" },
+        },
+        slideIn: {
+          from: { transform: "translateY(100%)" },
+          to: { transform: "translateY(0)" },
+        },
+        slideOut: {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(100%)" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
         },
       },
     },

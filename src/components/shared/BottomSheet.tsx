@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./buttons/Button";
 import Dimmed from "./Dimmed";
 import Flex from "./Flex";
@@ -7,13 +8,44 @@ import PicturesIcon from "./icons/PicturesIcon";
 import UserIcon from "./icons/UserIcon";
 import Spacing from "./Spacing";
 import Text from "./Text";
+import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
-export default function BottomSheet({ open = true }: { open?: boolean }) {
+export default function BottomSheet({
+  open = true,
+  onClose,
+}: {
+  open?: boolean;
+  onClose: () => void;
+}) {
+  const router = useRouter();
+  const [isClosing, setIsClosing] = useState(false);
+
+  // 애니메이션 종료 핸들러
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      onClose(); // 애니메이션이 끝난 후 모달 닫기
+      setIsClosing(false);
+    }
+  };
+
+  // 모달 바깥 클릭 핸들러
+  const handleBackdropClick = () => {
+    setIsClosing(true); // 닫는 애니메이션 활성화
+  };
   if (open === false) return null;
+
   return (
-    <Dimmed>
+    <Dimmed onClick={handleBackdropClick} isClosing={isClosing}>
       {/**BottomSheetContainer */}
-      <div className="bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zindex)] pb-[34px]">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={clsx(
+          `${isClosing ? "animate-slideOut" : "animate-slideIn"}`,
+          "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zindex)] pb-[34px]"
+        )}
+        onAnimationEnd={handleAnimationEnd} // 애니메이션 종료 시 호출
+      >
         <Flex direction="column">
           <Flex
             justify="center"
@@ -28,6 +60,9 @@ export default function BottomSheet({ open = true }: { open?: boolean }) {
             <Text className="text-T3">추억을 만들어볼까요?</Text>
             <Spacing size={20} />
             <ActionItem
+              onClick={() => {
+                router.push("/record");
+              }}
               icon={<UserIcon width="18" height="18" color="#fff" />}
               title={"모임 생성하기"}
               subTitle="모임을 만들고 친구들에게 모임 초대장을 보내요"
@@ -53,26 +88,30 @@ export default function BottomSheet({ open = true }: { open?: boolean }) {
 
 function ActionItem({
   title,
+  onClick,
   subTitle,
   icon,
 }: {
   title: string;
+  onClick?: () => void;
   subTitle?: string;
   icon: React.ReactNode;
 }) {
   return (
     <Flex style={{ paddingTop: "12px", paddingBottom: "12px", width: "full" }}>
-      <Button className="bg-grayscale-900 w-[40px] h-[40px] p-[11px] rounded-full">
+      <Button className="bg-grayscale-900 w-[40px] h-[40px] p-[11px] rounded-full cursor-default">
         {icon}
       </Button>
       <Spacing size={12} direction="horizontal" />
-      <Flex direction="column" style={{ flexGrow: 1 }}>
-        <span className="text-T5">{title}</span>
-        <Spacing size={4} />
-        <span className="text-C2 text-grayscale-400">{subTitle}</span>
+      <Flex style={{ flexGrow: 1, cursor: "pointer" }} onClick={onClick}>
+        <Flex direction="column" style={{ flexGrow: 1 }}>
+          <span className="text-T5">{title}</span>
+          <Spacing size={4} />
+          <span className="text-C2 text-grayscale-400">{subTitle}</span>
+        </Flex>
+        <Spacing size={12} />
+        <ArrowRightIcon />
       </Flex>
-      <Spacing size={12} />
-      <ArrowRightIcon />
     </Flex>
   );
 }

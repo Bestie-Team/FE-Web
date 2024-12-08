@@ -36,7 +36,7 @@ function WriterInfo() {
   );
 }
 
-function TogetherInfo() {
+export function TogetherInfo() {
   return (
     <Flex
       align="center"
