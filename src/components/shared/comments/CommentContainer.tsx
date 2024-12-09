@@ -6,11 +6,11 @@ import Spacing from "../Spacing";
 import CommentWrapper from "./CommentWrapper";
 import CommentItem from "./CommentItem";
 import Input from "../inputs/Input";
-import Button from "../buttons/Button";
+import Button from "../buttons";
 import ArrowUpIcon from "../icons/ArrowUpIcon";
 
 export default function CommentContainer({
-  open = true,
+  open = false,
   onClose,
 }: {
   open?: boolean;

@@ -1,6 +1,6 @@
 "use client";
 import { createPortal } from "react-dom";
-import Button from "./Button";
+import Button from ".";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 

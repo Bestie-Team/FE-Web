@@ -24,6 +24,7 @@ export default function LightyIcon({
         fill={color ?? "white"}
         style={{
           fillOpacity: 1,
+          transition: "fill 0.5s ease",
         }}
       />
     </svg>

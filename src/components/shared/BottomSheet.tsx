@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "./buttons/Button";
+import Button from "./buttons";
 import Dimmed from "./Dimmed";
 import Flex from "./Flex";
 import ArrowRightIcon from "./icons/ArrowRightIcon";

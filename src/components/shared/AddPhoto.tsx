@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PlusButtonSmall } from "./buttons/PlusButton";
+import { PlusCircleButtonSmall } from "./buttons/PlusCircleButton";
 import Image from "next/image";
 
 export default function AddPhoto() {
@@ -33,7 +33,7 @@ export default function AddPhoto() {
           )}
           <PhotoIcon />
         </div>
-        <PlusButtonSmall className="absolute bottom-[4.33px] right-[4.33px]" />
+        <PlusCircleButtonSmall className="absolute bottom-[4.33px] right-[4.33px]" />
         <input
           id="fileInput"
           type="file"

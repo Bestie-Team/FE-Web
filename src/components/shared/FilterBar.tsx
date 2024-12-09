@@ -19,8 +19,14 @@ export type OptionType = {
 };
 
 export default function FilterBar() {
-  const [selectedYear, setSelectedYear] = useState<OptionType | null>(null);
-  const [selectedOrder, setSelectedOrder] = useState<OptionType | null>(null);
+  const [selectedYear, setSelectedYear] = useState<OptionType | null>({
+    value: "2024",
+    label: "2024",
+  });
+  const [selectedOrder, setSelectedOrder] = useState<OptionType | null>({
+    value: "최신순",
+    label: "최신순",
+  });
 
   return (
     <div className={filterBarWrapperStyle}>
@@ -28,12 +34,14 @@ export default function FilterBar() {
         options={yearOptions}
         selected={selectedYear}
         setSelected={setSelectedYear}
+        placeholder="년도"
         borderColor="#E9E9E9"
       />
       <LightySelect
         options={orderOptions}
         selected={selectedOrder}
         setSelected={setSelectedOrder}
+        placeholder={selectedOrder?.label as string}
         borderColor="white"
         width="fit"
       />

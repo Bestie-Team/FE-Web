@@ -1,7 +1,7 @@
 import React from "react";
 import LightyIcon from "./shared/icons/LightyIcon";
 import Tooltip from "./shared/tootlips/Tooltip";
-import Button from "./shared/buttons/Button";
+import Button from "./shared/buttons";
 import Image from "next/image";
 import clsx from "clsx";
 

@@ -3,7 +3,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import Flex from "../shared/Flex";
-import { PlusButtonSmall } from "../shared/buttons/PlusButton";
+import { PlusCircleButtonSmall } from "../shared/buttons/PlusCircleButton";
 import Spacing from "../shared/Spacing";
 
 export default function EditPhotoSwiper({
@@ -65,7 +65,7 @@ export default function EditPhotoSwiper({
                 multiple
               />
               <Flex direction="column" align="center">
-                <PlusButtonSmall className="w-[25.2px] h-[25.2px]" />
+                <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
                 <Spacing size={6} />
                 <span>
                   <span className="text-T6 text-grayscale-300">사진</span>

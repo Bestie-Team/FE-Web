@@ -2,11 +2,17 @@ import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function PhotoSwiper({ images }: { images: string[] }) {
+export default function PhotoSwiper({
+  images,
+  percent,
+}: {
+  images: string[];
+  percent?: number;
+}) {
   return (
     <div className="pl-[20px]">
       <Swiper
-        slidesPerView={1.077}
+        slidesPerView={percent ?? 1.077}
         spaceBetween={12}
         grabCursor={true}
         className="custom-swiper w-full"

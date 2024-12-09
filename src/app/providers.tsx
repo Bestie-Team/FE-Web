@@ -1,5 +1,9 @@
 "use client";
-import { Header, HeaderTransparent } from "@/components/shared/Header";
+import {
+  Header,
+  HeaderTransparent,
+  HeaderTransparentWithLogo,
+} from "@/components/shared/Header";
 import { usePathname } from "next/navigation";
 import { RecoilRoot } from "recoil";
 interface Props {
@@ -14,6 +18,12 @@ export const NextLayout = ({ children }: Props) => {
     if (pathname.startsWith("/signin")) {
       return null;
     }
+    if (pathname.startsWith("/home")) {
+      return <HeaderTransparentWithLogo />;
+    }
+    if (pathname.startsWith("/invitation")) {
+      return <HeaderTransparent pageName="초대장" color="white" />;
+    }
     if (pathname.startsWith("/new")) {
       return <HeaderTransparent pageName="프로필 생성" square={false} />;
     }
@@ -27,7 +37,9 @@ export const NextLayout = ({ children }: Props) => {
   return (
     <RecoilRoot>
       {header()}
-      <div className="max-w-[430px] mx-auto">{children}</div>
+      <div style={{ scrollbarWidth: "none" }} className="max-w-[430px] mx-auto">
+        {children}
+      </div>
     </RecoilRoot>
   );
 };
