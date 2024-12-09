@@ -4,6 +4,7 @@ import React, { ChangeEvent, useState } from "react";
 import EmptySquareIcon from "../icons/EmptySquareIcon";
 import Text from "../Text";
 import Spacing from "../Spacing";
+import Flex from "../Flex";
 
 interface InputProps {
   square?: string;
@@ -13,6 +14,7 @@ interface InputProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   helpMessage?: React.ReactNode;
+  displayLength?: boolean;
 }
 
 export default function Input({
@@ -20,6 +22,7 @@ export default function Input({
   square,
   label,
   helpMessage,
+  displayLength = true,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -28,7 +31,7 @@ export default function Input({
   const handleBlur = () => setIsFocused(false);
 
   return (
-    <div className="flex flex-col w-full">
+    <Flex direction="column" style={{ marginBottom: isFocused ? "257px" : "" }}>
       {label && (
         <>
           <span className="text-T5">{label}</span>
@@ -49,16 +52,18 @@ export default function Input({
           value={value}
           {...props}
         />
-        <span>
-          <span className="text-grayscale-900 text-B4">{`${value?.length}`}</span>
-          <span className="text-grayscale-300 text-B4">{`/${maxLength}`}</span>
-        </span>
+        {displayLength && (
+          <span>
+            <span className="text-grayscale-900 text-B4">{`${value?.length}`}</span>
+            <span className="text-grayscale-300 text-B4">{`/${maxLength}`}</span>
+          </span>
+        )}
         {square && <EmptySquareIcon width="20" height="20" />}
       </div>
       {helpMessage ? (
         <Text className={helpMessageStyle}>{helpMessage}</Text>
       ) : null}
-    </div>
+    </Flex>
   );
 }
 

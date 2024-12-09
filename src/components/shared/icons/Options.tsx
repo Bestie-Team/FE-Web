@@ -1,7 +1,13 @@
 import { useState } from "react";
 import DropdownMenu from "../DropdownMenu";
 
-export default function Options() {
+export default function Options({
+  width,
+  height,
+}: {
+  width?: string;
+  height?: string;
+}) {
   const [opened, setOpened] = useState<boolean>(false);
 
   const onButtonClick = () => {
@@ -10,7 +16,11 @@ export default function Options() {
   return (
     <div
       onClick={onButtonClick}
-      className="cursor-pointer relative flex justify-center w-[24px] h-[24px] pt-[3px] pb-[4px]"
+      style={{
+        width: width ?? "24px",
+        height: height ?? "24px",
+      }}
+      className="cursor-pointer relative flex justify-center pt-[3px] pb-[4px]"
     >
       <svg
         width="3"

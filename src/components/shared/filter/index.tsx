@@ -6,6 +6,7 @@ interface SelectProps {
   options: OptionType[];
   selected: OptionType | null;
   setSelected: Dispatch<SetStateAction<OptionType | null>>;
+  placeholder: string;
   borderColor?: string;
   width?: string;
 }
@@ -26,6 +27,7 @@ export default function LightySelect({
       paddingRight: "16px",
       borderRadius: "12px",
       borderColor: "#F4F4F4",
+      borderWidth: "1.4px",
       boxShadow: "0px 0px 16px 0px #0000001F",
       width: "fit-content",
       "& > div": {
@@ -36,6 +38,7 @@ export default function LightySelect({
         gap: "6px",
         "& > div:last-child": {
           borderColor: "white",
+          flex: "none",
         },
         "& > div": {
           width: width ?? "99px",
@@ -49,6 +52,7 @@ export default function LightySelect({
           paddingBottom: "12px",
           borderBottomWidth: "1px",
           borderBottomColor: "#F4F4F4",
+          flex: "none",
           "&:hover": {
             backgroundColor: "white",
             cursor: "pointer",

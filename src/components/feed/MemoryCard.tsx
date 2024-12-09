@@ -2,7 +2,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import InfoBar from "./InfoBar";
-import PhotoSwiper from "./PhotoSwiper";
+import PhotoSwiper from "../shared/PhotoSwiper";
 
 export default function MemoryCard() {
   return (

@@ -1,18 +1,21 @@
 import clsx from "clsx";
 import PlusIcon from "../icons/PlusIcon";
-import Button from "./Button";
+import Button from ".";
+import useScrollThreshold from "@/hooks/useScrollThreshold";
 
-export default function PlusButton({
+export default function PlusCircleButton({
   width,
   height,
   className,
+  onClick,
 }: {
   width?: number;
   height?: number;
   className?: string;
+  onClick?: () => void;
 }) {
   return (
-    <Button className={clsx(PlusButtonStyle, className)}>
+    <Button className={clsx(PlusButtonStyle, className)} onClick={onClick}>
       <PlusIcon />
     </Button>
   );
@@ -21,10 +24,20 @@ export default function PlusButton({
 const PlusButtonStyle =
   "bg-grayscale-900 rounded-full w-[48px] h-[48px] flex items-center justify-center";
 
-export function PlusButtonSmall({ className }: { className?: string }) {
+export function PlusCircleButtonSmall({
+  className,
+  width,
+  height,
+}: {
+  className?: string;
+  width?: string;
+  height?: string;
+}) {
+  const isPastThreshold = useScrollThreshold(300);
+
   return (
     <div className={clsx(PlusButtonStyleSmall, className)}>
-      <PlusIcon width="13.71" height="13.71" />
+      <PlusIcon width={width ?? "13.71"} height={height ?? "13.71"} />
     </div>
   );
 }

@@ -1,37 +1,64 @@
+"use client";
 import React, { useState } from "react";
 import TabButton from "./TabButton";
 
-export default function TabBar() {
-  const [activeTab, setActiveTab] = useState("피드");
+export default function TabBar({
+  title1,
+  title2,
+  long = false,
+}: {
+  title1?: string;
+  title2?: string;
+  long?: boolean;
+}) {
+  const [activeTab, setActiveTab] = useState("left");
 
   return (
     <div className={tabContainerStyle}>
       <div className={tabWrapperStyle}>
         <TabButton
-          title="피드"
+          title={title1 ?? "left"}
           className="cursor-pointer"
-          onClick={() => setActiveTab("피드")}
-          current={activeTab === "피드"}
+          onClick={() => setActiveTab("left")}
+          current={activeTab === "left"}
           fresh={true}
         />
         <TabButton
-          title="모아보기"
+          title={title2 ?? "right"}
           className="cursor-pointer"
-          onClick={() => setActiveTab("모아보기")}
-          current={activeTab === "모아보기"}
+          onClick={() => setActiveTab("right")}
+          current={activeTab === "right"}
           fresh={true}
         />
-        <div
-          className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
-            activeTab === "피드"
-              ? "translate-x-0"
-              : "w-[53px] translate-x-[48px]"
-          }`}
-        ></div>
+        {long === true ? (
+          <LongBottomLine activeTab={activeTab} />
+        ) : (
+          <BottomLine activeTab={activeTab} />
+        )}
       </div>
     </div>
   );
 }
 
-const tabContainerStyle = "max-w-[430px] pl-[20px]";
+const tabContainerStyle = "bg-base-white max-w-[430px] w-full";
 const tabWrapperStyle = "relative flex gap-[16px]";
+
+function BottomLine({ activeTab }: { activeTab: string }) {
+  return (
+    <div
+      className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+        activeTab === "left" ? "translate-x-0" : "w-[53px] translate-x-[48px]"
+      }`}
+    />
+  );
+}
+
+function LongBottomLine({ activeTab }: { activeTab: string }) {
+  return (
+    <div
+      className={`absolute bottom-0 w-[58px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+        activeTab === "left" ? "translate-x-0" : "translate-x-[76px]"
+      }`}
+    />
+  );
+}

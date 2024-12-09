@@ -1,6 +1,6 @@
 "use client";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
-import PlusButton from "../components/shared/buttons/PlusButton";
+import PlusButton from "../components/shared/buttons/PlusCircleButton";
 import NavBar from "../components/shared/NavBar";
 import Toast from "@/components/shared/toasts/Toast";
 import RoundChip from "@/components/shared/chips/RoundChip";
@@ -11,7 +11,6 @@ import Spacing from "@/components/shared/Spacing";
 import TabBar from "@/components/shared/tab/TabBar";
 import Tooltip from "@/components/shared/tootlips/Tooltip";
 import AddPhoto from "@/components/shared/AddPhoto";
-import LightySelect from "../components/shared/filter";
 
 export default function Home() {
   return (
@@ -37,7 +36,6 @@ export default function Home() {
         </div>
         <NavBar />
         <AddPhoto />
-        <LightySelect />
         <Spacing size={28} />
         <SearchInput />
         <Input value="lighty" onChange={() => {}} />

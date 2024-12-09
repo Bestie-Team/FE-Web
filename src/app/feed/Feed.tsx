@@ -5,7 +5,7 @@ import Flex from "@/components/shared/Flex";
 export default function Feed() {
   const items = [1, 2, 3];
   return (
-    <>
+    <div className="py-[111px]">
       {items.length > 0 ? (
         <Flex direction="column">
           <MemoryCard />
@@ -16,6 +16,6 @@ export default function Feed() {
       ) : (
         <NoFeed />
       )}
-    </>
+    </div>
   );
 }
