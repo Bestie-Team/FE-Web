@@ -1,5 +1,6 @@
 "use client";
 import MonthCalendar from "@/components/gathering/calendar";
+import InvitationCard from "@/components/invitation/InvitationCard";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import ArrowLeftIcon from "@/components/shared/icons/ArrowLeftIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
@@ -246,6 +247,7 @@ export default function GatheringPage() {
         onClick={() => {}}
         className="z-[150] relative bottom-0 max-x-[390px] "
       />
+      <InvitationCard />
     </div>
   );
 }

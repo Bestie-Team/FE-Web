@@ -10,7 +10,6 @@ import UserIcon from "./icons/UserIcon";
 import Spacing from "./Spacing";
 import Text from "./Text";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 
 export default function BottomSheet({
   open = true,
@@ -19,7 +18,6 @@ export default function BottomSheet({
   open?: boolean;
   onClose: () => void;
 }) {
-  const router = useRouter();
   const [isClosing, setIsClosing] = useState(false);
 
   // 애니메이션 종료 핸들러
