@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import Button from "./buttons/Button";
 import Dimmed from "./Dimmed";
 import Flex from "./Flex";
@@ -9,6 +10,8 @@ import Spacing from "./Spacing";
 import Text from "./Text";
 
 export default function BottomSheet({ open = true }: { open?: boolean }) {
+  const router = useRouter();
+
   if (open === false) return null;
   return (
     <Dimmed>
@@ -27,11 +30,16 @@ export default function BottomSheet({ open = true }: { open?: boolean }) {
           >
             <Text className="text-T3">추억을 만들어볼까요?</Text>
             <Spacing size={20} />
-            <ActionItem
-              icon={<UserIcon width="18" height="18" color="#fff" />}
-              title={"모임 생성하기"}
-              subTitle="모임을 만들고 친구들에게 모임 초대장을 보내요"
-            />
+            <div
+              onClick={() => router.push("/gatherMake")}
+              className="cursor-pointer"
+            >
+              <ActionItem
+                icon={<UserIcon width="18" height="18" color="#fff" />}
+                title={"모임 생성하기"}
+                subTitle="모임을 만들고 친구들에게 모임 초대장을 보내요"
+              />
+            </div>
             <Spacing size={20} />
             <ActionItem
               icon={<PencilIcon />}

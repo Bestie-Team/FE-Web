@@ -2,10 +2,12 @@ export default function ArrowLeftIcon({
   width,
   height,
   className,
+  onClick,
 }: {
   width?: string;
   height?: string;
   className?: string;
+  onClick?: () => void;
 }) {
   return (
     <svg
@@ -15,6 +17,7 @@ export default function ArrowLeftIcon({
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      onClick={onClick}
     >
       <g id="icon">
         <path

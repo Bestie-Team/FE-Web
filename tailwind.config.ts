@@ -41,6 +41,7 @@ const config: Config = {
         black: {
           50: "rgba(0, 0, 0, 0.5)",
           70: "rgba(0, 0, 0, 0.7)",
+          100: "rgba(0,0,0,1)",
         },
       },
     },
