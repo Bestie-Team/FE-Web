@@ -1,5 +1,6 @@
 "use client";
 import MonthCalendar from "@/components/gathering/calendar";
+import InvitationGather from "@/components/gathering/invitationGather";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import ArrowLeftIcon from "@/components/shared/icons/ArrowLeftIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
@@ -44,6 +45,7 @@ export default function GatheringPage() {
 
   return (
     <div className={`pt-[97px] h-screen relative`}>
+      <InvitationGather />
       <div className="flex items-center gap-[10px] mb-[32px]">
         <ArrowLeftIcon
           className="cursor-pointer"
@@ -274,7 +276,6 @@ export default function GatheringPage() {
           </div>
         )}
       </div>
-      {/* <InvitationGather /> */}
       <FixedBottomButton
         label="다음"
         disabled={calendar && (!selectedDate || !selectedTime)}

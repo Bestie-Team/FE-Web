@@ -72,6 +72,6 @@ export default function NavBar() {
 }
 
 const NavBarWrapperStyle =
-  "fixed bottom-0 bg-base-white w-full max-w-[430px] flex justify-between px-[12px] py-[4px] pb-[38px] border-t-[1px] border-grayscale-10 mx-auto";
+  "fixed z-[101] bottom-0 bg-base-white w-full max-w-[430px] flex justify-between px-[12px] py-[4px] pb-[38px] border-t-[1px] border-grayscale-10 mx-auto";
 
 const iconWrapperStyle = "flex justify-center w-[64px] h-[44px] items-center";
