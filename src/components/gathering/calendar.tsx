@@ -1,20 +1,8 @@
 "use client";
 
-interface TodoItem {
-  colorTag: string;
-  status: number;
-  targetDate: number;
-  targetTime: string;
-  todoId: number;
-  todoText: string;
-  userId: number;
-  weeklyScheduleId: number;
-}
-
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useStore } from "../../store/date";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 
 const monthNames = [
   "1월",
@@ -31,18 +19,33 @@ const monthNames = [
   "12월",
 ];
 
-const MonthCalendar = ({
-  setMonth,
-  month,
-}: {
-  setMonth: (value: boolean) => void;
-  month: boolean;
-}) => {
+const generateTimeIntervals = () => {
+  const times = [];
+  for (let hour = 0; hour < 12; hour++) {
+    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+    times.push(`${displayHour}:00`);
+    times.push(`${displayHour}:30`);
+  }
+  return times;
+};
+
+const timeIntervals = generateTimeIntervals();
+
+export default function MonthCalendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [times, setTimes] = useState(false);
+  const [exactTime, setExactTime] = useState("");
+
+  const containerRef = useRef<any>(null);
 
   const selectedDate = useStore((state) => state.selectedDate);
+
   const setSelectedDate = useStore((state) => state.setSelectedDate);
+  const setTimeStore = useStore((state) => state.setTime);
+  const setPeriod = useStore((state) => state.setPeriod);
 
   const handlePrevMonth = useCallback(() => {
     setCurrentDate((prevDate) => {
@@ -67,6 +70,12 @@ const MonthCalendar = ({
     },
     [setSelectedDate]
   );
+
+  // 기존의 AM/PM 버튼 클릭 핸들러를 수정
+  const handlePeriodChange = (isAfternoon: boolean) => {
+    setTimes(isAfternoon);
+    setPeriod(isAfternoon ? "PM" : "AM");
+  };
 
   // Updated getMonthCalendarDates function to show only current month dates
   const getMonthCalendarDates = (year: number, month: number) => {
@@ -97,48 +106,64 @@ const MonthCalendar = ({
     return dates;
   };
 
-  const getTodoStatusColor = useCallback(
-    (date: Date | null) => {
-      if (!date) return "";
-
-      const dateString = `${date.getFullYear()}${String(
-        date.getMonth() + 1
-      ).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
-
-      const today = new Date();
-      const todayString = `${today.getFullYear()}${String(
-        today.getMonth() + 1
-      ).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`;
-
-      const todosForDate = todoItems.filter(
-        (item) => item.targetDate.toString() === dateString
-      );
-
-      if (todosForDate.length === 0) return "";
-
-      if (dateString > todayString) {
-        return "bg-gray-500";
-      }
-
-      const hasCompletedTodo = todosForDate.some((item) => item.status === 1);
-      const hasInProgressTodo = todosForDate.some((item) => item.status === 0);
-
-      if (hasCompletedTodo && !hasInProgressTodo) {
-        return "bg-green-500";
-      } else if (hasInProgressTodo) {
-        return "bg-pink-500";
-      }
-
-      return "";
-    },
-    [todoItems]
-  );
-
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    if (containerRef.current) {
+      setStartX(e.pageX - containerRef.current.offsetLeft);
+      setScrollLeft(containerRef.current.scrollLeft);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    if (containerRef.current) {
+      const x = e.pageX - containerRef.current.offsetLeft;
+      const walk = (x - startX) * 2;
+      containerRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  // 터치 이벤트 핸들러 추가
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    if (containerRef.current) {
+      setStartX(e.touches[0].pageX - containerRef.current.offsetLeft);
+      setScrollLeft(containerRef.current.scrollLeft);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    if (containerRef.current) {
+      const x = e.touches[0].pageX - containerRef.current.offsetLeft;
+      const walk = (x - startX) * 2;
+      containerRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   return (
-    <div className="bottom-0 fixed w-[430px] text-center h-[697px] mt-[33px] z-[101] bg-base-white rounded-tl-2xl rounded-tr-2xl pt-[25px]">
+    <div
+      className="bottom-0 fixed w-[430px] text-center h-[697px] mt-[33px] z-[101] bg-base-white rounded-tl-2xl rounded-tr-2xl pt-[25px] "
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <div className="flex items-center justify-center bg-gray-100 rounded-t-lg w-full mb-[24px]">
         <button
           onClick={handlePrevMonth}
@@ -244,8 +269,82 @@ const MonthCalendar = ({
           }
         )}
       </div>
+      <div className="flex pl-[32px] mt-[28px] mb-[16px] gap-[8px]">
+        <div
+          className={`${
+            !times ? "bg-transparent-black-100" : ""
+          } h-10 px-[18px] py-2.5 bg-white rounded-[40px] border border-[#e8e8e8] justify-center items-center inline-flex cursor-pointer`}
+          onClick={() => handlePeriodChange(false)}
+        >
+          <div
+            className={`${
+              !times ? "text-base-white " : "text-[#686868]"
+            } text-[13px] font-medium font-['Pretendard'] leading-tight`}
+          >
+            오전
+          </div>
+        </div>
+        <div
+          className={`${
+            times ? "bg-transparent-black-100" : ""
+          } h-10 px-[18px] py-2.5 bg-white rounded-[40px] border border-[#e8e8e8] justify-center items-center inline-flex cursor-pointer`}
+          onClick={() => handlePeriodChange(true)}
+        >
+          <div
+            className={`${
+              times ? "text-base-white " : "text-[#686868]"
+            } text-[13px] font-medium font-['Pretendard'] leading-tight`}
+          >
+            오후
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full">
+        <div className="w-[326px] h-[0px] border border-[#f4f4f4] mb-[16px] ml-[32px]"></div>
+      </div>
+      <div className="relative w-full pr-[32px]">
+        <div
+          ref={containerRef}
+          className={`overflow-x-auto scrollbar-hide flex gap-[8px] px-8 cursor-grab
+          ${isDragging ? "cursor-grabbing" : ""}`}
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            userSelect: "none",
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {timeIntervals.map((time, index) => (
+            <div
+              onClick={() => {
+                setExactTime(time);
+                setTimeStore(time);
+              }}
+              key={index}
+              className={`h-10 px-[18px] py-2.5 ${
+                exactTime === time
+                  ? "bg-transparent-black-100"
+                  : "bg-base-white"
+              } e rounded-[40px] border border-[#e8e8e8] justify-center items-center inline-flex`}
+            >
+              <div
+                className={`${
+                  exactTime === time ? "text-base-white" : "text-[#686868] "
+                } text-[13px] font-medium font-['Pretendard'] leading-tight`}
+              >
+                {time}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-};
-
-export default MonthCalendar;
+}

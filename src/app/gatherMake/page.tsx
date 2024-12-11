@@ -1,15 +1,23 @@
 "use client";
 import MonthCalendar from "@/components/gathering/calendar";
-import InvitationCard from "@/components/invitation/InvitationCard";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import ArrowLeftIcon from "@/components/shared/icons/ArrowLeftIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Input from "@/components/shared/inputs/Input";
+import { useStore } from "@/store/date";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const showClass = "bg-white rounded-full shadow text-neutral-950";
+
+const formatDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}.${month}.${day}`;
+};
 
 export default function GatheringPage() {
   const router = useRouter();
@@ -18,14 +26,24 @@ export default function GatheringPage() {
   const [description, setDescription] = useState<string>("");
   const [show, setShow] = useState<boolean>(false);
 
+  const selectedDate = useStore((state) => state.selectedDate);
+  const selectedPeriod = useStore((state) => state.period);
+  const selectedTime = useStore((state) => state.time);
+
   const [calendar, setCalendar] = useState<boolean>(false);
 
+  const formattedText = selectedDate ? (
+    <span style={{ whiteSpace: "pre-line" }}>
+      {`${formatDate(selectedDate)}\n${
+        selectedPeriod === "AM" ? "오전" : "오후"
+      } ${selectedTime}`}
+    </span>
+  ) : (
+    "선택하기"
+  );
+
   return (
-    <div
-      className={`pt-[97px] h-screen relative  ${
-        calendar ? "bg-transparent-black-50" : ""
-      }`}
-    >
+    <div className={`pt-[97px] h-screen relative`}>
       <div className="flex items-center gap-[10px] mb-[32px]">
         <ArrowLeftIcon
           className="cursor-pointer"
@@ -85,8 +103,8 @@ export default function GatheringPage() {
           </div>
         </div>
       </div>
-      <div className="w-[390px] h-[76px] px-5 flex-col justify-start items-start gap-2 inline-flex mb-[36px]">
-        <div className="justify-start items-center gap-1 inline-flex">
+      <div className="w-[390px] h-[76px]  flex-col justify-start items-start gap-2 inline-flex mb-[36px]">
+        <div className="px-5 justify-start items-center gap-1 inline-flex">
           <div className="w-4 h-4 justify-center items-center flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -119,14 +137,16 @@ export default function GatheringPage() {
             모임 이름
           </div>
         </div>
-        <Input
-          placeholder="모임 이름을 입력해주세요."
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div className="w-[350px] mx-[20px]">
+          <Input
+            placeholder="모임 이름을 입력해주세요."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="w-[390px] h-[76px] px-5 flex-col justify-start items-start gap-2 inline-flex">
-        <div className="justify-start items-center gap-1 inline-flex">
+      <div className="w-[390px] h-[76px]  flex-col justify-start items-start gap-2 inline-flex">
+        <div className="px-5 justify-start items-center gap-1 inline-flex">
           <div className="w-4 h-4 relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -151,13 +171,15 @@ export default function GatheringPage() {
             모임 설명
           </div>
         </div>
-        <Input
-          placeholder="모임에 대해 설명해주세요."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        <div className="w-[350px] mx-[20px]">
+          <Input
+            placeholder="모임에 대해 설명해주세요."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
       </div>
-      <div className="h-[18px] px-5 justify-start items-center gap-1 inline-flex mt-[36px]  mb-[9px]">
+      <div className="h-[18px] px-[20px] justify-start items-center gap-1 inline-flex mt-[36px]  mb-[9px]">
         <div className="w-4 h-4 relative mr-[4px]">
           <UserIcon />
         </div>
@@ -221,7 +243,7 @@ export default function GatheringPage() {
             onClick={() => setCalendar(true)}
           >
             <div className="text-[#979797] text-sm font-semibold font-['Pretendard'] leading-[18.20px]">
-              선택하기
+              {formattedText}
             </div>
           </div>
         </div>
@@ -239,15 +261,30 @@ export default function GatheringPage() {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center mx-auto">
-        {calendar && <MonthCalendar />}
+      <div className="w-full flex justify-center items-center mx-auto">
+        {calendar && (
+          <div
+            className="fixed top-0 left-0 flex justify-center items-center w-full h-screen bg-transparent-black-50"
+            onClick={(e) => {
+              e.preventDefault();
+              setCalendar(false);
+            }}
+          >
+            <MonthCalendar />
+          </div>
+        )}
       </div>
+      {/* <InvitationGather /> */}
       <FixedBottomButton
         label="다음"
-        onClick={() => {}}
-        className="z-[150] relative bottom-0 max-x-[390px] "
+        disabled={calendar && (!selectedDate || !selectedTime)}
+        onClick={() => {
+          if (calendar && selectedDate) {
+            setCalendar(false);
+          }
+        }}
+        className="z-[150] relative bottom-0 max-x-[390px]"
       />
-      <InvitationCard />
     </div>
   );
 }
