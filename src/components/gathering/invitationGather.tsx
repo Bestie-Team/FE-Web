@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 
-export default function InvitationGather() {
-  const [selectedImage, setSelectedImage] = useState(null);
+export default function InvitationGather({ selectedImage, setSelectedImage }) {
   const fileInputRef = useRef(null);
 
   const handleImageClick = () => {
