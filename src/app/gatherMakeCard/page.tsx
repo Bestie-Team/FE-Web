@@ -29,7 +29,7 @@ export default function GatherMakeCard() {
         disabled={!selectedImage}
         label="모임 생성 완료"
         onClick={() => {
-          router.push("/");
+          router.push("/home");
         }}
       />
     </div>
