@@ -17,7 +17,7 @@ export default function TabBar({
   long: "short" | "medium" | "long";
   bgColor?: string;
   onClick: (tabName: "1" | "2") => void;
-  atom: RecoilState<string>;
+  atom: RecoilState<"1" | "2">;
 }) {
   const selectedTab = useRecoilValue(atom);
 
