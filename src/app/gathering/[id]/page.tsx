@@ -2,7 +2,7 @@
 import GatheringBannerContainer from "@/components/gatheringDetail/GatheringBannerContainer";
 import GroupLeaderContainer from "@/components/gatheringDetail/GroupLeaderContainer";
 import Flex from "@/components/shared/Flex";
-import HeaderReturner from "@/utils/HeaderReturner";
+import HeaderReturner from "@/utils/headerReturner";
 
 export default function GatheringDetailPage() {
   return (

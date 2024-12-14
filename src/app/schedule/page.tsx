@@ -3,7 +3,7 @@ import LightySelect from "@/components/shared/filter";
 import { OptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import HeaderReturner from "@/utils/HeaderReturner";
+import HeaderReturner from "@/utils/headerReturner";
 import { useState } from "react";
 
 export default function SchedulePage() {
