@@ -11,17 +11,17 @@ import {
 } from "@/atoms/feed";
 import BottomSheet from "@/components/shared/bottomSheet/BottomSheet";
 import { recordModalStateAtom } from "@/atoms/record";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useRef } from "react";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TabButton from "@/components/shared/tab/TabButton";
+import { Swiper as SwiperType } from "swiper";
 
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
   const setSelectedTab = useSetRecoilState(feedSelectedTabAtom);
   const setAnimateTab = useSetRecoilState(animationStatusAtom);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(

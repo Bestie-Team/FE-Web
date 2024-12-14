@@ -12,12 +12,13 @@ import TabBar from "@/components/shared/tab/TabBar";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import InvitationModal from "@/components/invitation/InvitationModal";
 import NavBar from "@/components/shared/NavBar";
 
 export default function InvitationPage() {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
   const [isModalOpen, setModalOpen] = useState<boolean>();
   const setSelectedTab = useSetRecoilState(invitationSelectedTabAtom);
   const setAnimateTab = useSetRecoilState(animationStatusAtom);

@@ -15,6 +15,7 @@ export default function SmallPhotoSwiper({
   onImageClick?: (groupId: string) => void;
   groupId: string | null;
 }) {
+  console.log(groupId);
   return (
     <div className="relative w-full bg-gray-100 ">
       <Swiper
@@ -30,10 +31,7 @@ export default function SmallPhotoSwiper({
                 onImageClick(String(idx));
               } else return;
             }}
-            className={clsx(
-              "relative !h-[320px] my-auto shadow-custom rounded-[20px] overflow-hidden",
-              idx === 0 && "ml-[20px]"
-            )}
+            className={clsx(slideStyle, idx === 0 && "ml-[20px]")}
             key={`${imageUrl}${idx}`}
           >
             <Image
@@ -66,3 +64,6 @@ export default function SmallPhotoSwiper({
 
 const imageInfoStyle =
   "bg-base-white flex flex-col w-full absolute bottom-[-1px] pl-[20px] pt-[12px] pb-[24px] rounded-b-[20px] z-10";
+
+const slideStyle =
+  "relative !h-[320px] my-auto shadow-custom rounded-[20px] overflow-hidden";

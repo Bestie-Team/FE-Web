@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { HeaderTransparent } from "@/components/shared/Header";
 import { NextLayout } from "./providers";
 
 const pretendard = localFont({
