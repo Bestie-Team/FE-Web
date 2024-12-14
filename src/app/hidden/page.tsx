@@ -11,6 +11,7 @@ import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TabButton from "@/components/shared/tab/TabButton";
+import { BottomLine } from "@/components/shared/BottomLine";
 
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
@@ -72,11 +73,3 @@ const filterWrapperStyle =
 
 const tabContainerStyle = "max-w-[430px] w-full";
 const tabWrapperStyle = "relative flex gap-[16px]";
-
-export function BottomLine() {
-  return (
-    <div
-      className={`absolute bottom-0 w-[71px] h-[2px] bg-grayscale-900 transition-transform`}
-    />
-  );
-}
