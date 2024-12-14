@@ -15,7 +15,7 @@ import { recordModalStateAtom } from "@/atoms/record";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useRef } from "react";
-import HeaderReturner from "@/utils/HeaderReturner";
+import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 

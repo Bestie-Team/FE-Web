@@ -5,7 +5,7 @@ import UserProfile from "@/components/my/UserProfile";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import NavBar from "@/components/shared/NavBar";
-import HeaderReturner from "@/utils/HeaderReturner";
+import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 

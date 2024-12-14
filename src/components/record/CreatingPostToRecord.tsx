@@ -6,7 +6,7 @@ import EditPhotoSwiper from "./EditPhotoSwiper";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Image from "next/image";
 import SmallSelect from "./SmallSelect";
-import HeaderReturner from "@/utils/HeaderReturner";
+import HeaderReturner from "@/utils/headerReturner";
 
 export default function CreatingPostToRecord({
   onNext,
