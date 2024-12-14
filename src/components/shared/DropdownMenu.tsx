@@ -1,16 +1,19 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Flex from "./Flex";
 import clsx from "clsx";
 
-export default function DropdownMenu({
-  className,
-  items,
-}: {
-  items: string[];
-  className?: string;
-}) {
+const DropdownMenu = forwardRef<
+  HTMLElement,
+  { items: string[]; className?: string }
+>(({ items, className }, ref) => {
   return (
-    <div className={clsx("z-10", className)}>
+    <div
+      ref={ref as React.Ref<HTMLDivElement>}
+      style={{
+        animation: "selectMenuBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+      }}
+      className={clsx("z-10", className)}
+    >
       <Flex
         direction="column"
         style={{
@@ -22,7 +25,7 @@ export default function DropdownMenu({
         }}
       >
         {items.map((item, index) => (
-          <React.Fragment key={item}>
+          <React.Fragment key={`${item}${index}`}>
             <button
               className={`text-B4 w-[99px] py-[12px] text-left border-b-[1px] ${
                 index === items.length - 1
@@ -38,4 +41,8 @@ export default function DropdownMenu({
       </Flex>
     </div>
   );
-}
+});
+
+DropdownMenu.displayName = "DropdownMenu";
+
+export default DropdownMenu;

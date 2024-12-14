@@ -1,10 +1,12 @@
 export default function PlusIcon({
   width,
   height,
+  color,
   className,
 }: {
   width?: string;
   height?: string;
+  color?: string;
   className?: string;
 }) {
   return (
@@ -20,7 +22,7 @@ export default function PlusIcon({
         <path
           id="Vector"
           d="M11 5V17"
-          stroke="white"
+          stroke={color ?? "white"}
           strokeWidth="1.71429"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -28,7 +30,7 @@ export default function PlusIcon({
         <path
           id="Vector_2"
           d="M5 11H17"
-          stroke="white"
+          stroke={color ?? "white"}
           strokeWidth="1.71429"
           strokeLinecap="round"
           strokeLinejoin="round"

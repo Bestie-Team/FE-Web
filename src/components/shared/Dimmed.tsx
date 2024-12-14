@@ -1,6 +1,26 @@
-function Dimmed({ children }: { children: React.ReactNode }) {
+import clsx from "clsx";
+
+function Dimmed({
+  children,
+  onClick,
+  isClosing,
+  className,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  isClosing?: boolean;
+  className?: string;
+}) {
   return (
-    <div className="fixed inset-0 bg-transparent-black-70 z-[var(--dimmed-zindex)]">
+    <div
+      onClick={onClick}
+      className={clsx(
+        "fixed inset-0 z-[var(--dimmed-zIndex)]",
+        isClosing ? "animate-fadeOut" : "animate-fadeIn",
+        "bg-transparent-black-70",
+        className
+      )}
+    >
       {children}
     </div>
   );

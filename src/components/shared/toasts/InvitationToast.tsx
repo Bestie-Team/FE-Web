@@ -23,7 +23,10 @@ export function InvitationToast() {
       >
         {"초대장 토스트"}
       </button>
-      <ToastContainer autoClose={false} closeButton={<CloseIcon />} />
+      <ToastContainer
+        autoClose={false}
+        closeButton={<CloseIcon onClick={() => {}} />}
+      />
     </>
   );
 }

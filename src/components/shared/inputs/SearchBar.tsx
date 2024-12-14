@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import SearchIcon from "../icons/SearchIcon";
 import clsx from "clsx";
 
-export default function SearchInput() {
+export default function SearchInput({
+  className,
+  placeholder,
+}: {
+  className?: string;
+  placeholder: string;
+}) {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const placeholderText = "아이디를 검색해보세요.";
@@ -16,6 +22,7 @@ export default function SearchInput() {
     <div
       className={clsx(
         inputWrapperStyle,
+        className,
         isFocused ? "border-grayscale-900" : "border-grayscale-300"
       )}
     >
@@ -26,14 +33,14 @@ export default function SearchInput() {
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={inputStyle}
-        placeholder={inputValue.length === 0 ? placeholderText : ""}
+        className={clsx(inputStyle, className)}
+        placeholder={inputValue.length === 0 ? placeholder : ""}
       />
     </div>
   );
 }
 
-const maxWidth = `max-w-[350px]`;
+const maxWidth = `max-w-[400px]`;
 const height = `h-[50px]`;
 
 const inputWrapperStyle = `w-full ${maxWidth} ${height} flex items-center gap-[12px] px-[20px] py-2 bg-grayscale-10 border rounded-full transition-all duration-300 `;

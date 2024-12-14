@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import Spacing from "../Spacing";
 import Text from "../Text";
 import clsx from "clsx";
@@ -18,6 +18,10 @@ const BaseButton = ({
   children,
   onClick,
 }: ButtonProps) => {
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
+    onClick && onClick();
+  }
   return (
     <button
       style={{
@@ -25,7 +29,7 @@ const BaseButton = ({
       }}
       className={clsx("cursor-pointer", className)}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </button>

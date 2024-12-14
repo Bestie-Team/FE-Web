@@ -11,15 +11,19 @@ interface FlexProps {
     | "space-evenly";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   style?: React.CSSProperties;
+  onClick?: () => void;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Flex: React.FC<FlexProps> = ({
   align,
   justify,
   direction,
+  className,
   style,
   children,
+  onClick,
 }) => {
   const flexStyle: React.CSSProperties = {
     display: "flex",
@@ -29,7 +33,11 @@ const Flex: React.FC<FlexProps> = ({
     ...style,
   };
 
-  return <div style={flexStyle}>{children}</div>;
+  return (
+    <div onClick={onClick} style={flexStyle} className={className}>
+      {children}
+    </div>
+  );
 };
 
 export default Flex;

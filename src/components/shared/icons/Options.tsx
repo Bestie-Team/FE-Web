@@ -1,16 +1,44 @@
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DropdownMenu from "../DropdownMenu";
 
-export default function Options() {
+export default function Options({
+  width,
+  height,
+}: {
+  width?: string;
+  height?: string;
+}) {
   const [opened, setOpened] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as Node | null;
+    if (ref.current && !ref.current.contains(target)) {
+      setOpened(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside, {
+      passive: true,
+    });
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const onButtonClick = () => {
-    setOpened(!opened);
+    setOpened(true);
   };
   return (
     <div
+      id="optionBtn"
       onClick={onButtonClick}
-      className="cursor-pointer relative flex justify-center w-[24px] h-[24px] pt-[3px] pb-[4px]"
+      style={{
+        width: width ?? "24px",
+        height: height ?? "24px",
+      }}
+      className="cursor-pointer relative flex justify-center pt-[3px] pb-[4px]"
     >
       <svg
         width="3"
@@ -51,6 +79,7 @@ export default function Options() {
       </svg>
       {opened && (
         <DropdownMenu
+          ref={ref}
           items={menuItems}
           className="absolute -bottom-[162px] right-[4px]"
         />

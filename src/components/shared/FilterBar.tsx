@@ -15,25 +15,38 @@ const orderOptions = [
 
 export type OptionType = {
   value: string;
-  label: string;
+  label: string | React.ReactNode;
 };
 
 export default function FilterBar() {
-  const [selectedYear, setSelectedYear] = useState<OptionType | null>(null);
-  const [selectedOrder, setSelectedOrder] = useState<OptionType | null>(null);
+  const [selectedYear, setSelectedYear] = useState<OptionType | null>({
+    value: "2024",
+    label: "2024",
+  });
+  const [selectedOrder, setSelectedOrder] = useState<OptionType | null>({
+    value: "최신순",
+    label: "최신순",
+  });
 
   return (
-    <div className={filterBarWrapperStyle}>
+    <div
+      style={{
+        height: "68px",
+      }}
+      className={filterBarWrapperStyle}
+    >
       <LightySelect
         options={yearOptions}
         selected={selectedYear}
         setSelected={setSelectedYear}
+        placeholder="년도"
         borderColor="#E9E9E9"
       />
       <LightySelect
         options={orderOptions}
         selected={selectedOrder}
         setSelected={setSelectedOrder}
+        placeholder={selectedOrder?.label as string}
         borderColor="white"
         width="fit"
       />
@@ -42,4 +55,4 @@ export default function FilterBar() {
 }
 
 const filterBarWrapperStyle =
-  "flex justify-between pl-[20px] pt-[16px] pb-[12px]";
+  "max-w-[430px] flex justify-between pt-[16px] pb-[12px]";
