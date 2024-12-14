@@ -25,4 +25,5 @@ export default function CommentItem() {
   );
 }
 
-const containerStyle = "p-[12px] border-[1px] border-grayscale-100 w-fit";
+const containerStyle =
+  "p-[12px] border-[1px] rounded-[16px] border-grayscale-100 w-fit";
