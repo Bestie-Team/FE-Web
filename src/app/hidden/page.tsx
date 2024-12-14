@@ -3,52 +3,23 @@ import FilterBar from "@/components/shared/FilterBar";
 import NavBar from "@/components/shared/NavBar";
 import Feed from "../../components/feed/Feed";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  animationStatusAtom,
-  commentModalStateAtom,
-  feedSelectedTabAtom,
-} from "@/atoms/feed";
+import { useRecoilState } from "recoil";
+import { commentModalStateAtom } from "@/atoms/feed";
 import BottomSheet from "@/components/shared/bottomSheet/BottomSheet";
 import { recordModalStateAtom } from "@/atoms/record";
-import "swiper/css";
-import { useRef } from "react";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TabButton from "@/components/shared/tab/TabButton";
-import { Swiper as SwiperType } from "swiper";
+import { BottomLine } from "@/components/shared/BottomLine";
 
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
-  const swiperRef = useRef<SwiperType | null>(null);
-  const setSelectedTab = useSetRecoilState(feedSelectedTabAtom);
-  const setAnimateTab = useSetRecoilState(animationStatusAtom);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
   const [recordModalOpen, setRecordModalOpen] =
     useRecoilState(recordModalStateAtom);
-
-  const handleSlideChange = (index: number) => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(index); // 원하는 슬라이드로 이동
-    }
-  };
-
-  const handleTabClick = (tabName: "1" | "2") => {
-    if (tabName === "1") {
-      handleSlideChange(0);
-    }
-    if (tabName === "2") {
-      handleSlideChange(1);
-    }
-    setAnimateTab(true);
-    setTimeout(() => {
-      setSelectedTab(tabName);
-      setAnimateTab(false);
-    }, 300);
-  };
 
   return (
     <div className="relative">
@@ -102,11 +73,3 @@ const filterWrapperStyle =
 
 const tabContainerStyle = "max-w-[430px] w-full";
 const tabWrapperStyle = "relative flex gap-[16px]";
-
-export function BottomLine() {
-  return (
-    <div
-      className={`absolute bottom-0 w-[71px] h-[2px] bg-grayscale-900 transition-transform`}
-    />
-  );
-}
