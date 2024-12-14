@@ -80,7 +80,9 @@ export default function EditPhotoSwiper({
         {images.map((imageUrl, idx) => (
           <SwiperSlide
             onClick={() => {
-              onImageClick && onImageClick(String(idx));
+              if (onImageClick) {
+                onImageClick(String(idx));
+              } else return;
             }}
             className={clsx(
               "relative h-[250px] w-[240px] rounded-[16px] overflow-hidden",
@@ -101,6 +103,3 @@ export default function EditPhotoSwiper({
     </div>
   );
 }
-
-const imageInfoStyle =
-  "bg-base-white flex flex-col w-full absolute bottom-[-1px] pl-[20px] pt-[12px] pb-[24px] rounded-b-[20px]";

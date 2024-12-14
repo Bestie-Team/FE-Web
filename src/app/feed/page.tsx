@@ -3,6 +3,7 @@ import FilterBar from "@/components/shared/FilterBar";
 import NavBar from "@/components/shared/NavBar";
 import TabBar from "@/components/shared/tab/TabBar";
 import Feed from "../../components/feed/Feed";
+import { Swiper as SwiperType } from "swiper";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
@@ -21,7 +22,7 @@ import clsx from "clsx";
 
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
   const setSelectedTab = useSetRecoilState(feedSelectedTabAtom);
   const setAnimateTab = useSetRecoilState(animationStatusAtom);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(

@@ -20,7 +20,9 @@ const BaseButton = ({
 }: ButtonProps) => {
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
-    onClick && onClick();
+    if (onClick) {
+      onClick();
+    } else return;
   }
   return (
     <button

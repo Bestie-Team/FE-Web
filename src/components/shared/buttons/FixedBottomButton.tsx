@@ -37,7 +37,9 @@ export default function FixedBottomButton({
       <Button
         color={color}
         onClick={() => {
-          onClick && onClick();
+          if (onClick) {
+            onClick();
+          } else return;
         }}
         disabled={disabled}
         className={clsx(

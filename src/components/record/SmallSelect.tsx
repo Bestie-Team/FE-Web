@@ -42,7 +42,7 @@ export default function SmallSelect({
           flex: "none",
         },
         "& > div": {
-          width: "full",
+          width: width ? width : "full",
           fontWeight: 500,
           color: "#0A0A0A",
           fontSize: "13px",

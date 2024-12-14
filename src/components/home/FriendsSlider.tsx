@@ -14,7 +14,7 @@ export default function FriendsSlider() {
             console.log("친구를 추가하라");
           }}
         />
-        {Array.from({ length: 10 }, (_) => 1).map((_, i) => {
+        {Array.from({ length: 10 }, () => 1).map((_, i) => {
           return (
             <React.Fragment key={`friendItem${i}`}>
               <FriendItem />

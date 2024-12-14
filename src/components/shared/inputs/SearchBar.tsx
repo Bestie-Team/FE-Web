@@ -11,7 +11,6 @@ export default function SearchInput({
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const placeholderText = "아이디를 검색해보세요.";
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);

@@ -13,7 +13,7 @@ export default function GroupImages({
 }) {
   return (
     <Flex>
-      {Array.from({ length: 3 }, (_) => 1).map((_, i) => (
+      {Array.from({ length: 3 }, () => 1).map((_, i) => (
         <Image
           key={`img${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}

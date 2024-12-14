@@ -17,12 +17,12 @@ export default function FriendsListContainer() {
       <span className="text-T5">{`친구 ${24}`}</span>
       <Spacing size={12} />
       <ul>
-        {Array.from({ length: 12 }, (_) => 1).map((friendItem, idx) => {
+        {Array.from({ length: 12 }, () => 1).map((friendItem, idx) => {
           return (
-            <>
+            <React.Fragment key={`${friendItem}${idx}`}>
               <FriendListItem idx={idx} type="basic" />
               <Spacing size={16} />
-            </>
+            </React.Fragment>
           );
         })}
       </ul>
