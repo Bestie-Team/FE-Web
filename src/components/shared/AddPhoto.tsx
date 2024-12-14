@@ -2,7 +2,7 @@ import { useState } from "react";
 import { PlusCircleButtonSmall } from "./buttons/PlusCircleButton";
 import Image from "next/image";
 
-export default function AddPhoto() {
+export default function AddPhoto({ small }: { small?: boolean }) {
   const [image, setImage] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,21 +19,45 @@ export default function AddPhoto() {
   };
 
   return (
-    <label className="w-[84px]" htmlFor="fileInput">
-      <div className={uploadContainerStyle}>
-        <div className={imageWrapperStyle}>
+    <label
+      style={{
+        width: small ? `72px` : "84px",
+      }}
+      htmlFor="fileInput"
+    >
+      <div
+        style={{
+          width: small ? `72px` : "84px",
+          height: small ? `72px` : "84px",
+          padding: small ? "4px" : "4.67px",
+        }}
+        className={uploadContainerStyle}
+      >
+        <div
+          style={{
+            width: small ? `64px` : "74.67px",
+            height: small ? `64px` : "74.67px",
+          }}
+          className={imageWrapperStyle}
+        >
           {image && (
             <Image
               src={image}
               alt="upload_image"
-              width={74.67}
-              height={74.67}
+              width={small ? 64 : 74.67}
+              height={small ? 64 : 74.67}
               className="object-cover"
             />
           )}
           <PhotoIcon />
         </div>
-        <PlusCircleButtonSmall className="absolute bottom-[4.33px] right-[4.33px]" />
+        <PlusCircleButtonSmall
+          style={{
+            bottom: small ? `2px` : "4.33px",
+            right: small ? `2px` : "4.33px",
+          }}
+          className="absolute bottom-[4.33px] right-[4.33px]"
+        />
         <input
           id="fileInput"
           type="file"
@@ -66,7 +90,6 @@ function PhotoIcon() {
 }
 
 const imageWrapperStyle =
-  "w-[74.67px] h-[74.67px] flex justify-center items-center rounded-full bg-grayscale-50 overflow-hidden";
+  "flex justify-center items-center rounded-full bg-grayscale-50 overflow-hidden";
 
-const uploadContainerStyle =
-  "relative flex w-[84px] h-[84px] p-[4.67px] cursor-pointer";
+const uploadContainerStyle = "relative flex cursor-pointer";

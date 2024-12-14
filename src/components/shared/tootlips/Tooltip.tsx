@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import CloseIcon from "../icons/CloseIcon";
 import clsx from "clsx";

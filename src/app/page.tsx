@@ -39,7 +39,6 @@ export default function Home() {
         <Spacing size={28} />
         <SearchInput />
         <Input value="lighty" onChange={() => {}} />
-        <TabBar />
         <Tooltip
           title="안녕?"
           direction="right"

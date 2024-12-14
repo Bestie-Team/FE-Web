@@ -20,6 +20,7 @@ export default function LightySelect({
   const styles: StylesConfig = {
     menu: (baseStyles) => ({
       ...baseStyles,
+      animation: "selectMenuBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
       zIndex: 20,
       paddingTop: "4px",
       paddingBottom: "4px",

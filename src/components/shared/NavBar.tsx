@@ -1,21 +1,69 @@
 import Image from "next/image";
-import Button from "./buttons";
 import CalendarIcon from "./icons/CalendarIcon";
 import HomeIcon from "./icons/HomeIcon";
-import StarsIcon from "./icons/StarsIcon";
 import UserIcon from "./icons/UserIcon";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import PlusButton from "./buttons/PlusCircleButton";
-import Tooltip from "./tootlips/Tooltip";
-import BottomSheet from "./BottomSheet";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import SheetOpenBtnContainer from "./bottomSheet";
+import { useRecoilState } from "recoil";
+import { locationStatusAtom } from "@/atoms/location";
+import FeedIcon from "./icons/FeedIcon";
+
+const NAV_ITEMS = [
+  {
+    href: "/home",
+    icon: (isActive: boolean) => (
+      <HomeIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+    ),
+  },
+  {
+    href: "/record",
+    icon: (isActive: boolean) => (
+      <UserIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+    ),
+  },
+  {
+    href: "/feed",
+    icon: (isActive: boolean) => (
+      <FeedIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+    ),
+  },
+  {
+    href: "/schedule",
+    icon: (isActive: boolean) => (
+      <CalendarIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+    ),
+  },
+  {
+    href: "/my",
+    icon: (isActive: boolean) => (
+      <Image
+        className={profileImageStyle(isActive)}
+        src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
+        width={24}
+        height={24}
+        alt="profileImage"
+      />
+    ),
+  },
+];
 
 export default function NavBar() {
-  const [open, setOpen] = useState(false);
-  const isActive = false;
+  const [activeBtn, setActiveBtn] = useRecoilState<number>(locationStatusAtom);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const pathname = usePathname();
 
-  const [isClient, setIsClient] = useState(false);
+  const defaultBtn = useMemo(() => {
+    const index = NAV_ITEMS.findIndex((item) => pathname.startsWith(item.href));
+    return index === -1 ? 0 : index;
+  }, [pathname]);
+
+  useEffect(() => {
+    setActiveBtn(defaultBtn);
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
@@ -30,48 +78,33 @@ export default function NavBar() {
 
   return createPortal(
     <div className={NavBarWrapperStyle}>
-      <Button className={iconWrapperStyle}>
-        <HomeIcon />
-      </Button>
-      <Button className={iconWrapperStyle}>
-        <UserIcon />
-      </Button>
-      <Button className={iconWrapperStyle}>
-        <StarsIcon />
-      </Button>
-      <Button className={iconWrapperStyle}>
-        <CalendarIcon />
-      </Button>
-      <Button className={iconWrapperStyle}>
-        <Image
-          className={clsx(
-            "rounded-full border-2 ",
-            isActive ? "border-grayscale-900" : ""
-          )}
-          src="/images/anton.PNG"
-          width={24}
-          height={24}
-          alt="profileImage"
-        />
-      </Button>
-      <PlusButton
-        className="absolute bottom-[80px] right-[16px] z-10"
-        onClick={() => setOpen(true)}
-      />
-      <div className="absolute bottom-[84px] right-[74px] z-14">
-        <Tooltip
-          direction="right"
-          closeButton={true}
-          title={"추억 피드를 등록해보세요!"}
-        />
-      </div>
-      <BottomSheet onClose={() => setOpen(false)} open={open} />
+      {NAV_ITEMS.map((item, idx) => (
+        <Link
+          key={item.href.slice(1)}
+          href={item.href}
+          className={iconWrapperStyle}
+          onClick={() => setActiveBtn(idx)}
+        >
+          {item.icon(idx === activeBtn)}
+        </Link>
+      ))}
+      {(pathname.startsWith("/feed") || pathname.startsWith("/home")) && (
+        <SheetOpenBtnContainer />
+      )}
     </div>,
     $portalRoot
   );
 }
 
 const NavBarWrapperStyle =
-  "fixed bottom-0 bg-base-white w-full max-w-[430px] flex justify-between px-[12px] py-[4px] pb-[38px] border-t-[1px] border-grayscale-10 mx-auto";
+  "fixed bottom-0 bg-base-white w-full max-w-[430px] flex justify-between px-[12px] py-[4px] border-t-[1px] border-grayscale-10 mx-auto";
 
-const iconWrapperStyle = "flex justify-center w-[64px] h-[44px] items-center";
+const iconWrapperStyle =
+  "flex justify-center w-[64px] h-[44px] items-center transition-transform duration-300 hover:animate-shrink-grow";
+
+const profileImageStyle = (isActive: boolean) => {
+  return clsx(
+    "rounded-full border-2 ",
+    isActive ? "border-grayscale-900" : "border-none"
+  );
+};

@@ -50,6 +50,7 @@ const config: Config = {
         md: "0px 0px 16px 0px #0000001f",
         lg: "0px 0px 16px 0px #0000001f",
         custom: "0px 0px 12px 0px #0000001F",
+        bottom: "0px 2px 12px 0px #00000014",
       },
       colors: {
         background: "var(--background)",
@@ -106,7 +107,6 @@ const config: Config = {
           "14px",
           { lineHeight: "20px", letterSpacing: "-0.42px", fontWeight: 400 },
         ],
-
         // Typography C
         C1: [
           "12px",
@@ -137,10 +137,14 @@ const config: Config = {
       },
       animation: {
         "slide-up": "slide-up 0.5s ease-in-out forwards",
-        slideIn: "slideIn 0.3s ease-in-out",
-        slideOut: "slideOut 0.3s ease-in-out",
-        fadeIn: "fadeIn 0.3s ease-in",
-        fadeOut: "fadeOut 0.3s ease-out",
+        slideIn: "slideIn 0.2s ease-in-out",
+        slideOut: "slideOut 0.2s ease-in-out",
+        fadeIn: "fadeIn 0.2s ease-in",
+        fadeOut: "fadeOut 0.2s ease-out",
+        selectOpen: "selectOpen 0.2s ease-in-out",
+        "shrink-grow": "shrinkGrow 0.3s ease-in-out",
+        "shrink-grow-less": "shrinkGrowLess 0.3s ease-in-out",
+        "slide-from-left": "slideFromLeft 0.3s ease-in-out",
       },
       keyframes: {
         "slide-up": {
@@ -149,6 +153,10 @@ const config: Config = {
         },
         slideIn: {
           from: { transform: "translateY(100%)" },
+          to: { transform: "translateY(0)" },
+        },
+        slideFromLeft: {
+          from: { transform: "translateX(100%)" },
           to: { transform: "translateY(0)" },
         },
         slideOut: {
@@ -162,6 +170,28 @@ const config: Config = {
         fadeOut: {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
+        },
+        selectOpen: {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
+            visibility: "hidden",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+            visibility: "visible",
+          },
+        },
+        shrinkGrow: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.85)" },
+          "100%": { transform: "scale(1)" },
+        },
+        shrinkGrowLess: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.92)" },
+          "100%": { transform: "scale(1)" },
         },
       },
     },

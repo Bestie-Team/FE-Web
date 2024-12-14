@@ -5,15 +5,7 @@ import Spacing from "../Spacing";
 export default function CommentItem() {
   const 댓글슨이가나인가 = false;
   return (
-    <Flex
-      align="center"
-      style={{
-        padding: "12px",
-        border: "1px solid #E9E9E9",
-        borderRadius: "16px",
-        width: "fit-content",
-      }}
-    >
+    <Flex align="center" className={containerStyle}>
       <span className="text-T6 flex-none">최은재</span>
       <Spacing direction="horizontal" size={8} />
       <span className="text-B4">
@@ -32,3 +24,5 @@ export default function CommentItem() {
     </Flex>
   );
 }
+
+const containerStyle = "p-[12px] border-[1px] border-grayscale-100 w-fit";

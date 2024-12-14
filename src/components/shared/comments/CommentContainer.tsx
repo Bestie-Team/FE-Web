@@ -9,50 +9,42 @@ import Input from "../inputs/Input";
 import Button from "../buttons";
 import ArrowUpIcon from "../icons/ArrowUpIcon";
 
-export default function CommentContainer({
-  open = false,
-  onClose,
-}: {
-  open?: boolean;
-  onClose: () => void;
-}) {
+export default function CommentContainer({ onClose }: { onClose: () => void }) {
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
 
   const handleAnimationEnd = () => {
     if (isClosing) {
       onClose(); // 애니메이션이 끝난 후 모달 닫기
-      setIsClosing(false);
     }
   };
 
   const handleBackdropClick = () => {
     setIsClosing(true); // 닫는 애니메이션 활성화
   };
-  if (open === false) return null;
 
   return (
-    <Dimmed onClick={handleBackdropClick} isClosing={isClosing}>
+    <Dimmed onClick={handleBackdropClick}>
       <div
+        style={{
+          willChange: "transform",
+        }}
         onClick={(e) => e.stopPropagation()}
         className={clsx(
           bottomSheetContainerStyle,
-          `${isClosing ? "animate-slideOut" : "animate-slideIn"}`
+          isClosing ? "animate-slideOut" : "animate-slideIn"
         )}
         onAnimationEnd={handleAnimationEnd}
       >
         <Flex direction="column">
-          <Flex
-            justify="center"
-            style={{ paddingTop: "6px", paddingBottom: "18px" }}
-          >
+          <Flex justify="center" className="pt-[6px] pb-[18px]">
             <RectIcon />
           </Flex>
           <div className="pl-[24px] text-T3">댓글</div>
           <Spacing size={12} />
           <CommentWrapper>
             {[1, 2, 3, 4, 5, 1, 1].map((_, index) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={`commentItem${index}`}>
                 <CommentItem />
                 <Spacing size={16} />
               </React.Fragment>
@@ -101,7 +93,7 @@ function RectIcon() {
 }
 
 const bottomSheetContainerStyle =
-  "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zindex)] pb-[34px]";
+  "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-10 pb-[34px]";
 
 const inputWrapperStyle = "relative px-[20px] py-[12px] w-full";
 

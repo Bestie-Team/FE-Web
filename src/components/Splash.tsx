@@ -7,7 +7,7 @@ import clsx from "clsx";
 
 export default function Splash() {
   return (
-    <div className="mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('/images/bg.png')]">
+    <div className="mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('https://d20j4cey9ep9gv.cloudfront.net/bg.png')]">
       <div className={centerWrapperStyle}>
         <div className="flex flex-col items-center gap-[4px]">
           <div className="text-B3 text-base-white mt-[200px]">
@@ -32,7 +32,7 @@ export default function Splash() {
               width={24}
               height={24}
               className="rounded-full"
-              src="/images/kakao.svg"
+              src="https://d20j4cey9ep9gv.cloudfront.net/kakao.svg"
               alt="kakao"
             />
             <span>카카오로 계속하기</span>
@@ -42,7 +42,7 @@ export default function Splash() {
               width={24}
               height={24}
               className="rounded-full"
-              src="/images/apple.svg"
+              src="https://d20j4cey9ep9gv.cloudfront.net/apple.svg"
               alt="apple"
             />
             <span>Apple로 계속하기</span>

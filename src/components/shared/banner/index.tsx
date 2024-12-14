@@ -5,22 +5,15 @@ import ArrowRightWithBody from "../icons/ArrowRightWithBody";
 
 export default function Banner() {
   return (
-    <Flex style={{ margin: "52px 0", position: "relative" }}>
+    <Flex className="relative my-[52px] px-0">
       <Image
         alt="bannerImage"
         className="object-cover h-[124px]"
         width={450}
         height={124}
-        src={"/images/banner.png"}
+        src={"https://d20j4cey9ep9gv.cloudfront.net/banner.png"}
       />
-      <Flex
-        style={{
-          position: "absolute",
-          top: "40px",
-          left: "22px",
-        }}
-        align="center"
-      >
+      <Flex className="absolute top-[40px] left-[22px]" align="center">
         <Flex direction="column">
           <span className="text-base-white font-[600] text-[16px] leading-[24px] tracking-[-0.48px]">
             이 서비스 같이 쓸래? ❤️‍🔥

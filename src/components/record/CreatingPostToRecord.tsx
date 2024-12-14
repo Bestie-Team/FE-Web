@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { TogetherInfo } from "../feed/InfoBar";
 import Flex from "../shared/Flex";
-import PencilIcon from "../shared/icons/PencilIcon";
 import Spacing from "../shared/Spacing";
 import EditPhotoSwiper from "./EditPhotoSwiper";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import Image from "next/image";
+import SmallSelect from "./SmallSelect";
+import HeaderReturner from "@/utils/HeaderReturner";
 
 export default function CreatingPostToRecord({
   onNext,
@@ -19,13 +21,74 @@ export default function CreatingPostToRecord({
     recordContent: string;
   }>({ imageUrl: [], recordContent: "" });
 
+  const options = [
+    {
+      value: "최은재",
+      label: (
+        <Flex align="center">
+          <Image
+            alt="img"
+            width={24}
+            height={24}
+            className="border-[0.86px] border-base-white rounded-full"
+            src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
+          />
+          <Spacing direction="horizontal" size={2} />
+          <span className="text-C2 text-grayscale-600">최은재</span>
+        </Flex>
+      ),
+    },
+    {
+      value: "정서인",
+      label: (
+        <Flex align="center">
+          <Image
+            alt="img"
+            width={24}
+            height={24}
+            className="border-[0.86px] border-base-white rounded-full"
+            src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
+          />
+          <Spacing direction="horizontal" size={2} />
+          <span className="text-C2 text-grayscale-600">정서인</span>
+        </Flex>
+      ),
+    },
+    {
+      value: "임유진",
+      label: (
+        <Flex align="center">
+          <Image
+            alt="img"
+            width={24}
+            height={24}
+            className="border-[0.86px] border-base-white rounded-full"
+            src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
+          />
+          <Spacing direction="horizontal" size={2} />
+          <span className="text-C2 text-grayscale-600">임유진</span>
+        </Flex>
+      ),
+    },
+  ];
+
   return (
-    <Flex direction="column">
-      <Flex direction="column" style={{ padding: "24px", paddingBottom: 0 }}>
-        <div>
-          <PencilIcon width="28.8" height="28.8" color="#0A0A0A" />
+    <div>
+      <div className="max-w-[430px] w-full fixed z-10  bg-base-white">
+        {HeaderReturner()}
+        <div className="p-[20px] pb-[16px]">
+          <SmallSelect
+            options={options}
+            selected={null}
+            setSelected={null}
+            placeholder="1명 작성 완료"
+          />
         </div>
-        <Spacing size={16} />
+      </div>
+      <Flex
+        direction="column"
+        style={{ padding: "20px", paddingTop: "124px", paddingBottom: "0px" }}
+      >
         <Flex>
           <Flex direction="column" style={{ flexGrow: 1 }}>
             <span className="text-T2">christmas party</span>
@@ -64,7 +127,7 @@ export default function CreatingPostToRecord({
         }}
         disabled={postInfo.imageUrl.length === 0}
       />
-    </Flex>
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
@@ -13,16 +14,15 @@ export default function FriendsSlider() {
             console.log("친구를 추가하라");
           }}
         />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
-        <FriendItem />
+        {Array.from({ length: 10 }, (_) => 1).map((_, i) => {
+          return (
+            <React.Fragment key={`friendItem${i}`}>
+              <FriendItem />
+              <Spacing size={4} direction="horizontal" />
+            </React.Fragment>
+          );
+        })}
+
         <SeeMoreItem
           onClick={() => {
             console.log("친구를 추가하라");

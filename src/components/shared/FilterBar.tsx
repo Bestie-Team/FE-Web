@@ -15,7 +15,7 @@ const orderOptions = [
 
 export type OptionType = {
   value: string;
-  label: string;
+  label: string | React.ReactNode;
 };
 
 export default function FilterBar() {
@@ -29,7 +29,12 @@ export default function FilterBar() {
   });
 
   return (
-    <div className={filterBarWrapperStyle}>
+    <div
+      style={{
+        height: "68px",
+      }}
+      className={filterBarWrapperStyle}
+    >
       <LightySelect
         options={yearOptions}
         selected={selectedYear}
@@ -50,4 +55,4 @@ export default function FilterBar() {
 }
 
 const filterBarWrapperStyle =
-  "flex justify-between pl-[20px] pt-[16px] pb-[12px]";
+  "max-w-[430px] flex justify-between pt-[16px] pb-[12px]";

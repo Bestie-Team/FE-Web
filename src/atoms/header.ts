@@ -1,11 +1,11 @@
 import { atom } from "recoil";
 
 export const headerBgColorAtom = atom<string>({
-  key: "header/bg",
+  key: "HeaderReturner/bg",
   default: "transparent",
 });
 
 export const headerFontColorAtom = atom<string>({
-  key: "header/font",
+  key: "HeaderReturner/font",
   default: "#0A0A0A",
 });

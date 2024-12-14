@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../buttons";
 import clsx from "clsx";
 
 type Props = {

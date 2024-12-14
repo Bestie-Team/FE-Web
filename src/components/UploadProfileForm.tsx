@@ -6,8 +6,10 @@ import Spacing from "./shared/Spacing";
 import Flex from "./shared/Flex";
 import { FormValues } from "@/models/new";
 import validator from "validator";
+import { useRouter } from "next/navigation";
 
 export default function UploadProfileForm() {
+  const router = useRouter();
   const [formValues, setFormValues] = useState<FormValues>({
     name: "",
     lightyId: "",
@@ -27,6 +29,7 @@ export default function UploadProfileForm() {
   const errors = useMemo(() => validate(formValues), [formValues]);
 
   const isValidate = Object.keys(errors).length === 0;
+  console.log(isValidate);
 
   return (
     <Flex direction="column">
@@ -56,11 +59,13 @@ export default function UploadProfileForm() {
         *영문 소문자, 숫자, 특수기호 (_)만 입력 가능
       </span>
       <FixedBottomButton
-        color="#D8D8D8"
         label="라이티 시작하기"
-        className="bg-grayscale-200"
         disabled={isValidate === false}
-        onClick={() => {}}
+        onClick={() => {
+          if (false) {
+          }
+          router.push("/");
+        }}
       />
     </Flex>
   );

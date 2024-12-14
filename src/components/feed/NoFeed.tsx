@@ -3,7 +3,7 @@ import Spacing from "../shared/Spacing";
 
 export default function NoFeed() {
   return (
-    <Flex direction="column" align="center" style={{ paddingTop: "200px" }}>
+    <Flex direction="column" align="center" className="pt-[200px]">
       <div className="w-[40px] h-[40px] p-[5px]">
         <FeedIcon width="30" height="30" />
       </div>

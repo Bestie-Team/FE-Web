@@ -18,18 +18,21 @@ export default function PhotoSwiper({
         className="custom-swiper w-full"
       >
         {images.map((imageUrl, idx) => (
-          <SwiperSlide className="relative" key={imageUrl}>
+          <SwiperSlide className="relative" key={`slide${idx}`}>
             <Image
               src={imageUrl}
-              alt={`${idx + 1}번째 호텔의 이미지`}
-              className="object-cover rounded-[16px] aspect-[17/18]"
+              alt={`img${idx + 1}`}
+              className={imageStyle}
               width={340}
               height={360}
+              key={`swiperImg${idx + 1}`}
             />
-            <div className={imageInfoStyle}>
-              <span>안녕</span>
-              <span>2024.07.24</span>
-            </div>
+            {idx === 0 && (
+              <div className={imageInfoStyle}>
+                <span>안녕</span>
+                <span>2024.07.24</span>
+              </div>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
@@ -39,3 +42,5 @@ export default function PhotoSwiper({
 
 const imageInfoStyle =
   "flex justify-between w-full absolute bottom-0 text-base-white text-C2 px-[16px] py-[10px] rounded-b-[16px] bg-[#00000080]";
+
+const imageStyle = "slide-img object-cover rounded-[16px] aspect-[17/18]";

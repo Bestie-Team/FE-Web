@@ -1,20 +1,15 @@
 import clsx from "clsx";
+
 type Props = {
   title: string;
   onClick: () => void;
   className?: string;
   current: boolean;
-  fresh: boolean; // 빨간아이콘
+  fresh: boolean | "never"; // 빨간아이콘
 };
-export default function TabButton({
-  title,
-  className,
-  current,
-  onClick,
-  fresh,
-}: Props) {
+export default function TabButton({ title, current, onClick, fresh }: Props) {
   return (
-    <div className={clsx("flex ", className)}>
+    <div className={"flex cursor-pointer"}>
       <div
         onClick={onClick}
         className={clsx(
@@ -24,7 +19,7 @@ export default function TabButton({
       >
         {title}
       </div>
-      <DotIcon display={fresh} />
+      {fresh === "never" ? null : <DotIcon display={fresh as boolean} />}
     </div>
   );
 }
