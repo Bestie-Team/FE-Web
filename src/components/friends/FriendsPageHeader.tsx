@@ -29,7 +29,7 @@ export default function FriendsPageHeader({
       <Spacing size={6} direction="horizontal" />
       {type === "default" ? (
         <div
-          className="p-[4px]"
+          className="p-[4px] cursor-pointer"
           onClick={() => {
             router.push("/add");
           }}

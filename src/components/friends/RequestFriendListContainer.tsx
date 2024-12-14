@@ -4,7 +4,7 @@ import FriendListItem from "./FriendListItem";
 
 export default function RequestFriendListContainer() {
   return (
-    <Flex direction="column" className="bg-grayscale-50 pt-[177px] pr-[20px]">
+    <Flex direction="column" className="bg-grayscale-50 pt-[177px] px-[20px]">
       <Flex direction="column">
         <span className="text-T5">받은 요청</span>
         <Spacing size={12} />
