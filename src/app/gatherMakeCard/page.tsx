@@ -24,6 +24,7 @@ export default function GatherMakeCard() {
       <InvitationGather
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
+        openVal={true}
       />
       <FixedBottomButton
         disabled={!selectedImage}
