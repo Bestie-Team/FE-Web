@@ -4,25 +4,14 @@ import ContentWithComments from "./ContentWithComments";
 import InfoBar from "./InfoBar";
 import PhotoSwiper from "../shared/PhotoSwiper";
 
-export default function MemoryCard() {
+export default function MemoryCard({ images }: { images: string[] }) {
   return (
-    <Flex
-      direction="column"
-      style={{ paddingTop: "12px", paddingBottom: "12px" }}
-    >
+    <Flex direction="column" className="py-[12px]">
       <InfoBar />
       <Spacing size={12} />
-      <PhotoSwiper images={imageList} />
+      <PhotoSwiper images={images} />
       <Spacing size={8} />
       <ContentWithComments />
     </Flex>
   );
 }
-
-const imageList = [
-  "/images/window.jpg",
-  "/images/party.jpg",
-  "/images/ocean.jpg",
-  "/images/groom.jpg",
-  "/images/groom.jpg",
-];

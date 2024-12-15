@@ -1,6 +1,5 @@
 import React from "react";
 import Flex from "../shared/Flex";
-import FriendItem, { AddFriendItem } from "./FriendItem";
 import Spacing from "../shared/Spacing";
 import CalendarColoredIcon from "../shared/icons/CalendarColoredIcon";
 import ArrowRightIcon from "../shared/icons/ArrowRightIcon";

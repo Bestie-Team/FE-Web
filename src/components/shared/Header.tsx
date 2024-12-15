@@ -8,29 +8,40 @@ import { DotIcon } from "./tab/TabButton";
 import LightyLetterLogo from "./icons/LightyLetterLogo";
 import Spacing from "./Spacing";
 import { useRecoilValue } from "recoil";
-import { headerBgColorAtom, headerFontColorAtom } from "@/atom/header";
+import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
+import { useRouter } from "next/navigation";
+
 const headerWrapperStyle =
-  "z-10 fixed min-w-[320px] w-full flex justify-between items-center h-[97px] pt-[49px] bg-base-white";
+  "z-10 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white";
+const squareIconContainerStyle = "w-[44px] h-[44px] py-[10px] pr-[20px]";
 
 export function Header({
   pageName,
   square,
+  icon,
 }: {
   pageName: string;
   square?: boolean;
+  icon?: React.ReactNode;
 }) {
   return (
     <div
       className={clsx(
         headerWrapperStyle,
-        "pl-[20px] text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
+        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
       )}
     >
       <span>{pageName}</span>
       {square && (
-        <div className="w-[44px] h-[44px] py-[10px] pr-[20px]">
+        <div className="w-[44px] h-[44px] py-[10px]">
           <EmptySquareIcon />
         </div>
+      )}
+      {icon && (
+        <>
+          <Spacing size={8} />
+          <div>{icon}</div>
+        </>
       )}
     </div>
   );
@@ -39,24 +50,26 @@ export function Header({
 export function HeaderTransparent({
   pageName,
   square = false,
+  fontColor,
   color,
+  icon,
 }: {
   pageName: string;
   square?: boolean;
+  fontColor?: string;
   color?: string;
+  icon?: React.ReactNode;
 }) {
   const arrowIconContainerStyle =
     "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer";
-
-  const squareIconContainerStyle = "w-[44px] h-[44px] py-[10px] pr-[20px]";
 
   return (
     <div
       className={clsx(
         headerWrapperStyle,
-        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px] gap-[6px] pl-[0px]"
+        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px] gap-[6px] pl-[0px] pr-[20px]"
       )}
-      style={{ backgroundColor: color ?? "transparent" }}
+      style={{ backgroundColor: color ? color : "transparent" }}
     >
       <div
         className={arrowIconContainerStyle}
@@ -64,19 +77,34 @@ export function HeaderTransparent({
           window.history.back();
         }}
       >
-        <ArrowLeftIcon />
+        <ArrowLeftIcon color={fontColor} />
       </div>
-      <div className="flex-1">{pageName}</div>
+      <div
+        style={{
+          color: fontColor ? fontColor : "",
+        }}
+        className="flex-1"
+      >
+        {pageName}
+      </div>
+      <Spacing size={6} />
       {square && (
         <div className={squareIconContainerStyle}>
           <EmptySquareIcon />
         </div>
+      )}
+      {icon && (
+        <>
+          <Spacing size={6} />
+          {icon}
+        </>
       )}
     </div>
   );
 }
 
 export function HeaderTransparentWithLogo() {
+  const router = useRouter();
   const bgColor = useRecoilValue(headerBgColorAtom);
   const fontColor = useRecoilValue(headerFontColorAtom);
   const lightyIconContainer = "h-[40px] py-[10px]";
@@ -95,9 +123,14 @@ export function HeaderTransparentWithLogo() {
         <LightyIcon color={fontColor} />
       </div>
       <Spacing size={4} direction="horizontal" />
-      <div className="flex-1">
-        <LightyLetterLogo color={fontColor} />
-      </div>
+      <LightyLetterLogo
+        color={fontColor}
+        pointer
+        onClick={() => {
+          router.push("/home");
+        }}
+      />
+      <div className="flex-1" />
       <div className="relative w-[40px] h-[40px] p-[8px]">
         <MailIcon color={fontColor} />
         <DotIcon display={true} className="absolute top-0 right-[10px]" />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DropdownMenu from "../DropdownMenu";
 
 export default function Options({
@@ -9,12 +9,30 @@ export default function Options({
   height?: string;
 }) {
   const [opened, setOpened] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as Node | null;
+    if (ref.current && !ref.current.contains(target)) {
+      setOpened(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside, {
+      passive: true,
+    });
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const onButtonClick = () => {
-    setOpened(!opened);
+    setOpened(true);
   };
   return (
     <div
+      id="optionBtn"
       onClick={onButtonClick}
       style={{
         width: width ?? "24px",
@@ -61,6 +79,7 @@ export default function Options({
       </svg>
       {opened && (
         <DropdownMenu
+          ref={ref}
           items={menuItems}
           className="absolute -bottom-[162px] right-[4px]"
         />

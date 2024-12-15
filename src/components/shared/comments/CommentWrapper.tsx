@@ -8,12 +8,7 @@ export default function CommentWrapper({
   return (
     <Flex
       direction="column"
-      style={{
-        padding: "20px",
-        paddingTop: "16px",
-        height: "272px",
-        overflow: "scroll",
-      }}
+      className="p-[20px] pt-[16px] h-[272px] overflow-scroll"
     >
       {children}
     </Flex>

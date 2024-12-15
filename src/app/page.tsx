@@ -6,9 +6,7 @@ import Toast from "@/components/shared/toasts/Toast";
 import RoundChip from "@/components/shared/chips/RoundChip";
 import { InvitationToast } from "@/components/shared/toasts/InvitationToast";
 import Input from "@/components/shared/inputs/Input";
-import SearchInput from "@/components/shared/inputs/SearchBar";
 import Spacing from "@/components/shared/Spacing";
-import TabBar from "@/components/shared/tab/TabBar";
 import Tooltip from "@/components/shared/tootlips/Tooltip";
 import AddPhoto from "@/components/shared/AddPhoto";
 
@@ -37,9 +35,7 @@ export default function Home() {
         <NavBar />
         <AddPhoto />
         <Spacing size={28} />
-        <SearchInput />
         <Input value="lighty" onChange={() => {}} />
-        <TabBar />
         <Tooltip
           title="안녕?"
           direction="right"

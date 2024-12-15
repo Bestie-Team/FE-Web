@@ -31,7 +31,7 @@ export default function Input({
   const handleBlur = () => setIsFocused(false);
 
   return (
-    <Flex direction="column" style={{ marginBottom: isFocused ? "257px" : "" }}>
+    <Flex direction="column">
       {label && (
         <>
           <span className="text-T5">{label}</span>
@@ -67,7 +67,6 @@ export default function Input({
   );
 }
 
-// const maxWidth = `max-w-[350px]`;
 const height = `h-[50px]`;
 
 const inputWrapperStyle = `w-full ${height} px-[20px] rounded-[40px] flex items-center gap-[16px] justify-between bg-grayscale-10 border transition-all duration-300`;

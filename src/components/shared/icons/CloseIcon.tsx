@@ -2,11 +2,13 @@ export default function CloseIcon({
   className,
   width,
   height,
+  color,
   onClick,
 }: {
   className?: string;
   width?: string;
   height?: string;
+  color?: string;
   onClick: () => void;
 }) {
   return (
@@ -23,7 +25,7 @@ export default function CloseIcon({
         <path
           id="Vector"
           d="M15 5L5 15"
-          stroke="white"
+          stroke={color ?? "white"}
           strokeWidth="1.66667"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -31,7 +33,7 @@ export default function CloseIcon({
         <path
           id="Vector_2"
           d="M5 5L15 15"
-          stroke="white"
+          stroke={color ?? "white"}
           strokeWidth="1.66667"
           strokeLinecap="round"
           strokeLinejoin="round"

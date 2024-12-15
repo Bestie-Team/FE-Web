@@ -4,7 +4,7 @@ import Flex from "../shared/Flex";
 import LightyLogo from "../shared/icons/LightyLogo";
 import Spacing from "../shared/Spacing";
 import SmallPhotoSwiper from "./SmallPhotoSwiper";
-import { recordGroupAtom } from "@/atom/record";
+import { recordGroupAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 
 export default function ChoosingGroupToRecord({
@@ -35,8 +35,13 @@ export default function ChoosingGroupToRecord({
         </span>
       </Flex>
       <Spacing size={40} />
-      <SmallPhotoSwiper images={imageList} onImageClick={onImageClick} />
+      <SmallPhotoSwiper
+        images={imageList}
+        onImageClick={onImageClick}
+        groupId={groupId}
+      />
       <FixedBottomButton
+        disabled={groupId === null}
         label={"기록 시작하기"}
         onClick={() => {
           onNext("1");
@@ -47,9 +52,9 @@ export default function ChoosingGroupToRecord({
 }
 
 const imageList = [
-  "/images/window.jpg",
-  "/images/party.jpg",
-  "/images/ocean.jpg",
-  "/images/groom.jpg",
-  "/images/groom.jpg",
+  "https://d20j4cey9ep9gv.cloudfront.net/window.jpg",
+  "https://d20j4cey9ep9gv.cloudfront.net/party.jpg",
+  "https://d20j4cey9ep9gv.cloudfront.net/ocean.JPG",
+  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
+  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
 ];

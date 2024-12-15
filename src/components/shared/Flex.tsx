@@ -13,12 +13,14 @@ interface FlexProps {
   style?: React.CSSProperties;
   onClick?: () => void;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Flex: React.FC<FlexProps> = ({
   align,
   justify,
   direction,
+  className,
   style,
   children,
   onClick,
@@ -32,7 +34,7 @@ const Flex: React.FC<FlexProps> = ({
   };
 
   return (
-    <div onClick={onClick} style={flexStyle}>
+    <div onClick={onClick} style={flexStyle} className={className}>
       {children}
     </div>
   );

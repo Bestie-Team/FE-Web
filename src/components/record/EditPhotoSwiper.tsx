@@ -51,7 +51,8 @@ export default function EditPhotoSwiper({
           <>
             <Image
               alt="empty"
-              src={"/images/rectEdit.png"}
+              className="slide-img"
+              src={"https://d20j4cey9ep9gv.cloudfront.net/rectEdit.png"}
               width={240}
               height={250}
             />
@@ -79,18 +80,20 @@ export default function EditPhotoSwiper({
         {images.map((imageUrl, idx) => (
           <SwiperSlide
             onClick={() => {
-              onImageClick && onImageClick(String(idx));
+              if (onImageClick) {
+                onImageClick(String(idx));
+              } else return;
             }}
             className={clsx(
               "relative h-[250px] w-[240px] rounded-[16px] overflow-hidden",
               idx === 0 && "ml-[20px]"
             )}
-            key={imageUrl}
+            key={`${imageUrl}${idx}`}
           >
             <Image
               src={imageUrl}
               alt={`${idx + 1}번째 이미지`}
-              className="object-cover w-[240px] h-[250px]"
+              className="slide-img object-cover w-[240px] h-[250px]"
               width={270}
               height={320}
             />
@@ -100,6 +103,3 @@ export default function EditPhotoSwiper({
     </div>
   );
 }
-
-const imageInfoStyle =
-  "bg-base-white flex flex-col w-full absolute bottom-[-1px] pl-[20px] pt-[12px] pb-[24px] rounded-b-[20px]";

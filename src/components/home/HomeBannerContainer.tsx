@@ -12,7 +12,7 @@ export default function HomeBannerContainer() {
       <div className="relative">
         <Image
           alt="homeImage"
-          src="/images/dishes.jpg"
+          src="https://d20j4cey9ep9gv.cloudfront.net/dishes.jpg"
           width={600}
           height={434}
           className="h-[434px] object-cover"

@@ -2,17 +2,21 @@ export default function LightyLetterLogo({
   width,
   height,
   color,
-  className,
+  onClick,
+  pointer,
 }: {
   width?: string;
   height?: string;
   color?: string;
-  className?: string;
+  pointer?: boolean;
+  onClick?: () => void;
 }) {
   return (
     <svg
+      style={{ cursor: pointer ? "pointer" : "default" }}
       width={width ?? "62"}
       height={height ?? "20"}
+      onClick={onClick}
       viewBox="0 0 62 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

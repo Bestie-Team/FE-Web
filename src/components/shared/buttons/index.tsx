@@ -18,10 +18,11 @@ const BaseButton = ({
   children,
   onClick,
 }: ButtonProps) => {
-  console.log(onClick, "여기는 button");
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
-    onClick && onClick();
+    if (onClick) {
+      onClick();
+    } else return;
   }
   return (
     <button

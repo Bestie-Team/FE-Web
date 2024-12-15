@@ -9,3 +9,8 @@ export const recordGroupAtom = atom<string | null>({
   key: "record/group",
   default: null,
 });
+
+export const recordModalStateAtom = atom<boolean>({
+  key: "record/modal",
+  default: false,
+});

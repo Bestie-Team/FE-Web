@@ -6,8 +6,8 @@
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
-  --dimmed-zindex: 100;
-  --bottomSheet-zindex: 101;
+  --dimmed-zIndex: 100;
+  --bottomSheet-zIndex: 101;
   --toastify-color-light: #000000cc;
   --toastify-text-color-light: #ffffff;
   --toastify-text-color-dark: #ffffff;
@@ -27,8 +27,11 @@
     --foreground: #ededed;
   }
 }
+.react-select__placeholder {
+  color: "#0A0A0At" !important;
+}
 
-.swiper-slide img {
+.swiper-slide img.slide-img {
   width: 100%;
   height: 100%;
 }
@@ -116,5 +119,19 @@ body {
   .no-scrollbar {
     -ms-overflow-style: none; /* Internet Explorer */
     scrollbar-width: none; /* Firefox */
+  }
+}
+
+@keyframes selectMenuBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  70% {
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -9,7 +9,7 @@ export default function FriendItem() {
       <div className="p-[6px]">
         <Image
           alt="friendImage"
-          src="/images/bini.jpg"
+          src="https://d20j4cey9ep9gv.cloudfront.net/bini.JPG"
           className="rounded-full object-cover w-[56px] h-[56px]"
           width={56}
           height={56}
@@ -69,4 +69,4 @@ export function SeeMoreItem({ onClick }: { onClick: () => void }) {
 }
 
 const iconWrapperStyle =
-  "relative rounded-full w-[56px] h-[56px] border-[1px] border-[#E9E9E9]";
+  "relative rounded-full w-[56px] h-[56px] border-[1px] border-[#E9E9E9] cursor-pointer";
