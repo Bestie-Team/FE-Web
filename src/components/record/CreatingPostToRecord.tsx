@@ -116,7 +116,7 @@ export default function CreatingPostToRecord({
         </textarea>
         <Spacing size={12} />
         <div className="text-right">
-          <span className="text-grayscale-900 text-B4">{`${postInfo.recordContent?.length}`}</span>
+          <span className="text-grayscale-900 text-B3">{`${postInfo.recordContent?.length}`}</span>
           <span className="text-grayscale-300 text-B4">{` / 150`}</span>
         </div>
       </Flex>
@@ -132,4 +132,4 @@ export default function CreatingPostToRecord({
 }
 
 const recordTextAreaStyle =
-  "h-[163px] text-B3 text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none";
+  "h-[186.29px] leading-[22.86px] w-[114.29%] tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none transform origin-top-left scale-[0.875]";

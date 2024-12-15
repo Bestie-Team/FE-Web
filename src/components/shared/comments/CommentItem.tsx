@@ -18,7 +18,7 @@ export default function CommentItem() {
       {댓글슨이가나인가 && (
         <>
           <Spacing direction="horizontal" size={8} />
-          <Options width="12" height="12" />
+          <Options width="12" height="12" type="default" />
         </>
       )}
     </Flex>

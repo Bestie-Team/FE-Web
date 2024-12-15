@@ -32,6 +32,11 @@ export default function SmallSelect({
       boxShadow: "0px 0px 16px 0px #0000001F",
       width: "fit-content",
       "& > div": {
+        // fontSize: "16px",
+        // lineHeight: "24.62px",
+        // transform: "scale(0.8125)",
+        // transformOrigin: "left top",
+        // willChange: "transform",
         padding: 0,
         width: "fit-content",
         display: "flex",
