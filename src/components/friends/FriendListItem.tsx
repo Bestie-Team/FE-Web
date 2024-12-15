@@ -2,8 +2,6 @@ import Image from "next/image";
 import React from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
-import MinusIcon from "../shared/icons/MinusIcon";
-import CloseIcon from "../shared/icons/CloseIcon";
 import clsx from "clsx";
 import Options from "../shared/icons/Options";
 import Button from "../shared/buttons";
