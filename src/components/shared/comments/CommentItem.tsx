@@ -18,11 +18,12 @@ export default function CommentItem() {
       {댓글슨이가나인가 && (
         <>
           <Spacing direction="horizontal" size={8} />
-          <Options width="12" height="12" />
+          <Options width="12" height="12" type="default" />
         </>
       )}
     </Flex>
   );
 }
 
-const containerStyle = "p-[12px] border-[1px] border-grayscale-100 w-fit";
+const containerStyle =
+  "p-[12px] border-[1px] rounded-[16px] border-grayscale-100 w-fit";

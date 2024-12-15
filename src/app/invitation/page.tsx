@@ -16,6 +16,7 @@ import { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import InvitationModal from "@/components/invitation/InvitationModal";
 import NavBar from "@/components/shared/NavBar";
+import HeaderReturner from "@/utils/headerReturner";
 
 export default function InvitationPage() {
   const swiperRef = useRef<SwiperType | null>(null);
@@ -48,9 +49,10 @@ export default function InvitationPage() {
   };
 
   return (
-    <>
+    <div>
       <div className={filterStyle}>
-        <div className="w-full">
+        {HeaderReturner()}
+        <div className="w-full px-[20px]">
           <TabBar
             bgColor="transparent"
             atom={invitationSelectedTabAtom}
@@ -60,7 +62,7 @@ export default function InvitationPage() {
             onClick={handleTabClick}
           />
         </div>
-        <div className="py-[16px]">
+        <div className="py-[16px] px-[20px]">
           <LightySelect
             borderColor="#E9E9E9"
             placeholder="년도"
@@ -82,13 +84,13 @@ export default function InvitationPage() {
         className="custom-swiper w-full"
       >
         <SwiperSlide>
-          <Flex direction="column" className="pt-[111px]">
+          <Flex direction="column" className="pt-[162px]">
             <InvitationCard onClickOpen={setModalOpen} />
             <Spacing size={24} />
           </Flex>
         </SwiperSlide>
         <SwiperSlide>
-          <Flex direction="column" className="pt-[111px]">
+          <Flex direction="column" className="pt-[162px]">
             <InvitationCard onClickOpen={setModalOpen} />
             <Spacing size={24} />
             <InvitationCard onClickOpen={setModalOpen} />
@@ -98,12 +100,12 @@ export default function InvitationPage() {
       </Swiper>
       <NavBar />
       {isModalOpen ? <InvitationModal onClickClose={setModalOpen} /> : null}
-    </>
+    </div>
   );
 }
 
 const filterStyle =
-  "max-w-[430px] fixed z-10 flex flex-col w-full pl-[20px] bg-base-white";
+  "max-w-[430px] fixed z-10 flex flex-col w-full bg-base-white";
 
 const options = [
   {

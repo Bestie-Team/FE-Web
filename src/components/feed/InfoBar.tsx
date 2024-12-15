@@ -11,7 +11,7 @@ export default function InfoBar() {
       <div style={{ flexGrow: 1 }} />
       <TogetherInfo />
       <Spacing direction="horizontal" size={12} />
-      <Options />
+      <Options type="default" />
     </Flex>
   );
 }

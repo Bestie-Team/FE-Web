@@ -58,4 +58,4 @@ export default function FixedBottomButton({
 }
 
 const buttonStyle = `max-w-full min-w-[350px] py-[18px] text-center font-bold text-[white] rounded-full`;
-const buttonWrapperStyle = `px-[20px] pb-[10px] pt-[12px] mb-[34px] bg-white animate-slide-up`;
+const buttonWrapperStyle = `px-[20px] pb-[10px] pt-[12px] bg-white animate-slide-up`;

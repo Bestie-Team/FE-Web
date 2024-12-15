@@ -10,7 +10,7 @@ export default function AddPage() {
       <div className="px-[20px]">
         <Spacing size={20} />
         <SearchInput
-          className="!bg-base-white !text-B3"
+          className="!bg-base-white"
           placeholder="아이디를 검색해보세요."
         />
       </div>

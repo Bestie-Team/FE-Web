@@ -4,8 +4,8 @@ import clsx from "clsx";
 
 const DropdownMenu = forwardRef<
   HTMLElement,
-  { items: string[]; className?: string }
->(({ items, className }, ref) => {
+  { items: string[]; className?: string; type: "default" | "friend" }
+>(({ items, className, type }, ref) => {
   return (
     <div
       ref={ref as React.Ref<HTMLDivElement>}
@@ -31,6 +31,10 @@ const DropdownMenu = forwardRef<
                 index === items.length - 1
                   ? "border-b-base-white"
                   : "border-b-grayscale-50"
+              } ${
+                index === items.length - 1 &&
+                type === "friend" &&
+                "text-point-red50"
               }`}
               onClick={() => alert(`${item} 선택됨`)}
             >

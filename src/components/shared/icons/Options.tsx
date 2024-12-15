@@ -4,9 +4,11 @@ import DropdownMenu from "../DropdownMenu";
 export default function Options({
   width,
   height,
+  type = "default",
 }: {
   width?: string;
   height?: string;
+  type: "default" | "friend";
 }) {
   const [opened, setOpened] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -35,14 +37,18 @@ export default function Options({
       id="optionBtn"
       onClick={onButtonClick}
       style={{
-        width: width ?? "24px",
-        height: height ?? "24px",
+        width: "24px",
+        height: "24px",
       }}
-      className="cursor-pointer relative flex justify-center pt-[3px] pb-[4px]"
+      className={
+        type === "default"
+          ? "cursor-pointer relative flex justify-center pt-[3px] pb-[4px]"
+          : "cursor-pointer relative flex justify-center pt-[4.5px]"
+      }
     >
       <svg
-        width="3"
-        height="17"
+        width={width ?? "3"}
+        height={height ?? "17"}
         viewBox="0 0 3 17"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -79,12 +85,18 @@ export default function Options({
       </svg>
       {opened && (
         <DropdownMenu
+          type={type}
           ref={ref}
-          items={menuItems}
-          className="absolute -bottom-[162px] right-[4px]"
+          items={type === "default" ? menuItems : menuItemsF}
+          className={
+            type === "default"
+              ? "absolute -bottom-[162px] right-[4px]"
+              : "absolute -bottom-[104px] -right-[4px]"
+          }
         />
       )}
     </div>
   );
 }
 const menuItems = ["숨기기", "수정하기", "삭제하기"];
+const menuItemsF = ["친구 삭제", "유저 신고하기"];

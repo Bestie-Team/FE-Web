@@ -70,6 +70,6 @@ export default function Input({
 const height = `h-[50px]`;
 
 const inputWrapperStyle = `w-full ${height} px-[20px] rounded-[40px] flex items-center gap-[16px] justify-between bg-grayscale-10 border transition-all duration-300`;
-const inputStyle = `flex-grow bg-transparent outline-none text-B4 bg-grayscale-10`;
+const inputStyle = `flex-grow bg-transparent outline-none text-[16px] leading-[22.86px] tracking-[-0.48px] bg-grayscale-10 transform origin-left scale-[0.875]`;
 const helpMessageStyle =
   "pl-[8px] text-C2 text-[#FA6767] inline-block mt-[6px]";

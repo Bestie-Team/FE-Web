@@ -25,7 +25,7 @@ export default function FriendsPage() {
           />
           <Spacing size={20} />
           <SearchInput
-            className="!bg-base-white !text-B3"
+            className="!bg-base-white "
             placeholder="이름/아이디로 검색하기"
           />
         </div>
