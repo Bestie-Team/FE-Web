@@ -36,7 +36,7 @@
   height: 100%;
 }
 .react-select__input {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 body {
