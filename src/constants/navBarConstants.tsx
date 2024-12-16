@@ -38,11 +38,9 @@ const NAV_ITEMS: NavItem[] = [
     href: "/my",
     icon: (isActive: boolean) => (
       <Image
-        className={
-          isActive
-            ? "rounded-full border-2 border-grayscale-900"
-            : "rounded border-none"
-        }
+        className={`border-2 rounded-full ${
+          isActive ? "border-grayscale-900" : "border-none"
+        }`}
         src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
         width={24}
         height={24}
