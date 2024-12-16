@@ -46,6 +46,7 @@ export default function Input({
       >
         <input
           type="text"
+          inputMode="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={inputStyle}

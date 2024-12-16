@@ -74,7 +74,7 @@ export default function CreatingPostToRecord({
 
   return (
     <div className="bg-base-white h-screen">
-      <div className="max-w-[430px] w-full fixed z-10">
+      <div className=" bg-base-white max-w-[430px] w-full fixed z-10 shadow-bottom">
         {HeaderReturner()}
         <div className="p-[20px] pb-[16px]">
           <SmallSelect
@@ -87,7 +87,7 @@ export default function CreatingPostToRecord({
       </div>
       <Flex
         direction="column"
-        style={{ padding: "20px", paddingTop: "124px", paddingBottom: "0px" }}
+        style={{ padding: "20px", paddingTop: "124px", paddingBottom: "82px" }}
       >
         <Flex>
           <Flex direction="column" style={{ flexGrow: 1 }}>
@@ -106,6 +106,7 @@ export default function CreatingPostToRecord({
       <Spacing size={8} />
       <Flex direction="column" style={{ padding: "16px 28px" }}>
         <textarea
+          inputMode="text"
           placeholder="해당 모임에는 어떤 소중한 추억이 있었나요? 그날의 추억에 대해 글로 작성해 보세요."
           onChange={(e) => {
             setPostInfo((prev) => ({ ...prev, recordContent: e.target.value }));

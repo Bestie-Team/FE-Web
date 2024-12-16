@@ -18,7 +18,7 @@ export default function ChoosingGroupToRecord({
     setGroupId(group);
   };
   return (
-    <Flex direction="column">
+    <Flex direction="column" className="bg-base-white h-screen">
       <Flex
         direction="column"
         style={{ paddingLeft: "24px", paddingRight: "24px" }}

@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 
-export default function useNoKeyboardUp() {
+export default function useDisableKeyboardInput() {
   useEffect(() => {
     const observer = new MutationObserver(() => {
-      const elements = document.querySelectorAll(".react-select__input");
+      const elements = document.querySelectorAll<HTMLInputElement>(
+        ".react-select__input"
+      );
       elements.forEach((element) => {
-        element.addEventListener("focus", (e: Event) =>
-          (e as FocusEvent).preventDefault()
-        );
+        element.setAttribute("inputMode", "none");
       });
     });
 
