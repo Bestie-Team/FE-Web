@@ -5,7 +5,7 @@ import UploadProfileForm from "./UploadProfileForm";
 
 export default function New() {
   return (
-    <div className="flex flex-col gap-[24px] px-[24px]">
+    <div className="flex flex-col gap-[24px] px-[24px] bg-base-white h-screen">
       <Spacing size={28} />
       <div className="flex flex-col gap-[16px]">
         <LightyIcon width="20" height="20" color={"#0A0A0A"} />

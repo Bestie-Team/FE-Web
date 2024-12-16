@@ -36,6 +36,7 @@ export default function HomePage() {
       <FriendsSlider />
       <Spacing size={40} />
       <DateSlider />
+      <Spacing size={8} />
       <PhotoSwiper images={imageList} percent={2.2} />
       <Banner />
       <Flex direction="column" align="center">

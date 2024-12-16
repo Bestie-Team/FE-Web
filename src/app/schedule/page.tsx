@@ -2,6 +2,7 @@
 import LightySelect from "@/components/shared/filter";
 import { OptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
+import NavBar from "@/components/shared/NavBar";
 import Spacing from "@/components/shared/Spacing";
 import HeaderReturner from "@/utils/headerReturner";
 import { useState } from "react";
@@ -12,8 +13,8 @@ export default function SchedulePage() {
     label: "2024",
   });
   return (
-    <Flex direction="column">
-      <div className="max-w-[430px] pt-[8px] z-10 w-full pl-[17px] bg-base-white">
+    <Flex direction="column" className="bg-base-white h-screen">
+      <div className="max-w-[430px] pt-[8px] z-10 w-full pl-[17px] bg-base-white shadow-bottom">
         {HeaderReturner()}
         <LightySelect
           borderColor="#E9E9E9"
@@ -22,8 +23,10 @@ export default function SchedulePage() {
           selected={year}
           setSelected={setYear}
         />
+        <Spacing size={20} />
       </div>
-      <Spacing size={20} />
+
+      <NavBar />
     </Flex>
   );
 }

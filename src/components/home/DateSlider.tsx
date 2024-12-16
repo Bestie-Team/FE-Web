@@ -19,7 +19,7 @@ export default function DateSlider() {
       </Flex>
       <Spacing size={12} />
       <Flex
-        className="w-[330px] mx-auto my-0 px-0 py[10px]"
+        className="w-[330px] mx-auto my-0 px-0 py-[10px]"
         justify="space-between"
       >
         <DateItem />

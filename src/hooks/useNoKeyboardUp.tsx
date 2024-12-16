@@ -2,18 +2,19 @@ import { useEffect } from "react";
 
 export default function useNoKeyboardUp() {
   useEffect(() => {
-    const element = document.querySelector(".react-select__input");
+    const observer = new MutationObserver(() => {
+      const elements = document.querySelectorAll(".react-select__input");
+      elements.forEach((element) => {
+        element.addEventListener("focus", (e: Event) =>
+          (e as FocusEvent).preventDefault()
+        );
+      });
+    });
 
-    const handleFocus = (e: Event) => (e as FocusEvent).preventDefault();
-
-    if (element) {
-      element.addEventListener("focus", handleFocus);
-    }
+    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      if (element) {
-        element.removeEventListener("focus", handleFocus); // Clean up
-      }
+      observer.disconnect();
     };
   }, []);
 }
