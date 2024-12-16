@@ -7,6 +7,8 @@ import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Image from "next/image";
 import SmallSelect from "./SmallSelect";
 import HeaderReturner from "@/utils/headerReturner";
+import useScrollShadow from "@/hooks/useScrollShadow";
+import clsx from "clsx";
 
 export default function CreatingPostToRecord({
   onNext,
@@ -16,6 +18,7 @@ export default function CreatingPostToRecord({
     recordContent: string;
   }) => void;
 }) {
+  const hasShadow = useScrollShadow();
   const [postInfo, setPostInfo] = useState<{
     imageUrl: string[];
     recordContent: string;
@@ -74,7 +77,12 @@ export default function CreatingPostToRecord({
 
   return (
     <div className="bg-base-white h-screen">
-      <div className=" bg-base-white max-w-[430px] w-full fixed z-10 shadow-bottom">
+      <div
+        className={clsx(
+          "bg-base-white max-w-[430px] w-full fixed z-10",
+          hasShadow ? "shadow-bottom" : ""
+        )}
+      >
         {HeaderReturner()}
         <div className="p-[20px] pb-[16px]">
           <SmallSelect
@@ -87,7 +95,7 @@ export default function CreatingPostToRecord({
       </div>
       <Flex
         direction="column"
-        style={{ padding: "20px", paddingTop: "124px", paddingBottom: "82px" }}
+        style={{ padding: "20px", paddingTop: "124px", paddingBottom: 0 }}
       >
         <Flex>
           <Flex direction="column" style={{ flexGrow: 1 }}>
@@ -104,7 +112,10 @@ export default function CreatingPostToRecord({
       </Flex>
       <EditPhotoSwiper images={postInfo.imageUrl} setImages={setPostInfo} />
       <Spacing size={8} />
-      <Flex direction="column" style={{ padding: "16px 28px" }}>
+      <Flex
+        direction="column"
+        style={{ padding: "16px 28px", paddingBottom: "98px" }}
+      >
         <textarea
           inputMode="text"
           placeholder="해당 모임에는 어떤 소중한 추억이 있었나요? 그날의 추억에 대해 글로 작성해 보세요."
