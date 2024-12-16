@@ -49,7 +49,7 @@ export default function InvitationPage() {
   };
 
   return (
-    <div>
+    <div className="bg-base-white h-screen">
       <div className={filterStyle}>
         {HeaderReturner()}
         <div className="w-full px-[20px]">

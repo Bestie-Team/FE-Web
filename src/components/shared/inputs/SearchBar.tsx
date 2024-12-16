@@ -29,6 +29,7 @@ export default function SearchInput({
       <input
         type="search"
         inputMode="search"
+        enterKeyHint="search"
         value={inputValue}
         onChange={handleChange}
         onFocus={handleFocus}
