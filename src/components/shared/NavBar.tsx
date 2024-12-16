@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
@@ -61,10 +60,3 @@ const NavBarWrapperStyle =
 
 const iconWrapperStyle =
   "flex justify-center w-[64px] h-[44px] items-center transition-transform duration-300 hover:animate-shrink-grow";
-
-const profileImageStyle = (isActive: boolean) => {
-  return clsx(
-    "rounded-full border-2 ",
-    isActive ? "border-grayscale-900" : "border-none"
-  );
-};
