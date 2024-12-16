@@ -12,7 +12,7 @@ import PhotoSwiper from "@/components/shared/PhotoSwiper";
 import Spacing from "@/components/shared/Spacing";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import HeaderReturner from "@/utils/headerReturner";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
