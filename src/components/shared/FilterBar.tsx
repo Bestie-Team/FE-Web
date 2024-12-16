@@ -48,7 +48,7 @@ export default function FilterBar() {
         setSelected={setSelectedOrder}
         placeholder={selectedOrder?.label as string}
         borderColor="white"
-        width="68px"
+        width="fit-content"
       />
     </div>
   );
