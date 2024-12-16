@@ -18,7 +18,7 @@ export default function ActionItem({
     <Flex className="py-[12px] w-full">
       <Button className={buttonStyle}>{icon}</Button>
       <Spacing size={12} direction="horizontal" />
-      <Flex className="flex-grow cursor-pointer" onClick={onClick}>
+      <Flex className="flex-grow cursor-pointer items-center" onClick={onClick}>
         <Flex direction="column" className="flex-grow">
           <span className="text-T5">{title}</span>
           <Spacing size={4} />

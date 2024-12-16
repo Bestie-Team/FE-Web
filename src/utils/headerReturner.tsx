@@ -10,42 +10,30 @@ import React from "react";
 
 export default function HeaderReturner() {
   const pathname = usePathname();
-  console.log(pathname);
-  if (pathname.startsWith("/signin")) {
-    return null;
-  }
-  if (pathname.startsWith("/home")) {
-    return <HeaderTransparentWithLogo />;
-  }
-  if (pathname.startsWith("/invitation")) {
-    return <HeaderTransparent pageName="초대장" color="white" />;
-  }
-  if (pathname.startsWith("/new")) {
-    return <HeaderTransparent pageName="프로필 생성" square={false} />;
-  }
-  if (pathname.startsWith("/feed")) {
-    return <Header pageName="추억 피드" />;
-  }
-  if (pathname.startsWith("/hidden")) {
-    return <HeaderTransparent pageName="피드 관리" />;
-  }
-  if (pathname.startsWith("/record")) {
-    return <HeaderTransparent pageName="기록하기" />;
-  }
-  if (pathname.startsWith("/schedule")) {
-    return <Header pageName="모임 캘린더" />;
-  }
-  if (pathname.startsWith("/my")) {
-    return <Header pageName="My" icon={<SettingIcon />} />;
-  }
-  if (pathname.startsWith("/gathering")) {
-    console.log("gathering");
-    return (
+  const headerConfig: {
+    [key: string]: React.ReactNode | null;
+  } = {
+    "/signin": null,
+    "/home": <HeaderTransparentWithLogo />,
+    "/invitation": <HeaderTransparent pageName="초대장" color="white" />,
+    "/new": <HeaderTransparent pageName="프로필 생성" square={false} />,
+    "/feed": <Header pageName="추억 피드" />,
+    "/hidden": <HeaderTransparent pageName="피드 관리" />,
+    "/record": <HeaderTransparent pageName="기록하기" />,
+    "/schedule": <Header pageName="모임 캘린더" />,
+    "/my": <Header pageName="My" icon={<SettingIcon />} />,
+    "/gathering": (
       <HeaderTransparent
-        fontColor={"#FFF"}
+        fontColor="#FFF"
         pageName="모임 상세"
         icon={<ShareIcon />}
       />
-    );
-  }
+    ),
+  };
+
+  const matchedHeader = Object.keys(headerConfig).find((key) =>
+    pathname.startsWith(key)
+  );
+
+  return matchedHeader ? headerConfig[matchedHeader] : null;
 }

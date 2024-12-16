@@ -1,7 +1,3 @@
-import Image from "next/image";
-import CalendarIcon from "./icons/CalendarIcon";
-import HomeIcon from "./icons/HomeIcon";
-import UserIcon from "./icons/UserIcon";
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
@@ -10,46 +6,7 @@ import Link from "next/link";
 import SheetOpenBtnContainer from "./bottomSheet";
 import { useRecoilState } from "recoil";
 import { locationStatusAtom } from "@/atoms/location";
-import FeedIcon from "./icons/FeedIcon";
-
-const NAV_ITEMS = [
-  {
-    href: "/home",
-    icon: (isActive: boolean) => (
-      <HomeIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
-    ),
-  },
-  {
-    href: "/record",
-    icon: (isActive: boolean) => (
-      <UserIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
-    ),
-  },
-  {
-    href: "/feed",
-    icon: (isActive: boolean) => (
-      <FeedIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
-    ),
-  },
-  {
-    href: "/schedule",
-    icon: (isActive: boolean) => (
-      <CalendarIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
-    ),
-  },
-  {
-    href: "/my",
-    icon: (isActive: boolean) => (
-      <Image
-        className={profileImageStyle(isActive)}
-        src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
-        width={24}
-        height={24}
-        alt="profileImage"
-      />
-    ),
-  },
-];
+import NAV_ITEMS from "@/constants/navBarConstants";
 
 export default function NavBar() {
   const [activeBtn, setActiveBtn] = useRecoilState<number>(locationStatusAtom);
@@ -78,16 +35,19 @@ export default function NavBar() {
 
   return createPortal(
     <div className={NavBarWrapperStyle}>
-      {NAV_ITEMS.map((item, idx) => (
-        <Link
-          key={item.href.slice(1)}
-          href={item.href}
-          className={iconWrapperStyle}
-          onClick={() => setActiveBtn(idx)}
-        >
-          {item.icon(idx === activeBtn)}
-        </Link>
-      ))}
+      {NAV_ITEMS.map((item, idx) => {
+        const isActive = idx === activeBtn;
+        return (
+          <Link
+            key={item.href.slice(1)}
+            href={item.href}
+            className={iconWrapperStyle}
+            onClick={() => setActiveBtn(idx)}
+          >
+            {item.icon(isActive)}
+          </Link>
+        );
+      })}
       {(pathname.startsWith("/feed") || pathname.startsWith("/home")) && (
         <SheetOpenBtnContainer />
       )}

@@ -112,7 +112,7 @@ export function HeaderTransparentWithLogo() {
   return (
     <div
       style={{
-        zIndex: 9999,
+        position: "fixed",
         background: bgColor,
         transition: "background-color 0.5s ease",
         paddingLeft: "20px",

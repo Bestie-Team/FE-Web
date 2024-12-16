@@ -7,7 +7,10 @@ interface Props {
 export const NextLayout = ({ children }: Props) => {
   return (
     <RecoilRoot>
-      <div style={{ scrollbarWidth: "none" }} className="max-w-[430px] mx-auto">
+      <div
+        style={{ scrollbarWidth: "none" }}
+        className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50"
+      >
         {children}
       </div>
     </RecoilRoot>

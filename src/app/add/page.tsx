@@ -5,7 +5,7 @@ import Spacing from "@/components/shared/Spacing";
 
 export default function AddPage() {
   return (
-    <div className="max-w-[430px] fixed w-full bg-grayscale-50">
+    <div className="max-w-[430px] fixed w-full z-10">
       <FriendsPageHeader type="add" />
       <div className="px-[20px]">
         <Spacing size={20} />

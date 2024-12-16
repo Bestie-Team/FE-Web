@@ -12,6 +12,7 @@ import NavBar from "@/components/shared/NavBar";
 import PhotoSwiper from "@/components/shared/PhotoSwiper";
 import Spacing from "@/components/shared/Spacing";
 import useScrollThreshold from "@/hooks/useScrollThreshold";
+import HeaderReturner from "@/utils/headerReturner";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
 
   return (
     <>
+      {HeaderReturner()}
       <HomeBannerContainer />
       <FriendsSlider />
       <Spacing size={40} />

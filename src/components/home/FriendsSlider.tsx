@@ -7,7 +7,7 @@ export default function FriendsSlider() {
   return (
     <div className="w-full">
       <Spacing size={16} />
-      <Flex style={{ overflowX: "scroll", scrollbarWidth: "none" }}>
+      <Flex className="overflow-scroll no-scrollbar">
         <Spacing size={16} direction="horizontal" />
         <AddFriendItem
           onClick={() => {
