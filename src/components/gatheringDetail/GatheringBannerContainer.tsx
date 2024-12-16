@@ -13,7 +13,7 @@ export default function GatheringBannerContainer() {
       <div className="relative">
         <Image
           alt="homeImage"
-          src="https://d20j4cey9ep9gv.cloudfront.net/dishes.jpg"
+          src="https://d20j4cey9ep9gv.cloudfront.net/gathering.png"
           width={600}
           height={434}
           className="h-[434px] object-cover"

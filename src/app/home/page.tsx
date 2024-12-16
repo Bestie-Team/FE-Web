@@ -1,6 +1,5 @@
 "use client";
 
-import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
 import { homeModalStateAtom } from "@/atoms/home";
 import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
@@ -11,23 +10,13 @@ import Flex from "@/components/shared/Flex";
 import NavBar from "@/components/shared/NavBar";
 import PhotoSwiper from "@/components/shared/PhotoSwiper";
 import Spacing from "@/components/shared/Spacing";
-import useScrollThreshold from "@/hooks/useScrollThreshold";
+import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import HeaderReturner from "@/utils/headerReturner";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 export default function HomePage() {
-  const isPastThreshold = useScrollThreshold(92);
-  const setBgColor = useSetRecoilState(headerBgColorAtom);
-  const setFontColor = useSetRecoilState(headerFontColorAtom);
   const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
-
-  if (isPastThreshold) {
-    setBgColor("#fff");
-    setFontColor("#0A0A0A");
-  } else {
-    setBgColor("transparent");
-    setFontColor("#fff");
-  }
+  useChangeHeaderStyle();
 
   return (
     <>
