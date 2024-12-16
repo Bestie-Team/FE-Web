@@ -94,6 +94,8 @@ export default function LightySelect({
           margin: 0,
           "& > input": {
             caretColor: "transparent",
+            pointerEvents: "none",
+            fontSize: "16px",
           },
         },
       },
