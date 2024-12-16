@@ -6,7 +6,7 @@ import Flex from "../shared/Flex";
 import { PlusCircleButtonSmall } from "../shared/buttons/PlusCircleButton";
 import Spacing from "../shared/Spacing";
 
-export default function EditPhotoSwiper({
+export default function UploadPhotoSwiper({
   images,
   onImageClick,
   setImages,
@@ -36,9 +36,9 @@ export default function EditPhotoSwiper({
     }));
   };
   return (
-    <div className="relative w-full bg-gray-100 ">
+    <div className="relative w-full">
       <Swiper
-        slidesPerView={1.754}
+        slidesPerView={1.59}
         spaceBetween={12}
         grabCursor={true}
         className="custom-swiper w-full h-[250px]"
@@ -51,13 +51,13 @@ export default function EditPhotoSwiper({
           <>
             <Image
               alt="empty"
-              className="slide-img"
+              className="slide-img w-[240px] h-[250px]"
               src={"https://d20j4cey9ep9gv.cloudfront.net/rectEdit.png"}
               width={240}
               height={250}
             />
             {/* Upload Button */}
-            <label className="absolute left-[105px] top-[98px] cursor-pointer">
+            <label className="absolute left-[100px] top-[99px] cursor-pointer">
               <input
                 type="file"
                 accept="image/*"
@@ -85,7 +85,7 @@ export default function EditPhotoSwiper({
               } else return;
             }}
             className={clsx(
-              "relative h-[250px] w-[240px] rounded-[16px] overflow-hidden",
+              "h-[250px] w-[240px] rounded-[16px] overflow-hidden",
               idx === 0 && "ml-[20px]"
             )}
             key={`${imageUrl}${idx}`}

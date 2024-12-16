@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TogetherInfo } from "../feed/InfoBar";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import EditPhotoSwiper from "./EditPhotoSwiper";
+import EditPhotoSwiper from "./UploadPhotoSwiper";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Image from "next/image";
 import SmallSelect from "./SmallSelect";
@@ -73,8 +73,8 @@ export default function CreatingPostToRecord({
   ];
 
   return (
-    <div>
-      <div className="max-w-[430px] w-full fixed z-10  bg-base-white">
+    <div className="bg-base-white h-screen">
+      <div className="max-w-[430px] w-full fixed z-10">
         {HeaderReturner()}
         <div className="p-[20px] pb-[16px]">
           <SmallSelect

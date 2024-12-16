@@ -1,6 +1,7 @@
 import Select, { StylesConfig } from "react-select";
 import { Dispatch, SetStateAction } from "react";
 import { OptionType } from "../shared/FilterBar";
+import useNoKeyboardUp from "@/hooks/useNoKeyboardUp";
 
 interface SelectProps {
   options: OptionType[];
@@ -111,7 +112,7 @@ export default function SmallSelect({
       },
     }),
   };
-
+  useNoKeyboardUp();
   return (
     <Select
       className="react-select-container"

@@ -19,14 +19,8 @@ export default function DateSlider() {
       </Flex>
       <Spacing size={12} />
       <Flex
+        className="w-[330px] mx-auto my-0 px-0 py[10px]"
         justify="space-between"
-        style={{
-          width: "330px",
-          overflowX: "scroll",
-          scrollbarWidth: "none",
-          margin: "0 auto",
-          padding: "10px 0",
-        }}
       >
         <DateItem />
         <DateItem />

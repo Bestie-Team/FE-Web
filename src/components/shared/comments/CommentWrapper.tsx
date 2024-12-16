@@ -8,7 +8,7 @@ export default function CommentWrapper({
   return (
     <Flex
       direction="column"
-      className="p-[20px] pt-[16px] h-[272px] overflow-scroll"
+      className="p-[20px] pt-[16px] h-[272px] overflow-scroll no-scrollbar"
     >
       {children}
     </Flex>

@@ -27,7 +27,7 @@ export default function SearchInput({
     >
       <SearchIcon />
       <input
-        type="text"
+        type="search"
         value={inputValue}
         onChange={handleChange}
         onFocus={handleFocus}

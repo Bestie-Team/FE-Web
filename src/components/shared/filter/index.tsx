@@ -1,6 +1,7 @@
 import Select, { StylesConfig } from "react-select";
 import { OptionType } from "../FilterBar";
 import { Dispatch, SetStateAction } from "react";
+import useNoKeyboardUp from "@/hooks/useNoKeyboardUp";
 
 interface SelectProps {
   options: OptionType[];
@@ -109,7 +110,7 @@ export default function LightySelect({
       },
     }),
   };
-
+  useNoKeyboardUp();
   return (
     <Select
       className="react-select-container"
