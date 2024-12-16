@@ -5,7 +5,7 @@ import ArrowRightWithBody from "../icons/ArrowRightWithBody";
 
 export default function Banner() {
   return (
-    <Flex className="relative my-[52px] px-0">
+    <Flex className="relative mb-[52px] px-0">
       <Image
         alt="bannerImage"
         className="object-cover h-[124px]"

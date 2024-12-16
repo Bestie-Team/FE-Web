@@ -1,7 +1,7 @@
 import CalendarIcon from "@/components/shared/icons/CalendarIcon";
 import FeedIcon from "@/components/shared/icons/FeedIcon";
 import HomeIcon from "@/components/shared/icons/HomeIcon";
-import UserIcon from "@/components/shared/icons/UserIcon";
+import LightyLogoForNavBar from "@/components/shared/icons/LightyLogoForNavBar";
 import Image from "next/image";
 
 interface NavItem {
@@ -19,7 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     href: "/record",
     icon: (isActive: boolean) => (
-      <UserIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+      <LightyLogoForNavBar color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {

@@ -28,6 +28,6 @@ export default function SheetOpenBtnContainer() {
 }
 
 const plusBtnStyle =
-  "absolute bottom-[80px] right-[16px] z-10 shadow-lg transition-transform duration-300 hover:animate-shrink-grow-less";
+  "absolute bottom-[80px] right-[16px] z-10 shadow-lg transition-transform duration-300 cursor-pointer hover:animate-shrink-grow-less";
 
 const toolTipWrapperStyle = "absolute bottom-[84px] right-[74px] z-14";

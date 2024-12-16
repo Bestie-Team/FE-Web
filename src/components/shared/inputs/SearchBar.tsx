@@ -27,7 +27,6 @@ export default function SearchInput({
     >
       <SearchIcon />
       <input
-        type="search"
         inputMode="search"
         enterKeyHint="search"
         value={inputValue}

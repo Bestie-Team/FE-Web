@@ -9,7 +9,7 @@ export default function MemoryCard({ images }: { images: string[] }) {
     <Flex direction="column" className="py-[12px]">
       <InfoBar />
       <Spacing size={12} />
-      <PhotoSwiper images={images} />
+      <PhotoSwiper images={images} type="feed" />
       <Spacing size={8} />
       <ContentWithComments />
     </Flex>

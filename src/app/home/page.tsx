@@ -37,7 +37,7 @@ export default function HomePage() {
       <Spacing size={40} />
       <DateSlider />
       <Spacing size={8} />
-      <PhotoSwiper images={imageList} percent={2.2} />
+      <PhotoSwiper images={imageList} percent={2.2} type="home" />
       <Banner />
       <Flex direction="column" align="center">
         <div className="mb-[3px]">icon</div>
