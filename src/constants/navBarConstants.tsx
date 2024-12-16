@@ -2,7 +2,6 @@ import CalendarIcon from "@/components/shared/icons/CalendarIcon";
 import FeedIcon from "@/components/shared/icons/FeedIcon";
 import HomeIcon from "@/components/shared/icons/HomeIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
-import clsx from "clsx";
 import Image from "next/image";
 
 interface NavItem {
@@ -39,10 +38,11 @@ const NAV_ITEMS: NavItem[] = [
     href: "/my",
     icon: (isActive: boolean) => (
       <Image
-        className={clsx(
-          "rounded-full border-2",
-          isActive ? "border-grayscale-900" : "border-none"
-        )}
+        className={
+          isActive
+            ? "rounded-full border-2 border-grayscale-900"
+            : "rounded border-none"
+        }
         src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
         width={24}
         height={24}

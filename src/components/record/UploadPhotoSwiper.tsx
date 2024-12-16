@@ -56,25 +56,26 @@ export default function UploadPhotoSwiper({
               width={240}
               height={250}
             />
-            {/* Upload Button */}
-            <label className="absolute left-[100px] top-[99px] cursor-pointer">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-                multiple
-              />
-              <Flex direction="column" align="center">
-                <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
-                <Spacing size={6} />
-                <span>
-                  <span className="text-T6 text-grayscale-300">사진</span>
-                  <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
-                  <span className="text-T6 text-grayscale-300">/5</span>
-                </span>
-              </Flex>
-            </label>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <label className="cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  multiple
+                />
+                <Flex direction="column" align="center">
+                  <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
+                  <Spacing size={6} />
+                  <span>
+                    <span className="text-T6 text-grayscale-300">사진</span>
+                    <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
+                    <span className="text-T6 text-grayscale-300">/5</span>
+                  </span>
+                </Flex>
+              </label>
+            </div>
           </>
         </SwiperSlide>
         {images.map((imageUrl, idx) => (
