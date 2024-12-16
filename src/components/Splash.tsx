@@ -2,7 +2,6 @@ import React from "react";
 import LightyIcon from "./shared/icons/LightyIcon";
 import Tooltip from "./shared/tootlips/Tooltip";
 import Button from "./shared/buttons";
-import Image from "next/image";
 import clsx from "clsx";
 
 export default function Splash() {
@@ -28,22 +27,20 @@ export default function Splash() {
             className="py-[8px] !px-[12px] rounded-[8px]"
           />
           <Button className={clsx(oAuthButtonStyle, "bg-[#FAE300]")}>
-            <Image
+            <object
               width={24}
               height={24}
               className="rounded-full"
-              src="https://d20j4cey9ep9gv.cloudfront.net/kakao.svg"
-              alt="kakao"
+              data="https://d20j4cey9ep9gv.cloudfront.net/kakao.svg"
             />
             <span>카카오로 계속하기</span>
           </Button>
           <Button className={clsx(oAuthButtonStyle, "bg-base-white")}>
-            <Image
+            <object
               width={24}
               height={24}
               className="rounded-full"
-              src="https://d20j4cey9ep9gv.cloudfront.net/apple.svg"
-              alt="apple"
+              data="https://d20j4cey9ep9gv.cloudfront.net/apple.svg"
             />
             <span>Apple로 계속하기</span>
           </Button>
