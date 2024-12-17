@@ -7,12 +7,15 @@ import CalendarIcon from "../shared/icons/CalendarIcon";
 import MapPinIcon from "../shared/icons/MapPinIcon";
 import GroupImages from "../shared/GroupImages";
 import Button from "../shared/buttons";
+import { useRecoilValue } from "recoil";
+import { invitationSelectedTabAtom } from "@/atoms/invitation";
 
 export default function InvitationModal({
   onClickClose,
 }: {
   onClickClose: (value: boolean) => void;
 }) {
+  const selectedTab = useRecoilValue(invitationSelectedTabAtom);
   return (
     <Dimmed className="flex flex-col justify-center items-center">
       <Flex
@@ -93,16 +96,20 @@ export default function InvitationModal({
             <span className="text-B3">Maybin_</span>
           </Flex>
         </div>
-        <Spacing size={16} />
-        <Flex justify="center">
-          <Button className="bg-grayscale-100 px-[24px] py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200">
-            거절
-          </Button>
-          <Spacing size={15} direction="horizontal" />
-          <Button className="bg-grayscale-900 px-[24px] py-[14px] text-base-white rounded-[36px] text-T6">
-            수락
-          </Button>
-        </Flex>
+        {selectedTab === "1" ? (
+          <>
+            <Spacing size={16} />
+            <Flex justify="center">
+              <Button className="bg-grayscale-100 px-[24px] py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200">
+                거절
+              </Button>
+              <Spacing size={15} direction="horizontal" />
+              <Button className="bg-grayscale-900 px-[24px] py-[14px] text-base-white rounded-[36px] text-T6">
+                수락
+              </Button>
+            </Flex>
+          </>
+        ) : null}
       </Flex>
     </Dimmed>
   );

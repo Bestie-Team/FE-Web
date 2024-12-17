@@ -1,9 +1,11 @@
 export default function ArrowRightIcon({
   width,
   height,
+  color,
 }: {
   width?: string;
   height?: string;
+  color?: string;
 }) {
   return (
     <svg
@@ -17,9 +19,8 @@ export default function ArrowRightIcon({
         <path
           id="Vector"
           d="M7.5 16.6667L13.7745 9.99893L7.5 3.33335"
-          stroke="#D8D8D8"
+          stroke={color ?? "#D8D8D8"}
           style={{
-            stroke: "#D8D8D8",
             strokeOpacity: 1,
           }}
           strokeWidth="1.66667"

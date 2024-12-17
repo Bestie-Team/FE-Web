@@ -47,7 +47,7 @@ export function Header({
   );
 }
 
-export function HeaderTransparent({
+export function HeaderWithBackIcon({
   pageName,
   square = false,
   fontColor,
@@ -67,7 +67,7 @@ export function HeaderTransparent({
     <div
       className={clsx(
         headerWrapperStyle,
-        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px] gap-[6px] pl-[0px] pr-[20px]"
+        "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-[20px]"
       )}
       style={{ backgroundColor: color ? color : "transparent" }}
     >

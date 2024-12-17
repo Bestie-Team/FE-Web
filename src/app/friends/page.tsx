@@ -12,7 +12,7 @@ export default function FriendsPage() {
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
 
   return (
-    <div className="">
+    <div>
       <div className="max-w-[430px] fixed w-full z-10">
         <FriendsPageHeader type="default" />
         <div className="px-[20px] bg-grayscale-50">

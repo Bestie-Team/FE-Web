@@ -1,6 +1,6 @@
 import {
   Header,
-  HeaderTransparent,
+  HeaderWithBackIcon,
   HeaderTransparentWithLogo,
 } from "@/components/shared/Header";
 import SettingIcon from "@/components/shared/icons/SettingIcon";
@@ -15,20 +15,21 @@ export default function HeaderReturner() {
   } = {
     "/signin": null,
     "/home": <HeaderTransparentWithLogo />,
-    "/invitation": <HeaderTransparent pageName="초대장" color="white" />,
-    "/new": <HeaderTransparent pageName="프로필 생성" square={false} />,
+    "/invitation": <HeaderWithBackIcon pageName="초대장" color="white" />,
+    "/new": <HeaderWithBackIcon pageName="프로필 생성" />,
     "/feed": <Header pageName="추억 피드" />,
-    "/hidden": <HeaderTransparent pageName="피드 관리" />,
-    "/record": <HeaderTransparent pageName="기록하기" />,
+    "/hidden": <HeaderWithBackIcon pageName="피드 관리" />,
+    "/record": <HeaderWithBackIcon pageName="기록하기" />,
     "/schedule": <Header pageName="모임 캘린더" />,
     "/my": <Header pageName="My" icon={<SettingIcon />} />,
     "/gathering": (
-      <HeaderTransparent
+      <HeaderWithBackIcon
         fontColor="#FFF"
         pageName="모임 상세"
         icon={<ShareIcon />}
       />
     ),
+    "/groups": <HeaderWithBackIcon pageName="나의 그룹" />,
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>

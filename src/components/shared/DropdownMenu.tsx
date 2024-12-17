@@ -1,11 +1,14 @@
 import React, { forwardRef } from "react";
 import Flex from "./Flex";
 import clsx from "clsx";
+import { useSetRecoilState } from "recoil";
+import { recordModalStateAtom } from "@/atoms/record";
 
 const DropdownMenu = forwardRef<
   HTMLElement,
   { items: string[]; className?: string; type: "default" | "friend" }
 >(({ items, className, type }, ref) => {
+  const setModalOpen = useSetRecoilState(recordModalStateAtom);
   return (
     <div
       ref={ref as React.Ref<HTMLDivElement>}
@@ -24,9 +27,15 @@ const DropdownMenu = forwardRef<
           boxShadow: "0px 0px 16px 0px #0000001F",
         }}
       >
-        {items.map((item, index) => (
-          <React.Fragment key={`${item}${index}`}>
+        {items.map((item, index) => {
+          const handleClickMenuOption = () => {
+            if (item === "유저 신고하기") {
+              setModalOpen(true);
+            }
+          };
+          return (
             <button
+              key={`${item}${index}`}
               className={`text-B4 w-[99px] py-[12px] text-left border-b-[1px] ${
                 index === items.length - 1
                   ? "border-b-base-white"
@@ -36,12 +45,12 @@ const DropdownMenu = forwardRef<
                 type === "friend" &&
                 "text-point-red50"
               }`}
-              onClick={() => alert(`${item} 선택됨`)}
+              onClick={handleClickMenuOption}
             >
               {item}
             </button>
-          </React.Fragment>
-        ))}
+          );
+        })}
       </Flex>
     </div>
   );

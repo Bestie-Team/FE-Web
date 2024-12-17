@@ -17,7 +17,7 @@ function Dimmed({
       className={clsx(
         "fixed inset-0 z-[var(--dimmed-zIndex)]",
         isClosing ? "animate-fadeOut" : "animate-fadeIn",
-        "bg-transparent-black-70",
+        "bg-[#00000080]",
         className
       )}
     >

@@ -2,8 +2,12 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
+import Modal from "../shared/modal";
+import { useRecoilState } from "recoil";
+import { recordModalStateAtom } from "@/atoms/record";
 
 export default function FriendsListContainer() {
+  const [isModalOpen, setIsModalOpen] = useRecoilState(recordModalStateAtom);
   return (
     <Flex
       direction="column"
@@ -26,6 +30,13 @@ export default function FriendsListContainer() {
           );
         })}
       </ul>
+      {isModalOpen ? (
+        <Modal
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
+        />
+      ) : null}
     </Flex>
   );
 }

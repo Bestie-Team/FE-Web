@@ -1,24 +1,26 @@
 import React from "react";
 import Flex from "../shared/Flex";
 import EmptyLogoIcon from "../shared/icons/EmptyLogoIcon";
-import MailIcon from "../shared/icons/MailIcon";
 import UserIcon from "../shared/icons/UserIcon";
 import Spacing from "../shared/Spacing";
 import Button from "../shared/buttons";
 import { useRouter } from "next/navigation";
+import FolderIcon from "../shared/icons/FolderIcon";
 
 export default function MyMainInfo() {
   const router = useRouter();
   const buttons = [
     {
-      label: "보낸 초대장",
-      icon: <MailIcon width="16" height="16" color="#979797" />,
+      label: "친구 그룹",
+      icon: <FolderIcon width="16" height="16" color="#979797" />,
       value: 10,
+      link: "/groups",
     },
-    { label: "작성 피드", icon: <EmptyLogoIcon />, value: 20 },
+    { label: "작성 피드", icon: <EmptyLogoIcon />, value: 20, link: "/feed" },
     {
       label: "친구",
       icon: <UserIcon width="16" height="16" color="#979797" />,
+      link: "/friends",
       value: 30,
     },
   ];
@@ -30,7 +32,7 @@ export default function MyMainInfo() {
           <React.Fragment key={btn.label}>
             <Button
               className={buttonStyle}
-              onClick={() => router.push("/friends")}
+              onClick={() => router.push(btn.link)}
             >
               <div>{btn.icon}</div>
               <Spacing size={4} />
