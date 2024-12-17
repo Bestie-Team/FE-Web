@@ -18,6 +18,7 @@ export default function GatheringDetailPage({
   params: { id: string };
 }) {
   const member = 4;
+  console.log(params);
   return (
     <Flex
       direction="column"
