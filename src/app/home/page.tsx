@@ -12,14 +12,12 @@ import PhotoSwiper from "@/components/shared/PhotoSwiper";
 import Spacing from "@/components/shared/Spacing";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import HeaderReturner from "@/utils/headerReturner";
-import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
   useChangeHeaderStyle();
-  const { data } = useSession();
-  console.log(data);
+
   return (
     <>
       {HeaderReturner()}

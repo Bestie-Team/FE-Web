@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import LightyIcon from "./shared/icons/LightyIcon";
 import Tooltip from "./shared/tootlips/Tooltip";
@@ -8,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function Splash() {
   const router = useRouter();
-  const { status, data: session } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if (status === "authenticated") {
