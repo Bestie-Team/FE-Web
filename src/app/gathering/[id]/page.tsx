@@ -1,8 +1,8 @@
 "use client";
 import GatheringBannerContainer from "@/components/gathering/GatheringBannerContainer";
-import GatheringInfoContainer from "@/components/gathering/GatheringInfoContainer";
+import GatheringInfoContainer from "@/components/shared/LightyInfoContainer";
 import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
-import GroupLeaderContainer from "@/components/gathering/GroupLeaderContainer";
+import GroupLeaderContainer from "@/components/shared/GroupLeaderContainer";
 import Flex from "@/components/shared/Flex";
 import CalendarIcon from "@/components/shared/icons/CalendarIcon";
 import MapPinIcon from "@/components/shared/icons/MapPinIcon";

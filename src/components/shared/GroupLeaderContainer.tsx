@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Flex from "../shared/Flex";
-import Spacing from "../shared/Spacing";
-import Button from "../shared/buttons";
+import Flex from "./Flex";
+import Spacing from "./Spacing";
+import Button from "./buttons";
 
 export default function GroupLeaderContainer() {
   return (

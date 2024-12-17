@@ -3,13 +3,21 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/icons/ArrowRightIcon";
 import GroupImages from "../shared/GroupImages";
+import { useRouter } from "next/navigation";
 
 export default function GroupContainer() {
+  const router = useRouter();
   const groupName = "다꾸 모임💖";
   const groupDetail = "다꾸하는 모임";
 
   return (
-    <Flex align="center" className={groupContainerStyle}>
+    <Flex
+      align="center"
+      className={groupContainerStyle}
+      onClick={() => {
+        router.push("/groups/123");
+      }}
+    >
       <Flex direction="column" className="flex-grow">
         <Flex align="center">
           <div className="w-[48px] h-[48px]">
@@ -46,4 +54,5 @@ export default function GroupContainer() {
   );
 }
 
-const groupContainerStyle = "bg-base-white gap-[12px] p-[20px] rounded-[16px]";
+const groupContainerStyle =
+  "bg-base-white gap-[12px] p-[20px] rounded-[16px] cursor-pointer";
