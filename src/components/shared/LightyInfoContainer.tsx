@@ -6,7 +6,7 @@ interface GatheringInfoContainerProps {
   icon: React.ReactNode;
   title: React.ReactNode;
   content: React.ReactNode;
-  editBtn: React.ReactNode | null;
+  editBtn?: React.ReactNode;
 }
 export default function LightyInfoContainer({
   icon,
@@ -23,7 +23,7 @@ export default function LightyInfoContainer({
         {icon}
         <Spacing size={4} direction="horizontal" />
         {title}
-        {editBtn}
+        {editBtn ? editBtn : null}
       </Flex>
       <Spacing size={18} />
       <Flex>{content}</Flex>
