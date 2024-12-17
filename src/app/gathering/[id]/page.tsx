@@ -1,8 +1,8 @@
 "use client";
-import GatheringBannerContainer from "@/components/gatheringDetail/GatheringBannerContainer";
-import GatheringInfoContainer from "@/components/gatheringDetail/GatheringInfoContainer";
-import GatheringMembersSlider from "@/components/gatheringDetail/GatheringMembersContainer";
-import GroupLeaderContainer from "@/components/gatheringDetail/GroupLeaderContainer";
+import GatheringBannerContainer from "@/components/gathering/GatheringBannerContainer";
+import GatheringInfoContainer from "@/components/gathering/GatheringInfoContainer";
+import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
+import GroupLeaderContainer from "@/components/gathering/GroupLeaderContainer";
 import Flex from "@/components/shared/Flex";
 import CalendarIcon from "@/components/shared/icons/CalendarIcon";
 import MapPinIcon from "@/components/shared/icons/MapPinIcon";
@@ -12,7 +12,11 @@ import MEMBERS from "@/constants/members";
 import HeaderReturner from "@/utils/headerReturner";
 import Image from "next/image";
 
-export default function GatheringDetailPage() {
+export default function GatheringDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const member = 4;
   return (
     <Flex

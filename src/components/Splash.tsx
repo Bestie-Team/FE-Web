@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LightyIcon from "./shared/icons/LightyIcon";
 import Tooltip from "./shared/tootlips/Tooltip";
 import Button from "./shared/buttons";
 import clsx from "clsx";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Splash() {
+  const router = useRouter();
+  const { status, data: session } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/home");
+    }
+  }, [router, status]);
+
   return (
     <div className="mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('https://d20j4cey9ep9gv.cloudfront.net/bg.png')]">
       <div className={centerWrapperStyle}>
@@ -26,7 +37,12 @@ export default function Splash() {
             closeButton={false}
             className="py-[8px] !px-[12px] rounded-[8px]"
           />
-          <Button className={clsx(oAuthButtonStyle, "bg-[#FAE300]")}>
+          <Button
+            className={clsx(oAuthButtonStyle, "bg-[#FAE300]")}
+            onClick={() => {
+              signIn("kakao", { callbackUrl: "/home" });
+            }}
+          >
             <object
               width={24}
               height={24}
@@ -35,7 +51,12 @@ export default function Splash() {
             />
             <span>카카오로 계속하기</span>
           </Button>
-          <Button className={clsx(oAuthButtonStyle, "bg-base-white")}>
+          <Button
+            className={clsx(oAuthButtonStyle, "bg-base-white")}
+            onClick={() => {
+              signIn("google", { callbackUrl: "/home" });
+            }}
+          >
             <object
               width={24}
               height={24}

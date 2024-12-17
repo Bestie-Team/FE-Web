@@ -3,6 +3,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Spacing from "./Spacing";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 export default function PhotoSwiper({
   images,
@@ -13,6 +14,7 @@ export default function PhotoSwiper({
   percent?: number;
   type?: "home" | "feed";
 }) {
+  const router = useRouter();
   return (
     <Swiper
       slidesPerView={percent ?? 1.077}
@@ -25,6 +27,9 @@ export default function PhotoSwiper({
     >
       {images.map((imageUrl, idx) => (
         <SwiperSlide
+          onClick={() => {
+            router.push(`/gathering/${12345}`);
+          }}
           className={clsx(
             "relative",
             type === "home"

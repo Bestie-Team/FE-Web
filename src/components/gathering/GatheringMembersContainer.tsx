@@ -9,13 +9,13 @@ export default function GatheringMemberContainer({
   members: { imgUrl: string; userId: string; name: string }[];
 }) {
   return (
-    <Flex className={"overflow-scroll no-scrollbar gap-[12px] pb-[80px]"}>
+    <Flex className={memberContainerStyle}>
       {members.map(({ imgUrl, userId, name }, idx) => (
         <Flex
           key={`member${idx}`}
           direction="column"
           align="center"
-          className="px-[32px] py-[20px] rounded-[16px] border-[1px] border-grayscale-100"
+          className={memberWrapperStyle}
         >
           <div className={imageStyle}>
             <Image
@@ -39,3 +39,9 @@ export default function GatheringMemberContainer({
 }
 const imageStyle =
   "object-cover rounded-full w-[40px] h-[40px] border-[1.41px] border-base-white overflow-hidden";
+
+const memberWrapperStyle =
+  "px-[32px] py-[20px] rounded-[16px] border-[1px] border-grayscale-100";
+
+const memberContainerStyle =
+  "overflow-scroll no-scrollbar gap-[12px] pb-[46px]";

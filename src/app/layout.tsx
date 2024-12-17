@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { NextLayout } from "./providers";
+import { NextLayout, NextProvider } from "./providers";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -27,7 +27,9 @@ export default function RootLayout({
           className="fixed left-0 right-0 bottom-0 mx-auto flex justify-center z-10"
           id="root-portal"
         ></div>
-        <NextLayout>{children}</NextLayout>
+        <NextProvider>
+          <NextLayout>{children}</NextLayout>
+        </NextProvider>
       </body>
     </html>
   );

@@ -2,8 +2,10 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
+import { useRouter } from "next/navigation";
 
 export default function FriendsSlider() {
+  const router = useRouter();
   return (
     <div className="w-full">
       <Spacing size={16} />
@@ -11,7 +13,7 @@ export default function FriendsSlider() {
         <Spacing size={16} direction="horizontal" />
         <AddFriendItem
           onClick={() => {
-            console.log("친구를 추가하라");
+            router.push("/add");
           }}
         />
         {Array.from({ length: 10 }, () => 1).map((_, i) => {

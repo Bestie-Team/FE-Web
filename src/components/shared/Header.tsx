@@ -131,7 +131,12 @@ export function HeaderTransparentWithLogo() {
         }}
       />
       <div className="flex-1" />
-      <div className="relative w-[40px] h-[40px] p-[8px]">
+      <div
+        onClick={() => {
+          router.push("/invitation");
+        }}
+        className="flex justify-center items-center relative w-[40px] h-[40px] p-[8px] cursor-pointer"
+      >
         <MailIcon color={fontColor} />
         <DotIcon display={true} className="absolute top-0 right-[10px]" />
       </div>
