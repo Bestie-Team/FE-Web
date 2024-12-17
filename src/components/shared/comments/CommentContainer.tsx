@@ -54,7 +54,6 @@ export default function CommentContainer({ onClose }: { onClose: () => void }) {
             <Input
               value={newComment}
               placeholder="댓글 달기"
-              displayLength={false}
               onChange={(e) => {
                 setNewComment(e.target.value);
               }}

@@ -4,8 +4,10 @@ import Button from "@/components/shared/buttons";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import HeaderReturner from "@/utils/headerReturner";
+import { useRouter } from "next/navigation";
 
 export default function GroupsPage() {
+  const router = useRouter();
   return (
     <div className="h-screen">
       <div>{HeaderReturner()}</div>
@@ -15,7 +17,14 @@ export default function GroupsPage() {
           <Spacing size={4} direction="horizontal" />
           <span className="flex-grow">{4}</span>
           <Spacing size={4} direction="horizontal" />
-          <Button className={buttonStyle}>그룹 추가</Button>
+          <Button
+            className={buttonStyle}
+            onClick={() => {
+              router.push("/groups/new");
+            }}
+          >
+            그룹 추가
+          </Button>
         </Flex>
         {
           <>

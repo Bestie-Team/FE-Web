@@ -7,6 +7,7 @@ import SettingIcon from "@/components/shared/icons/SettingIcon";
 import ShareIcon from "@/components/shared/icons/ShareIcon";
 import { usePathname } from "next/navigation";
 import React from "react";
+import handleShare from "./handleShare";
 
 export default function HeaderReturner() {
   const pathname = usePathname();
@@ -26,10 +27,18 @@ export default function HeaderReturner() {
       <HeaderWithBackIcon
         fontColor="#FFF"
         pageName="모임 상세"
-        icon={<ShareIcon />}
+        icon={
+          <div className="cursor-pointer" onClick={handleShare}>
+            <ShareIcon />
+          </div>
+        }
       />
     ),
-    "/groups": <HeaderWithBackIcon pageName="나의 그룹" />,
+    "/groups": pathname.endsWith("new") ? (
+      <HeaderWithBackIcon pageName="그룹 생성" />
+    ) : (
+      <HeaderWithBackIcon pageName="나의 그룹" />
+    ),
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>
