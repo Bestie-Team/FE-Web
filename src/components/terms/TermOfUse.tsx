@@ -8,14 +8,9 @@ import CloseIcon2 from "../shared/icons/CloseIcon2";
 interface TermOfUseProps {
   label: string;
   onClick: () => void;
-  className?: string;
 }
 
-export default function TermOfUse({
-  label,
-  onClick,
-  className,
-}: TermOfUseProps) {
+export default function TermOfUse({ label, onClick }: TermOfUseProps) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
