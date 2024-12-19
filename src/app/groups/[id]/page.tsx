@@ -20,10 +20,7 @@ export default function GroupDetailPage({
   console.log(params);
   const 내가이그룹장인가 = true;
   return (
-    <Flex
-      direction="column"
-      className="w-full h-screen bg-grayscale-50 animate-slide-from-left"
-    >
+    <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       <GroupBannerContainer />
       <GroupInfoContainer />
       <div className="pl-[26px] pr-[14px] bg-base-white">

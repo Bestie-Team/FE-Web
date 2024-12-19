@@ -1,4 +1,5 @@
 "use client";
+import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
 import Flex from "@/components/shared/Flex";
 import FeedIcon from "@/components/shared/icons/FeedIcon";
 import PencilIcon from "@/components/shared/icons/PencilIcon";
@@ -59,6 +60,7 @@ export default function NewGroupPage() {
           <span>그룹 친구</span>
         </Flex>
         <Spacing size={8} />
+        <AddFriendsSlider />
       </Flex>
     </div>
   );

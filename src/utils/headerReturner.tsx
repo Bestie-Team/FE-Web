@@ -22,7 +22,11 @@ export default function HeaderReturner() {
     "/hidden": <HeaderWithBackIcon pageName="피드 관리" />,
     "/record": <HeaderWithBackIcon pageName="기록하기" />,
     "/schedule": <Header pageName="모임 캘린더" />,
-    "/my": <Header pageName="My" icon={<SettingIcon />} />,
+    "/my": pathname.endsWith("edit") ? (
+      <HeaderWithBackIcon pageName="프로필 편집" />
+    ) : (
+      <Header pageName="My" icon={<SettingIcon />} />
+    ),
     "/gathering": (
       <HeaderWithBackIcon
         fontColor="#FFF"

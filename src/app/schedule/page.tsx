@@ -14,7 +14,7 @@ export default function SchedulePage() {
   });
   return (
     <Flex direction="column" className="bg-base-white h-screen">
-      <div className="max-w-[430px] pt-[8px] z-10 w-full pl-[17px] bg-base-white shadow-bottom">
+      <div className={filterStyle}>
         {HeaderReturner()}
         <LightySelect
           borderColor="#E9E9E9"
@@ -49,3 +49,5 @@ const options = [
     label: "2021",
   },
 ];
+const filterStyle =
+  "max-w-[430px] pt-[8px] fixed z-10 w-full pl-[17px] bg-base-white shadow-bottom";

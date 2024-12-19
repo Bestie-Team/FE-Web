@@ -29,11 +29,26 @@ export default function GroupsPage() {
         {
           <>
             <Spacing size={16} />
-            <GroupContainer />
+            <GroupContainer
+              className="cursor-pointer"
+              onClick={() => {
+                router.push("/groups/123");
+              }}
+            />
             <Spacing size={16} />
-            <GroupContainer />
+            <GroupContainer
+              className="cursor-pointer"
+              onClick={() => {
+                router.push("/groups/123");
+              }}
+            />
             <Spacing size={16} />
-            <GroupContainer />
+            <GroupContainer
+              className="cursor-pointer"
+              onClick={() => {
+                router.push("/groups/123");
+              }}
+            />
           </>
         }
       </Flex>

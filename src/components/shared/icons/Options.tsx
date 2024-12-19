@@ -10,7 +10,7 @@ export default function Options({
   width?: string;
   height?: string;
   color?: string;
-  type: "default" | "friend";
+  type: "default" | "friend" | "group";
 }) {
   const [opened, setOpened] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -86,7 +86,13 @@ export default function Options({
         <DropdownMenu
           type={type}
           ref={ref}
-          items={type === "default" ? menuItems : menuItemsF}
+          items={
+            type === "default"
+              ? menuItems
+              : type === "friend"
+              ? menuItemsF
+              : group
+          }
           className={
             type === "default"
               ? "absolute -bottom-[162px] right-[4px]"
@@ -99,3 +105,4 @@ export default function Options({
 }
 const menuItems = ["숨기기", "수정하기", "삭제하기"];
 const menuItemsF = ["친구 삭제", "유저 신고하기"];
+const group = ["그룹 나가기", "그룹 신고하기"];

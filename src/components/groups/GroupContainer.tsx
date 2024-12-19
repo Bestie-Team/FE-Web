@@ -3,19 +3,26 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/icons/ArrowRightIcon";
 import GroupImages from "../shared/GroupImages";
-import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
-export default function GroupContainer() {
-  const router = useRouter();
+export default function GroupContainer({
+  onClick,
+  className,
+}: {
+  onClick?: () => void;
+  className?: string;
+}) {
   const groupName = "다꾸 모임💖";
   const groupDetail = "다꾸하는 모임";
 
   return (
     <Flex
       align="center"
-      className={groupContainerStyle}
+      className={clsx(groupContainerStyle, className)}
       onClick={() => {
-        router.push("/groups/123");
+        if (onClick) {
+          onClick();
+        } else return;
       }}
     >
       <Flex direction="column" className="flex-grow">
@@ -54,5 +61,4 @@ export default function GroupContainer() {
   );
 }
 
-const groupContainerStyle =
-  "bg-base-white gap-[12px] p-[20px] rounded-[16px] cursor-pointer";
+const groupContainerStyle = "bg-base-white gap-[12px] p-[20px] rounded-[16px]";

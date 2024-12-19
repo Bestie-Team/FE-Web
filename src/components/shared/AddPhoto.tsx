@@ -21,7 +21,8 @@ export default function AddPhoto({ small }: { small?: boolean }) {
   return (
     <label
       style={{
-        width: small ? `72px` : "84px",
+        display: "inline-block",
+        width: "fit-content",
       }}
       htmlFor="fileInput"
     >

@@ -23,7 +23,7 @@ import clsx from "clsx";
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
   const swiperRef = useRef<SwiperType | null>(null);
-  const setSelectedTab = useSetRecoilState(feedSelectedTabAtom);
+  const [selectedTab, setSelectedTab] = useRecoilState(feedSelectedTabAtom);
   const setAnimateTab = useSetRecoilState(animationStatusAtom);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
@@ -68,6 +68,7 @@ export default function FeedPage() {
       </div>
 
       <Swiper
+        initialSlide={Number(selectedTab) - 1}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}

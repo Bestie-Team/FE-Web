@@ -24,10 +24,17 @@ export default function FriendItem() {
   );
 }
 
-export function AddFriendItem({ onClick }: { onClick: () => void }) {
+export function AddFriendItem({ onClick }: { onClick?: () => void }) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
-      <div className="p-[6px]" onClick={onClick}>
+      <div
+        className="p-[6px]"
+        onClick={() => {
+          if (onClick) {
+            onClick();
+          } else return;
+        }}
+      >
         <div className={iconWrapperStyle}>
           <PlusIcon
             width="20"

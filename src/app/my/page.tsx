@@ -8,36 +8,78 @@ import NavBar from "@/components/shared/NavBar";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
+import TermOfUse from "@/components/terms/TermOfUse";
+import { useState } from "react";
 
 export default function MyPage() {
   const hasShadow = useScrollShadow();
+  const [open, setOpen] = useState(false);
+  const [privatePolicyOpen, setPrivatePolicyOpen] = useState(false);
+
+  const onClickTermOfUse = (term?: string) => {
+    if (term && term === "privatePolicy") {
+      setPrivatePolicyOpen(true);
+    } else setOpen(true);
+  };
+
   return (
-    <Flex direction="column">
-      <div
-        className={clsx(
-          "max-w-[430px] z-10 fixed w-full px-[20px] transition-shadow duration-300",
-          hasShadow ? "shadow-bottom" : ""
-        )}
-      >
-        {HeaderReturner()}
-      </div>
-      <Spacing size={48} />
-      <Spacing size={20} />
-      <UserProfile />
-      <Spacing size={12} />
-      <MyMainInfo />
-      <Spacing size={16} />
-      <SettingsMenu />
-      <div className="w-full py-[8px] px-[20px] text-C5 text-grayscale-300">
-        <span className="mr-[13px] border-b-[1px] border-b-[#AEAEAE]">
-          이용약관
-        </span>
-        <span className="border-b-[1px] border-b-[#AEAEAE]">
-          개인 정보 처리방침
-        </span>
-      </div>
-      <Spacing size={80} />
-      <NavBar />
-    </Flex>
+    <div className="">
+      <Flex direction="column" className="bg-base-white">
+        <div
+          className={clsx(
+            headerWrapperStyle,
+            hasShadow ? "shadow-bottom" : "",
+            open || privatePolicyOpen ? "" : "z-10"
+          )}
+        >
+          {HeaderReturner()}
+        </div>
+        <Spacing size={48} />
+        <Spacing size={20} />
+        <UserProfile />
+        <Spacing size={12} />
+        <MyMainInfo />
+        <Spacing size={16} />
+        <SettingsMenu />
+        <div className={termsWrapperStyle}>
+          <span
+            onClick={() => {
+              onClickTermOfUse();
+            }}
+            className={clsx("mr-[13px]", letterStyle)}
+          >
+            이용약관
+          </span>
+          <span
+            onClick={() => {
+              onClickTermOfUse("privatePolicy");
+            }}
+            className={letterStyle}
+          >
+            개인 정보 처리방침
+          </span>
+        </div>
+        <Spacing size={80} />
+        <NavBar />
+      </Flex>
+      {open || privatePolicyOpen ? (
+        <TermOfUse
+          label={open ? "이용 약관" : "개인 정보 처리방침"}
+          onClick={() => {
+            if (open) {
+              setOpen(false);
+            } else setPrivatePolicyOpen(false);
+          }}
+        />
+      ) : null}
+    </div>
   );
 }
+
+const headerWrapperStyle =
+  "max-w-[430px] fixed w-full px-[20px] transition-shadow duration-300";
+
+const letterStyle = "border-b-[1px] border-b-[#AEAEAE] cursor-pointer";
+
+const termsWrapperStyle =
+  "w-full py-[8px] px-[20px] text-C5 text-grayscale-300";

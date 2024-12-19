@@ -6,7 +6,7 @@ import { recordModalStateAtom } from "@/atoms/record";
 
 const DropdownMenu = forwardRef<
   HTMLElement,
-  { items: string[]; className?: string; type: "default" | "friend" }
+  { items: string[]; className?: string; type: "default" | "friend" | "group" }
 >(({ items, className, type }, ref) => {
   const setModalOpen = useSetRecoilState(recordModalStateAtom);
   return (

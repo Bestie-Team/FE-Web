@@ -105,7 +105,7 @@ export default function InvitationPage() {
 }
 
 const filterStyle =
-  "max-w-[430px] fixed z-10 flex flex-col w-full bg-base-white";
+  "max-w-[430px] z-10 fixed flex flex-col w-full bg-base-white";
 
 const options = [
   {

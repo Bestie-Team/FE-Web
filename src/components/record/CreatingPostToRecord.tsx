@@ -79,7 +79,7 @@ export default function CreatingPostToRecord({
     <div className="bg-base-white h-screen">
       <div
         className={clsx(
-          "bg-base-white max-w-[430px] w-full fixed z-10",
+          "bg-base-white max-w-[430px] w-full fixed",
           hasShadow ? "shadow-bottom" : ""
         )}
       >

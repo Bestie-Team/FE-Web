@@ -10,7 +10,6 @@ export default function FriendsSlider() {
     <div className="w-full">
       <Spacing size={16} />
       <Flex className="overflow-scroll no-scrollbar">
-        <Spacing size={16} direction="horizontal" />
         <AddFriendItem
           onClick={() => {
             router.push("/add");

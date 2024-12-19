@@ -20,10 +20,7 @@ export default function GatheringDetailPage({
   const member = 4;
   console.log(params);
   return (
-    <Flex
-      direction="column"
-      className="w-full h-screen bg-grayscale-50 animate-slide-from-left"
-    >
+    <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       <div className={"max-w-[430px] z-10 fixed w-full"}>
         {HeaderReturner()}
       </div>
