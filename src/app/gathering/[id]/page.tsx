@@ -26,7 +26,7 @@ export default function GatheringDetailPage({
       </div>
       <GatheringBannerContainer />
       <GroupLeaderContainer />
-      <Spacing size={10} />
+      <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<CalendarIcon width="20" height="20" />}
         title={<span className={titleStyle}>모임 장소</span>}
@@ -50,7 +50,7 @@ export default function GatheringDetailPage({
           </Flex>
         }
       />
-      <Spacing size={10} />
+      <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<MapPinIcon width="20" height="20" color="#0A0A0A" />}
         title={<span className={titleStyle}>모임 시간</span>}
@@ -62,7 +62,7 @@ export default function GatheringDetailPage({
           </Flex>
         }
       />
-      <Spacing size={10} />
+      <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
         title={<span className={titleStyle}>{`모임 멤버 ${member}`}</span>}

@@ -152,7 +152,7 @@ export function HeaderTransparentWithLogo() {
           }}
           className={iconWrapperStyle}
         >
-          <NoticeIcon />
+          <NoticeIcon color={fontColor} />
         </div>
       </Flex>
     </div>

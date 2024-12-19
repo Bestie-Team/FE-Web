@@ -1,9 +1,9 @@
 "use client";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
+import AddGroupPhoto from "@/components/groups/AddGroupPhoto";
 import Flex from "@/components/shared/Flex";
 import FeedIcon from "@/components/shared/icons/FeedIcon";
 import PencilIcon from "@/components/shared/icons/PencilIcon";
-import PhotoIcon from "@/components/shared/icons/PhotoIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
@@ -15,16 +15,7 @@ export default function NewGroupPage() {
       <div>{HeaderReturner()}</div>
       <Flex direction="column" className="px-[20px]">
         <Spacing size={24} />
-        <Flex
-          justify="center"
-          align="center"
-          direction="column"
-          className="w-[170px] h-[170px] bg-grayscale-50 rounded-[14.62px] text-C1 text-grayscale-300"
-        >
-          <PhotoIcon />
-          <Spacing size={8} />
-          <span>그룹 이미지 등록</span>
-        </Flex>
+        <AddGroupPhoto />
         <Spacing size={36} />
         <Input
           value={""}
