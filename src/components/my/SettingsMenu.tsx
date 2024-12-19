@@ -47,7 +47,7 @@ const settings = [
   {
     category: "계정관리",
     list: [
-      { title: "프로필 편집", info: null, link: "/profile" },
+      { title: "프로필 편집", info: null, link: "/my/edit" },
       { title: "피드 관리", info: null, link: "" },
     ],
   },

@@ -10,14 +10,14 @@ import { useState } from "react";
 export default function EditPage() {
   const [changed, setChanged] = useState(false);
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-base-white">
       {HeaderReturner()}
-      <Flex direction="column">
+      <Flex direction="column" className="px-[20px]">
         <Spacing size={58} />
-        <Flex justify="center" className="px-[20px] py-[12px] ">
+        <Flex justify="center" className="py-[12px] ">
           <AddPhoto small={false} />
         </Flex>
-        <Spacing size={8} />
+        <Spacing size={40} />
         <Input value="" label={<span>이름</span>} onChange={() => {}} />
         <Spacing size={30} />
         <Input

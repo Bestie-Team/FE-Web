@@ -4,7 +4,6 @@ import { homeModalStateAtom } from "@/atoms/home";
 import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
-import Notice from "@/components/notice/Notice";
 import Banner from "@/components/shared/banner";
 import BottomSheet from "@/components/shared/bottomSheet/BottomSheet";
 import Flex from "@/components/shared/Flex";
@@ -23,7 +22,6 @@ export default function HomePage() {
     <>
       {HeaderReturner()}
       <HomeBannerContainer />
-      <Notice />
       <FriendsSlider />
       <Spacing size={40} />
       <DateSlider />

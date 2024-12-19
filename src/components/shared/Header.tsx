@@ -10,6 +10,8 @@ import Spacing from "./Spacing";
 import { useRecoilValue } from "recoil";
 import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
 import { useRouter } from "next/navigation";
+import NoticeIcon from "./icons/NoticeIcon";
+import Flex from "./Flex";
 
 const headerWrapperStyle =
   "z-10 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white";
@@ -108,6 +110,8 @@ export function HeaderTransparentWithLogo() {
   const bgColor = useRecoilValue(headerBgColorAtom);
   const fontColor = useRecoilValue(headerFontColorAtom);
   const lightyIconContainer = "h-[40px] py-[10px]";
+  const iconWrapperStyle =
+    "flex justify-center items-center w-[40px] h-[40px] p-[8px] cursor-pointer";
 
   return (
     <div
@@ -131,15 +135,26 @@ export function HeaderTransparentWithLogo() {
         }}
       />
       <div className="flex-1" />
-      <div
-        onClick={() => {
-          router.push("/invitation");
-        }}
-        className="flex justify-center items-center relative w-[40px] h-[40px] p-[8px] cursor-pointer"
-      >
-        <MailIcon color={fontColor} />
-        <DotIcon display={true} className="absolute top-0 right-[10px]" />
-      </div>
+      <Flex align="center">
+        <div
+          onClick={() => {
+            router.push("/invitation");
+          }}
+          className={clsx("relative", iconWrapperStyle)}
+        >
+          <MailIcon width="24" height="24" color={fontColor} />
+          <DotIcon display={true} className="absolute top-0 right-[6px]" />
+        </div>
+        <Spacing size={4} direction="horizontal" />
+        <div
+          onClick={() => {
+            router.push("/notice");
+          }}
+          className={iconWrapperStyle}
+        >
+          <NoticeIcon />
+        </div>
+      </Flex>
     </div>
   );
 }
