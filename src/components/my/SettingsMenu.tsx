@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
@@ -6,6 +7,7 @@ export interface SettingsItem {
   title: string;
   info: null | string[];
   link?: string;
+  onClick?: () => Promise<undefined>;
 }
 
 export default function SettingsMenu() {
@@ -67,7 +69,12 @@ const settings = [
       },
       { title: "앱버전", info: ["V.2.3(최신버전)"] },
       { title: "탈퇴하기", info: null, link: "" },
-      { title: "로그아웃", info: null, link: "" },
+      {
+        title: "로그아웃",
+        info: null,
+        link: "/",
+        onClick: async () => await signOut({ callbackUrl: "/" }),
+      },
     ],
   },
 ];

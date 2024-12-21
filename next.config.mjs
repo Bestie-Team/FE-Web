@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push("konva");
+    }
+    return config;
+  },
   images: {
     remotePatterns: [
       {

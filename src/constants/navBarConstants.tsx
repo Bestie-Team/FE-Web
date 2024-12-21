@@ -41,7 +41,7 @@ const NAV_ITEMS: NavItem[] = [
         className={`border-2 rounded-full ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}
-        src={src || ""}
+        src={src || "https://d20j4cey9ep9gv.cloudfront.net/cute.jpg"}
         width={24}
         height={24}
         alt="profileImage"

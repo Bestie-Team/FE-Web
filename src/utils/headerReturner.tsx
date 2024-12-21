@@ -43,6 +43,7 @@ export default function HeaderReturner() {
     ) : (
       <HeaderWithBackIcon pageName="나의 그룹" />
     ),
+    "/card": <HeaderWithBackIcon pageName="카드 생성" />,
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>

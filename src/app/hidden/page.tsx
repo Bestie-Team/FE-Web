@@ -1,7 +1,7 @@
 "use client";
 import FilterBar from "@/components/shared/FilterBar";
 import NavBar from "@/components/shared/NavBar";
-import Feed from "../../components/feed/Feed";
+import Feed from "@/components/feed/Feed";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";

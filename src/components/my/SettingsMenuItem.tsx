@@ -10,9 +10,15 @@ export default function SettingsMenuItem({
   list: SettingsItem;
   link?: string;
 }) {
+  const handleClick = async (e: React.MouseEvent) => {
+    if (list.onClick) {
+      await list.onClick();
+    }
+  };
+
   return (
     <Link href={link ? link : ""}>
-      <li className={liStyle}>
+      <li className={liStyle} onClick={handleClick}>
         <span className="text-T5">{list.title}</span>
         <Flex direction="column" justify="center" style={{ gap: "2px" }}>
           {list.info?.map((infoCont, i) => {
