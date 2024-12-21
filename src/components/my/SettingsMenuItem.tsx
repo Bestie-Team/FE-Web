@@ -10,7 +10,7 @@ export default function SettingsMenuItem({
   list: SettingsItem;
   link?: string;
 }) {
-  const handleClick = async (e: React.MouseEvent) => {
+  const handleClick = async () => {
     if (list.onClick) {
       await list.onClick();
     }

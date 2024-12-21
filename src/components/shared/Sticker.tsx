@@ -53,7 +53,7 @@ const Sticker = ({
         ref={shapeRef}
         onClick={onSelect}
         onTap={onSelect}
-        onTransformEnd={(e) => {
+        onTransformEnd={() => {
           const node = shapeRef.current;
           if (node) {
             const newWidth = node.width() * node.scaleX();
