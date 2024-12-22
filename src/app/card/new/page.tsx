@@ -1,47 +1,36 @@
 "use client";
-import React, { useState } from "react";
-import { Stage, Layer, Image } from "react-konva";
+import React from "react";
 import HeaderReturner from "@/utils/headerReturner";
-import Sticker from "@/components/shared/Sticker";
-
 import Card from "@/components/cards/Card";
 import StickerContainer from "@/components/cards/StickerContainer";
-import useImage from "use-image";
-import { useRecoilValue } from "recoil";
-import { cardImageUrlAtom } from "@/atoms/card";
 import Spacing from "@/components/shared/Spacing";
 import Button from "@/components/shared/buttons";
 import Konva from "konva";
+import { stickersAtom } from "@/atoms/card";
+import { useRecoilState } from "recoil";
+import dynamic from "next/dynamic";
+
+const DecoratingSection = dynamic(
+  () => import("@/components/cards/DecoratingSection"),
+  {
+    ssr: false,
+  }
+);
+
+export interface Sticker {
+  id: number;
+  src: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 export default function Page() {
-  const [stickers, setStickers] = useState<
-    {
-      id: number;
-      src: string;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    }[]
-  >([]);
-  const cardImageUrl = useRecoilValue(cardImageUrlAtom);
+  const [stickers, setStickers] = useRecoilState<Sticker[]>(stickersAtom);
+
   const stageRef = React.useRef<Konva.Stage | null>(null);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const handleSelect = (id: number) => {
-    setSelectedId(id);
-  };
-
-  const handleChange = (
-    id: number,
-    newAttrs: { x: number; y: number; width: number; height: number }
-  ) => {
-    setStickers((prevStickers) =>
-      prevStickers.map((sticker) =>
-        sticker.id === id ? { ...sticker, ...newAttrs } : sticker
-      )
-    );
-  };
   function downloadURI(uri: string, name: string) {
     const link = document.createElement("a");
     link.download = name;
@@ -73,35 +62,7 @@ export default function Page() {
         사진
       </Button>
       <Spacing size={8} />
-      <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        ref={stageRef}
-      >
-        <Layer>
-          <Image
-            width={339}
-            height={453}
-            id="0"
-            image={useImage(cardImageUrl as string)[0]}
-            x={0}
-            y={0}
-            onClick={() => {
-              setSelectedId(null);
-            }}
-          />
-          {stickers.map((sticker) => (
-            <Sticker
-              key={sticker.id}
-              {...sticker}
-              draggable
-              isSelected={sticker.id === selectedId}
-              onSelect={() => handleSelect(sticker.id)}
-              onChange={(newAttrs) => handleChange(sticker.id, newAttrs)}
-            />
-          ))}
-        </Layer>
-      </Stage>
+      <DecoratingSection stageRef={stageRef} />
     </div>
   );
 }
