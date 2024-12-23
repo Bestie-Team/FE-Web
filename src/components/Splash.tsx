@@ -44,8 +44,9 @@ export default function Splash() {
           {oAuthButtons.map(({ color, provider, label, icon }, idx) => (
             <Button
               key={idx}
-              className={clsx(styles.oAuthButton, `bg-[${color}]`)}
+              className={clsx(styles.oAuthButton)}
               onClick={() => signIn(provider)}
+              color={color}
             >
               <object
                 width={24}
