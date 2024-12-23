@@ -1,6 +1,5 @@
 import React from "react";
 import Flex from "../Flex";
-import BottomSheet from "./BottomSheet";
 import Spacing from "../Spacing";
 import ActionItem from "./ActionItem";
 import { useRouter } from "next/navigation";
@@ -8,6 +7,7 @@ import Text from "../Text";
 import UserIcon from "../icons/UserIcon";
 import PencilIcon from "../icons/PencilIcon";
 import PicturesIcon from "../icons/PicturesIcon";
+import BottomSheetWrapper from "./BottomSheetWrapper";
 
 export default function MemoriesBottomSheet({
   open = true,
@@ -18,7 +18,7 @@ export default function MemoriesBottomSheet({
 }) {
   const router = useRouter();
   return (
-    <BottomSheet onClose={onClose} open={open}>
+    <BottomSheetWrapper onClose={onClose} open={open}>
       <Flex direction="column" className="p-[24px] pt-[4px]">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
         {actions.map((action) => {
@@ -38,7 +38,7 @@ export default function MemoriesBottomSheet({
           );
         })}
       </Flex>
-    </BottomSheet>
+    </BottomSheetWrapper>
   );
 }
 

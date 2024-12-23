@@ -27,7 +27,9 @@ export default function HeaderReturner() {
     ) : (
       <Header pageName="My" icon={<SettingIcon />} />
     ),
-    "/gathering": (
+    "/gathering": pathname.endsWith("gathering") ? (
+      <Header pageName="나의 모임" />
+    ) : (
       <HeaderWithBackIcon
         fontColor="#FFF"
         pageName="모임 상세"

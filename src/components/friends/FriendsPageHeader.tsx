@@ -31,7 +31,7 @@ export default function FriendsPageHeader({
         <div
           className="p-[4px] cursor-pointer"
           onClick={() => {
-            router.push("/add");
+            router.push("/friends/add");
           }}
         >
           <AddFriendIcon />

@@ -20,7 +20,7 @@ export default function SearchInput({
   return (
     <div
       className={clsx(
-        inputWrapperStyle,
+        styles.inputWrapper,
         className,
         isFocused ? "border-grayscale-900" : "border-grayscale-300"
       )}
@@ -33,7 +33,7 @@ export default function SearchInput({
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={clsx(inputStyle, className)}
+        className={clsx(styles.input, className)}
         placeholder={inputValue.length === 0 ? placeholder : ""}
       />
     </div>
@@ -43,6 +43,8 @@ export default function SearchInput({
 const maxWidth = `max-w-[400px]`;
 const height = `h-[50px]`;
 
-const inputWrapperStyle = `w-full ${maxWidth} ${height} flex items-center gap-[12px] px-[20px] py-2 bg-grayscale-10 border rounded-full transition-all duration-300 `;
-const inputStyle =
-  "flex-grow bg-grayscale-10 outline-none text-[16px] leading-[22.86px] tracking-[-0.48px] text-grayscale-700 transform origin-left scale-[0.875]";
+const styles = {
+  inputWrapper: `w-full ${maxWidth} ${height} flex items-center gap-[12px] px-[20px] py-2 bg-grayscale-10 border rounded-full transition-all duration-300 `,
+  input:
+    "flex-grow bg-grayscale-10 outline-none text-[16px] leading-[22.86px] tracking-[-0.48px] text-grayscale-700 transform origin-left scale-[0.875]",
+};

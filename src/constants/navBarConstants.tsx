@@ -17,7 +17,7 @@ const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
-    href: "/record",
+    href: "/gathering",
     icon: (isActive: boolean) => (
       <LightyLogoForNavBar color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),

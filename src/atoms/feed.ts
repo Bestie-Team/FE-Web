@@ -10,7 +10,7 @@ export const feedSelectedTabAtom = atom<"1" | "2">({
   default: "1",
 });
 
-export const animationStatusAtom = atom<boolean>({
+export const feedAnimationStatusAtom = atom<boolean>({
   key: "feed/animationStatus",
   default: false,
 });

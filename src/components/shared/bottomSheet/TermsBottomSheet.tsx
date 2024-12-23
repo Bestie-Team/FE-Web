@@ -1,10 +1,9 @@
 import React, { MouseEvent, useCallback, useState } from "react";
-import BottomSheet from "./BottomSheet";
+import BottomSheetWrapper from "./BottomSheetWrapper";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../buttons";
 import CheckInCircleIcon from "../icons/CheckInCircleIcon";
-import clsx from "clsx";
 import NArrowRightIcon from "../icons/NArrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";
 
@@ -39,7 +38,7 @@ export default function TermsBottomSheet({
   );
 
   return (
-    <BottomSheet onClose={onClose} open={open}>
+    <BottomSheetWrapper onClose={onClose} open={open}>
       <Flex direction="column" className="p-[24px] pt-[8px] pb-[32px]">
         <Flex direction="column" className="text-T3">
           <span>서비스 이용을 위해</span>
@@ -48,10 +47,9 @@ export default function TermsBottomSheet({
           <Spacing size={24} />
           <div
             onClick={(e) => handleAllCheck(e, !isAllChecked)}
-            className={clsx(
-              "text-B3 p-[16px] rounded-full border flex items-center",
-              "border-[#D8D8D8]"
-            )}
+            className={
+              "text-B3 p-[16px] rounded-full border flex items-center border-[#D8D8D8]"
+            }
           >
             <CheckInCircleIcon width="20" height="20" checked={isAllChecked} />
             <Spacing direction="horizontal" size={12} />
@@ -61,22 +59,17 @@ export default function TermsBottomSheet({
           {약관목록.map(({ title, id }, idx) => {
             return (
               <>
-                <li
-                  key={id}
-                  onClick={() => {
-                    setTermsAgreements((prevTerms) => ({
-                      ...prevTerms,
-                      [id]: !termsAgreements[id],
-                    }));
-                  }}
-                  className={
-                    "text-B3 flex items-center px-[12px] cursor-pointer"
-                  }
-                >
+                <li key={id} className={styles.list}>
                   <CheckInCircleIcon
                     width="20"
                     height="20"
                     checked={termsAgreements[id]}
+                    onClick={() => {
+                      setTermsAgreements((prevTerms) => ({
+                        ...prevTerms,
+                        [id]: !termsAgreements[id],
+                      }));
+                    }}
                   />
                   <Spacing direction="horizontal" size={12} />
                   <span className="flex-grow">{title}</span>
@@ -88,14 +81,15 @@ export default function TermsBottomSheet({
           })}
         </Flex>
       </Flex>
-      <div className={buttonWrapperStyle}>
-        <Button className={buttonStyle}>라이티 시작하기</Button>
+      <div className={styles.buttonWrapper}>
+        <Button className={styles.button}>라이티 시작하기</Button>
       </div>
-    </BottomSheet>
+    </BottomSheetWrapper>
   );
 }
-
-const buttonStyle =
-  "rounded-full text-[14px] font-[600] py-[18px] bg-[#D8D8D8] w-full text-base-white";
-
-const buttonWrapperStyle = "pt-[12px] pb-[10px] px-[20px]";
+const styles = {
+  button:
+    "rounded-full text-[14px] font-[600] py-[18px] bg-[#D8D8D8] w-full text-base-white",
+  buttonWrapper: "pt-[12px] pb-[10px] px-[20px]",
+  list: "text-B3 flex items-center px-[12px] cursor-pointer",
+};

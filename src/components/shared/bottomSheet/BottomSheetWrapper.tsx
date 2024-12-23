@@ -4,7 +4,7 @@ import Flex from "../Flex";
 import clsx from "clsx";
 import RectIcon from "../icons/RectIcon";
 
-export default function BottomSheet({
+export default function BottomSheetWrapper({
   open = true,
   onClose,
   children,

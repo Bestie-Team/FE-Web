@@ -1,7 +1,4 @@
-// import prisma from "@/db";
-// import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
-// import { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import KakaoProvider from "next-auth/providers/kakao";
 
@@ -11,7 +8,6 @@ const authOptions: NextAuthOptions = {
     maxAge: 60 * 60 * 24,
     updateAge: 60 * 60 * 2,
   },
-  //   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -35,7 +31,7 @@ const authOptions: NextAuthOptions = {
     }),
     jwt: async ({ user, token }) => {
       if (user) {
-        token.sub = user.id;
+        token.sub = String(user.id);
       }
       return token;
     },
