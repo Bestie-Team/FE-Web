@@ -18,7 +18,7 @@ export default function InvitationCard({
     >
       <div className="relative">
         <Image
-          src="https://d20j4cey9ep9gv.cloudfront.net/invitation.png"
+          src="https://d1al3w8x2wydb3.cloudfront.net/images/invitation.png"
           className="w-full flex-grow"
           width={350}
           height={169}

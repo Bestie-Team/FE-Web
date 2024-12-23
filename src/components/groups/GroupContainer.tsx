@@ -33,7 +33,7 @@ export default function GroupContainer({
               width={48}
               height={48}
               className="object-cover rounded-full"
-              src={"https://d20j4cey9ep9gv.cloudfront.net/cute.jpg"}
+              src={"https://d1al3w8x2wydb3.cloudfront.net/images/cute.jpg"}
             />
           </div>
           <Spacing size={12} direction="horizontal" />

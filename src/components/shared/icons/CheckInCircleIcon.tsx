@@ -1,9 +1,11 @@
 export default function CheckInCircleIcon({
   width,
   height,
+  checked,
 }: {
   width?: string;
   height?: string;
+  checked?: boolean;
 }) {
   return (
     <svg
@@ -17,12 +19,8 @@ export default function CheckInCircleIcon({
         <path
           id="Vector"
           d="M15.9998 29.3333C23.3636 29.3333 29.3332 23.3638 29.3332 16C29.3332 8.63619 23.3636 2.66666 15.9998 2.66666C8.63604 2.66666 2.6665 8.63619 2.6665 16C2.6665 23.3638 8.63604 29.3333 15.9998 29.3333Z"
-          fill="#0A0A0A"
-          stroke="#0A0A0A"
-          style={{
-            fill: "#0A0A0A",
-            stroke: "#0A0A0A",
-          }}
+          fill={checked ? "#0A0A0A" : "#D8D8D8"}
+          stroke={checked ? "#0A0A0A" : "#D8D8D8"}
           strokeWidth="2.66667"
           strokeLinecap="round"
           strokeLinejoin="round"

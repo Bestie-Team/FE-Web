@@ -17,7 +17,7 @@ export default function FriendListItem({
     <li key={`friend${idx}`} className={liStyle}>
       <Image
         alt="friendImg"
-        src="https://d20j4cey9ep9gv.cloudfront.net/bini.JPG"
+        src="https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
         width={36}
         height={36}
         className={imgStyle}

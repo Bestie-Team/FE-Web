@@ -12,7 +12,7 @@ export default function GroupBannerContainer() {
     <div className="relative">
       <Image
         alt="homeImage"
-        src="https://d20j4cey9ep9gv.cloudfront.net/gathering.png"
+        src="https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png"
         width={600}
         height={316}
         className="h-[316px] object-cover"

@@ -45,7 +45,7 @@ export default function GatheringDetailPage({
               alt="mapImg"
               width={36}
               height={36}
-              src={"https://d20j4cey9ep9gv.cloudfront.net/map.png"}
+              src={"https://d1al3w8x2wydb3.cloudfront.net/images/map.png"}
             />
           </Flex>
         }

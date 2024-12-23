@@ -20,7 +20,7 @@ export default function Splash() {
   }, [router, status]);
 
   return (
-    <div className="mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('https://d20j4cey9ep9gv.cloudfront.net/bg.png')]">
+    <div className="mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('https://d1al3w8x2wydb3.cloudfront.net/images/bg.png')]">
       <div className={centerWrapperStyle}>
         <div className="flex flex-col items-center gap-[4px]">
           <div className="text-B3 text-base-white mt-[200px]">
@@ -50,7 +50,7 @@ export default function Splash() {
               width={24}
               height={24}
               className="rounded-full"
-              data="https://d20j4cey9ep9gv.cloudfront.net/kakao.svg"
+              data="https://d1al3w8x2wydb3.cloudfront.net/images/kakao.svg"
             />
             <span className="w-[120px] text-center">카카오로 계속하기</span>
           </Button>
@@ -64,7 +64,7 @@ export default function Splash() {
               width={24}
               height={24}
               className="rounded-full"
-              data="https://d20j4cey9ep9gv.cloudfront.net/google.svg"
+              data="https://d1al3w8x2wydb3.cloudfront.net/images/google.svg"
             />
             <span className="w-[120px] text-center">Google로 계속하기</span>
           </Button>

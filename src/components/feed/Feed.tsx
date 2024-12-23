@@ -20,15 +20,15 @@ export default function MyFeed({ which }: { which: string }) {
   );
 }
 const myFeed = [
-  "https://d20j4cey9ep9gv.cloudfront.net/bini.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/party.jpg",
-  "https://d20j4cey9ep9gv.cloudfront.net/ocean.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/party.jpg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
 ];
 
 const allFeed = [
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
 ];

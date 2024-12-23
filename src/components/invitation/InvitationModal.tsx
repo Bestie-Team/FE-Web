@@ -35,7 +35,7 @@ export default function InvitationModal({
         <Spacing size={8} />
         <div className="relative">
           <Image
-            src="https://d20j4cey9ep9gv.cloudfront.net/invitationV.png"
+            src="https://d1al3w8x2wydb3.cloudfront.net/images/invitationV.png"
             alt="invitationVertical"
             width={330}
             height={460}
@@ -45,7 +45,7 @@ export default function InvitationModal({
             style={{ position: "absolute", padding: "15px", left: 0, top: 0 }}
           >
             <Image
-              src="https://d20j4cey9ep9gv.cloudfront.net/dishes.jpg"
+              src="https://d1al3w8x2wydb3.cloudfront.net/images/dishes.jpg"
               className="h-[210px] object-cover rounded-[12px]"
               width={300}
               height={210}

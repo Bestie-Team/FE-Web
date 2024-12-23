@@ -17,7 +17,7 @@ export default function GroupImages({
         <Image
           key={`img${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src="https://d20j4cey9ep9gv.cloudfront.net/anton.PNG"
+          src="https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
           width={width ?? 28}
           height={height ?? 28}
           className={clsx(groupImageStyle)}

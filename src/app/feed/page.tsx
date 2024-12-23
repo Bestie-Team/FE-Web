@@ -11,7 +11,6 @@ import {
   commentModalStateAtom,
   feedSelectedTabAtom,
 } from "@/atoms/feed";
-import BottomSheet from "@/components/shared/bottomSheet/BottomSheet";
 import { recordModalStateAtom } from "@/atoms/record";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -19,6 +18,7 @@ import { useRef } from "react";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
+import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
@@ -88,7 +88,7 @@ export default function FeedPage() {
       </Swiper>
       <NavBar />
       {recordModalOpen ? (
-        <BottomSheet
+        <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}
           open={recordModalOpen}
         />

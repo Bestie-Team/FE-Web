@@ -5,7 +5,7 @@ import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
 import Banner from "@/components/shared/banner";
-import BottomSheet from "@/components/shared/bottomSheet/BottomSheet";
+import TermsBottomSheet from "@/components/shared/bottomSheet/TermsBottomSheet";
 import Flex from "@/components/shared/Flex";
 import NavBar from "@/components/shared/NavBar";
 import PhotoSwiper from "@/components/shared/PhotoSwiper";
@@ -33,7 +33,7 @@ export default function HomePage() {
         <p>태권도</p>
       </Flex>
       {modalOpen && (
-        <BottomSheet
+        <TermsBottomSheet
           onClose={() => {
             setModalOpen(false);
           }}
@@ -45,9 +45,9 @@ export default function HomePage() {
   );
 }
 const imageList = [
-  "https://d20j4cey9ep9gv.cloudfront.net/window.jpg",
-  "https://d20j4cey9ep9gv.cloudfront.net/party.jpg",
-  "https://d20j4cey9ep9gv.cloudfront.net/ocean.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/window.jpg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/party.jpg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
 ];

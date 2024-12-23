@@ -5,13 +5,13 @@ import Feed from "@/components/feed/Feed";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";
-import BottomSheet from "@/components/shared/bottomSheet/BottomSheet";
 import { recordModalStateAtom } from "@/atoms/record";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TabButton from "@/components/shared/tab/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
+import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
 export default function FeedPage() {
   const hasShadow = useScrollShadow();
@@ -52,7 +52,7 @@ export default function FeedPage() {
 
       <NavBar />
       {recordModalOpen ? (
-        <BottomSheet
+        <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}
           open={recordModalOpen}
         />

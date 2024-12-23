@@ -52,9 +52,9 @@ export default function ChoosingGroupToRecord({
 }
 
 const imageList = [
-  "https://d20j4cey9ep9gv.cloudfront.net/window.jpg",
-  "https://d20j4cey9ep9gv.cloudfront.net/party.jpg",
-  "https://d20j4cey9ep9gv.cloudfront.net/ocean.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
-  "https://d20j4cey9ep9gv.cloudfront.net/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/window.jpg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/party.jpg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
 ];

@@ -52,7 +52,7 @@ export default function UploadPhotoSwiper({
             <Image
               alt="empty"
               className="slide-img w-[240px] h-[250px]"
-              src={"https://d20j4cey9ep9gv.cloudfront.net/rectEdit.png"}
+              src={"https://d1al3w8x2wydb3.cloudfront.net/images/rectEdit.png"}
               width={240}
               height={250}
             />

@@ -9,7 +9,7 @@ export default function FriendItem() {
       <div className="p-[6px]">
         <Image
           alt="friendImage"
-          src="https://d20j4cey9ep9gv.cloudfront.net/bini.JPG"
+          src="https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
           className="rounded-full object-cover w-[56px] h-[56px]"
           width={56}
           height={56}
