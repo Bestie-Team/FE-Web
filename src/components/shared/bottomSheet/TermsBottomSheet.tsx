@@ -7,6 +7,7 @@ import CheckInCircleIcon from "../icons/CheckInCircleIcon";
 import clsx from "clsx";
 import NArrowRightIcon from "../icons/NArrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";
+
 export default function TermsBottomSheet({
   onClose,
   open = true,
@@ -62,7 +63,7 @@ export default function TermsBottomSheet({
               <>
                 <li
                   key={id}
-                  onClick={(e) => {
+                  onClick={() => {
                     setTermsAgreements((prevTerms) => ({
                       ...prevTerms,
                       [id]: !termsAgreements[id],
