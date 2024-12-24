@@ -1,6 +1,7 @@
 import React from "react";
 import GatheringCard from "./GatheringCard";
 import clsx from "clsx";
+import Message from "../shared/Message";
 
 export default function Gathering({
   className,
@@ -13,6 +14,7 @@ export default function Gathering({
 
   return (
     <div className={clsx(styles.container, className)}>
+      {which === "2" ? <Message /> : null}
       <div className="grid grid-cols-2 gap-4">
         {images.map((gathering) => (
           <GatheringCard

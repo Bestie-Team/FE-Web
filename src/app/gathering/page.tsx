@@ -1,6 +1,7 @@
 "use client";
 import {
   gatheringAnimationStatusAtom,
+  gatheringModalStateAtom,
   gatheringSelectedTabAtom,
 } from "@/atoms/gathering";
 import FilterBar from "@/components/shared/FilterBar";
@@ -17,8 +18,10 @@ import "swiper/css";
 import NavBar from "@/components/shared/NavBar";
 import Gathering from "@/components/gathering/Gathering";
 import Message from "@/components/shared/Message";
+import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
 export default function MyGatheringPage() {
+  const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const hasShadow = useScrollShadow();
   const swiperRef = useRef<SwiperType | null>(null);
   const setAnimateTab = useSetRecoilState(gatheringAnimationStatusAtom);
@@ -75,10 +78,16 @@ export default function MyGatheringPage() {
           <Gathering which="1" />
         </SwiperSlide>
         <SwiperSlide>
-          <Message />
           <Gathering which="2" />
         </SwiperSlide>
       </Swiper>
+      {modalOpen && (
+        <MemoriesBottomSheet
+          onClose={() => {
+            setModalOpen(false);
+          }}
+        />
+      )}
       <NavBar />
     </div>
   );

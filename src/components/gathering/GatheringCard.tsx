@@ -27,7 +27,9 @@ export default function GatheringCard({
         className="absolute inset-0"
       />
       <Flex direction="column" className={styles.textWrapper}>
-        <span className="text-T4">연말 술 모임</span>
+        <span className="text-T4 truncate">
+          연말 술 모임 크리스마스 파티하하
+        </span>
         <Spacing size={4} />
         <Flex className="w-full text-C2 text-grayscale-100">
           <span className="flex-grow">날짜</span>

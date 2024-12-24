@@ -52,9 +52,9 @@ export default function NavBar() {
         );
       })}
 
-      {(pathname.startsWith("/feed") || pathname.startsWith("/home")) && (
-        <SheetOpenBtnContainer />
-      )}
+      {(pathname.startsWith("/feed") ||
+        pathname.startsWith("/home") ||
+        pathname.endsWith("/gathering")) && <SheetOpenBtnContainer />}
     </div>,
     $portalRoot
   );
