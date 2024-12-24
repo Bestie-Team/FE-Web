@@ -27,7 +27,7 @@ export const NextLayout = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50 no-scrollbar">
+    <div className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50 overflow-scroll no-scrollbar">
       {children}
     </div>
   );
