@@ -17,7 +17,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import NavBar from "@/components/shared/NavBar";
 import Gathering from "@/components/gathering/Gathering";
-import Message from "@/components/shared/Message";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
 export default function MyGatheringPage() {

@@ -1,7 +1,8 @@
-import React from "react";
+"use client";
 import GatheringCard from "./GatheringCard";
 import clsx from "clsx";
 import Message from "../shared/Message";
+import { usePathname } from "next/navigation";
 
 export default function Gathering({
   className,
@@ -11,10 +12,10 @@ export default function Gathering({
   which: string;
 }) {
   const images = which === "1" ? allFeed : myFeed;
-
+  const pathname = usePathname();
   return (
     <div className={clsx(styles.container, className)}>
-      {which === "2" ? <Message /> : null}
+      {which === "2" && pathname.endsWith("gathering") ? <Message /> : null}
       <div className="grid grid-cols-2 gap-4">
         {images.map((gathering) => (
           <GatheringCard
