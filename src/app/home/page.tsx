@@ -12,16 +12,14 @@ import ArrowRightIcon from "@/components/shared/icons/ArrowRightIcon";
 import NavBar from "@/components/shared/NavBar";
 import PhotoSwiper from "@/components/shared/PhotoSwiper";
 import Spacing from "@/components/shared/Spacing";
-import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import HeaderReturner from "@/utils/headerReturner";
 import { useRecoilState } from "recoil";
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
-  useChangeHeaderStyle();
 
   return (
-    <>
+    <div className="bg-base-white">
       {HeaderReturner()}
       <HomeBannerContainer />
       <FriendsSlider />
@@ -46,7 +44,7 @@ export default function HomePage() {
       )}
       <NavBar />
       <Spacing size={87} />
-    </>
+    </div>
   );
 }
 const imageList = [

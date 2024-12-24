@@ -1,4 +1,5 @@
 "use client";
+import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
 import { RecoilRoot } from "recoil";
@@ -19,6 +20,7 @@ export const NextProvider = ({ children }: Props) => {
 };
 
 export const NextLayout = ({ children }: Props) => {
+  useChangeHeaderStyle();
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -27,7 +29,10 @@ export const NextLayout = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50 overflow-scroll no-scrollbar">
+    <div
+      id="scrollable-container"
+      className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50 overflow-scroll no-scrollbar"
+    >
       {children}
     </div>
   );
