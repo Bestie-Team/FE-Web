@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import ArrowRightIcon from "../icons/ArrowRightIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
-import { gatheringSelectedDate } from "@/atoms/gathering";
+import { gatheringSelectedDateAtom } from "@/atoms/gathering";
 
 const Calendar = dynamic(() => import("react-calendar"), {
   ssr: false,
@@ -17,7 +17,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function LightyCalendar() {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
-    gatheringSelectedDate
+    gatheringSelectedDateAtom
   );
 
   return (

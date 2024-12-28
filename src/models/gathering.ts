@@ -6,5 +6,7 @@ export interface GatheringInfo {
   desc: string;
   friends: FriendInfo[];
   date: string;
+  ampm: string;
+  time: string;
   address: string;
 }

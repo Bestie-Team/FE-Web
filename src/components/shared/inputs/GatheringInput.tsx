@@ -3,27 +3,63 @@ import clsx from "clsx";
 import React, { useState } from "react";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
+import BottomSheetWrapper from "../bottomSheet/BottomSheetWrapper";
+import DaumPostcodeEmbed from "react-daum-postcode";
+import { SetterOrUpdater } from "recoil";
+import { GatheringInfo } from "@/models/gathering";
 
 interface GatheringInputProps {
+  type: "date" | "address";
   label?: React.ReactNode;
-  placeholder?: string;
   name?: string;
-  value: string;
+  value: React.ReactNode;
   onClick: () => void;
+  setValue?: SetterOrUpdater<GatheringInfo>;
 }
 
 export default function GatheringInput({
+  type,
   value,
   label,
   onClick,
+  setValue,
   ...props
 }: GatheringInputProps) {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleComplete = (data: any) => {
+    if (setValue == null) return;
+
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+    setValue((prev) => ({ ...prev, address: fullAddress }));
+    setIsOpen(false);
+  };
 
   return (
-    <Flex direction="column">
+    <Flex
+      direction="column"
+      onClick={() => {
+        if (type === "address") {
+          setIsOpen(true);
+        }
+      }}
+    >
       {label && (
         <>
           <Flex align="center" className="text-T5">
@@ -34,25 +70,29 @@ export default function GatheringInput({
       )}
       <div
         onClick={onClick}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        {...props}
         className={clsx(
           inputWrapperStyle,
-          isFocused ? "border-grayscale-700" : "border-grayscale-10"
+          isFocused
+            ? "border-grayscale-700"
+            : "border-grayscale-10 whitespace-pre-wrap"
         )}
       >
-        <input
-          inputMode="none"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          className={inputStyle}
-          value={value}
-          {...props}
-        />
+        {value}
       </div>
+      {isOpen && (
+        <BottomSheetWrapper
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        >
+          <DaumPostcodeEmbed onComplete={handleComplete} />
+        </BottomSheetWrapper>
+      )}
     </Flex>
   );
 }
 
-const height = `h-[50px]`;
-
-const inputWrapperStyle = `w-full ${height} p-[45.7px] rounded-[20px] cursor-pointer flex items-center gap-[16px] justify-between bg-grayscale-10 border transition-all duration-300`;
-const inputStyle = `ml-[21px] w-4/5 bg-transparent outline-none text-[16px] font-[500] leading-[22.86px] tracking-[-0.48px] bg-grayscale-10 transform origin-left scale-[0.875]`;
+const inputWrapperStyle = `w-full text-B3 text-center min-h-[103px] px-[20px] py-[20px] rounded-[20px] cursor-pointer flex flex-col items-center justify-center outline-none text-[14px] focus:outline-none bg-grayscale-10 border transition-all duration-300`;

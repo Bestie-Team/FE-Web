@@ -1,6 +1,7 @@
 "use client";
 import { newGatheringInfo } from "@/atoms/gathering";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
+// import AddressSearch from "@/components/shared/AddressSearch";
 import CalendarBottomSheet from "@/components/shared/bottomSheet/CalendarBottomSheet";
 import AnimatedTabButton from "@/components/shared/buttons/AnimatedTabButton";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
@@ -16,6 +17,7 @@ import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
 import { GatheringInfo } from "@/models/gathering";
 import HeaderReturner from "@/utils/headerReturner";
+import { format } from "date-fns";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -76,9 +78,21 @@ export default function NewGatheringPage() {
         <Spacing size={36} />
         <div className="grid grid-cols-2 gap-4">
           <GatheringInput
-            value={""}
+            type="date"
+            value={
+              gatheringInfo.date && gatheringInfo.ampm && gatheringInfo.time ? (
+                <>
+                  <span>{format(gatheringInfo.date, "yyyy-MM-dd")}</span>
+                  <Spacing size={8} />
+                  <span>
+                    {gatheringInfo.ampm} {gatheringInfo.time}
+                  </span>
+                </>
+              ) : (
+                "선택하기"
+              )
+            }
             onClick={() => setCalendarOpen(true)}
-            placeholder="선택하기"
             label={
               <>
                 <CalendarIcon width="16" height="16" color="#0A0A0A" />
@@ -88,9 +102,16 @@ export default function NewGatheringPage() {
             }
           />
           <GatheringInput
-            value={""}
+            type="address"
+            value={
+              gatheringInfo.address ? (
+                <span>{gatheringInfo.address}</span>
+              ) : (
+                "선택하기"
+              )
+            }
+            setValue={setGatheringInfo}
             onClick={() => {}}
-            placeholder="선택하기"
             label={
               <>
                 <MapPinIcon width="16" height="16" color="#0A0A0A" />
@@ -99,6 +120,7 @@ export default function NewGatheringPage() {
               </>
             }
           />
+          {/* <AddressSearch register={""} setValue={setGatheringInfo} errors="" /> */}
         </div>
         <CalendarBottomSheet
           onClose={() => setCalendarOpen(false)}

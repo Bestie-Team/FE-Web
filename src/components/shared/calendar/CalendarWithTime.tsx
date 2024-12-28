@@ -5,21 +5,19 @@ import Flex from "../Flex";
 import Spacing from "../Spacing";
 import LightyCalendar from "./Calendar";
 import { TIMES } from "@/constants/time";
-import { useRecoilState } from "recoil";
-import {
-  gatheringSelectedAmpm,
-  gatheringSelectedTime,
-} from "@/atoms/gathering";
+import { SetterOrUpdater } from "recoil";
 
-export default function CalendarWithTime() {
-  const [ampm, setAmpm] = useRecoilState<"오전" | "오후">(
-    gatheringSelectedAmpm
-  );
-
-  const [selectedTime, setSelectedTime] = useRecoilState<string>(
-    gatheringSelectedTime
-  );
-
+export default function CalendarWithTime({
+  ampm,
+  selectedTime,
+  setAmpm,
+  setSelectedTime,
+}: {
+  ampm: "오전" | "오후";
+  selectedTime: string;
+  setAmpm: SetterOrUpdater<"오전" | "오후">;
+  setSelectedTime: SetterOrUpdater<string>;
+}) {
   return (
     <Flex direction="column" className="w-[340px]">
       <LightyCalendar />

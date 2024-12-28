@@ -1,14 +1,16 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Button from "../buttons";
 import CalendarWithTime from "../calendar/CalendarWithTime";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import BottomSheetWrapper from "./BottomSheetWrapper";
 import {
-  gatheringSelectedAmpm,
-  gatheringSelectedDate,
-  gatheringSelectedTime,
+  gatheringSelectedAmpmAtom,
+  gatheringSelectedDateAtom,
+  gatheringSelectedTimeAtom,
+  newGatheringInfo,
 } from "@/atoms/gathering";
+import { formatISO } from "date-fns";
 
 export default function CalendarBottomSheet({
   open = true,
@@ -17,19 +19,39 @@ export default function CalendarBottomSheet({
   open?: boolean;
   onClose: () => void;
 }) {
-  const selectedDate = useRecoilValue(gatheringSelectedDate);
-  const selectedAmpm = useRecoilValue(gatheringSelectedAmpm);
-  const selectedTime = useRecoilValue(gatheringSelectedTime);
+  const selectedDate = useRecoilValue(gatheringSelectedDateAtom);
+  const setGatheringInfo = useSetRecoilState(newGatheringInfo);
+  const [ampm, setAmpm] = useRecoilState<"오전" | "오후">(
+    gatheringSelectedAmpmAtom
+  );
+  const [selectedTime, setSelectedTime] = useRecoilState<string>(
+    gatheringSelectedTimeAtom
+  );
 
   return (
     <BottomSheetWrapper onClose={onClose} open={open} bar={false}>
       <Flex direction="column" className="px-[20px]" align="center">
-        <CalendarWithTime />
+        <CalendarWithTime
+          ampm={ampm}
+          selectedTime={selectedTime}
+          setAmpm={setAmpm}
+          setSelectedTime={setSelectedTime}
+        />
         <Spacing size={40} />
         <Button
           className={buttonStyle}
           disabled={selectedDate == null}
-          onClick={() => console.log(selectedDate, selectedAmpm, selectedTime)}
+          onClick={() => {
+            if (selectedDate !== null) {
+              setGatheringInfo((prev) => ({
+                ...prev,
+                date: formatISO(selectedDate as Date),
+                ampm: ampm,
+                time: selectedTime,
+              }));
+            }
+            onClose();
+          }}
         >
           다음
         </Button>

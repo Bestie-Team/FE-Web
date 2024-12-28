@@ -20,17 +20,17 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export const gatheringSelectedDate = atom<Value>({
+export const gatheringSelectedDateAtom = atom<Value>({
   key: "gathering/selectedDate",
   default: new Date(),
 });
 
-export const gatheringSelectedAmpm = atom<"오전" | "오후">({
+export const gatheringSelectedAmpmAtom = atom<"오전" | "오후">({
   key: "gathering/selectedAmpm",
   default: "오전",
 });
 
-export const gatheringSelectedTime = atom<string>({
+export const gatheringSelectedTimeAtom = atom<string>({
   key: "gathering/selectedTime",
   default: "12:00",
 });
@@ -43,6 +43,8 @@ export const newGatheringInfo = atom<GatheringInfo>({
     desc: "",
     friends: [],
     date: "",
+    ampm: "",
+    time: "",
     address: "",
   },
 });
