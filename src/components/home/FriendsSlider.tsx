@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function FriendsSlider() {
   const router = useRouter();
   return (
-    <div className="w-full">
+    <div className="w-full pl-[20px]">
       <Spacing size={16} />
       <Flex className="overflow-scroll no-scrollbar">
         <AddFriendItem

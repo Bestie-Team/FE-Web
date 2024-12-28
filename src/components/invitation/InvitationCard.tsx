@@ -9,13 +9,7 @@ export default function InvitationCard({
   onClickOpen: (value: boolean) => void;
 }) {
   return (
-    <Flex
-      style={{
-        width: "full",
-        height: "full",
-      }}
-      justify="center"
-    >
+    <Flex className="w-full h-full px-[20px]" justify="center">
       <div className="relative">
         <Image
           src="https://d1al3w8x2wydb3.cloudfront.net/images/invitation.png"

@@ -5,8 +5,12 @@ import { useRouter } from "next/navigation";
 
 export default function FriendsPageHeader({
   type,
+  label,
+  addFriendIcon = false,
 }: {
   type: "default" | "add";
+  label: string;
+  addFriendIcon?: boolean;
 }) {
   const router = useRouter();
   const arrowIconContainerStyle =
@@ -23,11 +27,9 @@ export default function FriendsPageHeader({
         <ArrowLeftIcon />
       </div>
       <Spacing size={6} direction="horizontal" />
-      <span className="flex-grow text-T3">
-        {type === "default" ? "친구" : "친구 추가"}
-      </span>
+      <span className="flex-grow text-T3">{label}</span>
       <Spacing size={6} direction="horizontal" />
-      {type === "default" ? (
+      {addFriendIcon ? (
         <div
           className="p-[4px] cursor-pointer"
           onClick={() => {

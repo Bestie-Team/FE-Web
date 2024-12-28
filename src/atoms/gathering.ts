@@ -14,3 +14,22 @@ export const gatheringModalStateAtom = atom<boolean>({
   key: "gathering/modal",
   default: false,
 });
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+export const gatheringSelectedDate = atom<Value>({
+  key: "gathering/selectedDate",
+  default: new Date(),
+});
+
+export const gatheringSelectedAmpm = atom<"오전" | "오후">({
+  key: "gathering/selectedAmpm",
+  default: "오전",
+});
+
+export const gatheringSelectedTime = atom<string>({
+  key: "gathering/selectedTime",
+  default: "12:00",
+});

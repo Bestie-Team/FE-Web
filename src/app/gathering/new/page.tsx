@@ -1,5 +1,6 @@
 "use client";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
+import CalendarBottomSheet from "@/components/shared/bottomSheet/CalendarBottomSheet";
 import AnimatedTabButton from "@/components/shared/buttons/AnimatedTabButton";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
@@ -13,8 +14,10 @@ import GatheringInput from "@/components/shared/inputs/GatheringInput";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
 import HeaderReturner from "@/utils/headerReturner";
+import { useState } from "react";
 
 export default function NewGatheringPage() {
+  const [calendarOpen, setCalendarOpen] = useState(false);
   return (
     <div className="h-screen bg-base-white">
       <div>{HeaderReturner()}</div>
@@ -64,7 +67,7 @@ export default function NewGatheringPage() {
         <div className="grid grid-cols-2 gap-4">
           <GatheringInput
             value={""}
-            onChange={() => {}}
+            onClick={() => setCalendarOpen(true)}
             placeholder="선택하기"
             label={
               <>
@@ -76,7 +79,7 @@ export default function NewGatheringPage() {
           />
           <GatheringInput
             value={""}
-            onChange={() => {}}
+            onClick={() => {}}
             placeholder="선택하기"
             label={
               <>
@@ -87,6 +90,10 @@ export default function NewGatheringPage() {
             }
           />
         </div>
+        <CalendarBottomSheet
+          onClose={() => setCalendarOpen(false)}
+          open={calendarOpen}
+        />
       </Flex>
       <FixedBottomButton label="다음" />
     </div>

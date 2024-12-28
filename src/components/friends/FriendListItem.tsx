@@ -1,58 +1,75 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
 import Options from "../shared/icons/Options";
 import Button from "../shared/buttons";
+import { FriendInfo } from "@/models/friend";
 
 export default function FriendListItem({
+  friendInfo,
   type,
   idx,
+  onClick,
+  clicked,
 }: {
+  friendInfo: FriendInfo;
   type: "basic" | "receivedRequest" | "sendedRequest";
   idx: number;
+  onClick: () => void;
+  clicked: boolean;
 }) {
   return (
-    <li key={`friend${idx}`} className={liStyle}>
+    <li
+      key={`friend${idx}`}
+      className={clsx(
+        styles.li,
+        clicked ? "border-grayscale-900" : "border-base-white"
+      )}
+      onClick={onClick}
+    >
       <Image
         alt="friendImg"
-        src="https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
+        src={friendInfo.imageUrl}
         width={36}
         height={36}
-        className={imgStyle}
+        className={styles.img}
       />
       <Spacing direction="horizontal" size={8} />
       <Flex className="flex-grow" direction="column">
-        <span className="text-T6">maybin</span>
+        <span className="text-T6">{friendInfo.userId}</span>
         <Spacing size={2} />
-        <span className="text-C2 text-grayscale-400">김떙땡</span>
+        <span className="text-C2 text-grayscale-400">
+          {friendInfo.userName}
+        </span>
       </Flex>
       {type === "basic" ? (
-        <div className={clsx(iconContainerStyle)}>
+        <div className={clsx(styles.iconContainer)}>
           <Options width="2.5" height="14.17" type="friend" />
         </div>
       ) : null}
       {type === "receivedRequest" ? (
         <Flex>
-          <Button className={acceptBtnStyle}>수락</Button>
+          <Button className={styles.acceptBtn}>수락</Button>
           <Spacing size={12} direction="horizontal" />
-          <Button className={rejectBtnStyle}>거절</Button>
+          <Button className={styles.rejectBtn}>거절</Button>
         </Flex>
       ) : null}
     </li>
   );
 }
 
-const iconContainerStyle = "flex justify-center items-center w-[20px] h-[20px]";
+const styles = {
+  iconContainer: "flex justify-center items-center w-[20px] h-[20px]",
 
-const liStyle =
-  "bg-base-white flex py-[14px] px-[16px] rounded-[20px] items-center";
+  li: "bg-base-white flex py-[14px] px-[16px] rounded-[20px] items-center cursor-pointer border",
 
-const imgStyle = "rounded-full object-cover h-[36px] w-[36px]";
+  img: "rounded-full object-cover h-[36px] w-[36px]",
 
-const acceptBtnStyle =
-  "flex items-center px-[12px] py-[8px] rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit";
+  acceptBtn:
+    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit",
 
-const rejectBtnStyle =
-  "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px]";
+  rejectBtn:
+    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px]",
+};

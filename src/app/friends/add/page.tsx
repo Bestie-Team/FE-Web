@@ -6,7 +6,7 @@ import Spacing from "@/components/shared/Spacing";
 export default function AddPage() {
   return (
     <div className="max-w-[430px] fixed w-full z-10">
-      <FriendsPageHeader type="add" />
+      <FriendsPageHeader type="add" label="친구 추가" />
       <div className="px-[20px]">
         <Spacing size={20} />
         <SearchInput

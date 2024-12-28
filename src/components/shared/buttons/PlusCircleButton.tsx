@@ -16,13 +16,13 @@ export default function PlusCircleButton({
       className={clsx(PlusButtonStyle, className)}
       onClick={onClick}
     >
-      <PlusIcon />
+      <PlusIcon width="23.3" height="23.3" />
     </div>
   );
 }
 
 const PlusButtonStyle =
-  "bg-grayscale-900 rounded-full w-[48px] h-[48px] flex items-center justify-center";
+  "bg-grayscale-900 rounded-full w-[56px] h-[56px] flex items-center justify-center";
 
 export function PlusCircleButtonSmall({
   className,

@@ -47,13 +47,13 @@ const actions = [
     icon: <UserIcon width="18" height="18" color="#fff" />,
     title: "모임 생성하기",
     subTitle: "모임을 만들고 친구들에게 모임 초대장을 보내요",
-    link: "/record",
+    link: "/gathering/new",
   },
   {
     icon: <PencilIcon />,
     title: "추억 기록하기",
     subTitle: "소중한 모임 추억을 기록하고 공유할 수 있어요",
-    link: "/feed",
+    link: "/record",
   },
   {
     icon: <PicturesIcon />,
