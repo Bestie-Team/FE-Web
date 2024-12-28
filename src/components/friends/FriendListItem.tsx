@@ -14,11 +14,11 @@ export default function FriendListItem({
   onClick,
   clicked,
 }: {
-  friendInfo: FriendInfo;
+  friendInfo?: FriendInfo;
   type: "basic" | "receivedRequest" | "sendedRequest";
   idx: number;
-  onClick: () => void;
-  clicked: boolean;
+  onClick?: () => void;
+  clicked?: boolean;
 }) {
   return (
     <li
@@ -31,17 +31,17 @@ export default function FriendListItem({
     >
       <Image
         alt="friendImg"
-        src={friendInfo.imageUrl}
+        src={friendInfo?.imageUrl || "/cat.jpeg"}
         width={36}
         height={36}
         className={styles.img}
       />
       <Spacing direction="horizontal" size={8} />
       <Flex className="flex-grow" direction="column">
-        <span className="text-T6">{friendInfo.userId}</span>
+        <span className="text-T6">{friendInfo?.userId || "lighty"}</span>
         <Spacing size={2} />
         <span className="text-C2 text-grayscale-400">
-          {friendInfo.userName}
+          {friendInfo?.userName || "김땡땡"}
         </span>
       </Flex>
       {type === "basic" ? (
