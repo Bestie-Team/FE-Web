@@ -4,11 +4,9 @@ import AddFriendIcon from "../shared/icons/AddFriendIcon";
 import { useRouter } from "next/navigation";
 
 export default function FriendsPageHeader({
-  type,
   label,
   addFriendIcon = false,
 }: {
-  type: "default" | "add";
   label: string;
   addFriendIcon?: boolean;
 }) {

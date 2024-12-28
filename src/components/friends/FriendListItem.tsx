@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";

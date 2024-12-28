@@ -8,11 +8,7 @@ export default function InvitePage() {
   return (
     <div>
       <div className="max-w-[430px] fixed w-full z-10 bg-grayscale-50">
-        <FriendsPageHeader
-          type="default"
-          label="초대할 친구"
-          addFriendIcon={false}
-        />
+        <FriendsPageHeader label="초대할 친구" addFriendIcon={false} />
         <div className="px-[20px]">
           <Spacing size={20} />
           <SearchInput

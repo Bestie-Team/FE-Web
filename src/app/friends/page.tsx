@@ -14,7 +14,7 @@ export default function FriendsPage() {
   return (
     <div>
       <div className="max-w-[430px] fixed w-full z-10">
-        <FriendsPageHeader type="default" label="친구" addFriendIcon />
+        <FriendsPageHeader label="친구" addFriendIcon />
         <div className="px-[20px] bg-grayscale-50">
           <TabBar
             title1="전체"
