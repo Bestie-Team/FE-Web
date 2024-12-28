@@ -57,5 +57,5 @@ export default function FixedBottomButton({
   );
 }
 
-const buttonStyle = `max-w-full min-w-[350px] py-[18px] text-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`;
-const buttonWrapperStyle = `px-[20px] pb-[10px] pt-[12px] bg-white animate-slide-up`;
+const buttonStyle = `max-w-full min-w-[390px] py-[18px] text-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`;
+const buttonWrapperStyle = `px-[20px] pb-[10px] pt-[12px] bg-base-white animate-slide-up`;

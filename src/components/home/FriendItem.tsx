@@ -2,14 +2,18 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/icons/PlusIcon";
+import { FriendInfo } from "@/models/friend";
 
-export default function FriendItem() {
+export default function FriendItem({ friendInfo }: { friendInfo: FriendInfo }) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
       <div className="p-[6px]">
         <Image
           alt="friendImage"
-          src="https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
+          src={
+            friendInfo.imageUrl ||
+            "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
+          }
           className="rounded-full object-cover w-[56px] h-[56px]"
           width={56}
           height={56}
@@ -17,8 +21,10 @@ export default function FriendItem() {
       </div>
       <Spacing size={2} />
       <Flex direction="column" align="center">
-        <span className="text-T6">이름</span>
-        <span className="text-C5 text-grayscale-400">아이디</span>
+        <span className="text-T6">{friendInfo.userName || "이름"}</span>
+        <span className="text-C5 text-grayscale-400">
+          {friendInfo.userId || "아이디"}
+        </span>
       </Flex>
     </Flex>
   );

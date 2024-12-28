@@ -3,6 +3,7 @@ import {
   gatheringAnimationStatusAtom,
   gatheringModalStateAtom,
   gatheringSelectedTabAtom,
+  newGatheringInfo,
 } from "@/atoms/gathering";
 import FilterBar from "@/components/shared/FilterBar";
 import TabBar from "@/components/shared/tab/TabBar";
@@ -10,9 +11,9 @@ import useScrollShadow from "@/hooks/useScrollShadow";
 import HeaderReturner from "@/utils/headerReturner";
 import clsx from "clsx";
 import { Swiper as SwiperType } from "swiper";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import NavBar from "@/components/shared/NavBar";
@@ -20,6 +21,7 @@ import Gathering from "@/components/gathering/Gathering";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
 export default function MyGatheringPage() {
+  const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const hasShadow = useScrollShadow();
   const swiperRef = useRef<SwiperType | null>(null);
@@ -45,6 +47,10 @@ export default function MyGatheringPage() {
       setAnimateTab(false);
     }, 300);
   };
+
+  useEffect(() => {
+    reset();
+  }, []);
 
   return (
     <div className="bg-base-white h-screen">

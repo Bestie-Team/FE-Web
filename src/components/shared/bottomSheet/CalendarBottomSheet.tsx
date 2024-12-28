@@ -7,6 +7,7 @@ import BottomSheetWrapper from "./BottomSheetWrapper";
 import {
   gatheringSelectedAmpm,
   gatheringSelectedDate,
+  gatheringSelectedTime,
 } from "@/atoms/gathering";
 
 export default function CalendarBottomSheet({
@@ -18,15 +19,17 @@ export default function CalendarBottomSheet({
 }) {
   const selectedDate = useRecoilValue(gatheringSelectedDate);
   const selectedAmpm = useRecoilValue(gatheringSelectedAmpm);
+  const selectedTime = useRecoilValue(gatheringSelectedTime);
+
   return (
-    <BottomSheetWrapper onClose={onClose} open={open}>
+    <BottomSheetWrapper onClose={onClose} open={open} bar={false}>
       <Flex direction="column" className="px-[20px]" align="center">
         <CalendarWithTime />
         <Spacing size={40} />
         <Button
           className={buttonStyle}
           disabled={selectedDate == null}
-          onClick={() => console.log(selectedDate, selectedAmpm)}
+          onClick={() => console.log(selectedDate, selectedAmpm, selectedTime)}
         >
           다음
         </Button>

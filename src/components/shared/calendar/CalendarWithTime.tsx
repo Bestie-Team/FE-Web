@@ -15,9 +15,11 @@ export default function CalendarWithTime() {
   const [ampm, setAmpm] = useRecoilState<"오전" | "오후">(
     gatheringSelectedAmpm
   );
+
   const [selectedTime, setSelectedTime] = useRecoilState<string>(
     gatheringSelectedTime
   );
+
   return (
     <Flex direction="column" className="w-[340px]">
       <LightyCalendar />

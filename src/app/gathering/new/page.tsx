@@ -1,4 +1,5 @@
 "use client";
+import { newGatheringInfo } from "@/atoms/gathering";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
 import CalendarBottomSheet from "@/components/shared/bottomSheet/CalendarBottomSheet";
 import AnimatedTabButton from "@/components/shared/buttons/AnimatedTabButton";
@@ -13,11 +14,16 @@ import UserIcon from "@/components/shared/icons/UserIcon";
 import GatheringInput from "@/components/shared/inputs/GatheringInput";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
+import { GatheringInfo } from "@/models/gathering";
 import HeaderReturner from "@/utils/headerReturner";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 
 export default function NewGatheringPage() {
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [gatheringInfo, setGatheringInfo] =
+    useRecoilState<GatheringInfo>(newGatheringInfo);
+
   return (
     <div className="h-screen bg-base-white">
       <div>{HeaderReturner()}</div>
@@ -31,8 +37,10 @@ export default function NewGatheringPage() {
         </Flex>
         <Spacing size={24} />
         <Input
-          value={""}
-          onChange={() => {}}
+          value={gatheringInfo.name}
+          onChange={(e) =>
+            setGatheringInfo((prev) => ({ ...prev, name: e.target.value }))
+          }
           placeholder="모임 이름을 입력해 주세요."
           label={
             <>
@@ -44,8 +52,10 @@ export default function NewGatheringPage() {
         />
         <Spacing size={36} />
         <Input
-          value={""}
-          onChange={() => {}}
+          value={gatheringInfo.desc}
+          onChange={(e) =>
+            setGatheringInfo((prev) => ({ ...prev, desc: e.target.value }))
+          }
           placeholder="모임 이름을 설명해 주세요."
           label={
             <>

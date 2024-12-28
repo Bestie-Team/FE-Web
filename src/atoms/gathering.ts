@@ -1,3 +1,4 @@
+import { GatheringInfo } from "@/models/gathering";
 import { atom } from "recoil";
 
 export const gatheringSelectedTabAtom = atom<"1" | "2">({
@@ -32,4 +33,16 @@ export const gatheringSelectedAmpm = atom<"오전" | "오후">({
 export const gatheringSelectedTime = atom<string>({
   key: "gathering/selectedTime",
   default: "12:00",
+});
+
+export const newGatheringInfo = atom<GatheringInfo>({
+  key: "gathering/gatheringInfo",
+  default: {
+    type: "normal",
+    name: "",
+    desc: "",
+    friends: [],
+    date: "",
+    address: "",
+  },
 });

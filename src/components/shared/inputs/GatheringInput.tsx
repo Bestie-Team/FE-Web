@@ -40,8 +40,7 @@ export default function GatheringInput({
         )}
       >
         <input
-          type="text"
-          inputMode="text"
+          inputMode="none"
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={inputStyle}

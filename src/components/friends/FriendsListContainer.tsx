@@ -3,10 +3,13 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
 import Modal from "../shared/modal";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { recordModalStateAtom } from "@/atoms/record";
 import FRIENDS from "@/constants/friends";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import { FriendInfo } from "@/models/friend";
+import { selectedFriendsAtom } from "@/atoms/friends";
+import { useRouter } from "next/navigation";
 
 export default function FriendsListContainer({
   paddingTop,
@@ -15,7 +18,11 @@ export default function FriendsListContainer({
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(recordModalStateAtom);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
+  const setSelectedFriends =
+    useSetRecoilState<FriendInfo[]>(selectedFriendsAtom);
   const userFriends = FRIENDS;
+
+  const router = useRouter();
 
   const toggleItemClick = (idx: number) => {
     setClickedItems((prev) =>
@@ -24,8 +31,9 @@ export default function FriendsListContainer({
   };
 
   const handleSubmitClickedFriends = () => {
-    const clickedFriends = clickedItems.map((idx) => userFriends[idx]); // 클릭된 친구 정보 배열 생성
-    console.log(clickedFriends);
+    const clickedFriends = clickedItems.map((idx) => userFriends[idx]);
+    setSelectedFriends(clickedFriends);
+    router.back();
   };
 
   return (
@@ -58,7 +66,7 @@ export default function FriendsListContainer({
             </React.Fragment>
           );
         })}
-      </ul>{" "}
+      </ul>
       <FixedBottomButton
         label={`${clickedItems.length}명 선택 완료`}
         disabled={clickedItems.length < 1}

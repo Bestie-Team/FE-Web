@@ -8,10 +8,12 @@ export default function BottomSheetWrapper({
   open = true,
   onClose,
   children,
+  bar = true,
 }: {
   open?: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  bar?: boolean;
 }) {
   const [isClosing, setIsClosing] = useState(false);
 
@@ -39,7 +41,7 @@ export default function BottomSheetWrapper({
       >
         <Flex direction="column">
           <Flex justify="center" className="pt-[6px] pb-[18px]">
-            <RectIcon />
+            {bar ? <RectIcon /> : null}
           </Flex>
           {children}
         </Flex>
@@ -49,4 +51,4 @@ export default function BottomSheetWrapper({
 }
 
 const containerStyle =
-  "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zIndex)] pb-[34px]";
+  "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zIndex)] pb-[10px]";
