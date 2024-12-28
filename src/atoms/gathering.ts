@@ -1,9 +1,15 @@
-import { GatheringInfo } from "@/models/gathering";
+import { GatheringInfo, GatheringType } from "@/models/gathering";
+import { GroupInfo } from "@/models/group";
 import { atom } from "recoil";
 
 export const gatheringSelectedTabAtom = atom<"1" | "2">({
   key: "gathering/selectedTab",
   default: "1",
+});
+
+export const selectedGatheringTypeAtom = atom<GatheringType>({
+  key: "gathering/gatheringType",
+  default: "일반 모임",
 });
 
 export const gatheringAnimationStatusAtom = atom<boolean>({
@@ -41,10 +47,22 @@ export const newGatheringInfo = atom<GatheringInfo>({
     type: "normal",
     name: "",
     desc: "",
+    group: "",
     friends: [],
     date: "",
     ampm: "",
     time: "",
     address: "",
+  },
+});
+
+export const selectedGroupAtom = atom<GroupInfo>({
+  key: "gathering/selectedGroup",
+  default: {
+    groupName: "",
+    imageUrl: "",
+    desc: "",
+    groupLeader: "",
+    members: [],
   },
 });

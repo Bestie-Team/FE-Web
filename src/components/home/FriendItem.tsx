@@ -3,15 +3,24 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/icons/PlusIcon";
 import { FriendInfo } from "@/models/friend";
+import { AddFriendsSliderType } from "../groups/AddFriendsSlider";
+import { GroupInfo } from "@/models/group";
 
-export default function FriendItem({ friendInfo }: { friendInfo: FriendInfo }) {
+export default function FriendItem({
+  friendInfo,
+  groupInfo,
+}: {
+  friendInfo?: FriendInfo;
+  groupInfo?: GroupInfo;
+}) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
       <div className="p-[6px]">
         <Image
           alt="friendImage"
           src={
-            friendInfo.imageUrl ||
+            friendInfo?.imageUrl ||
+            groupInfo?.imageUrl ||
             "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
           }
           className="rounded-full object-cover w-[56px] h-[56px]"
@@ -21,16 +30,24 @@ export default function FriendItem({ friendInfo }: { friendInfo: FriendInfo }) {
       </div>
       <Spacing size={2} />
       <Flex direction="column" align="center">
-        <span className="text-T6">{friendInfo.userName || "이름"}</span>
-        <span className="text-C5 text-grayscale-400">
-          {friendInfo.userId || "아이디"}
+        <span className="text-T6">
+          {friendInfo?.userName || groupInfo?.groupName || "이름"}
+        </span>
+        <span className="text-C5 text-grayscale-400 truncate">
+          {friendInfo?.userId || groupInfo?.desc || "아이디"}
         </span>
       </Flex>
     </Flex>
   );
 }
 
-export function AddFriendItem({ onClick }: { onClick?: () => void }) {
+export function AddFriendItem({
+  onClick,
+  type = "친구",
+}: {
+  onClick?: () => void;
+  type?: AddFriendsSliderType;
+}) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
       <div
@@ -52,7 +69,7 @@ export function AddFriendItem({ onClick }: { onClick?: () => void }) {
       </div>
       <Spacing size={2} />
       <Flex direction="column" align="center">
-        <span className="text-T6">친구 추가</span>
+        <span className="text-T6">{type} 추가</span>
         <span className="text-C5 text-grayscale-400 hidden">ㅇㅇㅇ</span>
       </Flex>
     </Flex>

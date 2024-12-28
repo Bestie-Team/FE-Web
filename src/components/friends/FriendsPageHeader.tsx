@@ -11,13 +11,11 @@ export default function FriendsPageHeader({
   addFriendIcon?: boolean;
 }) {
   const router = useRouter();
-  const arrowIconContainerStyle =
-    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer";
 
   return (
-    <div className="bg-grayscale-50 flex pr-[20px] w-full items-center h-[48px]">
+    <div className={styles.headerWrapper}>
       <div
-        className={arrowIconContainerStyle}
+        className={styles.arrowIconContainer}
         onClick={() => {
           window.history.back();
         }}
@@ -40,3 +38,10 @@ export default function FriendsPageHeader({
     </div>
   );
 }
+
+const styles = {
+  arrowIconContainer:
+    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer",
+
+  headerWrapper: "bg-grayscale-50 flex pr-[20px] w-full items-center h-[48px]",
+};
