@@ -3,9 +3,11 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
 import { useRouter } from "next/navigation";
+import FRIENDS from "@/constants/friends";
 
 export default function FriendsSlider() {
   const router = useRouter();
+  const friends = FRIENDS;
   return (
     <div className="w-full pl-[20px]">
       <Spacing size={16} />
@@ -15,10 +17,10 @@ export default function FriendsSlider() {
             router.push("/friends/add");
           }}
         />
-        {Array.from({ length: 10 }, () => 1).map((_, i) => {
+        {friends.map((friend, i) => {
           return (
             <React.Fragment key={`friendItem${i}`}>
-              <FriendItem />
+              <FriendItem friendInfo={friend} />
               <Spacing size={4} direction="horizontal" />
             </React.Fragment>
           );
