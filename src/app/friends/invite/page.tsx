@@ -1,4 +1,5 @@
 "use client";
+// import FriendSearchSelectContainer from "@/components/friends/FriendSearchSelectContainer";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
 import SearchInput from "@/components/shared/inputs/SearchBar";
@@ -19,6 +20,7 @@ export default function InvitePage() {
         <Spacing size={16} />
       </div>
       <SelectFriendsContainer paddingTop="138px" />
+      {/* <FriendSearchSelectContainer /> */}
     </div>
   );
 }

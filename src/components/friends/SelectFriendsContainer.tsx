@@ -4,19 +4,19 @@ import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
 import Modal from "../shared/modal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { recordModalStateAtom } from "@/atoms/record";
 import FRIENDS from "@/constants/friends";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import { FriendInfo } from "@/models/friend";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { useRouter } from "next/navigation";
+import { gatheringModalStateAtom } from "@/atoms/gathering";
 
 export default function SelectFriendsContainer({
   paddingTop,
 }: {
   paddingTop?: string;
 }) {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(recordModalStateAtom);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
   const setSelectedFriends =
     useSetRecoilState<FriendInfo[]>(selectedFriendsAtom);
