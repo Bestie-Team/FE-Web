@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import "react-calendar/dist/Calendar.css";
+import "./Calendar.css";
 import { format } from "date-fns";
 import ArrowRightIcon from "../icons/ArrowRightIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
