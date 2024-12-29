@@ -2,48 +2,65 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
-import { format } from "date-fns";
+import { differenceInDays, format } from "date-fns";
+import { ko } from "date-fns/locale";
+import { GatheringResponse } from "@/models/gathering";
 
-export default function GatheringBannerContainer() {
-  const dateInfo = format(new Date(), "yyyy.MM.dd");
-  const title = "연말 술모임";
+export default function GatheringBannerContainer({
+  gathering,
+}: {
+  gathering: GatheringResponse;
+}) {
+  const dateInfo = format(gathering.date, "yyyy.MM.dd (E)", { locale: ko });
+  const diff = differenceInDays(new Date(), gathering.date);
 
   return (
     <Flex>
       <div className="relative">
         <Image
           alt="homeImage"
-          src="https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png"
+          src={
+            gathering.invitation_img_url ||
+            "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png"
+          }
           width={600}
           height={434}
           className="h-[434px] object-cover"
         />
-        <Flex
-          justify="space-between"
-          className="absolute left-0 right-0 bottom-0 p-[24px] pt-0"
-        >
+        <Flex justify="space-between" className={styles.wrapper}>
           <Flex direction="column">
             <Flex direction="column">
-              {title.length >= 10 ? (
+              {gathering.name.length >= 10 ? (
                 <>
-                  <span className="text-base-white text-T1">
-                    {title.slice(0, 5)}
+                  <span className={styles.gatheringName}>
+                    {gathering.name.slice(0, 5)}
                   </span>
                   <Spacing size={6} />
-                  <span className="text-base-white text-T1">
-                    {title.slice(5)}
+                  <span className={styles.gatheringName}>
+                    {gathering.name.slice(5)}
                   </span>
                 </>
               ) : (
-                <span className="text-base-white text-T1">{title}</span>
+                <span className={styles.gatheringName}>{gathering.name}</span>
               )}
             </Flex>
             <Spacing size={4} />
-            <span className="text-grayscale-100 text-B3">{dateInfo}</span>
+            <span className={styles.date}>{dateInfo}</span>
           </Flex>
-          <div className="text-base-white text-T2 self-end">D-2</div>
+          <div className={styles.diff}>
+            {diff > 0 ? `D + ${diff}` : `D${diff}`}
+          </div>
         </Flex>
       </div>
     </Flex>
   );
 }
+
+const styles = {
+  wrapper: "absolute left-0 right-0 bottom-0 p-[24px] pt-0",
+
+  gatheringName: "text-base-white text-T1",
+
+  date: "text-grayscale-100 text-B3",
+  diff: "text-base-white text-T2 self-end",
+};

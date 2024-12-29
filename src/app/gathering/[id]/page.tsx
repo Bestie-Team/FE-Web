@@ -12,21 +12,17 @@ import HeaderReturner from "@/utils/headerReturner";
 import Image from "next/image";
 import { GATHERINGS } from "@/constants/gathering";
 import { GatheringResponse } from "@/models/gathering";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 export default function GatheringDetailPage() {
-  const {
-    group,
-    address,
-    invitation_img_url,
-    ampm,
-    time,
-    date,
-  }: GatheringResponse = GATHERINGS[0];
+  const { group, address, ampm, time, date }: GatheringResponse = GATHERINGS[0];
+  const dateInfo = format(date, "yyyy.MM.dd (E)", { locale: ko });
 
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       <div className={styles.header}>{HeaderReturner()}</div>
-      <GatheringBannerContainer />
+      <GatheringBannerContainer gathering={GATHERINGS[0]} />
       <GroupLeaderContainer groupLeader={group.groupLeader} />
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
@@ -43,14 +39,11 @@ export default function GatheringDetailPage() {
             </Flex>
             <Spacing size={8} direction="horizontal" />
             <Image
-              className="rounded-[10.8px]"
+              className="rounded-[10.8px] width-[36px] height-[36px]"
               alt="mapImg"
               width={36}
               height={36}
-              src={
-                invitation_img_url ||
-                "https://d1al3w8x2wydb3.cloudfront.net/images/map.png"
-              }
+              src={"https://d1al3w8x2wydb3.cloudfront.net/images/map.png"}
             />
           </Flex>
         }
@@ -61,7 +54,7 @@ export default function GatheringDetailPage() {
         title={<span className={styles.title}>모임 시간</span>}
         content={
           <Flex className={styles.contentWrapper}>
-            <span>{date}</span>
+            <span>{dateInfo}</span>
             <Spacing size={12} direction="horizontal" />
             <span className="text-grayscale-400">{`${ampm} ${time}`}</span>
           </Flex>

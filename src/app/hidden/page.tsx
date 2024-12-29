@@ -37,7 +37,7 @@ export default function FeedPage() {
             <div className={tabWrapperStyle}>
               <TabButton
                 title={"숨김 피드 3"}
-                onClick={() => {}}
+                onMouseDown={() => {}}
                 current={true}
                 fresh={"never"}
               />
