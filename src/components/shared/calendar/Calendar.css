@@ -154,6 +154,27 @@
   letter-spacing: 0.42px;
 }
 
+.react-calendar__year-view__months__month {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+}
+
+.react-calendar__decade-view__years__year {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+
+.react-calendar__century-view__decades__decade {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+
 .react-calendar__tile:disabled {
   background-color: #f0f0f0;
   color: #ababab;
