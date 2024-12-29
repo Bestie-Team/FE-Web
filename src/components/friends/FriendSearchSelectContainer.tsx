@@ -1,6 +1,6 @@
 "use client";
 import React, { FormEvent, useState } from "react";
-import useDebounce from "@/hooks/debounce";
+// import useDebounce from "@/hooks/debounce";
 import FRIENDS from "@/constants/friends";
 import SearchInput from "../shared/inputs/SearchBar";
 import Spacing from "../shared/Spacing";
@@ -24,8 +24,7 @@ export default function FriendSearchSelectContainer() {
   const [clickedItems, setClickedItems] = useState<number[]>([]);
   const setSelectedFriends =
     useSetRecoilState<FriendInfo[]>(selectedFriendsAtom);
-  const [keyword, setKeyword] = useState("");
-  const debouncedKeyword = useDebounce(keyword);
+  // const debouncedKeyword = useDebounce(keyword);
   //   const {
   //     data: users,
   //     isLoading,
