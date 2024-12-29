@@ -27,8 +27,7 @@ const myFeed = [
 ];
 
 const allFeed = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/tongue_cake.jpeg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/binanton_jp.jpeg",
   "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
 ];
