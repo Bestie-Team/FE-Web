@@ -15,7 +15,7 @@ export default function FriendListItem({
   clicked,
 }: {
   friendInfo?: MemberInfo;
-  type: "basic" | "receivedRequest" | "sendedRequest";
+  type: "basic" | "invite" | "receivedRequest" | "sendedRequest";
   idx: number;
   onClick?: () => void;
   clicked?: boolean;
@@ -27,7 +27,7 @@ export default function FriendListItem({
         styles.li,
         clicked ? "border-grayscale-900" : "border-base-white"
       )}
-      onClick={onClick}
+      onMouseDown={onClick}
     >
       <Image
         alt="friendImg"

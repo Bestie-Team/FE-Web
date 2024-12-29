@@ -15,14 +15,14 @@ export default function ActionItem({
   icon: React.ReactNode;
 }) {
   return (
-    <Flex className="py-[12px] w-full">
-      <Button className={buttonStyle}>{icon}</Button>
+    <Flex className={styles.container}>
+      <Button className={styles.button}>{icon}</Button>
       <Spacing size={12} direction="horizontal" />
-      <Flex className="flex-grow cursor-pointer items-center" onClick={onClick}>
+      <Flex className={styles.descWrapper} onMouseDown={onClick}>
         <Flex direction="column" className="flex-grow">
           <span className="text-T5">{title}</span>
           <Spacing size={4} />
-          <span className="text-C2 text-grayscale-400">{subTitle}</span>
+          <span className={styles.subTitle}>{subTitle}</span>
         </Flex>
         <Spacing size={12} />
         <ArrowRightIcon />
@@ -31,5 +31,12 @@ export default function ActionItem({
   );
 }
 
-const buttonStyle =
-  "bg-grayscale-900 w-[40px] h-[40px] p-[11px] rounded-full cursor-default";
+const styles = {
+  container: "py-[12px] w-full",
+
+  descWrapper: "flex-grow cursor-pointer items-center",
+  button:
+    "bg-grayscale-900 w-[40px] h-[40px] p-[11px] rounded-full cursor-default",
+
+  subTitle: "text-C2 text-grayscale-400",
+};

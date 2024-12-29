@@ -2,16 +2,21 @@ import clsx from "clsx";
 
 type Props = {
   title: string;
-  onClick: () => void;
+  onMouseDown: () => void;
   className?: string;
   current: boolean;
   fresh: boolean | "never"; // 빨간아이콘
 };
-export default function TabButton({ title, current, onClick, fresh }: Props) {
+export default function TabButton({
+  title,
+  current,
+  onMouseDown,
+  fresh,
+}: Props) {
   return (
     <div className={"flex cursor-pointer"}>
       <div
-        onClick={onClick}
+        onMouseDown={onMouseDown}
         className={clsx(
           textStyle,
           current ? "text-grayscale-900" : "text-grayscale-300"

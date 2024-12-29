@@ -56,7 +56,7 @@ export default function SelectFriendsContainer({
               <FriendListItem
                 friendInfo={friendItem}
                 idx={idx}
-                type="basic"
+                type="invite"
                 onClick={() => {
                   toggleItemClick(idx);
                 }}

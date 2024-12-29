@@ -45,7 +45,7 @@ export default function NavBar() {
             key={item.href.slice(1)}
             href={item.href}
             className={iconWrapperStyle}
-            onClick={() => setActiveBtn(idx)}
+            onMouseDown={() => setActiveBtn(idx)}
           >
             {item.icon(isActive, src)}
           </Link>

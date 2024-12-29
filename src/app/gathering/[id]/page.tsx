@@ -8,36 +8,38 @@ import CalendarIcon from "@/components/shared/icons/CalendarIcon";
 import MapPinIcon from "@/components/shared/icons/MapPinIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Spacing from "@/components/shared/Spacing";
-import MEMBERS from "@/constants/members";
 import HeaderReturner from "@/utils/headerReturner";
 import Image from "next/image";
+import { GATHERINGS } from "@/constants/gathering";
+import { GatheringResponse } from "@/models/gathering";
 
-export default function GatheringDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const member = 4;
-  console.log(params);
+export default function GatheringDetailPage() {
+  const {
+    group,
+    address,
+    invitation_img_url,
+    ampm,
+    time,
+    date,
+  }: GatheringResponse = GATHERINGS[0];
+
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-      <div className={"max-w-[430px] z-10 fixed w-full"}>
-        {HeaderReturner()}
-      </div>
+      <div className={styles.header}>{HeaderReturner()}</div>
       <GatheringBannerContainer />
-      <GroupLeaderContainer />
+      <GroupLeaderContainer groupLeader={group.groupLeader} />
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<CalendarIcon width="20" height="20" />}
-        title={<span className={titleStyle}>모임 장소</span>}
+        title={<span className={styles.title}>모임 장소</span>}
         content={
-          <Flex className={contentWrapperStyle}>
+          <Flex className={styles.contentWrapper}>
             <Flex direction="column" className="flex-grow">
-              <span className="text-T5">빙봉 성수점</span>
+              <span className="text-T5">{address}</span>
               <Spacing size={4.16} />
-              <span className="text-C2 text-grayscale-400">
+              {/* <span className="text-C2 text-grayscale-400">
                 서울 성동구 서울숲2길 18-14 1층
-              </span>
+              </span> */}
             </Flex>
             <Spacing size={8} direction="horizontal" />
             <Image
@@ -45,7 +47,10 @@ export default function GatheringDetailPage({
               alt="mapImg"
               width={36}
               height={36}
-              src={"https://d1al3w8x2wydb3.cloudfront.net/images/map.png"}
+              src={
+                invitation_img_url ||
+                "https://d1al3w8x2wydb3.cloudfront.net/images/map.png"
+              }
             />
           </Flex>
         }
@@ -53,26 +58,34 @@ export default function GatheringDetailPage({
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<MapPinIcon width="20" height="20" color="#0A0A0A" />}
-        title={<span className={titleStyle}>모임 시간</span>}
+        title={<span className={styles.title}>모임 시간</span>}
         content={
-          <Flex className={contentWrapperStyle}>
-            <span>2024.12.24(월)</span>
+          <Flex className={styles.contentWrapper}>
+            <span>{date}</span>
             <Spacing size={12} direction="horizontal" />
-            <span className="text-grayscale-400">오후 6:00</span>
+            <span className="text-grayscale-400">{`${ampm} ${time}`}</span>
           </Flex>
         }
       />
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
-        title={<span className={titleStyle}>{`모임 멤버 ${member}`}</span>}
-        content={<GatheringMembersSlider members={MEMBERS} />}
+        title={
+          <span
+            className={styles.title}
+          >{`모임 멤버 ${group.members.length}`}</span>
+        }
+        content={<GatheringMembersSlider members={group.members} />}
       />
     </Flex>
   );
 }
 
-const titleStyle = "font-[700] text-[16px] leading-[20.8px]";
+const styles = {
+  header: "max-w-[430px] z-10 fixed w-full",
 
-const contentWrapperStyle =
-  "w-full px-[20px] py-[16px] border-[1px] border-grayscale-100 rounded-[12px] text-B3";
+  title: "font-[700] text-[16px] leading-[20.8px]",
+
+  contentWrapper:
+    "w-full px-[20px] py-[16px] border-[1px] border-grayscale-100 rounded-[12px] text-B3",
+};

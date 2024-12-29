@@ -137,7 +137,7 @@ export function HeaderTransparentWithLogo() {
       <div className="flex-1" />
       <Flex align="center">
         <div
-          onClick={() => {
+          onMouseDown={() => {
             router.push("/invitation");
           }}
           className={clsx("relative", iconWrapperStyle)}
@@ -147,7 +147,7 @@ export function HeaderTransparentWithLogo() {
         </div>
         <Spacing size={4} direction="horizontal" />
         <div
-          onClick={() => {
+          onMouseDown={() => {
             router.push("/notice");
           }}
           className={iconWrapperStyle}

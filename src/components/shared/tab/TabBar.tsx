@@ -31,13 +31,13 @@ export default function TabBar({
       <div className={tabWrapperStyle}>
         <TabButton
           title={title1 ?? "left"}
-          onClick={() => onClick("1")}
+          onMouseDown={() => onClick("1")}
           current={selectedTab === "1"}
           fresh={true}
         />
         <TabButton
           title={title2 ?? "mine"}
-          onClick={() => onClick("2")}
+          onMouseDown={() => onClick("2")}
           current={selectedTab === "2"}
           fresh={true}
         />

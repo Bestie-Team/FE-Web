@@ -12,6 +12,7 @@ interface FlexProps {
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   style?: React.CSSProperties;
   onClick?: () => void;
+  onMouseDown?: () => void;
   children: React.ReactNode;
   className?: string;
   ref?: React.LegacyRef<HTMLDivElement>;
@@ -25,6 +26,7 @@ const Flex: React.FC<FlexProps> = ({
   style,
   children,
   onClick,
+  onMouseDown,
   ref,
 }) => {
   const flexStyle: React.CSSProperties = {
@@ -36,7 +38,13 @@ const Flex: React.FC<FlexProps> = ({
   };
 
   return (
-    <div ref={ref} onClick={onClick} style={flexStyle} className={className}>
+    <div
+      ref={ref}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      style={flexStyle}
+      className={className}
+    >
       {children}
     </div>
   );

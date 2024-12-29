@@ -52,7 +52,7 @@ export function AddFriendItem({
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
       <div
         className="p-[6px]"
-        onClick={() => {
+        onMouseDown={() => {
           if (onClick) {
             onClick();
           } else return;

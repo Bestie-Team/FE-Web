@@ -13,7 +13,7 @@ interface GatheringInputProps {
   label?: React.ReactNode;
   name?: string;
   value: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   setValue?: SetterOrUpdater<GatheringInfo>;
 }
 
@@ -28,7 +28,7 @@ export default function GatheringInput({
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [addressSearchOpen, setAddressSearchOpen] = useState<boolean>(false);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleComplete = (data: any) => {
@@ -48,18 +48,11 @@ export default function GatheringInput({
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
     setValue((prev) => ({ ...prev, address: fullAddress }));
-    setIsOpen(false);
+    setAddressSearchOpen(false);
   };
 
   return (
-    <Flex
-      direction="column"
-      onClick={() => {
-        if (type === "address") {
-          setIsOpen(true);
-        }
-      }}
-    >
+    <Flex direction="column">
       {label && (
         <>
           <Flex align="center" className="text-T5">
@@ -69,6 +62,14 @@ export default function GatheringInput({
         </>
       )}
       <div
+        onMouseDown={() => {
+          if (type === "address") {
+            setAddressSearchOpen(true);
+          }
+          if (onClick) {
+            onClick();
+          }
+        }}
         onClick={onClick}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -82,13 +83,16 @@ export default function GatheringInput({
       >
         {value}
       </div>
-      {isOpen && (
+      {addressSearchOpen && (
         <BottomSheetWrapper
           onClose={() => {
-            setIsOpen(false);
+            setAddressSearchOpen(false);
           }}
         >
-          <DaumPostcodeEmbed onComplete={handleComplete} />
+          <DaumPostcodeEmbed
+            onComplete={handleComplete}
+            className="px-[24px]"
+          />
         </BottomSheetWrapper>
       )}
     </Flex>
