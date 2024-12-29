@@ -2,15 +2,16 @@ import Image from "next/image";
 import "swiper/css";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
+import { MemberInfo } from "@/constants/members";
 
 export default function GatheringMemberContainer({
   members,
 }: {
-  members: { imgUrl: string; userId: string; name: string }[];
+  members: MemberInfo[];
 }) {
   return (
     <Flex className={memberContainerStyle}>
-      {members.map(({ imgUrl, userId, name }, idx) => (
+      {members.map(({ imageUrl, userId, name }, idx) => (
         <Flex
           key={`member${idx}`}
           direction="column"
@@ -19,7 +20,7 @@ export default function GatheringMemberContainer({
         >
           <div className={imageStyle}>
             <Image
-              src={imgUrl}
+              src={imageUrl}
               alt={`img${idx + 1}`}
               width={40}
               height={40}
