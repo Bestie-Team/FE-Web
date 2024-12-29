@@ -21,13 +21,13 @@ export default function GroupDetailPage({
   // if (data == null || isLoading) return <div>Loading...</div>;
 
   // 임시로 아래와 같이 데이터 불러옴
-  const { groupLeader, desc, members, imageUrl } = GROUPS[Number(params.id)];
+  const { groupLeader, desc, members } = GROUPS[Number(params.id)];
 
   const 내가이그룹장인가 = true;
 
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-      <GroupBannerContainer imageUrl={imageUrl} />
+      <GroupBannerContainer imageUrl={GROUPS[Number(params.id)].imageUrl} />
       <GroupInfoContainer group={GROUPS[Number(params.id)]} />
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />

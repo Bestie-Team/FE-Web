@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FriendInfo } from "@/models/friend";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { useRecoilValue } from "recoil";
-import { GroupInfo, GroupInfoResponse } from "@/models/group";
+import { GroupInfoResponse } from "@/models/group";
 import { selectedGroupAtom } from "@/atoms/gathering";
 
 export type AddFriendsSliderType = "친구" | "그룹";
