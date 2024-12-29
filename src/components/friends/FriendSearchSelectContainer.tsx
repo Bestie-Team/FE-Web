@@ -33,7 +33,7 @@ export default function FriendSearchSelectContainer() {
   const users = FRIENDS;
   const router = useRouter();
   const onSubmit = (e: FormEvent) => {
-    e.preventDefault;
+    e.preventDefault();
   };
 
   const toggleItemClick = (idx: number) => {
