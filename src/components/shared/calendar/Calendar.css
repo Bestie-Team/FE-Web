@@ -54,6 +54,7 @@
 .react-calendar__navigation {
   justify-self: center;
   display: flex;
+  gap: 12px;
   width: 184px;
   height: 44px;
   padding: 8px 0;

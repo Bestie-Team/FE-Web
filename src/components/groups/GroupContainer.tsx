@@ -4,26 +4,30 @@ import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/icons/ArrowRightIcon";
 import GroupImages from "../shared/GroupImages";
 import clsx from "clsx";
+import { GroupInfoResponse } from "@/models/group";
 
 export default function GroupContainer({
+  group,
   onClick,
   className,
 }: {
+  group: GroupInfoResponse;
   onClick?: () => void;
   className?: string;
 }) {
-  const groupName = "다꾸 모임💖";
-  const groupDetail = "다꾸하는 모임";
+  const { groupName, desc, gatheringCount, imageUrl, members } = group;
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
 
   return (
     <Flex
       align="center"
-      className={clsx(groupContainerStyle, className)}
-      onClick={() => {
-        if (onClick) {
-          onClick();
-        } else return;
-      }}
+      className={clsx(styles.groupContainer, className)}
+      onClick={handleClick}
     >
       <Flex direction="column" className="flex-grow">
         <Flex align="center">
@@ -32,26 +36,29 @@ export default function GroupContainer({
               alt="leaderImg"
               width={48}
               height={48}
-              className="object-cover rounded-full"
-              src={"https://d1al3w8x2wydb3.cloudfront.net/images/cute.jpg"}
+              className="object-cover rounded-full h-[48px]"
+              src={
+                imageUrl ||
+                "https://d1al3w8x2wydb3.cloudfront.net/images/cute.jpg"
+              }
             />
           </div>
           <Spacing size={12} direction="horizontal" />
           <Flex direction="column">
             <span className="text-T5">{groupName}</span>
             <Spacing size={4} />
-            <span className="text-C2 text-grayscale-300">{groupDetail}</span>
+            <span className={styles.font}>{desc}</span>
           </Flex>
         </Flex>
         <Spacing size={12} />
         <Flex align="center">
-          <span className="text-C2 text-grayscale-300">모임 횟수</span>
+          <span className={styles.font}>모임횟수</span>
           <Spacing size={2} direction="horizontal" />
-          <span className="text-B4">{12}</span>
-          <div className="mx-[12px] bg-grayscale-100 h-[13px] w-[1px]" />
-          <span className="text-C2 text-grayscale-300">그룹 멤버</span>
+          <span className="text-B4">{gatheringCount}</span>
+          <div className={styles.bar} />
+          <span className={styles.font}>그룹 멤버</span>
           <Spacing size={2} direction="horizontal" />
-          <span className="text-B4">{4}</span>
+          <span className="text-B4">{members.length}</span>
           <Spacing size={12} direction="horizontal" />
           <GroupImages width={24} height={24} gap={8} />
         </Flex>
@@ -61,4 +68,10 @@ export default function GroupContainer({
   );
 }
 
-const groupContainerStyle = "bg-base-white gap-[12px] p-[20px] rounded-[16px]";
+const styles = {
+  groupContainer: "bg-base-white gap-[12px] p-[20px] rounded-[16px]",
+
+  font: "text-C2 text-grayscale-300",
+
+  bar: "mx-[12px] bg-grayscale-100 h-[13px] w-[1px]",
+};

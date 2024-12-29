@@ -20,6 +20,7 @@ export default function InvitePage() {
         <Spacing size={16} />
       </div>
       <SelectFriendsContainer paddingTop="138px" />
+      {/**아래 컴포넌트 완성 후 위 컴포넌트대신 아래 컴포넌트 사용 예정*/}
       {/* <FriendSearchSelectContainer /> */}
     </div>
   );

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FriendInfo } from "@/models/friend";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { useRecoilValue } from "recoil";
-import { GroupInfo } from "@/models/group";
+import { GroupInfo, GroupInfoResponse } from "@/models/group";
 import { selectedGroupAtom } from "@/atoms/gathering";
 
 export type AddFriendsSliderType = "친구" | "그룹";
@@ -18,7 +18,7 @@ export default function AddFriendsSlider({
 }) {
   const router = useRouter();
   const friends = useRecoilValue<FriendInfo[]>(selectedFriendsAtom);
-  const selectedGroup = useRecoilValue<GroupInfo>(selectedGroupAtom);
+  const selectedGroup = useRecoilValue<GroupInfoResponse>(selectedGroupAtom);
   return (
     <div className="w-full">
       <Flex className="overflow-scroll no-scrollbar">

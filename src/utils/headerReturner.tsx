@@ -42,11 +42,12 @@ export default function HeaderReturner() {
         }
       />
     ),
-    "/groups": pathname.endsWith("new") ? (
-      <HeaderWithBackIcon pageName="그룹 생성" />
-    ) : (
-      <HeaderWithBackIcon pageName="나의 그룹" />
-    ),
+    "/groups":
+      pathname.endsWith("new") || pathname.endsWith("done") ? (
+        <HeaderWithBackIcon pageName="그룹 생성" />
+      ) : (
+        <HeaderWithBackIcon pageName="나의 그룹" />
+      ),
     "/card": <HeaderWithBackIcon pageName="카드 생성" />,
   };
 

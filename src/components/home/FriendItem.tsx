@@ -4,14 +4,14 @@ import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/icons/PlusIcon";
 import { FriendInfo } from "@/models/friend";
 import { AddFriendsSliderType } from "../groups/AddFriendsSlider";
-import { GroupInfo } from "@/models/group";
+import { GroupInfoResponse } from "@/models/group";
 
 export default function FriendItem({
   friendInfo,
   groupInfo,
 }: {
   friendInfo?: FriendInfo;
-  groupInfo?: GroupInfo;
+  groupInfo?: GroupInfoResponse;
 }) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>

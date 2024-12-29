@@ -1,5 +1,5 @@
 import { GatheringInfo, GatheringType } from "@/models/gathering";
-import { GroupInfo } from "@/models/group";
+import { GroupInfo, GroupInfoResponse } from "@/models/group";
 import { atom } from "recoil";
 
 export const gatheringSelectedTabAtom = atom<"1" | "2">({
@@ -56,13 +56,15 @@ export const newGatheringInfo = atom<GatheringInfo>({
   },
 });
 
-export const selectedGroupAtom = atom<GroupInfo>({
+export const selectedGroupAtom = atom<GroupInfoResponse>({
   key: "gathering/selectedGroup",
   default: {
+    id: "",
     groupName: "",
     imageUrl: "",
     desc: "",
-    groupLeader: "",
+    groupLeader: { imgUrl: "", userId: "", name: "" },
     members: [],
+    gatheringCount: 0,
   },
 });
