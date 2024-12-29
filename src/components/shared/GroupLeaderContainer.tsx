@@ -7,9 +7,9 @@ import { MemberInfo } from "@/constants/members";
 export default function GroupLeaderContainer({
   groupLeader,
 }: {
-  groupLeader: MemberInfo;
+  groupLeader?: MemberInfo;
 }) {
-  const { name, userId, imgUrl } = groupLeader;
+  const { name, userId, imgUrl } = groupLeader!;
   return (
     <Flex
       align="center"
