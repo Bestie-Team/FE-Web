@@ -5,29 +5,34 @@ import GroupBannerContainer from "@/components/groups/GroupBannerContainer";
 import Flex from "@/components/shared/Flex";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Spacing from "@/components/shared/Spacing";
-import MEMBERS from "@/constants/members";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/icons/PencilIcon";
 import Button from "@/components/shared/buttons";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
+import { GROUPS } from "@/constants/groups";
 
 export default function GroupDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  console.log(params.id);
+  // const { id } = params;
+  // const { data, isLoading } = useGroup({ id });
+  // if (data == null || isLoading) return <div>Loading...</div>;
+
+  // 임시로 아래와 같이 데이터 불러옴
+  const { groupLeader, desc, members, imageUrl } = GROUPS[Number(params.id)];
 
   const 내가이그룹장인가 = true;
 
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-      <GroupBannerContainer />
-      <GroupInfoContainer />
+      <GroupBannerContainer imageUrl={imageUrl} />
+      <GroupInfoContainer group={GROUPS[Number(params.id)]} />
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />
       </div>
-      <GroupLeaderContainer />
+      <GroupLeaderContainer groupLeader={groupLeader} />
       <Spacing size={10} />
       <LightyInfoContainer
         icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
@@ -39,20 +44,22 @@ export default function GroupDetailPage({
         }
         content={
           <Flex className={styles.contentWrapper}>
-            <span>다꾸하는 모임</span>
+            <span>{desc}</span>
           </Flex>
         }
       />
       <Spacing size={10} />
       <LightyInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
-        title={<span className={styles.title}>{`모임 멤버 ${4}`}</span>}
+        title={
+          <span className={styles.title}>{`모임 멤버 ${members.length}`}</span>
+        }
         editBtn={
           내가이그룹장인가 ? (
             <Button className={styles.button}>추가</Button>
           ) : null
         }
-        content={<GatheringMembersSlider members={MEMBERS} />}
+        content={<GatheringMembersSlider members={members} />}
       />
     </Flex>
   );

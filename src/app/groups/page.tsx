@@ -29,7 +29,6 @@ export default function GroupsPage() {
             그룹 추가
           </Button>
         </Flex>
-
         {myGroups.map((group, idx) => {
           return (
             <React.Fragment key={`${group}${idx}`}>

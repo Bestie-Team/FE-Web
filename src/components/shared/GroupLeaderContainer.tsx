@@ -2,8 +2,14 @@ import Image from "next/image";
 import Flex from "./Flex";
 import Spacing from "./Spacing";
 import Button from "./buttons";
+import { MemberInfo } from "@/constants/members";
 
-export default function GroupLeaderContainer() {
+export default function GroupLeaderContainer({
+  groupLeader,
+}: {
+  groupLeader: MemberInfo;
+}) {
+  const { name, userId, imgUrl } = groupLeader;
   return (
     <Flex
       align="center"
@@ -15,13 +21,13 @@ export default function GroupLeaderContainer() {
           alt="leader"
           width={36}
           height={36}
-          src="https://d1al3w8x2wydb3.cloudfront.net/images/hi.jpeg"
+          src={imgUrl || "https://d1al3w8x2wydb3.cloudfront.net/images/hi.jpeg"}
           className={leaderImageStyle}
         />
         <Spacing direction="horizontal" size={8} />
-        <span>maybin_</span>
+        <span>{userId}</span>
         <Spacing direction="horizontal" size={8} />
-        <span className="text-grayscale-500">김혜빈</span>
+        <span className="text-grayscale-500">{name}</span>
       </Flex>
       <Button className={buttonWrapperStyle}>
         <Flex align="center" justify="space-between" style={{ gap: "6px" }}>
