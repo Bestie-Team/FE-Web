@@ -8,6 +8,7 @@ import FRIENDS from "@/constants/friends";
 export default function FriendsSlider() {
   const router = useRouter();
   const friends = FRIENDS;
+
   return (
     <div className="w-full pl-[20px]">
       <Spacing size={16} />

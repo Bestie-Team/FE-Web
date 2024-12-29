@@ -10,10 +10,10 @@ import Flex from "../shared/Flex";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Modal from "../shared/modal";
 import { selectedFriendsAtom } from "@/atoms/friends";
-import { FriendInfo } from "@/models/friend";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useRouter } from "next/navigation";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
+import { MemberInfo } from "@/constants/members";
 
 // /api/search/${keyword}
 // 검색하는 keyword가 있다면 /api/search/${keyword} -> 유저네임이나, 네임
@@ -23,7 +23,7 @@ export default function FriendSearchSelectContainer() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
   const setSelectedFriends =
-    useSetRecoilState<FriendInfo[]>(selectedFriendsAtom);
+    useSetRecoilState<MemberInfo[]>(selectedFriendsAtom);
   // const debouncedKeyword = useDebounce(keyword);
   //   const {
   //     data: users,

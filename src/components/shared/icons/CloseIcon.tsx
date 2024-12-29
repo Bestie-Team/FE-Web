@@ -9,7 +9,7 @@ export default function CloseIcon({
   width?: string;
   height?: string;
   color?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   return (
     <svg

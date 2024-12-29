@@ -63,7 +63,7 @@ export const selectedGroupAtom = atom<GroupInfoResponse>({
     groupName: "",
     imageUrl: "",
     desc: "",
-    groupLeader: { imgUrl: "", userId: "", name: "" },
+    groupLeader: { imageUrl: "", userId: "", name: "" },
     members: [],
     gatheringCount: 0,
   },

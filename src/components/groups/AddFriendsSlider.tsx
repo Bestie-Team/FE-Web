@@ -3,11 +3,12 @@ import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import FriendItem, { AddFriendItem } from "../home/FriendItem";
 import { useRouter } from "next/navigation";
-import { FriendInfo } from "@/models/friend";
 import { selectedFriendsAtom } from "@/atoms/friends";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { GroupInfoResponse } from "@/models/group";
 import { selectedGroupAtom } from "@/atoms/gathering";
+import { MemberInfo } from "@/constants/members";
+import DeletableFriendItem from "../friends/DeletableFriendItem";
 
 export type AddFriendsSliderType = "친구" | "그룹";
 
@@ -17,8 +18,17 @@ export default function AddFriendsSlider({
   type?: AddFriendsSliderType;
 }) {
   const router = useRouter();
-  const friends = useRecoilValue<FriendInfo[]>(selectedFriendsAtom);
+  const [friends, setFriends] =
+    useRecoilState<MemberInfo[]>(selectedFriendsAtom);
   const selectedGroup = useRecoilValue<GroupInfoResponse>(selectedGroupAtom);
+
+  const onClickDelete = (friend: MemberInfo) => {
+    const changedFriends = friends.filter(
+      (friendItem) => friendItem.userId !== friend.userId
+    );
+    setFriends(changedFriends);
+  };
+
   return (
     <div className="w-full">
       <Flex className="overflow-scroll no-scrollbar">
@@ -36,7 +46,10 @@ export default function AddFriendsSlider({
           ? friends.map((friend, i) => {
               return (
                 <React.Fragment key={`friendItem${i}`}>
-                  <FriendItem friendInfo={friend} />
+                  <DeletableFriendItem
+                    friendInfo={friend}
+                    onClickDelete={() => onClickDelete(friend)}
+                  />
                   <Spacing size={4} direction="horizontal" />
                 </React.Fragment>
               );

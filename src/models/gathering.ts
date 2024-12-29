@@ -1,10 +1,10 @@
-import { FriendInfo } from "./friend";
+import { MemberInfo } from "@/constants/members";
 
 export interface GatheringInfo {
   type: "normal" | "group";
   name: string;
   desc: string;
-  friends: FriendInfo[];
+  friends: MemberInfo[];
   group: string;
   date: string;
   ampm: string;

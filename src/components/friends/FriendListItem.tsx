@@ -5,7 +5,7 @@ import Flex from "../shared/Flex";
 import clsx from "clsx";
 import Options from "../shared/icons/Options";
 import Button from "../shared/buttons";
-import { FriendInfo } from "@/models/friend";
+import { MemberInfo } from "@/constants/members";
 
 export default function FriendListItem({
   friendInfo,
@@ -14,7 +14,7 @@ export default function FriendListItem({
   onClick,
   clicked,
 }: {
-  friendInfo?: FriendInfo;
+  friendInfo?: MemberInfo;
   type: "basic" | "receivedRequest" | "sendedRequest";
   idx: number;
   onClick?: () => void;
@@ -41,7 +41,7 @@ export default function FriendListItem({
         <span className="text-T6">{friendInfo?.userId || "lighty"}</span>
         <Spacing size={2} />
         <span className="text-C2 text-grayscale-400">
-          {friendInfo?.userName || "김땡땡"}
+          {friendInfo?.name || "김땡땡"}
         </span>
       </Flex>
       {type === "basic" ? (

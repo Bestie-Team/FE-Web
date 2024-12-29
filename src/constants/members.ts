@@ -1,32 +1,32 @@
 export interface MemberInfo {
-  imgUrl: string;
+  imageUrl: string;
   userId: string;
   name: string;
 }
 
 const MEMBERS: MemberInfo[] = [
   {
-    imgUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/yellow.jpg",
+    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/yellow.jpg",
     userId: "sky",
     name: "김하늘",
   },
   {
-    imgUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/mich.jpg",
+    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/mich.jpg",
     userId: "summer",
     name: "김여름",
   },
   {
-    imgUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/cute.jpg",
+    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/cute.jpg",
     userId: "choco",
     name: "김초코",
   },
   {
-    imgUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/blanket.jpg",
+    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/blanket.jpg",
     userId: "anton",
     name: "이앤톤",
   },
   {
-    imgUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/cat.jpg",
+    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/cat.jpg",
     userId: "stone",
     name: "돌",
   },

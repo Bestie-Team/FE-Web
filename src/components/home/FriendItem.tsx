@@ -2,15 +2,15 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/icons/PlusIcon";
-import { FriendInfo } from "@/models/friend";
 import { AddFriendsSliderType } from "../groups/AddFriendsSlider";
 import { GroupInfoResponse } from "@/models/group";
+import { MemberInfo } from "@/constants/members";
 
 export default function FriendItem({
   friendInfo,
   groupInfo,
 }: {
-  friendInfo?: FriendInfo;
+  friendInfo?: MemberInfo;
   groupInfo?: GroupInfoResponse;
 }) {
   return (
@@ -31,7 +31,7 @@ export default function FriendItem({
       <Spacing size={2} />
       <Flex direction="column" align="center">
         <span className="text-T6">
-          {friendInfo?.userName || groupInfo?.groupName || "이름"}
+          {friendInfo?.name || groupInfo?.groupName || "이름"}
         </span>
         <span className="text-C5 text-grayscale-400 truncate">
           {friendInfo?.userId || groupInfo?.desc || "아이디"}
