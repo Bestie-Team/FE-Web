@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import "./Calendar.css";
+import "./CalendarWithBorder.css";
 import { format } from "date-fns";
 import ArrowRightIcon from "../icons/ArrowRightIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
@@ -15,7 +15,7 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function LightyCalendar() {
+export default function LightyCalendarWithBorder() {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
@@ -29,15 +29,17 @@ export default function LightyCalendar() {
       prev2Label={null}
       next2Label={null}
       nextLabel={
-        <div className="border border-[#E9E9E9] p-[7px] rounded-[8px]">
+        <div className={iconWrapper}>
           <ArrowRightIcon width="14" height="14" color="#AEAEAE" />
         </div>
       }
       prevLabel={
-        <div className="border border-[#E9E9E9] p-[7px] rounded-[8px]">
+        <div className={iconWrapper}>
           <ArrowLeftIcon width="14" height="14" color="#AEAEAE" />
         </div>
       }
     />
   );
 }
+
+const iconWrapper = "border border-[#E9E9E9] p-[7px] rounded-[8px]";

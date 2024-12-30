@@ -61,4 +61,4 @@ export default function CalendarBottomSheet({
 }
 
 const buttonStyle =
-  "bg-grayscale-900 max-w-full min-w-[350px] py-[18px] text-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full";
+  "bg-grayscale-900 w-full py-[18px] text-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full";

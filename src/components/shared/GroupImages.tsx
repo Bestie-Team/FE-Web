@@ -58,6 +58,7 @@ export default function GroupImages({
     </Flex>
   );
 }
+
 const styles = {
   groupImage:
     "object-cover rounded-full overflow-hidden border-[1px] border-base-white aspect-square",
