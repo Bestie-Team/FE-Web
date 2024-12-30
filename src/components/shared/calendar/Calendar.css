@@ -1,6 +1,7 @@
 .react-calendar {
   display: flex;
-  justify-items: center;
+  flex-direction: column;
+  align-items: center;
   width: 340px;
   max-width: 100%;
   background: white;
