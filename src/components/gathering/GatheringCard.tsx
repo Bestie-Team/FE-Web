@@ -12,7 +12,7 @@ export default function GatheringCard({
   gathering,
   which,
 }: {
-  onClick: (e: any) => void;
+  onClick: () => void;
   gathering: GatheringResponse;
   which: string;
 }) {

@@ -55,11 +55,3 @@ export default function ChoosingGatheringToRecord({
     </Flex>
   );
 }
-
-const imageList = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/window.jpg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/party.jpg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
-];

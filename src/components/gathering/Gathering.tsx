@@ -43,7 +43,7 @@ export default function Gathering({
         {which === "2"
           ? passedGathering.map((gathering, i) => (
               <GatheringCard
-                onClick={(e) => {
+                onClick={() => {
                   router.push(`/gathering/${gathering.id}`);
                 }}
                 gathering={gathering}
