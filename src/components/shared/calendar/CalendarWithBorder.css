@@ -1,5 +1,7 @@
 .react-calendar {
-  width: 350px;
+  display: flex;
+  justify-items: center;
+  width: 348.6px;
   min-width: 350px;
   background: white;
   border: none;

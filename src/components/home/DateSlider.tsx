@@ -13,19 +13,16 @@ export default function DateSlider() {
 
   return (
     <Flex direction="column">
-      <Flex align="center" className="px-[20px] w-full">
+      <Flex align="center" className={styles.titleWrapper}>
         <CalendarColoredIcon />
         <Spacing size={4} direction="horizontal" />
-        <div className="text-T3 flex-grow"> 이번 주 모임</div>
+        <div className={styles.title}> 이번 주 모임</div>
         <div className="cursor-pointer" onClick={() => router.push("/home")}>
           <ArrowRightIcon />
         </div>
       </Flex>
       <Spacing size={12} />
-      <Flex
-        className="w-[330px] mx-auto my-0 px-0 py-[10px]"
-        justify="space-between"
-      >
+      <Flex className={styles.dateWrapper} justify="space-between">
         {sevenDays.map(({ D, E }, i) => {
           return <DateItem date={D} day={E} key={i} />;
         })}
@@ -33,3 +30,10 @@ export default function DateSlider() {
     </Flex>
   );
 }
+
+const styles = {
+  titleWrapper: "px-[20px] w-full",
+  title: "text-T3 flex-grow",
+
+  dateWrapper: "w-[330px] mx-auto my-0 px-0 py-[10px]",
+};
