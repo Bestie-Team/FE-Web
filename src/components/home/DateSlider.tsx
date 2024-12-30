@@ -26,8 +26,8 @@ export default function DateSlider() {
         className="w-[330px] mx-auto my-0 px-0 py-[10px]"
         justify="space-between"
       >
-        {sevenDays.map(({ D, E }) => {
-          return <DateItem date={D} day={E} />;
+        {sevenDays.map(({ D, E }, i) => {
+          return <DateItem date={D} day={E} key={i} />;
         })}
       </Flex>
     </Flex>
