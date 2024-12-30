@@ -4,7 +4,7 @@ export const GATHERINGS = [
   {
     id: "3",
     type: "normal",
-    name: "4회 모임",
+    name: "4차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 4회차",
     friends: [
       {
@@ -52,7 +52,7 @@ export const GATHERINGS = [
   {
     id: "2",
     type: "normal",
-    name: "3회 모임",
+    name: "3차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 3회차",
     friends: [
       {
@@ -100,7 +100,7 @@ export const GATHERINGS = [
   {
     id: "1",
     type: "normal",
-    name: "2회 모임",
+    name: "2차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 2회차",
     friends: [
       {
@@ -148,7 +148,7 @@ export const GATHERINGS = [
   {
     id: "0",
     type: "normal",
-    name: "1회 모임",
+    name: "1차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 1회차",
     friends: [
       {
@@ -199,7 +199,7 @@ export const GATHERINGS_PASSED = [
   {
     id: "1",
     type: "normal",
-    name: "2회 모임",
+    name: "2차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 2회차",
     friends: [
       {
@@ -247,7 +247,7 @@ export const GATHERINGS_PASSED = [
   {
     id: "0",
     type: "normal",
-    name: "1회 모임",
+    name: "1차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 1회차",
     friends: [
       {

@@ -5,9 +5,12 @@ import CalendarColoredIcon from "../shared/icons/CalendarColoredIcon";
 import ArrowRightIcon from "../shared/icons/ArrowRightIcon";
 import DateItem from "./DateItem";
 import { useRouter } from "next/navigation";
+import getNext7Days from "@/utils/get7days";
 
 export default function DateSlider() {
   const router = useRouter();
+  const sevenDays = getNext7Days();
+
   return (
     <Flex direction="column">
       <Flex align="center" className="px-[20px] w-full">
@@ -23,13 +26,9 @@ export default function DateSlider() {
         className="w-[330px] mx-auto my-0 px-0 py-[10px]"
         justify="space-between"
       >
-        <DateItem />
-        <DateItem />
-        <DateItem />
-        <DateItem />
-        <DateItem />
-        <DateItem />
-        <DateItem />
+        {sevenDays.map(({ D, E }) => {
+          return <DateItem date={D} day={E} />;
+        })}
       </Flex>
     </Flex>
   );

@@ -1,15 +1,11 @@
 import Flex from "../shared/Flex";
 import LightyLogo from "../shared/icons/LightyLogo";
 
-export default function DateItem() {
+export default function DateItem({ date, day }: { date: number; day: string }) {
   return (
-    <Flex
-      direction="column"
-      align="center"
-      style={{ width: "32px", paddingBottom: "4px" }}
-    >
-      <div className={dayWrapperStyle}>월</div>
-      <div className={dayNumWrapperStyle}>12</div>
+    <Flex direction="column" align="center" className={styles.container}>
+      <div className={styles.day}>{day}</div>
+      <div className={styles.date}>{date}</div>
       <div>
         <LightyLogo width="8" height="8" />
       </div>
@@ -17,7 +13,9 @@ export default function DateItem() {
   );
 }
 
-const dayWrapperStyle =
-  "text-B3 text-grayscale-600 pl-[9px] pr-[8px] pt-[3px] pb-[7px]";
+const styles = {
+  container: "w-[32px] pb-[4px]",
 
-const dayNumWrapperStyle = "text-center text-T5 w-[32px] h-[32px] py-[7px]";
+  day: "text-B3 text-grayscale-600 pl-[9px] pr-[8px] pt-[3px] pb-[7px]",
+  date: "text-center text-T5 w-[32px] h-[32px] py-[7px]",
+};

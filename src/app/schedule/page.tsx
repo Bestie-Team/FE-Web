@@ -36,7 +36,6 @@ export default function SchedulePage() {
         <Spacing size={28} />
         <UpcomingSchedule />
       </Flex>
-
       <NavBar />
     </Flex>
   );
