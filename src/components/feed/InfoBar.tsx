@@ -3,13 +3,15 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Options from "../shared/icons/Options";
 import GroupImages from "../shared/GroupImages";
+import { GroupInfoResponse } from "@/models/group";
+import { MemberInfo } from "@/constants/members";
 
-export default function InfoBar() {
+export default function InfoBar({ group }: { group: GroupInfoResponse }) {
   return (
     <Flex align="center" className="px-[20px]">
       <WriterInfo />
       <div style={{ flexGrow: 1 }} />
-      <TogetherInfo />
+      <TogetherInfo members={group.members} />
       <Spacing direction="horizontal" size={12} />
       <Options type="default" />
     </Flex>
@@ -36,7 +38,7 @@ function WriterInfo() {
   );
 }
 
-export function TogetherInfo() {
+export function TogetherInfo({ members }: { members: MemberInfo[] }) {
   return (
     <Flex
       align="center"
@@ -44,7 +46,7 @@ export function TogetherInfo() {
     >
       <span className="text-C2">with</span>
       <Spacing direction="horizontal" size={4} />
-      <GroupImages gap={8} />
+      <GroupImages gap={8} members={members} />
     </Flex>
   );
 }

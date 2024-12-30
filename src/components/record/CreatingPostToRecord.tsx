@@ -9,6 +9,10 @@ import SmallSelect from "./SmallSelect";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
+import { GATHERINGS_PASSED } from "@/constants/gathering";
+import { useRecoilValue } from "recoil";
+import { recordGatheringAtom } from "@/atoms/record";
+import { GatheringResponse } from "@/models/gathering";
 
 export default function CreatingPostToRecord({
   onNext,
@@ -23,7 +27,7 @@ export default function CreatingPostToRecord({
     imageUrl: string[];
     recordContent: string;
   }>({ imageUrl: [], recordContent: "" });
-
+  const selectedGatheringId = useRecoilValue(recordGatheringAtom);
   const options = [
     {
       value: "최은재",
@@ -75,6 +79,12 @@ export default function CreatingPostToRecord({
     },
   ];
 
+  const gathering = GATHERINGS_PASSED.find(
+    (g) => g.id === selectedGatheringId
+  ) as GatheringResponse;
+
+  const { desc, name, group } = gathering;
+
   return (
     <div className={styles.container}>
       <div
@@ -93,14 +103,12 @@ export default function CreatingPostToRecord({
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
         <Flex>
           <Flex direction="column" style={{ flexGrow: 1 }}>
-            <span className="text-T2">christmas party</span>
+            <span className="text-T2">{name}</span>
             <Spacing size={8} />
-            <span className="text-C2 text-grayscale-400">
-              먹고 죽는 크리스마스 돼지 파티에 초대합니다
-            </span>
+            <span className="text-C2 text-grayscale-400">{desc}</span>
           </Flex>
           <Spacing direction="horizontal" size={16} />
-          <TogetherInfo />
+          <TogetherInfo members={group.members} />
         </Flex>
         <Spacing size={28} />
       </Flex>

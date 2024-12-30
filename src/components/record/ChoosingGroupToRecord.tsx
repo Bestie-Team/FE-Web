@@ -18,7 +18,7 @@ export default function ChoosingGatheringToRecord({
 
   const gatheringsPassed = GATHERINGS_PASSED;
 
-  const onImageClick = (group: string | null) => {
+  const handleImageClick = (group: string | null) => {
     setSelectedGatheringId(group);
   };
 
@@ -42,7 +42,7 @@ export default function ChoosingGatheringToRecord({
       <Spacing size={40} />
       <SmallPhotoSwiper
         gathering={gatheringsPassed}
-        onImageClick={onImageClick}
+        onImageClick={handleImageClick}
         selectedGatheringId={selectedGatheringId}
       />
       <FixedBottomButton

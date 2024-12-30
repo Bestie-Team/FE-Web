@@ -60,7 +60,7 @@ export default function GroupContainer({
           <Spacing size={2} direction="horizontal" />
           <span className="text-B4">{members.length}</span>
           <Spacing size={12} direction="horizontal" />
-          <GroupImages width={24} height={24} gap={8} />
+          <GroupImages width={24} height={24} gap={8} members={images} />
         </Flex>
       </Flex>
       <ArrowRightIcon color="#979797" />
@@ -75,3 +75,9 @@ const styles = {
 
   bar: "mx-[12px] bg-grayscale-100 h-[13px] w-[1px]",
 };
+const images = [
+  "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/binanton_jp.jpeg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+];

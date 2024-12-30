@@ -1,32 +1,71 @@
 import Image from "next/image";
 import Flex from "./Flex";
 import clsx from "clsx";
+import { MemberInfo } from "@/constants/members";
 
 export default function GroupImages({
+  members,
+  maxLength = 3,
   width,
   height,
   gap,
 }: {
+  members: MemberInfo[] | string[];
+  maxLength?: number;
   width?: number;
   height?: number;
   gap?: number;
 }) {
+  const getMemberImages = (members: any[]): string[] => {
+    return typeof members[0] === "string"
+      ? members
+      : (members.map((member) => member.imageUrl) as string[]);
+  };
+
+  const getSeenImages = (
+    memberImages: string[],
+    maxLength: number
+  ): string[] => {
+    return memberImages.length <= maxLength
+      ? memberImages
+      : memberImages.slice(0, maxLength);
+  };
+
+  const memberImages = getMemberImages(members);
+  const seenImages = getSeenImages(memberImages, maxLength);
+  const imageWidthHeight =
+    width && height ? `w-[${width}px] h-[${height}px]` : `w-[28px] h-[28px]`;
   return (
     <Flex>
-      {Array.from({ length: 3 }, () => 1).map((_, i) => (
+      {seenImages.map((imageUrl, i) => (
         <Image
           key={`img${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src="https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
-          width={width ?? 28}
-          height={height ?? 28}
-          className={clsx(groupImageStyle)}
+          src={
+            imageUrl || "https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
+          }
+          width={width ? width : 28}
+          height={height ? height : 28}
+          className={clsx(styles.groupImage, imageWidthHeight)}
           alt={`writer${i}`}
         />
       ))}
+      {memberImages.length > maxLength ? (
+        <div
+          style={{
+            marginLeft: `-${gap}px`,
+            width: width ? `${width}px` : "28px",
+            height: height ? `${height}px` : "28px",
+          }}
+          className={styles.circle}
+        >{`+${memberImages.length - maxLength}`}</div>
+      ) : null}
     </Flex>
   );
 }
-
-const groupImageStyle =
-  "rounded-full overflow-hidden border-[1px] border-base-white";
+const styles = {
+  groupImage:
+    "object-cover rounded-full overflow-hidden border-[1px] border-base-white aspect-square",
+  circle:
+    "text-C4 flex items-center justify-center text-base-white bg-grayscale-300 border-[1px] border-base-white rounded-full overflow-hidden aspect-square",
+};

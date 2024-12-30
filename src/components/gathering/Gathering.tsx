@@ -5,6 +5,8 @@ import Message from "../shared/Message";
 import { usePathname, useRouter } from "next/navigation";
 import { GATHERINGS } from "@/constants/gathering";
 import { differenceInDays } from "date-fns";
+import { useSetRecoilState } from "recoil";
+import { recordGatheringAtom } from "@/atoms/record";
 
 export default function Gathering({
   className,
@@ -20,7 +22,7 @@ export default function Gathering({
   const passedGathering = GATHERINGS.filter(
     (gathering) => differenceInDays(new Date(), gathering.date) >= 0
   );
-
+  const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -44,7 +46,8 @@ export default function Gathering({
           ? passedGathering.map((gathering, i) => (
               <GatheringCard
                 onClick={() => {
-                  router.push(`/gathering/${gathering.id}`);
+                  setGatheringId(gathering.id);
+                  router.push(`/record`);
                 }}
                 gathering={gathering}
                 key={`${gathering}${i}`}

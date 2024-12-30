@@ -80,7 +80,7 @@ export default function InvitationModal({
             </Flex>
           </Flex>
           <div className="absolute bottom-[15px] left-[15px] pl-[4px]">
-            <GroupImages width={34} height={34} gap={6} />
+            <GroupImages width={34} height={34} gap={6} members={images} />
           </div>
           <Flex
             align="center"
@@ -114,3 +114,10 @@ export default function InvitationModal({
     </Dimmed>
   );
 }
+
+const images = [
+  "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/binanton_jp.jpeg",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
+  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+];
