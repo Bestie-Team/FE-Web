@@ -60,7 +60,12 @@ export default function GroupContainer({
           <Spacing size={2} direction="horizontal" />
           <span className="text-B4">{members.length}</span>
           <Spacing size={12} direction="horizontal" />
-          <GroupImages width={24} height={24} gap={8} members={images} />
+          <GroupImages
+            width={24}
+            height={24}
+            gap={8}
+            memberImageUrls={images}
+          />
         </Flex>
       </Flex>
       <ArrowRightIcon color="#979797" />

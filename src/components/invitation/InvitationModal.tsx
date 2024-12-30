@@ -80,7 +80,12 @@ export default function InvitationModal({
             </Flex>
           </Flex>
           <div className="absolute bottom-[15px] left-[15px] pl-[4px]">
-            <GroupImages width={34} height={34} gap={6} members={images} />
+            <GroupImages
+              width={34}
+              height={34}
+              gap={6}
+              memberImageUrls={images}
+            />
           </div>
           <Flex
             align="center"

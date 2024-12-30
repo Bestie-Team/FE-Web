@@ -5,34 +5,29 @@ import { MemberInfo } from "@/constants/members";
 
 export default function GroupImages({
   members,
+  memberImageUrls,
   maxLength = 3,
   width,
   height,
   gap,
 }: {
-  members: MemberInfo[] | string[];
+  members?: MemberInfo[];
+  memberImageUrls?: string[];
   maxLength?: number;
   width?: number;
   height?: number;
   gap?: number;
 }) {
-  const getMemberImages = (members: any[]): string[] => {
-    return typeof members[0] === "string"
-      ? members
-      : (members.map((member) => member.imageUrl) as string[]);
-  };
+  const memberImages =
+    members != null
+      ? (members.map((member) => member.imageUrl) as string[])
+      : memberImageUrls!;
 
-  const getSeenImages = (
-    memberImages: string[],
-    maxLength: number
-  ): string[] => {
-    return memberImages.length <= maxLength
+  const seenImages =
+    memberImages.length <= maxLength
       ? memberImages
       : memberImages.slice(0, maxLength);
-  };
 
-  const memberImages = getMemberImages(members);
-  const seenImages = getSeenImages(memberImages, maxLength);
   const imageWidthHeight =
     width && height ? `w-[${width}px] h-[${height}px]` : `w-[28px] h-[28px]`;
   return (
