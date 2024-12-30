@@ -24,7 +24,7 @@ export default function AddFriendsSlider({
     useRecoilState<MemberInfo[]>(selectedFriendsAtom);
 
   const [selectedGroup, setSelectedGroup] =
-    useRecoilState<GroupInfoResponse>(selectedGroupAtom);
+    useRecoilState<GroupInfoResponse | null>(selectedGroupAtom);
 
   const onClickDelete = (friend: MemberInfo) => {
     const changedFriends = friends.filter(
@@ -66,8 +66,14 @@ export default function AddFriendsSlider({
               <SelectableGroupItem
                 key={`groupItem${i}`}
                 groupInfo={group}
-                onClickGroup={() => setSelectedGroup(group)}
-                clicked={selectedGroup.id === group.id}
+                onClickGroup={() => {
+                  if (selectedGroup?.id === group.id) {
+                    setSelectedGroup(null);
+                    return;
+                  }
+                  setSelectedGroup(group);
+                }}
+                clicked={selectedGroup?.id === group.id}
               />
             ))
           : null}

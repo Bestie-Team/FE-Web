@@ -34,30 +34,29 @@ export default function MyPage() {
         >
           {HeaderReturner()}
         </div>
-        <Spacing size={48} />
-        <Spacing size={20} />
+        <Spacing size={68} />
         <UserProfile />
         <Spacing size={12} />
         <MyMainInfo />
         <Spacing size={16} />
         <SettingsMenu />
         <div className={termsWrapperStyle}>
-          <span
+          <ins
             onClick={() => {
               onClickTermOfUse();
             }}
             className={clsx("mr-[13px]", letterStyle)}
           >
             이용약관
-          </span>
-          <span
+          </ins>
+          <ins
             onClick={() => {
               onClickTermOfUse("privatePolicy");
             }}
             className={letterStyle}
           >
             개인 정보 처리방침
-          </span>
+          </ins>
         </div>
         <Spacing size={80} />
         <NavBar />
@@ -79,7 +78,7 @@ export default function MyPage() {
 const headerWrapperStyle =
   "max-w-[430px] fixed w-full px-[20px] transition-shadow duration-300";
 
-const letterStyle = "border-b-[1px] border-b-[#AEAEAE] cursor-pointer";
+const letterStyle = "cursor-pointer";
 
 const termsWrapperStyle =
   "w-full py-[8px] px-[20px] text-C5 text-grayscale-300";

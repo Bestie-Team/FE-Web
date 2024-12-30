@@ -2,6 +2,7 @@
 
 import { homeModalStateAtom } from "@/atoms/home";
 import Gathering from "@/components/gathering/Gathering";
+import GatheringSwiper from "@/components/gathering/GatheringSwiper";
 import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
@@ -10,7 +11,6 @@ import WelcomeBottomSheet from "@/components/shared/bottomSheet/WelcomeBottomShe
 import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/icons/ArrowRightIcon";
 import NavBar from "@/components/shared/NavBar";
-import PhotoSwiper from "@/components/shared/PhotoSwiper";
 import Spacing from "@/components/shared/Spacing";
 import HeaderReturner from "@/utils/headerReturner";
 import { useRecoilState } from "recoil";
@@ -26,7 +26,7 @@ export default function HomePage() {
       <Spacing size={40} />
       <DateSlider />
       <Spacing size={8} />
-      <PhotoSwiper images={imageList} percent={2.2} type="home" />
+      <GatheringSwiper percent={2.2} />
       <Banner />
       <Flex direction="column" align="center">
         <Flex className="w-full px-[20px]" align="center">
@@ -47,10 +47,3 @@ export default function HomePage() {
     </div>
   );
 }
-const imageList = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/window.jpg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/party.jpg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
-];

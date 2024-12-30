@@ -57,7 +57,7 @@ export const newGatheringInfo = atom<GatheringInfo>({
   },
 });
 
-export const selectedGroupAtom = atom<GroupInfoResponse>({
+export const selectedGroupAtom = atom<GroupInfoResponse | null>({
   key: "gathering/selectedGroup",
   default: {
     id: "",

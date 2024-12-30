@@ -76,15 +76,12 @@ export default function CreatingPostToRecord({
   ];
 
   return (
-    <div className="bg-base-white h-screen">
+    <div className={styles.container}>
       <div
-        className={clsx(
-          "bg-base-white max-w-[430px] w-full fixed z-10",
-          hasShadow ? "shadow-bottom" : ""
-        )}
+        className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
       >
         {HeaderReturner()}
-        <div className="p-[20px] pb-[16px]">
+        <div className={styles.selectWrapper}>
           <SmallSelect
             options={options}
             selected={null}
@@ -93,10 +90,7 @@ export default function CreatingPostToRecord({
           />
         </div>
       </div>
-      <Flex
-        direction="column"
-        style={{ padding: "20px", paddingTop: "124px", paddingBottom: 0 }}
-      >
+      <Flex direction="column" className={styles.gatheringInfoWrapper}>
         <Flex>
           <Flex direction="column" style={{ flexGrow: 1 }}>
             <span className="text-T2">christmas party</span>
@@ -112,17 +106,14 @@ export default function CreatingPostToRecord({
       </Flex>
       <EditPhotoSwiper images={postInfo.imageUrl} setImages={setPostInfo} />
       <Spacing size={8} />
-      <Flex
-        direction="column"
-        style={{ padding: "16px 28px", paddingBottom: "98px" }}
-      >
+      <Flex direction="column" className={styles.textareaWrapper}>
         <textarea
           inputMode="text"
           placeholder="해당 모임에는 어떤 소중한 추억이 있었나요? 그날의 추억에 대해 글로 작성해 보세요."
           onChange={(e) => {
             setPostInfo((prev) => ({ ...prev, recordContent: e.target.value }));
           }}
-          className={recordTextAreaStyle}
+          className={styles.recordTextarea}
         >
           {postInfo.recordContent}
         </textarea>
@@ -143,5 +134,14 @@ export default function CreatingPostToRecord({
   );
 }
 
-const recordTextAreaStyle =
-  "h-[186.29px] leading-[22.86px] w-[114.29%] tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none transform origin-top-left scale-[0.875]";
+const styles = {
+  container: "bg-base-white h-screen",
+  headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
+  selectWrapper: "p-[20px] pb-[16px]",
+
+  gatheringInfoWrapper: "p-[20px] pt-[124px] pb-0",
+
+  textareaWrapper: "px-[28px] py-[16px] pb-[98px]",
+  recordTextarea:
+    "h-[186.29px] leading-[22.86px] w-[114.29%] tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none transform origin-top-left scale-[0.875]",
+};

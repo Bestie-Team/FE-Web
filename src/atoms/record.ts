@@ -5,8 +5,8 @@ export const recordStepAtom = atom<number | null>({
   default: 1,
 });
 
-export const recordGroupAtom = atom<string | null>({
-  key: "record/group",
+export const recordGatheringAtom = atom<string | null>({
+  key: "record/gathering",
   default: null,
 });
 

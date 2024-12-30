@@ -2,7 +2,9 @@
 import GatheringCard from "./GatheringCard";
 import clsx from "clsx";
 import Message from "../shared/Message";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { GATHERINGS } from "@/constants/gathering";
+import { differenceInDays } from "date-fns";
 
 export default function Gathering({
   className,
@@ -11,32 +13,49 @@ export default function Gathering({
   className?: string;
   which: string;
 }) {
-  const images = which === "1" ? allFeed : myFeed;
+  const expectingGathering = GATHERINGS.filter(
+    (gathering) => differenceInDays(new Date(), gathering.date) < 0
+  );
+
+  const passedGathering = GATHERINGS.filter(
+    (gathering) => differenceInDays(new Date(), gathering.date) >= 0
+  );
+
   const pathname = usePathname();
+  const router = useRouter();
+
   return (
     <div className={clsx(styles.container, className)}>
       {which === "2" && pathname.endsWith("gathering") ? <Message /> : null}
       <div className="grid grid-cols-2 gap-4">
-        {images.map((gathering) => (
-          <GatheringCard
-            imageUrl={images[0]}
-            key={`${gathering}`}
-            which={which}
-          />
-        ))}
+        {which === "1"
+          ? expectingGathering.map((gathering, i) => (
+              <GatheringCard
+                onClick={() => {
+                  router.push(`/gathering/${gathering.id}`);
+                }}
+                gathering={gathering}
+                key={`${gathering}${i}`}
+                which={which}
+              />
+            ))
+          : null}
+        {which === "2"
+          ? passedGathering.map((gathering, i) => (
+              <GatheringCard
+                onClick={(e) => {
+                  router.push(`/gathering/${gathering.id}`);
+                }}
+                gathering={gathering}
+                key={`${gathering}${i}`}
+                which={which}
+              />
+            ))
+          : null}
       </div>
     </div>
   );
 }
-
-const myFeed = ["https://d1al3w8x2wydb3.cloudfront.net/images/IMG_7815.jpeg"];
-
-const allFeed = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png",
-];
 
 const styles = {
   container: "pt-[155px] pb-[111px] animate-fadeIn w-full px-[20px]",

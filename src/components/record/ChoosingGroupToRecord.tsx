@@ -4,19 +4,24 @@ import Flex from "../shared/Flex";
 import LightyLogo from "../shared/icons/LightyLogo";
 import Spacing from "../shared/Spacing";
 import SmallPhotoSwiper from "./SmallPhotoSwiper";
-import { recordGroupAtom } from "@/atoms/record";
+import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import { GATHERINGS_PASSED } from "@/constants/gathering";
 
-export default function ChoosingGroupToRecord({
+export default function ChoosingGatheringToRecord({
   onNext,
 }: {
   onNext: (groupInfoValue: string) => void;
 }) {
-  const [groupId, setGroupId] = useRecoilState(recordGroupAtom);
+  const [selectedGatheringId, setSelectedGatheringId] =
+    useRecoilState(recordGatheringAtom);
 
-  const onImageClick = (group: string) => {
-    setGroupId(group);
+  const gatheringsPassed = GATHERINGS_PASSED;
+
+  const onImageClick = (group: string | null) => {
+    setSelectedGatheringId(group);
   };
+
   return (
     <Flex direction="column" className="bg-base-white h-screen">
       <Flex
@@ -36,12 +41,12 @@ export default function ChoosingGroupToRecord({
       </Flex>
       <Spacing size={40} />
       <SmallPhotoSwiper
-        images={imageList}
+        gathering={gatheringsPassed}
         onImageClick={onImageClick}
-        groupId={groupId}
+        selectedGatheringId={selectedGatheringId}
       />
       <FixedBottomButton
-        disabled={groupId === null}
+        disabled={selectedGatheringId === null}
         label={"기록 시작하기"}
         onClick={() => {
           onNext("1");

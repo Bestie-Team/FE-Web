@@ -14,15 +14,28 @@ import { GATHERINGS } from "@/constants/gathering";
 import { GatheringResponse } from "@/models/gathering";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
+import { useMemo } from "react";
 
-export default function GatheringDetailPage() {
-  const { group, address, ampm, time, date }: GatheringResponse = GATHERINGS[0];
+export default function GatheringDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const gatheringId = params.id;
+  const gathering = GATHERINGS.find(
+    (g) => g.id === gatheringId
+  ) as GatheringResponse;
+
+  const { date, group, address, ampm, time } = gathering;
+
   const dateInfo = format(date, "yyyy.MM.dd (E)", { locale: ko });
+
+  const header = useMemo(() => HeaderReturner(), []);
 
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-      <div className={styles.header}>{HeaderReturner()}</div>
-      <GatheringBannerContainer gathering={GATHERINGS[0]} />
+      <div className={styles.header}>{header}</div>
+      <GatheringBannerContainer gathering={gathering} />
       <GroupLeaderContainer groupLeader={group.groupLeader} />
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
@@ -78,7 +91,6 @@ const styles = {
   header: "max-w-[430px] z-10 fixed w-full",
 
   title: "font-[700] text-[16px] leading-[20.8px]",
-
   contentWrapper:
     "w-full px-[20px] py-[16px] border-[1px] border-grayscale-100 rounded-[12px] text-B3",
 };

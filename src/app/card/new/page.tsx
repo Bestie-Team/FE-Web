@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import HeaderReturner from "@/utils/headerReturner";
 import Card from "@/components/cards/Card";
 import StickerContainer from "@/components/cards/StickerContainer";
@@ -49,16 +49,14 @@ export default function Page() {
     downloadURI(uri, "card.png");
   };
 
+  const header = useMemo(() => HeaderReturner(), []);
   return (
     <div className="p-auto">
-      <div className="bg-base-white">{HeaderReturner()}</div>
+      <div className="bg-base-white">{header}</div>
       <Card />
       <StickerContainer setStickers={setStickers} stickers={stickers} />
       <Spacing size={8} />
-      <Button
-        className="px-[12px] py-[8px] rounded-[12px] bg-base-white text-B4"
-        onClick={handleExport}
-      >
+      <Button className={styles.button} onClick={handleExport}>
         사진
       </Button>
       <Spacing size={8} />
@@ -66,3 +64,7 @@ export default function Page() {
     </div>
   );
 }
+
+const styles = {
+  button: "px-[12px] py-[8px] rounded-[12px] bg-base-white text-B4",
+};
