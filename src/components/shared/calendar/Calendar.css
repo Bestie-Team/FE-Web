@@ -17,7 +17,7 @@
 }
 
 .react-calendar__month-view__days {
-  gap: 8px 15px;
+  gap: 8px 14.6px;
   place-content: flex-end;
 }
 
