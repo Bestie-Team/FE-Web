@@ -15,7 +15,7 @@ export default function TimelineItem({ imageUrl }: { imageUrl: string }) {
         <span className="text-T4">{diff}</span>
         <Spacing size={24} direction="horizontal" />
         <Flex direction="column" justify="space-between">
-          <span>christmas party</span>
+          <span className="text-T4">christmas party</span>
           <div className={styles.date}>2024. 12. 24. 오후 6:00</div>
         </Flex>
       </Flex>

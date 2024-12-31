@@ -18,6 +18,7 @@ export default function GatheringBannerContainer({
     <Flex>
       <div className="relative">
         <Image
+          priority
           alt="homeImage"
           src={
             gathering.invitation_img_url ||
@@ -27,6 +28,7 @@ export default function GatheringBannerContainer({
           height={434}
           className="h-[434px] object-cover"
         />
+        <div className="absolute inset-0 bg-[#00000080]" />
         <Flex justify="space-between" className={styles.wrapper}>
           <Flex direction="column">
             <Flex direction="column">

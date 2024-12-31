@@ -28,7 +28,7 @@ export default function PhotoSwiper({
       {images.map((imageUrl, idx) => (
         <SwiperSlide
           onClick={() => {
-            router.push(`/gathering/${12345}`);
+            router.push(`/gathering/${1}`);
           }}
           className={clsx(
             "relative",
