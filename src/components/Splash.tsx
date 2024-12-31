@@ -84,7 +84,7 @@ const styles = {
   centerWrapper: "flex flex-col gap-[26px] items-center text-base-white",
 
   splashContainer:
-    "mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('https://d1al3w8x2wydb3.cloudfront.net/images/bg.png')]",
+    "mx-auto w-full flex flex-col justify-between bg-cover bg-center bg-no-repeat h-screen bg-[url('https://cdn.lighty.today/bg.png')]",
 
   text: "border-b-[1px] border-b-grayscale-10",
 };

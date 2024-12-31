@@ -27,6 +27,6 @@ const styles = {
 };
 
 const schedules = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/b_cake.jpeg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/santa.jpeg",
+  "https://cdn.lighty.today/b_cake.jpeg",
+  "https://cdn.lighty.today/santa.jpeg",
 ];

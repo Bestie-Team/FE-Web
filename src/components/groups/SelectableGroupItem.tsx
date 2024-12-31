@@ -31,10 +31,7 @@ export default function SelectableGroupItem({
         >
           <Image
             alt="groupImage"
-            src={
-              groupInfo?.imageUrl ||
-              "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
-            }
+            src={groupInfo?.imageUrl || "https://cdn.lighty.today/bini.JPG"}
             className={style.image}
             width={56}
             height={56}

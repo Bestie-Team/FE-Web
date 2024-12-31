@@ -25,7 +25,7 @@ export default function WelcomeBottomSheet({
           width={176}
           height={180}
           alt="welcomeImg"
-          src={"https://d1al3w8x2wydb3.cloudfront.net/images/welcome.png"}
+          src={"https://cdn.lighty.today/welcome.png"}
         />
         <div className={styles.buttonWrapper}>
           <Button

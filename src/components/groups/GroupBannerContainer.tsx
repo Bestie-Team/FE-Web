@@ -16,10 +16,7 @@ export default function GroupBannerContainer({
     <div className="relative">
       <Image
         alt="groupBannerImage"
-        src={
-          imageUrl ||
-          "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png"
-        }
+        src={imageUrl || "https://cdn.lighty.today/gathering.png"}
         width={600}
         height={316}
         className="h-[316px] object-cover"

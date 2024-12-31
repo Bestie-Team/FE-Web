@@ -12,7 +12,7 @@ export default function InvitationCard({
     <Flex className="w-full h-full px-[20px]" justify="center">
       <div className="relative">
         <Image
-          src="https://d1al3w8x2wydb3.cloudfront.net/images/invitation.png"
+          src="https://cdn.lighty.today/invitation.png"
           className="w-full flex-grow"
           width={350}
           height={169}

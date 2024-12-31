@@ -21,7 +21,7 @@ export default function GatheringBannerContainer({
           alt="homeImage"
           src={
             gathering.invitation_img_url ||
-            "https://d1al3w8x2wydb3.cloudfront.net/images/gathering.png"
+            "https://cdn.lighty.today/gathering.png"
           }
           width={600}
           height={434}

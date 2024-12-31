@@ -20,14 +20,14 @@ export default function MyFeed({ which }: { which: string }) {
   );
 }
 const myFeed = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/party.jpg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://cdn.lighty.today/bini.JPG",
+  "https://cdn.lighty.today/party.jpg",
+  "https://cdn.lighty.today/ocean.JPG",
+  "https://cdn.lighty.today/groom.JPG",
 ];
 
 const allFeed = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/tongue_cake.jpeg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/binanton_jp.jpeg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://cdn.lighty.today/tongue_cake.jpeg",
+  "https://cdn.lighty.today/binanton_jp.jpeg",
+  "https://cdn.lighty.today/groom.JPG",
 ];

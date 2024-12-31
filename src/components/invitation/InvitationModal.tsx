@@ -35,7 +35,7 @@ export default function InvitationModal({
         <Spacing size={8} />
         <div className="relative">
           <Image
-            src="https://d1al3w8x2wydb3.cloudfront.net/images/invitationV.png"
+            src="https://cdn.lighty.today/invitationV.png"
             alt="invitationVertical"
             width={330}
             height={460}
@@ -45,7 +45,7 @@ export default function InvitationModal({
             style={{ position: "absolute", padding: "15px", left: 0, top: 0 }}
           >
             <Image
-              src="https://d1al3w8x2wydb3.cloudfront.net/images/dishes.jpg"
+              src="https://cdn.lighty.today/dishes.jpg"
               className="h-[210px] object-cover rounded-[12px]"
               width={300}
               height={210}
@@ -121,8 +121,8 @@ export default function InvitationModal({
 }
 
 const images = [
-  "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/binanton_jp.jpeg",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/ocean.JPG",
-  "https://d1al3w8x2wydb3.cloudfront.net/images/groom.JPG",
+  "https://cdn.lighty.today/bini.JPG",
+  "https://cdn.lighty.today/binanton_jp.jpeg",
+  "https://cdn.lighty.today/ocean.JPG",
+  "https://cdn.lighty.today/groom.JPG",
 ];

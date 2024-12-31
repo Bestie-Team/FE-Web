@@ -38,7 +38,7 @@ export default function Card() {
       >
         <div className={imageWrapperStyle}>
           <Image
-            src="https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
+            src="https://cdn.lighty.today/bini.JPG"
             width={230}
             height={230}
             alt="img"

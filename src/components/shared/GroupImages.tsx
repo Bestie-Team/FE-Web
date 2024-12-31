@@ -36,9 +36,7 @@ export default function GroupImages({
         <Image
           key={`img${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src={
-            imageUrl || "https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
-          }
+          src={imageUrl || "https://cdn.lighty.today/anton.PNG"}
           width={width ? width : 28}
           height={height ? height : 28}
           className={clsx(styles.groupImage, imageWidthHeight)}

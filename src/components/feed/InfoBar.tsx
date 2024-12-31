@@ -22,7 +22,7 @@ function WriterInfo() {
   return (
     <Flex>
       <Image
-        src="https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
+        src="https://cdn.lighty.today/anton.PNG"
         width={36}
         height={36}
         className="w-[36px] h-[36px] rounded-full overflow-hidden"

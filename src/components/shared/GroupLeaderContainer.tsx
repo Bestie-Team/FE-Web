@@ -21,9 +21,7 @@ export default function GroupLeaderContainer({
           alt="leader"
           width={36}
           height={36}
-          src={
-            imageUrl || "https://d1al3w8x2wydb3.cloudfront.net/images/hi.jpeg"
-          }
+          src={imageUrl || "https://cdn.lighty.today/hi.jpeg"}
           className={styles.leaderImage}
         />
         <Spacing direction="horizontal" size={8} />

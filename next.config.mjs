@@ -10,7 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "d1al3w8x2wydb3.cloudfront.net",
+        hostname: "cdn.lighty.today",
       },
       {
         protocol: "https",

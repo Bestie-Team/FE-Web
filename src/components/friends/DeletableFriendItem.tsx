@@ -26,7 +26,7 @@ export default function DeletableFriendItem({
             src={
               friendInfo?.imageUrl ||
               groupInfo?.imageUrl ||
-              "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
+              "https://cdn.lighty.today/bini.JPG"
             }
             className={style.image}
             width={56}

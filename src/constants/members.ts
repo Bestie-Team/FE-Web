@@ -6,27 +6,27 @@ export interface MemberInfo {
 
 const MEMBERS: MemberInfo[] = [
   {
-    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/yellow.jpg",
+    imageUrl: "https://cdn.lighty.today/yellow.jpg",
     userId: "sky",
     name: "김하늘",
   },
   {
-    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/mich.jpg",
+    imageUrl: "https://cdn.lighty.today/mich.jpg",
     userId: "summer",
     name: "김여름",
   },
   {
-    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/cute.jpg",
+    imageUrl: "https://cdn.lighty.today/cute.jpg",
     userId: "choco",
     name: "김초코",
   },
   {
-    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/blanket.jpg",
+    imageUrl: "https://cdn.lighty.today/blanket.jpg",
     userId: "anton",
     name: "이앤톤",
   },
   {
-    imageUrl: "https://d1al3w8x2wydb3.cloudfront.net/images/cat.jpg",
+    imageUrl: "https://cdn.lighty.today/cat.jpg",
     userId: "stone",
     name: "돌",
   },

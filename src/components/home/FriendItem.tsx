@@ -21,7 +21,7 @@ export default function FriendItem({
           src={
             friendInfo?.imageUrl ||
             groupInfo?.imageUrl ||
-            "https://d1al3w8x2wydb3.cloudfront.net/images/bini.JPG"
+            "https://cdn.lighty.today/bini.JPG"
           }
           className="rounded-full object-cover w-[56px] h-[56px]"
           width={56}

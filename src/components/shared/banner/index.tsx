@@ -11,7 +11,7 @@ export default function Banner() {
         className="object-cover h-[124px]"
         width={450}
         height={124}
-        src={"https://d1al3w8x2wydb3.cloudfront.net/images/banner.png"}
+        src={"https://cdn.lighty.today/banner.png"}
       />
       <Flex className="absolute top-[40px] left-[22px]" align="center">
         <Flex direction="column">

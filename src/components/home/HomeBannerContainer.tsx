@@ -11,7 +11,7 @@ export default function HomeBannerContainer() {
       <div className="relative">
         <Image
           alt="homeImage"
-          src="https://d1al3w8x2wydb3.cloudfront.net/images/strawberry.jpeg"
+          src="https://cdn.lighty.today/strawberry.jpeg"
           width={600}
           height={434}
           className={styles.homeBannerImage}

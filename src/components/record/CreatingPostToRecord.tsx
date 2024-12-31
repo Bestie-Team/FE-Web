@@ -38,7 +38,7 @@ export default function CreatingPostToRecord({
             width={24}
             height={24}
             className="border-[0.86px] border-base-white rounded-full"
-            src="https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
+            src="https://cdn.lighty.today/anton.PNG"
           />
           <Spacing direction="horizontal" size={2} />
           <span className="text-C2 text-grayscale-600">최은재</span>
@@ -54,7 +54,7 @@ export default function CreatingPostToRecord({
             width={24}
             height={24}
             className="border-[0.86px] border-base-white rounded-full"
-            src="https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
+            src="https://cdn.lighty.today/anton.PNG"
           />
           <Spacing direction="horizontal" size={2} />
           <span className="text-C2 text-grayscale-600">정서인</span>
@@ -70,7 +70,7 @@ export default function CreatingPostToRecord({
             width={24}
             height={24}
             className="border-[0.86px] border-base-white rounded-full"
-            src="https://d1al3w8x2wydb3.cloudfront.net/images/anton.PNG"
+            src="https://cdn.lighty.today/anton.PNG"
           />
           <Spacing direction="horizontal" size={2} />
           <span className="text-C2 text-grayscale-600">임유진</span>
