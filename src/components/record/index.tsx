@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ChoosingGroupToRecord from "./ChoosingGroupToRecord";
 import { RecordValues } from "@/models/record";
 import { useRouter } from "next/navigation";
