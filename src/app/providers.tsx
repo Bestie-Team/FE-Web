@@ -32,7 +32,7 @@ const NextLayout = ({ children }: Props) => {
   return (
     <div
       id="scrollable-container"
-      className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50 overflow-scroll no-scrollbar"
+      className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50"
     >
       {children}
     </div>

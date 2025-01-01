@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
 
 export default function useChangeHeaderStyle() {
-  const isPastThreshold = useScrollThreshold(92, "scrollable-container");
+  const isPastThreshold = useScrollThreshold(92);
   const setBgColor = useSetRecoilState(headerBgColorAtom);
   const setFontColor = useSetRecoilState(headerFontColorAtom);
 

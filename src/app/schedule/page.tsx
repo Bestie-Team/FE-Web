@@ -14,8 +14,8 @@ import { useState } from "react";
 export default function SchedulePage() {
   const hasShadow = useScrollShadow();
   const [year, setYear] = useState<OptionType | null>({
-    value: "2024",
-    label: "2024",
+    value: "2025",
+    label: "2025",
   });
 
   return (
