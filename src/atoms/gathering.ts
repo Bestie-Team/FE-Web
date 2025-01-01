@@ -1,5 +1,4 @@
 import { GatheringInfo } from "@/models/gathering";
-import { GroupInfoResponse } from "@/models/group";
 import { atom } from "recoil";
 
 export const gatheringSelectedTabAtom = atom<"1" | "2">({

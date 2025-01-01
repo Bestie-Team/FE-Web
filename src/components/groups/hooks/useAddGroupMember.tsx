@@ -1,4 +1,4 @@
-import { addGroupMember, getGroup } from "@/remote/group";
+import { addGroupMember } from "@/remote/group";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useAddGroupMember({
