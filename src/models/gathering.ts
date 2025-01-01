@@ -28,4 +28,4 @@ export interface GatheringResponse {
   invitation_img_url: string;
 }
 
-export type GatheringType = "일반 모임" | "그룹 모임";
+export type GatheringType = "friend" | "group";

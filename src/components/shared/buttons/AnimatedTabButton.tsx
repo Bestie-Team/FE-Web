@@ -1,17 +1,16 @@
-import { selectedGatheringTypeAtom } from "@/atoms/gathering";
-import { GatheringType } from "@/models/gathering";
+import { newGatheringInfo } from "@/atoms/gathering";
+import { GatheringInfo, GatheringType } from "@/models/gathering";
 import clsx from "clsx";
 import React from "react";
 import { useRecoilState } from "recoil";
 
 const AnimatedTabButton = () => {
-  const [selectedTab, setSelectedTab] = useRecoilState<GatheringType>(
-    selectedGatheringTypeAtom
-  );
+  const [selectedGathering, setSelectedGathering] =
+    useRecoilState<GatheringInfo>(newGatheringInfo);
 
   const tabs = [
-    { id: "friend", label: "일반 모임" as GatheringType },
-    { id: "group", label: "그룹 모임" as GatheringType },
+    { id: "friend", label: "일반 모임" },
+    { id: "group", label: "그룹 모임" },
   ];
 
   return (
@@ -19,7 +18,9 @@ const AnimatedTabButton = () => {
       <div
         className={clsx(
           styles.slider,
-          selectedTab === "그룹 모임" ? "translate-x-full" : "translate-x-0"
+          selectedGathering.type === "group"
+            ? "translate-x-full"
+            : "translate-x-0"
         )}
       />
 
@@ -27,10 +28,15 @@ const AnimatedTabButton = () => {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            onClick={() => setSelectedTab(tab.label)}
+            onClick={() =>
+              setSelectedGathering((prev) => ({
+                ...prev,
+                type: tab.id as GatheringType,
+              }))
+            }
             className={clsx(
               styles.button,
-              selectedTab === tab.label
+              selectedGathering.type === tab.id
                 ? "text-grayscale-900"
                 : "text-grayscale-500 hover:text-grayscale-700"
             )}

@@ -1,5 +1,5 @@
 "use client";
-import { newGatheringInfo, selectedGatheringTypeAtom } from "@/atoms/gathering";
+import { newGatheringInfo } from "@/atoms/gathering";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
 import AddGroupSlider from "@/components/groups/AddGroupSlider";
 import CalendarBottomSheet from "@/components/shared/bottomSheet/CalendarBottomSheet";
@@ -19,10 +19,9 @@ import { GatheringInfo } from "@/models/gathering";
 import HeaderReturner from "@/utils/headerReturner";
 import { format } from "date-fns";
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 export default function NewGatheringPage() {
-  const gatheringType = useRecoilValue(selectedGatheringTypeAtom);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [gatheringInfo, setGatheringInfo] =
     useRecoilState<GatheringInfo>(newGatheringInfo);
@@ -77,11 +76,13 @@ export default function NewGatheringPage() {
           <UserIcon width="16" height="16" color="#0A0A0A" />
           <Spacing direction="horizontal" size={4} />
           <span>
-            {gatheringType === "일반 모임" ? "초대할 친구" : "초대할 친구 그룹"}
+            {gatheringInfo.type === "friend"
+              ? "초대할 친구"
+              : "초대할 친구 그룹"}
           </span>
         </Flex>
         <Spacing size={8} />
-        {gatheringType === "일반 모임" ? (
+        {gatheringInfo.type === "friend" ? (
           <AddFriendsSlider setGathering={setGatheringInfo} type="gathering" />
         ) : (
           <AddGroupSlider />
