@@ -1,4 +1,4 @@
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 import { atom } from "recoil";
 
 export const friendsSelectedTabAtom = atom<"1" | "2">({
@@ -6,7 +6,7 @@ export const friendsSelectedTabAtom = atom<"1" | "2">({
   default: "1",
 });
 
-export const selectedFriendsAtom = atom<MemberInfo[]>({
+export const selectedFriendsAtom = atom<UserInfo[]>({
   key: "friend/selectedFriends",
   default: [],
 });

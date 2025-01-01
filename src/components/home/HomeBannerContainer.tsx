@@ -10,7 +10,8 @@ export default function HomeBannerContainer() {
     <Flex>
       <div className="relative">
         <Image
-          alt="homeImage"
+          priority
+          alt="homeBanner"
           src="https://cdn.lighty.today/strawberry.jpeg"
           width={600}
           height={434}

@@ -1,4 +1,4 @@
-import { MemberInfo } from "./members";
+import { UserInfo } from "./users";
 
 const FRIENDS = [
   {
@@ -26,6 +26,6 @@ const FRIENDS = [
     name: "손채영",
     imageUrl: "/phone.jpeg",
   },
-] as MemberInfo[];
+] as UserInfo[];
 
 export default FRIENDS;

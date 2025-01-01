@@ -5,7 +5,7 @@ import Flex from "../shared/Flex";
 import clsx from "clsx";
 import Options from "../shared/icons/Options";
 import Button from "../shared/buttons";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
 export default function FriendListItem({
   friendInfo,
@@ -14,7 +14,7 @@ export default function FriendListItem({
   onClick,
   clicked,
 }: {
-  friendInfo?: MemberInfo;
+  friendInfo?: UserInfo;
   type: "basic" | "invite" | "receivedRequest" | "sendedRequest";
   idx: number;
   onClick?: () => void;
@@ -30,15 +30,15 @@ export default function FriendListItem({
       onMouseDown={onClick}
     >
       <Image
-        alt="friendImg"
-        src={friendInfo?.imageUrl || "/cat.jpeg"}
+        alt="friendProfile"
+        src={friendInfo?.profileImageUrl || "/cat.jpeg"}
         width={36}
         height={36}
         className={styles.img}
       />
       <Spacing direction="horizontal" size={8} />
       <Flex className="flex-grow" direction="column">
-        <span className="text-T6">{friendInfo?.userId || "lighty"}</span>
+        <span className="text-T6">{friendInfo?.accountId || "lighty"}</span>
         <Spacing size={2} />
         <span className="text-C2 text-grayscale-400">
           {friendInfo?.name || "김땡땡"}

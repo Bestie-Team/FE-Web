@@ -4,8 +4,6 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import EditPhotoSwiper from "./UploadPhotoSwiper";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
-import Image from "next/image";
-import SmallSelect from "./SmallSelect";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
@@ -28,56 +26,56 @@ export default function CreatingPostToRecord({
     recordContent: string;
   }>({ imageUrl: [], recordContent: "" });
   const selectedGatheringId = useRecoilValue(recordGatheringAtom);
-  const options = [
-    {
-      value: "최은재",
-      label: (
-        <Flex align="center">
-          <Image
-            alt="img"
-            width={24}
-            height={24}
-            className="border-[0.86px] border-base-white rounded-full"
-            src="https://cdn.lighty.today/anton.PNG"
-          />
-          <Spacing direction="horizontal" size={2} />
-          <span className="text-C2 text-grayscale-600">최은재</span>
-        </Flex>
-      ),
-    },
-    {
-      value: "정서인",
-      label: (
-        <Flex align="center">
-          <Image
-            alt="img"
-            width={24}
-            height={24}
-            className="border-[0.86px] border-base-white rounded-full"
-            src="https://cdn.lighty.today/anton.PNG"
-          />
-          <Spacing direction="horizontal" size={2} />
-          <span className="text-C2 text-grayscale-600">정서인</span>
-        </Flex>
-      ),
-    },
-    {
-      value: "임유진",
-      label: (
-        <Flex align="center">
-          <Image
-            alt="img"
-            width={24}
-            height={24}
-            className="border-[0.86px] border-base-white rounded-full"
-            src="https://cdn.lighty.today/anton.PNG"
-          />
-          <Spacing direction="horizontal" size={2} />
-          <span className="text-C2 text-grayscale-600">임유진</span>
-        </Flex>
-      ),
-    },
-  ];
+  // const options = [
+  //   {
+  //     value: "최은재",
+  //     label: (
+  //       <Flex align="center">
+  //         <Image
+  //           alt="img"
+  //           width={24}
+  //           height={24}
+  //           className="border-[0.86px] border-base-white rounded-full"
+  //           src="https://cdn.lighty.today/anton.PNG"
+  //         />
+  //         <Spacing direction="horizontal" size={2} />
+  //         <span className="text-C2 text-grayscale-600">최은재</span>
+  //       </Flex>
+  //     ),
+  //   },
+  //   {
+  //     value: "정서인",
+  //     label: (
+  //       <Flex align="center">
+  //         <Image
+  //           alt="img"
+  //           width={24}
+  //           height={24}
+  //           className="border-[0.86px] border-base-white rounded-full"
+  //           src="https://cdn.lighty.today/anton.PNG"
+  //         />
+  //         <Spacing direction="horizontal" size={2} />
+  //         <span className="text-C2 text-grayscale-600">정서인</span>
+  //       </Flex>
+  //     ),
+  //   },
+  //   {
+  //     value: "임유진",
+  //     label: (
+  //       <Flex align="center">
+  //         <Image
+  //           alt="img"
+  //           width={24}
+  //           height={24}
+  //           className="border-[0.86px] border-base-white rounded-full"
+  //           src="https://cdn.lighty.today/anton.PNG"
+  //         />
+  //         <Spacing direction="horizontal" size={2} />
+  //         <span className="text-C2 text-grayscale-600">임유진</span>
+  //       </Flex>
+  //     ),
+  //   },
+  // ];
 
   const gathering = GATHERINGS_PASSED.find(
     (g) => g.id === selectedGatheringId
@@ -91,14 +89,14 @@ export default function CreatingPostToRecord({
         className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
       >
         {HeaderReturner()}
-        <div className={styles.selectWrapper}>
+        {/* <div className={styles.selectWrapper}>
           <SmallSelect
             options={options}
             selected={null}
             setSelected={null}
             placeholder="1명 작성 완료"
           />
-        </div>
+        </div> */}
       </div>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
         <Flex>

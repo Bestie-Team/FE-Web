@@ -3,11 +3,10 @@ import { useState } from "react";
 import LightySelect from "./filter";
 
 const yearOptions = [
+  { value: "2025", label: "2025" },
   { value: "2024", label: "2024" },
-  { value: "2023", label: "2023" },
-  { value: "2021", label: "2021" },
-  { value: "2020", label: "2020" },
 ];
+
 const orderOptions = [
   { value: "최신순", label: "최신순" },
   { value: "오래된순", label: "오래된순" },
@@ -20,8 +19,8 @@ export type OptionType = {
 
 export default function FilterBar() {
   const [selectedYear, setSelectedYear] = useState<OptionType | null>({
-    value: "2024",
-    label: "2024",
+    value: "2025",
+    label: "2025",
   });
   const [selectedOrder, setSelectedOrder] = useState<OptionType | null>({
     value: "최신순",

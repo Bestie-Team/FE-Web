@@ -2,14 +2,14 @@ import Image from "next/image";
 import Flex from "./Flex";
 import Spacing from "./Spacing";
 import Button from "./buttons";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
 export default function GroupLeaderContainer({
   groupLeader,
 }: {
-  groupLeader?: MemberInfo;
+  groupLeader?: UserInfo;
 }) {
-  const { name, userId, imageUrl } = groupLeader!;
+  const { name, accountId, profileImageUrl } = groupLeader!;
   return (
     <Flex
       align="center"
@@ -21,11 +21,11 @@ export default function GroupLeaderContainer({
           alt="leader"
           width={36}
           height={36}
-          src={imageUrl || "https://cdn.lighty.today/hi.jpeg"}
+          src={profileImageUrl || "https://cdn.lighty.today/hi.jpeg"}
           className={styles.leaderImage}
         />
         <Spacing direction="horizontal" size={8} />
-        <span>{userId}</span>
+        <span>{accountId}</span>
         <Spacing direction="horizontal" size={8} />
         <span className="text-grayscale-500">{name}</span>
       </Flex>

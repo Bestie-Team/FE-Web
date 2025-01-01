@@ -8,22 +8,30 @@ export default function useScrollThreshold(
   const [isPastThreshold, setIsPastThreshold] = useState(false);
 
   useEffect(() => {
-    // 스크롤 요소 가져오기: ID가 주어진 경우 해당 요소, 아니면 window
     const scrollElement = scrollElementId
       ? (document.getElementById(scrollElementId) as HTMLElement | null)
       : window;
 
-    const handleScroll = () => {
-      const scrollPosition =
-        scrollElement instanceof HTMLElement
-          ? scrollElement.scrollTop // HTMLElement의 scrollTop
-          : window.scrollY; // Window의 scrollY
+    let lastKnownScrollPosition = 0;
+    let ticking = false;
 
-      setIsPastThreshold(scrollPosition > threshold);
+    const handleScroll = () => {
+      lastKnownScrollPosition =
+        scrollElement instanceof HTMLElement
+          ? scrollElement.scrollTop
+          : window.scrollY;
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsPastThreshold(lastKnownScrollPosition > threshold);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     scrollElement?.addEventListener("scroll", handleScroll);
-    handleScroll(); // 초기 상태 설정
+    handleScroll();
 
     return () => {
       scrollElement?.removeEventListener("scroll", handleScroll);

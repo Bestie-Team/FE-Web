@@ -38,11 +38,11 @@ export default function BigClickableGatheringSwiper({
           <SwiperSlide
             onClick={() => handleGatheringClick(id)}
             className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
-            key={`${id}`}
+            key={`gathering${id}`}
           >
             <Image
               src={invitation_img_url}
-              alt={`${idx + 1}`}
+              alt={`gathering${idx + 1}`}
               className={styles.image}
               width={270}
               height={320}

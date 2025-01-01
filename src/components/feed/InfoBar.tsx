@@ -2,9 +2,9 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Options from "../shared/icons/Options";
-import GroupImages from "../shared/GroupImages";
 import { GroupInfoResponse } from "@/models/group";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
+import GroupMemberImages from "../shared/GroupMemberImages";
 
 export default function InfoBar({ group }: { group: GroupInfoResponse }) {
   return (
@@ -26,7 +26,7 @@ function WriterInfo() {
         width={36}
         height={36}
         className="w-[36px] h-[36px] rounded-full overflow-hidden"
-        alt="writerImage"
+        alt="writer"
       />
       <Spacing direction="horizontal" size={6} />
       <Flex style={{ width: "full" }} direction="column">
@@ -38,7 +38,7 @@ function WriterInfo() {
   );
 }
 
-export function TogetherInfo({ members }: { members: MemberInfo[] }) {
+export function TogetherInfo({ members }: { members: UserInfo[] }) {
   return (
     <Flex
       align="center"
@@ -46,7 +46,7 @@ export function TogetherInfo({ members }: { members: MemberInfo[] }) {
     >
       <span className="text-C2">with</span>
       <Spacing direction="horizontal" size={4} />
-      <GroupImages gap={8} members={members} />
+      <GroupMemberImages gap={8} members={members} />
     </Flex>
   );
 }

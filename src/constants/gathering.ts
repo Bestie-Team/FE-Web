@@ -3,7 +3,7 @@ import { GatheringResponse } from "@/models/gathering";
 export const GATHERINGS = [
   {
     id: "3",
-    type: "normal",
+    type: "friend",
     name: "4차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 4회차",
     friends: [
@@ -50,7 +50,7 @@ export const GATHERINGS = [
   },
   {
     id: "2",
-    type: "normal",
+    type: "friend",
     name: "3차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 3회차",
     friends: [
@@ -97,7 +97,7 @@ export const GATHERINGS = [
   },
   {
     id: "1",
-    type: "normal",
+    type: "friend",
     name: "2차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 2회차",
     friends: [
@@ -144,7 +144,7 @@ export const GATHERINGS = [
   },
   {
     id: "0",
-    type: "normal",
+    type: "friend",
     name: "1차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 1회차",
     friends: [
@@ -194,7 +194,7 @@ export const GATHERINGS = [
 export const GATHERINGS_PASSED = [
   {
     id: "1",
-    type: "normal",
+    type: "friend",
     name: "2차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 2회차",
     friends: [
@@ -241,7 +241,7 @@ export const GATHERINGS_PASSED = [
   },
   {
     id: "0",
-    type: "normal",
+    type: "friend",
     name: "1차 멍룡꾸 모임",
     desc: "멍룡이 꾸미기 1회차",
     friends: [

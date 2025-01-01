@@ -1,25 +1,33 @@
 "use client";
+import { newGroupAtom } from "@/atoms/group";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
 import AddGroupPhoto from "@/components/groups/AddGroupPhoto";
+import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
 import FeedIcon from "@/components/shared/icons/FeedIcon";
 import PencilIcon from "@/components/shared/icons/PencilIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
+import { GroupInfo } from "@/models/group";
 import HeaderReturner from "@/utils/headerReturner";
+import { useRecoilState } from "recoil";
 
 export default function NewGroupPage() {
+  const [newGroup, setNewGroup] = useRecoilState<GroupInfo>(newGroupAtom);
+
   return (
     <div className="h-screen bg-base-white">
       <div>{HeaderReturner()}</div>
-      <Flex direction="column" className="px-[20px]">
+      <form className="flex flex-col px-[20px]">
         <Spacing size={24} />
-        <AddGroupPhoto />
+        <AddGroupPhoto image={newGroup.groupImageUrl} setImage={setNewGroup} />
         <Spacing size={36} />
         <Input
-          value={""}
-          onChange={() => {}}
+          value={newGroup.name}
+          onChange={(e) => {
+            setNewGroup((prev) => ({ ...prev, name: e.target.value }));
+          }}
           displayLength={20}
           placeholder="그룹 이름을 입력해 주세요."
           label={
@@ -32,8 +40,10 @@ export default function NewGroupPage() {
         />
         <Spacing size={36} />
         <Input
-          value={""}
-          onChange={() => {}}
+          value={newGroup.description}
+          onChange={(e) => {
+            setNewGroup((prev) => ({ ...prev, desc: e.target.value }));
+          }}
           displayLength={20}
           placeholder="그룹 이름을 설명해 주세요."
           label={
@@ -51,8 +61,14 @@ export default function NewGroupPage() {
           <span>그룹 친구</span>
         </Flex>
         <Spacing size={8} />
-        <AddFriendsSlider />
-      </Flex>
+        <AddFriendsSlider setGroup={setNewGroup} type="group" />
+      </form>
+      <FixedBottomButton
+        label="그룹 생성하기"
+        onClick={() => {
+          console.log(newGroup);
+        }}
+      />
     </div>
   );
 }

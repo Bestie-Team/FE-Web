@@ -70,6 +70,7 @@ export default function AddPhoto({ small }: { small?: boolean }) {
     </label>
   );
 }
+
 function PhotoIcon() {
   return (
     <svg

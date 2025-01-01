@@ -24,7 +24,7 @@ export default function GatheringCard({
       <Image
         src={invitation_img_url}
         className={styles.image}
-        alt="gatheringImg"
+        alt="invitationImg"
         width={168}
         height={168}
       />

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Flex from "./Flex";
 import clsx from "clsx";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
-export default function GroupImages({
+export default function GroupMemberImages({
   members,
   memberImageUrls,
   maxLength = 3,
@@ -11,7 +11,7 @@ export default function GroupImages({
   height,
   gap,
 }: {
-  members?: MemberInfo[];
+  members?: UserInfo[];
   memberImageUrls?: string[];
   maxLength?: number;
   width?: number;
@@ -20,7 +20,7 @@ export default function GroupImages({
 }) {
   const memberImages =
     members != null
-      ? (members.map((member) => member.imageUrl) as string[])
+      ? (members.map((member) => member.profileImageUrl) as string[])
       : memberImageUrls!;
 
   const seenImages =
@@ -34,7 +34,7 @@ export default function GroupImages({
     <Flex>
       {seenImages.map((imageUrl, i) => (
         <Image
-          key={`img${i}`}
+          key={`group${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
           src={imageUrl || "https://cdn.lighty.today/anton.PNG"}
           width={width ? width : 28}

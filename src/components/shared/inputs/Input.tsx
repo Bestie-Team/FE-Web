@@ -15,6 +15,7 @@ interface InputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   helpMessage?: React.ReactNode;
   displayLength?: number;
+  minLength?: number;
 }
 
 export default function Input({
@@ -23,6 +24,7 @@ export default function Input({
   label,
   helpMessage,
   displayLength,
+  minLength,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -42,7 +44,7 @@ export default function Input({
       )}
       <div
         className={clsx(
-          inputWrapperStyle,
+          styles.inputWrapper,
           isFocused ? "border-grayscale-700" : "border-grayscale-10"
         )}
       >
@@ -51,8 +53,10 @@ export default function Input({
           inputMode="text"
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className={inputStyle}
+          className={styles.input}
           value={value}
+          minLength={minLength}
+          maxLength={maxLength}
           {...props}
         />
         {displayLength && (
@@ -64,15 +68,16 @@ export default function Input({
         {square && <EmptySquareIcon width="20" height="20" />}
       </div>
       {helpMessage ? (
-        <Text className={helpMessageStyle}>{helpMessage}</Text>
+        <Text className={styles.helpMessage}>{helpMessage}</Text>
       ) : null}
     </Flex>
   );
 }
 
 const height = `h-[50px]`;
-
-const inputWrapperStyle = `w-full ${height} px-[20px] rounded-[40px] flex items-center gap-[16px] justify-between bg-grayscale-10 border transition-all duration-300`;
-const inputStyle = `flex-grow bg-transparent outline-none text-[16px] font-[500] leading-[22.86px] tracking-[-0.48px] bg-grayscale-10 transform origin-left scale-[0.875]`;
-const helpMessageStyle =
-  "pl-[8px] text-C2 text-[#FA6767] inline-block mt-[6px]";
+const styles = {
+  inputWrapper: `w-full ${height} px-[20px] rounded-[40px] flex items-center gap-[16px] justify-between bg-grayscale-10 border transition-all duration-300`,
+  input:
+    "flex-grow bg-transparent outline-none text-[16px] font-[500] leading-[22.86px] tracking-[-0.48px] bg-grayscale-10 transform origin-left scale-[0.875]",
+  helpMessage: "pl-[8px] text-C2 text-[#FA6767] inline-block mt-[6px]",
+};

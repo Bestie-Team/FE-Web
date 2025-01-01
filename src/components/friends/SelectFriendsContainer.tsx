@@ -9,7 +9,7 @@ import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { useRouter } from "next/navigation";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
 export default function SelectFriendsContainer({
   paddingTop,
@@ -18,8 +18,7 @@ export default function SelectFriendsContainer({
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
-  const setSelectedFriends =
-    useSetRecoilState<MemberInfo[]>(selectedFriendsAtom);
+  const setSelectedFriends = useSetRecoilState<UserInfo[]>(selectedFriendsAtom);
   const userFriends = FRIENDS;
 
   const router = useRouter();

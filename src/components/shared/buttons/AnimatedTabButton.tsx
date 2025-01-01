@@ -10,7 +10,7 @@ const AnimatedTabButton = () => {
   );
 
   const tabs = [
-    { id: "normal", label: "일반 모임" as GatheringType },
+    { id: "friend", label: "일반 모임" as GatheringType },
     { id: "group", label: "그룹 모임" as GatheringType },
   ];
 

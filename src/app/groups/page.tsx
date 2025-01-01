@@ -11,6 +11,7 @@ import React from "react";
 export default function GroupsPage() {
   const router = useRouter();
   const myGroups = GROUPS;
+
   return (
     <div className="h-screen">
       <div>{HeaderReturner()}</div>
@@ -48,4 +49,5 @@ export default function GroupsPage() {
   );
 }
 
-const buttonStyle = "py-[8px] px-[12px] bg-base-white text-T6 rounded-[8px]";
+const buttonStyle =
+  "py-[8px] px-[12px] bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform";

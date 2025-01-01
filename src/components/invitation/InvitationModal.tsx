@@ -5,10 +5,10 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import CalendarIcon from "../shared/icons/CalendarIcon";
 import MapPinIcon from "../shared/icons/MapPinIcon";
-import GroupImages from "../shared/GroupImages";
 import Button from "../shared/buttons";
 import { useRecoilValue } from "recoil";
 import { invitationSelectedTabAtom } from "@/atoms/invitation";
+import GroupMemberImages from "../shared/GroupMemberImages";
 
 export default function InvitationModal({
   onClickClose,
@@ -16,8 +16,9 @@ export default function InvitationModal({
   onClickClose: (value: boolean) => void;
 }) {
   const selectedTab = useRecoilValue(invitationSelectedTabAtom);
+
   return (
-    <Dimmed className="flex flex-col justify-center items-center">
+    <Dimmed className={styles.dimmed}>
       <Flex
         direction="column"
         justify="center"
@@ -36,17 +37,14 @@ export default function InvitationModal({
         <div className="relative">
           <Image
             src="https://cdn.lighty.today/invitationV.png"
-            alt="invitationVertical"
+            alt="verticalBar"
             width={330}
             height={460}
           />
-          <Flex
-            direction="column"
-            style={{ position: "absolute", padding: "15px", left: 0, top: 0 }}
-          >
+          <Flex direction="column" className={styles.mainContentWrapper}>
             <Image
               src="https://cdn.lighty.today/dishes.jpg"
-              className="h-[210px] object-cover rounded-[12px]"
+              className={styles.image}
               width={300}
               height={210}
               alt="invitationImage"
@@ -57,15 +55,7 @@ export default function InvitationModal({
               먹고 죽는 크리스마스 돼지 파티에 초대합니다.
             </span>
           </Flex>
-          <Flex
-            direction="column"
-            style={{
-              position: "absolute",
-              paddingLeft: "4px",
-              left: "15px",
-              top: "332px",
-            }}
-          >
+          <Flex direction="column" className={styles.subContentWrapper}>
             <Flex align="center">
               <CalendarIcon width="14" height="14" color="#AEAEAE" />
               <Spacing direction="horizontal" size={8} />
@@ -79,23 +69,15 @@ export default function InvitationModal({
               <span className="text-B4">성수 에이바</span>
             </Flex>
           </Flex>
-          <div className="absolute bottom-[15px] left-[15px] pl-[4px]">
-            <GroupImages
+          <div className={styles.groupMemberImagesWrapper}>
+            <GroupMemberImages
               width={34}
               height={34}
               gap={6}
-              memberImageUrls={images}
+              memberImageUrls={groupMemberImages}
             />
           </div>
-          <Flex
-            align="center"
-            style={{
-              position: "absolute",
-              paddingRight: "4px",
-              right: "15px",
-              bottom: "22px",
-            }}
-          >
+          <Flex align="center" className={styles.fromWrapper}>
             <span className="text-T5 text-grayscale-300">from</span>
             <Spacing direction="horizontal" size={4} />
             <span className="text-B3">Maybin_</span>
@@ -105,13 +87,9 @@ export default function InvitationModal({
           <>
             <Spacing size={16} />
             <Flex justify="center">
-              <Button className="bg-grayscale-100 px-[24px] py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200">
-                거절
-              </Button>
+              <Button className={styles.rejectBtn}>거절</Button>
               <Spacing size={15} direction="horizontal" />
-              <Button className="bg-grayscale-900 px-[24px] py-[14px] text-base-white rounded-[36px] text-T6">
-                수락
-              </Button>
+              <Button className={styles.acceptBtn}>수락</Button>
             </Flex>
           </>
         ) : null}
@@ -120,9 +98,23 @@ export default function InvitationModal({
   );
 }
 
-const images = [
+const groupMemberImages = [
   "https://cdn.lighty.today/bini.JPG",
   "https://cdn.lighty.today/binanton_jp.jpeg",
   "https://cdn.lighty.today/ocean.JPG",
   "https://cdn.lighty.today/groom.JPG",
 ];
+
+const styles = {
+  dimmed: "flex flex-col justify-center items-center",
+
+  image: "h-[210px] object-cover rounded-[12px]",
+  mainContentWrapper: "absolute padding-[15px] left-0 top-0",
+  subContentWrapper: "absolute pl-[4px] left-[15px] top-[332px]",
+  groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-[4px]",
+  fromWrapper: "absolute pr-[4px] right-[15px] bottom-[22px]",
+  rejectBtn:
+    "bg-grayscale-100 px-[24px] py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200",
+  acceptBtn:
+    "bg-grayscale-900 px-[24px] py-[14px] text-base-white rounded-[36px] text-T6",
+};

@@ -49,7 +49,7 @@ export default function PhotoSwiper({
           {idx === 0 && type === "feed" ? (
             <div className={feedImageInfoStyle}>
               <span>안녕</span>
-              <span>2024.07.24</span>
+              <span>2025.07.24</span>
             </div>
           ) : null}
           {type === "home" ? (

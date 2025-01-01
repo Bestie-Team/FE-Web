@@ -19,7 +19,7 @@ export default function GatheringBannerContainer({
       <div className="relative">
         <Image
           priority
-          alt="homeImage"
+          alt="gatheringBanner"
           src={
             gathering.invitation_img_url ||
             "https://cdn.lighty.today/gathering.png"

@@ -24,8 +24,8 @@ export default function InvitationPage() {
   const setSelectedTab = useSetRecoilState(invitationSelectedTabAtom);
   const setAnimateTab = useSetRecoilState(animationStatusAtom);
   const [year, setYear] = useState<OptionType | null>({
-    value: "2024",
-    label: "2024",
+    value: "2025",
+    label: "2025",
   });
 
   const handleSlideChange = (index: number) => {

@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import PhotoIcon from "../shared/icons/PhotoIcon";
 import Spacing from "../shared/Spacing";
+import { SetterOrUpdater } from "recoil";
+import { GroupInfo } from "@/models/group";
 
-export default function AddGroupPhoto() {
-  const [image, setImage] = useState<string | null>(null);
-
+export default function AddGroupPhoto({
+  image,
+  setImage,
+}: {
+  image: string | null;
+  setImage: SetterOrUpdater<GroupInfo>;
+}) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          setImage(event.target.result as string);
+          setImage((prev) => ({
+            ...prev,
+            groupImageUrl: event.target?.result as string,
+          }));
         }
       };
       reader.readAsDataURL(file);

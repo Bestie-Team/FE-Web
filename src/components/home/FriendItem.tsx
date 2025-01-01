@@ -2,15 +2,14 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/icons/PlusIcon";
-import { AddFriendsSliderType } from "../groups/AddFriendsSlider";
 import { GroupInfoResponse } from "@/models/group";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
 export default function FriendItem({
   friendInfo,
   groupInfo,
 }: {
-  friendInfo?: MemberInfo;
+  friendInfo?: UserInfo;
   groupInfo?: GroupInfoResponse;
 }) {
   return (
@@ -19,7 +18,7 @@ export default function FriendItem({
         <Image
           alt="friendImage"
           src={
-            friendInfo?.imageUrl ||
+            friendInfo?.profileImageUrl ||
             groupInfo?.imageUrl ||
             "https://cdn.lighty.today/bini.JPG"
           }
@@ -34,20 +33,14 @@ export default function FriendItem({
           {friendInfo?.name || groupInfo?.groupName || "이름"}
         </span>
         <span className="text-C5 text-grayscale-400 truncate">
-          {friendInfo?.userId || groupInfo?.desc || "아이디"}
+          {friendInfo?.accountId || groupInfo?.desc || "아이디"}
         </span>
       </Flex>
     </Flex>
   );
 }
 
-export function AddFriendItem({
-  onClick,
-  type = "친구",
-}: {
-  onClick?: () => void;
-  type?: AddFriendsSliderType;
-}) {
+export function AddFriendItem({ onClick }: { onClick?: () => void }) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
       <div
@@ -69,7 +62,7 @@ export function AddFriendItem({
       </div>
       <Spacing size={2} />
       <Flex direction="column" align="center">
-        <span className="text-T6">{type} 추가</span>
+        <span className="text-T6">친구 추가</span>
         <span className="text-C5 text-grayscale-400 hidden">ㅇㅇㅇ</span>
       </Flex>
     </Flex>

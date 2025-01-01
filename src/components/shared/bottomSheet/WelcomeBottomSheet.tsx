@@ -22,6 +22,7 @@ export default function WelcomeBottomSheet({
         </span>
         <Spacing size={4} />
         <Image
+          priority
           width={176}
           height={180}
           alt="welcomeImg"

@@ -1,7 +1,7 @@
 "use client";
 import { newGatheringInfo, selectedGatheringTypeAtom } from "@/atoms/gathering";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
-// import AddressSearch from "@/components/shared/AddressSearch";
+import AddGroupSlider from "@/components/groups/AddGroupSlider";
 import CalendarBottomSheet from "@/components/shared/bottomSheet/CalendarBottomSheet";
 import AnimatedTabButton from "@/components/shared/buttons/AnimatedTabButton";
 import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
@@ -30,7 +30,7 @@ export default function NewGatheringPage() {
   return (
     <div className="h-screen bg-base-white">
       <div>{HeaderReturner()}</div>
-      <Flex direction="column" className="px-[20px]">
+      <form className="flex flex-col px-[20px]">
         <Spacing size={16} />
         <Flex align="center" className="h-[50px]">
           <EmptyLogoIcon color="#0A0A0A" />
@@ -40,6 +40,8 @@ export default function NewGatheringPage() {
         </Flex>
         <Spacing size={24} />
         <Input
+          minLength={2}
+          displayLength={10}
           value={gatheringInfo.name}
           onChange={(e) =>
             setGatheringInfo((prev) => ({ ...prev, name: e.target.value }))
@@ -55,6 +57,8 @@ export default function NewGatheringPage() {
         />
         <Spacing size={36} />
         <Input
+          minLength={10}
+          displayLength={40}
           value={gatheringInfo.desc}
           onChange={(e) =>
             setGatheringInfo((prev) => ({ ...prev, desc: e.target.value }))
@@ -78,9 +82,9 @@ export default function NewGatheringPage() {
         </Flex>
         <Spacing size={8} />
         {gatheringType === "일반 모임" ? (
-          <AddFriendsSlider />
+          <AddFriendsSlider setGathering={setGatheringInfo} type="gathering" />
         ) : (
-          <AddFriendsSlider type="그룹" />
+          <AddGroupSlider />
         )}
         <Spacing size={36} />
         <div className="grid grid-cols-2 gap-4">
@@ -126,14 +130,18 @@ export default function NewGatheringPage() {
               </>
             }
           />
-          {/* <AddressSearch register={""} setValue={setGatheringInfo} errors="" /> */}
+          <FixedBottomButton
+            label="다음"
+            onClick={() => {
+              console.log(gatheringInfo);
+            }}
+          />
         </div>
         <CalendarBottomSheet
           onClose={() => setCalendarOpen(false)}
           open={calendarOpen}
         />
-      </Flex>
-      <FixedBottomButton label="다음" />
+      </form>
     </div>
   );
 }

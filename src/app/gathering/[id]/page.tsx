@@ -53,7 +53,7 @@ export default function GatheringDetailPage({
             <Spacing size={8} direction="horizontal" />
             <Image
               className="rounded-[10.8px] width-[36px] height-[36px]"
-              alt="mapImg"
+              alt="mapIcon"
               width={36}
               height={36}
               src={"https://cdn.lighty.today/map.png"}

@@ -1,22 +1,19 @@
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
-// export interface GroupInfo {
-//   groupName: string;
-//   imageUrl: string;
-//   desc: string;
-//   groupLeader: MemberInfo;
-//   members: MemberInfo[];
-//   gatheringCount: number;
-// }
+export interface GroupInfo {
+  name: string;
+  groupImageUrl: string | null;
+  description: string;
+  groupLeaderId: string;
+  friendIds: string[];
+}
 
 export interface GroupInfoResponse {
   id: string;
   groupName: string;
   imageUrl: string;
   desc: string;
-  groupLeader: MemberInfo;
-  members: MemberInfo[];
+  groupLeader: UserInfo;
+  members: UserInfo[];
   gatheringCount: number;
 }
-
-export type GroupInfo = Omit<GroupInfoResponse, "id">;

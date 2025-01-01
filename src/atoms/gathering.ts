@@ -44,11 +44,11 @@ export const gatheringSelectedTimeAtom = atom<string>({
 export const newGatheringInfo = atom<GatheringInfo>({
   key: "gathering/gatheringInfo",
   default: {
-    type: "normal",
+    type: "friend",
     name: "",
     desc: "",
     group: "",
-    friends: [],
+    friendIds: [],
     date: "",
     ampm: "",
     time: "",

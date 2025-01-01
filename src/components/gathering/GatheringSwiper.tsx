@@ -1,7 +1,6 @@
 import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { useRouter } from "next/navigation";
 import Spacing from "../shared/Spacing";
 import { GATHERINGS } from "@/constants/gathering";
@@ -30,11 +29,10 @@ export default function GatheringSwiper({ percent }: { percent?: number }) {
         >
           <Image
             src={invitation_img_url}
-            alt={`img${idx + 1}`}
+            alt={`invitationImage${idx + 1}`}
             className={styles.image}
             width={340}
             height={360}
-            key={`swiperImg${idx + 1}`}
           />
           <div className={styles.gatheringImageInfo}>
             <span>{name}</span>

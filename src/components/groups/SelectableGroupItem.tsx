@@ -22,7 +22,7 @@ export default function SelectableGroupItem({
       className={style.container}
       justify="space-between"
     >
-      <div className="relative p-[6px] cursor-pointer">
+      <div className={style.wrapper}>
         <div
           onClick={onClickGroup}
           className={clsx(
@@ -53,6 +53,8 @@ export default function SelectableGroupItem({
 
 const style = {
   container: "w-fit shrink-0",
+  wrapper: "relative p-[6px] cursor-pointer",
+
   circleWrapper: "relative rounded-full border-[1.2px] border-grayscale-100",
   clickedCircleWrapper: "relative rounded-full border-dashed border-[2px]",
   image: "rounded-full object-cover w-[56px] h-[56px]",

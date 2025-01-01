@@ -13,7 +13,7 @@ import { selectedFriendsAtom } from "@/atoms/friends";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useRouter } from "next/navigation";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 
 // /api/search/${keyword}
 // 검색하는 keyword가 있다면 /api/search/${keyword} -> 유저네임이나, 네임
@@ -22,8 +22,7 @@ import { MemberInfo } from "@/constants/members";
 export default function FriendSearchSelectContainer() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
-  const setSelectedFriends =
-    useSetRecoilState<MemberInfo[]>(selectedFriendsAtom);
+  const setSelectedFriends = useSetRecoilState<UserInfo[]>(selectedFriendsAtom);
   // const debouncedKeyword = useDebounce(keyword);
   //   const {
   //     data: users,

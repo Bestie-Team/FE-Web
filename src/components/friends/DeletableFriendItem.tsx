@@ -2,12 +2,12 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { GroupInfoResponse } from "@/models/group";
-import { MemberInfo } from "@/constants/members";
+import { UserInfo } from "@/models/user";
 import CloseIcon from "../shared/icons/CloseIcon";
 import CheckIcon from "../shared/icons/CheckIcon";
 
 interface Props {
-  friendInfo?: MemberInfo;
+  friendInfo?: UserInfo;
   groupInfo?: GroupInfoResponse;
   onClickDelete: () => void;
 }
@@ -22,9 +22,9 @@ export default function DeletableFriendItem({
       <div className="relative p-[6px]">
         <div className={style.circleWrapper}>
           <Image
-            alt="friendImage"
+            alt="friendProfile"
             src={
-              friendInfo?.imageUrl ||
+              friendInfo?.profileImageUrl ||
               groupInfo?.imageUrl ||
               "https://cdn.lighty.today/bini.JPG"
             }
@@ -44,7 +44,7 @@ export default function DeletableFriendItem({
           {friendInfo?.name || groupInfo?.groupName || "이름"}
         </span>
         <span className={style.text}>
-          {friendInfo?.userId || groupInfo?.desc || "아이디"}
+          {friendInfo?.accountId || groupInfo?.desc || "아이디"}
         </span>
       </Flex>
     </Flex>
