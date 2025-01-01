@@ -99,7 +99,7 @@ export default function NewGatheringPage() {
             value={
               gatheringInfo.date && gatheringInfo.ampm && gatheringInfo.time ? (
                 <>
-                  <span>{format(gatheringInfo.date, "yyyy-MM-dd")}</span>
+                  <span>{format(gatheringInfo.date, "yyyy.MM.dd")}</span>
                   <Spacing size={8} />
                   <span>
                     {gatheringInfo.ampm} {gatheringInfo.time}
@@ -143,11 +143,11 @@ export default function NewGatheringPage() {
             }}
           />
         </div>
-        <CalendarBottomSheet
-          onClose={() => setCalendarOpen(false)}
-          open={calendarOpen}
-        />
       </form>
+      <CalendarBottomSheet
+        onClose={() => setCalendarOpen(false)}
+        open={calendarOpen}
+      />
     </div>
   );
 }

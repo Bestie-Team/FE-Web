@@ -48,7 +48,7 @@ export default function CalendarWithTime({
         </Button>
       </Flex>
       <div className="w-[326px] h-[1px] bg-grayscale-50 my-[16px] mx-[12px]" />
-      <Flex className="gap-[8px] overflow-x-scroll no-scrollbar px-[12px]">
+      <Flex className={styles.timeWrapper}>
         {TIMES.map((time, idx) => (
           <Button
             key={idx}
@@ -69,5 +69,6 @@ export default function CalendarWithTime({
 }
 
 const styles = {
+  timeWrapper: "gap-[8px] overflow-x-scroll no-scrollbar px-[12px]",
   button: "py-[10px] px-[18px] rounded-[40px] text-B4 border",
 };
