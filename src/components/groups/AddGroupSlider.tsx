@@ -5,7 +5,7 @@ import { selectedGroupAtom } from "@/atoms/gathering";
 import SelectableGroupItem from "./SelectableGroupItem";
 import { GROUPS } from "@/constants/groups";
 
-export default function AddGroupSlider({}: {}) {
+export default function AddGroupSlider() {
   const [selectedGroup, setSelectedGroup] =
     useRecoilState<GroupInfoResponse | null>(selectedGroupAtom);
 
