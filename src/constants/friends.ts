@@ -9,22 +9,22 @@ const FRIENDS = [
   {
     accountId: "anasdf70",
     name: "임나연",
-    imageUrl: "/brown.jpeg",
+    profileImageUrl: "/brown.jpeg",
   },
   {
     accountId: "loy09",
     name: "임지원",
-    imageUrl: "/coat.jpeg",
+    profileImageUrl: "/coat.jpeg",
   },
   {
     accountId: "ooz1234",
     name: "두나",
-    imageUrl: "/flower.jpeg",
+    profileImageUrl: "/flower.jpeg",
   },
   {
     accountId: "pp00",
     name: "손채영",
-    imageUrl: "/phone.jpeg",
+    profileImageUrl: "/phone.jpeg",
   },
 ] as UserInfo[];
 
