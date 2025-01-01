@@ -1,5 +1,5 @@
 "use client";
-import { SessionProvider } from "next-auth/react";
+// import { SessionProvider } from "next-auth/react";
 import { RecoilRoot } from "recoil";
 interface Props {
   children?: React.ReactNode;
@@ -13,9 +13,7 @@ const queryClient = new QueryClient();
 export const NextProvider = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
-        <SessionProvider>{children}</SessionProvider>
-      </RecoilRoot>
+      <RecoilRoot>{children}</RecoilRoot>
     </QueryClientProvider>
   );
 };

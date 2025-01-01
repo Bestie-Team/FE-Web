@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
@@ -7,7 +6,7 @@ export interface SettingsItem {
   title: string;
   info: null | string[];
   link?: string;
-  onClick?: () => Promise<undefined>;
+  onClick?: () => void;
 }
 
 export default function SettingsMenu() {
@@ -73,7 +72,7 @@ const settings = [
         title: "로그아웃",
         info: null,
         link: "/",
-        onClick: async () => await signOut({ callbackUrl: "/" }),
+        onClick: async () => {},
       },
     ],
   },

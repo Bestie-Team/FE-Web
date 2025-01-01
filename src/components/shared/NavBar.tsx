@@ -6,14 +6,11 @@ import SheetOpenBtnContainer from "./bottomSheet";
 import { useRecoilState } from "recoil";
 import { locationStatusAtom } from "@/atoms/location";
 import NAV_ITEMS from "@/constants/navBarConstants";
-import { useSession } from "next-auth/react";
 
 export default function NavBar() {
   const [activeBtn, setActiveBtn] = useRecoilState<number>(locationStatusAtom);
   const [isClient, setIsClient] = useState<boolean>(false);
   const pathname = usePathname();
-  const { data } = useSession();
-  const imgUrl = data?.user?.image;
 
   const defaultBtn = useMemo(() => {
     const index = NAV_ITEMS.findIndex((item) => pathname.startsWith(item.href));
@@ -39,7 +36,6 @@ export default function NavBar() {
     <div className={NavBarWrapperStyle}>
       {NAV_ITEMS.map((item, idx) => {
         const isActive = idx === activeBtn;
-        const src = imgUrl !== null ? imgUrl : "";
         return (
           <Link
             key={item.href.slice(1)}
@@ -47,7 +43,7 @@ export default function NavBar() {
             className={iconWrapperStyle}
             onMouseDown={() => setActiveBtn(idx)}
           >
-            {item.icon(isActive, src)}
+            {item.icon(isActive, "")}
           </Link>
         );
       })}

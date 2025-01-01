@@ -1,24 +1,19 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import LightyIcon from "./shared/icons/LightyIcon";
 import Tooltip from "./shared/tootlips/Tooltip";
 import Button from "./shared/buttons";
 import clsx from "clsx";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import LargeLightyLogo from "./shared/icons/LargeLightyLogo";
 import oAuthButtons from "@/constants/oAuthButtons";
 
 export default function Splash() {
-  const router = useRouter();
-  const { status } = useSession();
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.replace("/home");
-    }
-  }, [router, status]);
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.replace("/home");
+  //   }
+  // }, [router, status]);
 
   return (
     <div className={styles.splashContainer}>
@@ -45,7 +40,9 @@ export default function Splash() {
             <Button
               key={idx}
               className={clsx(styles.oAuthButton)}
-              onClick={() => signIn(provider)}
+              onClick={() => {
+                console.log(provider);
+              }}
               color={color}
             >
               <object
