@@ -11,15 +11,15 @@ import { GATHERINGS_PASSED } from "@/constants/gathering";
 export default function ChoosingGatheringToRecord({
   onNext,
 }: {
-  onNext: (groupInfoValue: string) => void;
+  onNext: (gatheringId: string) => void;
 }) {
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
 
   const gatheringsPassed = GATHERINGS_PASSED;
 
-  const handleImageClick = (group: string | null) => {
-    setSelectedGatheringId(group);
+  const handleImageClick = (gatheringId: string | null) => {
+    setSelectedGatheringId(gatheringId);
   };
 
   return (

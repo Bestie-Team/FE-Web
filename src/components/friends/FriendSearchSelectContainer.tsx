@@ -85,7 +85,7 @@ export default function FriendSearchSelectContainer() {
         <ul>
           {users &&
             users.map((user, index) => (
-              <React.Fragment key={`${user.userId}${index}`}>
+              <React.Fragment key={`${user.accountId}${index}`}>
                 <FriendListItem
                   friendInfo={user}
                   idx={index}

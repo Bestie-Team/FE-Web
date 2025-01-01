@@ -23,10 +23,10 @@ export default function Record({
     }
   }, [recordValues, onSubmit]);
 
-  const handleGroupChange = (groupInfoValue: string) => {
+  const handleGroupChange = (gatheringId: string) => {
     setRecordValues((prevValues) => ({
       ...prevValues,
-      groupId: groupInfoValue,
+      groupId: gatheringId,
     }));
     setStep(step + 1);
   };

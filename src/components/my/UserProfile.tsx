@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 
 export default function UserProfile() {
   const name = "이찬영";
-  const userId = "antinitony";
+  const accountId = "antinitony";
   return (
     <Flex
       align="center"
@@ -18,7 +18,7 @@ export default function UserProfile() {
       <AddPhoto />
       <Spacing size={8} />
       <Flex direction="column" align="center">
-        <span className="text-T3 leading-[23px]">{userId}</span>
+        <span className="text-T3 leading-[23px]">{accountId}</span>
         <Spacing size={4} />
         <span className="text-B4 text-grayscale-400">{name}</span>
       </Flex>

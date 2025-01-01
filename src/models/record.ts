@@ -1,7 +1,7 @@
 export interface RecordValues {
-  userId: string;
-  groupId: string;
-  recordedAt: Date;
+  accountId: string;
+  gatheringId: string;
+  recordedAt: string;
   recordContent: string;
   imageUrl: string[];
 }
