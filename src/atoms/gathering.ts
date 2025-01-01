@@ -64,7 +64,7 @@ export const selectedGroupAtom = atom<GroupInfoResponse | null>({
     groupName: "",
     imageUrl: "",
     desc: "",
-    groupLeader: { imageUrl: "", userId: "", name: "" },
+    groupLeader: { profileImageUrl: "", accountId: "", name: "" },
     members: [],
     gatheringCount: 0,
   },
