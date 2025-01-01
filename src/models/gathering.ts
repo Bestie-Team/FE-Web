@@ -4,9 +4,9 @@ import { UserInfo } from "./user";
 export interface GatheringInfo {
   type: "group" | "friend";
   name: string;
-  desc: string;
+  description: string;
   friendIds: string[];
-  group: string;
+  groupId: string;
   date: string;
   ampm: string;
   time: string;
@@ -18,7 +18,7 @@ export interface GatheringResponse {
   id: string;
   type: "group" | "friend";
   name: string;
-  desc: string;
+  description: string;
   friends: UserInfo[];
   group: GroupInfoResponse;
   date: string;

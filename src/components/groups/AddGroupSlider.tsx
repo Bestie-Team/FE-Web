@@ -1,13 +1,13 @@
 import Flex from "../shared/Flex";
 import { useRecoilState } from "recoil";
-import { GroupInfoResponse } from "@/models/group";
 import { selectedGroupAtom } from "@/atoms/gathering";
 import SelectableGroupItem from "./SelectableGroupItem";
 import { GROUPS } from "@/constants/groups";
 
 export default function AddGroupSlider() {
-  const [selectedGroup, setSelectedGroup] =
-    useRecoilState<GroupInfoResponse | null>(selectedGroupAtom);
+  const [selectedGroupId, setSelectedGroupId] = useRecoilState<string | null>(
+    selectedGroupAtom
+  );
 
   return (
     <div className="w-full">
@@ -17,13 +17,13 @@ export default function AddGroupSlider() {
             key={`groupItem${i}`}
             groupInfo={group}
             onClickGroup={() => {
-              if (selectedGroup?.id === group.id) {
-                setSelectedGroup(null);
+              if (selectedGroupId === group.id) {
+                setSelectedGroupId(null);
                 return;
               }
-              setSelectedGroup(group);
+              setSelectedGroupId(group.id);
             }}
-            clicked={selectedGroup?.id === group.id}
+            clicked={selectedGroupId === group.id}
           />
         ))}
       </Flex>

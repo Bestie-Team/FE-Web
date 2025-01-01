@@ -12,7 +12,7 @@ export interface GroupInfoResponse {
   id: string;
   groupName: string;
   imageUrl: string;
-  desc: string;
+  description: string;
   groupLeader: UserInfo;
   members: UserInfo[];
   gatheringCount: number;

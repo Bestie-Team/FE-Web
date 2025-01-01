@@ -7,14 +7,14 @@ interface Props {
 }
 
 export default function GroupInfoContainer({ group }: Props) {
-  const { groupName, desc } = group;
+  const { groupName, description } = group;
 
   return (
     <Flex className={styles.container}>
       <Flex align="center">
         <span className="text-T1">{groupName}</span>
         <Spacing size={6} direction="horizontal" />
-        <span className={styles.descWrapper}>{desc}</span>
+        <span className={styles.descWrapper}>{description}</span>
       </Flex>
     </Flex>
   );

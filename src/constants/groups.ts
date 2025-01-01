@@ -6,7 +6,7 @@ export const GROUPS = [
     id: "0",
     groupName: "다꾸모임💖",
     imageUrl: "https://cdn.lighty.today/diary.jpeg",
-    desc: "다꾸하는 모임",
+    description: "다꾸하는 모임",
     groupLeader: {
       profileImageUrl: "https://cdn.lighty.today/cute.jpg",
       accountId: "choco",
@@ -45,7 +45,7 @@ export const GROUPS = [
     id: "1",
     groupName: "클친자",
     imageUrl: "https://cdn.lighty.today/climbing.jpeg",
-    desc: "클밍 도파민 중독자들",
+    description: "클밍 도파민 중독자들",
     groupLeader: {
       profileImageUrl: "https://cdn.lighty.today/yellow.jpg",
       accountId: "sky",
@@ -69,7 +69,7 @@ export const GROUPS = [
     id: "2",
     groupName: "멍룡모임",
     imageUrl: "https://cdn.lighty.today/meongryong.jpeg",
-    desc: "대왕멍룡이 주인들의 모임",
+    description: "대왕멍룡이 주인들의 모임",
     groupLeader: {
       profileImageUrl: "https://cdn.lighty.today/blanket.jpg",
       accountId: "anton",
@@ -98,7 +98,7 @@ export const GROUPS = [
     id: "3",
     groupName: "왕룡꾸모임",
     imageUrl: "https://cdn.lighty.today/cute.jpg",
-    desc: "왕룡이 꾸미는 모임",
+    description: "왕룡이 꾸미는 모임",
     groupLeader: {
       profileImageUrl: "https://cdn.lighty.today/cat.jpg",
       accountId: "stone",

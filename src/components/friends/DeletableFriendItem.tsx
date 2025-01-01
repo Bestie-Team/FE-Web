@@ -44,7 +44,7 @@ export default function DeletableFriendItem({
           {friendInfo?.name || groupInfo?.groupName || "이름"}
         </span>
         <span className={style.text}>
-          {friendInfo?.accountId || groupInfo?.desc || "아이디"}
+          {friendInfo?.accountId || groupInfo?.description || "아이디"}
         </span>
       </Flex>
     </Flex>

@@ -21,7 +21,7 @@ export default function GroupDetailPage({
   // if (data == null || isLoading) return <div>Loading...</div>;
 
   // 임시로 아래와 같이 데이터 불러옴
-  const { groupLeader, desc, members } = GROUPS[Number(params.id)];
+  const { groupLeader, description, members } = GROUPS[Number(params.id)];
 
   const 내가이그룹장인가 = true;
 
@@ -44,7 +44,7 @@ export default function GroupDetailPage({
         }
         content={
           <Flex className={styles.contentWrapper}>
-            <span>{desc}</span>
+            <span>{description}</span>
           </Flex>
         }
       />

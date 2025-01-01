@@ -81,7 +81,7 @@ export default function CreatingPostToRecord({
     (g) => g.id === selectedGatheringId
   ) as GatheringResponse;
 
-  const { desc, name, group } = gathering;
+  const { description, name, group } = gathering;
 
   return (
     <div className={styles.container}>
@@ -103,7 +103,7 @@ export default function CreatingPostToRecord({
           <Flex direction="column" style={{ flexGrow: 1 }}>
             <span className="text-T2">{name}</span>
             <Spacing size={8} />
-            <span className="text-C2 text-grayscale-400">{desc}</span>
+            <span className="text-C2 text-grayscale-400">{description}</span>
           </Flex>
           <Spacing direction="horizontal" size={16} />
           <TogetherInfo members={group.members} />

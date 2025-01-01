@@ -15,7 +15,7 @@ export default function GroupContainer({
   onClick?: () => void;
   className?: string;
 }) {
-  const { groupName, desc, gatheringCount, imageUrl, members } = group;
+  const { groupName, description, gatheringCount, imageUrl, members } = group;
 
   const handleClick = () => {
     if (onClick) {
@@ -44,7 +44,7 @@ export default function GroupContainer({
           <Flex direction="column">
             <span className="text-T5">{groupName}</span>
             <Spacing size={4} />
-            <span className={styles.font}>{desc}</span>
+            <span className={styles.font}>{description}</span>
           </Flex>
         </Flex>
         <Spacing size={12} />

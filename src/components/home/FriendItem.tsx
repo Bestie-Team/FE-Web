@@ -33,7 +33,7 @@ export default function FriendItem({
           {friendInfo?.name || groupInfo?.groupName || "이름"}
         </span>
         <span className="text-C5 text-grayscale-400 truncate">
-          {friendInfo?.accountId || groupInfo?.desc || "아이디"}
+          {friendInfo?.accountId || groupInfo?.description || "아이디"}
         </span>
       </Flex>
     </Flex>

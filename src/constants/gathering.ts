@@ -7,7 +7,7 @@ export const GATHERINGS = [
     id: "3",
     type: "friend",
     name: "4차 멍룡꾸 모임",
-    desc: "멍룡이 꾸미기 4회차",
+    description: "멍룡이 꾸미기 4회차",
     friends: [
       {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
@@ -24,7 +24,7 @@ export const GATHERINGS = [
       id: "3",
       groupName: "왕룡꾸모임",
       imageUrl: "https://cdn.lighty.today/cute.jpg",
-      desc: "왕룡이 꾸미는 모임",
+      description: "왕룡이 꾸미는 모임",
       groupLeader: {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
         accountId: "stone",
@@ -54,7 +54,7 @@ export const GATHERINGS = [
     id: "2",
     type: "friend",
     name: "3차 멍룡꾸 모임",
-    desc: "멍룡이 꾸미기 3회차",
+    description: "멍룡이 꾸미기 3회차",
     friends: [
       {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
@@ -71,7 +71,7 @@ export const GATHERINGS = [
       id: "3",
       groupName: "왕룡꾸모임",
       imageUrl: "https://cdn.lighty.today/cute.jpg",
-      desc: "왕룡이 꾸미는 모임",
+      description: "왕룡이 꾸미는 모임",
       groupLeader: {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
         accountId: "stone",
@@ -101,7 +101,7 @@ export const GATHERINGS = [
     id: "1",
     type: "friend",
     name: "2차 멍룡꾸 모임",
-    desc: "멍룡이 꾸미기 2회차",
+    description: "멍룡이 꾸미기 2회차",
     friends: [
       {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
@@ -118,7 +118,7 @@ export const GATHERINGS = [
       id: "3",
       groupName: "왕룡꾸모임",
       imageUrl: "https://cdn.lighty.today/cute.jpg",
-      desc: "왕룡이 꾸미는 모임",
+      description: "왕룡이 꾸미는 모임",
       groupLeader: {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
         accountId: "stone",
@@ -148,7 +148,7 @@ export const GATHERINGS = [
     id: "0",
     type: "friend",
     name: "1차 멍룡꾸 모임",
-    desc: "멍룡이 꾸미기 1회차",
+    description: "멍룡이 꾸미기 1회차",
     friends: [
       {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
@@ -165,7 +165,7 @@ export const GATHERINGS = [
       id: "3",
       groupName: "왕룡꾸모임",
       imageUrl: "https://cdn.lighty.today/cute.jpg",
-      desc: "왕룡이 꾸미는 모임",
+      description: "왕룡이 꾸미는 모임",
       groupLeader: {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
         accountId: "stone",
@@ -198,7 +198,7 @@ export const GATHERINGS_PASSED = [
     id: "1",
     type: "friend",
     name: "2차 멍룡꾸 모임",
-    desc: "멍룡이 꾸미기 2회차",
+    description: "멍룡이 꾸미기 2회차",
     friends: [
       {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
@@ -215,7 +215,7 @@ export const GATHERINGS_PASSED = [
       id: "3",
       groupName: "왕룡꾸모임",
       imageUrl: "https://cdn.lighty.today/cute.jpg",
-      desc: "왕룡이 꾸미는 모임",
+      description: "왕룡이 꾸미는 모임",
       groupLeader: {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
         accountId: "stone",
@@ -245,7 +245,7 @@ export const GATHERINGS_PASSED = [
     id: "0",
     type: "friend",
     name: "1차 멍룡꾸 모임",
-    desc: "멍룡이 꾸미기 1회차",
+    description: "멍룡이 꾸미기 1회차",
     friends: [
       {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
@@ -262,7 +262,7 @@ export const GATHERINGS_PASSED = [
       id: "3",
       groupName: "왕룡꾸모임",
       imageUrl: "https://cdn.lighty.today/cute.jpg",
-      desc: "왕룡이 꾸미는 모임",
+      description: "왕룡이 꾸미는 모임",
       groupLeader: {
         profileImageUrl: "https://cdn.lighty.today/cat.jpg",
         accountId: "stone",

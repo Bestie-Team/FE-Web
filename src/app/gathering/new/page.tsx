@@ -60,9 +60,12 @@ export default function NewGatheringPage() {
           name="gatheringDesc"
           minLength={10}
           displayLength={40}
-          value={gatheringInfo.desc}
+          value={gatheringInfo.description}
           onChange={(e) =>
-            setGatheringInfo((prev) => ({ ...prev, desc: e.target.value }))
+            setGatheringInfo((prev) => ({
+              ...prev,
+              description: e.target.value,
+            }))
           }
           placeholder="모임 이름을 설명해 주세요."
           label={

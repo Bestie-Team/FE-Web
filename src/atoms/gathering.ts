@@ -41,8 +41,8 @@ export const newGatheringInfo = atom<GatheringInfo>({
   default: {
     type: "friend",
     name: "",
-    desc: "",
-    group: "",
+    description: "",
+    groupId: "",
     friendIds: [],
     date: "",
     ampm: "",
@@ -52,15 +52,7 @@ export const newGatheringInfo = atom<GatheringInfo>({
   },
 });
 
-export const selectedGroupAtom = atom<GroupInfoResponse | null>({
+export const selectedGroupAtom = atom<string | null>({
   key: "gathering/selectedGroup",
-  default: {
-    id: "",
-    groupName: "",
-    imageUrl: "",
-    desc: "",
-    groupLeader: { profileImageUrl: "", accountId: "", name: "" },
-    members: [],
-    gatheringCount: 0,
-  },
+  default: null,
 });

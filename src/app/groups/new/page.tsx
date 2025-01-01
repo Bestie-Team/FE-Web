@@ -42,7 +42,7 @@ export default function NewGroupPage() {
         <Input
           value={newGroup.description}
           onChange={(e) => {
-            setNewGroup((prev) => ({ ...prev, desc: e.target.value }));
+            setNewGroup((prev) => ({ ...prev, description: e.target.value }));
           }}
           displayLength={20}
           placeholder="그룹 이름을 설명해 주세요."

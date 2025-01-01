@@ -46,7 +46,7 @@ export async function addGroupMember({
   return response.json();
 }
 
-export async function deleteGroup(groupId: string) {
+export async function deleteGroup({ groupId }: { groupId: string }) {
   const response = await fetch(`/groups/${groupId}`, {
     method: "DELETE",
   });

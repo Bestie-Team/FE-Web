@@ -34,7 +34,7 @@ export default function BigClickableGatheringSwiper({
         grabCursor={true}
         className="custom-swiper w-full h-[340px]"
       >
-        {gathering.map(({ invitation_img_url, id, name, desc }, idx) => (
+        {gathering.map(({ invitation_img_url, id, name, description }, idx) => (
           <SwiperSlide
             onClick={() => handleGatheringClick(id)}
             className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
@@ -50,7 +50,7 @@ export default function BigClickableGatheringSwiper({
             <div className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{name}</span>
               <Spacing size={6} />
-              <span className="text-C2 text-grayscale-600">{desc}</span>
+              <span className="text-C2 text-grayscale-600">{description}</span>
             </div>
             {id === selectedGatheringId ? (
               <Flex
