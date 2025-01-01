@@ -47,7 +47,7 @@ export default function Gathering({
               <GatheringCard
                 onClick={() => {
                   setGatheringId(gathering.id);
-                  router.push(`/record`);
+                  router.push(`/record/${gathering.id}`);
                 }}
                 gathering={gathering}
                 key={`${gathering}${i}`}

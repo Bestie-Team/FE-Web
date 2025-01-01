@@ -44,7 +44,7 @@ export default function GatheringCard({
         </Flex>
       </Flex>
       {which === "2" ? (
-        <Button className={styles.button}>
+        <Button className={styles.button} onClick={onClick}>
           <PencilIcon color="#0A0A0A" />
         </Button>
       ) : null}

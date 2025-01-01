@@ -1,51 +1,25 @@
 import React, { useEffect, useState } from "react";
 import ChoosingGroupToRecord from "./ChoosingGroupToRecord";
-import CreatingPostToRecord from "./CreatingPostToRecord";
 import { RecordValues } from "@/models/record";
+import { useRouter } from "next/navigation";
+import { useRecoilState } from "recoil";
+import { recordGatheringFormValues } from "@/atoms/record";
 
-export default function Record({
-  onSubmit,
-}: {
-  onSubmit: (recordValues: RecordValues) => void;
-}) {
-  const [step, setStep] = useState(1);
-
-  const [recordValues, setRecordValues] = useState<Partial<RecordValues>>();
-
-  useEffect(() => {
-    if (step === 3) {
-      onSubmit({
-        ...recordValues,
-        appliedAt: new Date(),
-      } as RecordValues);
-    } else {
-      console.log("저장", recordValues);
-    }
-  }, [recordValues, onSubmit]);
+export default function Record() {
+  const router = useRouter();
+  const [recordValues, setRecordValues] = useRecoilState<RecordValues>(
+    recordGatheringFormValues
+  );
 
   const handleGroupChange = (gatheringId: string) => {
     setRecordValues((prevValues) => ({
       ...prevValues,
-      groupId: gatheringId,
+      gatheringId: gatheringId,
     }));
-    setStep(step + 1);
+    router.push(`/record/${gatheringId}`);
   };
 
-  const handlePostInfoChange = (postInfoValues: {
-    imageUrl: string[];
-    recordContent: string;
-  }) => {
-    setRecordValues((prevValues) => ({
-      ...prevValues,
-      ...postInfoValues,
-    }));
-    setStep(step + 1);
-  };
+  console.log(recordValues);
 
-  return (
-    <>
-      {step === 1 && <ChoosingGroupToRecord onNext={handleGroupChange} />}
-      {step === 2 && <CreatingPostToRecord onNext={handlePostInfoChange} />}
-    </>
-  );
+  return <ChoosingGroupToRecord onNext={handleGroupChange} />;
 }

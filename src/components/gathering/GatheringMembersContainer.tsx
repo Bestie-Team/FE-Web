@@ -20,7 +20,7 @@ export default function GatheringMemberContainer({
         >
           <div className={styles.image}>
             <Image
-              src={accountId}
+              src={profileImageUrl}
               alt={`gatheringMember${idx + 1}`}
               width={40}
               height={40}
@@ -28,7 +28,7 @@ export default function GatheringMemberContainer({
           </div>
           <Spacing size={6} />
           <Flex direction="column" align="center" className="text-T5">
-            <span>{profileImageUrl}</span>
+            <span>{accountId}</span>
             <Spacing size={4} />
             <span className={styles.name}>{name}</span>
           </Flex>

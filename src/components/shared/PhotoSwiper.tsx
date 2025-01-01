@@ -39,6 +39,7 @@ export default function PhotoSwiper({
           key={`slide${idx}`}
         >
           <Image
+            priority
             src={imageUrl}
             alt={`img${idx + 1}`}
             className={imageStyle}
