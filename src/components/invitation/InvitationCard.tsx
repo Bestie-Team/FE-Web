@@ -20,7 +20,7 @@ export default function InvitationCard({
         />
         <Flex direction="column" className={styles.mainContentWrapper}>
           <Flex direction="column" justify="space-between" className="w-full">
-            <span className="text-T3">Christmas Party ♡✧。</span>
+            <span className="text-T3">christmas party ♡✧。</span>
             <Spacing size={8} />
             <span className="text-C2 text-grayscale-500">
               welcome to pig party
@@ -51,9 +51,9 @@ export default function InvitationCard({
 const styles = {
   container: "w-full h-full px-[20px]",
   mainContentWrapper:
-    "h-[173px] w-full min-w-[188px] gap-[54px] absolute py-[24px] px-[20px] left-0 top-0",
+    "h-[173px] w-full max-w-[196px] gap-[54px] absolute py-[24px] pl-[20px] left-0 top-0",
   subContentWrapper:
-    "w-full min-w-[188px] absolute px-[20px] py-[24px] left-0 bottom-0",
+    "w-full max-w-[188px] absolute pl-[20px] py-[24px] left-0 bottom-0",
 
   button:
     "absolute right-[20px] bottom-[24px] h-fit text-C1 flex-none px-[24px] py-[12px] rounded-[36px] text-base-white",
