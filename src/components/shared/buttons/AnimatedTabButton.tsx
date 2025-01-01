@@ -26,7 +26,7 @@ const AnimatedTabButton = () => {
 
       <div className="relative flex">
         {tabs.map((tab) => (
-          <button
+          <div
             key={tab.id}
             onClick={() =>
               setSelectedGathering((prev) => ({
@@ -42,7 +42,7 @@ const AnimatedTabButton = () => {
             )}
           >
             {tab.label}
-          </button>
+          </div>
         ))}
       </div>
     </div>

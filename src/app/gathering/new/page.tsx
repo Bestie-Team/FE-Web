@@ -39,6 +39,7 @@ export default function NewGatheringPage() {
         </Flex>
         <Spacing size={24} />
         <Input
+          name="gatheringName"
           minLength={2}
           displayLength={10}
           value={gatheringInfo.name}
@@ -56,6 +57,7 @@ export default function NewGatheringPage() {
         />
         <Spacing size={36} />
         <Input
+          name="gatheringDesc"
           minLength={10}
           displayLength={40}
           value={gatheringInfo.desc}

@@ -19,6 +19,7 @@ interface InputProps {
 }
 
 export default function Input({
+  name,
   value,
   square,
   label,
@@ -49,6 +50,7 @@ export default function Input({
         )}
       >
         <input
+          name={name}
           type="text"
           inputMode="text"
           onFocus={handleFocus}
