@@ -1,7 +1,7 @@
 import {
+  BackgroundReversibleHeader,
   Header,
-  HeaderWithBackIcon,
-  HeaderTransparentWithLogo,
+  HeaderWithBackBtn,
 } from "@/components/shared/Header";
 import SettingIcon from "@/components/shared/icons/SettingIcon";
 import ShareIcon from "@/components/shared/icons/ShareIcon";
@@ -15,24 +15,24 @@ export default function HeaderReturner() {
     [key: string]: React.ReactNode | null;
   } = {
     "/signin": null,
-    "/home": <HeaderTransparentWithLogo />,
-    "/invitation": <HeaderWithBackIcon pageName="초대장" color="white" />,
-    "/new": <HeaderWithBackIcon pageName="프로필 생성" />,
+    "/home": <BackgroundReversibleHeader />,
+    "/invitation": <HeaderWithBackBtn pageName="초대장" color="white" />,
+    "/new": <HeaderWithBackBtn pageName="프로필 생성" />,
     "/feed": <Header pageName="추억 피드" />,
-    "/hidden": <HeaderWithBackIcon pageName="피드 관리" />,
-    "/record": <HeaderWithBackIcon pageName="기록하기" />,
+    "/hidden": <HeaderWithBackBtn pageName="피드 관리" />,
+    "/record": <HeaderWithBackBtn pageName="기록하기" />,
     "/schedule": <Header pageName="모임 캘린더" />,
     "/my": pathname.endsWith("edit") ? (
-      <HeaderWithBackIcon pageName="프로필 편집" />
+      <HeaderWithBackBtn pageName="프로필 편집" />
     ) : (
       <Header pageName="My" icon={<SettingIcon />} />
     ),
     "/gathering": pathname.endsWith("gathering") ? (
       <Header pageName="나의 모임" />
     ) : pathname.endsWith("new") ? (
-      <HeaderWithBackIcon pageName="모임 생성" />
+      <HeaderWithBackBtn pageName="모임 생성" />
     ) : (
-      <HeaderWithBackIcon
+      <HeaderWithBackBtn
         fontColor="#FFF"
         pageName="모임 상세"
         icon={
@@ -44,11 +44,11 @@ export default function HeaderReturner() {
     ),
     "/groups":
       pathname.endsWith("new") || pathname.endsWith("done") ? (
-        <HeaderWithBackIcon pageName="그룹 생성" />
+        <HeaderWithBackBtn pageName="그룹 생성" />
       ) : (
-        <HeaderWithBackIcon pageName="나의 그룹" />
+        <HeaderWithBackBtn pageName="나의 그룹" />
       ),
-    "/card": <HeaderWithBackIcon pageName="카드 생성" />,
+    "/card": <HeaderWithBackBtn pageName="카드 생성" />,
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>

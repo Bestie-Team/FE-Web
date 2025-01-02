@@ -3,7 +3,7 @@ import React from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import Options from "../shared/icons/Options";
+import Options from "../shared/Options";
 import Button from "../shared/buttons/Button";
 import { UserInfo } from "@/models/user";
 

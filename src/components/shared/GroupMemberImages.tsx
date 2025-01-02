@@ -30,6 +30,7 @@ export default function GroupMemberImages({
 
   const imageWidthHeight =
     width && height ? `w-[${width}px] h-[${height}px]` : `w-[28px] h-[28px]`;
+
   return (
     <Flex>
       {seenImages.map((imageUrl, i) => (

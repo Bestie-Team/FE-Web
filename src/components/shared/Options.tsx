@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import DropdownMenu from "../DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 
 export default function Options({
   width,
@@ -41,7 +41,6 @@ export default function Options({
     <div
       ref={btn}
       test-id="options-icon"
-      id="optionBtn"
       onClick={onButtonClick}
       style={{
         width: "24px",
@@ -54,7 +53,6 @@ export default function Options({
       }
     >
       <svg
-        id="options-icon"
         width={width ?? "3"}
         height={height ?? "17"}
         viewBox="0 0 3 17"

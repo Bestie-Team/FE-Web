@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import Options from "../shared/icons/Options";
+import Options from "../shared/Options";
 import { GroupInfoResponse } from "@/models/group";
 import { UserInfo } from "@/models/user";
 import GroupMemberImages from "../shared/GroupMemberImages";

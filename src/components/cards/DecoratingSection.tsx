@@ -33,13 +33,14 @@ export default function DecoratingSection({
     <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
       <Layer>
         <Image
+          alt="card"
           width={339}
           height={453}
           id="0"
           image={useImage(cardImageUrl as string)[0]}
           x={0}
           y={0}
-          onClick={() => {
+          onMouseDown={() => {
             setSelectedId(null);
           }}
         />

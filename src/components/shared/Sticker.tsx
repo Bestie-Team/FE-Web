@@ -44,6 +44,7 @@ const Sticker = ({
   return (
     <>
       <Image
+        alt="sticker"
         image={image}
         x={x}
         y={y}

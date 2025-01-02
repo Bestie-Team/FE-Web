@@ -1,5 +1,5 @@
 import Flex from "../Flex";
-import Options from "../icons/Options";
+import Options from "../Options";
 import Spacing from "../Spacing";
 
 export default function CommentItem() {

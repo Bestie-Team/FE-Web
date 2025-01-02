@@ -4,7 +4,7 @@ import ArrowLeftIcon from "./icons/ArrowLeftIcon";
 import clsx from "clsx";
 import LightyIcon from "./icons/LightyIcon";
 import MailIcon from "./icons/MailIcon";
-import { DotIcon } from "./tab/TabButton";
+import { DotIcon } from "./icons/DotIcon";
 import LightyLetterLogo from "./icons/LightyLetterLogo";
 import Spacing from "./Spacing";
 import { useRecoilValue } from "recoil";
@@ -12,10 +12,6 @@ import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
 import { useRouter } from "next/navigation";
 import NoticeIcon from "./icons/NoticeIcon";
 import Flex from "./Flex";
-
-const headerWrapperStyle =
-  "z-10 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white";
-const squareIconContainerStyle = "w-[44px] h-[44px] py-[10px] pr-[20px]";
 
 export function Header({
   pageName,
@@ -29,7 +25,7 @@ export function Header({
   return (
     <div
       className={clsx(
-        headerWrapperStyle,
+        styles.universalHeaderWrapper,
         "text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
       )}
     >
@@ -49,7 +45,7 @@ export function Header({
   );
 }
 
-export function HeaderWithBackIcon({
+export function HeaderWithBackBtn({
   pageName,
   square = false,
   fontColor,
@@ -62,19 +58,16 @@ export function HeaderWithBackIcon({
   color?: string;
   icon?: React.ReactNode;
 }) {
-  const arrowIconContainerStyle =
-    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer";
-
   return (
     <div
       className={clsx(
-        headerWrapperStyle,
+        styles.universalHeaderWrapper,
         "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-[20px]"
       )}
       style={{ backgroundColor: color ? color : "transparent" }}
     >
       <div
-        className={arrowIconContainerStyle}
+        className={styles.arrowIconContainer}
         onClick={() => {
           window.history.back();
         }}
@@ -91,7 +84,7 @@ export function HeaderWithBackIcon({
       </div>
       <Spacing size={6} />
       {square && (
-        <div className={squareIconContainerStyle}>
+        <div className={styles.squareIconContainer}>
           <EmptySquareIcon />
         </div>
       )}
@@ -105,25 +98,23 @@ export function HeaderWithBackIcon({
   );
 }
 
-export function HeaderTransparentWithLogo() {
+export function BackgroundReversibleHeader() {
   const router = useRouter();
   const bgColor = useRecoilValue(headerBgColorAtom);
   const fontColor = useRecoilValue(headerFontColorAtom);
-  const lightyIconContainer = "h-[40px] py-[10px]";
-  const iconWrapperStyle =
-    "flex justify-center items-center w-[40px] h-[40px] p-[8px] cursor-pointer";
 
   return (
     <div
       style={{
-        position: "fixed",
         background: bgColor,
         transition: "background-color 0.5s ease",
-        paddingLeft: "20px",
       }}
-      className={clsx(headerWrapperStyle, "text-T4 px-[20px]")}
+      className={clsx(
+        styles.universalHeaderWrapper,
+        "fixed pl-[20px] text-T4 px-[20px]"
+      )}
     >
-      <div className={lightyIconContainer}>
+      <div className={styles.lightyIconContainer}>
         <LightyIcon color={fontColor} />
       </div>
       <Spacing size={4} direction="horizontal" />
@@ -140,7 +131,7 @@ export function HeaderTransparentWithLogo() {
           onMouseDown={() => {
             router.push("/invitation");
           }}
-          className={clsx("relative", iconWrapperStyle)}
+          className={clsx("relative", styles.iconWrapperStyle)}
         >
           <MailIcon width="24" height="24" color={fontColor} />
           <DotIcon display={true} className="absolute top-0 right-[6px]" />
@@ -150,7 +141,7 @@ export function HeaderTransparentWithLogo() {
           onMouseDown={() => {
             router.push("/notice");
           }}
-          className={iconWrapperStyle}
+          className={styles.iconWrapperStyle}
         >
           <NoticeIcon color={fontColor} />
         </div>
@@ -158,3 +149,14 @@ export function HeaderTransparentWithLogo() {
     </div>
   );
 }
+
+const styles = {
+  universalHeaderWrapper:
+    "z-10 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white",
+  arrowIconContainer:
+    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer",
+  iconWrapperStyle:
+    "flex justify-center items-center w-[40px] h-[40px] p-[8px] cursor-pointer",
+  lightyIconContainer: "h-[40px] py-[10px]",
+  squareIconContainer: "w-[44px] h-[44px] py-[10px] pr-[20px]",
+};

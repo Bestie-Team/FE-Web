@@ -3,7 +3,7 @@ import Image from "next/image";
 import ArrowLeftIcon from "../shared/icons/ArrowLeftIcon";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import Options from "../shared/icons/Options";
+import Options from "../shared/Options";
 import { useRouter } from "next/navigation";
 
 export default function GroupBannerContainer({

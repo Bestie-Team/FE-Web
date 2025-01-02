@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { DotIcon } from "../icons/DotIcon";
 
 type Props = {
   title: string;
@@ -26,35 +27,6 @@ export default function TabButton({
       </div>
       {fresh === "never" ? null : <DotIcon display={fresh as boolean} />}
     </div>
-  );
-}
-
-export function DotIcon({
-  display,
-  className,
-}: {
-  display: boolean;
-  className?: string;
-}) {
-  return (
-    <svg
-      width="4"
-      height="26"
-      viewBox="0 0 4 26"
-      fill="none"
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g id="Frame 1321316008">
-        <circle
-          id="Ellipse 13"
-          cx="2"
-          cy="10"
-          r="2"
-          fill={display ? "#FA6767" : "white"}
-        />
-      </g>
-    </svg>
   );
 }
 
