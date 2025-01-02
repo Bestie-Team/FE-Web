@@ -14,10 +14,12 @@ export default function Options({
 }) {
   const [opened, setOpened] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
+  const btn = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as Node | null;
-    if (ref.current && !ref.current.contains(target)) {
+    if (btn.current?.contains(target)) return;
+    else if (ref.current && !ref.current.contains(target)) {
       setOpened(false);
     }
   };
@@ -34,8 +36,10 @@ export default function Options({
   const onButtonClick = () => {
     setOpened((prev) => !prev);
   };
+
   return (
     <div
+      ref={btn}
       test-id="options-icon"
       id="optionBtn"
       onClick={onButtonClick}
@@ -50,6 +54,7 @@ export default function Options({
       }
     >
       <svg
+        id="options-icon"
         width={width ?? "3"}
         height={height ?? "17"}
         viewBox="0 0 3 17"
