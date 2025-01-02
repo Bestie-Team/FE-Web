@@ -32,7 +32,7 @@ export default function Options({
   }, []);
 
   const onButtonClick = () => {
-    setOpened(true);
+    setOpened((prev) => !prev);
   };
   return (
     <div

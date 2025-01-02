@@ -26,6 +26,7 @@ const BaseButton = ({
   }
   return (
     <button
+      type="button"
       style={{
         backgroundColor: color,
       }}

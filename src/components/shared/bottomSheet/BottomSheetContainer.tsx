@@ -23,11 +23,11 @@ export default function SheetOpenBtnContainer({
   return (
     <>
       <PlusCircleButton
-        className={plusBtnStyle}
+        className={styles.plusButton}
         onClick={() => setModalOpen(true)}
       />
       {tooltip ? (
-        <div className={toolTipWrapperStyle}>
+        <div className={styles.toolTipWrapper}>
           <Tooltip
             direction="right"
             closeButton={true}
@@ -39,7 +39,8 @@ export default function SheetOpenBtnContainer({
   );
 }
 
-const plusBtnStyle =
-  "absolute bottom-[86px] right-[16px] z-10 shadow-lg transition-transform duration-300 cursor-pointer hover:animate-shrink-grow-less";
-
-const toolTipWrapperStyle = "absolute bottom-[84px] right-[74px] z-14";
+const styles = {
+  plusButton:
+    "absolute bottom-[86px] right-[16px] z-10 shadow-lg transition-transform duration-300 cursor-pointer hover:animate-shrink-grow-less",
+  toolTipWrapper: "absolute bottom-[84px] right-[74px] z-14",
+};

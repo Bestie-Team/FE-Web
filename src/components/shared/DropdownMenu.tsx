@@ -9,6 +9,7 @@ const DropdownMenu = forwardRef<
   { items: string[]; className?: string; type: "default" | "friend" | "group" }
 >(({ items, className, type }, ref) => {
   const setModalOpen = useSetRecoilState(recordModalStateAtom);
+
   return (
     <div
       ref={ref as React.Ref<HTMLDivElement>}
@@ -19,11 +20,8 @@ const DropdownMenu = forwardRef<
     >
       <Flex
         direction="column"
+        className="bg-base-white rounded-[12px] px-[16px] py-[4px] gap-[6px]"
         style={{
-          backgroundColor: "#fff",
-          borderRadius: "12px",
-          padding: "4px 16px",
-          gap: "6px",
           boxShadow: "0px 0px 16px 0px #0000001F",
         }}
       >
