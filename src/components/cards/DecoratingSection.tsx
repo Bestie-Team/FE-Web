@@ -33,6 +33,9 @@ export default function DecoratingSection({
     <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
       <Layer>
         <Image
+          onClick={() => {
+            setSelectedId(null);
+          }}
           alt="card"
           width={339}
           height={453}
@@ -40,9 +43,6 @@ export default function DecoratingSection({
           image={useImage(cardImageUrl as string)[0]}
           x={0}
           y={0}
-          onMouseDown={() => {
-            setSelectedId(null);
-          }}
         />
         {stickers.map((sticker) => (
           <Sticker
@@ -50,8 +50,11 @@ export default function DecoratingSection({
             {...sticker}
             draggable
             isSelected={sticker.id === selectedId}
-            onSelect={() => handleSelect(sticker.id)}
+            onSelect={() => {
+              handleSelect(sticker.id);
+            }}
             onChange={(newAttrs) => handleChange(sticker.id, newAttrs)}
+            onResizeEnd={() => setSelectedId(null)} // 터치 후 선택 해제
           />
         ))}
       </Layer>

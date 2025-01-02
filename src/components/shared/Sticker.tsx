@@ -19,6 +19,7 @@ interface StickerProps {
     width: number;
     height: number;
   }) => void;
+  onResizeEnd: () => void;
 }
 
 const Sticker = ({
@@ -29,6 +30,7 @@ const Sticker = ({
   isSelected,
   onSelect,
   onChange,
+  onResizeEnd,
 }: StickerProps) => {
   const [image] = useImage(src);
   const shapeRef = useRef<Konva.Image>(null);
@@ -65,6 +67,7 @@ const Sticker = ({
               width: newWidth,
               height: newHeight,
             });
+            onResizeEnd();
           }
         }}
       />
