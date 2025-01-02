@@ -12,6 +12,7 @@ export default function PlusCircleButton({
 }) {
   return (
     <div
+      data-testid="plus-circle-button"
       style={style}
       className={clsx(PlusButtonStyle, className)}
       onClick={onClick}
@@ -36,7 +37,11 @@ export function PlusCircleButtonSmall({
   height?: string;
 }) {
   return (
-    <div style={style} className={clsx(PlusButtonStyleSmall, className)}>
+    <div
+      data-testid="plus-circle-button-small"
+      style={style}
+      className={clsx(PlusButtonStyleSmall, className)}
+    >
       <PlusIcon width={width ?? "13.71"} height={height ?? "13.71"} />
     </div>
   );

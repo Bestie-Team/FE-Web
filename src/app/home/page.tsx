@@ -6,7 +6,7 @@ import GatheringSwiper from "@/components/gathering/GatheringSwiper";
 import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
-import Banner from "@/components/shared/banner";
+import Banner from "@/components/shared/banner/Banner";
 import WelcomeBottomSheet from "@/components/shared/bottomSheet/WelcomeBottomSheet";
 import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/icons/ArrowRightIcon";

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import SheetOpenBtnContainer from "./bottomSheet";
+import SheetOpenBtnContainer from "./bottomSheet/BottomSheetContainer";
 import { useRecoilState } from "recoil";
 import { locationStatusAtom } from "@/atoms/location";
 import NAV_ITEMS from "@/constants/navBarConstants";

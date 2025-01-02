@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import Button from "../buttons";
+import Button from "../buttons/Button";
 import CalendarWithTime from "../calendar/CalendarWithTime";
 import Flex from "../Flex";
 import Spacing from "../Spacing";

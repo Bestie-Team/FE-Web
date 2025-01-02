@@ -11,6 +11,7 @@ export default function PlusIcon({
 }) {
   return (
     <svg
+      data-testid="plus-icon"
       width={width ?? "20.57"}
       height={height ?? "20.57"}
       className={className}

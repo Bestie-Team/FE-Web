@@ -27,11 +27,13 @@ export default function BottomSheetWrapper({
   const handleBackdropClick = () => {
     setIsClosing(true);
   };
+
   if (open === false) return null;
 
   return (
     <Dimmed onClick={handleBackdropClick} isClosing={isClosing}>
       <div
+        data-testid="bottom-sheet-wrapper"
         onClick={(e) => e.stopPropagation()}
         className={clsx(
           containerStyle,

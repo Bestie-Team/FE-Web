@@ -9,6 +9,7 @@ export default function ArrowRightIcon({
 }) {
   return (
     <svg
+      data-testid="arrow-right-icon"
       width={width ?? "20"}
       height={height ?? "20"}
       viewBox="0 0 20 20"

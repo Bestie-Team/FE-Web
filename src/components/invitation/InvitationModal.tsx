@@ -5,7 +5,7 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import CalendarIcon from "../shared/icons/CalendarIcon";
 import MapPinIcon from "../shared/icons/MapPinIcon";
-import Button from "../shared/buttons";
+import Button from "../shared/buttons/Button";
 import { useRecoilValue } from "recoil";
 import { invitationSelectedTabAtom } from "@/atoms/invitation";
 import GroupMemberImages from "../shared/GroupMemberImages";

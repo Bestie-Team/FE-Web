@@ -4,7 +4,7 @@ import HeaderReturner from "@/utils/headerReturner";
 import Card from "@/components/cards/Card";
 import StickerContainer from "@/components/cards/StickerContainer";
 import Spacing from "@/components/shared/Spacing";
-import Button from "@/components/shared/buttons";
+import Button from "@/components/shared/buttons/Button";
 import Konva from "konva";
 import { stickersAtom } from "@/atoms/card";
 import { useRecoilState } from "recoil";

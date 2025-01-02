@@ -1,6 +1,7 @@
 export default function RectIcon() {
   return (
     <svg
+      data-testid="rect-icon"
       width="58"
       height="4"
       viewBox="0 0 58 4"

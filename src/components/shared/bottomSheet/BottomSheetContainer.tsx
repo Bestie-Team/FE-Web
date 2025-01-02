@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import { recordModalStateAtom } from "@/atoms/record";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
 
-export default function SheetOpenBtnContainer() {
+export default function SheetOpenBtnContainer({
+  tooltip = false,
+}: {
+  tooltip?: boolean;
+}) {
   const pathname = usePathname();
   const getModalStateAtom = () => {
     if (pathname.startsWith("/home")) return homeModalStateAtom;
@@ -15,8 +19,6 @@ export default function SheetOpenBtnContainer() {
   };
 
   const setModalOpen = useSetRecoilState(getModalStateAtom());
-
-  const tooltip = false;
 
   return (
     <>

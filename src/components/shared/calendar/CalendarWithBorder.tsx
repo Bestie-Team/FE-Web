@@ -37,7 +37,7 @@ export default function LightyCalendarWithBorder() {
     );
 
     return isSpecialDate ? (
-      <Flex justify="center" className="!z-999 w-full absolute bottom-[-4px]">
+      <Flex justify="center" className="!z-999 w-full absolute bottom-[-10px]">
         <LightyIcon width="8" height="8" color="#0A0A0A" />
       </Flex>
     ) : null;
@@ -51,7 +51,7 @@ export default function LightyCalendarWithBorder() {
         specialDate.getDate() === date.getDate()
     );
 
-    return isSpecialDate ? "special-date" : null;
+    return isSpecialDate ? "special-date !overflow-visible" : null;
   };
 
   return (

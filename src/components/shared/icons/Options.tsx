@@ -36,6 +36,7 @@ export default function Options({
   };
   return (
     <div
+      test-id="options-icon"
       id="optionBtn"
       onClick={onButtonClick}
       style={{

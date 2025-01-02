@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import Button from "../shared/buttons";
+import Button from "../shared/buttons/Button";
 import PencilIcon from "../shared/icons/PencilIcon";
 import { GatheringResponse } from "@/models/gathering";
 import { differenceInDays } from "date-fns";

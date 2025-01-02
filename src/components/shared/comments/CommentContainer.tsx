@@ -6,7 +6,7 @@ import Spacing from "../Spacing";
 import CommentWrapper from "./CommentWrapper";
 import CommentItem from "./CommentItem";
 import Input from "../inputs/Input";
-import Button from "../buttons";
+import Button from "../buttons/Button";
 import ArrowUpIcon from "../icons/ArrowUpIcon";
 
 export default function CommentContainer({ onClose }: { onClose: () => void }) {

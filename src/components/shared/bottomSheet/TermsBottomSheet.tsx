@@ -2,7 +2,7 @@ import React, { MouseEvent, useCallback, useState } from "react";
 import BottomSheetWrapper from "./BottomSheetWrapper";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import Button from "../buttons";
+import Button from "../buttons/Button";
 import CheckInCircleIcon from "../icons/CheckInCircleIcon";
 import NArrowRightIcon from "../icons/NArrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";

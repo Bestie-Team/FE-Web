@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "../shared/buttons";
+import Button from "../shared/buttons/Button";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 

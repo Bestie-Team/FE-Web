@@ -1,6 +1,6 @@
 "use client";
 import { createPortal } from "react-dom";
-import Button from ".";
+import Button from "./Button";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 
@@ -12,13 +12,13 @@ interface FixedBottomButtonProps {
   color?: string;
 }
 
-export default function FixedBottomButton({
+const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
   label,
   onClick,
   color,
   className,
   disabled,
-}: FixedBottomButtonProps) {
+}: FixedBottomButtonProps) => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -55,7 +55,9 @@ export default function FixedBottomButton({
     </div>,
     $portalRoot
   );
-}
+};
 
 const buttonStyle = `w-full py-[18px] text-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`;
 const buttonWrapperStyle = `w-full px-[20px] pb-[10px] pt-[12px] bg-base-white animate-slide-up`;
+
+export default FixedBottomButton;

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Button from "../buttons";
+import Button from "../buttons/Button";
 import Dimmed from "../Dimmed";
 import Flex from "../Flex";
 import Spacing from "../Spacing";

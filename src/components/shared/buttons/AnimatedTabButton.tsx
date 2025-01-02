@@ -1,7 +1,6 @@
 import { newGatheringInfo } from "@/atoms/gathering";
 import { GatheringInfo, GatheringType } from "@/models/gathering";
 import clsx from "clsx";
-import React from "react";
 import { useRecoilState } from "recoil";
 
 const AnimatedTabButton = () => {
@@ -16,6 +15,7 @@ const AnimatedTabButton = () => {
   return (
     <div className={styles.tabWrapper}>
       <div
+        role="presentation"
         className={clsx(
           styles.slider,
           selectedGathering.type === "group"

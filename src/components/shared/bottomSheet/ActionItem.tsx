@@ -1,4 +1,4 @@
-import Button from "../buttons";
+import Button from "../buttons/Button";
 import Flex from "../Flex";
 import ArrowRightIcon from "../icons/ArrowRightIcon";
 import Spacing from "../Spacing";

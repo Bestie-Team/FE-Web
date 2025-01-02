@@ -7,6 +7,7 @@ export default function LightyLogo({
 }) {
   return (
     <svg
+      data-testid="lighty-logo"
       width={width ?? "24"}
       height={height ?? "24"}
       viewBox="0 0 24 24"

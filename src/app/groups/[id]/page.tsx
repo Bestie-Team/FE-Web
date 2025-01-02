@@ -7,7 +7,7 @@ import UserIcon from "@/components/shared/icons/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/icons/PencilIcon";
-import Button from "@/components/shared/buttons";
+import Button from "@/components/shared/buttons/Button";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
 import { GROUPS } from "@/constants/groups";
 

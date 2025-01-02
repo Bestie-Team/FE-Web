@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
 import Options from "../shared/icons/Options";
-import Button from "../shared/buttons";
+import Button from "../shared/buttons/Button";
 import { UserInfo } from "@/models/user";
 
 export default function FriendListItem({

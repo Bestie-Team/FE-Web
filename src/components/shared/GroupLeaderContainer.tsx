@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "./Flex";
 import Spacing from "./Spacing";
-import Button from "./buttons";
+import Button from "./buttons/Button";
 import { UserInfo } from "@/models/user";
 
 export default function GroupLeaderContainer({

@@ -13,6 +13,7 @@ function Dimmed({
 }) {
   return (
     <div
+      data-testid="dimmed-backdrop"
       onClick={onClick}
       className={clsx(
         "fixed inset-0 z-[var(--dimmed-zIndex)]",

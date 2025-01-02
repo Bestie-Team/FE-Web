@@ -1,6 +1,6 @@
 "use client";
 import GroupContainer from "@/components/groups/GroupContainer";
-import Button from "@/components/shared/buttons";
+import Button from "@/components/shared/buttons/Button";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { GROUPS } from "@/constants/groups";
