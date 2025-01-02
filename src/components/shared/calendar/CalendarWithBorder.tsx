@@ -6,6 +6,9 @@ import ArrowRightIcon from "../icons/ArrowRightIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
 import { gatheringSelectedDateAtom } from "@/atoms/gathering";
+import LightyIcon from "../icons/LightyIcon";
+import Flex from "../Flex";
+import React from "react";
 
 const Calendar = dynamic(() => import("react-calendar"), {
   ssr: false,
@@ -19,9 +22,52 @@ export default function LightyCalendarWithBorder() {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
+  const datesWithIcons = [
+    new Date(2025, 0, 2),
+    new Date(2025, 0, 15),
+    new Date(2025, 0, 30),
+  ];
+
+  const renderIcon = (date: Date) => {
+    const isSpecialDate = datesWithIcons.some(
+      (specialDate) =>
+        specialDate.getFullYear() === date.getFullYear() &&
+        specialDate.getMonth() === date.getMonth() &&
+        specialDate.getDate() === date.getDate()
+    );
+
+    return isSpecialDate ? (
+      <Flex justify="center" className="!z-999 w-full absolute bottom-[-4px]">
+        <LightyIcon width="8" height="8" color="#0A0A0A" />
+      </Flex>
+    ) : null;
+  };
+
+  const returnClassName = (date: Date) => {
+    const isSpecialDate = datesWithIcons.some(
+      (specialDate) =>
+        specialDate.getFullYear() === date.getFullYear() &&
+        specialDate.getMonth() === date.getMonth() &&
+        specialDate.getDate() === date.getDate()
+    );
+
+    return isSpecialDate ? "special-date" : null;
+  };
 
   return (
     <Calendar
+      tileClassName={({ date, view }) => {
+        if (view === "month") {
+          return returnClassName(date);
+        }
+        return null;
+      }}
+      tileContent={({ date, view }) => {
+        if (view === "month") {
+          return renderIcon(date);
+        }
+        return null;
+      }}
       onChange={setSelectedDate}
       value={selectedDate}
       formatDay={(locale, date) => format(date, "d")}
