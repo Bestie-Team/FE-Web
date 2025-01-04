@@ -1,6 +1,5 @@
 "use client";
 import FilterBar from "@/components/shared/FilterBar";
-import NavBar from "@/components/shared/NavBar";
 import TabBar from "@/components/shared/tab/TabBar";
 import Feed from "@/components/feed/Feed";
 import { Swiper as SwiperType } from "swiper";
@@ -52,7 +51,7 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-y-scroll no-scrollbar">
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
@@ -86,7 +85,7 @@ export default function FeedPage() {
           <Feed which="2" />
         </SwiperSlide>
       </Swiper>
-      <NavBar />
+
       {recordModalOpen ? (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}

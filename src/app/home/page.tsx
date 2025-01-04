@@ -10,16 +10,20 @@ import Banner from "@/components/shared/banner/Banner";
 import WelcomeBottomSheet from "@/components/shared/bottomSheet/WelcomeBottomSheet";
 import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/icons/ArrowRightIcon";
-import NavBar from "@/components/shared/NavBar";
 import Spacing from "@/components/shared/Spacing";
+import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import HeaderReturner from "@/utils/headerReturner";
 import { useRecoilState } from "recoil";
 
 export default function HomePage() {
+  useChangeHeaderStyle();
   const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
 
   return (
-    <div className="bg-base-white">
+    <div
+      id="scrollable-container"
+      className="bg-base-white overflow-y-scroll no-scrollbar"
+    >
       {HeaderReturner()}
       <HomeBannerContainer />
       <FriendsSlider />
@@ -42,7 +46,6 @@ export default function HomePage() {
           }}
         />
       )}
-      <NavBar />
       <Spacing size={87} />
     </div>
   );

@@ -17,6 +17,7 @@ export default function SelectFriendsContainer({
   paddingTop?: string;
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
+  const [countModal, setCountModal] = useState(false);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
   const setSelectedFriends = useSetRecoilState<UserInfo[]>(selectedFriendsAtom);
   const userFriends = FRIENDS;
@@ -24,6 +25,10 @@ export default function SelectFriendsContainer({
   const router = useRouter();
 
   const toggleItemClick = (idx: number) => {
+    if (clickedItems.length >= 3) {
+      setCountModal(true);
+      return;
+    }
     setClickedItems((prev) =>
       prev.includes(idx) ? prev.filter((item) => item !== idx) : [...prev, idx]
     );
@@ -38,12 +43,10 @@ export default function SelectFriendsContainer({
   return (
     <Flex
       direction="column"
+      className="px-[20px] pb-[72px]"
       style={{
         backgroundColor: "#F4F4F4",
         paddingTop: paddingTop ?? "177px",
-        paddingBottom: "72px",
-        paddingLeft: "20px",
-        paddingRight: "20px",
       }}
     >
       <span className="text-T5">{`친구 ${userFriends.length}`}</span>
@@ -75,6 +78,16 @@ export default function SelectFriendsContainer({
         <Modal
           onClose={() => {
             setIsModalOpen(false);
+          }}
+        />
+      ) : null}
+      {countModal ? (
+        <Modal
+          title=""
+          content="최대 12명 까지만 초대할 수 있어요."
+          left="확인"
+          onClose={() => {
+            setCountModal(false);
           }}
         />
       ) : null}

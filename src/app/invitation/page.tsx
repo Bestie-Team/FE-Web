@@ -15,7 +15,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import InvitationModal from "@/components/invitation/InvitationModal";
-import NavBar from "@/components/shared/NavBar";
 import HeaderReturner from "@/utils/headerReturner";
 
 export default function InvitationPage() {
@@ -49,7 +48,7 @@ export default function InvitationPage() {
   };
 
   return (
-    <div className="bg-base-white h-screen">
+    <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar">
       <div className={filterStyle}>
         {HeaderReturner()}
         <div className="w-full px-[20px]">
@@ -98,7 +97,6 @@ export default function InvitationPage() {
           </Flex>
         </SwiperSlide>
       </Swiper>
-      <NavBar />
       {isModalOpen ? <InvitationModal onClickClose={setModalOpen} /> : null}
     </div>
   );

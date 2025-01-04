@@ -16,7 +16,6 @@ import React from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import NavBar from "@/components/shared/NavBar";
 import Gathering from "@/components/gathering/Gathering";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
@@ -53,7 +52,7 @@ export default function MyGatheringPage() {
   }, []);
 
   return (
-    <div className="bg-base-white h-screen">
+    <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar">
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
@@ -93,7 +92,6 @@ export default function MyGatheringPage() {
           }}
         />
       )}
-      <NavBar />
     </div>
   );
 }

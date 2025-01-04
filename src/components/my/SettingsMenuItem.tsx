@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Flex from "../shared/Flex";
 import { SettingsItem } from "./SettingsMenu";
 import Link from "next/link";
+import Modal from "../shared/modal";
 
 export default function SettingsMenuItem({
   list,
   link,
 }: {
   list: SettingsItem;
-  link?: string;
+  link: { href: string; target?: string };
 }) {
-  const handleClick = async () => {
-    if (list.onClick) {
-      await list.onClick();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClick = () => {
+    if (list.title === "탈퇴하기") {
+      setIsModalOpen(true);
     }
   };
 
   return (
-    <Link href={link ? link : ""}>
+    <Link {...link}>
       <li className={liStyle} onClick={handleClick}>
         <span className="text-T5">{list.title}</span>
         <Flex direction="column" justify="center" style={{ gap: "2px" }}>
@@ -30,6 +32,15 @@ export default function SettingsMenuItem({
           })}
         </Flex>
       </li>
+      {isModalOpen ? (
+        <Modal
+          title="탈퇴하시겠어요?"
+          content="탈퇴 시 모든 활동 내용이 삭제 되며 해당 정보는 복구할 수 없어요."
+          left="닫기"
+          right="탈퇴"
+          onClose={() => setIsModalOpen(false)}
+        />
+      ) : null}
     </Link>
   );
 }

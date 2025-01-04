@@ -1,6 +1,5 @@
 "use client";
 import FilterBar from "@/components/shared/FilterBar";
-import NavBar from "@/components/shared/NavBar";
 import Feed from "@/components/feed/Feed";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState } from "recoil";
@@ -22,7 +21,7 @@ export default function FeedPage() {
     useRecoilState(recordModalStateAtom);
 
   return (
-    <div className="relative">
+    <div className="relative overflow-y-scroll no-scrollbar">
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
@@ -50,7 +49,6 @@ export default function FeedPage() {
 
       <Feed which="1" />
 
-      <NavBar />
       {recordModalOpen ? (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}

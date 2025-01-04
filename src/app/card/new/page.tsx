@@ -9,6 +9,7 @@ import Konva from "konva";
 import { stickersAtom } from "@/atoms/card";
 import { useRecoilState } from "recoil";
 import dynamic from "next/dynamic";
+import Flex from "@/components/shared/Flex";
 
 const DecoratingSection = dynamic(
   () => import("@/components/cards/DecoratingSection"),
@@ -51,20 +52,23 @@ export default function Page() {
 
   const header = useMemo(() => HeaderReturner(), []);
   return (
-    <div className="p-auto">
-      <div className="bg-base-white">{header}</div>
-      <Card />
-      <StickerContainer setStickers={setStickers} stickers={stickers} />
-      <Spacing size={8} />
-      <Button className={styles.button} onClick={handleExport}>
-        사진
-      </Button>
-      <Spacing size={8} />
-      <DecoratingSection stageRef={stageRef} />
+    <div className="flex justify-center overflow-scroll">
+      <div className={styles.header}>{header}</div>
+      <Flex direction="column">
+        <Card />
+        <StickerContainer setStickers={setStickers} stickers={stickers} />
+        <Spacing size={8} />
+        <Button className={styles.button} onClick={handleExport}>
+          사진
+        </Button>
+        <Spacing size={8} />
+        <DecoratingSection stageRef={stageRef} />
+      </Flex>
     </div>
   );
 }
 
 const styles = {
+  header: "max-w-[430px] pt-[8px] fixed z-10 w-full pl-[17px] bg-base-white",
   button: "px-[12px] py-[8px] rounded-[12px] bg-base-white text-B4",
 };

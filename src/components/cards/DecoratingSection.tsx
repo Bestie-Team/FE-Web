@@ -30,7 +30,7 @@ export default function DecoratingSection({
     );
   };
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight} ref={stageRef}>
+    <Stage width={339} height={453} ref={stageRef}>
       <Layer>
         <Image
           onClick={() => {
@@ -54,7 +54,7 @@ export default function DecoratingSection({
               handleSelect(sticker.id);
             }}
             onChange={(newAttrs) => handleChange(sticker.id, newAttrs)}
-            onResizeEnd={() => setSelectedId(null)} // 터치 후 선택 해제
+            onResizeEnd={() => setSelectedId(null)}
           />
         ))}
       </Layer>

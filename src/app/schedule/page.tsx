@@ -4,7 +4,6 @@ import LightyCalendarWithBorder from "@/components/shared/calendar/CalendarWithB
 import LightySelect from "@/components/shared/filter";
 import { OptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
-import NavBar from "@/components/shared/NavBar";
 import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import HeaderReturner from "@/utils/headerReturner";
@@ -19,7 +18,10 @@ export default function SchedulePage() {
   });
 
   return (
-    <Flex direction="column" className="bg-base-white h-screen">
+    <Flex
+      direction="column"
+      className="bg-base-white h-screen overflow-y-scroll no-scrollbar"
+    >
       <div className={clsx(styles.header, hasShadow ? "shadow-bottom" : "")}>
         {HeaderReturner()}
         <LightySelect
@@ -36,7 +38,6 @@ export default function SchedulePage() {
         <Spacing size={28} />
         <UpcomingSchedule />
       </Flex>
-      <NavBar />
     </Flex>
   );
 }

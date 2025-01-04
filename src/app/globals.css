@@ -27,6 +27,7 @@
     --foreground: #ededed;
   }
 }
+
 .react-select__placeholder {
   color: "#0A0A0At" !important;
 }
@@ -47,6 +48,7 @@ body {
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
+
 #__daum__layer_1 {
   -ms-overflow-style: none;
   scrollbar-width: none;

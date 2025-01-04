@@ -4,12 +4,12 @@ import MyMainInfo from "@/components/my/MyMainInfo";
 import UserProfile from "@/components/my/UserProfile";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import NavBar from "@/components/shared/NavBar";
 import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function MyPage() {
   const hasShadow = useScrollShadow();
@@ -24,10 +24,13 @@ export default function MyPage() {
 
   return (
     <div className="">
-      <Flex direction="column" className="bg-base-white">
+      <Flex
+        direction="column"
+        className="bg-base-white overflow-y-scroll no-scrollbar"
+      >
         <div
           className={clsx(
-            headerWrapperStyle,
+            styles.headerWrapper,
             hasShadow ? "shadow-bottom" : "",
             open || privatePolicyOpen ? "" : "z-10"
           )}
@@ -40,26 +43,33 @@ export default function MyPage() {
         <MyMainInfo />
         <Spacing size={16} />
         <SettingsMenu />
-        <div className={termsWrapperStyle}>
-          <ins
+        <div className={styles.termsWrapper}>
+          <Link
+            href={
+              "https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
+            }
+            target="_blank"
             onClick={() => {
               onClickTermOfUse();
             }}
-            className={clsx("mr-[13px]", letterStyle)}
+            className={clsx("mr-[13px]", styles.letter)}
           >
-            이용약관
-          </ins>
-          <ins
+            <ins>이용약관</ins>
+          </Link>
+          <Link
+            href={
+              "https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
+            }
+            target="_blank"
             onClick={() => {
               onClickTermOfUse("privatePolicy");
             }}
-            className={letterStyle}
+            className={styles.letter}
           >
-            개인 정보 처리방침
-          </ins>
+            <ins>개인 정보 처리방침</ins>
+          </Link>
         </div>
         <Spacing size={80} />
-        <NavBar />
       </Flex>
       {open || privatePolicyOpen ? (
         <TermOfUse
@@ -75,10 +85,10 @@ export default function MyPage() {
   );
 }
 
-const headerWrapperStyle =
-  "max-w-[430px] fixed w-full px-[20px] transition-shadow duration-300";
+const styles = {
+  headerWrapper:
+    "max-w-[430px] fixed w-full px-[20px] transition-shadow duration-300",
+  letter: "cursor-pointer",
 
-const letterStyle = "cursor-pointer";
-
-const termsWrapperStyle =
-  "w-full py-[8px] px-[20px] text-C5 text-grayscale-300";
+  termsWrapper: "w-full py-[8px] px-[20px] text-C5 text-grayscale-300",
+};

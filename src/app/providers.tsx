@@ -1,12 +1,13 @@
 "use client";
-// import { SessionProvider } from "next-auth/react";
 import { RecoilRoot } from "recoil";
+
 interface Props {
   children?: React.ReactNode;
 }
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import { useEffect } from "react";
+import { LayoutTransition } from "@/components/LayoutTransition";
+import NavBar from "@/components/shared/NavBar";
 
 const queryClient = new QueryClient();
 
@@ -19,22 +20,29 @@ export const NextProvider = ({ children }: Props) => {
 };
 
 const NextLayout = ({ children }: Props) => {
-  useChangeHeaderStyle();
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, []);
-
-  return (
-    <div
-      id="scrollable-container"
-      className="max-w-[430px] mx-auto flex flex-col h-screen bg-grayscale-50"
-    >
-      {children}
-    </div>
-  );
+  {
+    return (
+      <div
+        style={{
+          position: "relative",
+          maxWidth: "430px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+        }}
+      >
+        <LayoutTransition>{children}</LayoutTransition>
+        <NavBar />
+      </div>
+    );
+  }
 };
 
 export default NextLayout;

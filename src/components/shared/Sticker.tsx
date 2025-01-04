@@ -75,5 +75,3 @@ const Sticker = ({
     </>
   );
 };
-
-export default Sticker;
