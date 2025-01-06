@@ -13,42 +13,16 @@ export default function BigClickableGatheringSwiper({
   selectedGatheringId,
 }: {
   gathering: GatheringResponse[];
-  onImageClick?: (
-    groupId: {
-      id: string;
-      name: string;
-      description: string;
-      invitation_img_url: string;
-      date: string;
-    } | null
-  ) => void;
+  onImageClick?: (groupId: null | string) => void;
   selectedGatheringId: string | null;
 }) {
-  const handleGatheringClick = ({
-    id,
-    name,
-    description,
-    invitation_img_url,
-    date,
-  }: {
-    id: string;
-    name: string;
-    description: string;
-    invitation_img_url: string;
-    date: string;
-  }) => {
+  const handleGatheringClick = (id: string) => {
     if (onImageClick) {
       if (selectedGatheringId === id) {
         onImageClick(null);
         return;
       }
-      onImageClick({
-        id,
-        name,
-        description,
-        invitation_img_url,
-        date,
-      });
+      onImageClick(id);
     } else return;
   };
 
@@ -60,47 +34,35 @@ export default function BigClickableGatheringSwiper({
         grabCursor={true}
         className="custom-swiper w-full h-[340px]"
       >
-        {gathering.map(
-          ({ invitation_img_url, id, name, description, date }, idx) => (
-            <SwiperSlide
-              onClick={() =>
-                handleGatheringClick({
-                  id,
-                  name,
-                  description,
-                  invitation_img_url,
-                  date,
-                })
-              }
-              className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
-              key={`gathering${id}`}
-            >
-              <Image
-                src={invitation_img_url}
-                alt={`gathering${idx + 1}`}
-                className={styles.image}
-                width={270}
-                height={320}
-              />
-              <div className={styles.gatheringInfoWrapper}>
-                <span className="text-T3">{name}</span>
-                <Spacing size={6} />
-                <span className="text-C2 text-grayscale-600">
-                  {description}
-                </span>
-              </div>
-              {id === selectedGatheringId ? (
-                <Flex
-                  align="center"
-                  justify="center"
-                  className={styles.checkWrapper}
-                >
-                  <CheckIcon />
-                </Flex>
-              ) : null}
-            </SwiperSlide>
-          )
-        )}
+        {gathering.map(({ invitation_img_url, id, name, description }, idx) => (
+          <SwiperSlide
+            onClick={() => handleGatheringClick(id)}
+            className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
+            key={`gathering${id}`}
+          >
+            <Image
+              src={invitation_img_url}
+              alt={`gathering${idx + 1}`}
+              className={styles.image}
+              width={270}
+              height={320}
+            />
+            <div className={styles.gatheringInfoWrapper}>
+              <span className="text-T3">{name}</span>
+              <Spacing size={6} />
+              <span className="text-C2 text-grayscale-600">{description}</span>
+            </div>
+            {id === selectedGatheringId ? (
+              <Flex
+                align="center"
+                justify="center"
+                className={styles.checkWrapper}
+              >
+                <CheckIcon />
+              </Flex>
+            ) : null}
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

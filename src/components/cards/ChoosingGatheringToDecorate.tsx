@@ -5,9 +5,9 @@ import LightyLogo from "../shared/icons/LightyLogo";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import { GATHERINGS_PASSED } from "@/constants/gathering";
-import BigClickableGatheringSwiper from "../record/BigClickableGatheringSwiper";
 import { cardSelectedGatheringAtom } from "@/atoms/card";
 import { GatheringResponse } from "@/models/gathering";
+import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -47,7 +47,7 @@ export default function ChoosingGatheringToDecorate({
         </span>
       </Flex>
       <Spacing size={40} />
-      <BigClickableGatheringSwiper
+      <ClickableGatheringSwiperForDeco
         gathering={gatheringsPassed}
         onImageClick={handleImageClick}
         selectedGatheringId={cardSelectedGathering?.id || "0"}
