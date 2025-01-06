@@ -29,16 +29,30 @@ export default function DecoratingSection({
       )
     );
   };
+
   return (
-    <Stage width={339} height={453} ref={stageRef}>
-      <Layer>
+    <Stage
+      width={282}
+      height={372}
+      ref={stageRef}
+      style={{ width: "full", display: "flex", justifyContent: "center" }}
+    >
+      <Layer
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          overflow: "visible",
+          margin: "0 auto",
+        }}
+      >
         <Image
           onClick={() => {
             setSelectedId(null);
           }}
           alt="card"
-          width={339}
-          height={453}
+          width={282}
+          height={372}
           id="0"
           image={useImage(cardImageUrl as string)[0]}
           x={0}

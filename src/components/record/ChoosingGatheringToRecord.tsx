@@ -3,10 +3,10 @@ import { useRecoilState } from "recoil";
 import Flex from "../shared/Flex";
 import LightyLogo from "../shared/icons/LightyLogo";
 import Spacing from "../shared/Spacing";
-import SmallPhotoSwiper from "./SmallPhotoSwiper";
 import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import { GATHERINGS_PASSED } from "@/constants/gathering";
+import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 
 export default function ChoosingGatheringToRecord({
   onNext,
@@ -40,7 +40,7 @@ export default function ChoosingGatheringToRecord({
         </span>
       </Flex>
       <Spacing size={40} />
-      <SmallPhotoSwiper
+      <BigClickableGatheringSwiper
         gathering={gatheringsPassed}
         onImageClick={handleImageClick}
         selectedGatheringId={selectedGatheringId}

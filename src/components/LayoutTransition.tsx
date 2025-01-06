@@ -21,7 +21,16 @@ export const LayoutTransition = ({
     );
     lastPageRef.current = currentPageRef.current.children;
   }, [pathname]);
-
+  if (
+    pathname.startsWith("/card") ||
+    pathname.startsWith("/new") ||
+    pathname.startsWith("/home") ||
+    pathname.startsWith("/feed") ||
+    pathname.startsWith("/gathering") ||
+    pathname.startsWith("/schedule")
+  ) {
+    return <>{children}</>;
+  }
   return (
     <AnimatePresence initial={false}>
       <div>
@@ -32,8 +41,8 @@ export const LayoutTransition = ({
           }}
           initial={{ x: 0 }}
           animate={{
-            x: "-50%",
-            opacity: 0,
+            x: "-100%",
+            opacity: 1,
           }}
           transition={{
             type: "linear",
@@ -42,7 +51,6 @@ export const LayoutTransition = ({
         >
           <div ref={exitAnimationDivRef} />
         </motion.div>
-
         <motion.div
           key={pathname}
           initial={{ x: "100%" }}

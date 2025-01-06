@@ -29,12 +29,10 @@ export default function UploadProfileForm() {
   const errors = useMemo(() => validate(formValues), [formValues]);
 
   const isValidate = Object.keys(errors).length === 0;
-  console.log(isValidate);
-
   return (
     <Flex direction="column">
       <div className="mx-auto w-[84px] py-[12px]">
-        <AddPhoto />
+        <AddPhoto imageUrl={formValues.image} setImageUrl={setFormValues} />
       </div>
       <Spacing size={16} />
       <Input
@@ -51,6 +49,7 @@ export default function UploadProfileForm() {
         label="프로필 계정 아이디"
         placeholder="프로필 계정 아이디를 입력해주세요"
         onChange={handleFormValues}
+        displayLength={15}
         value={formValues.lightyId}
         helpMessage={errors.lightyId}
       />
@@ -60,7 +59,12 @@ export default function UploadProfileForm() {
       </span>
       <FixedBottomButton
         label="라이티 시작하기"
-        disabled={isValidate === false}
+        disabled={
+          isValidate === false ||
+          formValues.image == null ||
+          formValues.lightyId.length < 5 ||
+          formValues.name == null
+        }
         onClick={() => {
           if (false) {
           }
@@ -76,10 +80,13 @@ function validate(formValues: FormValues) {
 
   if (
     !validator.isEmpty(formValues.lightyId) &&
-    validator.isUppercase(formValues.lightyId)
+    !validator.isLowercase(formValues.lightyId)
   ) {
     errors.lightyId = "소문자만 입력 가능합니다.";
-    if (!validator.isAlpha(formValues.lightyId)) {
+    if (
+      !validator.isAlpha(formValues.lightyId) &&
+      /[^\w\s_]/.test(formValues.lightyId)
+    ) {
       errors.lightyId = "영문을 필수로 입력해주세요";
     }
   }

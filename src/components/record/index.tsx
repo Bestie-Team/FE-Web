@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ChoosingGroupToRecord from "./ChoosingGroupToRecord";
+import ChoosingGatheringToRecord from "./ChoosingGatheringToRecord";
 import { RecordValues } from "@/models/record";
 import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
@@ -22,5 +22,5 @@ export default function Record() {
 
   console.log(recordValues);
 
-  return <ChoosingGroupToRecord onNext={handleGroupChange} />;
+  return <ChoosingGatheringToRecord onNext={handleGroupChange} />;
 }

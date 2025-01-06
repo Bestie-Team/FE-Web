@@ -1,4 +1,5 @@
-import { Sticker } from "@/app/card/new/page";
+import { Sticker } from "@/components/cards/Decorate";
+import { GatheringResponse } from "@/models/gathering";
 import { atom } from "recoil";
 
 export const cardImageUrlAtom = atom<string>({
@@ -9,4 +10,19 @@ export const cardImageUrlAtom = atom<string>({
 export const stickersAtom = atom<Sticker[]>({
   key: "card/stickers",
   default: [],
+});
+
+export const selectedGatheringIdAtom = atom<string | null>({
+  key: "card/gatheringId",
+  default: null,
+});
+
+export const cardSelectedGatheringAtom = atom<Partial<GatheringResponse>>({
+  key: "card/gathering",
+  default: {
+    id: "0",
+    name: "",
+    description: "",
+    invitation_img_url: "",
+  },
 });

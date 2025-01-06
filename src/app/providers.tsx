@@ -6,7 +6,6 @@ interface Props {
 }
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { LayoutTransition } from "@/components/LayoutTransition";
 import NavBar from "@/components/shared/NavBar";
 
 const queryClient = new QueryClient();
@@ -38,7 +37,7 @@ const NextLayout = ({ children }: Props) => {
           height: "100%",
         }}
       >
-        <LayoutTransition>{children}</LayoutTransition>
+        <>{children}</>
         <NavBar />
       </div>
     );

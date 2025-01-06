@@ -26,7 +26,7 @@ export default function StickerContainer({
     4: boolean;
   }>({ 1: false, 2: false, 3: false, 4: false });
   return (
-    <Flex className="pl-[30px] pt-[16px] gap-[20px]">
+    <Flex className="w-full justify-center py-[16px] gap-[20px]">
       <div className={imageWrapper}>
         <Image
           src="/sticker1.png"

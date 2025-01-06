@@ -1,23 +1,38 @@
-import { useState } from "react";
 import { PlusCircleButtonSmall } from "./buttons/PlusCircleButton";
 import Image from "next/image";
+import { FormValues } from "@/models/new";
+import { useState } from "react";
 
-export default function AddPhoto({ small }: { small?: boolean }) {
-  const [image, setImage] = useState<string | null>(null);
-
+export default function AddPhoto({
+  small,
+  imageUrl,
+  setImageUrl,
+}: {
+  small?: boolean;
+  imageUrl?: string | null;
+  setImageUrl?: React.Dispatch<React.SetStateAction<FormValues>>;
+}) {
+  const [image, setImage] = useState("");
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        if (event.target?.result) {
-          setImage(event.target.result as string);
+        if (event.target?.result && setImageUrl) {
+          setImageUrl(
+            (prev) =>
+              ({
+                ...prev,
+                image: event.target?.result as string,
+              } as FormValues)
+          );
+        } else if (event.target?.result) {
+          setImage(event.target?.result as string);
         }
       };
       reader.readAsDataURL(file);
     }
   };
-
   return (
     <label
       style={{
@@ -41,16 +56,17 @@ export default function AddPhoto({ small }: { small?: boolean }) {
           }}
           className={imageWrapperStyle}
         >
-          {image && (
+          {imageUrl || image ? (
             <Image
-              src={image}
+              src={imageUrl || image}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}
               className="object-cover"
             />
+          ) : (
+            <PhotoIcon />
           )}
-          <PhotoIcon />
         </div>
         <PlusCircleButtonSmall
           style={{
@@ -60,10 +76,10 @@ export default function AddPhoto({ small }: { small?: boolean }) {
           className="absolute bottom-[4.33px] right-[4.33px]"
         />
         <input
+          className="hidden"
           id="fileInput"
           type="file"
           accept="image/*"
-          className="hidden"
           onChange={handleFileChange}
         />
       </div>
