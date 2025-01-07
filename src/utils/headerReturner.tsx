@@ -48,7 +48,11 @@ export default function HeaderReturner() {
       ) : (
         <HeaderWithBackBtn pageName="나의 그룹" />
       ),
-    "/card": <HeaderWithBackBtn pageName="카드 생성" color="transparent" />,
+    "/card": pathname.endsWith("frame") ? (
+      <HeaderWithBackBtn pageName="프레임 선택" color="transparent" />
+    ) : (
+      <HeaderWithBackBtn pageName="카드 꾸미기" color="transparent" />
+    ),
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>

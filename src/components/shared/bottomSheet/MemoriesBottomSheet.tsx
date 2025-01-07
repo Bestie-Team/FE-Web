@@ -59,6 +59,6 @@ const actions = [
     icon: <PicturesIcon />,
     title: "추억 카드 만들기",
     subTitle: "소중한 모임 추억을 기록하고 공유할 수 있어요",
-    link: "/invitation",
+    link: "/card",
   },
 ];

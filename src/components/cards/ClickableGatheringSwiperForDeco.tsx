@@ -56,7 +56,7 @@ export default function ClickableGatheringSwiperForDeco({
     <div className={styles.swiperContainer}>
       <Swiper
         slidesPerView={1.4}
-        spaceBetween={12}
+        spaceBetween={20}
         grabCursor={true}
         className="custom-swiper w-full h-[340px]"
       >

@@ -9,14 +9,16 @@ import Flex from "../shared/Flex";
 import clsx from "clsx";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Decorate from "./Decorate";
+import { useRouter } from "next/navigation";
 
 export default function SelectFrame({ onNext }: { onNext: () => void }) {
   const setCardImageUrl = useSetRecoilState(cardImageUrlAtom);
   const [hide, setHide] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const ref = useRef<HTMLDivElement>(null);
+  const route = useRouter();
 
-  const onButtonClick = useCallback(() => {
+  const onClickToDecorate = useCallback(() => {
     if (ref.current === null) {
       return;
     }
@@ -30,26 +32,32 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
       });
   }, [setCardImageUrl]);
 
+  console.log(onClickToDecorate);
+
+  const onClickSelectFrame = () => {
+    route.push("/card/frame");
+  };
+
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
       <Flex justify="space-between" className="px-[20px] w-full" align="center">
         <span className="text-B4 text-grayscale-500">
           점선 영역이 이미지 영역이에요!
         </span>
-        <button className={styles.button} onClick={onButtonClick}>
-          스티커 꾸미기
+        <button className={styles.button} onClick={onClickSelectFrame}>
+          프레임 선택
         </button>
       </Flex>
       <Spacing size={24} />
       {hide === false ? (
         <div id="card" className={clsx(styles.cardContainer)}>
-          <div ref={ref} className="relative rounded-[20px] w-full">
+          <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
             <Image
-              src="/flower.png"
+              src="/frame1.jpeg"
               width={282}
               height={372}
               alt="card"
-              className="h-[372px] w-[282px]"
+              className="h-[372px] w-[282px] rounded-[20px]"
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>

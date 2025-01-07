@@ -20,7 +20,7 @@ export const selectedGatheringIdAtom = atom<string | null>({
 export const cardSelectedGatheringAtom = atom<Partial<GatheringResponse>>({
   key: "card/gathering",
   default: {
-    id: "0",
+    id: "",
     name: "",
     description: "",
     invitation_img_url: "",

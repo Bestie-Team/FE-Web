@@ -50,10 +50,10 @@ export default function ChoosingGatheringToDecorate({
       <ClickableGatheringSwiperForDeco
         gathering={gatheringsPassed}
         onImageClick={handleImageClick}
-        selectedGatheringId={cardSelectedGathering?.id || "0"}
+        selectedGatheringId={cardSelectedGathering?.id || null}
       />
       <FixedBottomButton
-        disabled={cardSelectedGathering.id === null}
+        disabled={cardSelectedGathering?.id === ""}
         label={"꾸미기 시작!"}
         onClick={() => {
           onNext();

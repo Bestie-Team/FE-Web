@@ -22,6 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head></head>
       <body className={`${pretendard.variable} antialiased h-screen`}>
         <div
           className="fixed left-0 right-0 bottom-0 mx-auto flex justify-center z-10"
