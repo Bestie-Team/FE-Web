@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
 import SelectFrame from "@/components/cards/SelectFrame";
 import HeaderReturner from "@/utils/headerReturner";
+import { cardStepAtom } from "@/atoms/card";
+import { useRecoilState } from "recoil";
 
 export default function Page() {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useRecoilState<number>(cardStepAtom);
   const handleGatheringChange = () => {
     setStep(step + 1);
   };

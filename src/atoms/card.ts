@@ -7,6 +7,16 @@ export const cardImageUrlAtom = atom<string>({
   default: "",
 });
 
+export const cardStepAtom = atom<number>({
+  key: "card/step",
+  default: 1,
+});
+
+export const cardFrameAtom = atom<number | null>({
+  key: "card/frame",
+  default: null,
+});
+
 export const stickersAtom = atom<Sticker[]>({
   key: "card/stickers",
   default: [],

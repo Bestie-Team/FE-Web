@@ -4,7 +4,11 @@ import React, { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spacing from "../shared/Spacing";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { cardImageUrlAtom, cardSelectedGatheringAtom } from "@/atoms/card";
+import {
+  cardFrameAtom,
+  cardImageUrlAtom,
+  cardSelectedGatheringAtom,
+} from "@/atoms/card";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
@@ -12,11 +16,14 @@ import Decorate from "./Decorate";
 import { useRouter } from "next/navigation";
 
 export default function SelectFrame({ onNext }: { onNext: () => void }) {
+  const selectedFrame = useRecoilValue(cardFrameAtom);
   const setCardImageUrl = useSetRecoilState(cardImageUrlAtom);
   const [hide, setHide] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const ref = useRef<HTMLDivElement>(null);
   const route = useRouter();
+
+  const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
   const onClickToDecorate = useCallback(() => {
     if (ref.current === null) {
@@ -53,7 +60,7 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
             <Image
-              src="/frame1.jpeg"
+              src={frames[0 || selectedFrame!]}
               width={282}
               height={372}
               alt="card"

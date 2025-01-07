@@ -8,11 +8,12 @@ import clsx from "clsx";
 import { useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { NavigationOptions } from "swiper/types";
-import { cardSelectedGatheringAtom } from "@/atoms/card";
-import { useRecoilValue } from "recoil";
+import { cardFrameAtom, cardSelectedGatheringAtom } from "@/atoms/card";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function SelectFrameSwiper() {
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
+  const [selectedFrame, setSelectedFrame] = useRecoilState(cardFrameAtom);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -21,6 +22,10 @@ export default function SelectFrameSwiper() {
 
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
   const frameNames = ["ribbon", "zebra", "green"];
+
+  const onClickFrame = (id: number) => {
+    setSelectedFrame(id);
+  };
 
   return (
     <div className={styles.swiperContainer}>
@@ -46,9 +51,19 @@ export default function SelectFrameSwiper() {
         className="custom-swiper w-[324px] h-[451px]"
       >
         {frames.map((frame, idx) => (
-          <SwiperSlide className={clsx(styles.slide)} key={`frame${idx}`}>
+          <SwiperSlide
+            className={styles.slide}
+            key={`frame${idx}`}
+            onClick={() => onClickFrame(idx)}
+          >
             <Flex direction="column">
-              <div ref={ref} className={styles.frameWrapper}>
+              <div
+                ref={ref}
+                className={clsx(
+                  styles.frameWrapper,
+                  idx === selectedFrame && "opacity-60"
+                )}
+              >
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <Image
@@ -104,7 +119,7 @@ const styles = {
   frameName:
     "w-fit bg-base-white text-C1 py-[12px] px-[16px] border rounded-[12px] mx-auto",
 
-  slide: "relative w-[324px] !h-[450px] my-auto overflow-hidden",
+  slide: "relative w-[324px] !h-[450px] my-auto overflow-hidden cursor-pointer",
   cardContainer:
     "relative px-[33px] py-[40px] flex bg-base-white rounded-[20px] justify-center items-center border border-[#AEAEAE] border-dotted w-[350px] h-[453px]",
   cardWrapper: "flex flex-col bg-base-white rounded-[12px] w-full h-full",
