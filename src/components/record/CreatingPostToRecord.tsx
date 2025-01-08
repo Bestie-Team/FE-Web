@@ -76,7 +76,7 @@ export default function CreatingPostToRecord({
   //     ),
   //   },
   // ];
-
+  if (selectedGatheringId == null) return null;
   const gathering = GATHERINGS_PASSED.find(
     (g) => g.id === selectedGatheringId
   ) as GatheringResponse;
