@@ -14,7 +14,7 @@ export const cardStepAtom = atom<number>({
 
 export const cardFrameAtom = atom<number | null>({
   key: "card/frame",
-  default: null,
+  default: 0,
 });
 
 export const stickersAtom = atom<Sticker[]>({
@@ -34,5 +34,28 @@ export const cardSelectedGatheringAtom = atom<Partial<GatheringResponse>>({
     name: "",
     description: "",
     invitation_img_url: "",
+  },
+});
+
+export const cardDecorateModalStateAtom = atom<boolean>({
+  key: "card/decorate",
+  default: false,
+});
+
+export const silverDecorateStickersAtom = atom<{ [key: number]: boolean }>({
+  key: "card/silver_stickers",
+  default: {
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+    8: false,
+    9: false,
+    10: false,
+    11: false,
   },
 });

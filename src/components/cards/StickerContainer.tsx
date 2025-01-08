@@ -20,10 +20,7 @@ export default function StickerContainer({
   setStickers: (stickers: Stickers[]) => void;
 }) {
   const [selectSticker, setSelectSticker] = useState<{
-    1: boolean;
-    2: boolean;
-    3: boolean;
-    4: boolean;
+    [key: number]: boolean;
   }>({ 1: false, 2: false, 3: false, 4: false });
   return (
     <Flex className="w-full justify-center py-[16px] gap-[20px]">

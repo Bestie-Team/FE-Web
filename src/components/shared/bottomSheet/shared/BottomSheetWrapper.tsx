@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import Dimmed from "../Dimmed";
-import Flex from "../Flex";
+import Dimmed from "../../Dimmed";
+import Flex from "../../Flex";
 import clsx from "clsx";
-import RectIcon from "../icons/RectIcon";
+import RectIcon from "../../icons/RectIcon";
 
 export default function BottomSheetWrapper({
   open = true,
   onClose,
   children,
   bar = true,
+  bright = false,
 }: {
   open?: boolean;
   onClose: () => void;
   children: React.ReactNode;
   bar?: boolean;
+  bright?: boolean;
 }) {
   const [isClosing, setIsClosing] = useState(false);
 
@@ -31,7 +33,7 @@ export default function BottomSheetWrapper({
   if (open === false) return null;
 
   return (
-    <Dimmed onClick={handleBackdropClick} isClosing={isClosing}>
+    <Dimmed onClick={handleBackdropClick} isClosing={isClosing} bright={bright}>
       <div
         data-testid="bottom-sheet-wrapper"
         onClick={(e) => e.stopPropagation()}

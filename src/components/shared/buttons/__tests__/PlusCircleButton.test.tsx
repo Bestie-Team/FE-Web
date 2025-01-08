@@ -1,11 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import PlusCircleButton, { PlusCircleButtonSmall } from "../PlusCircleButton";
+import BottomSheetOpenButton from "../BottomSheetOpenButton";
+import { PlusCircleButtonSmall } from "../BottomSheetOpenButton";
 
-describe("PlusCircleButton", () => {
+describe("BottomSheetOpenButton", () => {
   test("버튼 클릭 시 onClick 함수 호출되는가", () => {
     const handleClick = jest.fn();
-    render(<PlusCircleButton onClick={handleClick} />);
+    render(<BottomSheetOpenButton onClick={handleClick} />);
 
     const button = screen.getByTestId("plus-circle-button");
     fireEvent.click(button);
@@ -16,7 +17,7 @@ describe("PlusCircleButton", () => {
   test("스타일과 클래스명이 올바르게 적용되는가", () => {
     const style = { bottom: "20px", right: "20px" };
     const customClass = "custom-class";
-    render(<PlusCircleButton style={style} className={customClass} />);
+    render(<BottomSheetOpenButton style={style} className={customClass} />);
 
     const button = screen.getByTestId("plus-circle-button");
     expect(button).toHaveStyle("bottom: 20px");
@@ -24,7 +25,7 @@ describe("PlusCircleButton", () => {
     expect(button).toHaveClass(customClass);
   });
   test("PlusIcon이 올바르게 렌더링되었는가", () => {
-    render(<PlusCircleButton />);
+    render(<BottomSheetOpenButton />);
 
     const icon = screen.getByTestId("plus-icon");
     expect(icon).toBeInTheDocument();

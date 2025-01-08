@@ -1,7 +1,7 @@
 "use client";
 import Splash from "@/components/Splash";
 
-export default function Home() {
+export default function SplashPage() {
   return (
     <>
       <Splash />

@@ -5,11 +5,13 @@ function Dimmed({
   onClick,
   isClosing,
   className,
+  bright,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
   isClosing?: boolean;
   className?: string;
+  bright?: boolean;
 }) {
   return (
     <div
@@ -18,7 +20,7 @@ function Dimmed({
       className={clsx(
         "fixed inset-0 z-[var(--dimmed-zIndex)]",
         isClosing ? "animate-fadeOut" : "animate-fadeIn",
-        "bg-[#00000080]",
+        bright ? "bg-[#00000020]" : "bg-[#00000080]",
         className
       )}
     >

@@ -3,7 +3,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import Flex from "../shared/Flex";
-import { PlusCircleButtonSmall } from "../shared/buttons/PlusCircleButton";
+import { PlusCircleButtonSmall } from "../shared/buttons/BottomSheetOpenButton";
 import Spacing from "../shared/Spacing";
 
 export default function UploadPhotoSwiper({

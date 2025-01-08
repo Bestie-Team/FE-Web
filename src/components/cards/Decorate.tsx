@@ -1,11 +1,8 @@
 "use client";
 import React from "react";
-import StickerContainer from "@/components/cards/StickerContainer";
 import Spacing from "@/components/shared/Spacing";
 import Button from "@/components/shared/buttons/Button";
 import Konva from "konva";
-import { stickersAtom } from "@/atoms/card";
-import { useRecoilState } from "recoil";
 import dynamic from "next/dynamic";
 import Flex from "@/components/shared/Flex";
 import downloadURI from "@/utils/downloadURI";
@@ -27,7 +24,6 @@ export interface Sticker {
 }
 
 export default function Decorate() {
-  const [stickers, setStickers] = useRecoilState<Sticker[]>(stickersAtom);
   const stageRef = React.useRef<Konva.Stage | null>(null);
 
   const handleExport = () => {
@@ -40,9 +36,8 @@ export default function Decorate() {
   return (
     <div className="flex justify-center">
       <Flex direction="column">
-        <StickerContainer setStickers={setStickers} stickers={stickers} />
-        <Spacing size={8} />
         <DecoratingSection stageRef={stageRef} />
+        <Spacing size={8} />
         <Flex justify="center">
           <Button className={styles.button} onClick={handleExport}>
             사진 저장하기

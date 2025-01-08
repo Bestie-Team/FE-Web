@@ -3,7 +3,7 @@ import clsx from "clsx";
 import React, { useState } from "react";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
-import BottomSheetWrapper from "../bottomSheet/BottomSheetWrapper";
+import BottomSheetWrapper from "../bottomSheet/shared/BottomSheetWrapper";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { SetterOrUpdater } from "recoil";
 import { GatheringInfo } from "@/models/gathering";

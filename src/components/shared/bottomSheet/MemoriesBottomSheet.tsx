@@ -7,7 +7,7 @@ import Text from "../Text";
 import UserIcon from "../icons/UserIcon";
 import PencilIcon from "../icons/PencilIcon";
 import PicturesIcon from "../icons/PicturesIcon";
-import BottomSheetWrapper from "./BottomSheetWrapper";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function MemoriesBottomSheet({
   open = true,

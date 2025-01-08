@@ -15,13 +15,24 @@ export default function DecoratingSection({
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
 
+  const checkDeselect = () => {
+    if (true) {
+      setSelectedId(null);
+    }
+  };
+
   const handleSelect = (id: number) => {
     setSelectedId(id);
   };
 
   const handleChange = (
     id: number,
-    newAttrs: { x: number; y: number; width: number; height: number }
+    newAttrs: {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    }
   ) => {
     setStickers((prevStickers) =>
       prevStickers.map((sticker) =>
@@ -47,6 +58,8 @@ export default function DecoratingSection({
         }}
       >
         <Image
+          onMouseDown={checkDeselect}
+          onTouchStart={checkDeselect}
           onClick={() => {
             setSelectedId(null);
           }}
@@ -68,7 +81,7 @@ export default function DecoratingSection({
               handleSelect(sticker.id);
             }}
             onChange={(newAttrs) => handleChange(sticker.id, newAttrs)}
-            onResizeEnd={() => setSelectedId(null)}
+            // onResizeEnd={() => setSelectedId(null)}
           />
         ))}
       </Layer>

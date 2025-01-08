@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import SheetOpenBtnContainer from "./bottomSheet/BottomSheetContainer";
+import SheetOpenBtnContainer from "./bottomSheet/shared/SheetOpenBtnContainer";
 import { useRecoilState } from "recoil";
 import { locationStatusAtom } from "@/atoms/location";
 import NAV_ITEMS from "@/constants/navBarConstants";
@@ -50,7 +50,7 @@ export default function NavBar() {
 
       {(pathname.startsWith("/feed") ||
         pathname.startsWith("/home") ||
-        pathname.endsWith("/gathering")) && <SheetOpenBtnContainer />}
+        pathname.endsWith("/gathering")) && <SheetOpenBtnContainer tooltip />}
     </div>,
     $portalRoot
   );

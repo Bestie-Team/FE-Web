@@ -10,12 +10,14 @@ interface FixedBottomButtonProps {
   disabled?: boolean;
   className?: string;
   color?: string;
+  bgColor?: string;
 }
 
 const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
   label,
   onClick,
   color,
+  bgColor,
   className,
   disabled,
 }: FixedBottomButtonProps) => {
@@ -33,7 +35,7 @@ const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
   if ($portalRoot == null) return null;
 
   return createPortal(
-    <div className={buttonWrapperStyle}>
+    <div className={clsx(buttonWrapperStyle, bgColor)}>
       <Button
         color={color}
         onClick={() => {

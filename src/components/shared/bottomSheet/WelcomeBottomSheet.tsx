@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Spacing from "../Spacing";
-import BottomSheetWrapper from "./BottomSheetWrapper";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import Flex from "../Flex";
 import Button from "../buttons/Button";
 import clsx from "clsx";

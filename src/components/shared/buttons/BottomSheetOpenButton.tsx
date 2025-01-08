@@ -1,14 +1,16 @@
 import clsx from "clsx";
 import PlusIcon from "../icons/PlusIcon";
 
-export default function PlusCircleButton({
+export default function BottomSheetOpenButton({
   style,
   className,
   onClick,
+  icon,
 }: {
   className?: string;
   style?: { bottom: string; right: string };
   onClick?: () => void;
+  icon?: React.ReactNode;
 }) {
   return (
     <div
@@ -17,7 +19,7 @@ export default function PlusCircleButton({
       className={clsx(PlusButtonStyle, className)}
       onClick={onClick}
     >
-      <PlusIcon width="23.3" height="23.3" />
+      {icon ? icon : <PlusIcon width="23.3" height="23.3" />}
     </div>
   );
 }

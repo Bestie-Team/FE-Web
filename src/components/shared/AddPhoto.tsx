@@ -1,4 +1,4 @@
-import { PlusCircleButtonSmall } from "./buttons/PlusCircleButton";
+import { PlusCircleButtonSmall } from "./buttons/BottomSheetOpenButton";
 import Image from "next/image";
 import { FormValues } from "@/models/new";
 import { useState } from "react";

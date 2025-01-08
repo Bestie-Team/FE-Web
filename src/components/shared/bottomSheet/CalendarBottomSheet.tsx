@@ -3,7 +3,7 @@ import Button from "../buttons/Button";
 import CalendarWithTime from "../calendar/CalendarWithTime";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import BottomSheetWrapper from "./BottomSheetWrapper";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import {
   gatheringSelectedAmpmAtom,
   gatheringSelectedDateAtom,

@@ -1,5 +1,5 @@
 import React, { MouseEvent, useCallback, useState } from "react";
-import BottomSheetWrapper from "./BottomSheetWrapper";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../buttons/Button";

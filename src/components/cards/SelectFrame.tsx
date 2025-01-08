@@ -3,8 +3,9 @@ import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spacing from "../shared/Spacing";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  cardDecorateModalStateAtom,
   cardFrameAtom,
   cardImageUrlAtom,
   cardSelectedGatheringAtom,
@@ -14,6 +15,8 @@ import clsx from "clsx";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Decorate from "./Decorate";
 import { useRouter } from "next/navigation";
+import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
+import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
 
 export default function SelectFrame({ onNext }: { onNext: () => void }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);
@@ -22,7 +25,9 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const ref = useRef<HTMLDivElement>(null);
   const route = useRouter();
-
+  const [decoModalOpen, setDecoModalOpen] = useRecoilState(
+    cardDecorateModalStateAtom
+  );
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
   const onClickToDecorate = useCallback(() => {
@@ -39,8 +44,6 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
       });
   }, [setCardImageUrl]);
 
-  console.log(onClickToDecorate);
-
   const onClickSelectFrame = () => {
     route.push("/card/frame");
   };
@@ -53,6 +56,9 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
         </span>
         <button className={styles.button} onClick={onClickSelectFrame}>
           프레임 선택
+        </button>
+        <button className={styles.button} onClick={onClickToDecorate}>
+          스티커 꾸미기
         </button>
       </Flex>
       <Spacing size={24} />
@@ -94,8 +100,14 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
           </div>
         </div>
       ) : null}
+      <DecoStickerBottomSheet
+        open={decoModalOpen}
+        onClose={() => setDecoModalOpen(false)}
+      />
+      {<SheetOpenBtnContainer tooltip />}
       {hide === true ? <Decorate /> : null}
       <FixedBottomButton
+        bgColor="bg-grayscale-50"
         label={"이미지 저장"}
         onClick={() => {
           onNext();

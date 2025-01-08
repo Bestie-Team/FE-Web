@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import { usePathname } from "next/navigation";
-import SheetOpenBtnContainer from "../BottomSheetContainer";
+import SheetOpenBtnContainer from "../shared/SheetOpenBtnContainer";
 
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn(() => "/home"),
