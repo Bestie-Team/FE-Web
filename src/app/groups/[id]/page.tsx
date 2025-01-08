@@ -16,11 +16,9 @@ export default function GroupDetailPage({
 }: {
   params: { id: string };
 }) {
-  // const { id } = params;
-  // const { data, isLoading } = useGroup({ id });
-  // if (data == null || isLoading) return <div>Loading...</div>;
-
-  // 임시로 아래와 같이 데이터 불러옴
+  if (!GROUPS[Number(params.id)]) {
+    return <div>그룹을 찾을 수 없습니다.</div>;
+  }
   const { groupLeader, description, members } = GROUPS[Number(params.id)];
 
   const 내가이그룹장인가 = true;

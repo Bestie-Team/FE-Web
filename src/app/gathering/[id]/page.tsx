@@ -14,7 +14,6 @@ import { GATHERINGS } from "@/constants/gathering";
 import { GatheringResponse } from "@/models/gathering";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import { useMemo } from "react";
 
 export default function GatheringDetailPage({
   params,
@@ -26,15 +25,17 @@ export default function GatheringDetailPage({
     (g) => g.id === gatheringId
   ) as GatheringResponse;
 
+  if (!gathering) {
+    return <div>모임을 찾을 수 없습니다.</div>;
+  }
+
   const { date, group, address, ampm, time } = gathering;
 
   const dateInfo = format(date, "yyyy.MM.dd (E)", { locale: ko });
 
-  const header = useMemo(() => HeaderReturner(), []);
-
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-      <div className={styles.header}>{header}</div>
+      <div className={styles.header}>{HeaderReturner()}</div>
       <GatheringBannerContainer gathering={gathering} />
       <GroupLeaderContainer groupLeader={group.groupLeader} />
       <Spacing size={10} color="#f4f4f4" />
