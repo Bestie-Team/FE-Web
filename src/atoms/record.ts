@@ -1,9 +1,9 @@
 import { RecordValues } from "@/models/record";
 import { atom } from "recoil";
 
-export const recordGatheringAtom = atom<string | null>({
+export const recordGatheringAtom = atom<string>({
   key: "record/gathering",
-  default: null,
+  default: "0",
 });
 
 export const recordGatheringFormValues = atom<RecordValues>({
