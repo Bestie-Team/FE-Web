@@ -11,6 +11,7 @@ declare global {
   }
 }
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
 import NavBar from "@/components/shared/NavBar";
 import { usePathname } from "next/navigation";
@@ -56,10 +57,13 @@ export const NextProvider = ({ children }: Props) => {
       );
     }
   }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>{children}</RecoilRoot>
-    </QueryClientProvider>
+    <GoogleOAuthProvider clientId="819938529870-7ng56emjnvtfds459lrb7h1a9g04r4q5.apps.googleusercontent.com">
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>{children}</RecoilRoot>
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   );
 };
 

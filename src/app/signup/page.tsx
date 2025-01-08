@@ -1,9 +1,8 @@
-"use client";
-import LightyIcon from "./shared/icons/LightyIcon";
-import Spacing from "./shared/Spacing";
-import UploadProfileForm from "./UploadProfileForm";
+import LightyIcon from "@/components/shared/icons/LightyIcon";
+import Spacing from "@/components/shared/Spacing";
+import UploadProfileForm from "@/components/UploadProfileForm";
 
-export default function New() {
+export default function SignupPage() {
   return (
     <div className="flex flex-col gap-[24px] px-[24px] bg-base-white h-screen">
       <Spacing size={28} />

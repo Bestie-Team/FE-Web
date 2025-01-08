@@ -18,6 +18,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://dev-api.lighty.today/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

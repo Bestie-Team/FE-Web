@@ -1,3 +1,4 @@
+"use client";
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import AddPhoto from "./shared/AddPhoto";
 import Input from "./shared/inputs/Input";
@@ -29,6 +30,7 @@ export default function UploadProfileForm() {
   const errors = useMemo(() => validate(formValues), [formValues]);
 
   const isValidate = Object.keys(errors).length === 0;
+
   return (
     <Flex direction="column">
       <div className="mx-auto w-[84px] py-[12px]">
@@ -66,8 +68,6 @@ export default function UploadProfileForm() {
           formValues.name == null
         }
         onClick={() => {
-          if (false) {
-          }
           router.push("/");
         }}
       />
