@@ -1,12 +1,10 @@
 "use client";
-import dynamic from "next/dynamic";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { GatheringResponse } from "@/models/gathering";
 import { divide } from "@/constants/gathering";
-
-const GatheringCard = dynamic(import("./GatheringCard"), { ssr: false });
-const Message = dynamic(import("../shared/Message"), { ssr: false });
+import GatheringCard from "./GatheringCard";
+import Message from "../shared/Message";
 
 type GatheringProps = {
   className?: string;

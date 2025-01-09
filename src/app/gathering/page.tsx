@@ -11,7 +11,7 @@ import useScrollShadow from "@/hooks/useScrollShadow";
 import HeaderReturner from "@/utils/headerReturner";
 import clsx from "clsx";
 import { Swiper as SwiperType } from "swiper";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import React from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -83,10 +83,14 @@ export default function MyGatheringPage() {
         direction="horizontal"
       >
         <SwiperSlide>
-          <Gathering which="1" />
+          <Suspense fallback={<div>로딩중</div>}>
+            <Gathering which="1" />
+          </Suspense>
         </SwiperSlide>
         <SwiperSlide>
-          <Gathering which="2" />
+          <Suspense fallback={<div>로딩중</div>}>
+            <Gathering which="2" />
+          </Suspense>
         </SwiperSlide>
       </Swiper>
       {modalOpen && (
