@@ -22,9 +22,20 @@ export default function Gathering({ className, which }: GatheringProps) {
 
   const gatherings = useMemo(() => {
     const now = new Date();
+    const nowUtc = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+    );
     return GATHERINGS.reduce(
       (acc, gathering) => {
-        const isPassed = differenceInDays(now, gathering.date) >= 0;
+        const gatheringDate = new Date(gathering.date);
+        const gatheringDateUtc = new Date(
+          Date.UTC(
+            gatheringDate.getUTCFullYear(),
+            gatheringDate.getUTCMonth(),
+            gatheringDate.getUTCDate()
+          )
+        ); // UTC 기준으로 변환
+        const isPassed = differenceInDays(nowUtc, gatheringDateUtc) >= 0;
         if (isPassed) acc.passed.push(gathering);
         else acc.expecting.push(gathering);
         return acc;
@@ -35,7 +46,6 @@ export default function Gathering({ className, which }: GatheringProps) {
       }
     );
   }, []);
-
   const renderGatherings = (
     gatheringsList: typeof GATHERINGS,
     action: (id: string) => void

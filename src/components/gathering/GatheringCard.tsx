@@ -18,7 +18,25 @@ export default function GatheringCard({
   which: string;
 }) {
   const { invitation_img_url, name, date } = gathering;
-  const diff = differenceInDays(new Date(), date);
+
+  const nowUtc = new Date(
+    Date.UTC(
+      new Date().getUTCFullYear(),
+      new Date().getUTCMonth(),
+      new Date().getUTCDate()
+    )
+  );
+  const dateDate = new Date(date);
+
+  const dateUtc = new Date(
+    Date.UTC(
+      dateDate.getUTCFullYear(),
+      dateDate.getUTCMonth(),
+      dateDate.getUTCDate()
+    )
+  );
+
+  const diff = differenceInDays(nowUtc, dateUtc);
 
   return (
     <div className={styles.gatheringWrapper} onClick={onClick}>
