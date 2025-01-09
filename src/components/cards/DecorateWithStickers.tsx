@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spacing from "../shared/Spacing";
@@ -38,12 +37,8 @@ export default function DecorateWithStickers({
     if (ref.current === null) return;
     const options = {
       cacheBust: true,
-      width: ref.current.offsetWidth * window.devicePixelRatio,
-      height: ref.current.offsetHeight * window.devicePixelRatio,
-      style: {
-        transform: `scale(${window.devicePixelRatio})`,
-        transformOrigin: "top left",
-      },
+      pixelRatio: 1, // 해상도 낮춰보기
+      quality: 0.9,
     };
 
     try {
@@ -72,7 +67,7 @@ export default function DecorateWithStickers({
       {hide === false ? (
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
-            <Image
+            <img
               src={frames[selectedFrame!]}
               width={282}
               height={372}
@@ -81,7 +76,7 @@ export default function DecorateWithStickers({
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
-                <Image
+                <img
                   src={selectedGathering.invitation_img_url as string}
                   width={230}
                   height={230}
