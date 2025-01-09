@@ -6,7 +6,6 @@ import HeaderReturner from "@/utils/headerReturner";
 import { cardStepAtom } from "@/atoms/card";
 import { useRecoilState } from "recoil";
 import ChooseFrame from "@/components/cards/ChooseFrame";
-import { toPng } from "html-to-image";
 
 export default function Page() {
   const [step, setStep] = useRecoilState<number>(cardStepAtom);
