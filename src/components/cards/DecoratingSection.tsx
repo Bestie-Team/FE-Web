@@ -17,7 +17,7 @@ export default function DecoratingSection({
   const cardImageUrl = useRecoilValue(cardImageUrlAtom);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
-  const [cardImage] = useImage(cardImageUrl || "");
+  const [cardImage] = useImage(cardImageUrl);
   const deselectSticker = useCallback(() => setSelectedId(null), []);
   const selectSticker = useCallback((id: number) => setSelectedId(id), []);
 

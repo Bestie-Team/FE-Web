@@ -2,7 +2,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spacing from "../shared/Spacing";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   cardDecorateModalStateAtom,
   cardFrameAtom,
@@ -15,6 +15,7 @@ import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Decorate from "./Decorate";
 import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
+import Image from "next/image";
 
 export default function DecorateWithStickers({
   onNext,
@@ -22,7 +23,7 @@ export default function DecorateWithStickers({
   onNext: () => void;
 }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);
-  const setCardImageUrl = useSetRecoilState(cardImageUrlAtom);
+  const [cardImageUrl, setCardImageUrl] = useRecoilState(cardImageUrlAtom);
   const [hide, setHide] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
@@ -35,14 +36,9 @@ export default function DecorateWithStickers({
 
   const handleCaptureImage = useCallback(async () => {
     if (ref.current === null) return;
-    const options = {
-      cacheBust: true,
-      pixelRatio: 1, // 해상도 낮춰보기
-      quality: 0.9,
-    };
 
     try {
-      const dataUrl = await toPng(ref.current, options);
+      const dataUrl = await toPng(ref.current);
       setCardImageUrl(dataUrl);
       setHide(true);
     } catch (err) {
@@ -67,7 +63,7 @@ export default function DecorateWithStickers({
       {hide === false ? (
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
-            <img
+            <Image
               src={frames[selectedFrame!]}
               width={282}
               height={372}
@@ -76,7 +72,7 @@ export default function DecorateWithStickers({
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
-                <img
+                <Image
                   src={selectedGathering.invitation_img_url as string}
                   width={230}
                   height={230}
@@ -102,7 +98,7 @@ export default function DecorateWithStickers({
           </div>
         </div>
       ) : null}
-      <Decorate />
+      {cardImageUrl ? <Decorate /> : null}
       <DecoStickerBottomSheet
         open={decoModalOpen}
         onClose={() => setDecoModalOpen(false)}
