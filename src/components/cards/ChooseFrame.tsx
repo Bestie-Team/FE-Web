@@ -1,10 +1,15 @@
 "use client";
+import { cardFrameAtom } from "@/atoms/card";
 import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import HeaderReturner from "@/utils/headerReturner";
+import { useRecoilValue } from "recoil";
+import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 
-export default function FramePage() {
+export default function ChooseFrame({ onNext }: { onNext: () => void }) {
+  const selectedFrame = useRecoilValue(cardFrameAtom);
+
   return (
     <Flex className="bg-grayscale-50 h-screen" direction="column">
       <div className={styles.header}>{HeaderReturner()}</div>
@@ -16,6 +21,13 @@ export default function FramePage() {
       </Flex>
       <Spacing size={40} />
       <SelectFrameSwiper />
+      <FixedBottomButton
+        disabled={selectedFrame == null}
+        label={"스티커로 꾸미기"}
+        onClick={() => {
+          onNext();
+        }}
+      />
     </Flex>
   );
 }

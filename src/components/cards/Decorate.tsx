@@ -37,7 +37,7 @@ export default function Decorate() {
     <div className="flex justify-center">
       <Flex direction="column">
         <DecoratingSection stageRef={stageRef} />
-        <Spacing size={8} />
+        <Spacing size={16} />
         <Flex justify="center">
           <Button className={styles.button} onClick={handleExport}>
             사진 저장하기

@@ -1,3 +1,4 @@
+"use client";
 import React, { useCallback, useState } from "react";
 import { Image, Layer, Stage } from "react-konva";
 import Sticker from "../shared/Sticker";
@@ -75,7 +76,6 @@ export default function DecoratingSection({
             onChange={(newAttrs) =>
               updateStickerAttributes(sticker.id, newAttrs)
             }
-            // onResizeEnd={() => setSelectedId(null)}
           />
         ))}
       </Layer>

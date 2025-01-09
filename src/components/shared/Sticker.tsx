@@ -19,7 +19,6 @@ interface StickerProps {
     width: number;
     height: number;
   }) => void;
-  // onResizeEnd: () => void;
 }
 
 const Sticker = ({
@@ -67,7 +66,6 @@ StickerProps) => {
               width: newWidth,
               height: newHeight,
             });
-            // onResizeEnd();
           }
         }}
       />

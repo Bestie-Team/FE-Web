@@ -14,11 +14,14 @@ import Flex from "../shared/Flex";
 import clsx from "clsx";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Decorate from "./Decorate";
-import { useRouter } from "next/navigation";
 import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
 
-export default function SelectFrame({ onNext }: { onNext: () => void }) {
+export default function DecorateWithStickers({
+  onNext,
+}: {
+  onNext: () => void;
+}) {
   const selectedFrame = useRecoilValue(cardFrameAtom);
   const setCardImageUrl = useSetRecoilState(cardImageUrlAtom);
   const [hide, setHide] = useState<boolean>(false);
@@ -28,13 +31,12 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
   );
 
   const ref = useRef<HTMLDivElement>(null);
-  const route = useRouter();
 
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
-  const handleCaptureImage = useCallback(() => {
+  const handleCaptureImage = useCallback(async () => {
     if (ref.current === null) return;
-    toPng(ref.current, { cacheBust: true })
+    await toPng(ref.current, { cacheBust: true })
       .then((dataUrl) => {
         setCardImageUrl(dataUrl);
         setHide(true);
@@ -42,25 +44,21 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
       .catch((err) => console.error(err));
   }, [setCardImageUrl]);
 
-  const onClickSelectFrame = () => {
-    route.push("/card/frame");
-  };
-
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
       <Flex justify="space-between" className="px-[20px] w-full" align="center">
         <span className="text-B4 text-grayscale-500">
           점선 영역이 이미지 영역이에요!
         </span>
-        <button className={styles.button} onClick={onClickSelectFrame}>
+        {/* <button className={styles.button} onClick={onClickSelectFrame}>
           프레임 선택
-        </button>
+        </button> */}
         <button className={styles.button} onClick={handleCaptureImage}>
           스티커 꾸미기
         </button>
       </Flex>
       <Spacing size={24} />
-      {hide === false && (
+      {hide === false ? (
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
             <Image
@@ -97,13 +95,14 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
             </div>
           </div>
         </div>
+      ) : (
+        <Decorate />
       )}
       <DecoStickerBottomSheet
         open={decoModalOpen}
         onClose={() => setDecoModalOpen(false)}
       />
       {<SheetOpenBtnContainer tooltip />}
-      {hide && <Decorate />}
       <FixedBottomButton
         bgColor="bg-grayscale-50"
         label={"이미지 저장"}
