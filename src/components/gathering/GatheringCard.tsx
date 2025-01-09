@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
