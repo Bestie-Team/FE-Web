@@ -15,7 +15,6 @@ import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Decorate from "./Decorate";
 import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
-import Image from "next/image";
 
 export default function DecorateWithStickers({
   onNext,
@@ -63,7 +62,7 @@ export default function DecorateWithStickers({
       {hide === false ? (
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
-            <Image
+            <img
               src={frames[selectedFrame!]}
               width={282}
               height={372}
@@ -72,7 +71,7 @@ export default function DecorateWithStickers({
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
-                <Image
+                <img
                   src={selectedGathering.invitation_img_url as string}
                   width={230}
                   height={230}

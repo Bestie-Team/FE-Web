@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, Layer, Stage } from "react-konva";
 import Sticker from "../shared/Sticker";
 import useImage from "use-image";
@@ -14,10 +14,6 @@ interface DecoratingSectionProps {
 export default function DecoratingSection({
   stageRef,
 }: DecoratingSectionProps) {
-  const [stageSize, setStageSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
   const cardImageUrl = useRecoilValue(cardImageUrlAtom);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
@@ -39,25 +35,14 @@ export default function DecoratingSection({
     [setStickers]
   );
 
-  useEffect(() => {
-    const handleResize = () => {
-      setStageSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error loading image</div>;
   return (
     <Stage
-      width={stageSize.width * 0.8}
-      height={stageSize.height * 0.8}
+      width={282}
+      height={372}
       ref={stageRef}
-      style={{ width: "100%", display: "flex", justifyContent: "center" }}
+      style={{ width: "full", display: "flex", justifyContent: "center" }}
     >
       <Layer
         style={{
