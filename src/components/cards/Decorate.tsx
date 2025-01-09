@@ -27,7 +27,7 @@ export default function Decorate() {
   const stageRef = React.useRef<Konva.Stage | null>(null);
 
   const handleExport = () => {
-    if (stageRef.current == null) return;
+    if (!stageRef.current) return;
     const scale = 4;
     const uri = stageRef.current.toDataURL({ pixelRatio: scale });
     downloadURI(uri, "card.png");

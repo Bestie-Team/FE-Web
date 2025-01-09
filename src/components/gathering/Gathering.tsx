@@ -1,4 +1,5 @@
 "use client";
+
 import GatheringCard from "./GatheringCard";
 import clsx from "clsx";
 import Message from "../shared/Message";
@@ -7,54 +8,48 @@ import { GATHERINGS } from "@/constants/gathering";
 import { differenceInDays } from "date-fns";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
+import { useMemo } from "react";
 
-export default function Gathering({
-  className,
-  which,
-}: {
+type GatheringProps = {
   className?: string;
-  which: string;
-}) {
-  const expectingGathering = GATHERINGS.filter(
-    (gathering) => differenceInDays(new Date(), gathering.date) < 0
-  );
+  which: "1" | "2";
+};
 
-  const passedGathering = GATHERINGS.filter(
-    (gathering) => differenceInDays(new Date(), gathering.date) >= 0
-  );
-
+export default function Gathering({ className, which }: GatheringProps) {
+  const router = useRouter();
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const pathname = usePathname();
-  const router = useRouter();
+
+  const gatherings = useMemo(() => {
+    const now = new Date();
+    return {
+      expecting: GATHERINGS.filter((g) => differenceInDays(now, g.date) < 0),
+      passed: GATHERINGS.filter((g) => differenceInDays(now, g.date) >= 0),
+    };
+  }, []);
+
+  const renderGatherings = (
+    gatheringsList: typeof GATHERINGS,
+    action: (id: string) => void
+  ) =>
+    gatheringsList.map((gathering, i) => (
+      <GatheringCard
+        key={`${gathering.name}-${i}`}
+        gathering={gathering}
+        onClick={() => action(gathering.id)}
+        which={which}
+      />
+    ));
 
   return (
     <div className={clsx(styles.container, className)}>
-      {which === "2" && pathname.endsWith("gathering") ? <Message /> : null}
+      {which === "2" && pathname.endsWith("gathering") && <Message />}
       <div className="grid grid-cols-2 gap-4">
-        {which === "1"
-          ? expectingGathering.map((gathering, i) => (
-              <GatheringCard
-                onClick={() => {
-                  router.push(`/gathering/${gathering.id}`);
-                }}
-                gathering={gathering}
-                key={`${gathering.name}-${i}`}
-                which={which}
-              />
-            ))
-          : null}
-        {which === "2"
-          ? passedGathering.map((gathering, i) => (
-              <GatheringCard
-                onClick={() => {
-                  setGatheringId(gathering.id);
-                }}
-                gathering={gathering}
-                key={`${gathering.name}-${i}`}
-                which={which}
-              />
-            ))
-          : null}
+        {which === "1" &&
+          renderGatherings(gatherings.expecting, (id) =>
+            router.push(`/gathering/${id}`)
+          )}
+        {which === "2" && renderGatherings(gatherings.passed, setGatheringId)}
       </div>
     </div>
   );

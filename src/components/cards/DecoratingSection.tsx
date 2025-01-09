@@ -1,45 +1,37 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, Layer, Stage } from "react-konva";
 import Sticker from "../shared/Sticker";
 import useImage from "use-image";
 import { cardImageUrlAtom, stickersAtom } from "@/atoms/card";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Konva from "konva";
+import { Sticker as StickerType } from "./Decorate";
 
+interface DecoratingSectionProps {
+  stageRef: React.MutableRefObject<Konva.Stage | null>;
+}
 export default function DecoratingSection({
   stageRef,
-}: {
-  stageRef: React.MutableRefObject<Konva.Stage | null>;
-}) {
+}: DecoratingSectionProps) {
   const cardImageUrl = useRecoilValue(cardImageUrlAtom);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
+  const [cardImage] = useImage(cardImageUrl || "");
+  const deselectSticker = useCallback(() => setSelectedId(null), []);
+  const selectSticker = useCallback((id: number) => setSelectedId(id), []);
 
-  const checkDeselect = () => {
-    if (true) {
-      setSelectedId(null);
-    }
-  };
-
-  const handleSelect = (id: number) => {
-    setSelectedId(id);
-  };
-
-  const handleChange = (
-    id: number,
-    newAttrs: {
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    }
-  ) => {
-    setStickers((prevStickers) =>
-      prevStickers.map((sticker) =>
-        sticker.id === id ? { ...sticker, ...newAttrs } : sticker
-      )
-    );
-  };
+  const updateStickerAttributes = useCallback(
+    (id: number, newAttrs: Partial<Konva.NodeConfig>) => {
+      setStickers((prevStickers) =>
+        prevStickers.map((sticker) =>
+          sticker.id === id
+            ? ({ ...sticker, ...newAttrs } as StickerType)
+            : sticker
+        )
+      );
+    },
+    [setStickers]
+  );
 
   return (
     <Stage
@@ -58,8 +50,8 @@ export default function DecoratingSection({
         }}
       >
         <Image
-          onMouseDown={checkDeselect}
-          onTouchStart={checkDeselect}
+          onMouseDown={deselectSticker}
+          onTouchStart={deselectSticker}
           onClick={() => {
             setSelectedId(null);
           }}
@@ -67,7 +59,7 @@ export default function DecoratingSection({
           width={282}
           height={372}
           id="0"
-          image={useImage(cardImageUrl as string)[0]}
+          image={cardImage}
           x={0}
           y={0}
         />
@@ -78,9 +70,11 @@ export default function DecoratingSection({
             draggable
             isSelected={sticker.id === selectedId}
             onSelect={() => {
-              handleSelect(sticker.id);
+              selectSticker(sticker.id);
             }}
-            onChange={(newAttrs) => handleChange(sticker.id, newAttrs)}
+            onChange={(newAttrs) =>
+              updateStickerAttributes(sticker.id, newAttrs)
+            }
             // onResizeEnd={() => setSelectedId(null)}
           />
         ))}

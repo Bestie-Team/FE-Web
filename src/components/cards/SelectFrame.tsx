@@ -23,25 +23,23 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
   const setCardImageUrl = useSetRecoilState(cardImageUrlAtom);
   const [hide, setHide] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
-  const ref = useRef<HTMLDivElement>(null);
-  const route = useRouter();
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
     cardDecorateModalStateAtom
   );
+
+  const ref = useRef<HTMLDivElement>(null);
+  const route = useRouter();
+
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
-  const onClickToDecorate = useCallback(() => {
-    if (ref.current === null) {
-      return;
-    }
+  const handleCaptureImage = useCallback(() => {
+    if (ref.current === null) return;
     toPng(ref.current, { cacheBust: true })
       .then((dataUrl) => {
         setCardImageUrl(dataUrl);
+        setHide(true);
       })
-      .then(() => setHide(true))
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.error(err));
   }, [setCardImageUrl]);
 
   const onClickSelectFrame = () => {
@@ -57,12 +55,12 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
         <button className={styles.button} onClick={onClickSelectFrame}>
           프레임 선택
         </button>
-        <button className={styles.button} onClick={onClickToDecorate}>
+        <button className={styles.button} onClick={handleCaptureImage}>
           스티커 꾸미기
         </button>
       </Flex>
       <Spacing size={24} />
-      {hide === false ? (
+      {hide === false && (
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
             <Image
@@ -99,13 +97,13 @@ export default function SelectFrame({ onNext }: { onNext: () => void }) {
             </div>
           </div>
         </div>
-      ) : null}
+      )}
       <DecoStickerBottomSheet
         open={decoModalOpen}
         onClose={() => setDecoModalOpen(false)}
       />
       {<SheetOpenBtnContainer tooltip />}
-      {hide === true ? <Decorate /> : null}
+      {hide && <Decorate />}
       <FixedBottomButton
         bgColor="bg-grayscale-50"
         label={"이미지 저장"}

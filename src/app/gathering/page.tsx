@@ -20,19 +20,23 @@ import Gathering from "@/components/gathering/Gathering";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 
 export default function MyGatheringPage() {
-  const reset = useResetRecoilState(newGatheringInfo);
+  const resetNewGatheringInfo = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
-  const hasShadow = useScrollShadow();
-  const swiperRef = useRef<SwiperType | null>(null);
   const setAnimateTab = useSetRecoilState(gatheringAnimationStatusAtom);
   const [selectedTab, setSelectedTab] = useRecoilState(
     gatheringSelectedTabAtom
   );
+
+  const hasShadow = useScrollShadow();
+
+  const swiperRef = useRef<SwiperType | null>(null);
+
   const handleSlideChange = (index: number) => {
     if (swiperRef.current) {
-      swiperRef.current.slideTo(index); // 원하는 슬라이드로 이동
+      swiperRef.current.slideTo(index);
     }
   };
+
   const handleTabClick = (tabName: "1" | "2") => {
     if (tabName === "1") {
       handleSlideChange(0);
@@ -48,8 +52,8 @@ export default function MyGatheringPage() {
   };
 
   useEffect(() => {
-    reset();
-  }, []);
+    resetNewGatheringInfo();
+  }, [resetNewGatheringInfo]);
 
   return (
     <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar">
