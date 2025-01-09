@@ -291,7 +291,7 @@ export const GATHERINGS_PASSED = [
   },
 ] as GatheringResponse[];
 
-const divide = () => {
+export const divide = () => {
   const now = new Date();
   return GATHERINGS.reduce(
     (acc, gathering) => {
@@ -306,5 +306,3 @@ const divide = () => {
     }
   );
 };
-
-export const DividedGatherings = divide();

@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import {
   gatheringAnimationStatusAtom,
   gatheringModalStateAtom,
@@ -16,8 +17,10 @@ import React from "react";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import Gathering from "@/components/gathering/Gathering";
-import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+const Gathering = dynamic(import("@/components/gathering/Gathering"));
+const MemoriesBottomSheet = dynamic(
+  import("@/components/shared/bottomSheet/MemoriesBottomSheet")
+);
 
 export default function MyGatheringPage() {
   const resetNewGatheringInfo = useResetRecoilState(newGatheringInfo);

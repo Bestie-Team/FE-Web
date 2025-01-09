@@ -1,10 +1,12 @@
 "use client";
-
-import GatheringCard from "./GatheringCard";
+import dynamic from "next/dynamic";
 import clsx from "clsx";
-import Message from "../shared/Message";
 import { usePathname } from "next/navigation";
-import { DividedGatherings, GATHERINGS } from "@/constants/gathering";
+import { GatheringResponse } from "@/models/gathering";
+import { divide } from "@/constants/gathering";
+
+const GatheringCard = dynamic(import("./GatheringCard"));
+const Message = dynamic(import("../shared/Message"));
 
 type GatheringProps = {
   className?: string;
@@ -14,7 +16,9 @@ type GatheringProps = {
 export default function Gathering({ className, which }: GatheringProps) {
   const pathname = usePathname();
 
-  const renderGatherings = (gatheringsList: typeof GATHERINGS) =>
+  const DividedGatherings = divide();
+
+  const renderGatherings = (gatheringsList: GatheringResponse[]) =>
     gatheringsList.map((gathering, i) => (
       <GatheringCard
         key={`${gathering?.name}-${i}`}
