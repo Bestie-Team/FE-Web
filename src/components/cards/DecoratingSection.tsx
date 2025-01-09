@@ -66,6 +66,12 @@ export default function DecoratingSection({
         />
         {stickers.map((sticker) => (
           <Sticker
+            onDragEnd={(event) => {
+              updateStickerAttributes(sticker.id, {
+                x: event.target.x(),
+                y: event.target.y(),
+              });
+            }}
             key={sticker.id}
             {...sticker}
             draggable
@@ -73,9 +79,9 @@ export default function DecoratingSection({
             onSelect={() => {
               selectSticker(sticker.id);
             }}
-            onChange={(newAttrs) =>
-              updateStickerAttributes(sticker.id, newAttrs)
-            }
+            // onChange={(newAttrs) =>
+            //   updateStickerAttributes(sticker.id, newAttrs)
+            // }
           />
         ))}
       </Layer>

@@ -13,12 +13,13 @@ interface StickerProps {
   draggable: boolean;
   isSelected: boolean;
   onSelect: () => void;
-  onChange: (newAttrs: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  }) => void;
+  onDragEnd: (event: Konva.KonvaEventObject<DragEvent>) => void;
+  // onChange?: (newAttrs: {
+  //   x: number;
+  //   y: number;
+  //   width: number;
+  //   height: number;
+  // }) => void;
 }
 
 const Sticker = ({
@@ -28,8 +29,9 @@ const Sticker = ({
   draggable,
   isSelected,
   onSelect,
-  onChange,
-}: // onResizeEnd,
+  onDragEnd,
+}: // onChange,
+// onResizeEnd,
 StickerProps) => {
   const [image] = useImage(src);
   const shapeRef = useRef<Konva.Image>(null);
@@ -55,19 +57,20 @@ StickerProps) => {
         ref={shapeRef}
         onClick={onSelect}
         onTap={onSelect}
-        onTransformEnd={() => {
-          const node = shapeRef.current;
-          if (node) {
-            const newWidth = node.width() * node.scaleX();
-            const newHeight = node.height() * node.scaleY();
-            onChange({
-              x: node.x(),
-              y: node.y(),
-              width: newWidth,
-              height: newHeight,
-            });
-          }
-        }}
+        onDragEnd={(event) => onDragEnd(event)}
+        // onTransformEnd={() => {
+        //   const node = shapeRef.current;
+        //   if (node) {
+        //     const newWidth = node.width() * node.scaleX();
+        //     const newHeight = node.height() * node.scaleY();
+        //     onChange({
+        //       x: node.x(),
+        //       y: node.y(),
+        //       width: newWidth,
+        //       height: newHeight,
+        //     });
+        //   }
+        // }}
       />
       {isSelected && <Transformer ref={transformerRef} />}
     </>

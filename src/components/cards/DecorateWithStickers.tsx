@@ -62,7 +62,7 @@ export default function DecorateWithStickers({
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
             <Image
-              src={frames[0 || selectedFrame!]}
+              src={frames[selectedFrame!]}
               width={282}
               height={372}
               alt="card"

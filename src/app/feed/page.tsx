@@ -2,6 +2,8 @@
 import FilterBar from "@/components/shared/FilterBar";
 import TabBar from "@/components/shared/tab/TabBar";
 import Feed from "@/components/feed/Feed";
+import "swiper/css";
+import "swiper/css/navigation";
 import { Swiper as SwiperType } from "swiper";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState, useSetRecoilState } from "recoil";
