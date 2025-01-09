@@ -22,10 +22,18 @@ export default function Gathering({ className, which }: GatheringProps) {
 
   const gatherings = useMemo(() => {
     const now = new Date();
-    return {
-      expecting: GATHERINGS.filter((g) => differenceInDays(now, g.date) < 0),
-      passed: GATHERINGS.filter((g) => differenceInDays(now, g.date) >= 0),
-    };
+    return GATHERINGS.reduce(
+      (acc, gathering) => {
+        const isPassed = differenceInDays(now, gathering.date) >= 0;
+        if (isPassed) acc.passed.push(gathering);
+        else acc.expecting.push(gathering);
+        return acc;
+      },
+      { expecting: [], passed: [] } as {
+        expecting: typeof GATHERINGS;
+        passed: typeof GATHERINGS;
+      }
+    );
   }, []);
 
   const renderGatherings = (
@@ -42,19 +50,15 @@ export default function Gathering({ className, which }: GatheringProps) {
     ));
 
   return (
-    <div className={clsx(styles.container, className)}>
+    <div className={clsx("pt-[155px] pb-[111px] w-full px-[20px]", className)}>
       {which === "2" && pathname.endsWith("gathering") && <Message />}
       <div className="grid grid-cols-2 gap-4">
-        {which === "1" &&
-          renderGatherings(gatherings.expecting, (id) =>
-            router.push(`/gathering/${id}`)
-          )}
-        {which === "2" && renderGatherings(gatherings.passed, setGatheringId)}
+        {which === "1"
+          ? renderGatherings(gatherings.expecting, (id) =>
+              router.push(`/gathering/${id}`)
+            )
+          : renderGatherings(gatherings.passed, setGatheringId)}
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: "pt-[155px] pb-[111px] animate-fadeIn w-full px-[20px]",
-};
