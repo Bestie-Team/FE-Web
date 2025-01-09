@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { GatheringResponse } from "@/models/gathering";
 import { divide } from "@/constants/gathering";
 
-const GatheringCard = dynamic(import("./GatheringCard"));
-const Message = dynamic(import("../shared/Message"));
+const GatheringCard = dynamic(import("./GatheringCard"), { ssr: false });
+const Message = dynamic(import("../shared/Message"), { ssr: false });
 
 type GatheringProps = {
   className?: string;
