@@ -7,39 +7,31 @@ import PencilIcon from "../shared/icons/PencilIcon";
 import { GatheringResponse } from "@/models/gathering";
 import { differenceInDays } from "date-fns";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useSetRecoilState } from "recoil";
+import { recordGatheringAtom } from "@/atoms/record";
 
 export default function GatheringCard({
-  onClick,
   gathering,
   which,
 }: {
-  onClick: () => void;
   gathering: GatheringResponse;
   which: string;
 }) {
+  const setGatheringId = useSetRecoilState(recordGatheringAtom);
+
   const { invitation_img_url, name, date } = gathering;
+  const router = useRouter();
+  const diff = differenceInDays(new Date(), date);
 
-  const nowUtc = new Date(
-    Date.UTC(
-      new Date().getUTCFullYear(),
-      new Date().getUTCMonth(),
-      new Date().getUTCDate()
-    )
-  );
-  const dateDate = new Date(date);
-
-  const dateUtc = new Date(
-    Date.UTC(
-      dateDate.getUTCFullYear(),
-      dateDate.getUTCMonth(),
-      dateDate.getUTCDate()
-    )
-  );
-
-  const diff = differenceInDays(nowUtc, dateUtc);
+  const handleClickGathering = () => {
+    if (which === "1") {
+      router.push(`/gathering/${gathering.id}`);
+    } else setGatheringId(gathering.id);
+  };
 
   return (
-    <div className={styles.gatheringWrapper} onClick={onClick}>
+    <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
       <Image
         src={invitation_img_url}
         className={styles.image}
@@ -63,7 +55,7 @@ export default function GatheringCard({
         </Flex>
       </Flex>
       {which === "2" ? (
-        <Button className={styles.button} onClick={onClick}>
+        <Button className={styles.button} onClick={handleClickGathering}>
           <PencilIcon color="#0A0A0A" />
         </Button>
       ) : null}
