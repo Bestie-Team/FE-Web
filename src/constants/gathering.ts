@@ -1,6 +1,7 @@
 import { GatheringResponse } from "@/models/gathering";
 import { GroupInfoResponse } from "@/models/group";
 import { UserInfo } from "@/models/user";
+import { differenceInDays } from "date-fns";
 
 export const GATHERINGS = [
   {
@@ -289,3 +290,21 @@ export const GATHERINGS_PASSED = [
     invitation_img_url: "https://cdn.lighty.today/meongryong_wine.jpg",
   },
 ] as GatheringResponse[];
+
+const divide = () => {
+  const now = new Date();
+  return GATHERINGS.reduce(
+    (acc, gathering) => {
+      const isPassed = differenceInDays(now, gathering.date) >= 0;
+      if (isPassed) acc.passed.push(gathering);
+      else acc.expecting.push(gathering);
+      return acc;
+    },
+    { expecting: [], passed: [] } as {
+      expecting: typeof GATHERINGS;
+      passed: typeof GATHERINGS;
+    }
+  );
+};
+
+export const DividedGatherings = divide();

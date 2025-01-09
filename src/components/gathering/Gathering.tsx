@@ -4,9 +4,7 @@ import GatheringCard from "./GatheringCard";
 import clsx from "clsx";
 import Message from "../shared/Message";
 import { usePathname } from "next/navigation";
-import { GATHERINGS } from "@/constants/gathering";
-import { differenceInDays } from "date-fns";
-import { useMemo } from "react";
+import { DividedGatherings, GATHERINGS } from "@/constants/gathering";
 
 type GatheringProps = {
   className?: string;
@@ -15,22 +13,6 @@ type GatheringProps = {
 
 export default function Gathering({ className, which }: GatheringProps) {
   const pathname = usePathname();
-
-  const gatherings = useMemo(() => {
-    const now = new Date();
-    return GATHERINGS.reduce(
-      (acc, gathering) => {
-        const isPassed = differenceInDays(now, gathering.date) >= 0;
-        if (isPassed) acc.passed.push(gathering);
-        else acc.expecting.push(gathering);
-        return acc;
-      },
-      { expecting: [], passed: [] } as {
-        expecting: typeof GATHERINGS;
-        passed: typeof GATHERINGS;
-      }
-    );
-  }, []);
 
   const renderGatherings = (gatheringsList: typeof GATHERINGS) =>
     gatheringsList.map((gathering, i) => (
@@ -46,8 +28,8 @@ export default function Gathering({ className, which }: GatheringProps) {
       {which === "2" && pathname.endsWith("gathering") && <Message />}
       <div className="grid grid-cols-2 gap-4">
         {which === "1"
-          ? renderGatherings(gatherings.expecting)
-          : renderGatherings(gatherings.passed)}
+          ? renderGatherings(DividedGatherings.expecting)
+          : renderGatherings(DividedGatherings.passed)}
       </div>
     </div>
   );
