@@ -36,12 +36,23 @@ export default function DecorateWithStickers({
 
   const handleCaptureImage = useCallback(async () => {
     if (ref.current === null) return;
-    await toPng(ref.current, { cacheBust: true })
-      .then((dataUrl) => {
-        setCardImageUrl(dataUrl);
-        setHide(true);
-      })
-      .catch((err) => console.error(err));
+    const options = {
+      cacheBust: true,
+      width: ref.current.offsetWidth * window.devicePixelRatio,
+      height: ref.current.offsetHeight * window.devicePixelRatio,
+      style: {
+        transform: `scale(${window.devicePixelRatio})`,
+        transformOrigin: "top left",
+      },
+    };
+
+    try {
+      const dataUrl = await toPng(ref.current, options);
+      setCardImageUrl(dataUrl);
+      setHide(true);
+    } catch (err) {
+      console.error("이미지 캡처 오류:", err);
+    }
   }, [setCardImageUrl]);
 
   return (
