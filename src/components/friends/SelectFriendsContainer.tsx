@@ -54,7 +54,7 @@ export default function SelectFriendsContainer({
       <ul>
         {userFriends.map((friendItem, idx) => {
           return (
-            <React.Fragment key={`${friendItem}${idx}`}>
+            <React.Fragment key={`${friendItem.accountId}`}>
               <FriendListItem
                 friendInfo={friendItem}
                 idx={idx}

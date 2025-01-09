@@ -73,7 +73,7 @@ export default function ClickableGatheringSwiperForDeco({
                 })
               }
               className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
-              key={`gathering${id}`}
+              key={`gathering_${id}`}
             >
               <Image
                 src={invitation_img_url}

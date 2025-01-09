@@ -32,7 +32,7 @@ export default function GroupsPage() {
         </Flex>
         {myGroups.map((group, idx) => {
           return (
-            <React.Fragment key={`${group}${idx}`}>
+            <React.Fragment key={`${group.id}_${idx}`}>
               <Spacing size={16} />
               <GroupContainer
                 group={group}

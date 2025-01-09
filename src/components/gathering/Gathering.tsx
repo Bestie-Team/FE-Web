@@ -22,6 +22,7 @@ export default function Gathering({
   const passedGathering = GATHERINGS.filter(
     (gathering) => differenceInDays(new Date(), gathering.date) >= 0
   );
+
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const pathname = usePathname();
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function Gathering({
                   router.push(`/gathering/${gathering.id}`);
                 }}
                 gathering={gathering}
-                key={`${gathering}${i}`}
+                key={`${gathering.name}-${i}`}
                 which={which}
               />
             ))
@@ -49,7 +50,7 @@ export default function Gathering({
                   setGatheringId(gathering.id);
                 }}
                 gathering={gathering}
-                key={`${gathering}${i}`}
+                key={`${gathering.name}-${i}`}
                 which={which}
               />
             ))

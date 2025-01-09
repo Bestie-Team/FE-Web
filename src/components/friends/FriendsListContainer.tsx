@@ -28,7 +28,7 @@ export default function FriendsListContainer() {
       <ul>
         {userFriends.map((friendItem, idx) => {
           return (
-            <React.Fragment key={`${friendItem}${idx}`}>
+            <React.Fragment key={`${friendItem.accountId}`}>
               <FriendListItem friendInfo={friendItem} idx={idx} type="basic" />
               <Spacing size={16} />
             </React.Fragment>
