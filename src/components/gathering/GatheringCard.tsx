@@ -57,7 +57,9 @@ const styles = {
     "relative rounded-[16px] overflow-hidden aspect-square cursor-pointer",
   image: "object-cover object-center w-full h-full",
   gradation:
-    "linear-gradient(180deg, color(display-p3 0 0 0 / 0) 65%, color(display-p3 0 0 0 / 0.9) 100%)",
+    "linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.9) 100%)",
+  // gradation:
+  //   "linear-gradient(180deg, color(display-p3 0 0 0 / 0) 65%, color(display-p3 0 0 0 / 0.9) 100%)",
 
   textWrapper: "absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white",
   date: "w-full text-C2 text-grayscale-100",
