@@ -16,6 +16,9 @@ const AnimatedTabButton = () => {
     <div className={styles.tabWrapper}>
       <div
         role="presentation"
+        style={{
+          boxShadow: "2px 0px 8px 0px #0000000F",
+        }}
         className={clsx(
           styles.slider,
           selectedGathering.type === "group"
@@ -55,7 +58,7 @@ const styles = {
   tabWrapper: "relative p-1 bg-grayscale-10 rounded-full w-[158px]",
 
   slider:
-    "absolute h-8 w-[75px] py-[10px] bg-white rounded-full shadow-md transition-transform duration-300 ease-in-out",
+    "absolute h-8 w-[75px] py-[10px] bg-base-white rounded-full shadow-md transition-transform duration-300 ease-in-out",
 
   button:
     "flex items-center h-8 px-4 py-[10px] rounded-full text-C1 transition-colors duration-300 z-10",
