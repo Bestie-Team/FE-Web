@@ -95,9 +95,8 @@ export default function DecorateWithStickers({
             </div>
           </div>
         </div>
-      ) : (
-        <Decorate />
-      )}
+      ) : null}
+      <Decorate />
       <DecoStickerBottomSheet
         open={decoModalOpen}
         onClose={() => setDecoModalOpen(false)}
