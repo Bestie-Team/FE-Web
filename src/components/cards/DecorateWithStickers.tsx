@@ -63,7 +63,6 @@ export default function DecorateWithStickers({
         <div id="card" className={clsx(styles.cardContainer)}>
           <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
             <img
-              crossOrigin="anonymous"
               src={frames[selectedFrame!]}
               width={282}
               height={372}
@@ -73,7 +72,6 @@ export default function DecorateWithStickers({
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
                 <img
-                  crossOrigin="anonymous"
                   src={selectedGathering.invitation_img_url as string}
                   width={230}
                   height={230}
