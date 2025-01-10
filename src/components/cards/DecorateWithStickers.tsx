@@ -36,8 +36,7 @@ export default function DecorateWithStickers({
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const [cardImgUrlWithCache, setCardImgUrlWithCache] = useState("");
-  const [frameImgUrlWithCache, setFrameImgUrlWithCache] = useState("");
+
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
   useEffect(() => {
@@ -89,17 +88,6 @@ export default function DecorateWithStickers({
       console.error("이미지 캡처 오류:", err);
     }
   }, []);
-  const updateImageUrls = useCallback(() => {
-    // 선택한 이미지들의 캐시 버스터 URL로 갱신
-    setCardImgUrlWithCache(
-      addCacheBuster(selectedGathering.invitation_img_url as string)
-    );
-    setFrameImgUrlWithCache(addCacheBuster(frames[selectedFrame!]));
-  }, [selectedGathering.invitation_img_url, selectedFrame]);
-
-  useEffect(() => {
-    updateImageUrls();
-  }, [updateImageUrls, selectedFrame]);
 
   const handleAddSticker = async (sticker: string) => {
     console.log("handleAddSticker called with sticker:", sticker);
@@ -137,12 +125,7 @@ export default function DecorateWithStickers({
       downloadURI(uri, "card.png");
     }
   };
-  const addCacheBuster = (url: string) => {
-    const timestamp = new Date().getTime();
-    const separator = url.includes("?") ? "&" : "?";
-    return `${url}${separator}t=${timestamp}`;
-  };
-
+  console.log(hide);
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
       <Flex justify="space-between" className="px-[20px] w-full" align="center">
@@ -154,45 +137,46 @@ export default function DecorateWithStickers({
         </button>
       </Flex>
       <Spacing size={24} />
-      {hide === false ? (
-        <div className={clsx(styles.cardContainer)}>
+      <div className={clsx(styles.cardContainer)}>
+        <div
+          ref={ref}
+          id="card"
+          className="relative rounded-[20px] w-full shadow-sm"
+        >
           <div
-            ref={ref}
-            id="card"
-            className="relative rounded-[20px] w-full shadow-sm"
-          >
-            <div
-              style={{
-                backgroundImage: `url('${frameImgUrlWithCache}')`,
-                backgroundSize: "cover",
-              }}
-              className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
-            />
-            <div className={styles.cardWrapper}>
-              <div className={styles.imageWrapper}>
-                <div
-                  style={{
-                    backgroundImage: `url('${cardImgUrlWithCache}')`,
-                    backgroundSize: "cover",
-                  }}
-                  className={styles.image}
-                />
-              </div>
-              <Flex direction="column" className="px-[20px] py-[15px]">
-                <span className={styles.textWrapper}>
-                  {selectedGathering.name}
-                </span>
-                <Spacing size={8} />
-                <span className="text-C5">{selectedGathering.description}</span>
-                <Spacing size={16} />
-                <span className={styles.dateWrapper}>
-                  {selectedGathering.date}
-                </span>
-              </Flex>
+            style={{
+              backgroundImage: `url('${frames[selectedFrame]}')`,
+              backgroundSize: "cover",
+            }}
+            className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
+          />
+          <div className={styles.cardWrapper}>
+            <div className={styles.imageWrapper}>
+              <div
+                style={{
+                  backgroundImage: `url('${
+                    selectedGathering.invitation_img_url as string
+                  }')`,
+                  backgroundSize: "cover",
+                }}
+                className={styles.image}
+              />
             </div>
+            <Flex direction="column" className="px-[20px] py-[15px]">
+              <span className={styles.textWrapper}>
+                {selectedGathering.name}
+              </span>
+              <Spacing size={8} />
+              <span className="text-C5">{selectedGathering.description}</span>
+              <Spacing size={16} />
+              <span className={styles.dateWrapper}>
+                {selectedGathering.date}
+              </span>
+            </Flex>
           </div>
         </div>
-      ) : null}
+      </div>
+
       <Flex direction="column">
         <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
           <canvas
@@ -211,7 +195,6 @@ export default function DecorateWithStickers({
           사진 저장하기
         </Button>
       </Flex>
-
       {/* {cardImgUrl ? <Decorate /> : null} */}
       {decoModalOpen ? (
         <DecoStickerBottomSheet

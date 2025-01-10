@@ -17,7 +17,7 @@ export const cardStepAtom = atom<number>({
   default: 1,
 });
 
-export const cardFrameAtom = atom<number | null>({
+export const cardFrameAtom = atom<number>({
   key: "card/frame",
   default: 0,
 });
