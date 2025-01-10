@@ -58,7 +58,10 @@ export default function DecorateWithStickers({
     try {
       const dataUrl = await toPng(ref.current);
       const img = new Image();
-      img.src = dataUrl;
+
+      const timestamp = new Date().getTime();
+      img.src = `${dataUrl}?timestamp=${timestamp}`;
+
       img.onload = async () => {
         const canvas = fabricCanvasRef.current;
         if (canvas) {
