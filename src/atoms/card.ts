@@ -7,6 +7,11 @@ export const cardImageUrlAtom = atom<string>({
   default: "",
 });
 
+export const cardImageAtom = atom<HTMLImageElement | null>({
+  key: "card/Image",
+  default: null,
+});
+
 export const cardStepAtom = atom<number>({
   key: "card/step",
   default: 1,

@@ -2,8 +2,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { Image, Layer, Stage } from "react-konva";
 import Sticker from "../shared/Sticker";
-import useImage from "use-image";
-import { cardImageUrlAtom, stickersAtom } from "@/atoms/card";
+import { cardImageAtom, stickersAtom } from "@/atoms/card";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Konva from "konva";
 import { Sticker as StickerType } from "./Decorate";
@@ -15,10 +14,12 @@ export default function DecoratingSection({
   stageRef,
 }: DecoratingSectionProps) {
   const layerRef = useRef(null);
-  const cardImageUrl = useRecoilValue(cardImageUrlAtom);
+  const image = useRecoilValue(cardImageAtom);
+  // const cardImageUrl = useRecoilValue(cardImageUrlAtom);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
-  const [cardImage] = useImage(cardImageUrl);
+  // const [cardImage] = useImage(cardImageUrl);
+
   const deselectSticker = useCallback(() => setSelectedId(null), []);
   const selectSticker = useCallback((id: number) => setSelectedId(id), []);
 
@@ -40,18 +41,15 @@ export default function DecoratingSection({
       width={282}
       height={372}
       ref={stageRef}
-      style={{ width: "full", display: "flex", justifyContent: "center" }}
+      style={{
+        width: "full",
+        display: "flex",
+        justifyContent: "center",
+        borderRadius: "20px",
+        overflow: "hidden",
+      }}
     >
-      <Layer
-        ref={layerRef}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-          overflow: "visible",
-          margin: "0 auto",
-        }}
-      >
+      <Layer ref={layerRef}>
         <Image
           onMouseDown={deselectSticker}
           onTouchStart={deselectSticker}
@@ -61,8 +59,9 @@ export default function DecoratingSection({
           alt="card"
           width={282}
           height={372}
-          id="0"
-          image={cardImage}
+          id="frame"
+          // image={cardImage}
+          image={image!}
           x={0}
           y={0}
         />

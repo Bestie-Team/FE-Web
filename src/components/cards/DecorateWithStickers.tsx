@@ -6,7 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import {
   cardDecorateModalStateAtom,
   cardFrameAtom,
-  cardImageUrlAtom,
+  cardImageAtom,
   cardSelectedGatheringAtom,
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
@@ -23,7 +23,8 @@ export default function DecorateWithStickers({
   onNext: () => void;
 }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);
-  const [cardImageUrl, setCardImageUrl] = useRecoilState(cardImageUrlAtom);
+  // const [cardImageUrl, setCardImageUrl] = useRecoilState(cardImageUrlAtom);
+  const [img, setImg] = useRecoilState(cardImageAtom);
   const [hide, setHide] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
@@ -39,13 +40,14 @@ export default function DecorateWithStickers({
 
     try {
       const dataUrl = await toPng(ref.current);
-      setCardImageUrl(dataUrl);
-      setHide(true);
+      const img = new Image();
+      img.src = dataUrl;
+      img.onload = () => setImg(img);
       setHide(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
-  }, [setCardImageUrl]);
+  }, [setImg]);
 
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
@@ -53,9 +55,6 @@ export default function DecorateWithStickers({
         <span className="text-B4 text-grayscale-500">
           점선 영역이 이미지 영역이에요!
         </span>
-        {/* <button className={styles.button} onClick={onClickSelectFrame}>
-          프레임 선택
-        </button> */}
         <button className={styles.button} onClick={handleCaptureImage}>
           스티커 꾸미기
         </button>
@@ -100,7 +99,8 @@ export default function DecorateWithStickers({
           </div>
         </div>
       ) : null}
-      {cardImageUrl ? <Decorate /> : null}
+      {img ? <Decorate /> : null}
+      {/* <Decorate /> */}
       <DecoStickerBottomSheet
         open={decoModalOpen}
         onClose={() => setDecoModalOpen(false)}
