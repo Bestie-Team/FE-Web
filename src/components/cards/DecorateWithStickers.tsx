@@ -17,6 +17,7 @@ import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
 import Button from "../shared/buttons/Button";
 import downloadURI from "@/utils/downloadURI";
+import cropAndResizeImage from "@/utils/cropAndResizeImage";
 
 export default function DecorateWithStickers({
   onNext,
@@ -26,6 +27,8 @@ export default function DecorateWithStickers({
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
     cardDecorateModalStateAtom
   );
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const imageRef = React.useRef<HTMLImageElement | null>(null);
   const selectedFrame = useRecoilValue(cardFrameAtom);
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
   const stageRef = React.useRef<HTMLDivElement | null>(null);
@@ -54,7 +57,9 @@ export default function DecorateWithStickers({
 
   const handleCaptureImage = useCallback(async () => {
     if (ref.current === null || !fabricCanvasRef.current) return;
-
+    if (imageRef.current) {
+      console.log("resize");
+    }
     try {
       const canvas = await html2canvas(ref.current, {
         scale: 3, // 고해상도
@@ -131,7 +136,23 @@ export default function DecorateWithStickers({
       downloadURI(uri, "card.png");
     }
   };
-  console.log(hide);
+
+  useEffect(() => {
+    const applyCrop = async () => {
+      try {
+        const croppedImageUrl = await cropAndResizeImage(
+          selectedGathering.invitation_img_url as string,
+          230, // 원하는 너비
+          250 // 원하는 높이
+        );
+        setCroppedImage(croppedImageUrl);
+      } catch (err) {
+        console.error("이미지 자르기 실패:", err);
+      }
+    };
+
+    applyCrop();
+  }, [selectedGathering.invitation_img_url]);
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
       <Flex justify="space-between" className="px-[20px] w-full" align="center">
@@ -166,15 +187,27 @@ export default function DecorateWithStickers({
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
-                <img
+                {/* <img
+                  ref={imageRef}
                   style={{
                     objectFit: "cover",
+                    clipPath: "inset(0)",
                     height: 270,
                     width: 230,
                   }}
                   alt="card_img"
                   src={selectedGathering.invitation_img_url as string}
-                />
+                /> */}
+                {croppedImage ? (
+                  <img
+                    src={croppedImage}
+                    alt="Cropped Image"
+                    width={230}
+                    height={250}
+                  />
+                ) : (
+                  <p>이미지를 불러오는 중...</p>
+                )}
               </div>
               <Flex direction="column" className="px-[20px] py-[15px]">
                 <span className={styles.textWrapper}>
