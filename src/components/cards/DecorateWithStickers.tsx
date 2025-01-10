@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { toPng } from "html-to-image";
+import html2canvas from "html2canvas";
 import Spacing from "../shared/Spacing";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -56,7 +56,13 @@ export default function DecorateWithStickers({
     if (ref.current === null || !fabricCanvasRef.current) return;
 
     try {
-      const dataUrl = await toPng(ref.current);
+      const canvas = await html2canvas(ref.current, {
+        scale: 3, // 고해상도
+        useCORS: true, // 외부 리소스 허용
+        backgroundColor: null, // 투명 배경 유지
+      });
+      const dataUrl = canvas.toDataURL("image/png", 1.0); // 최고 품질
+      // const dataUrl = await toPng(ref.current);
       const img = new Image();
 
       img.src = dataUrl;
@@ -137,45 +143,54 @@ export default function DecorateWithStickers({
         </button>
       </Flex>
       <Spacing size={24} />
-      <div className={clsx(styles.cardContainer)}>
-        <div
-          ref={ref}
-          id="card"
-          className="relative rounded-[20px] w-full shadow-sm"
-        >
+      {hide === false ? (
+        <div className={clsx(styles.cardContainer)}>
           <div
-            style={{
-              backgroundImage: `url('${frames[selectedFrame]}')`,
-              backgroundSize: "cover",
-            }}
-            className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
-          />
-          <div className={styles.cardWrapper}>
-            <div className={styles.imageWrapper}>
-              <div
-                style={{
-                  backgroundImage: `url('${
-                    selectedGathering.invitation_img_url as string
-                  }')`,
-                  backgroundSize: "cover",
-                }}
-                className={styles.image}
-              />
+            ref={ref}
+            id="card"
+            className="relative rounded-[20px] w-full shadow-sm"
+          >
+            {/* <div
+              style={{
+                backgroundImage: `url('${frames[selectedFrame]}')`,
+                backgroundSize: "cover",
+              }}
+              className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
+            /> */}
+            <img
+              alt="frame"
+              height={372}
+              width={282}
+              className="rounded-[20px] w-[282px] h-[372px]"
+              src={frames[selectedFrame]}
+            />
+            <div className={styles.cardWrapper}>
+              <div className={styles.imageWrapper}>
+                <img
+                  style={{
+                    objectFit: "cover",
+                    height: 270,
+                    width: 230,
+                  }}
+                  alt="card_img"
+                  src={selectedGathering.invitation_img_url as string}
+                />
+              </div>
+              <Flex direction="column" className="px-[20px] py-[15px]">
+                <span className={styles.textWrapper}>
+                  {selectedGathering.name}
+                </span>
+                <Spacing size={8} />
+                <span className="text-C5">{selectedGathering.description}</span>
+                <Spacing size={16} />
+                <span className={styles.dateWrapper}>
+                  {selectedGathering.date}
+                </span>
+              </Flex>
             </div>
-            <Flex direction="column" className="px-[20px] py-[15px]">
-              <span className={styles.textWrapper}>
-                {selectedGathering.name}
-              </span>
-              <Spacing size={8} />
-              <span className="text-C5">{selectedGathering.description}</span>
-              <Spacing size={16} />
-              <span className={styles.dateWrapper}>
-                {selectedGathering.date}
-              </span>
-            </Flex>
           </div>
         </div>
-      </div>
+      ) : null}
 
       <Flex direction="column">
         <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
@@ -226,7 +241,7 @@ const styles = {
     "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
   imageWrapper:
     "w-[230px] h-full rounded-t-[12px] bg-grayscale-50 overflow-hidden",
-  image: "object-cover w-[230px] h-[220px]",
+  image: "w-[230px] h-[220px]",
   textWrapper: "flex-grow text-T5 ",
   dateWrapper: "text-C5 text-grayscale-500",
 };
