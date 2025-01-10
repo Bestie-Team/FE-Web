@@ -15,6 +15,7 @@ import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import Decorate from "./Decorate";
 import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
+// import Image from "next/image";
 
 export default function DecorateWithStickers({
   onNext,
@@ -40,6 +41,7 @@ export default function DecorateWithStickers({
       const dataUrl = await toPng(ref.current);
       setCardImageUrl(dataUrl);
       setHide(true);
+      setHide(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
@@ -60,25 +62,26 @@ export default function DecorateWithStickers({
       </Flex>
       <Spacing size={24} />
       {hide === false ? (
-        <div id="card" className={clsx(styles.cardContainer)}>
-          <div ref={ref} className="relative rounded-[20px] w-full shadow-sm">
-            <img
-              src={frames[selectedFrame!]}
-              width={282}
-              height={372}
-              alt="card"
-              className="h-[372px] w-[282px] rounded-[20px]"
+        <div className={clsx(styles.cardContainer)}>
+          <div
+            ref={ref}
+            id="card"
+            className="relative rounded-[20px] w-full shadow-sm"
+          >
+            <div
+              style={{
+                backgroundImage: `url('${frames[selectedFrame!]}')`,
+                backgroundSize: "cover",
+              }}
+              className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
-                <img
-                  src={selectedGathering.invitation_img_url as string}
-                  width={230}
-                  height={230}
+                <div
                   style={{
-                    flexGrow: 1,
+                    backgroundImage: `url('${selectedGathering.invitation_img_url}')`,
+                    backgroundSize: "cover",
                   }}
-                  alt="img"
                   className={styles.image}
                 />
               </div>
@@ -123,7 +126,7 @@ const styles = {
     "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
   imageWrapper:
     "w-[230px] h-full rounded-t-[12px] bg-grayscale-50 overflow-hidden",
-  image: "object-cover w-full h-full",
+  image: "object-cover w-[230px] h-[220px]",
   textWrapper: "flex-grow text-T5 ",
   dateWrapper: "text-C5 text-grayscale-500",
 };

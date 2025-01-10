@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Image, Layer, Stage } from "react-konva";
 import Sticker from "../shared/Sticker";
 import useImage from "use-image";
@@ -14,11 +14,11 @@ interface DecoratingSectionProps {
 export default function DecoratingSection({
   stageRef,
 }: DecoratingSectionProps) {
+  const layerRef = useRef(null);
   const cardImageUrl = useRecoilValue(cardImageUrlAtom);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
-  const [cardImage, status] = useImage(cardImageUrl);
-
+  const [cardImage] = useImage(cardImageUrl);
   const deselectSticker = useCallback(() => setSelectedId(null), []);
   const selectSticker = useCallback((id: number) => setSelectedId(id), []);
 
@@ -35,8 +35,6 @@ export default function DecoratingSection({
     [setStickers]
   );
 
-  if (status === "loading") return <div>Loading...</div>;
-  if (status === "failed") return <div>Error loading image</div>;
   return (
     <Stage
       width={282}
@@ -45,6 +43,7 @@ export default function DecoratingSection({
       style={{ width: "full", display: "flex", justifyContent: "center" }}
     >
       <Layer
+        ref={layerRef}
         style={{
           display: "flex",
           justifyContent: "center",
