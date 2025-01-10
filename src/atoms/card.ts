@@ -1,4 +1,4 @@
-import { Sticker } from "@/components/cards/Decorate";
+import { StickerType } from "@/components/cards/Decorate";
 import { GatheringResponse } from "@/models/gathering";
 import { atom } from "recoil";
 
@@ -22,11 +22,15 @@ export const cardFrameAtom = atom<number | null>({
   default: 0,
 });
 
-export const stickersAtom = atom<Sticker[]>({
+export const stickersAtom = atom<StickerType[]>({
   key: "card/stickers",
   default: [],
 });
 
+export const canvasAtom = atom<fabric.Canvas | null>({
+  key: "canvasAtom",
+  default: null,
+});
 export const selectedGatheringIdAtom = atom<string | null>({
   key: "card/gatheringId",
   default: null,

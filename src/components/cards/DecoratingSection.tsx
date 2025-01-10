@@ -1,11 +1,12 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, Layer, Stage } from "react-konva";
 import Sticker from "../shared/Sticker";
-import { cardImageAtom, stickersAtom } from "@/atoms/card";
+import { cardImageUrlAtom, stickersAtom } from "@/atoms/card";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Konva from "konva";
-import { Sticker as StickerType } from "./Decorate";
+import { StickerType } from "./Decorate";
+import useImage from "use-image";
 
 interface DecoratingSectionProps {
   stageRef: React.MutableRefObject<Konva.Stage | null>;
@@ -13,12 +14,10 @@ interface DecoratingSectionProps {
 export default function DecoratingSection({
   stageRef,
 }: DecoratingSectionProps) {
-  const layerRef = useRef(null);
-  const image = useRecoilValue(cardImageAtom);
-  // const cardImageUrl = useRecoilValue(cardImageUrlAtom);
+  const image = useRecoilValue(cardImageUrlAtom);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [stickers, setStickers] = useRecoilState(stickersAtom);
-  // const [cardImage] = useImage(cardImageUrl);
+  const [cardImage] = useImage(image);
 
   const deselectSticker = useCallback(() => setSelectedId(null), []);
   const selectSticker = useCallback((id: number) => setSelectedId(id), []);
@@ -49,7 +48,7 @@ export default function DecoratingSection({
         overflow: "hidden",
       }}
     >
-      <Layer ref={layerRef}>
+      <Layer>
         <Image
           onMouseDown={deselectSticker}
           onTouchStart={deselectSticker}
@@ -60,8 +59,7 @@ export default function DecoratingSection({
           width={282}
           height={372}
           id="frame"
-          // image={cardImage}
-          image={image!}
+          image={cardImage}
           x={0}
           y={0}
         />

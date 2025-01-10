@@ -1,53 +1,128 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spacing from "../shared/Spacing";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   cardDecorateModalStateAtom,
   cardFrameAtom,
-  cardImageAtom,
+  cardImageUrlAtom,
   cardSelectedGatheringAtom,
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
-import Decorate from "./Decorate";
 import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
+import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
-// import Image from "next/image";
+import Button from "../shared/buttons/Button";
+import downloadURI from "@/utils/downloadURI";
 
 export default function DecorateWithStickers({
   onNext,
 }: {
   onNext: () => void;
 }) {
-  const selectedFrame = useRecoilValue(cardFrameAtom);
-  // const [cardImageUrl, setCardImageUrl] = useRecoilState(cardImageUrlAtom);
-  const [img, setImg] = useRecoilState(cardImageAtom);
-  const [hide, setHide] = useState<boolean>(false);
-  const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
     cardDecorateModalStateAtom
   );
-
+  const selectedFrame = useRecoilValue(cardFrameAtom);
+  const cardImgUrl = useRecoilValue(cardImageUrlAtom);
+  const stageRef = React.useRef<HTMLDivElement | null>(null);
+  const [hide, setHide] = useState<boolean>(false);
+  const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
+  // const [selectedKind, setSelectedKind] = useState("실버");
+  // const decoKinds = ["실버", "큐빅", "빈티지", "이벤트"];
+  const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
+  const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
+  useEffect(() => {
+    if (canvasElementRef.current && !fabricCanvasRef.current) {
+      fabricCanvasRef.current = new fabric.Canvas(canvasElementRef.current, {
+        width: 282,
+        height: 372,
+      });
+    }
+    return () => {
+      fabricCanvasRef.current?.dispose();
+      fabricCanvasRef.current = null;
+    };
+  }, []);
+
   const handleCaptureImage = useCallback(async () => {
-    if (ref.current === null) return;
+    if (ref.current === null || !fabricCanvasRef.current) return;
 
     try {
       const dataUrl = await toPng(ref.current);
       const img = new Image();
       img.src = dataUrl;
-      img.onload = () => setImg(img);
+      img.onload = () => {
+        const canvas = fabricCanvasRef.current;
+        if (canvas) {
+          const bgImage = new fabric.Image(img, {
+            originX: "left",
+            originY: "top",
+          });
+
+          const canvasAspectRatio = canvas.width! / canvas.height!;
+          const imageAspectRatio = img.width / img.height;
+
+          if (imageAspectRatio > canvasAspectRatio) {
+            bgImage.scaleToWidth(canvas.width!);
+          } else {
+            bgImage.scaleToHeight(canvas.height!);
+          }
+
+          canvas.backgroundImage = bgImage;
+          canvas.renderAll();
+        }
+        // setImg(img);
+      };
       setHide(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
-  }, [setImg]);
+  }, []);
+
+  const handleAddSticker = async (sticker: string) => {
+    console.log("handleAddSticker called with sticker:", sticker);
+    if (fabricCanvasRef.current) {
+      const canvas = fabricCanvasRef.current;
+      try {
+        const stickerObj = await fabric.Image.fromURL(
+          `/deco_stickers/${sticker}`,
+          {
+            crossOrigin: "anonymous",
+          }
+        );
+        stickerObj.set({
+          scaleX: 0.25,
+          scaleY: 0.25,
+        });
+
+        canvas.add(stickerObj);
+        canvas.renderAll();
+      } catch (error) {
+        console.error("Error adding sticker:", error);
+      }
+    } else {
+      console.error("Canvas reference is not initialized.");
+    }
+  };
+
+  const handleExport = () => {
+    if (!stageRef.current) return;
+    if (fabricCanvasRef.current) {
+      const uri = fabricCanvasRef.current.toDataURL({
+        format: "png",
+        multiplier: 2,
+      });
+      downloadURI(uri, "card.png");
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
@@ -99,12 +174,33 @@ export default function DecorateWithStickers({
           </div>
         </div>
       ) : null}
-      {img ? <Decorate /> : null}
-      {/* <Decorate /> */}
-      <DecoStickerBottomSheet
-        open={decoModalOpen}
-        onClose={() => setDecoModalOpen(false)}
-      />
+      <Flex direction="column">
+        <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
+          <canvas
+            ref={canvasElementRef}
+            id="canvas"
+            style={{
+              width: "282px",
+              height: "372px",
+              backgroundImage: `url(${cardImgUrl})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
+          />
+        </div>
+        <Button className={styles.saveButton} onClick={handleExport}>
+          사진 저장하기
+        </Button>
+      </Flex>
+
+      {/* {cardImgUrl ? <Decorate /> : null} */}
+      {decoModalOpen ? (
+        <DecoStickerBottomSheet
+          handleSticker={handleAddSticker}
+          open={decoModalOpen}
+          onClose={() => setDecoModalOpen(false)}
+        />
+      ) : null}
       {<SheetOpenBtnContainer tooltip />}
       <FixedBottomButton
         bgColor="bg-grayscale-50"
@@ -120,6 +216,8 @@ export default function DecorateWithStickers({
 const styles = {
   button:
     "py-[10px] px-[12px] text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
+  saveButton:
+    "w-[120px] px-[12px] py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
   cardContainer:
     "relative px-[33px] py-[40px] flex bg-base-white rounded-[20px] justify-center items-center border border-[#AEAEAE] border-dotted w-[350px] h-[453px]",
   cardWrapper:

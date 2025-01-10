@@ -14,7 +14,7 @@ const DecoratingSection = dynamic(
   }
 );
 
-export interface Sticker {
+export interface StickerType {
   id: number;
   src: string;
   x: number;
