@@ -59,9 +59,7 @@ export default function DecorateWithStickers({
       const dataUrl = await toPng(ref.current);
       const img = new Image();
 
-      const timestamp = new Date().getTime();
-      img.src = `${dataUrl}?timestamp=${timestamp}`;
-
+      img.src = dataUrl;
       img.onload = async () => {
         const canvas = fabricCanvasRef.current;
         if (canvas) {
@@ -128,6 +126,13 @@ export default function DecorateWithStickers({
     }
   };
 
+  const addCacheBuster = (url: string) => {
+    const timestamp = new Date().getTime();
+    // URL에 이미 쿼리 파라미터가 있는지 확인
+    const separator = url.includes("?") ? "&" : "?";
+    return `${url}${separator}t=${timestamp}`;
+  };
+
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
       <Flex justify="space-between" className="px-[20px] w-full" align="center">
@@ -148,7 +153,9 @@ export default function DecorateWithStickers({
           >
             <div
               style={{
-                backgroundImage: `url('${frames[selectedFrame!]}')`,
+                backgroundImage: `url('${addCacheBuster(
+                  frames[selectedFrame!]
+                )}')`,
                 backgroundSize: "cover",
               }}
               className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
@@ -157,7 +164,9 @@ export default function DecorateWithStickers({
               <div className={styles.imageWrapper}>
                 <div
                   style={{
-                    backgroundImage: `url('${selectedGathering.invitation_img_url}')`,
+                    backgroundImage: `url('${addCacheBuster(
+                      selectedGathering.invitation_img_url as string
+                    )}')`,
                     backgroundSize: "cover",
                   }}
                   className={styles.image}
