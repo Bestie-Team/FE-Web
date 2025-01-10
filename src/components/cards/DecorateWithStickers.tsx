@@ -59,12 +59,13 @@ export default function DecorateWithStickers({
       const dataUrl = await toPng(ref.current);
       const img = new Image();
       img.src = dataUrl;
-      img.onload = () => {
+      img.onload = async () => {
         const canvas = fabricCanvasRef.current;
         if (canvas) {
           const bgImage = new fabric.Image(img, {
             originX: "left",
             originY: "top",
+            crossOrigin: "anonymous",
           });
 
           const canvasAspectRatio = canvas.width! / canvas.height!;
