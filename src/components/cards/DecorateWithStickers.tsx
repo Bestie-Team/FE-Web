@@ -36,7 +36,8 @@ export default function DecorateWithStickers({
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-
+  const [cardImgUrlWithCache, setCardImgUrlWithCache] = useState("");
+  const [frameImgUrlWithCache, setFrameImgUrlWithCache] = useState("");
   const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
 
   useEffect(() => {
@@ -88,6 +89,17 @@ export default function DecorateWithStickers({
       console.error("이미지 캡처 오류:", err);
     }
   }, []);
+  const updateImageUrls = useCallback(() => {
+    // 선택한 이미지들의 캐시 버스터 URL로 갱신
+    setCardImgUrlWithCache(
+      addCacheBuster(selectedGathering.invitation_img_url as string)
+    );
+    setFrameImgUrlWithCache(addCacheBuster(frames[selectedFrame!]));
+  }, [selectedGathering.invitation_img_url, selectedFrame]);
+
+  useEffect(() => {
+    updateImageUrls();
+  }, [updateImageUrls, selectedFrame]);
 
   const handleAddSticker = async (sticker: string) => {
     console.log("handleAddSticker called with sticker:", sticker);
@@ -125,10 +137,8 @@ export default function DecorateWithStickers({
       downloadURI(uri, "card.png");
     }
   };
-
   const addCacheBuster = (url: string) => {
     const timestamp = new Date().getTime();
-    // URL에 이미 쿼리 파라미터가 있는지 확인
     const separator = url.includes("?") ? "&" : "?";
     return `${url}${separator}t=${timestamp}`;
   };
@@ -153,9 +163,7 @@ export default function DecorateWithStickers({
           >
             <div
               style={{
-                backgroundImage: `url('${addCacheBuster(
-                  frames[selectedFrame!]
-                )}')`,
+                backgroundImage: `url('${frameImgUrlWithCache}')`,
                 backgroundSize: "cover",
               }}
               className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
@@ -164,9 +172,7 @@ export default function DecorateWithStickers({
               <div className={styles.imageWrapper}>
                 <div
                   style={{
-                    backgroundImage: `url('${addCacheBuster(
-                      selectedGathering.invitation_img_url as string
-                    )}')`,
+                    backgroundImage: `url('${cardImgUrlWithCache}')`,
                     backgroundSize: "cover",
                   }}
                   className={styles.image}
