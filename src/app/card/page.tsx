@@ -23,7 +23,3 @@ export default function Page() {
     </div>
   );
 }
-
-const styles = {
-  header: "",
-};

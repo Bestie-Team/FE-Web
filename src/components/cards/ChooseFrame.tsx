@@ -3,7 +3,6 @@ import { cardFrameAtom } from "@/atoms/card";
 import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import HeaderReturner from "@/utils/getHeader";
 import { useRecoilValue } from "recoil";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 
@@ -30,6 +29,3 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
     </Flex>
   );
 }
-const styles = {
-  header: "max-w-[430px] fixed z-10 w-full",
-};
