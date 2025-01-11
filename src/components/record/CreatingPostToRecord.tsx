@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { TogetherInfo } from "../feed/InfoBar";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import EditPhotoSwiper from "./UploadPhotoSwiper";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
-import HeaderReturner from "@/utils/getHeader";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import { GATHERINGS_PASSED } from "@/constants/gathering";
 import { useRecoilValue } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
 import { GatheringResponse } from "@/models/gathering";
+import { usePathname } from "next/navigation";
+import getHeader from "@/utils/getHeader";
 
 export default function CreatingPostToRecord({
   onNext,
@@ -20,62 +21,16 @@ export default function CreatingPostToRecord({
     recordContent: string;
   }) => void;
 }) {
-  const hasShadow = useScrollShadow();
+  const pathname = usePathname();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const header = getHeader(pathname);
+  const hasShadow = useScrollShadow(containerRef);
   const [postInfo, setPostInfo] = useState<{
     imageUrl: string[];
     recordContent: string;
   }>({ imageUrl: [], recordContent: "" });
   const selectedGatheringId = useRecoilValue(recordGatheringAtom);
-  // const options = [
-  //   {
-  //     value: "최은재",
-  //     label: (
-  //       <Flex align="center">
-  //         <Image
-  //           alt="img"
-  //           width={24}
-  //           height={24}
-  //           className="border-[0.86px] border-base-white rounded-full"
-  //           src="https://cdn.lighty.today/anton.PNG"
-  //         />
-  //         <Spacing direction="horizontal" size={2} />
-  //         <span className="text-C2 text-grayscale-600">최은재</span>
-  //       </Flex>
-  //     ),
-  //   },
-  //   {
-  //     value: "정서인",
-  //     label: (
-  //       <Flex align="center">
-  //         <Image
-  //           alt="img"
-  //           width={24}
-  //           height={24}
-  //           className="border-[0.86px] border-base-white rounded-full"
-  //           src="https://cdn.lighty.today/anton.PNG"
-  //         />
-  //         <Spacing direction="horizontal" size={2} />
-  //         <span className="text-C2 text-grayscale-600">정서인</span>
-  //       </Flex>
-  //     ),
-  //   },
-  //   {
-  //     value: "임유진",
-  //     label: (
-  //       <Flex align="center">
-  //         <Image
-  //           alt="img"
-  //           width={24}
-  //           height={24}
-  //           className="border-[0.86px] border-base-white rounded-full"
-  //           src="https://cdn.lighty.today/anton.PNG"
-  //         />
-  //         <Spacing direction="horizontal" size={2} />
-  //         <span className="text-C2 text-grayscale-600">임유진</span>
-  //       </Flex>
-  //     ),
-  //   },
-  // ];
+
   if (selectedGatheringId == null) return null;
   const gathering = GATHERINGS_PASSED.find(
     (g) => g.id === selectedGatheringId
@@ -84,19 +39,11 @@ export default function CreatingPostToRecord({
   const { description, name, group } = gathering;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <div
         className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
       >
-        {HeaderReturner()}
-        {/* <div className={styles.selectWrapper}>
-          <SmallSelect
-            options={options}
-            selected={null}
-            setSelected={null}
-            placeholder="1명 작성 완료"
-          />
-        </div> */}
+        {header}
       </div>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
         <Flex>

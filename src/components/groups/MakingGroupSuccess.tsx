@@ -1,16 +1,19 @@
 "use client";
-import HeaderReturner from "@/utils/getHeader";
+import { usePathname } from "next/navigation";
 import Flex from "../shared/Flex";
 import CheckInCircleIcon from "../shared/icons/CheckInCircleIcon";
 import Spacing from "../shared/Spacing";
 import GroupContainer from "./GroupContainer";
 import { GROUPS } from "@/constants/groups";
+import getHeader from "@/utils/getHeader";
 
 export default function MakingGroupSuccess() {
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const group = GROUPS[0];
   return (
-    <Flex direction="column" className="bg-base-white h-full">
-      <HeaderReturner />
+    <div className="flex flex-col bg-base-white h-full">
+      {header}
       <Flex direction="column" className="h-screen pt-[106px]" align="center">
         <CheckInCircleIcon />
         <Spacing size={17} />
@@ -20,6 +23,6 @@ export default function MakingGroupSuccess() {
         <Spacing size={48} />
         <GroupContainer className="shadow-sm" group={group} />
       </Flex>
-    </Flex>
+    </div>
   );
 }
