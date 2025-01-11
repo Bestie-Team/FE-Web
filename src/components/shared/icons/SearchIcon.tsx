@@ -2,10 +2,12 @@ export default function SearchIcon({
   width,
   height,
   className,
+  color,
 }: {
   width?: string;
   height?: string;
   className?: string;
+  color?: string;
 }) {
   return (
     <svg
@@ -21,7 +23,7 @@ export default function SearchIcon({
           <path
             id="Vector"
             d="M11 18C14.866 18 18 14.866 18 11C18 7.13401 14.866 4 11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18Z"
-            stroke="#0A0A0A"
+            stroke={color ?? "#0A0A0A"}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -29,7 +31,7 @@ export default function SearchIcon({
           <path
             id="Vector_2"
             d="M20 20L16 16"
-            stroke="#0A0A0A"
+            stroke={color ?? "#0A0A0A"}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

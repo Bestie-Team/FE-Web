@@ -36,7 +36,7 @@ const styles = {
 
   descWrapper: "flex-grow cursor-pointer items-center",
   button:
-    "bg-grayscale-900 w-[40px] h-[40px] p-[11px] rounded-full cursor-default",
+    "bg-grayscale-900 w-[40px] h-[40px] flex justify-center items-center rounded-full cursor-default",
 
   subTitle: "text-C2 text-grayscale-400",
 };

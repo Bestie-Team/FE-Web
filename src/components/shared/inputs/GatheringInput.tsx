@@ -7,6 +7,11 @@ import BottomSheetWrapper from "../bottomSheet/shared/BottomSheetWrapper";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { SetterOrUpdater } from "recoil";
 import { GatheringInfo } from "@/models/gathering";
+import ActionItem from "../bottomSheet/ActionItem";
+import SearchIcon from "../icons/SearchIcon";
+import PencilIcon from "../icons/PencilIcon";
+import Button from "../buttons/Button";
+import Input from "./Input";
 
 interface GatheringInputProps {
   type: "date" | "address";
@@ -28,7 +33,8 @@ export default function GatheringInput({
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
-  const [addressSearchOpen, setAddressSearchOpen] = useState<boolean>(false);
+  const [writtenAddress, setWrittenAddress] = useState("");
+  const [addressSearch, setAddressSearch] = useState<number>(0);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleComplete = (data: any) => {
@@ -48,7 +54,7 @@ export default function GatheringInput({
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
     setValue((prev) => ({ ...prev, address: fullAddress }));
-    setAddressSearchOpen(false);
+    setAddressSearch(0);
   };
 
   return (
@@ -64,7 +70,7 @@ export default function GatheringInput({
       <div
         onMouseDown={() => {
           if (type === "address") {
-            setAddressSearchOpen(true);
+            setAddressSearch(1);
           }
           if (onClick) {
             onClick();
@@ -75,7 +81,7 @@ export default function GatheringInput({
         onBlur={handleBlur}
         {...props}
         className={clsx(
-          inputWrapperStyle,
+          styles.inputWrapper,
           isFocused
             ? "border-grayscale-700"
             : "border-grayscale-10 whitespace-pre-wrap"
@@ -83,20 +89,71 @@ export default function GatheringInput({
       >
         {value}
       </div>
-      {addressSearchOpen && (
+      {addressSearch > 0 && (
         <BottomSheetWrapper
           onClose={() => {
-            setAddressSearchOpen(false);
+            setAddressSearch(0);
           }}
         >
-          <DaumPostcodeEmbed
-            onComplete={handleComplete}
-            className="px-[24px]"
-          />
+          {addressSearch === 1 ? (
+            <Flex direction="column" className={styles.bottomSheetContainer}>
+              <span className="text-T3">모임 장소</span>
+              <ActionItem
+                onClick={() => {
+                  setAddressSearch(2);
+                }}
+                title="장소 검색하기"
+                subTitle="모임 장소를 검색해서 선택할 수 있어요."
+                icon={<SearchIcon width="20" height="20" color={"white"} />}
+              />
+              <ActionItem
+                onClick={() => {
+                  setAddressSearch(3);
+                }}
+                title="장소 직접 입력하기"
+                subTitle="모임 장소를 직접 입력할 수 있어요."
+                icon={<PencilIcon color={"white"} />}
+              />
+            </Flex>
+          ) : addressSearch === 2 ? (
+            <DaumPostcodeEmbed
+              onComplete={handleComplete}
+              className="px-[24px]"
+            />
+          ) : (
+            <Flex direction="column" className={styles.bottomSheetContainer}>
+              <Flex justify="space-between">
+                <span className="text-T3">주소 입력하기</span>
+                <Button
+                  className={styles.button}
+                  onClick={() => {
+                    if (setValue)
+                      setValue((prev) => ({
+                        ...prev,
+                        address: writtenAddress,
+                      }));
+                    setAddressSearch(0);
+                  }}
+                >
+                  입력 완료
+                </Button>
+              </Flex>
+              <Input
+                placeholder="모임 장소를 입력해주세요."
+                value={writtenAddress}
+                onChange={(e) => setWrittenAddress(e.target.value)}
+              />
+            </Flex>
+          )}
         </BottomSheetWrapper>
       )}
     </Flex>
   );
 }
 
-const inputWrapperStyle = `w-full text-B3 text-center min-h-[103px] px-[20px] py-[20px] rounded-[20px] cursor-pointer flex flex-col items-center justify-center outline-none text-[14px] focus:outline-none bg-grayscale-10 border transition-all duration-300`;
+const styles = {
+  inputWrapper: `w-full text-B3 text-center min-h-[103px] px-[20px] py-[20px] rounded-[20px] cursor-pointer flex flex-col items-center justify-center outline-none text-[14px] focus:outline-none bg-grayscale-10 border transition-all duration-300`,
+  button:
+    "py-[10px] px-[12px] bg-grayscale-900 rounded-[10px] text-base-white text-C2",
+  bottomSheetContainer: "p-[24px] pt-[4px] gap-[20px]",
+};

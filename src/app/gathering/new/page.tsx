@@ -123,13 +123,7 @@ export default function NewGatheringPage() {
           />
           <GatheringInput
             type="address"
-            value={
-              gatheringInfo.address ? (
-                <span>{gatheringInfo.address}</span>
-              ) : (
-                "선택하기"
-              )
-            }
+            value={gatheringInfo.address ? gatheringInfo.address : "선택하기"}
             setValue={setGatheringInfo}
             label={
               <>
