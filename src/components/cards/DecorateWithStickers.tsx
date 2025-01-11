@@ -231,7 +231,6 @@ export default function DecorateWithStickers({
           사진 저장하기
         </Button>
       </Flex>
-      {/* {cardImgUrl ? <Decorate /> : null} */}
       {decoModalOpen ? (
         <DecoStickerBottomSheet
           handleSticker={handleAddSticker}
