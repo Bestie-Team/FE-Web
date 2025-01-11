@@ -44,7 +44,14 @@ const NextLayout = ({ children }: Props) => {
         }}
       >
         <>{children}</>
-        {pathname.startsWith("/card") ? null : <NavBar />}
+        {pathname === "/home" ||
+        pathname === "/" ||
+        pathname === "/gathering" ||
+        pathname === "/feed" ||
+        pathname === "/schedule" ||
+        pathname === "/my" ? (
+          <NavBar />
+        ) : null}
       </div>
     );
   }

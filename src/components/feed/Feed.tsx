@@ -5,7 +5,7 @@ import Flex from "@/components/shared/Flex";
 export default function MyFeed({ which }: { which: string }) {
   const items = [1, 2, 3];
   return (
-    <div className="pt-[155px] pb-[111px] animate-fadeIn">
+    <div className="pt-[107px] pb-[111px] animate-fadeIn">
       {items.length > 0 ? (
         <Flex direction="column">
           <MemoryCard images={which === "1" ? allFeed : myFeed} />

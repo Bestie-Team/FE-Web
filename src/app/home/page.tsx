@@ -12,11 +12,14 @@ import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/icons/ArrowRightIcon";
 import Spacing from "@/components/shared/Spacing";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
-import HeaderReturner from "@/utils/headerReturner";
+import getHeader from "@/utils/getHeader";
+import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
 
 export default function HomePage() {
   useChangeHeaderStyle();
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
 
   return (
@@ -24,7 +27,7 @@ export default function HomePage() {
       id="scrollable-container"
       className="bg-base-white overflow-y-scroll no-scrollbar"
     >
-      {HeaderReturner()}
+      {header}
       <HomeBannerContainer />
       <FriendsSlider />
       <Spacing size={40} />

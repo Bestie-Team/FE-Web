@@ -4,14 +4,17 @@ import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
-import HeaderReturner from "@/utils/headerReturner";
+import getHeader from "@/utils/getHeader";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function EditPage() {
   const [changed, setChanged] = useState(false);
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   return (
     <div className="h-screen bg-base-white">
-      {HeaderReturner()}
+      {header}
       <Flex direction="column" className="px-[20px]">
         <Spacing size={58} />
         <Flex justify="center" className="py-[12px] ">

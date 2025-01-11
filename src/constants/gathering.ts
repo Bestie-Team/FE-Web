@@ -240,7 +240,7 @@ export const GATHERINGS_PASSED = [
     ampm: "오전",
     time: "10시",
     address: "서초",
-    invitation_img_url: "/bag.jpeg",
+    invitation_img_url: "https://cdn.lighty.today/binanton_jp.jpeg",
   },
   {
     id: "0",
@@ -287,7 +287,7 @@ export const GATHERINGS_PASSED = [
     ampm: "오후",
     time: "6시",
     address: "성수",
-    invitation_img_url: "/brown.jpeg",
+    invitation_img_url: "https://cdn.lighty.today/groom.JPG",
   },
 ] as GatheringResponse[];
 

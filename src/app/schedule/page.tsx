@@ -6,24 +6,28 @@ import { OptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
-import HeaderReturner from "@/utils/headerReturner";
+import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useRef, useState } from "react";
 
 export default function SchedulePage() {
-  const hasShadow = useScrollShadow();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const header = getHeader(pathname);
+  const hasShadow = useScrollShadow(containerRef);
   const [year, setYear] = useState<OptionType | null>({
     value: "2025",
     label: "2025",
   });
 
   return (
-    <Flex
-      direction="column"
-      className="bg-base-white h-screen overflow-y-scroll no-scrollbar"
+    <div
+      ref={containerRef}
+      className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
     >
+      {header}
       <div className={clsx(styles.header, hasShadow ? "shadow-bottom" : "")}>
-        {HeaderReturner()}
         <LightySelect
           borderColor="#E9E9E9"
           placeholder="년도"
@@ -38,14 +42,13 @@ export default function SchedulePage() {
         <Spacing size={28} />
         <UpcomingSchedule />
       </Flex>
-    </Flex>
+    </div>
   );
 }
 
 const styles = {
-  header: "max-w-[430px] pt-[8px] fixed z-10 w-full pl-[17px] bg-base-white",
-
-  container: "items-center mt-[120px] px-[20px] overflow-x-scroll no-scrollbar",
+  header: "max-w-[430px] fixed z-10 w-full pl-[20px] bg-base-white",
+  container: "items-center mt-[60px] px-[20px] overflow-x-scroll no-scrollbar",
 };
 
 const options = [

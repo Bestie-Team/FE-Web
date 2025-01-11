@@ -5,15 +5,20 @@ import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";
 import { recordModalStateAtom } from "@/atoms/record";
-import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TabButton from "@/components/shared/tab/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+import { usePathname } from "next/navigation";
+import getHeader from "@/utils/getHeader";
+import { useRef } from "react";
 
 export default function FeedPage() {
-  const hasShadow = useScrollShadow();
+  const pathname = usePathname();
+  const header = getHeader(pathname);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasShadow = useScrollShadow(containerRef);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
@@ -21,11 +26,14 @@ export default function FeedPage() {
     useRecoilState(recordModalStateAtom);
 
   return (
-    <div className="relative overflow-y-scroll no-scrollbar">
+    <div
+      ref={containerRef}
+      className="overflow-y-scroll no-scrollbar pt-[48px]"
+    >
+      {header}
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
-        {HeaderReturner()}
         <div className="px-[20px]">
           <div
             style={{

@@ -16,13 +16,17 @@ import { recordModalStateAtom } from "@/atoms/record";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useRef } from "react";
-import HeaderReturner from "@/utils/headerReturner";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+import { usePathname } from "next/navigation";
+import getHeader from "@/utils/getHeader";
 
 export default function FeedPage() {
-  const hasShadow = useScrollShadow();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const header = getHeader(pathname);
+  const hasShadow = useScrollShadow(containerRef);
   const swiperRef = useRef<SwiperType | null>(null);
   const [selectedTab, setSelectedTab] = useRecoilState(feedSelectedTabAtom);
   const setAnimateTab = useSetRecoilState(feedAnimationStatusAtom);
@@ -53,11 +57,14 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="relative overflow-y-scroll no-scrollbar">
+    <div
+      ref={containerRef}
+      className="relative overflow-y-scroll no-scrollbar pt-[48px]"
+    >
+      {header}
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
-        {HeaderReturner()}
         <TabBar
           atom={feedSelectedTabAtom}
           long="medium"
@@ -67,7 +74,6 @@ export default function FeedPage() {
         />
         <FilterBar />
       </div>
-
       <Swiper
         initialSlide={Number(selectedTab) - 1}
         onSwiper={(swiper) => {

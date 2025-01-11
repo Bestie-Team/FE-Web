@@ -5,21 +5,19 @@ import {
 } from "@/components/shared/Header";
 import SettingIcon from "@/components/shared/icons/SettingIcon";
 import ShareIcon from "@/components/shared/icons/ShareIcon";
-import { usePathname } from "next/navigation";
 import React from "react";
 import handleShare from "./handleShare";
 
-export default function HeaderReturner() {
-  const pathname = usePathname();
+export default function getHeader(pathname: string) {
   const headerConfig: {
     [key: string]: React.ReactNode | null;
   } = {
     "/signin": null,
     "/home": <BackgroundReversibleHeader />,
     "/invitation": <HeaderWithBackBtn pageName="초대장" color="white" />,
-    "/new": <HeaderWithBackBtn pageName="프로필 생성" />,
-    "/feed": <Header pageName="추억 피드" />,
-    "/hidden": <HeaderWithBackBtn pageName="피드 관리" />,
+    "/signup": <HeaderWithBackBtn pageName="프로필 생성" color="white" />,
+    "/feed": <Header pageName="추억피드" />,
+    "/hidden": <HeaderWithBackBtn pageName="피드 관리" color="white" />,
     "/record": <HeaderWithBackBtn pageName="기록하기" />,
     "/schedule": <Header pageName="모임 캘린더" />,
     "/my": pathname.endsWith("edit") ? (
@@ -46,13 +44,8 @@ export default function HeaderReturner() {
       pathname.endsWith("new") || pathname.endsWith("done") ? (
         <HeaderWithBackBtn pageName="그룹 생성" />
       ) : (
-        <HeaderWithBackBtn pageName="나의 그룹" />
+        <HeaderWithBackBtn pageName="나의 그룹" color="#f4f4f4" />
       ),
-    "/card": pathname.endsWith("frame") ? (
-      <HeaderWithBackBtn pageName="프레임 선택" color="transparent" />
-    ) : (
-      <HeaderWithBackBtn pageName="카드 꾸미기" color="transparent" />
-    ),
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>

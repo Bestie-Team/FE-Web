@@ -10,16 +10,19 @@ import UserIcon from "@/components/shared/icons/UserIcon";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
 import { GroupInfo } from "@/models/group";
-import HeaderReturner from "@/utils/headerReturner";
+import getHeader from "@/utils/getHeader";
+import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
 
 export default function NewGroupPage() {
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const [newGroup, setNewGroup] = useRecoilState<GroupInfo>(newGroupAtom);
 
   return (
     <div className="h-screen bg-base-white">
-      <div>{HeaderReturner()}</div>
-      <form className="flex flex-col px-[20px]">
+      {header}
+      <form className="flex flex-col px-[20px] pt-[48px]">
         <Spacing size={24} />
         <AddGroupPhoto image={newGroup.groupImageUrl} setImage={setNewGroup} />
         <Spacing size={36} />

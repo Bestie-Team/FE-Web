@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function useScrollShadow() {
+function useScrollShadow(elementRef: React.RefObject<HTMLElement>) {
   const [hasShadow, setHasShadow] = useState(false);
 
   useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
     let lastKnownScrollY = 0;
     let ticking = false;
 
     const handleScroll = () => {
-      lastKnownScrollY = window.scrollY;
+      lastKnownScrollY = element.scrollTop;
 
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -19,14 +22,13 @@ function useScrollShadow() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-
+    element.addEventListener("scroll", handleScroll);
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      element.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [elementRef]);
 
   return hasShadow;
 }

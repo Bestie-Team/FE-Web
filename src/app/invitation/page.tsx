@@ -15,9 +15,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import InvitationModal from "@/components/invitation/InvitationModal";
-import HeaderReturner from "@/utils/headerReturner";
+import { usePathname } from "next/navigation";
+import getHeader from "@/utils/getHeader";
+import clsx from "clsx";
+import useScrollShadow from "@/hooks/useScrollShadow";
 
 export default function InvitationPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasShadow = useScrollShadow(containerRef);
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const swiperRef = useRef<SwiperType | null>(null);
   const [isModalOpen, setModalOpen] = useState<boolean>();
   const setSelectedTab = useSetRecoilState(invitationSelectedTabAtom);
@@ -49,8 +56,8 @@ export default function InvitationPage() {
 
   return (
     <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar">
-      <div className={filterStyle}>
-        {HeaderReturner()}
+      <div className={clsx(filterStyle, hasShadow ? "shadow-bottom" : "")}>
+        {header}
         <div className="w-full px-[20px]">
           <TabBar
             bgColor="transparent"
@@ -83,13 +90,13 @@ export default function InvitationPage() {
         className="custom-swiper w-full"
       >
         <SwiperSlide>
-          <Flex direction="column" className="pt-[162px]">
+          <Flex direction="column" className="pt-[120px]">
             <InvitationCard onClickOpen={setModalOpen} />
             <Spacing size={24} />
           </Flex>
         </SwiperSlide>
         <SwiperSlide>
-          <Flex direction="column" className="pt-[162px]">
+          <Flex direction="column" className="pt-[120px]">
             <InvitationCard onClickOpen={setModalOpen} />
             <Spacing size={24} />
             <InvitationCard onClickOpen={setModalOpen} />

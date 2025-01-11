@@ -7,13 +7,26 @@ import SearchInput from "@/components/shared/inputs/SearchBar";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import FriendsListContainer from "@/components/friends/FriendsListContainer";
 import RequestFriendListContainer from "@/components/friends/RequestFriendListContainer";
+import clsx from "clsx";
+import { useRef } from "react";
+import useScrollShadow from "@/hooks/useScrollShadow";
 
 export default function FriendsPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasShadow = useScrollShadow(containerRef);
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
 
   return (
-    <div>
-      <div className="max-w-[430px] fixed w-full z-10">
+    <div
+      ref={containerRef}
+      className="h-screen overflow-y-scroll no-scrollbar bg-grayscale-50"
+    >
+      <div
+        className={clsx(
+          "h-screen max-w-[430px] fixed w-full z-10",
+          hasShadow ? "shadow-bottom" : ""
+        )}
+      >
         <FriendsPageHeader label="친구" addFriendIcon />
         <div className="px-[20px] bg-grayscale-50">
           <TabBar

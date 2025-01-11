@@ -8,7 +8,6 @@ import {
 import FilterBar from "@/components/shared/FilterBar";
 import TabBar from "@/components/shared/tab/TabBar";
 import useScrollShadow from "@/hooks/useScrollShadow";
-import HeaderReturner from "@/utils/headerReturner";
 import clsx from "clsx";
 import { Swiper as SwiperType } from "swiper";
 import { Suspense, useEffect, useRef } from "react";
@@ -18,16 +17,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Gathering from "@/components/gathering/Gathering";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+import { usePathname } from "next/navigation";
+import getHeader from "@/utils/getHeader";
 
 export default function MyGatheringPage() {
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const resetNewGatheringInfo = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const setAnimateTab = useSetRecoilState(gatheringAnimationStatusAtom);
   const [selectedTab, setSelectedTab] = useRecoilState(
     gatheringSelectedTabAtom
   );
-
-  const hasShadow = useScrollShadow();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasShadow = useScrollShadow(containerRef);
 
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -56,11 +59,14 @@ export default function MyGatheringPage() {
   }, [resetNewGatheringInfo]);
 
   return (
-    <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar">
+    <div
+      ref={containerRef}
+      className="bg-base-white h-screen overflow-y-scroll no-scrollbar"
+    >
+      {header}
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
-        {HeaderReturner()}
         <TabBar
           atom={gatheringSelectedTabAtom}
           long="short"

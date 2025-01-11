@@ -62,11 +62,11 @@ export default function DecorateWithStickers({
     }
     try {
       const canvas = await html2canvas(ref.current, {
-        scale: 3, // 고해상도
-        useCORS: true, // 외부 리소스 허용
-        backgroundColor: null, // 투명 배경 유지
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null,
       });
-      const dataUrl = canvas.toDataURL("image/png", 1.0); // 최고 품질
+      const dataUrl = canvas.toDataURL("image/png", 1.0);
       // const dataUrl = await toPng(ref.current);
       const img = new Image();
 
@@ -171,13 +171,6 @@ export default function DecorateWithStickers({
             id="card"
             className="relative rounded-[20px] w-full shadow-sm"
           >
-            {/* <div
-              style={{
-                backgroundImage: `url('${frames[selectedFrame]}')`,
-                backgroundSize: "cover",
-              }}
-              className={clsx(`h-[372px] w-[282px] rounded-[20px]`)}
-            /> */}
             <img
               alt="frame"
               height={372}
@@ -187,17 +180,6 @@ export default function DecorateWithStickers({
             />
             <div className={styles.cardWrapper}>
               <div className={styles.imageWrapper}>
-                {/* <img
-                  ref={imageRef}
-                  style={{
-                    objectFit: "cover",
-                    clipPath: "inset(0)",
-                    height: 270,
-                    width: 230,
-                  }}
-                  alt="card_img"
-                  src={selectedGathering.invitation_img_url as string}
-                /> */}
                 {croppedImage ? (
                   <img
                     src={croppedImage}
@@ -206,7 +188,13 @@ export default function DecorateWithStickers({
                     height={250}
                   />
                 ) : (
-                  <p>이미지를 불러오는 중...</p>
+                  <div
+                    style={{
+                      backgroundColor: "#AEAEAE",
+                      height: 250,
+                      width: 230,
+                    }}
+                  />
                 )}
               </div>
               <Flex direction="column" className="px-[20px] py-[15px]">

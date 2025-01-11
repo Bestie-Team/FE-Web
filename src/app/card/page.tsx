@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
-import HeaderReturner from "@/utils/headerReturner";
 import { cardStepAtom } from "@/atoms/card";
 import { useRecoilState } from "recoil";
 import ChooseFrame from "@/components/cards/ChooseFrame";
@@ -9,13 +8,13 @@ import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
 
 export default function Page() {
   const [step, setStep] = useRecoilState<number>(cardStepAtom);
+
   const handleGatheringChange = () => {
     setStep(step + 1);
   };
 
   return (
     <div className="bg-grayscale-50">
-      <div className={styles.header}>{HeaderReturner()}</div>
       {step === 1 && (
         <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
       )}
@@ -26,5 +25,5 @@ export default function Page() {
 }
 
 const styles = {
-  header: "max-w-[430px] fixed z-10 w-full",
+  header: "",
 };

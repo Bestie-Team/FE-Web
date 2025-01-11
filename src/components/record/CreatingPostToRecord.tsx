@@ -4,7 +4,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import EditPhotoSwiper from "./UploadPhotoSwiper";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
-import HeaderReturner from "@/utils/headerReturner";
+import HeaderReturner from "@/utils/getHeader";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import { GATHERINGS_PASSED } from "@/constants/gathering";

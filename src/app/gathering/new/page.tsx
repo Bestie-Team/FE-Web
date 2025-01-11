@@ -16,19 +16,22 @@ import GatheringInput from "@/components/shared/inputs/GatheringInput";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
 import { GatheringInfo } from "@/models/gathering";
-import HeaderReturner from "@/utils/headerReturner";
+import getHeader from "@/utils/getHeader";
 import { format } from "date-fns";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 
 export default function NewGatheringPage() {
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [gatheringInfo, setGatheringInfo] =
     useRecoilState<GatheringInfo>(newGatheringInfo);
 
   return (
-    <div className="h-screen bg-base-white">
-      <div>{HeaderReturner()}</div>
+    <div className="h-screen bg-base-white pt-[48px]">
+      {header}
       <form className="flex flex-col px-[20px]">
         <Spacing size={16} />
         <Flex align="center" className="h-[50px]">

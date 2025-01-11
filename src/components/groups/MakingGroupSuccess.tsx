@@ -1,5 +1,5 @@
 "use client";
-import HeaderReturner from "@/utils/headerReturner";
+import HeaderReturner from "@/utils/getHeader";
 import Flex from "../shared/Flex";
 import CheckInCircleIcon from "../shared/icons/CheckInCircleIcon";
 import Spacing from "../shared/Spacing";

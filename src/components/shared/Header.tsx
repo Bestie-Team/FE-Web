@@ -24,9 +24,13 @@ export function Header({
 }) {
   return (
     <div
+      style={{
+        top: 0,
+        position: "fixed",
+      }}
       className={clsx(
         styles.universalHeaderWrapper,
-        "text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
+        "pl-[20px] text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
       )}
     >
       <span>{pageName}</span>
@@ -38,7 +42,7 @@ export function Header({
       {icon && (
         <>
           <Spacing size={8} />
-          <div>{icon}</div>
+          <div className="pr-[20px]">{icon}</div>
         </>
       )}
     </div>
@@ -64,7 +68,11 @@ export function HeaderWithBackBtn({
         styles.universalHeaderWrapper,
         "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-[20px]"
       )}
-      style={{ backgroundColor: color ? color : "transparent" }}
+      style={{
+        position: "fixed",
+        top: 0,
+        backgroundColor: color ? color : "transparent",
+      }}
     >
       <div
         className={styles.arrowIconContainer}
@@ -106,6 +114,8 @@ export function BackgroundReversibleHeader() {
   return (
     <div
       style={{
+        top: 0,
+        position: "fixed",
         background: bgColor,
         transition: "background-color 0.5s ease",
       }}
@@ -152,7 +162,7 @@ export function BackgroundReversibleHeader() {
 
 const styles = {
   universalHeaderWrapper:
-    "z-10 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white",
+    "z-20 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white",
   arrowIconContainer:
     "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer",
   iconWrapperStyle:

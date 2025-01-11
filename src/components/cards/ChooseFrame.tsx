@@ -3,7 +3,7 @@ import { cardFrameAtom } from "@/atoms/card";
 import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import HeaderReturner from "@/utils/headerReturner";
+import HeaderReturner from "@/utils/getHeader";
 import { useRecoilValue } from "recoil";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 
@@ -12,7 +12,6 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
   return (
     <Flex className="bg-grayscale-50 h-screen" direction="column">
-      <div className={styles.header}>{HeaderReturner()}</div>
       <Spacing size={88} />
       <Flex className="px-[24px]" direction="column">
         <span className="text-T2">프레임을 선택해 주세요</span>

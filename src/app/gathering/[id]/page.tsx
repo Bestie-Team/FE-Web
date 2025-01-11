@@ -8,18 +8,21 @@ import CalendarIcon from "@/components/shared/icons/CalendarIcon";
 import MapPinIcon from "@/components/shared/icons/MapPinIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Spacing from "@/components/shared/Spacing";
-import HeaderReturner from "@/utils/headerReturner";
 import Image from "next/image";
 import { GATHERINGS } from "@/constants/gathering";
 import { GatheringResponse } from "@/models/gathering";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
+import getHeader from "@/utils/getHeader";
+import { usePathname } from "next/navigation";
 
 export default function GatheringDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
+  const pathname = usePathname();
+  const header = getHeader(pathname);
   const gatheringId = params.id;
   const gathering = GATHERINGS.find(
     (g) => g.id === gatheringId
@@ -35,7 +38,7 @@ export default function GatheringDetailPage({
 
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-      <div className={styles.header}>{HeaderReturner()}</div>
+      {header}
       <GatheringBannerContainer gathering={gathering} />
       <GroupLeaderContainer groupLeader={group.groupLeader} />
       <Spacing size={10} color="#f4f4f4" />
