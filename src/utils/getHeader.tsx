@@ -3,7 +3,6 @@ import {
   Header,
   HeaderWithBackBtn,
 } from "@/components/shared/Header";
-import SettingIcon from "@/components/shared/icons/SettingIcon";
 import ShareIcon from "@/components/shared/icons/ShareIcon";
 import React from "react";
 import handleShare from "./handleShare";
@@ -23,7 +22,7 @@ export default function getHeader(pathname: string) {
     "/my": pathname.endsWith("edit") ? (
       <HeaderWithBackBtn pageName="프로필 편집" />
     ) : (
-      <Header pageName="My" icon={<SettingIcon />} />
+      <Header pageName="My" />
     ),
     "/gathering": pathname.endsWith("gathering") ? (
       <Header pageName="나의 모임" />

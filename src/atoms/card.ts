@@ -1,4 +1,3 @@
-import { StickerType } from "@/components/cards/Decorate";
 import { GatheringResponse } from "@/models/gathering";
 import { atom } from "recoil";
 
@@ -20,11 +19,6 @@ export const cardStepAtom = atom<number>({
 export const cardFrameAtom = atom<number>({
   key: "card/frame",
   default: 0,
-});
-
-export const stickersAtom = atom<StickerType[]>({
-  key: "card/stickers",
-  default: [],
 });
 
 export const canvasAtom = atom<fabric.Canvas | null>({

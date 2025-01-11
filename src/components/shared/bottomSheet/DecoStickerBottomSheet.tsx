@@ -5,9 +5,6 @@ import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import Image from "next/image";
 import clsx from "clsx";
 import { silver_stickers } from "@/constants/stickers";
-// import { useRecoilState, useSetRecoilState } from "recoil";
-// import { silverDecorateStickersAtom, stickersAtom } from "@/atoms/card";
-// import { StickerType } from "@/components/cards/Decorate";
 
 export default function DecoStickerBottomSheet({
   open = true,
@@ -18,10 +15,6 @@ export default function DecoStickerBottomSheet({
   handleSticker: (sticker: string) => void;
   onClose: () => void;
 }) {
-  // const setSilverStickersClicked = useSetRecoilState(
-  //   silverDecorateStickersAtom
-  // );
-  // const [stickers, setStickers] = useRecoilState<StickerType[]>(stickersAtom);
   const [selectedKind, setSelectedKind] = useState("실버");
   const decoKinds = ["실버", "큐빅", "빈티지", "이벤트"];
 

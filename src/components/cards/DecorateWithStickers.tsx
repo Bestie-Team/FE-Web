@@ -34,8 +34,6 @@ export default function DecorateWithStickers({
   const stageRef = React.useRef<HTMLDivElement | null>(null);
   const [hide, setHide] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
-  // const [selectedKind, setSelectedKind] = useState("실버");
-  // const decoKinds = ["실버", "큐빅", "빈티지", "이벤트"];
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -67,7 +65,6 @@ export default function DecorateWithStickers({
         backgroundColor: null,
       });
       const dataUrl = canvas.toDataURL("image/png", 1.0);
-      // const dataUrl = await toPng(ref.current);
       const img = new Image();
 
       img.src = dataUrl;
@@ -101,7 +98,6 @@ export default function DecorateWithStickers({
   }, []);
 
   const handleAddSticker = async (sticker: string) => {
-    console.log("handleAddSticker called with sticker:", sticker);
     if (fabricCanvasRef.current) {
       const canvas = fabricCanvasRef.current;
       try {
