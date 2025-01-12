@@ -1,24 +1,29 @@
 "use client";
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
-import AddPhoto from "./shared/AddPhoto";
+import * as lighty from "lighty-type";
+import AddPhoto, { UploadType } from "./shared/AddPhoto";
 import Input from "./shared/inputs/Input";
 import FixedBottomButton from "./shared/buttons/FixedBottomButton";
 import Spacing from "./shared/Spacing";
 import Flex from "./shared/Flex";
-import { FormValues } from "@/models/new";
 import validator from "validator";
 import { useRouter } from "next/navigation";
+import { postRegister } from "@/remote/auth";
+
+export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
 export default function UploadProfileForm() {
   const router = useRouter();
-  const [formValues, setFormValues] = useState<FormValues>({
+  const [formValues, setFormValues] = useState<UploadType>({
+    email: "",
     name: "",
-    lightyId: "",
-    image: null,
+    accountId: "",
+    profileImageUrl: null,
+    provider: "GOOGLE",
   });
 
   const handleFormValues = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "lightyId" && e.target.value.length > 40) {
+    if (e.target.name === "accountId" && e.target.value.length > 40) {
       return;
     }
     setFormValues((prevFormValues) => ({
@@ -30,11 +35,17 @@ export default function UploadProfileForm() {
   const errors = useMemo(() => validate(formValues), [formValues]);
 
   const isValidate = Object.keys(errors).length === 0;
-
+  const user_info: lighty.LoginFailResponse = JSON.parse(
+    sessionStorage.getItem("oauth_data") as string
+  );
+  console.log(user_info);
   return (
     <Flex direction="column">
       <div className="mx-auto w-[84px] py-[12px]">
-        <AddPhoto imageUrl={formValues.image} setImageUrl={setFormValues} />
+        <AddPhoto
+          imageUrl={formValues.profileImageUrl}
+          setImageUrl={setFormValues}
+        />
       </div>
       <Spacing size={16} />
       <Input
@@ -42,18 +53,18 @@ export default function UploadProfileForm() {
         label="이름"
         placeholder="이름을 입력해주세요."
         onChange={handleFormValues}
-        value={formValues.name}
+        value={user_info.name}
         helpMessage={errors.name}
       />
       <Spacing size={30} />
       <Input
-        name={"lightyId"}
+        name={"accountId"}
         label="계정 아이디"
         placeholder="영문 소문자, 숫자, 특수기호 (_)만 입력 가능"
         onChange={handleFormValues}
         displayLength={15}
-        value={formValues.lightyId}
-        helpMessage={errors.lightyId}
+        value={formValues.accountId}
+        helpMessage={errors.accountId}
       />
       <Spacing size={6} />
       <span className="text-C2 text-grayscale-500">
@@ -63,39 +74,50 @@ export default function UploadProfileForm() {
         label="라이티 시작하기"
         disabled={
           isValidate === false ||
-          formValues.image == null ||
-          formValues.lightyId.length < 5 ||
+          formValues.profileImageUrl == null ||
+          formValues.accountId.length < 5 ||
           formValues.name == null
         }
         onClick={() => {
-          router.push("/");
+          postRegister({
+            ...formValues,
+            name: user_info.name,
+            email: user_info.email,
+            provider: user_info.provider as Provider,
+          });
         }}
       />
     </Flex>
   );
 }
 
-function validate(formValues: FormValues) {
-  const errors: Partial<FormValues> = {};
+function validate(formValues: UploadType) {
+  const errors: Partial<{
+    email: string;
+    name: string;
+    accountId: string;
+    profileImageUrl: string | null;
+    provider: Provider;
+  }> = {};
 
   if (
-    !validator.isEmpty(formValues.lightyId) &&
-    !validator.isLowercase(formValues.lightyId)
+    !validator.isEmpty(formValues.accountId) &&
+    !validator.isLowercase(formValues.accountId)
   ) {
-    errors.lightyId = "소문자만 입력 가능합니다.";
+    errors.accountId = "소문자만 입력 가능합니다.";
     if (
-      !validator.isAlpha(formValues.lightyId) &&
-      /[^\w\s_]/.test(formValues.lightyId)
+      !validator.isAlpha(formValues.accountId) &&
+      /[^\w\s_]/.test(formValues.accountId)
     ) {
-      errors.lightyId = "영문을 필수로 입력해주세요";
+      errors.accountId = "영문을 필수로 입력해주세요";
     }
   }
   if (
-    (!validator.isEmpty(formValues.lightyId) &&
-      /[^\w\s_]/.test(formValues.lightyId)) ||
-    formValues.lightyId.includes(" ")
+    (!validator.isEmpty(formValues.accountId) &&
+      /[^\w\s_]/.test(formValues.accountId)) ||
+    formValues.accountId.includes(" ")
   ) {
-    errors.lightyId = "올바르지 않은 형식입니다.";
+    errors.accountId = "올바르지 않은 형식입니다.";
   }
 
   return errors;

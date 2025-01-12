@@ -6,7 +6,7 @@ import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
@@ -18,12 +18,26 @@ export default function MyPage() {
   const hasShadow = useScrollShadow(containerRef);
   const [open, setOpen] = useState(false);
   const [privatePolicyOpen, setPrivatePolicyOpen] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+
+  console.log("profileImageUrl", profileImageUrl);
 
   const onClickTermOfUse = (term?: string) => {
     if (term && term === "privatePolicy") {
       setPrivatePolicyOpen(true);
     } else setOpen(true);
   };
+
+  useEffect(() => {
+    setIsClient(true);
+    const storedImageUrl = localStorage.getItem("profile_image_url") as string;
+    setProfileImageUrl(storedImageUrl);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div

@@ -10,6 +10,8 @@ import NAV_ITEMS from "@/constants/navBarConstants";
 export default function NavBar() {
   const [activeBtn, setActiveBtn] = useRecoilState<number>(locationStatusAtom);
   const [isClient, setIsClient] = useState<boolean>(false);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+
   const pathname = usePathname();
 
   const defaultBtn = useMemo(() => {
@@ -23,6 +25,9 @@ export default function NavBar() {
 
   useEffect(() => {
     setIsClient(true);
+    const storedImageUrl = localStorage.getItem("profile_image_url") as string;
+
+    setProfileImageUrl(storedImageUrl);
   }, []);
 
   if (!isClient) {
@@ -43,7 +48,10 @@ export default function NavBar() {
             className={iconWrapperStyle}
             onMouseDown={() => setActiveBtn(idx)}
           >
-            {item.icon(isActive, "")}
+            {item.icon(
+              isActive,
+              profileImageUrl ? `https://${profileImageUrl}` : ""
+            )}
           </Link>
         );
       })}

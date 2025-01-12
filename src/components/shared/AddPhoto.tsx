@@ -1,7 +1,16 @@
 import { PlusCircleButtonSmall } from "./buttons/BottomSheetOpenButton";
 import Image from "next/image";
-import { FormValues } from "@/models/new";
-import { useState } from "react";
+import * as lighty from "lighty-type";
+import { useEffect, useState } from "react";
+import { handleProfileImageUpdate } from "@/remote/profile";
+
+export interface UploadType {
+  email: string;
+  name: string;
+  accountId: string;
+  profileImageUrl: File | string | null;
+  provider: lighty.Provider;
+}
 
 export default function AddPhoto({
   small,
@@ -9,23 +18,24 @@ export default function AddPhoto({
   setImageUrl,
 }: {
   small?: boolean;
-  imageUrl?: string | null;
-  setImageUrl?: React.Dispatch<React.SetStateAction<FormValues>>;
+  imageUrl?: string | null | File;
+  setImageUrl?: React.Dispatch<React.SetStateAction<UploadType>>;
 }) {
   const [image, setImage] = useState("");
+  const [uploadFile, setUploadFile] = useState<File>();
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
+    setUploadFile(file);
+
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result && setImageUrl) {
-          setImageUrl(
-            (prev) =>
-              ({
-                ...prev,
-                image: event.target?.result as string,
-              } as FormValues)
-          );
+          setImageUrl((prev) => ({
+            ...prev,
+            profileImageUrl: file,
+          }));
         } else if (event.target?.result) {
           setImage(event.target?.result as string);
         }
@@ -33,6 +43,14 @@ export default function AddPhoto({
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    if (uploadFile !== undefined) {
+      console.log("요청 보냄");
+      handleProfileImageUpdate({ file: uploadFile as File });
+    }
+  }, [uploadFile]);
+
   return (
     <label
       style={{
@@ -58,7 +76,7 @@ export default function AddPhoto({
         >
           {imageUrl || image ? (
             <Image
-              src={imageUrl || image}
+              src={(imageUrl as string) || image}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}
@@ -80,6 +98,7 @@ export default function AddPhoto({
           id="fileInput"
           type="file"
           accept="image/*"
+          name="imageUrl"
           onChange={handleFileChange}
         />
       </div>

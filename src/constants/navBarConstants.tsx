@@ -38,7 +38,7 @@ const NAV_ITEMS: NavItem[] = [
     href: "/my",
     icon: (isActive: boolean, src?: string) => (
       <Image
-        className={`border-2 rounded-full ${
+        className={`border-2 rounded-full aspect-square ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}
         src={src || "https://cdn.lighty.today/cute.jpg"}

@@ -25,7 +25,7 @@
   align-items: center;
 }
 .react-calendar__month-view__days {
-  gap: 0 14.6px;
+  gap: 0 12.6px;
   place-content: flex-end;
 }
 
@@ -116,8 +116,8 @@
 
 .react-calendar__month-view__weekdays__weekday {
   flex: none !important;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   margin-bottom: 4px;
 }
 
@@ -153,11 +153,13 @@
 }
 .special-date {
   position: relative !important;
+  font-weight: 600 !important;
+  color: #0a0a0a;
 }
 .react-calendar__tile {
   max-width: 100%;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   flex: none !important;
   align-items: center;
   border-radius: 9999px;

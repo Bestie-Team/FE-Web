@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import LightyIcon from "./shared/icons/LightyIcon";
 import Tooltip from "./shared/tootlips/Tooltip";
@@ -7,8 +6,8 @@ import Button from "./shared/buttons/Button";
 import clsx from "clsx";
 import LargeLightyLogo from "./shared/icons/LargeLightyLogo";
 import oAuthButtons from "@/constants/oAuthButtons";
-// import { postLogin } from "@/remote/login";
-// import { useGoogleLogin } from "@react-oauth/google";
+import { postLogin } from "@/remote/auth";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function Splash() {
   // useEffect(() => {
@@ -17,15 +16,14 @@ export default function Splash() {
   //   }
   // }, [router, status]);
 
-  // const login = useGoogleLogin({
-  //   flow: "auth-code",
-  //   onSuccess: async (tokenResponse) => {
-  //     await postLogin({ tokenResponse });
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
+  const login = useGoogleLogin({
+    onSuccess: async (credentialResponse) => {
+      await postLogin({ accessToken: credentialResponse.access_token });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   return (
     <div className={styles.splashContainer}>
@@ -55,7 +53,7 @@ export default function Splash() {
                 "hover:animate-shrink-grow-less transition-transform duration-300"
               )}
               onClick={() => {
-                // login();
+                login();
                 console.log(provider);
               }}
               color={color}

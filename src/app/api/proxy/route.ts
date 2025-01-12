@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const targetUrl = "https://dev-api.lighty.today/auth/google/login"; // 대상 URL
+  const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
 
   try {
     const body = await req.json();

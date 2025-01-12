@@ -22,7 +22,9 @@ export default function SheetOpenBtnContainer({
   };
 
   const getModalTooltip = () => {
-    if (pathname.startsWith("/home")) return "추억 피드를 등록해보세요!";
+    if (pathname === "/home") return "추억 피드를 등록해보세요!";
+    if (pathname === "/feed") return "추억 피드를 등록해보세요!";
+    if (pathname === "/gathering") return "추억 피드를 등록해보세요!";
     if (pathname.startsWith("/card")) return "👀 스티커로 꾸며보세요!";
   };
 
