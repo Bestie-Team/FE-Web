@@ -1,5 +1,11 @@
 "use client";
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import * as lighty from "lighty-type";
 import AddPhoto, { UploadType } from "./shared/AddPhoto";
 import Input from "./shared/inputs/Input";
@@ -19,7 +25,9 @@ export default function UploadProfileForm() {
     profileImageUrl: null,
     provider: "GOOGLE",
   });
+  const [isClient, setIsClient] = useState(false);
 
+  const [oathData, setOauthData] = useState<lighty.LoginFailResponse>();
   const handleFormValues = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "accountId" && e.target.value.length > 40) {
       return;
@@ -34,9 +42,17 @@ export default function UploadProfileForm() {
   const errors = useMemo(() => validate(formValues), [formValues]);
 
   const isValidate = Object.keys(errors).length === 0;
-  const user_info: lighty.LoginFailResponse = JSON.parse(
-    sessionStorage.getItem("oauth_data") as string
-  );
+
+  useEffect(() => {
+    setIsClient(true);
+    const user_info: lighty.LoginFailResponse = JSON.parse(
+      sessionStorage.getItem("oauth_data") as string
+    );
+    setOauthData(user_info);
+  }, []);
+
+  if (!isClient || !oathData) return null;
+
   return (
     <Flex direction="column">
       <div className="mx-auto w-[84px] py-[12px]">
@@ -51,7 +67,7 @@ export default function UploadProfileForm() {
         label="이름"
         placeholder="이름을 입력해주세요."
         onChange={handleFormValues}
-        value={user_info.name}
+        value={oathData.name}
         helpMessage={errors.name}
       />
       <Spacing size={30} />
@@ -79,9 +95,9 @@ export default function UploadProfileForm() {
         onClick={() => {
           postRegister({
             ...formValues,
-            name: user_info.name,
-            email: user_info.email,
-            provider: user_info.provider as Provider,
+            name: oathData.name,
+            email: oathData.email,
+            provider: oathData.provider as Provider,
           }).then(() => {
             alert("회원가입이 정상적으로 완료되었습니다.");
           });
