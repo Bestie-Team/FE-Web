@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
@@ -9,6 +10,11 @@ export interface SettingsItem {
 }
 
 export default function SettingsMenu() {
+  const router = useRouter();
+  const handleLogout = async (title: string) => {
+    // if (title === "로그아웃") await logout();
+    router.push("/");
+  };
   return (
     <Flex direction="column" className="pt-[32px] gap-[36px]">
       {settings.map((setting) => {
@@ -19,10 +25,10 @@ export default function SettingsMenu() {
             </span>
             {setting.list.map((list: SettingsItem, idx) => {
               return (
-                <ul key={idx}>
+                <li key={idx} onClick={() => handleLogout(list.title)}>
                   <Spacing size={8} />
                   <SettingsMenuItem list={list} link={list.link} />
-                </ul>
+                </li>
               );
             })}
           </li>
@@ -72,7 +78,7 @@ const settings = [
       {
         title: "로그아웃",
         info: null,
-        link: { href: "/" },
+        link: { href: "" },
       },
     ],
   },
