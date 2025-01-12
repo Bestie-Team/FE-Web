@@ -1,0 +1,6 @@
+const STORAGE_KEYS = {
+  AUTH_TOKEN: "auth_token",
+  USER_INFO: "user_info",
+  PROFILE_IMAGE_URL: "profile_image_url",
+};
+export default STORAGE_KEYS;

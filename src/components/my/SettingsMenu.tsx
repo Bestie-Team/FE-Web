@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export interface SettingsItem {
   title: string;
@@ -12,14 +13,19 @@ export interface SettingsItem {
 export default function SettingsMenu() {
   const router = useRouter();
   const handleLogout = async (title: string) => {
-    // if (title === "로그아웃") await logout();
-    router.push("/");
+    if (title === "로그아웃") {
+      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+      sessionStorage.removeItem(STORAGE_KEYS.USER_INFO);
+      localStorage.removeItem(STORAGE_KEYS.PROFILE_IMAGE_URL);
+      router.push("/");
+    }
   };
+
   return (
     <Flex direction="column" className="pt-[32px] gap-[36px]">
       {settings.map((setting) => {
         return (
-          <li key={setting.category} className="flex flex-col">
+          <ul key={setting.category} className="flex flex-col">
             <span className="px-[20px] text-C1 text-grayscale-400">
               {setting.category}
             </span>
@@ -31,7 +37,7 @@ export default function SettingsMenu() {
                 </li>
               );
             })}
-          </li>
+          </ul>
         );
       })}
     </Flex>
