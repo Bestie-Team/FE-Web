@@ -7,13 +7,11 @@ import FixedBottomButton from "./shared/buttons/FixedBottomButton";
 import Spacing from "./shared/Spacing";
 import Flex from "./shared/Flex";
 import validator from "validator";
-import { useRouter } from "next/navigation";
 import { postRegister } from "@/remote/auth";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
 export default function UploadProfileForm() {
-  const router = useRouter();
   const [formValues, setFormValues] = useState<UploadType>({
     email: "",
     name: "",
@@ -26,6 +24,7 @@ export default function UploadProfileForm() {
     if (e.target.name === "accountId" && e.target.value.length > 40) {
       return;
     }
+
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       [e.target.name]: e.target.value,
@@ -38,7 +37,6 @@ export default function UploadProfileForm() {
   const user_info: lighty.LoginFailResponse = JSON.parse(
     sessionStorage.getItem("oauth_data") as string
   );
-  console.log(user_info);
   return (
     <Flex direction="column">
       <div className="mx-auto w-[84px] py-[12px]">
@@ -84,6 +82,8 @@ export default function UploadProfileForm() {
             name: user_info.name,
             email: user_info.email,
             provider: user_info.provider as Provider,
+          }).then(() => {
+            alert("회원가입이 정상적으로 완료되었습니다.");
           });
         }}
       />

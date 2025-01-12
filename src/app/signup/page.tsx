@@ -12,9 +12,9 @@ export default function SignupPage() {
     <div className="flex flex-col gap-[24px] bg-base-white h-screen">
       {header}
       <Spacing size={28} />
-      <div className="flex flex-col gap-[16px] px-[24px]">
+      <div className={styles.container}>
         <LightyIcon width="20" height="20" color={"#0A0A0A"} />
-        <div className="flex flex-col gap-[7px] text-T2">
+        <div className={styles.greeting}>
           <div>반가워요!</div>
           <div>프로필 계정을 만들어볼까요?</div>
         </div>
@@ -26,3 +26,8 @@ export default function SignupPage() {
     </div>
   );
 }
+
+const styles = {
+  container: "flex flex-col gap-[16px] px-[24px]",
+  greeting: "flex flex-col gap-[7px] text-T2",
+};

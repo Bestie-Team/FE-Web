@@ -2,9 +2,14 @@ import AddPhoto from "../shared/AddPhoto";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 
-export default function UserProfile() {
+export default function UserProfile({
+  userProfileImage,
+}: {
+  userProfileImage?: string;
+}) {
   const name = "이찬영";
   const accountId = "antinitony";
+
   return (
     <Flex
       align="center"
@@ -15,7 +20,7 @@ export default function UserProfile() {
         paddingBottom: "12px",
       }}
     >
-      <AddPhoto />
+      <AddPhoto imageUrl={userProfileImage} />
       <Spacing size={8} />
       <Flex direction="column" align="center">
         <span className="text-T3 leading-[23px]">{accountId}</span>

@@ -6,7 +6,6 @@ import ArrowRightIcon from "../icons/ArrowRightIcon";
 import ArrowLeftIcon from "../icons/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
 import { gatheringSelectedDateAtom } from "@/atoms/gathering";
-import LightyIcon from "../icons/LightyIcon";
 import Flex from "../Flex";
 import React from "react";
 import CalendarLightyIcon from "../icons/CalendarLightyIcon";

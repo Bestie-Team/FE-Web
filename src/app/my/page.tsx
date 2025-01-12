@@ -19,9 +19,9 @@ export default function MyPage() {
   const [open, setOpen] = useState(false);
   const [privatePolicyOpen, setPrivatePolicyOpen] = useState(false);
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
-
-  console.log("profileImageUrl", profileImageUrl);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | undefined>(
+    undefined
+  );
 
   const onClickTermOfUse = (term?: string) => {
     if (term && term === "privatePolicy") {
@@ -54,7 +54,7 @@ export default function MyPage() {
         {header}
       </div>
       <Spacing size={68} />
-      <UserProfile />
+      <UserProfile userProfileImage={profileImageUrl} />
       <Spacing size={12} />
       <MyMainInfo />
       <Spacing size={16} />

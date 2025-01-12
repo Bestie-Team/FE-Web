@@ -76,7 +76,7 @@ export default function AddPhoto({
         >
           {imageUrl || image ? (
             <Image
-              src={(imageUrl as string) || image}
+              src={(`https://${imageUrl}` as string) || image}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}

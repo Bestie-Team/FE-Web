@@ -1,12 +1,17 @@
-import { GroupInfo } from "@/models/group";
+import * as lighty from "lighty-type";
 
+/** 그룹 생성 */
 export async function getGroup({ id }: { id: string }) {
-  const response = await fetch(`/groups/${id}`);
+  const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/groups/id`;
+  const response = await fetch(targetUrl);
+
+  const data = await response.json();
+
   if (!response.ok) {
     throw new Error(`Failed to get group ${id}`);
   }
 
-  return response.json();
+  return data;
 }
 
 export async function getGroups() {
@@ -18,11 +23,39 @@ export async function getGroups() {
   return response.json();
 }
 
-export async function postGroup({ group }: { group: GroupInfo }) {
-  const response = await fetch(`/groups`, {
+/** 그룹 생성 */
+export async function postGroupCoverImage({ file }: { file: string }) {
+  const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/groups/cover/image`;
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(targetUrl, {
+    method: "POST",
+    body: formData,
+  });
+
+  const data: { imageUrl: string } = await response.json();
+
+  if (!response.ok) {
+    throw new Error("Failed to delete group member");
+  }
+
+  return data.imageUrl;
+}
+
+export async function postGroup({
+  group,
+}: {
+  group: lighty.CreateGroupRequest;
+}) {
+  const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/groups`;
+
+  const response = await fetch(targetUrl, {
     method: "POST",
     body: JSON.stringify(group),
   });
+
   if (!response.ok) {
     throw new Error("Failed to post group");
   }
