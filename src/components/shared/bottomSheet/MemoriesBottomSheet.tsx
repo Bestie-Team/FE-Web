@@ -45,8 +45,8 @@ export default function MemoriesBottomSheet({
 const actions = [
   {
     icon: <UserIcon width="18" height="18" color="#fff" />,
-    title: "모임 생성하기",
-    subTitle: "모임을 만들고 친구들에게 모임 초대장을 보내요",
+    title: "모임 약속 만들기",
+    subTitle: "모임 약속을 만들고 친구들에게 모임 초대장을 보내요",
     link: "/gathering/new",
   },
   {
@@ -57,8 +57,8 @@ const actions = [
   },
   {
     icon: <PicturesIcon />,
-    title: "추억 카드 만들기",
-    subTitle: "소중한 모임 추억을 기록하고 공유할 수 있어요",
+    title: "포트 카드 만들기",
+    subTitle: "추억이 담긴 포토 카드를 꾸밀 수 있어요",
     link: "/card",
   },
 ];

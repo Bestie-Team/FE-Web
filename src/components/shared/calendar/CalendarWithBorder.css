@@ -18,6 +18,7 @@
   border: 1.4px solid #e9e9e9;
   border-radius: 20px;
 }
+
 .react-calendar__tile .react-calendar__month-view__days__day {
   z-index: 999 !important;
   display: flex;
@@ -25,8 +26,8 @@
   align-items: center;
 }
 .react-calendar__month-view__days {
-  gap: 0 12.6px;
-  place-content: flex-end;
+  gap: 0 14.9px;
+  /* place-content: flex-end; */
 }
 
 .react-calendar--doubleView {
@@ -158,8 +159,8 @@
 }
 .react-calendar__tile {
   max-width: 100%;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   flex: none !important;
   align-items: center;
   border-radius: 9999px;

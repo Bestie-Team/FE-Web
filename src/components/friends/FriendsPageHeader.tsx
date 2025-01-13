@@ -29,7 +29,7 @@ export default function FriendsPageHeader({
         <div
           className="p-[4px] cursor-pointer"
           onClick={() => {
-            router.push("/friends/add");
+            router.push("/friends/search");
           }}
         >
           <AddFriendIcon />
@@ -43,5 +43,5 @@ const styles = {
   arrowIconContainer:
     "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer",
 
-  headerWrapper: "bg-grayscale-50 flex pr-[20px] w-full items-center h-[48px]",
+  headerWrapper: "bg-grayscale-50 pr-[20px] flex w-full items-center h-[48px]",
 };

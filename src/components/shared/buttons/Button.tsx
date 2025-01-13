@@ -29,6 +29,7 @@ const BaseButton = ({
       type="button"
       style={{
         backgroundColor: color,
+        cursor: "pointer",
       }}
       className={clsx("cursor-pointer", className)}
       disabled={disabled}
