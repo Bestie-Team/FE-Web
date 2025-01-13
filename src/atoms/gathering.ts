@@ -47,7 +47,7 @@ export const newGatheringInfo = atom<GatheringInfo>({
     ampm: "",
     time: "",
     address: "",
-    invitation_img_url: "",
+    invitationImageUrl: "",
   },
 });
 

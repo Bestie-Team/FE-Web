@@ -36,7 +36,7 @@ export const cardSelectedGatheringAtom = atom<Partial<GatheringResponse>>({
     id: "",
     name: "",
     description: "",
-    invitation_img_url: "",
+    invitationImageUrl: "",
   },
 });
 

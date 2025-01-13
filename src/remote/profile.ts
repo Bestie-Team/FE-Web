@@ -1,3 +1,5 @@
+import STORAGE_KEYS from "@/constants/storageKeys";
+
 export async function handleProfileImageUpdate(imageFile: { file: File }) {
   try {
     const imageUrl = await postProfileImage(imageFile);
@@ -10,7 +12,11 @@ export async function handleProfileImageUpdate(imageFile: { file: File }) {
       }
     }
   } catch (error) {
-    console.error("프로필 이미지 업로드중 에러가 발생하였습니다:", error);
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "이미지 업로드 요청에 실패했습니다."
+    );
   }
 }
 
@@ -23,7 +29,7 @@ export async function postProfileImage(imageFile: { file: File }) {
     const formData = new FormData();
     formData.append("file", imageFile.file);
 
-    const token = localStorage.getItem("auth_token");
+    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
     if (!token) {
       throw new Error("로그인이 필요합니다.");
     }
@@ -33,7 +39,7 @@ export async function postProfileImage(imageFile: { file: File }) {
       throw new Error("백엔드 URL이 설정되지 않았습니다.");
     }
 
-    const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/profile/image`;
+    const targetUrl = `${backendUrl}/users/profile/image`;
 
     const response = await fetch(targetUrl, {
       method: "POST",
@@ -51,24 +57,22 @@ export async function postProfileImage(imageFile: { file: File }) {
     const data: { imageUrl: string } = await response.json();
 
     if (response.ok) {
-      localStorage.setItem("profile_image_url", data.imageUrl);
+      localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
 
-      alert("프로필 이미지가 성공적으로 업로드되었습니다.");
+      console.log("프로필 이미지가 성공적으로 업로드되었습니다.");
 
-      window.location.href = "/home";
       return data.imageUrl;
     } else {
       alert("이미지 업로드 중 문제가 발생했습니다.");
     }
   } catch (error) {
-    console.error("Error during uploading Image:", error);
-    alert("이미지 업로드 요청에 실패했습니다.");
+    throw new Error("이미지 업로드 중 문제가 발생했습니다.");
   }
 }
 
 export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
   try {
-    const token = localStorage.getItem("auth_token");
+    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
     if (!token) {
       throw new Error("로그인이 필요합니다.");
     }
@@ -96,7 +100,7 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
       );
     }
 
-    alert("프로필 이미지가 성공적으로 업데이트되었습니다.");
+    console.log("프로필 이미지가 성공적으로 업데이트되었습니다.");
     return true;
   } catch (error) {
     console.error("Error during updating profile image:", error);

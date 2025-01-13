@@ -49,7 +49,7 @@ export const GATHERINGS = [
     ampm: "오전",
     time: "11시",
     address: "우리 집",
-    invitation_img_url: "https://cdn.lighty.today/gathering.png",
+    invitationImageUrl: "https://cdn.lighty.today/gathering.png",
   },
   {
     id: "2",
@@ -96,7 +96,7 @@ export const GATHERINGS = [
     ampm: "오후",
     time: "1시",
     address: "카페",
-    invitation_img_url: "https://cdn.lighty.today/four_cut.jpeg",
+    invitationImageUrl: "https://cdn.lighty.today/four_cut.jpeg",
   },
   {
     id: "1",
@@ -143,7 +143,7 @@ export const GATHERINGS = [
     ampm: "오전",
     time: "10시",
     address: "서초",
-    invitation_img_url: "https://cdn.lighty.today/name_cake.jpeg",
+    invitationImageUrl: "https://cdn.lighty.today/name_cake.jpeg",
   },
   {
     id: "0",
@@ -190,7 +190,7 @@ export const GATHERINGS = [
     ampm: "오후",
     time: "6시",
     address: "성수",
-    invitation_img_url: "https://cdn.lighty.today/meongryong_wine.jpg",
+    invitationImageUrl: "https://cdn.lighty.today/meongryong_wine.jpg",
   },
 ] as GatheringResponse[];
 
@@ -240,7 +240,7 @@ export const GATHERINGS_PASSED = [
     ampm: "오전",
     time: "10시",
     address: "서초",
-    invitation_img_url: "https://cdn.lighty.today/binanton_jp.jpeg",
+    invitationImageUrl: "https://cdn.lighty.today/binanton_jp.jpeg",
   },
   {
     id: "0",
@@ -287,7 +287,7 @@ export const GATHERINGS_PASSED = [
     ampm: "오후",
     time: "6시",
     address: "성수",
-    invitation_img_url: "https://cdn.lighty.today/groom.JPG",
+    invitationImageUrl: "https://cdn.lighty.today/groom.JPG",
   },
 ] as GatheringResponse[];
 

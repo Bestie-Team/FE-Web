@@ -1,6 +1,7 @@
 import * as lighty from "lighty-type";
 import { handleProfileImageUpdate } from "./profile";
 import { UploadType } from "@/components/shared/AddPhoto";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export async function postLogin({ accessToken }: lighty.LoginRequest) {
   try {
@@ -25,11 +26,12 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
     if (response.ok) {
       const user_info: lighty.LoginResponse = data;
 
-      localStorage.setItem("auth_token", user_info.accessToken);
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
       sessionStorage.setItem(
-        "user_info",
+        STORAGE_KEYS.USER_INFO,
         JSON.stringify({
           accountId: user_info.accountId,
+          profileImageUrl: user_info.profileImageUrl,
         })
       );
 
@@ -42,8 +44,10 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
       case 404:
         const user_oauth_info: lighty.LoginFailResponse = data;
 
-        // 회원가입 페이지로 이동 시 현재 정보 저장
-        sessionStorage.setItem("oauth_data", JSON.stringify(user_oauth_info));
+        sessionStorage.setItem(
+          STORAGE_KEYS.OAUTH_DATA,
+          JSON.stringify(user_oauth_info)
+        );
         window.location.href = "/signup";
         break;
 
@@ -88,7 +92,7 @@ export async function postRegister(RegisterRequest: UploadType) {
     if (response.ok) {
       window.location.href = "/home";
       sessionStorage.setItem(
-        "user_info",
+        STORAGE_KEYS.USER_INFO,
         JSON.stringify({
           accessToken: data.accessToken,
           accountId: data.accountId,

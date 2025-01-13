@@ -10,3 +10,18 @@ export const selectedFriendsAtom = atom<UserInfo[]>({
   key: "friend/selectedFriends",
   default: [],
 });
+
+export const friendsModalStateAtom = atom<boolean>({
+  key: "friends/modal",
+  default: false,
+});
+
+export const friendSearchModalStateAtom = atom<boolean>({
+  key: "friends/search/modal",
+  default: false,
+});
+
+export const friendSearchAtom = atom<string>({
+  key: "friends/search",
+  default: "",
+});

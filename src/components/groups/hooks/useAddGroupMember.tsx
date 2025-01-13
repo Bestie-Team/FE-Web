@@ -1,15 +1,9 @@
-import { addGroupMember } from "@/remote/group";
+import { postGroupMember } from "@/remote/group";
 import { useQuery } from "@tanstack/react-query";
 
-export default function useAddGroupMember({
-  groupId,
-  accountId,
-}: {
-  groupId: string;
-  accountId: string;
-}) {
+export default function useAddGroupMember({ groupId }: { groupId: string }) {
   return useQuery({
-    queryKey: ["group", groupId, accountId],
-    queryFn: () => addGroupMember({ groupId, accountId }),
+    queryKey: ["group", groupId],
+    queryFn: () => postGroupMember({ groupId }),
   });
 }

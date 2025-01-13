@@ -1,14 +1,14 @@
 import { GatheringInfo } from "@/models/gathering";
 import { postGathering } from "@/remote/gathering";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export default function useMakeGathering({
   gathering,
 }: {
   gathering: GatheringInfo;
 }) {
-  return useQuery({
-    queryKey: ["make/gathering", gathering.name],
-    queryFn: () => postGathering({ gathering }),
+  return useMutation({
+    mutationKey: ["make/gathering", gathering.name],
+    mutationFn: () => postGathering({ gathering }),
   });
 }

@@ -1,3 +1,4 @@
+import * as lighty from "lighty-type";
 import { GroupInfoResponse } from "./group";
 import { UserInfo } from "./user";
 
@@ -11,7 +12,7 @@ export interface GatheringInfo {
   ampm: string;
   time: string;
   address: string;
-  invitation_img_url: string;
+  invitationImageUrl: string;
 }
 
 export interface GatheringResponse {
@@ -25,7 +26,23 @@ export interface GatheringResponse {
   ampm: string;
   time: string;
   address: string;
-  invitation_img_url: string;
+  invitationImageUrl: string;
 }
 
 export type GatheringType = "friend" | "group";
+
+export interface GatheringInvitation {
+  id: string;
+  name: string;
+  description: string;
+  sender: string;
+  createdAt: string;
+  gatheringDate: string;
+  address: string;
+  members: lighty.User[];
+}
+
+export interface GatheringInvitationListResponse {
+  invitations: GatheringInvitation[];
+  nextCursor: string | null;
+}
