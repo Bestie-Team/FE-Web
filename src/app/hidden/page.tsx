@@ -1,9 +1,8 @@
 "use client";
 import FilterBar from "@/components/shared/FilterBar";
-import Feed from "@/components/feed/Feed";
-import CommentContainer from "@/components/shared/comments/CommentContainer";
+// import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState } from "recoil";
-import { commentModalStateAtom } from "@/atoms/feed";
+// import { commentModalStateAtom } from "@/atoms/feed";
 import { recordModalStateAtom } from "@/atoms/record";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
@@ -19,9 +18,9 @@ export default function FeedPage() {
   const header = getHeader(pathname);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasShadow = useScrollShadow(containerRef);
-  const [commentModalOpen, setCommentModalOpen] = useRecoilState(
-    commentModalStateAtom
-  );
+  // const [commentModalOpen, setCommentModalOpen] = useRecoilState(
+  //   commentModalStateAtom
+  // );
   const [recordModalOpen, setRecordModalOpen] =
     useRecoilState(recordModalStateAtom);
 
@@ -55,7 +54,7 @@ export default function FeedPage() {
         </div>
       </div>
 
-      <Feed which="1" />
+      {/* <Feed which="1" /> */}
 
       {recordModalOpen ? (
         <MemoriesBottomSheet
@@ -63,13 +62,13 @@ export default function FeedPage() {
           open={recordModalOpen}
         />
       ) : null}
-      {commentModalOpen ? (
+      {/* {commentModalOpen ? (
         <CommentContainer
           onClose={() => {
             setCommentModalOpen(false);
           }}
         />
-      ) : null}
+      ) : null} */}
     </div>
   );
 }
