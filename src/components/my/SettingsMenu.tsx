@@ -31,10 +31,10 @@ export default function SettingsMenu() {
             </span>
             {setting.list.map((list: SettingsItem, idx) => {
               return (
-                <li key={idx} onClick={() => handleLogout(list.title)}>
+                <ul key={idx} onClick={() => handleLogout(list.title)}>
                   <Spacing size={8} />
                   <SettingsMenuItem list={list} link={list.link} />
-                </li>
+                </ul>
               );
             })}
           </ul>

@@ -2,12 +2,12 @@ import Image from "next/image";
 import Flex from "./Flex";
 import Spacing from "./Spacing";
 import Button from "./buttons/Button";
-import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
 
 export default function GroupLeaderContainer({
   groupLeader,
 }: {
-  groupLeader?: UserInfo;
+  groupLeader?: lighty.User;
 }) {
   const { name, accountId, profileImageUrl } = groupLeader!;
   return (

@@ -1,4 +1,4 @@
-import { GatheringInfo } from "@/models/gathering";
+import { CreateGatheringRequest } from "@/models/gathering";
 import { atom } from "recoil";
 
 export const gatheringSelectedTabAtom = atom<"1" | "2">({
@@ -35,23 +35,16 @@ export const gatheringSelectedTimeAtom = atom<string>({
   default: "12:00",
 });
 
-export const newGatheringInfo = atom<GatheringInfo>({
+export const newGatheringInfo = atom<CreateGatheringRequest>({
   key: "gathering/gatheringInfo",
   default: {
-    type: "friend",
+    type: "GROUP",
     name: "",
     description: "",
-    groupId: "",
-    friendIds: [],
-    date: "",
-    ampm: "",
-    time: "",
+    groupId: null,
+    friendIds: null,
+    gatheringDate: "",
     address: "",
     invitationImageUrl: "",
   },
-});
-
-export const selectedGroupAtom = atom<string | null>({
-  key: "gathering/selectedGroup",
-  default: null,
 });

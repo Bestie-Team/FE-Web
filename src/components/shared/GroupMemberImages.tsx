@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "./Flex";
 import clsx from "clsx";
-import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
 
 export default function GroupMemberImages({
   members,
@@ -11,7 +11,7 @@ export default function GroupMemberImages({
   height,
   gap,
 }: {
-  members?: UserInfo[];
+  members?: lighty.User[];
   memberImageUrls?: string[];
   maxLength?: number;
   width?: number;
@@ -23,17 +23,18 @@ export default function GroupMemberImages({
       ? (members.map((member) => member.profileImageUrl) as string[])
       : memberImageUrls!;
 
-  const seenImages =
-    memberImages.length <= maxLength
-      ? memberImages
-      : memberImages.slice(0, maxLength);
+  const seenImages = !memberImages
+    ? null
+    : memberImages.length <= maxLength
+    ? memberImages
+    : memberImages.slice(0, maxLength);
 
   const imageWidthHeight =
     width && height ? `w-[${width}px] h-[${height}px]` : `w-[28px] h-[28px]`;
 
   return (
     <Flex>
-      {seenImages.map((imageUrl, i) => (
+      {seenImages?.map((imageUrl, i) => (
         <Image
           key={`group${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
@@ -44,7 +45,7 @@ export default function GroupMemberImages({
           alt={`writer${i}`}
         />
       ))}
-      {memberImages.length > maxLength ? (
+      {memberImages && memberImages.length > maxLength ? (
         <div
           style={{
             marginLeft: `-${gap}px`,

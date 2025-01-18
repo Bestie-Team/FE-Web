@@ -1,9 +1,18 @@
 import { postGroupMember } from "@/remote/group";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
-export default function useAddGroupMember({ groupId }: { groupId: string }) {
-  return useQuery({
-    queryKey: ["group", groupId],
-    queryFn: () => postGroupMember({ groupId }),
+export default function useAddGroupMember({
+  groupId,
+  friendIds,
+  onSuccess,
+}: {
+  groupId: string;
+  friendIds: string[];
+  onSuccess: (data: { message: string }) => void;
+}) {
+  return useMutation({
+    mutationKey: ["add/groupMember", groupId],
+    mutationFn: () => postGroupMember({ groupId, userIds: friendIds }),
+    onSuccess: (data: { message: string }) => onSuccess(data),
   });
 }

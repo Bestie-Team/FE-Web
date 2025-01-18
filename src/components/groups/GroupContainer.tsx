@@ -3,7 +3,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/icons/ArrowRightIcon";
 import clsx from "clsx";
-import { GroupInfoResponse } from "@/models/group";
+import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 
 export default function GroupContainer({
@@ -11,11 +11,11 @@ export default function GroupContainer({
   onClick,
   className,
 }: {
-  group: GroupInfoResponse;
+  group: lighty.Group;
   onClick?: () => void;
   className?: string;
 }) {
-  const { groupName, description, gatheringCount, imageUrl, members } = group;
+  const { name, description, groupImageUrl, gatheringCount, members } = group;
 
   const handleClick = () => {
     if (onClick) {
@@ -37,12 +37,12 @@ export default function GroupContainer({
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={imageUrl || "https://cdn.lighty.today/cute.jpg"}
+              src={groupImageUrl || "https://cdn.lighty.today/cute.jpg"}
             />
           </div>
           <Spacing size={12} direction="horizontal" />
           <Flex direction="column">
-            <span className="text-T5">{groupName}</span>
+            <span className="text-T5">{name}</span>
             <Spacing size={4} />
             <span className={styles.font}>{description}</span>
           </Flex>

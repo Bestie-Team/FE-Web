@@ -7,12 +7,14 @@ import Spacing from "../Spacing";
 export default function Modal({
   title = "해당 유저를 신고할까요?",
   content = "신고 시, 친구 목록에서 삭제 되며 상대는 친구 요청을 다시 보낼 수 없어요.",
+  action,
   left = "취소",
   right,
   onClose,
 }: {
   title?: string;
   content?: string;
+  action: () => void;
   left?: string;
   right?: string;
   onClose: () => void;
@@ -36,7 +38,13 @@ export default function Modal({
           {right ? (
             <>
               <Spacing size={12} direction="horizontal" />
-              <Button className={clsx(styles.button, styles.report)}>
+              <Button
+                onClick={() => {
+                  onClose();
+                  action();
+                }}
+                className={clsx(styles.button, styles.report)}
+              >
                 {right}
               </Button>
             </>
@@ -54,7 +62,7 @@ const styles = {
     "bg-base-white rounded-[20px] w-[268px] pt-[28px] pb-[20px] px-[30px]",
   button: "w-[104px] py-[14px] rounded-full text-T6",
 
-  content: "text-B3 text-grayscale-600 text-center",
+  content: "text-B3 text-grayscale-600 text-center max-w-[168px]",
   cancel: "text-grayscale-300 hover:bg-grayscale-50",
   report: "bg-grayscale-900 text-base-white hover:bg-grayscale-800",
 };

@@ -5,25 +5,33 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { NavigationOptions } from "swiper/types";
 import { cardFrameAtom, cardSelectedGatheringAtom } from "@/atoms/card";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function SelectFrameSwiper() {
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
-  const [selectedFrame, setSelectedFrame] = useRecoilState(cardFrameAtom);
-
+  const setSelectedFrame = useSetRecoilState(cardFrameAtom);
   const ref = useRef<HTMLDivElement>(null);
 
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
-  const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
-  const frameNames = ["ribbon", "zebra", "green"];
+  const frames = [
+    "/frame1.jpeg",
+    "/frame2.jpeg",
+    "/frame3.jpeg",
+    "/frame4.jpeg",
+  ];
+  const frameNames = ["ribbon", "zebra", "green", "check"];
 
-  const onClickFrame = (id: number) => {
+  useEffect(() => {
+    onChangeFrame(0);
+  }, []);
+
+  const onChangeFrame = (id: number) => {
     setSelectedFrame(id);
   };
 
@@ -40,6 +48,8 @@ export default function SelectFrameSwiper() {
           prevEl: prevRef.current,
           nextEl: nextRef.current,
         }}
+        onNavigationNext={(swiper) => onChangeFrame(swiper.activeIndex)}
+        onNavigationPrev={(swiper) => onChangeFrame(swiper.activeIndex)}
         modules={[Navigation]}
         onBeforeInit={(swiper) => {
           if (swiper.params.navigation) {
@@ -51,23 +61,13 @@ export default function SelectFrameSwiper() {
         className="custom-swiper w-[324px] h-[451px]"
       >
         {frames.map((frame, idx) => (
-          <SwiperSlide
-            className={styles.slide}
-            key={`frame${idx}`}
-            onClick={() => onClickFrame(idx)}
-          >
+          <SwiperSlide className={styles.slide} key={`frame${idx}`}>
             <Flex direction="column">
-              <div
-                ref={ref}
-                className={clsx(
-                  styles.frameWrapper,
-                  idx === selectedFrame && "opacity-60"
-                )}
-              >
+              <div ref={ref} className={clsx(styles.frameWrapper)}>
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      src={selectedGathering.invitation_img_url as string}
+                      src={selectedGathering?.invitationImageUrl || ""}
                       width={230}
                       height={230}
                       style={{

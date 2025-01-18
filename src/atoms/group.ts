@@ -1,13 +1,22 @@
-import { GroupInfo } from "@/models/group";
 import { atom } from "recoil";
+import * as lighty from "lighty-type";
 
-export const newGroupAtom = atom<GroupInfo>({
+export const newGroupAtom = atom<lighty.CreateGroupRequest>({
   key: "group/new",
   default: {
     name: "",
-    groupImageUrl: "",
     description: "",
-    groupLeaderId: "",
     friendIds: [""],
+    groupImageUrl: "",
   },
+});
+
+export const myGroupAtom = atom<lighty.Group[]>({
+  key: "groupList/my",
+  default: [],
+});
+
+export const groupDeleteAskModalAtom = atom<boolean>({
+  key: "group/delete/modal",
+  default: false,
 });

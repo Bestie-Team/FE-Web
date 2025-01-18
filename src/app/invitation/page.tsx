@@ -1,67 +1,77 @@
 "use client";
-import {
-  animationStatusAtom,
-  invitationSelectedTabAtom,
-} from "@/atoms/invitation";
 import InvitationCard from "@/components/invitation/InvitationCard";
 import LightySelect from "@/components/shared/filter";
-import { OptionType } from "@/components/shared/FilterBar";
+import { SelectOptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import TabBar from "@/components/shared/tab/TabBar";
-import { useRef, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperType } from "swiper";
 import "swiper/css";
-import InvitationModal from "@/components/invitation/InvitationModal";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import useScrollShadow from "@/hooks/useScrollShadow";
+import { useInvitationTabs } from "@/hooks/useInvitationTabs";
+import useReceivedInvitationToGathering from "@/components/gathering/hooks/useReceivedInvitationToGathering";
+import * as lighty from "lighty-type";
+import useSentInvitationToGathering from "@/components/gathering/hooks/useSentInvitationToGathering";
+import InvitationModal from "@/components/invitation/InvitationModal";
 
 export default function InvitationPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasShadow = useScrollShadow(containerRef);
   const pathname = usePathname();
   const header = getHeader(pathname);
-  const swiperRef = useRef<SwiperType | null>(null);
-  const [isModalOpen, setModalOpen] = useState<boolean>();
-  const setSelectedTab = useSetRecoilState(invitationSelectedTabAtom);
-  const setAnimateTab = useSetRecoilState(animationStatusAtom);
-  const [year, setYear] = useState<OptionType | null>({
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",
     label: "2025",
   });
 
-  const handleSlideChange = (index: number) => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(index);
-    }
-  };
+  const queryParams = useMemo(
+    () => ({
+      cursor: new Date().toISOString(),
+      minDate: new Date("2025-01-01").toISOString(),
+      maxDate: new Date("2025-12-31").toISOString(),
+      limit: 10,
+    }),
+    []
+  );
+  const [invitations, setInvitations] = useState<{
+    received: lighty.GatheringInvitation[];
+    sent: lighty.GatheringInvitation[];
+  }>({ received: [], sent: [] });
 
-  const handleTabClick = (tabName: "1" | "2") => {
-    if (tabName === "1") {
-      handleSlideChange(0);
+  const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
+    useInvitationTabs();
+
+  const { data: received, isSuccess } =
+    useReceivedInvitationToGathering(queryParams);
+
+  const { data: sent, isSuccess: sent_isSuccess } =
+    useSentInvitationToGathering(queryParams);
+
+  useEffect(() => {
+    if (isSuccess && received?.invitations) {
+      setInvitations((prev) => ({ ...prev, received: received.invitations }));
     }
-    if (tabName === "2") {
-      handleSlideChange(1);
+  }, [isSuccess, received]);
+
+  useEffect(() => {
+    if (sent_isSuccess && sent?.invitations) {
+      setInvitations((prev) => ({ ...prev, sent: sent.invitations }));
     }
-    setAnimateTab(true);
-    setTimeout(() => {
-      setSelectedTab(tabName);
-      setAnimateTab(false);
-    }, 300);
-  };
+  }, [sent_isSuccess, sent]);
 
   return (
-    <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar">
+    <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]">
       <div className={clsx(filterStyle, hasShadow ? "shadow-bottom" : "")}>
         {header}
         <div className="w-full px-[20px]">
           <TabBar
             bgColor="transparent"
-            atom={invitationSelectedTabAtom}
+            selectedTab={selectedTab}
             title1="받은 초대"
             title2="보낸 초대"
             long="long"
@@ -83,7 +93,7 @@ export default function InvitationPage() {
           swiperRef.current = swiper;
         }}
         onSlideChange={(swiper) => {
-          setSelectedTab(String(swiper.activeIndex + 1) as "1" | "2");
+          handleSlideChange(swiper.activeIndex);
         }}
         slidesPerView={1}
         spaceBetween={2}
@@ -91,20 +101,41 @@ export default function InvitationPage() {
       >
         <SwiperSlide>
           <Flex direction="column" className="pt-[120px]">
-            <InvitationCard onClickOpen={setModalOpen} />
-            <Spacing size={24} />
+            {invitations.received?.map((invitation) => {
+              return (
+                <React.Fragment key={invitation.id}>
+                  <InvitationCard
+                    onClickOpen={setModalOpen}
+                    invitation={invitation}
+                  />
+                  <Spacing size={24} />
+                </React.Fragment>
+              );
+            })}
           </Flex>
         </SwiperSlide>
         <SwiperSlide>
           <Flex direction="column" className="pt-[120px]">
-            <InvitationCard onClickOpen={setModalOpen} />
-            <Spacing size={24} />
-            <InvitationCard onClickOpen={setModalOpen} />
-            <Spacing size={24} />
+            {invitations.sent?.map((invitation) => {
+              return (
+                <>
+                  <InvitationCard
+                    onClickOpen={setModalOpen}
+                    invitation={invitation}
+                  />
+                  <Spacing size={24} />
+                </>
+              );
+            })}
           </Flex>
         </SwiperSlide>
       </Swiper>
-      {isModalOpen ? <InvitationModal onClickClose={setModalOpen} /> : null}
+      {isModalOpen ? (
+        <InvitationModal
+          onClickClose={setModalOpen}
+          selectedTab={selectedTab}
+        />
+      ) : null}
     </div>
   );
 }
@@ -118,7 +149,7 @@ const options = [
     label: "2025",
   },
   {
-    value: "2024",
-    label: "2024",
+    value: "2026",
+    label: "2026",
   },
 ];

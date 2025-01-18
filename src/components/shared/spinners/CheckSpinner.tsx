@@ -1,6 +1,13 @@
 export default function CheckSpinner() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 36 36"
+      style={{
+        width: 36,
+        height: 36,
+      }}
+    >
       <style jsx>{`
         @keyframes scale {
           0% {
@@ -23,7 +30,7 @@ export default function CheckSpinner() {
         .circle {
           fill: black;
           transform-origin: center;
-          animation: scale 2s infinite;
+          animation: scale 2s;
         }
         .checkmark {
           fill: none;
@@ -33,7 +40,7 @@ export default function CheckSpinner() {
           stroke-linejoin: round;
           stroke-dasharray: 48;
           stroke-dashoffset: 48;
-          animation: check 2s infinite;
+          animation: check 2s forwards;
         }
       `}</style>
 

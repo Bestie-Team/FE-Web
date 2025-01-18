@@ -2,6 +2,13 @@ import { GatheringResponse } from "@/models/gathering";
 import { GroupInfoResponse } from "@/models/group";
 import { UserInfo } from "@/models/user";
 import { differenceInDays } from "date-fns";
+import * as lighty from "lighty-type";
+import { GatheringInWhichType } from "@/models/gathering";
+
+export const GatheringType = {
+  GROUP: "GROUP" as lighty.GatheringType,
+  FRIEND: "FRIEND" as lighty.GatheringType,
+};
 
 export const GATHERINGS = [
   {
@@ -305,4 +312,9 @@ export const divide = () => {
       passed: typeof GATHERINGS;
     }
   );
+};
+
+export const GatheringInWhich = {
+  GATHERING: "GATHERING" as GatheringInWhichType,
+  HOME: "HOME" as GatheringInWhichType,
 };

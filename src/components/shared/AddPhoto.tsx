@@ -1,8 +1,10 @@
+"use client";
 import { PlusCircleButtonSmall } from "./buttons/BottomSheetOpenButton";
 import Image from "next/image";
 import * as lighty from "lighty-type";
 import { useEffect, useState } from "react";
-import { handleProfileImageUpdate } from "@/remote/profile";
+import { usePathname } from "next/navigation";
+import useUpdateProfile from "../my/hooks/useUpdateProfile";
 
 export interface UploadType {
   email: string;
@@ -18,38 +20,44 @@ export default function AddPhoto({
   setImageUrl,
 }: {
   small?: boolean;
-  imageUrl?: string | null | File;
+  imageUrl?: string | null;
   setImageUrl?: React.Dispatch<React.SetStateAction<UploadType>>;
 }) {
-  const [image, setImage] = useState("");
-  const [uploadFile, setUploadFile] = useState<File>();
+  const pathname = usePathname();
+  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<string | undefined>(undefined);
+  const { mutate } = useUpdateProfile({
+    file,
+    onError: (error: Error) => console.log(error),
+  });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
-    setUploadFile(file);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result && setImageUrl) {
-          setImageUrl((prev) => ({
-            ...prev,
-            profileImageUrl: file,
-          }));
-        } else if (event.target?.result) {
-          setImage(event.target?.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+    if (!file) return;
+    setFile(file);
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const selectedImage = event.target?.result;
+
+      if (selectedImage && typeof selectedImage === "string") {
+        setImage(selectedImage);
+      }
+      if (setImageUrl) {
+        setImageUrl((prev) => ({
+          ...prev,
+          profileImageUrl: file,
+        }));
+      }
+    };
+    reader.readAsDataURL(file);
   };
-
   useEffect(() => {
-    if (uploadFile !== undefined) {
-      console.log("요청 보냄");
-      handleProfileImageUpdate({ file: uploadFile as File });
+    if (pathname === "/my") {
+      mutate();
     }
-  }, [uploadFile]);
+  }, [file]);
 
   return (
     <label
@@ -76,7 +84,7 @@ export default function AddPhoto({
         >
           {imageUrl || image ? (
             <Image
-              src={(`https://${imageUrl}` as string) || image}
+              src={imageUrl ? imageUrl : image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}
@@ -97,7 +105,7 @@ export default function AddPhoto({
           className="hidden"
           id="fileInput"
           type="file"
-          accept="image/*"
+          accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
           name="imageUrl"
           onChange={handleFileChange}
         />

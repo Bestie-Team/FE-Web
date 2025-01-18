@@ -4,57 +4,42 @@ import TabBar from "@/components/shared/tab/TabBar";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Swiper as SwiperType } from "swiper";
 import CommentContainer from "@/components/shared/comments/CommentContainer";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import {
-  commentModalStateAtom,
-  feedAnimationStatusAtom,
-  feedSelectedTabAtom,
-} from "@/atoms/feed";
+import { useRecoilState } from "recoil";
+import { commentModalStateAtom } from "@/atoms/feed";
 import { recordModalStateAtom } from "@/atoms/record";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
+import { useFeedTabs } from "@/hooks/useFeedTabs";
+import useFeed from "@/components/feeds/hooks/useFeed";
 
 export default function FeedPage() {
+  const [selectedFeed, setSelectedFeed] = useState<string>("");
+  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
+    useFeedTabs();
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const header = getHeader(pathname);
   const hasShadow = useScrollShadow(containerRef);
-  const swiperRef = useRef<SwiperType | null>(null);
-  const [selectedTab, setSelectedTab] = useRecoilState(feedSelectedTabAtom);
-  const setAnimateTab = useSetRecoilState(feedAnimationStatusAtom);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
   const [recordModalOpen, setRecordModalOpen] =
     useRecoilState(recordModalStateAtom);
-
-  const handleSlideChange = (index: number) => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(index); // 원하는 슬라이드로 이동
-    }
-  };
-
-  const handleTabClick = (tabName: "1" | "2") => {
-    if (tabName === "1") {
-      handleSlideChange(0);
-    }
-    if (tabName === "2") {
-      handleSlideChange(1);
-    }
-    setAnimateTab(true);
-    setTimeout(() => {
-      setSelectedTab(tabName);
-      setAnimateTab(false);
-    }, 300);
-  };
+  const minDate = new Date("2025-01-01").toISOString();
+  const maxDate = new Date("2025-12-31").toISOString();
+  const { data: feed } = useFeed({
+    order: "DESC",
+    minDate,
+    maxDate,
+    limit: 10,
+  });
 
   return (
     <div
@@ -66,7 +51,7 @@ export default function FeedPage() {
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
         <TabBar
-          atom={feedSelectedTabAtom}
+          selectedTab={selectedTab}
           long="medium"
           title1="전체"
           title2="나의 피드"
@@ -74,26 +59,27 @@ export default function FeedPage() {
         />
         <FilterBar />
       </div>
-      <Swiper
-        initialSlide={Number(selectedTab) - 1}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        onSlideChange={(swiper) => {
-          setSelectedTab(String(swiper.activeIndex + 1) as "1" | "2");
-        }}
-        slidesPerView={1}
-        spaceBetween={2}
-        className="custom-swiper w-full"
-      >
-        <SwiperSlide>
-          <Feed which="1" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Feed which="2" />
-        </SwiperSlide>
-      </Swiper>
-
+      {feed ? (
+        <Swiper
+          initialSlide={Number(selectedTab) - 1}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          onSlideChange={(swiper) => {
+            handleSlideChange(swiper.activeIndex);
+          }}
+          slidesPerView={1}
+          spaceBetween={2}
+          className="custom-swiper w-full"
+        >
+          <SwiperSlide>
+            <Feed which="1" feeds={feed?.feeds} onClickFeed={setSelectedFeed} />
+          </SwiperSlide>
+          {/* <SwiperSlide>
+            <Feed which="2" />
+          </SwiperSlide> */}
+        </Swiper>
+      ) : null}
       {recordModalOpen ? (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}
@@ -102,6 +88,7 @@ export default function FeedPage() {
       ) : null}
       {commentModalOpen ? (
         <CommentContainer
+          selectedFeedId={selectedFeed}
           onClose={() => {
             setCommentModalOpen(false);
           }}

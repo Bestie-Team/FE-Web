@@ -1,3 +1,4 @@
+import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import TimelineItem from "./TimelineItem";
@@ -10,10 +11,10 @@ export default function UpcomingSchedule() {
       <div className="relative">
         <div className={styles.timelineWrapper} />
         {schedules.map((schedule, i) => (
-          <>
-            <TimelineItem imageUrl={schedule} key={i} />
+          <React.Fragment key={i}>
+            <TimelineItem imageUrl={schedule} />
             <Spacing size={48} />
-          </>
+          </React.Fragment>
         ))}
       </div>
     </Flex>

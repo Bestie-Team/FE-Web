@@ -15,12 +15,24 @@ import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import getHeader from "@/utils/getHeader";
 import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
+import { useEffect } from "react";
+import { GatheringInWhich } from "@/constants/gathering";
 
 export default function HomePage() {
   useChangeHeaderStyle();
   const pathname = usePathname();
   const header = getHeader(pathname);
-  const [modalOpen, setModalOpen] = useRecoilState(homeModalStateAtom);
+  const [isNew, setIsNew] = useRecoilState(homeModalStateAtom);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refParam = urlParams.get("ref");
+
+    if (refParam === "signup") {
+      setIsNew(true);
+      console.log("from signup");
+    }
+  }, []);
 
   return (
     <div
@@ -40,12 +52,12 @@ export default function HomePage() {
           <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
           <ArrowRightIcon width="16" height="16" color="#808080" />
         </Flex>
-        <Gathering which="2" className="pt-[16px]" />
+        <Gathering where={GatheringInWhich.HOME} className="pt-[16px]" />
       </Flex>
-      {modalOpen && (
+      {isNew && (
         <WelcomeBottomSheet
           onClose={() => {
-            setModalOpen(false);
+            setIsNew(false);
           }}
         />
       )}

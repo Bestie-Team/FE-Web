@@ -12,7 +12,7 @@ export default function useFriends({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["friends", { name, accountId, limit }],
+    queryKey: ["friends", { accountId, limit }],
     queryFn: (): Promise<lighty.FriendListResponse> => {
       return getFriends({ name, accountId, limit });
     },

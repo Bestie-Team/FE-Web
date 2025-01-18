@@ -24,12 +24,12 @@ export async function postFriends({ userId }: { userId: string }) {
   });
 
   const data = await response.json();
-
+  console.log(data);
   if (!response.ok) {
-    throw new Error("Failed to delete group member");
+    throw new Error("Failed to friend request");
   }
 
-  return data;
+  return data || {};
 }
 
 /** 친구 목록 조회 */
@@ -66,6 +66,7 @@ export async function getFriends({
   });
 
   const data: lighty.FriendListResponse = await response.json();
+  console.log(data);
   if (!response.ok) {
     throw new Error("친구 목록 조회에 실패하였습니다.");
   }
@@ -96,8 +97,7 @@ export async function postAcceptFriend({ friendId }: { friendId: string }) {
   if (!response.ok) {
     throw new Error("친구 요청 수락에 실패하였습니다,");
   }
-  const data = await response.json();
-  return data;
+  return { message: "친구 요청을 수락하였습니다" };
 }
 
 /** 친구 요청 거절 */
@@ -125,7 +125,7 @@ export async function postRejectFriend({ friendId }: { friendId: string }) {
   if (!response.ok) {
     throw new Error("친구 요청 거절에 실패하였습니다.");
   }
-  return data;
+  return data || {};
 }
 
 /** 받은 친구 요청 목록 조회 */
@@ -219,7 +219,6 @@ export async function getSearchFriends({
   search: string;
 }) {
   try {
-    if (search === "") return;
     const cursor = { name, accountId };
 
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;

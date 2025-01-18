@@ -15,19 +15,57 @@ import UserIcon from "@/components/shared/icons/UserIcon";
 import GatheringInput from "@/components/shared/inputs/GatheringInput";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
-import { GatheringInfo } from "@/models/gathering";
+import { CreateGatheringRequest } from "@/models/gathering";
 import getHeader from "@/utils/getHeader";
-import { format } from "date-fns";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { isValid } from "date-fns";
 import { useRecoilState } from "recoil";
+import { formatToKoreanTime } from "@/utils/makeUTC";
+import MakingInvitation from "@/components/gathering/MakingInvitation";
+import StepToInvitation from "@/components/groups/StepToInvitation";
 
 export default function NewGatheringPage() {
+  const [step, setStep] = useState(1);
   const pathname = usePathname();
   const header = getHeader(pathname);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [gatheringInfo, setGatheringInfo] =
-    useRecoilState<GatheringInfo>(newGatheringInfo);
+    useRecoilState<CreateGatheringRequest>(newGatheringInfo);
+
+  const isGroupInfoValid = () => {
+    if (
+      gatheringInfo.name.length <= 2 ||
+      gatheringInfo.description.length <= 10 ||
+      gatheringInfo.type == null ||
+      gatheringInfo.gatheringDate == null ||
+      gatheringInfo.address.length < 1 ||
+      gatheringInfo.invitationImageUrl == null ||
+      gatheringInfo.groupId == null ||
+      gatheringInfo.friendIds == null
+    ) {
+      if (
+        (gatheringInfo.groupId == null && gatheringInfo.friendIds == null) ||
+        (gatheringInfo.groupId == null &&
+          gatheringInfo.friendIds &&
+          gatheringInfo.friendIds.length < 1)
+      )
+        return false;
+      else return true;
+    }
+  };
+
+  if (step === 2) {
+    return <StepToInvitation setStep={setStep} />;
+  }
+  if (step === 3) {
+    return (
+      <MakingInvitation
+        gathering={gatheringInfo}
+        setGathering={setGatheringInfo}
+      />
+    );
+  }
 
   return (
     <div className="h-screen bg-base-white pt-[48px]">
@@ -84,28 +122,37 @@ export default function NewGatheringPage() {
           <UserIcon width="16" height="16" color="#0A0A0A" />
           <Spacing direction="horizontal" size={4} />
           <span>
-            {gatheringInfo.type === "friend"
+            {gatheringInfo.type === "FRIEND"
               ? "초대할 친구"
               : "초대할 친구 그룹"}
           </span>
         </Flex>
         <Spacing size={8} />
-        {gatheringInfo.type === "friend" ? (
+        {gatheringInfo.type === "FRIEND" ? (
           <AddFriendsSlider setGathering={setGatheringInfo} type="gathering" />
         ) : (
-          <AddGroupSlider />
+          <AddGroupSlider
+            setGatheringInfo={setGatheringInfo}
+            gatheringInfo={gatheringInfo}
+          />
         )}
         <Spacing size={36} />
         <div className="grid grid-cols-2 gap-4">
           <GatheringInput
             type="date"
             value={
-              gatheringInfo.date && gatheringInfo.ampm && gatheringInfo.time ? (
+              gatheringInfo.gatheringDate &&
+              isValid(new Date(gatheringInfo.gatheringDate)) ? (
                 <>
-                  <span>{format(gatheringInfo.date, "yyyy.MM.dd")}</span>
+                  <span>
+                    {formatToKoreanTime(gatheringInfo.gatheringDate).slice(
+                      0,
+                      10
+                    )}
+                  </span>
                   <Spacing size={8} />
                   <span>
-                    {gatheringInfo.ampm} {gatheringInfo.time}
+                    {formatToKoreanTime(gatheringInfo.gatheringDate).slice(10)}
                   </span>
                 </>
               ) : (
@@ -134,9 +181,10 @@ export default function NewGatheringPage() {
             }
           />
           <FixedBottomButton
-            label="다음"
+            label={"다음"}
+            disabled={isGroupInfoValid() === false}
             onClick={() => {
-              console.log(gatheringInfo);
+              setStep(2);
             }}
           />
         </div>

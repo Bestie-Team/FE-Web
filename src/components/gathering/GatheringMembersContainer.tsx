@@ -2,12 +2,12 @@ import Image from "next/image";
 import "swiper/css";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
-import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
 
 export default function GatheringMemberContainer({
   members,
 }: {
-  members: UserInfo[];
+  members: lighty.User[];
 }) {
   return (
     <Flex className={styles.memberContainerStyle}>
@@ -20,7 +20,7 @@ export default function GatheringMemberContainer({
         >
           <div className={styles.image}>
             <Image
-              src={profileImageUrl}
+              src={profileImageUrl || "/default.png"}
               alt={`gatheringMember${idx + 1}`}
               width={40}
               height={40}

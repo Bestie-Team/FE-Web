@@ -1,6 +1,6 @@
 "use client";
 import { RecoilRoot } from "recoil";
-
+import React from "react";
 interface Props {
   children?: React.ReactNode;
 }
@@ -15,6 +15,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
 import NavBar from "@/components/shared/NavBar";
 import { usePathname } from "next/navigation";
+import { AuthProvider } from "@/components/shared/providers/AuthProvider";
+import { ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient();
 
@@ -58,7 +60,14 @@ export const NextProvider = ({ children }: Props) => {
   return (
     <GoogleOAuthProvider clientId="819938529870-7ng56emjnvtfds459lrb7h1a9g04r4q5.apps.googleusercontent.com">
       <QueryClientProvider client={queryClient}>
-        <RecoilRoot>{children}</RecoilRoot>
+        <RecoilRoot>
+          <AuthProvider>{children}</AuthProvider>
+          <ToastContainer
+            autoClose={1000}
+            pauseOnFocusLoss={false}
+            pauseOnHover={false}
+          />
+        </RecoilRoot>
       </QueryClientProvider>
     </GoogleOAuthProvider>
   );

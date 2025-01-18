@@ -20,6 +20,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
       <Spacing size={40} />
       <SelectFrameSwiper />
       <FixedBottomButton
+        bgColor="bg-grayscale-50"
         disabled={selectedFrame == null}
         label={"스티커로 꾸미기"}
         onClick={() => {

@@ -25,7 +25,7 @@ export default function ChoosingGatheringToDecorate({
       id: string;
       name: string;
       description: string;
-      invitation_img_url: string;
+      invitationImageUrl: string;
       date: string;
     } | null
   ) => {
@@ -40,7 +40,7 @@ export default function ChoosingGatheringToDecorate({
         <Spacing size={16} />
         <span className="text-T2">어떤 피드의</span>
         <Spacing size={7} />
-        <span className="text-T2">추억 카드를 꾸밀까요?</span>
+        <span className="text-T2">포토 카드를 꾸밀까요?</span>
         <Spacing size={16} />
         <span className="text-B3 text-grayscale-500">
           직접 작성한 피드만 카드로 꾸밀 수 있어요.

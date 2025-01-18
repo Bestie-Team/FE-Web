@@ -5,11 +5,12 @@ export default function useGroup({
   cursor,
   limit,
 }: {
-  cursor: string;
+  cursor: string | null;
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["groups", { cursor, limit }],
+    queryKey: ["groups"],
     queryFn: () => getGroups({ cursor, limit }),
+    refetchOnWindowFocus: true,
   });
 }

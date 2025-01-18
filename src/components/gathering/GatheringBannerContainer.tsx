@@ -2,18 +2,19 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
-import { differenceInDays, format } from "date-fns";
-import { ko } from "date-fns/locale";
-import { GatheringResponse } from "@/models/gathering";
+import { addHours, differenceInDays } from "date-fns";
+import { GatheringDetailResponse } from "@/models/gathering";
+import { formatToDisplay, formatToKoreanTime } from "@/utils/makeUTC";
 
 export default function GatheringBannerContainer({
   gathering,
 }: {
-  gathering: GatheringResponse;
+  gathering: GatheringDetailResponse;
 }) {
-  const dateInfo = format(gathering.date, "yyyy.MM.dd (E)", { locale: ko });
-  const diff = differenceInDays(new Date(), gathering.date);
-
+  const convertedDate = formatToKoreanTime(gathering.gatheringDate);
+  const date = addHours(new Date(gathering.gatheringDate), 9);
+  const diff = differenceInDays(new Date(), new Date(date));
+  const displayingDate = formatToDisplay(gathering.gatheringDate);
   return (
     <Flex>
       <div className="relative">
@@ -21,7 +22,7 @@ export default function GatheringBannerContainer({
           priority
           alt="gatheringBanner"
           src={
-            gathering.invitation_img_url ||
+            gathering.invitationImageUrl ||
             "https://cdn.lighty.today/gathering.png"
           }
           width={600}
@@ -47,10 +48,10 @@ export default function GatheringBannerContainer({
               )}
             </Flex>
             <Spacing size={4} />
-            <span className={styles.date}>{dateInfo}</span>
+            <span className={styles.date}>{displayingDate.slice(0, 14)}</span>
           </Flex>
           <div className={styles.diff}>
-            {diff > 0 ? `D + ${diff}` : `D${diff}`}
+            {diff >= 0 ? `D + ${diff}` : `D${diff}`}
           </div>
         </Flex>
       </div>

@@ -49,6 +49,13 @@ body {
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+input:-internal-autofill-selected {
+  background-image: none !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  appearance: unset !important;
+}
+
 #__daum__layer_1 {
   -ms-overflow-style: none;
   scrollbar-width: none;

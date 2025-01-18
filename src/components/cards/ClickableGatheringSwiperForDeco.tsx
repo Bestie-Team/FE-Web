@@ -18,7 +18,7 @@ export default function ClickableGatheringSwiperForDeco({
       id: string;
       name: string;
       description: string;
-      invitation_img_url: string;
+      invitationImageUrl: string;
       date: string;
     } | null
   ) => void;
@@ -28,13 +28,13 @@ export default function ClickableGatheringSwiperForDeco({
     id,
     name,
     description,
-    invitation_img_url,
+    invitationImageUrl,
     date,
   }: {
     id: string;
     name: string;
     description: string;
-    invitation_img_url: string;
+    invitationImageUrl: string;
     date: string;
   }) => {
     if (onImageClick) {
@@ -46,7 +46,7 @@ export default function ClickableGatheringSwiperForDeco({
         id,
         name,
         description,
-        invitation_img_url,
+        invitationImageUrl,
         date,
       });
     } else return;
@@ -61,14 +61,14 @@ export default function ClickableGatheringSwiperForDeco({
         className="custom-swiper w-full h-[340px]"
       >
         {gathering.map(
-          ({ invitation_img_url, id, name, description, date }, idx) => (
+          ({ invitationImageUrl, id, name, description, date }, idx) => (
             <SwiperSlide
               onClick={() =>
                 handleGatheringClick({
                   id,
                   name,
                   description,
-                  invitation_img_url,
+                  invitationImageUrl,
                   date,
                 })
               }
@@ -76,7 +76,7 @@ export default function ClickableGatheringSwiperForDeco({
               key={`gathering_${id}`}
             >
               <Image
-                src={invitation_img_url}
+                src={invitationImageUrl}
                 alt={`gathering${idx + 1}`}
                 className={styles.image}
                 width={270}

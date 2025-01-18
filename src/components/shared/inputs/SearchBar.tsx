@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 import SearchIcon from "../icons/SearchIcon";
 import clsx from "clsx";
+import { useSetRecoilState } from "recoil";
+import { friendSearchAtom, userSearchAtom } from "@/atoms/friends";
 
 export default function SearchInput({
   className,
   placeholder,
+  type,
 }: {
   className?: string;
   placeholder: string;
+  type?: "users" | "friends";
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
+  const setUserSearch = useSetRecoilState(userSearchAtom);
+  const setFriendSearch = useSetRecoilState(friendSearchAtom);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (type === "users") {
+      setUserSearch(event.target.value);
+    } else if (type === "friends") {
+      setFriendSearch(event.target.value);
+    }
     setInputValue(event.target.value);
+  };
 
   return (
     <div

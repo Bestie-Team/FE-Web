@@ -2,7 +2,7 @@
 import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
 import LightyCalendarWithBorder from "@/components/shared/calendar/CalendarWithBorder";
 import LightySelect from "@/components/shared/filter";
-import { OptionType } from "@/components/shared/FilterBar";
+import { SelectOptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
@@ -16,7 +16,7 @@ export default function SchedulePage() {
   const pathname = usePathname();
   const header = getHeader(pathname);
   const hasShadow = useScrollShadow(containerRef);
-  const [year, setYear] = useState<OptionType | null>({
+  const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",
     label: "2025",
   });
@@ -48,7 +48,7 @@ export default function SchedulePage() {
 
 const styles = {
   header: "max-w-[430px] fixed z-10 w-full pl-[20px] bg-base-white",
-  container: "items-center mt-[60px] px-[20px] overflow-x-scroll no-scrollbar",
+  container: "items-center mt-[62px] px-[20px] overflow-x-scroll no-scrollbar",
 };
 
 const options = [

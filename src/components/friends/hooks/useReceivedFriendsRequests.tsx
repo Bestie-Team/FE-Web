@@ -11,9 +11,10 @@ export default function useReceivedFriendsRequests({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["received", "friendsRequests", { name, accountId, limit }],
+    queryKey: ["received", "friendsRequests", { accountId, limit }],
     queryFn: () => {
       return getReceivedFriendRequestsList({ name, accountId, limit });
     },
+    refetchOnWindowFocus: true,
   });
 }

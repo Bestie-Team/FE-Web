@@ -1,15 +1,16 @@
 import { newGatheringInfo } from "@/atoms/gathering";
-import { GatheringInfo, GatheringType } from "@/models/gathering";
+import { GatheringType } from "@/constants/gathering";
+import { CreateGatheringRequest } from "@/models/gathering";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
 
 const AnimatedTabButton = () => {
   const [selectedGathering, setSelectedGathering] =
-    useRecoilState<GatheringInfo>(newGatheringInfo);
+    useRecoilState<CreateGatheringRequest>(newGatheringInfo);
 
   const tabs = [
-    { id: "friend", label: "일반 모임" },
-    { id: "group", label: "그룹 모임" },
+    { id: GatheringType.FRIEND, label: "일반 모임" },
+    { id: GatheringType.GROUP, label: "그룹 모임" },
   ];
 
   return (
@@ -21,7 +22,7 @@ const AnimatedTabButton = () => {
         }}
         className={clsx(
           styles.slider,
-          selectedGathering.type === "group"
+          selectedGathering.type === "GROUP"
             ? "translate-x-full"
             : "translate-x-0"
         )}
@@ -34,7 +35,7 @@ const AnimatedTabButton = () => {
             onClick={() =>
               setSelectedGathering((prev) => ({
                 ...prev,
-                type: tab.id as GatheringType,
+                type: tab.id,
               }))
             }
             className={clsx(
@@ -61,5 +62,5 @@ const styles = {
     "absolute h-8 w-[75px] py-[10px] bg-base-white rounded-full shadow-md transition-transform duration-300 ease-in-out",
 
   button:
-    "flex items-center h-8 px-4 py-[10px] rounded-full text-C1 transition-colors duration-300 z-10",
+    "cursor-pointer flex items-center h-8 px-4 py-[10px] rounded-full text-C1 transition-colors duration-300 z-10",
 };

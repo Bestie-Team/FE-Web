@@ -1,5 +1,5 @@
 import Flex from "../shared/Flex";
-import LightyLogo from "../shared/icons/LightyLogo";
+import CalendarLightyIcon from "../shared/icons/CalendarLightyIcon";
 
 export default function DateItem({ date, day }: { date: number; day: string }) {
   return (
@@ -7,7 +7,7 @@ export default function DateItem({ date, day }: { date: number; day: string }) {
       <div className={styles.day}>{day}</div>
       <div className={styles.date}>{date}</div>
       <div>
-        <LightyLogo width="8" height="8" />
+        <CalendarLightyIcon />
       </div>
     </Flex>
   );

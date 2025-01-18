@@ -6,16 +6,45 @@ import Flex from "../shared/Flex";
 import CalendarIcon from "../shared/icons/CalendarIcon";
 import MapPinIcon from "../shared/icons/MapPinIcon";
 import Button from "../shared/buttons/Button";
-import { useRecoilValue } from "recoil";
-import { invitationSelectedTabAtom } from "@/atoms/invitation";
 import GroupMemberImages from "../shared/GroupMemberImages";
+import { formatToKoreanTime } from "@/utils/makeUTC";
+import { useRecoilValue } from "recoil";
+import { selectedInvitationAtom } from "@/atoms/invitation";
+import useAcceptInvitationToGathering from "../gathering/hooks/useAcceptInvitationToGathering";
+import useRejectInvitationToGathering from "../gathering/hooks/useRejectInvitationToGathering";
+import { SuccessResponse } from "@/models/response";
 
 export default function InvitationModal({
+  selectedTab,
   onClickClose,
 }: {
+  selectedTab: "1" | "2";
   onClickClose: (value: boolean) => void;
 }) {
-  const selectedTab = useRecoilValue(invitationSelectedTabAtom);
+  const selectedInvitation = useRecoilValue(selectedInvitationAtom);
+  const { mutate: accept } = useAcceptInvitationToGathering({
+    invitationId: selectedInvitation?.id || "",
+    onSuccess: (data: SuccessResponse) => alert(data.message),
+  });
+
+  const { mutate: reject } = useRejectInvitationToGathering({
+    invitationId: selectedInvitation?.id || "",
+    onSuccess: (data: SuccessResponse) => alert(data.message),
+  });
+
+  if (!selectedInvitation) return;
+
+  const { name, description, gatheringDate, address, sender } =
+    selectedInvitation;
+
+  const convertedTime = formatToKoreanTime(gatheringDate).slice(11);
+
+  const handleAccept = () => {
+    accept();
+  };
+  const handleReject = () => {
+    reject();
+  };
 
   return (
     <Dimmed className={styles.dimmed}>
@@ -36,37 +65,37 @@ export default function InvitationModal({
         <Spacing size={8} />
         <div className="relative">
           <Image
-            src="https://cdn.lighty.today/invitationV.png"
+            src="/vertical_invitation.png"
             alt="verticalBar"
             width={330}
             height={460}
           />
           <Flex direction="column" className={styles.mainContentWrapper}>
             <Image
-              src="https://cdn.lighty.today/dishes.jpg"
+              src={"https://cdn.lighty.today/dishes.jpg"}
               className={styles.image}
               width={300}
               height={210}
               alt="invitationImage"
             />
             <Spacing size={10} />
-            <span className="text-T1 pl-[4px]">christmas party</span>
+            <span className="text-T1 pl-[4px]">{name}</span>
             <span className="text-B4 pl-[4px] text-grayscale-600">
-              먹고 죽는 크리스마스 돼지 파티에 초대합니다.
+              {description}
             </span>
           </Flex>
           <Flex direction="column" className={styles.subContentWrapper}>
             <Flex align="center">
               <CalendarIcon width="14" height="14" color="#AEAEAE" />
               <Spacing direction="horizontal" size={8} />
-              <span className="text-B4">christmas party</span>
+              <span className="text-B4">{name}</span>
               <Spacing direction="horizontal" size={8} />
-              <span className="text-B4">오후 6:00</span>
+              <span className="text-B4">{convertedTime}</span>
             </Flex>
             <Flex align="center">
               <MapPinIcon />
               <Spacing direction="horizontal" size={8} />
-              <span className="text-B4">성수 에이바</span>
+              <span className="text-B4">{address}</span>
             </Flex>
           </Flex>
           <div className={styles.groupMemberImagesWrapper}>
@@ -80,16 +109,20 @@ export default function InvitationModal({
           <Flex align="center" className={styles.fromWrapper}>
             <span className="text-T5 text-grayscale-300">from</span>
             <Spacing direction="horizontal" size={4} />
-            <span className="text-B3">Maybin_</span>
+            <span className="text-B3">{sender}</span>
           </Flex>
         </div>
         {selectedTab === "1" ? (
           <>
             <Spacing size={16} />
             <Flex justify="center">
-              <Button className={styles.rejectBtn}>거절</Button>
+              <Button className={styles.rejectBtn} onClick={handleReject}>
+                거절
+              </Button>
               <Spacing size={15} direction="horizontal" />
-              <Button className={styles.acceptBtn}>수락</Button>
+              <Button className={styles.acceptBtn} onClick={handleAccept}>
+                수락
+              </Button>
             </Flex>
           </>
         ) : null}

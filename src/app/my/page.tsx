@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function MyPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,9 +20,9 @@ export default function MyPage() {
   const [open, setOpen] = useState(false);
   const [privatePolicyOpen, setPrivatePolicyOpen] = useState(false);
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [profileImageUrl, setProfileImageUrl] = useState<string | undefined>(
-    undefined
-  );
+  const [profileInfo, setProfileInfo] = useState<
+    { profileImageUrl: string; accountId: string } | undefined
+  >(undefined);
 
   const onClickTermOfUse = (term?: string) => {
     if (term && term === "privatePolicy") {
@@ -31,8 +32,32 @@ export default function MyPage() {
 
   useEffect(() => {
     setIsClient(true);
-    const storedImageUrl = localStorage.getItem("profile_image_url") as string;
-    setProfileImageUrl(storedImageUrl);
+
+    const imageUrlAfterSignup = localStorage.getItem(
+      STORAGE_KEYS.PROFILE_IMAGE_URL
+    );
+    const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+
+    if (imageUrlAfterSignup != null && userInfoSession != null) {
+      const userInfo: { accountId: string; profileImageUrl: string } =
+        JSON.parse(userInfoSession);
+
+      setProfileInfo((prev) => ({
+        ...prev,
+        profileImageUrl: imageUrlAfterSignup,
+        accountId: userInfo.accountId,
+      }));
+      return;
+    } else if (userInfoSession != null) {
+      const userInfo: { accountId: string; profileImageUrl: string } =
+        JSON.parse(userInfoSession);
+      setProfileInfo((prev) => ({
+        ...prev,
+        profileImageUrl: userInfo.profileImageUrl,
+        accountId: userInfo.accountId,
+      }));
+      return;
+    }
   }, []);
 
   if (!isClient) {
@@ -54,7 +79,10 @@ export default function MyPage() {
         {header}
       </div>
       <Spacing size={68} />
-      <UserProfile userProfileImage={profileImageUrl} />
+      <UserProfile
+        userProfileImage={profileInfo?.profileImageUrl}
+        userAccountId={profileInfo?.accountId}
+      />
       <Spacing size={12} />
       <MyMainInfo />
       <Spacing size={16} />

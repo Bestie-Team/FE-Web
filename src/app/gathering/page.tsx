@@ -1,58 +1,35 @@
 "use client";
-import {
-  gatheringAnimationStatusAtom,
-  gatheringModalStateAtom,
-  gatheringSelectedTabAtom,
-  newGatheringInfo,
-} from "@/atoms/gathering";
-import FilterBar from "@/components/shared/FilterBar";
-import TabBar from "@/components/shared/tab/TabBar";
-import useScrollShadow from "@/hooks/useScrollShadow";
-import clsx from "clsx";
+
+import React, { Suspense, useEffect, useRef } from "react";
 import { Swiper as SwiperType } from "swiper";
-import { Suspense, useEffect, useRef } from "react";
-import React from "react";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+
+import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
+import FilterBar from "@/components/shared/FilterBar";
+import TabBar from "@/components/shared/tab/TabBar";
 import Gathering from "@/components/gathering/Gathering";
 import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+
+import useScrollShadow from "@/hooks/useScrollShadow";
 import { usePathname } from "next/navigation";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
+import { useGatheringTabs } from "@/hooks/useGatheringTabs";
+import { GatheringInWhich } from "@/constants/gathering";
 
 export default function MyGatheringPage() {
   const pathname = usePathname();
   const header = getHeader(pathname);
+
   const resetNewGatheringInfo = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
-  const setAnimateTab = useSetRecoilState(gatheringAnimationStatusAtom);
-  const [selectedTab, setSelectedTab] = useRecoilState(
-    gatheringSelectedTabAtom
-  );
+
+  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
+    useGatheringTabs();
   const containerRef = useRef<HTMLDivElement>(null);
   const hasShadow = useScrollShadow(containerRef);
-
-  const swiperRef = useRef<SwiperType | null>(null);
-
-  const handleSlideChange = (index: number) => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(index);
-    }
-  };
-
-  const handleTabClick = (tabName: "1" | "2") => {
-    if (tabName === "1") {
-      handleSlideChange(0);
-    }
-    if (tabName === "2") {
-      handleSlideChange(1);
-    }
-    setAnimateTab(true);
-    setTimeout(() => {
-      setSelectedTab(tabName);
-      setAnimateTab(false);
-    }, 300);
-  };
 
   useEffect(() => {
     resetNewGatheringInfo();
@@ -61,54 +38,77 @@ export default function MyGatheringPage() {
   return (
     <div
       ref={containerRef}
-      className="bg-base-white h-screen overflow-y-scroll no-scrollbar"
+      className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
     >
       {header}
-      <div
-        className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
-      >
-        <TabBar
-          atom={gatheringSelectedTabAtom}
-          long="short"
-          title1="예정"
-          title2="완료"
-          onClick={handleTabClick}
-        />
-        <FilterBar />
-      </div>
-      <Swiper
-        initialSlide={Number(selectedTab) - 1}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        onSlideChange={(swiper) => {
-          setSelectedTab(String(swiper.activeIndex + 1) as "1" | "2");
-        }}
-        slidesPerView={1}
-        spaceBetween={2}
-        direction="horizontal"
-      >
-        <SwiperSlide>
-          <Suspense fallback={<div>로딩중</div>}>
-            <Gathering which="1" />
-          </Suspense>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Suspense fallback={<div>로딩중</div>}>
-            <Gathering which="2" />
-          </Suspense>
-        </SwiperSlide>
-      </Swiper>
-      {modalOpen && (
-        <MemoriesBottomSheet
-          onClose={() => {
-            setModalOpen(false);
-          }}
-        />
-      )}
+      <FilterAndTabs
+        hasShadow={hasShadow}
+        onTabClick={handleTabClick}
+        selectedTab={selectedTab}
+      />
+      <GatheringSwiper
+        selectedTab={selectedTab}
+        swiperRef={swiperRef}
+        onSlideChange={(index) => handleSlideChange(index)}
+      />
+      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>
   );
 }
 
-const filterWrapperStyle =
-  "max-w-[430px] pl-[20px] fixed z-10 flex flex-col w-full bg-base-white transition-shadow duration-300";
+function FilterAndTabs({
+  hasShadow,
+  onTabClick,
+  selectedTab,
+}: {
+  hasShadow: boolean;
+  onTabClick: (tabName: "1" | "2") => void;
+  selectedTab: "1" | "2";
+}) {
+  return (
+    <div
+      className={clsx(
+        "max-w-[430px] pl-[20px] flex flex-col w-full bg-base-white transition-shadow duration-300",
+        hasShadow ? "shadow-bottom" : ""
+      )}
+    >
+      <TabBar
+        selectedTab={selectedTab}
+        long="short"
+        title1="예정"
+        title2="완료"
+        onClick={onTabClick}
+      />
+      <FilterBar />
+    </div>
+  );
+}
+
+function GatheringSwiper({
+  selectedTab,
+  swiperRef,
+  onSlideChange,
+}: {
+  selectedTab: string;
+  swiperRef: React.MutableRefObject<SwiperType | null>;
+  onSlideChange: (index: number) => void;
+}) {
+  return (
+    <Swiper
+      initialSlide={Number(selectedTab) - 1}
+      onSwiper={(swiper) => (swiperRef.current = swiper)}
+      onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
+      slidesPerView={1}
+      spaceBetween={2}
+      direction="horizontal"
+    >
+      {[GatheringInWhich.HOME, GatheringInWhich.GATHERING].map((which) => (
+        <SwiperSlide key={which}>
+          <Suspense fallback={<div>로딩중</div>}>
+            <Gathering where={which} />
+          </Suspense>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
+}

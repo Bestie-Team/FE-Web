@@ -1,4 +1,4 @@
-import Record from "@/components/record";
+import Record from "@/components/feeds";
 export default function RecordPage() {
   return <Record />;
 }

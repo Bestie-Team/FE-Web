@@ -1,6 +1,19 @@
-export default function DotSpinner() {
+export default function DotSpinner({
+  width,
+  height,
+}: {
+  width?: number;
+  height?: number;
+}) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      style={{
+        width: width ?? 18.67,
+        height: height ?? 18.67,
+      }}
+    >
       <style jsx>{`
         @keyframes highlight {
           0%,

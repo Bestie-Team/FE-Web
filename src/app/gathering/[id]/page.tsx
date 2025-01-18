@@ -9,12 +9,10 @@ import MapPinIcon from "@/components/shared/icons/MapPinIcon";
 import UserIcon from "@/components/shared/icons/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import Image from "next/image";
-import { GATHERINGS } from "@/constants/gathering";
-import { GatheringResponse } from "@/models/gathering";
-import { format } from "date-fns";
-import { ko } from "date-fns/locale";
 import getHeader from "@/utils/getHeader";
 import { usePathname } from "next/navigation";
+import { formatToKoreanTime } from "@/utils/makeUTC";
+import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 
 export default function GatheringDetailPage({
   params,
@@ -24,23 +22,21 @@ export default function GatheringDetailPage({
   const pathname = usePathname();
   const header = getHeader(pathname);
   const gatheringId = params.id;
-  const gathering = GATHERINGS.find(
-    (g) => g.id === gatheringId
-  ) as GatheringResponse;
+  const { data: selectedGathering } = useGatheringDetail({ gatheringId });
 
-  if (!gathering) {
+  if (!selectedGathering) {
     return <div>모임을 찾을 수 없습니다.</div>;
   }
 
-  const { date, group, address, ampm, time } = gathering;
+  const { gatheringDate, members, hostUser, address } = selectedGathering;
 
-  const dateInfo = format(date, "yyyy.MM.dd (E)", { locale: ko });
+  const convertedDate = formatToKoreanTime(gatheringDate);
 
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       {header}
-      <GatheringBannerContainer gathering={gathering} />
-      <GroupLeaderContainer groupLeader={group.groupLeader} />
+      <GatheringBannerContainer gathering={selectedGathering} />
+      <GroupLeaderContainer groupLeader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<CalendarIcon width="20" height="20" />}
@@ -71,9 +67,11 @@ export default function GatheringDetailPage({
         title={<span className={styles.title}>모임 시간</span>}
         content={
           <Flex className={styles.contentWrapper}>
-            <span>{dateInfo}</span>
+            <span>{convertedDate.slice(0, 10)}</span>
             <Spacing size={12} direction="horizontal" />
-            <span className="text-grayscale-400">{`${ampm} ${time}`}</span>
+            <span className="text-grayscale-400">
+              {convertedDate.slice(10)}
+            </span>
           </Flex>
         }
       />
@@ -81,11 +79,9 @@ export default function GatheringDetailPage({
       <GatheringInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
         title={
-          <span
-            className={styles.title}
-          >{`모임 멤버 ${group.members.length}`}</span>
+          <span className={styles.title}>{`모임 멤버 ${members.length}`}</span>
         }
-        content={<GatheringMembersSlider members={group.members} />}
+        content={<GatheringMembersSlider members={members} />}
       />
     </Flex>
   );

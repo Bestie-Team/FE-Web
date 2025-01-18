@@ -1,33 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import PhotoIcon from "../shared/icons/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
-import { GroupInfo } from "@/models/group";
+import * as lighty from "lighty-type";
+import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
 
 export default function AddGroupPhoto({
   image,
   setImage,
 }: {
   image: string | null;
-  setImage: SetterOrUpdater<GroupInfo>;
+  setImage: SetterOrUpdater<lighty.CreateGroupRequest>;
 }) {
+  const [groupImageFile, setGroupImageFile] = useState<File>();
+  const { mutate: uploadGroupCover, isPending } = useUploadGroupCoverImage({
+    file: groupImageFile as File,
+    onSuccess: (data) => {
+      setImage((prev) => ({
+        ...prev,
+        groupImageUrl: data,
+      }));
+      console.log("making upload success");
+    },
+  });
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
+
     if (file) {
+      setGroupImageFile(file);
       const reader = new FileReader();
       reader.onload = (event) => {
-        if (event.target?.result) {
+        const selectedImage = event.target?.result;
+        if (selectedImage && typeof selectedImage === "string") {
           setImage((prev) => ({
             ...prev,
-            groupImageUrl: event.target?.result as string,
+            groupImageUrl: selectedImage,
           }));
         }
       };
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    if (groupImageFile) {
+      uploadGroupCover();
+    }
+  }, [groupImageFile]);
 
   return (
     <label
@@ -50,7 +71,7 @@ export default function AddGroupPhoto({
             alt="upload_image"
             width={170}
             height={170}
-            className="object-cover"
+            className="object-cover w-[170px] h-[170px]"
           />
         ) : (
           <>
@@ -63,7 +84,7 @@ export default function AddGroupPhoto({
       <input
         id="fileInput"
         type="file"
-        accept="image/*"
+        accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
         className="hidden"
         onChange={handleFileChange}
       />

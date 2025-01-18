@@ -3,15 +3,15 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Options from "../shared/Options";
 import { GroupInfoResponse } from "@/models/group";
-import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 
-export default function InfoBar({ group }: { group: GroupInfoResponse }) {
+export default function InfoBar({ members }: { members: lighty.User[] }) {
   return (
     <Flex align="center" className="px-[20px]">
       <WriterInfo />
       <div style={{ flexGrow: 1 }} />
-      <TogetherInfo members={group.members} />
+      <TogetherInfo members={members} />
       <Spacing direction="horizontal" size={12} />
       <Options type="default" />
     </Flex>
@@ -38,7 +38,7 @@ function WriterInfo() {
   );
 }
 
-export function TogetherInfo({ members }: { members: UserInfo[] }) {
+export function TogetherInfo({ members }: { members: lighty.User[] }) {
   return (
     <Flex
       align="center"

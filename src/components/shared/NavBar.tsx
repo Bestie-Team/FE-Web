@@ -6,6 +6,7 @@ import SheetOpenBtnContainer from "./bottomSheet/shared/SheetOpenBtnContainer";
 import { useRecoilState } from "recoil";
 import { locationStatusAtom } from "@/atoms/location";
 import NAV_ITEMS from "@/constants/navBarConstants";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function NavBar() {
   const [activeBtn, setActiveBtn] = useRecoilState<number>(locationStatusAtom);
@@ -25,9 +26,20 @@ export default function NavBar() {
 
   useEffect(() => {
     setIsClient(true);
-    const storedImageUrl = localStorage.getItem("profile_image_url") as string;
+    const imageUrlAfterSignup = localStorage.getItem(
+      STORAGE_KEYS.PROFILE_IMAGE_URL
+    );
 
-    setProfileImageUrl(storedImageUrl);
+    if (imageUrlAfterSignup != null) {
+      setProfileImageUrl(imageUrlAfterSignup);
+    }
+    const user_info = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+
+    if (user_info != null) {
+      const storedImageUrl: { accountId: string; profileImageUrl: string } =
+        JSON.parse(user_info);
+      setProfileImageUrl(storedImageUrl.profileImageUrl);
+    }
   }, []);
 
   if (!isClient) {
@@ -48,10 +60,7 @@ export default function NavBar() {
             className={iconWrapperStyle}
             onMouseDown={() => setActiveBtn(idx)}
           >
-            {item.icon(
-              isActive,
-              profileImageUrl ? `https://${profileImageUrl}` : ""
-            )}
+            {item.icon(isActive, profileImageUrl ? `${profileImageUrl}` : "")}
           </Link>
         );
       })}

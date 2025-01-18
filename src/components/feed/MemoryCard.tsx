@@ -1,19 +1,33 @@
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
-import InfoBar from "./InfoBar";
 import PhotoSwiper from "../shared/PhotoSwiper";
-import { GROUPS } from "@/constants/groups";
+import { Feed } from "@/models/feed";
+import { Dispatch, SetStateAction } from "react";
 
-export default function MemoryCard({ images }: { images: string[] }) {
-  const members = GROUPS[0];
+export default function MemoryCard({
+  feed,
+  onClick,
+}: {
+  feed: Feed;
+  onClick: Dispatch<SetStateAction<string>>;
+}) {
   return (
-    <Flex direction="column" className="py-[12px]">
-      <InfoBar group={members} />
+    <Flex
+      direction="column"
+      className="py-[12px]"
+      onClick={() => {
+        onClick(feed.id);
+      }}
+    >
+      {/* <InfoBar group={members} /> */}
       <Spacing size={12} />
-      <PhotoSwiper images={images} type="feed" />
+      <PhotoSwiper feed={feed} type="feed" />
       <Spacing size={8} />
-      <ContentWithComments />
+      <ContentWithComments
+        content={feed.content}
+        commentCount={feed.commentCount}
+      />
     </Flex>
   );
 }

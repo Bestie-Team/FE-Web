@@ -1,31 +1,63 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
 import Modal from "../shared/modal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import FRIENDS from "@/constants/friends";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
-import { selectedFriendsAtom } from "@/atoms/friends";
-import { useRouter } from "next/navigation";
+import { newGroupMembersAtom, selectedFriendsAtom } from "@/atoms/friends";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
-import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
+import useFriends from "./hooks/useFriends";
 
 export default function SelectFriendsContainer({
   paddingTop,
+  action,
+  exceptIds,
+  setStep,
+  isNew,
 }: {
   paddingTop?: string;
+  action?: () => void;
+  exceptIds?: string[];
+  setStep?: Dispatch<SetStateAction<number>>;
+  isNew: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [countModal, setCountModal] = useState(false);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
-  const setSelectedFriends = useSetRecoilState<UserInfo[]>(selectedFriendsAtom);
-  const userFriends = FRIENDS;
+  const setFriendsToAdd = useSetRecoilState<lighty.User[] | []>(
+    selectedFriendsAtom
+  );
+  const setFriendsToNewGroup = useSetRecoilState<lighty.User[] | []>(
+    newGroupMembersAtom
+  );
+  const [friends, setFriends] = useState<lighty.User[] | []>([]);
+  const [cursor, setCursor] = useState<lighty.UserCursor | null>();
 
-  const router = useRouter();
+  const { data } = useFriends({
+    name: cursor?.name ?? "가가",
+    accountId: cursor?.accountId ?? "aaaaa",
+    limit: 30,
+  });
+
+  useEffect(() => {
+    if (!data?.users) return;
+    if (exceptIds && exceptIds.length > 0) {
+      const nonMemberUsers = data?.users.filter(
+        (user) => !exceptIds.includes(user.id)
+      );
+      setFriends(nonMemberUsers);
+    } else {
+      setFriends(data?.users);
+    }
+    if (data?.nextCursor) {
+      setCursor(data?.nextCursor);
+    }
+  }, [data]);
 
   const toggleItemClick = (idx: number) => {
-    if (clickedItems.length >= 3) {
+    if (clickedItems.length >= 10 && !clickedItems.includes(idx)) {
       setCountModal(true);
       return;
     }
@@ -34,10 +66,37 @@ export default function SelectFriendsContainer({
     );
   };
 
-  const handleSubmitClickedFriends = () => {
-    const clickedFriends = clickedItems.map((idx) => userFriends[idx]);
-    setSelectedFriends(clickedFriends);
-    router.back();
+  const renderModal = () => {
+    if (countModal) {
+      return (
+        <Modal
+          action={() => {
+            setStep?.(3);
+          }}
+          content="최대 10명 까지만 초대할 수 있어요."
+          left="확인"
+          onClose={() => setCountModal(false)}
+        />
+      );
+    }
+
+    if (isModalOpen) {
+      return <Modal action={() => {}} onClose={() => setIsModalOpen(false)} />;
+    }
+
+    return null;
+  };
+
+  const handleSubmitSelection = () => {
+    const clickedFriends = clickedItems.map((idx) => friends[idx]);
+    setFriendsToAdd(clickedFriends);
+    action?.();
+  };
+
+  const handleSubmitSelectionToNewGroup = () => {
+    const clickedFriends = clickedItems.map((idx) => friends[idx]);
+    setFriendsToNewGroup(clickedFriends);
+    setStep?.(1);
   };
 
   return (
@@ -49,16 +108,16 @@ export default function SelectFriendsContainer({
         paddingTop: paddingTop ?? "177px",
       }}
     >
-      <span className="text-T5">{`친구 ${userFriends.length}`}</span>
+      <span className="text-T5">{`친구 ${friends.length}`}</span>
       <Spacing size={12} />
       <ul>
-        {userFriends.map((friendItem, idx) => {
+        {friends.map((friendItem, idx) => {
           return (
             <React.Fragment key={`${friendItem.accountId}`}>
               <FriendListItem
                 friendInfo={friendItem}
                 idx={idx}
-                type="invite"
+                type="friend"
                 onClick={() => {
                   toggleItemClick(idx);
                 }}
@@ -70,27 +129,14 @@ export default function SelectFriendsContainer({
         })}
       </ul>
       <FixedBottomButton
+        bgColor="bg-grayscale-50"
         label={`${clickedItems.length}명 선택 완료`}
         disabled={clickedItems.length < 1}
-        onClick={handleSubmitClickedFriends}
+        onClick={
+          isNew ? handleSubmitSelectionToNewGroup : handleSubmitSelection
+        }
       />
-      {isModalOpen ? (
-        <Modal
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        />
-      ) : null}
-      {countModal ? (
-        <Modal
-          title=""
-          content="최대 12명 까지만 초대할 수 있어요."
-          left="확인"
-          onClose={() => {
-            setCountModal(false);
-          }}
-        />
-      ) : null}
+      {renderModal()}
     </Flex>
   );
 }

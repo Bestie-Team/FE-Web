@@ -15,7 +15,6 @@ import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
 import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
-import Button from "../shared/buttons/Button";
 import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 
@@ -32,13 +31,18 @@ export default function DecorateWithStickers({
   const selectedFrame = useRecoilValue(cardFrameAtom);
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
   const stageRef = React.useRef<HTMLDivElement | null>(null);
-  const [hide, setHide] = useState<boolean>(false);
+  const [deco, setDeco] = useState<boolean>(false);
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-  const frames = ["/frame1.jpeg", "/frame2.jpeg", "/frame3.jpeg"];
+  const frames = [
+    "/frame1.jpeg",
+    "/frame2.jpeg",
+    "/frame3.jpeg",
+    "/frame4.jpeg",
+  ];
 
   useEffect(() => {
     if (canvasElementRef.current && !fabricCanvasRef.current) {
@@ -91,22 +95,19 @@ export default function DecorateWithStickers({
         }
         // setImg(img);
       };
-      setHide(true);
+      setDeco(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
   }, []);
 
-  const handleAddSticker = async (sticker: string) => {
+  const handleAddSticker = async (path: string) => {
     if (fabricCanvasRef.current) {
       const canvas = fabricCanvasRef.current;
       try {
-        const stickerObj = await fabric.Image.fromURL(
-          `/deco_stickers/${sticker}`,
-          {
-            crossOrigin: "anonymous",
-          }
-        );
+        const stickerObj = await fabric.Image.fromURL(path, {
+          crossOrigin: "anonymous",
+        });
         stickerObj.set({
           scaleX: 0.25,
           scaleY: 0.25,
@@ -137,7 +138,7 @@ export default function DecorateWithStickers({
     const applyCrop = async () => {
       try {
         const croppedImageUrl = await cropAndResizeImage(
-          selectedGathering.invitation_img_url as string,
+          selectedGathering.invitationImageUrl as string,
           230, // 원하는 너비
           250 // 원하는 높이
         );
@@ -148,30 +149,28 @@ export default function DecorateWithStickers({
     };
 
     applyCrop();
-  }, [selectedGathering.invitation_img_url]);
+  }, [selectedGathering.invitationImageUrl]);
+
   return (
     <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
       <Flex justify="space-between" className="px-[20px] w-full" align="center">
         <span className="text-B4 text-grayscale-500">
           점선 영역이 이미지 영역이에요!
         </span>
-        <button className={styles.button} onClick={handleCaptureImage}>
-          스티커 꾸미기
-        </button>
       </Flex>
-      <Spacing size={24} />
-      {hide === false ? (
+      <Spacing size={32} />
+      {deco === false ? (
         <div className={clsx(styles.cardContainer)}>
-          <div
-            ref={ref}
-            id="card"
-            className="relative rounded-[20px] w-full shadow-sm"
-          >
+          <div className={styles.dimmed} />
+          <button className={styles.button} onClick={handleCaptureImage}>
+            꾸미기 시작
+          </button>
+          <div ref={ref} id="card" className="relative rounded-[20px] w-full">
             <img
               alt="frame"
               height={372}
               width={282}
-              className="rounded-[20px] w-[282px] h-[372px]"
+              className={styles.frame}
               src={frames[selectedFrame]}
             />
             <div className={styles.cardWrapper}>
@@ -181,19 +180,22 @@ export default function DecorateWithStickers({
                     src={croppedImage}
                     alt="Cropped Image"
                     width={230}
-                    height={250}
+                    height={218}
                   />
                 ) : (
                   <div
                     style={{
                       backgroundColor: "#AEAEAE",
-                      height: 250,
+                      height: 218,
                       width: 230,
                     }}
                   />
                 )}
               </div>
-              <Flex direction="column" className="px-[20px] py-[15px]">
+              <Flex
+                direction="column"
+                className="px-[20px] py-[10px] pb-[20px] h-[100px]"
+              >
                 <span className={styles.textWrapper}>
                   {selectedGathering.name}
                 </span>
@@ -208,7 +210,6 @@ export default function DecorateWithStickers({
           </div>
         </div>
       ) : null}
-
       <Flex direction="column">
         <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
           <canvas
@@ -223,9 +224,6 @@ export default function DecorateWithStickers({
             }}
           />
         </div>
-        <Button className={styles.saveButton} onClick={handleExport}>
-          사진 저장하기
-        </Button>
       </Flex>
       {decoModalOpen ? (
         <DecoStickerBottomSheet
@@ -234,12 +232,12 @@ export default function DecorateWithStickers({
           onClose={() => setDecoModalOpen(false)}
         />
       ) : null}
-      {<SheetOpenBtnContainer tooltip />}
+      {deco ? <SheetOpenBtnContainer tooltip /> : null}
       <FixedBottomButton
         bgColor="bg-grayscale-50"
         label={"이미지 저장"}
         onClick={() => {
-          onNext();
+          handleExport();
         }}
       />
     </div>
@@ -247,17 +245,20 @@ export default function DecorateWithStickers({
 }
 
 const styles = {
+  dimmed:
+    "absolute flex justify-center items-center z-10 bg-grayscale-10 inset-0 opacity-50",
+  frame: "rounded-[20px] w-[282px] h-[372px]",
   button:
-    "py-[10px] px-[12px] text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
+    "absolute z-10 py-[10px] px-[12px] text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
   saveButton:
     "w-[120px] px-[12px] py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
   cardContainer:
-    "relative px-[33px] py-[40px] flex bg-base-white rounded-[20px] justify-center items-center border border-[#AEAEAE] border-dotted w-[350px] h-[453px]",
+    "relative flex justify-center items-center rounded-[20px] w-[282px] h-[453px]",
   cardWrapper:
     "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
   imageWrapper:
     "w-[230px] h-full rounded-t-[12px] bg-grayscale-50 overflow-hidden",
   image: "w-[230px] h-[220px]",
-  textWrapper: "flex-grow text-T5 ",
+  textWrapper: "text-T5 ",
   dateWrapper: "text-C5 text-grayscale-500",
 };

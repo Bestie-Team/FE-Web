@@ -2,12 +2,20 @@ import Image from "next/image";
 import Button from "../shared/buttons/Button";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
+import * as lighty from "lighty-type";
+import { useSetRecoilState } from "recoil";
+import { selectedInvitationAtom } from "@/atoms/invitation";
 
 export default function InvitationCard({
+  invitation,
   onClickOpen,
 }: {
+  invitation: lighty.GatheringInvitation;
   onClickOpen: (value: boolean) => void;
 }) {
+  if (!invitation) return null;
+  const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
+  const { name, description, sender, address, gatheringDate } = invitation;
   return (
     <Flex className={styles.container} justify="center">
       <div className="relative">
@@ -20,22 +28,21 @@ export default function InvitationCard({
         />
         <Flex direction="column" className={styles.mainContentWrapper}>
           <Flex direction="column" justify="space-between" className="w-full">
-            <span className="text-T3">christmas party ♡✧。</span>
+            <span className="text-T3">{name}♡✧。</span>
             <Spacing size={8} />
-            <span className="text-C2 text-grayscale-500">
-              welcome to pig party
-            </span>
+            <span className="text-C2 text-grayscale-500">{description}</span>
           </Flex>
         </Flex>
         <Flex align="center" className={styles.subContentWrapper}>
           <span className="text-B4 text-grayscale-300">from</span>
           <Spacing size={4} direction="horizontal" />
-          <span className="text-B4 flex-grow">Maybin_</span>
+          <span className="text-B4 flex-grow">{sender}</span>
           <Spacing size={4} direction="horizontal" />
           <span className="text-C2 text-grayscale-300">0일 전</span>
         </Flex>
         <Button
           onClick={() => {
+            setSelectedInvitation(invitation);
             onClickOpen(true);
           }}
           color="#0A0A0A"

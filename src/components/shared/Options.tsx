@@ -1,47 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+import React from "react";
 import DropdownMenu from "./DropdownMenu";
+import { useDropdown } from "@/hooks/useDropdown";
 
 export default function Options({
   width,
   height,
   type = "default",
   color,
+  id,
 }: {
   width?: string;
   height?: string;
   color?: string;
   type: "default" | "friend" | "group";
+  id?: string;
 }) {
-  const [opened, setOpened] = useState<boolean>(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const btn = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    const target = event.target as Node | null;
-    if (btn.current?.contains(target)) return;
-    else if (ref.current && !ref.current.contains(target)) {
-      setOpened(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside, {
-      passive: true,
-    });
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const onButtonClick = () => {
-    setOpened((prev) => !prev);
-  };
-
+  const { opened, ref, btnRef, toggleDropdown } = useDropdown();
   return (
     <div
-      ref={btn}
+      ref={btnRef}
       test-id="options-icon"
-      onClick={onButtonClick}
+      onClick={toggleDropdown}
       style={{
         width: "24px",
         height: "24px",
@@ -94,8 +74,8 @@ export default function Options({
             type === "default"
               ? menuItems
               : type === "friend"
-              ? menuItemsF
-              : group
+              ? friend.menu
+              : menuItems_group
           }
           className={
             type === "default"
@@ -108,5 +88,6 @@ export default function Options({
   );
 }
 const menuItems = ["숨기기", "수정하기", "삭제하기"];
-const menuItemsF = ["친구 삭제", "유저 신고하기"];
-const group = ["그룹 나가기", "그룹 신고하기"];
+const friend = { menu: ["친구 삭제", "유저 신고하기"], actions: [] };
+
+const menuItems_group = ["그룹 나가기", "그룹 신고하기"];

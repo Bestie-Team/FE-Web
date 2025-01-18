@@ -1,18 +1,18 @@
-import { GroupInfoResponse } from "@/models/group";
+import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 
 interface Props {
-  group: GroupInfoResponse;
+  group: lighty.Group;
 }
 
 export default function GroupInfoContainer({ group }: Props) {
-  const { groupName, description } = group;
+  const { name, description } = group;
 
   return (
     <Flex className={styles.container}>
       <Flex align="center">
-        <span className="text-T1">{groupName}</span>
+        <span className="text-T1">{name}</span>
         <Spacing size={6} direction="horizontal" />
         <span className={styles.descWrapper}>{description}</span>
       </Flex>

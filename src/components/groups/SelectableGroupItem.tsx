@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import { GroupInfoResponse } from "@/models/group";
+import * as lighty from "lighty-type";
 import CheckIcon from "../shared/icons/CheckIcon";
 import clsx from "clsx";
 
 interface Props {
-  groupInfo?: GroupInfoResponse;
+  groupInfo?: lighty.Group;
   onClickGroup: () => void;
   clicked: boolean;
 }
@@ -31,7 +31,9 @@ export default function SelectableGroupItem({
         >
           <Image
             alt="groupImage"
-            src={groupInfo?.imageUrl || "https://cdn.lighty.today/bini.JPG"}
+            src={
+              groupInfo?.groupImageUrl || "https://cdn.lighty.today/bini.JPG"
+            }
             className={style.image}
             width={56}
             height={56}
@@ -43,16 +45,18 @@ export default function SelectableGroupItem({
           ) : null}
         </div>
       </div>
-      <Flex direction="column" align="center">
+      <Flex direction="column" align="center" className="w-[70px]">
         <Spacing size={2} />
-        <span className="text-T6">{groupInfo?.groupName || "이름"}</span>
+        <span className="text-T6 truncate w-full text-center">
+          {groupInfo?.name || "이름"}
+        </span>
       </Flex>
     </Flex>
   );
 }
 
 const style = {
-  container: "w-fit shrink-0",
+  container: "w-fit shrink-0 w-[70px]",
   wrapper: "relative p-[6px] cursor-pointer",
 
   circleWrapper: "relative rounded-full border-[1.2px] border-grayscale-100",

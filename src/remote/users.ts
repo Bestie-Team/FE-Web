@@ -13,7 +13,6 @@ export async function getSearchUsers({
   limit: number;
   search: string;
 }) {
-  if (search === "") return;
   const cursor = { name, accountId };
 
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;

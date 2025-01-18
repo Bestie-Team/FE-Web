@@ -2,6 +2,7 @@ import * as lighty from "lighty-type";
 import { handleProfileImageUpdate } from "./profile";
 import { UploadType } from "@/components/shared/AddPhoto";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import { ERROR_MESSAGES } from "@/constants/errorMessages";
 
 export async function postLogin({ accessToken }: lighty.LoginRequest) {
   try {
@@ -90,7 +91,8 @@ export async function postRegister(RegisterRequest: UploadType) {
     const data: lighty.RegisterResponse = await response.json();
 
     if (response.ok) {
-      window.location.href = "/home";
+      window.location.href = "/home?ref=signup";
+
       sessionStorage.setItem(
         STORAGE_KEYS.USER_INFO,
         JSON.stringify({
@@ -98,7 +100,7 @@ export async function postRegister(RegisterRequest: UploadType) {
           accountId: data.accountId,
         })
       );
-
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
       if (RegisterRequest.profileImageUrl) {
         await handleProfileImageUpdate({
           file: RegisterRequest.profileImageUrl as File,

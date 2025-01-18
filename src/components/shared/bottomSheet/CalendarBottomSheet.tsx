@@ -1,16 +1,14 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import Button from "../buttons/Button";
 import CalendarWithTime from "../calendar/CalendarWithTime";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
-import {
-  gatheringSelectedAmpmAtom,
-  gatheringSelectedDateAtom,
-  gatheringSelectedTimeAtom,
-  newGatheringInfo,
-} from "@/atoms/gathering";
-import { formatISO } from "date-fns";
+import { gatheringSelectedDateAtom, newGatheringInfo } from "@/atoms/gathering";
+import { format } from "date-fns";
+import makeUTC from "@/utils/makeUTC";
+import { Dispatch, SetStateAction, useState } from "react";
+import { CreateGatheringRequest } from "@/models/gathering";
 
 export default function CalendarBottomSheet({
   open = true,
@@ -21,12 +19,8 @@ export default function CalendarBottomSheet({
 }) {
   const selectedDate = useRecoilValue(gatheringSelectedDateAtom);
   const setGatheringInfo = useSetRecoilState(newGatheringInfo);
-  const [ampm, setAmpm] = useRecoilState<"오전" | "오후">(
-    gatheringSelectedAmpmAtom
-  );
-  const [selectedTime, setSelectedTime] = useRecoilState<string>(
-    gatheringSelectedTimeAtom
-  );
+  const [ampm, setAmpm] = useState<"오전" | "오후">("오전");
+  const [selectedTime, setSelectedTime] = useState<string>("12:00");
 
   return (
     <BottomSheetWrapper onClose={onClose} open={open} bar={false}>
@@ -43,11 +37,16 @@ export default function CalendarBottomSheet({
           disabled={selectedDate == null}
           onClick={() => {
             if (selectedDate !== null) {
+              console.log("selectedDate", selectedDate);
+              const converted = makeUTC({
+                ampm,
+                date: format(selectedDate.toString(), "yyyy-MM-dd"),
+                time: selectedTime,
+              });
+              console.log(converted);
               setGatheringInfo((prev) => ({
                 ...prev,
-                date: formatISO(selectedDate as Date),
-                ampm: ampm,
-                time: selectedTime,
+                gatheringDate: converted,
               }));
             }
             onClose();

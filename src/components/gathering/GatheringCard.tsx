@@ -4,38 +4,47 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Button from "../shared/buttons/Button";
 import PencilIcon from "../shared/icons/PencilIcon";
-import { GatheringResponse } from "@/models/gathering";
+import { Gathering, GatheringInWhichType } from "@/models/gathering";
 import { differenceInDays } from "date-fns";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
+import { GatheringInWhich } from "@/constants/gathering";
 
 export default function GatheringCard({
   gathering,
-  which,
+  where,
 }: {
-  gathering: GatheringResponse;
-  which: string;
+  gathering: Gathering;
+  where: GatheringInWhichType;
 }) {
+  //기록할 모임의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
 
-  const { invitation_img_url, name, date } = gathering;
+  const { invitationImageUrl, name, gatheringDate } = gathering;
   const router = useRouter();
-  const diff = differenceInDays(new Date(), date);
+  const diff = differenceInDays(new Date(), gatheringDate);
 
   const handleClickGathering = () => {
-    if (which === "1") {
+    if (where === GatheringInWhich.HOME) {
       router.push(`/gathering/${gathering.id}`);
     } else setGatheringId(gathering.id);
   };
 
   return (
-    <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
+    <div
+      className={styles.gatheringWrapper}
+      onClick={() => router.push(`/gathering/${gathering.id}`)}
+    >
       <Image
-        src={invitation_img_url}
+        src={
+          invitationImageUrl.startsWith("https://example")
+            ? "/bag.jpeg"
+            : invitationImageUrl
+        }
         className={styles.image}
-        alt="invitationImg"
+        alt={name}
         width={168}
         height={168}
       />
@@ -51,10 +60,13 @@ export default function GatheringCard({
         <Flex className={styles.date}>
           <span className="flex-grow">날짜</span>
           <Spacing size={4} direction="horizontal" />
-          <span> {diff > 0 ? `D+${diff}` : `D${diff}`}</span>
+          <span className="tracking-widest">
+            {" "}
+            {diff >= 0 ? `D+${diff}` : `D${diff}`}
+          </span>
         </Flex>
       </Flex>
-      {which === "2" ? (
+      {where === GatheringInWhich.GATHERING ? (
         <Button className={styles.button} onClick={handleClickGathering}>
           <PencilIcon color="#0A0A0A" />
         </Button>
@@ -69,8 +81,6 @@ const styles = {
   image: "object-cover object-center w-full h-full",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.9) 100%)",
-  // gradation:
-  //   "linear-gradient(180deg, color(display-p3 0 0 0 / 0) 65%, color(display-p3 0 0 0 / 0.9) 100%)",
 
   textWrapper: "absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white",
   date: "w-full text-C2 text-grayscale-100",

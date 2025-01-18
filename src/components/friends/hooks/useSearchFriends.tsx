@@ -7,17 +7,20 @@ export default function useSearchFriends({
   accountId,
   limit,
   search,
+  enabled,
 }: {
   name: string;
   accountId: string;
   limit: number;
   search: string;
+  enabled: boolean;
 }) {
   return useQuery({
-    queryKey: ["friends", { name, accountId, limit, search }],
+    queryKey: ["friends", { name, accountId, limit, search, enabled }],
     queryFn: (): Promise<lighty.FriendListResponse | undefined> => {
       return getSearchFriends({ name, accountId, limit, search });
     },
     staleTime: 0,
+    enabled: enabled,
   });
 }

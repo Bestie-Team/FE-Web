@@ -8,10 +8,24 @@ import CommentItem from "./CommentItem";
 import Input from "../inputs/Input";
 import Button from "../buttons/Button";
 import ArrowUpIcon from "../icons/ArrowUpIcon";
+import useMakeComment from "@/components/feeds/hooks/useMakeComment";
 
-export default function CommentContainer({ onClose }: { onClose: () => void }) {
+export default function CommentContainer({
+  selectedFeedId,
+  onClose,
+}: {
+  selectedFeedId: string;
+  onClose: () => void;
+}) {
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
+
+  const { mutate: postComment } = useMakeComment({
+    feedId: selectedFeedId,
+    content: newComment,
+    onSuccess: (data: { message: string }) => alert(data.message),
+    onError: (error) => console.log(error),
+  });
 
   const handleAnimationEnd = () => {
     if (isClosing) {
@@ -58,7 +72,7 @@ export default function CommentContainer({ onClose }: { onClose: () => void }) {
                 setNewComment(e.target.value);
               }}
             />
-            <Button className={submitButtonStyle}>
+            <Button className={submitButtonStyle} onClick={postComment}>
               <ArrowUpIcon />
             </Button>
           </div>

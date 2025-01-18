@@ -1,12 +1,12 @@
 import Select, { StylesConfig } from "react-select";
-import { OptionType } from "../FilterBar";
+import { SelectOptionType } from "../FilterBar";
 import { Dispatch, SetStateAction } from "react";
 import useNoKeyboardUp from "@/hooks/useNoKeyboardUp";
 
 interface SelectProps {
-  options: OptionType[];
-  selected: OptionType | null;
-  setSelected: Dispatch<SetStateAction<OptionType | null>>;
+  options: SelectOptionType[];
+  selected: SelectOptionType | null;
+  setSelected: Dispatch<SetStateAction<SelectOptionType | null>>;
   placeholder: string;
   borderColor?: string;
   width?: string;
@@ -117,7 +117,7 @@ export default function LightySelect({
       classNamePrefix="react-select"
       placeholder="년도"
       defaultValue={selected}
-      onChange={(newValue) => setSelected(newValue as OptionType)}
+      onChange={(newValue) => setSelected(newValue as SelectOptionType)}
       options={options}
       styles={styles}
     />

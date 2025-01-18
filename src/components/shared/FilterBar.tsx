@@ -12,17 +12,17 @@ const orderOptions = [
   { value: "오래된순", label: "오래된순" },
 ];
 
-export type OptionType = {
+export type SelectOptionType = {
   value: string;
-  label: string | React.ReactNode;
+  label: string;
 };
 
 export default function FilterBar() {
-  const [selectedYear, setSelectedYear] = useState<OptionType | null>({
+  const [selectedYear, setSelectedYear] = useState<SelectOptionType | null>({
     value: "2025",
     label: "2025",
   });
-  const [selectedOrder, setSelectedOrder] = useState<OptionType | null>({
+  const [selectedOrder, setSelectedOrder] = useState<SelectOptionType | null>({
     value: "최신순",
     label: "최신순",
   });
@@ -45,7 +45,7 @@ export default function FilterBar() {
         options={orderOptions}
         selected={selectedOrder}
         setSelected={setSelectedOrder}
-        placeholder={selectedOrder?.label as string}
+        placeholder={selectedOrder?.label || ""}
         borderColor="white"
         width="fit-content"
       />

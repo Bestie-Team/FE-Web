@@ -19,7 +19,7 @@ export default function GatheringSwiper({ percent }: { percent?: number }) {
       }}
       className="custom-swiper w-full"
     >
-      {expectedGatherings.map(({ invitation_img_url, id, name, date }, idx) => (
+      {expectedGatherings.map(({ invitationImageUrl, id, name, date }, idx) => (
         <SwiperSlide
           onClick={() => {
             router.push(`/gathering/${id}`);
@@ -28,7 +28,7 @@ export default function GatheringSwiper({ percent }: { percent?: number }) {
           key={`slide${idx}`}
         >
           <Image
-            src={invitation_img_url}
+            src={invitationImageUrl}
             alt={`invitationImage${idx + 1}`}
             className={styles.image}
             width={340}

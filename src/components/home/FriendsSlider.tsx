@@ -15,7 +15,7 @@ export default function FriendsSlider() {
       <Flex className="overflow-scroll no-scrollbar">
         <AddFriendItem
           onClick={() => {
-            router.push("/friends/add");
+            router.push("/friends/search");
           }}
         />
         {friends.map((friend, i) => {
