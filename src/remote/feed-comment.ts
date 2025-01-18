@@ -60,39 +60,6 @@ async function makePostRequest(
   });
 }
 
-async function makePatchRequest(
-  backendUrl: string,
-  token: string,
-  content: { content: string }
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(content),
-  });
-}
-
-async function makeUploadRequest(
-  backendUrl: string,
-  token: string,
-  formData: FormData
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
-}
-
 async function handleResponse(response: Response) {
   const errorMap: Record<number, string> = {
     404: ERROR_MESSAGES.NOT_FOUND,

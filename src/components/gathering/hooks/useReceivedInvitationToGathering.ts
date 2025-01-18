@@ -1,6 +1,5 @@
 import { getReceivedInvitationToGatheringList } from "@/remote/gathering";
 import { useQuery } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
 
 export default function useReceivedInvitationToGathering({
   cursor,

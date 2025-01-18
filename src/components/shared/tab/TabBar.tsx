@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import TabButton from "./TabButton";
-import { RecoilState, useRecoilValue } from "recoil";
 import clsx from "clsx";
 
 export default function TabBar({

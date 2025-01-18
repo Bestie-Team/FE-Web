@@ -5,6 +5,7 @@ import Spacing from "../shared/Spacing";
 import * as lighty from "lighty-type";
 import { useSetRecoilState } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
+import { addHours, differenceInDays } from "date-fns";
 
 export default function InvitationCard({
   invitation,
@@ -13,9 +14,12 @@ export default function InvitationCard({
   invitation: lighty.GatheringInvitation;
   onClickOpen: (value: boolean) => void;
 }) {
-  if (!invitation) return null;
   const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
-  const { name, description, sender, address, gatheringDate } = invitation;
+  const { name, description, sender, gatheringDate } = invitation;
+  const date = addHours(new Date(gatheringDate), 9);
+  const diff = differenceInDays(new Date(), new Date(date));
+
+  if (!invitation) return null;
   return (
     <Flex className={styles.container} justify="center">
       <div className="relative">
@@ -38,7 +42,9 @@ export default function InvitationCard({
           <Spacing size={4} direction="horizontal" />
           <span className="text-B4 flex-grow">{sender}</span>
           <Spacing size={4} direction="horizontal" />
-          <span className="text-C2 text-grayscale-300">0일 전</span>
+          <span className="text-C2 text-grayscale-300">
+            {diff <= 0 ? `${diff}일 전` : `${diff}일 지남`}
+          </span>
         </Flex>
         <Button
           onClick={() => {

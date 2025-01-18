@@ -10,28 +10,27 @@ export default function Record() {
   const [step, setStep] = useState(1);
   const minDate = new Date("2025-01-01").toISOString();
   const maxDate = new Date("2025-12-31").toISOString();
-  const [gatheringCursor, setGatheringCursor] = useState<string | null>(
-    minDate
-  );
 
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
   const { data: gathering_data } = useGatherings({
-    cursor: gatheringCursor,
+    cursor: minDate,
     limit: 50,
     minDate: minDate,
     maxDate: maxDate,
   });
 
-  // const { mutate: createFeed } = usec
   //일단 무한스크롤 구현 전짜기 이렇게 저장
   useEffect(() => {
     if (
       gatherings[0] &&
       gathering_data?.gatherings &&
       gathering_data?.gatherings[0].id === gatherings[0].id
-    )
+    ) {
       return;
-    gathering_data && setGatherings(gathering_data?.gatherings);
+    }
+    if (gathering_data) {
+      setGatherings(gathering_data?.gatherings);
+    }
     console.log(gathering_data?.gatherings);
   }, [gathering_data]);
 

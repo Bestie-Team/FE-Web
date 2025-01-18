@@ -2,7 +2,6 @@ import * as lighty from "lighty-type";
 import { handleProfileImageUpdate } from "./profile";
 import { UploadType } from "@/components/shared/AddPhoto";
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { ERROR_MESSAGES } from "@/constants/errorMessages";
 
 export async function postLogin({ accessToken }: lighty.LoginRequest) {
   try {

@@ -23,13 +23,15 @@ export async function postFriends({ userId }: { userId: string }) {
     body: JSON.stringify({ userId }),
   });
 
-  const data = await response.json();
-  console.log(data);
+  if (response.ok) {
+    return { message: "친구요청을 성공적으로 보냈습니다" };
+  }
+
   if (!response.ok) {
     throw new Error("Failed to friend request");
   }
 
-  return data || {};
+  return { message: "친구요청을 성공적으로 보냈습니다" };
 }
 
 /** 친구 목록 조회 */

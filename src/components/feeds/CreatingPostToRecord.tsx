@@ -16,6 +16,7 @@ import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import MakingFeedStatus from "./MakingFeedStatus";
 import DotSpinner from "../shared/spinners/DotSpinner";
+import { toast } from "react-toastify";
 
 export default function CreatingPostToRecord({
   onNext,
@@ -51,6 +52,7 @@ export default function CreatingPostToRecord({
   } = useMakeGatheringFeed({
     gathering: postInfo,
     onSuccess: (data) => {
+      toast.success(data.message);
       setPostInfo({
         gatheringId: selectedGatheringId ? selectedGatheringId : "",
         imageUrls: [],
@@ -66,6 +68,9 @@ export default function CreatingPostToRecord({
       });
     },
   });
+  const { data: selectedGathering } = useGatheringDetail({
+    gatheringId: selectedGatheringId ? selectedGatheringId : "",
+  });
 
   useEffect(() => {
     if (postInfo.imageUrls.length > 0) {
@@ -74,9 +79,7 @@ export default function CreatingPostToRecord({
   }, [postInfo.imageUrls]);
 
   if (selectedGatheringId == null) return null;
-  const { data: selectedGathering } = useGatheringDetail({
-    gatheringId: selectedGatheringId,
-  });
+
   if (!selectedGathering) return null;
 
   const { name, members, description } = selectedGathering;
@@ -128,7 +131,7 @@ export default function CreatingPostToRecord({
         label={isUploading || isPending ? <DotSpinner /> : "기록 완료"}
         onClick={() => {
           uploadImages();
-          // onNext(postInfo);
+          onNext(postInfo);
         }}
         // disabled={}
       />

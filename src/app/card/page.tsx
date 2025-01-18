@@ -42,7 +42,7 @@ export default function Page() {
         <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
       )}
       {step === 2 && <ChooseFrame onNext={handleGatheringChange} />}
-      {step === 3 && <DecorateWithStickers onNext={handleGatheringChange} />}
+      {step === 3 && <DecorateWithStickers />}
     </div>
   );
 }

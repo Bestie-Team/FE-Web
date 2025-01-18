@@ -7,8 +7,7 @@ import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { gatheringSelectedDateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { format } from "date-fns";
 import makeUTC from "@/utils/makeUTC";
-import { Dispatch, SetStateAction, useState } from "react";
-import { CreateGatheringRequest } from "@/models/gathering";
+import { useState } from "react";
 
 export default function CalendarBottomSheet({
   open = true,

@@ -4,14 +4,13 @@ import Image from "next/image";
 import Spacing from "../shared/Spacing";
 import { addHours, differenceInDays } from "date-fns";
 import { GatheringDetailResponse } from "@/models/gathering";
-import { formatToDisplay, formatToKoreanTime } from "@/utils/makeUTC";
+import { formatToDisplay } from "@/utils/makeUTC";
 
 export default function GatheringBannerContainer({
   gathering,
 }: {
   gathering: GatheringDetailResponse;
 }) {
-  const convertedDate = formatToKoreanTime(gathering.gatheringDate);
   const date = addHours(new Date(gathering.gatheringDate), 9);
   const diff = differenceInDays(new Date(), new Date(date));
   const displayingDate = formatToDisplay(gathering.gatheringDate);

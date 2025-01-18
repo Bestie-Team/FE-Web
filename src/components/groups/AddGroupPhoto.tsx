@@ -6,6 +6,7 @@ import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import * as lighty from "lighty-type";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
+import { toast } from "react-toastify";
 
 export default function AddGroupPhoto({
   image,
@@ -15,14 +16,14 @@ export default function AddGroupPhoto({
   setImage: SetterOrUpdater<lighty.CreateGroupRequest>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
-  const { mutate: uploadGroupCover, isPending } = useUploadGroupCoverImage({
+  const { mutate: uploadGroupCover } = useUploadGroupCoverImage({
     file: groupImageFile as File,
     onSuccess: (data) => {
+      toast.success(data.message);
       setImage((prev) => ({
         ...prev,
-        groupImageUrl: data,
+        groupImageUrl: data.url,
       }));
-      console.log("making upload success");
     },
   });
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

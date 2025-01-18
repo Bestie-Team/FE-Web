@@ -6,18 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 
 const uuid = uuidv4();
 
-// 에러 타입 정의
-type FeedError = {
-  status: number;
-  message: string;
-};
-
 // 응답 타입 정의
 export type FeedSuccessResponse = {
   message: string;
 };
-
-const SUCCESS_MESSAGE = "피드를 성공적으로 생성하였습니다.";
 
 /** 피드 목록 조회 */
 /** 첫 커서는 현재 날짜 */

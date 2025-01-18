@@ -10,7 +10,6 @@ import useAcceptFriendRequest from "./hooks/useAcceptFriendRequest";
 import { useQueryClient } from "@tanstack/react-query";
 import DotSpinner from "../shared/spinners/DotSpinner";
 import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
-import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function FriendListItem({
   requestId,

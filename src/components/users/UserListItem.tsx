@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { userSearchAtom } from "@/atoms/friends";
 import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
+import { toast } from "react-toastify";
 
 export default function UserListItem({
   userInfo,
@@ -28,14 +29,14 @@ export default function UserListItem({
   const debouncedSearch = useDebounce(search);
   const { mutate, isPending } = useRequestFriend({
     userId: userInfo?.id,
-    onSuccess: () => {
-      console.log("success");
+    onSuccess: (data: { message: string }) => {
       queryClient.invalidateQueries({
         queryKey: [
           "users",
           { nae: "가", accountId: "a", limit: 10, search: debouncedSearch },
         ],
       });
+      toast.success(data.message);
     },
   });
   return (

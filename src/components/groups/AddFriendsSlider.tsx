@@ -1,7 +1,7 @@
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import { AddFriendItem } from "../home/FriendItem";
-import { newGroupMembersAtom, selectedFriendsAtom } from "@/atoms/friends";
+import { newGroupMembersAtom } from "@/atoms/friends";
 import { SetterOrUpdater, useRecoilState } from "recoil";
 import DeletableFriendItem from "../friends/DeletableFriendItem";
 import { CreateGatheringRequest } from "@/models/gathering";
@@ -50,7 +50,9 @@ export default function AddFriendsSlider({
       <Flex className="overflow-scroll no-scrollbar">
         <AddFriendItem
           onClick={() => {
-            setStep && setStep(2);
+            if (setStep) {
+              setStep(2);
+            }
           }}
         />
 

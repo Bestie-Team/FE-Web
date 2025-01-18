@@ -6,7 +6,7 @@ export default function useRequestFriend({
   onSuccess,
 }: {
   userId: string;
-  onSuccess: () => void;
+  onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({
     mutationKey: ["request/friend", userId],
@@ -14,7 +14,7 @@ export default function useRequestFriend({
       return await postFriends({ userId });
     },
     onSuccess: (data) => {
-      onSuccess();
+      onSuccess(data);
     },
   });
 }

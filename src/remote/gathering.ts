@@ -47,6 +47,7 @@ export async function getGatheringDetail({
 }: {
   gatheringId: string;
 }) {
+  if (gatheringId == "") return;
   const backendUrl = validateBackendUrl();
   const token = validateAuth();
 

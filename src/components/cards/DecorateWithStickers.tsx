@@ -18,11 +18,7 @@ import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet
 import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 
-export default function DecorateWithStickers({
-  onNext,
-}: {
-  onNext: () => void;
-}) {
+export default function DecorateWithStickers() {
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
     cardDecorateModalStateAtom
   );

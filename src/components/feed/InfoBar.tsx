@@ -2,7 +2,6 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Options from "../shared/Options";
-import { GroupInfoResponse } from "@/models/group";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 
