@@ -5,14 +5,14 @@ import PhotoIcon from "../shared/icons/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import useUploadInvitationImage from "./hooks/useUploadInvitationImage";
-import { CreateGatheringRequest } from "@/models/gathering";
+import * as lighty from "lighty-type";
 
 export default function AddGatheringPhoto({
   image,
   setImage,
 }: {
   image: string | null;
-  setImage: SetterOrUpdater<CreateGatheringRequest>;
+  setImage: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
   const [gatheringImageFile, setGatheringImageFile] = useState<File>();
   const { mutate: uploadInvitationImage } = useUploadInvitationImage({

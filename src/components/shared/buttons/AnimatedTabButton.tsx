@@ -1,12 +1,12 @@
 import { newGatheringInfo } from "@/atoms/gathering";
 import { GatheringType } from "@/constants/gathering";
-import { CreateGatheringRequest } from "@/models/gathering";
+import * as lighty from "lighty-type";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
 
 const AnimatedTabButton = () => {
   const [selectedGathering, setSelectedGathering] =
-    useRecoilState<CreateGatheringRequest>(newGatheringInfo);
+    useRecoilState<lighty.CreateGatheringRequest>(newGatheringInfo);
 
   const tabs = [
     { id: GatheringType.FRIEND, label: "일반 모임" },

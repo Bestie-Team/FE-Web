@@ -1,11 +1,6 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import STORAGE_KEYS from "@/constants/storageKeys";
-import {
-  CreateGatheringRequest,
-  GatheringDetailResponse,
-  GatheringInvitationListResponse,
-  GatheringListResponse,
-} from "@/models/gathering";
+
 import * as lighty from "lighty-type";
 
 /** 참여 모임 목록 조회 */
@@ -36,7 +31,7 @@ export async function getGatherings({
   if (!response.ok) {
     throw new Error("참여한 그룹 목록 조회를 실패하였습니다,");
   }
-  const data: GatheringListResponse = await response.json();
+  const data: lighty.GatheringListResponse = await response.json();
 
   return data;
 }
@@ -63,7 +58,7 @@ export async function getGatheringDetail({
   if (!response.ok) {
     throw new Error("그룹 상세 정보 조회를 실패하였습니다,");
   }
-  const data: GatheringDetailResponse = await response.json();
+  const data: lighty.GatheringDetailResponse = await response.json();
 
   return data;
 }
@@ -71,7 +66,7 @@ export async function getGatheringDetail({
 export async function postGathering({
   gathering,
 }: {
-  gathering: CreateGatheringRequest;
+  gathering: lighty.CreateGatheringRequest;
 }) {
   const backendUrl = validateBackendUrl();
   const token = validateAuth();
@@ -197,7 +192,7 @@ export async function getReceivedInvitationToGatheringList({
   if (!response.ok) {
     throw new Error(`받은 모임 초대 목록 조회 실패`);
   }
-  const data: GatheringInvitationListResponse = await response.json();
+  const data: lighty.GatheringInvitationListResponse = await response.json();
 
   return data;
 }
@@ -228,7 +223,7 @@ export async function getSentInvitationToGatheringList({
   if (!response.ok) {
     throw new Error(`보낸 모임 초대 목록 조회 실패`);
   }
-  const data: GatheringInvitationListResponse = await response.json();
+  const data: lighty.GatheringInvitationListResponse = await response.json();
 
   return data;
 }

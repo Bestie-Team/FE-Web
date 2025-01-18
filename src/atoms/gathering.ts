@@ -1,4 +1,4 @@
-import { CreateGatheringRequest } from "@/models/gathering";
+import * as lighty from "lighty-type";
 import { atom } from "recoil";
 
 export const gatheringSelectedTabAtom = atom<"1" | "2">({
@@ -35,7 +35,7 @@ export const gatheringSelectedTimeAtom = atom<string>({
   default: "12:00",
 });
 
-export const newGatheringInfo = atom<CreateGatheringRequest>({
+export const newGatheringInfo = atom<lighty.CreateGatheringRequest>({
   key: "gathering/gatheringInfo",
   default: {
     type: "GROUP",

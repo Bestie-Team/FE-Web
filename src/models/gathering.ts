@@ -18,33 +18,6 @@ export interface GatheringResponse {
 
 export type GatheringType = "friend" | "group";
 
-export interface GatheringInvitation {
-  id: string;
-  name: string;
-  description: string;
-  sender: string;
-  createdAt: string;
-  gatheringDate: string;
-  address: string;
-  members: lighty.User[];
-}
-
-export interface GatheringInvitationListResponse {
-  invitations: GatheringInvitation[];
-  nextCursor: string | null;
-}
-
-export interface CreateGatheringRequest {
-  name: string;
-  description: string;
-  type: "GROUP" | "FRIEND";
-  friendIds: null | string[];
-  groupId: null | string;
-  gatheringDate: string;
-  address: string;
-  invitationImageUrl: string;
-}
-
 export interface GatheringListResponse {
   gatherings: {
     id: string;

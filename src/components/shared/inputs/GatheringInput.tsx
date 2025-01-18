@@ -1,12 +1,12 @@
 "use client";
 import clsx from "clsx";
+import * as lighty from "lighty-type";
 import React, { useState } from "react";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
 import BottomSheetWrapper from "../bottomSheet/shared/BottomSheetWrapper";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { SetterOrUpdater } from "recoil";
-import { CreateGatheringRequest } from "@/models/gathering";
 import ActionItem from "../bottomSheet/ActionItem";
 import SearchIcon from "../icons/SearchIcon";
 import PencilIcon from "../icons/PencilIcon";
@@ -19,7 +19,7 @@ interface GatheringInputProps {
   name?: string;
   value: React.ReactNode;
   onClick?: () => void;
-  setValue?: SetterOrUpdater<CreateGatheringRequest>;
+  setValue?: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }
 
 export default function GatheringInput({

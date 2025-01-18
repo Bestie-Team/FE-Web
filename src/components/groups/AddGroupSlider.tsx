@@ -2,7 +2,6 @@ import Flex from "../shared/Flex";
 import { SetterOrUpdater } from "recoil";
 import SelectableGroupItem from "./SelectableGroupItem";
 import * as lighty from "lighty-type";
-import { CreateGatheringRequest } from "@/models/gathering";
 import { useEffect, useState } from "react";
 import useGroup from "./hooks/useGroups";
 
@@ -10,8 +9,8 @@ export default function AddGroupSlider({
   gatheringInfo,
   setGatheringInfo,
 }: {
-  gatheringInfo: CreateGatheringRequest;
-  setGatheringInfo: SetterOrUpdater<CreateGatheringRequest>;
+  gatheringInfo: lighty.CreateGatheringRequest;
+  setGatheringInfo: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
   const dateCursor = new Date().toISOString();
   const [groupCursor, setGroupCursor] = useState<string | null>(dateCursor);

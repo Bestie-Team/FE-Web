@@ -4,7 +4,6 @@ import { AddFriendItem } from "../home/FriendItem";
 import { newGroupMembersAtom } from "@/atoms/friends";
 import { SetterOrUpdater, useRecoilState } from "recoil";
 import DeletableFriendItem from "../friends/DeletableFriendItem";
-import { CreateGatheringRequest } from "@/models/gathering";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import * as lighty from "lighty-type";
 
@@ -15,7 +14,7 @@ export default function AddFriendsSlider({
   setStep,
 }: {
   type: "gathering" | "group";
-  setGathering?: SetterOrUpdater<CreateGatheringRequest>;
+  setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
   setGroup?: SetterOrUpdater<lighty.CreateGroupRequest>;
   setStep?: Dispatch<SetStateAction<number>>;
 }) {
@@ -38,7 +37,7 @@ export default function AddFriendsSlider({
         friendIds: friendIds,
       }));
     } else if (type === "gathering" && setGathering) {
-      setGathering((prev: CreateGatheringRequest) => ({
+      setGathering((prev: lighty.CreateGatheringRequest) => ({
         ...prev,
         friendIds: friendIds,
       }));

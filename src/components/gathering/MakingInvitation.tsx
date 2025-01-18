@@ -4,7 +4,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/buttons/FixedBottomButton";
 import VerticalInvitationCard from "../invitation/VerticalInvitationCard";
-import { CreateGatheringRequest } from "@/models/gathering";
+import * as lighty from "lighty-type";
 import { SetterOrUpdater } from "recoil";
 import useMakeGathering from "./hooks/useMakeGathering";
 import MakingGatheringStatus from "./MakeGatheringStatus";
@@ -13,8 +13,8 @@ export default function MakingInvitation({
   gathering,
   setGathering,
 }: {
-  gathering: CreateGatheringRequest;
-  setGathering: SetterOrUpdater<CreateGatheringRequest>;
+  gathering: lighty.CreateGatheringRequest;
+  setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
   const pathname = usePathname();
   const header = getHeader(pathname);

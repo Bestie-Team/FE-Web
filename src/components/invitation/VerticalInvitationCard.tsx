@@ -1,11 +1,11 @@
 import React from "react";
+import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
 import MapPinIcon from "../shared/icons/MapPinIcon";
 import CalendarIcon from "../shared/icons/CalendarIcon";
 import AddGatheringPhoto from "../gathering/AddGatheringPhoto";
-import { CreateGatheringRequest } from "@/models/gathering";
 import { SetterOrUpdater } from "recoil";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { formatToKoreanTime } from "@/utils/makeUTC";
@@ -14,8 +14,8 @@ export default function VerticalInvitationCard({
   gathering,
   setGathering,
 }: {
-  gathering: CreateGatheringRequest;
-  setGathering: SetterOrUpdater<CreateGatheringRequest>;
+  gathering: lighty.CreateGatheringRequest;
+  setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
   const { userInfo } = useAuth();
   const time = formatToKoreanTime(gathering.gatheringDate);

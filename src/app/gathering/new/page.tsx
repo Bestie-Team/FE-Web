@@ -15,7 +15,6 @@ import UserIcon from "@/components/shared/icons/UserIcon";
 import GatheringInput from "@/components/shared/inputs/GatheringInput";
 import Input from "@/components/shared/inputs/Input";
 import Spacing from "@/components/shared/Spacing";
-import { CreateGatheringRequest } from "@/models/gathering";
 import getHeader from "@/utils/getHeader";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -24,6 +23,7 @@ import { useRecoilState } from "recoil";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import MakingInvitation from "@/components/gathering/MakingInvitation";
 import StepToInvitation from "@/components/groups/StepToInvitation";
+import * as lighty from "lighty-type";
 
 export default function NewGatheringPage() {
   const [step, setStep] = useState(1);
@@ -31,7 +31,7 @@ export default function NewGatheringPage() {
   const header = getHeader(pathname);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [gatheringInfo, setGatheringInfo] =
-    useRecoilState<CreateGatheringRequest>(newGatheringInfo);
+    useRecoilState<lighty.CreateGatheringRequest>(newGatheringInfo);
 
   const isGroupInfoValid = () => {
     if (
