@@ -5,7 +5,7 @@ import Spacing from "../shared/Spacing";
 import Button from "../shared/buttons/Button";
 import PencilIcon from "../shared/icons/PencilIcon";
 import { Gathering, GatheringInWhichType } from "@/models/gathering";
-import { differenceInDays } from "date-fns";
+import { addHours, differenceInDays } from "date-fns";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
@@ -24,7 +24,8 @@ export default function GatheringCard({
 
   const { invitationImageUrl, name, gatheringDate } = gathering;
   const router = useRouter();
-  const diff = differenceInDays(new Date(), gatheringDate);
+  const date = addHours(new Date(gatheringDate), 9);
+  const diff = differenceInDays(new Date(), date);
 
   const handleClickGathering = () => {
     if (where === GatheringInWhich.HOME) {
@@ -61,7 +62,6 @@ export default function GatheringCard({
           <span className="flex-grow">날짜</span>
           <Spacing size={4} direction="horizontal" />
           <span className="tracking-widest">
-            {" "}
             {diff >= 0 ? `D+${diff}` : `D${diff}`}
           </span>
         </Flex>

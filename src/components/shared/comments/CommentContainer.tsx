@@ -4,11 +4,12 @@ import Dimmed from "../Dimmed";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import CommentWrapper from "./CommentWrapper";
-import CommentItem from "./CommentItem";
 import Input from "../inputs/Input";
 import Button from "../buttons/Button";
 import ArrowUpIcon from "../icons/ArrowUpIcon";
 import useMakeComment from "@/components/feeds/hooks/useMakeComment";
+import useFeedComments from "@/components/feeds/hooks/useGetGomment";
+import CommentItem from "./CommentItem";
 
 export default function CommentContainer({
   selectedFeedId,
@@ -20,6 +21,7 @@ export default function CommentContainer({
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
 
+  const { data: comments } = useFeedComments({ feedId: selectedFeedId });
   const { mutate: postComment } = useMakeComment({
     feedId: selectedFeedId,
     content: newComment,
@@ -57,9 +59,9 @@ export default function CommentContainer({
           <div className="pl-[24px] text-T3">댓글</div>
           <Spacing size={12} />
           <CommentWrapper>
-            {[1, 2, 3, 4, 5, 1, 1].map((_, index) => (
-              <React.Fragment key={`commentItem${index}`}>
-                <CommentItem />
+            {comments?.map((comment) => (
+              <React.Fragment key={comment.id}>
+                <CommentItem comment={comment} />
                 <Spacing size={16} />
               </React.Fragment>
             ))}

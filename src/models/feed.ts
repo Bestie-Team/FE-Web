@@ -15,3 +15,10 @@ export interface FeedResponse {
   feeds: Feed[];
   nextCursor: { createdAt: string; id: string };
 }
+
+export interface FeedCommentResponse {
+  id: string;
+  writer: lighty.User;
+  content: string;
+  createdAt: string;
+}

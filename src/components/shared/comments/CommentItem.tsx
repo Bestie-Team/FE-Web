@@ -1,18 +1,30 @@
+import { FeedCommentResponse } from "@/models/feed";
 import Flex from "../Flex";
 import Options from "../Options";
 import Spacing from "../Spacing";
+import { useAuth } from "../providers/AuthProvider";
+import { addHours } from "date-fns";
+import { formatDate } from "@/utils/formatDate";
 
-export default function CommentItem() {
-  const 댓글슨이가나인가 = false;
+export default function CommentItem({
+  comment,
+}: {
+  comment: FeedCommentResponse;
+}) {
+  const { userInfo } = useAuth();
+  if (!comment) return;
 
+  const isMe = userInfo?.accountId === comment.writer.accountId;
+  const { writer, content, createdAt } = comment;
+  const time = formatDate(addHours(new Date(createdAt), 9));
   return (
     <Flex align="center" className={styles.container}>
-      <span className={styles.commenter}>최은재</span>
+      <span className={styles.commenter}>{writer.accountId}</span>
       <Spacing direction="horizontal" size={8} />
-      <span className={styles.comment}>wow great post</span>
+      <span className={styles.comment}>{content}</span>
       <Spacing direction="horizontal" size={8} />
-      <span className={styles.time}>00분전</span>
-      {댓글슨이가나인가 && (
+      <span className={styles.time}>{time}</span>
+      {isMe && (
         <>
           <Spacing direction="horizontal" size={8} />
           <Options width="12" height="12" type="default" />

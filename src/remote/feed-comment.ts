@@ -1,5 +1,28 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import { FeedCommentResponse } from "@/models/feed";
+
+/** 피드 댓글 조회 */
+export async function getFeedComments({ feedId }: { feedId: string }) {
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+
+  const targetUrl = `${backendUrl}/feed-comments?feedId=${feedId}`;
+
+  const response = await fetch(targetUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("피드 댓글 조회를 실패하였습니다,");
+  }
+  const data: FeedCommentResponse[] = await response.json();
+
+  return data;
+}
 
 /** 피드 댓글 작성*/
 export async function postMakeComment({
