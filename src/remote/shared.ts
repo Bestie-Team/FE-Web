@@ -16,3 +16,37 @@ export function validateAuth(): string {
   }
   return token;
 }
+
+// 공통으로 사용되는 기본 설정
+export const API_CONFIG = {
+  getBaseUrl: () => {
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+    if (!url) throw new Error(ERROR_MESSAGES.NO_BACKEND_URL);
+    return url;
+  },
+  getHeaders: () => {
+    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    if (!token) throw new Error(ERROR_MESSAGES.NO_AUTH);
+
+    return {
+      Authorization: `Bearer ${token}`,
+    };
+  },
+};
+
+// 기본 fetch 함수
+export const fetchWithAuth = async (url: string, options: RequestInit) => {
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      ...API_CONFIG.getHeaders(),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("API 요청 실패");
+  }
+
+  return response;
+};

@@ -2,7 +2,7 @@ import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import { FeedResponse } from "@/models/feed";
 import * as lighty from "lighty-type";
 import { v4 as uuidv4 } from "uuid";
-import { validateAuth, validateBackendUrl } from "./shared";
+import { API_CONFIG, fetchWithAuth } from "./shared";
 
 const uuid = uuidv4();
 
@@ -24,29 +24,29 @@ export async function getFeedAll({
   maxDate: string;
   limit: number;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
   const cursor = {
     createdAt: order === "DESC" ? maxDate : minDate,
     id: uuid,
   };
-  const targetUrl = `${backendUrl}/feeds?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
-    JSON.stringify(cursor)
-  )}&limit=${limit}`;
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/feeds?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
+      JSON.stringify(cursor)
+    )}&limit=${limit}`;
 
-  const response = await fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetch(targetUrl, {
+      method: "GET",
+    });
 
-  if (!response.ok) {
+    const data: FeedResponse = await response.json();
+
+    return data;
+  } catch (error) {
+    if (error instanceof Response) {
+      throw new Error("피드 조회를 실패하였습니다,");
+    }
     throw new Error("피드 조회를 실패하였습니다,");
   }
-  const data: FeedResponse = await response.json();
-
-  return data;
 }
 
 /** 자신이 작성한 피드 목록 조회 */
@@ -62,55 +62,49 @@ export async function getFeedMine({
   maxDate: string;
   limit: number;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
   const cursor = {
     createdAt: order === "DESC" ? maxDate : minDate,
     id: uuid,
   };
-  const targetUrl = `${backendUrl}/feeds/my?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
-    JSON.stringify(cursor)
-  )}&limit=${limit}`;
+  try {
+    const targetUrl = `${baseUrl}/feeds/my?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
+      JSON.stringify(cursor)
+    )}&limit=${limit}`;
 
-  const response = await fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: FeedResponse = await response.json();
 
-  if (!response.ok) {
+    return data;
+  } catch (error) {
     throw new Error("내가 작성한 피드 조회를 실패하였습니다,");
   }
-  const data: FeedResponse = await response.json();
-
-  return data;
 }
 
 /** 모임 피드 사진 업로드 생성 */
 export async function uploadFeedImages({ files }: { files: File[] }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+    const targetUrl = `${baseUrl}/feeds/images`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      body: formData,
+    });
 
-  const formData = new FormData();
-  for (let i = 0; i < files.length; i++) {
-    formData.append("files", files[i]);
+    const data: lighty.UploadImageListResponse = await response.json();
+    return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
+  } catch (error) {
+    if (error instanceof Response) {
+      handleResponse(error);
+    }
+    throw new Error("이미지 업로드 실패");
   }
-
-  const response = await makeUploadRequest(
-    `${backendUrl}/feeds/images`,
-    token,
-    formData
-  );
-  const data: lighty.UploadImageListResponse = await response.json();
-
-  if (response.ok) {
-    return { ...data, message: "이미지를 성공적으로 업데이트하였습니다" };
-  }
-
-  if (!response.ok) return handleResponse(response);
-
-  return { ...data, message: "이미지를 성공적으로 업데이트하였습니다" };
 }
 
 /** 모임 피드 생성 */
@@ -119,20 +113,21 @@ export async function postGatheringFeed({
 }: {
   gatheringFeed: lighty.CreateGatheringFeedRequest;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/feeds/gatherings`;
+  try {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gatheringFeed),
+    });
 
-  const response = await makePostRequest(
-    `${backendUrl}/feeds/gatherings`,
-    token,
-    gatheringFeed
-  );
-
-  if (response.ok) {
     return { message: "모임 피드를 성공적으로 작성하였습니다." };
+  } catch (error) {
+    if (error instanceof Response) {
+      return handleResponse(error);
+    }
   }
-
-  return handleResponse(response);
 }
 
 /** 일반 피드 생성 */
@@ -141,21 +136,23 @@ export async function postFriendFeed({
 }: {
   friendFeed: lighty.CreateFriendFeedRequest;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/feeds/friends`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(friendFeed),
+    });
 
-  const response = await makePostRequest(
-    `${backendUrl}/feeds/friends`,
-    token,
-    friendFeed
-  );
+    const data = await response.json();
 
-  const data = await response.json();
-  if (response.ok) {
     return { message: data };
+  } catch (error) {
+    if (error instanceof Response) {
+      handleResponse(error);
+    }
   }
-
-  return handleResponse(response);
 }
 
 /** 피드 수정 */
@@ -166,70 +163,22 @@ export async function patchFeed({
   content: string;
   feedId: string;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/${feedId}`;
+  try {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(content),
+    });
 
-  const response = await makePatchRequest(`${backendUrl}/${feedId}`, token, {
-    content,
-  });
-
-  const data = await response.json();
-  if (response.ok) {
+    const data = await response.json();
     return { message: data };
+  } catch (error) {
+    if (error instanceof Response) {
+      return handleResponse(error);
+    }
   }
-
-  return handleResponse(response);
-}
-
-async function makePostRequest(
-  backendUrl: string,
-  token: string,
-  gatheringFeed:
-    | lighty.CreateGatheringFeedRequest
-    | lighty.CreateFriendFeedRequest
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(gatheringFeed),
-  });
-}
-async function makePatchRequest(
-  backendUrl: string,
-  token: string,
-  content: { content: string }
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(content),
-  });
-}
-
-async function makeUploadRequest(
-  backendUrl: string,
-  token: string,
-  formData: FormData
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
 }
 
 async function handleResponse(response: Response) {

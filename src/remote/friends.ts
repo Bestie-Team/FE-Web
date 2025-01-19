@@ -1,31 +1,24 @@
-import STORAGE_KEYS from "@/constants/storageKeys";
 import * as lighty from "lighty-type";
-import { validateAuth, validateBackendUrl } from "./shared";
+import { API_CONFIG, fetchWithAuth } from "./shared";
 
 /** 친구 요청 */
 export async function postFriends({ userId }: { userId: string }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/friends`;
 
-  const targetUrl = `${backendUrl}/friends`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
 
-  const response = await fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ userId }),
-  });
-
-  if (response.ok) {
     return { message: "친구요청을 성공적으로 보냈습니다" };
-  }
-  if (!response.ok) {
+  } catch (error) {
     throw new Error("Failed to friend request");
   }
-
-  return { message: "친구요청을 성공적으로 보냈습니다" };
 }
 
 /** 친구 목록 조회 */
@@ -39,70 +32,60 @@ export async function getFriends({
   limit: number;
 }) {
   const cursor = { name, accountId };
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
-
-  const targetUrl = `${backendUrl}/friends?cursor=${encodeURIComponent(
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/friends?cursor=${encodeURIComponent(
     JSON.stringify(cursor)
   )}&limit=${limit}`;
 
-  const response = await fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const data: lighty.FriendListResponse = await response.json();
-  console.log(data);
-  if (!response.ok) {
+  try {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data: lighty.FriendListResponse = await response.json();
+    return data;
+  } catch (error) {
     throw new Error("친구 목록 조회에 실패하였습니다.");
   }
-  return data;
 }
 
 /** 친구 요청 수락 */
 export async function postAcceptFriend({ friendId }: { friendId: string }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/friends/${friendId}/accept`;
 
-  const targetUrl = `${backendUrl}/friends/${friendId}/accept`;
-
-  const response = await fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
+  try {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return { message: "친구 요청을 수락하였습니다" };
+  } catch (error) {
     throw new Error("친구 요청 수락에 실패하였습니다,");
   }
-  return { message: "친구 요청을 수락하였습니다" };
 }
 
 /** 친구 요청 거절 */
 export async function postRejectFriend({ friendId }: { friendId: string }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/friends/${friendId}/reject`;
 
-  const targetUrl = `${backendUrl}/friends/${friendId}/reject`;
-
-  const response = await fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const data = await response.json();
-  if (!response.ok) {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return { message: "친구 요청을 성공적으로 거절했습니다.", data };
+  } catch (error) {
     throw new Error("친구 요청 거절에 실패하였습니다.");
   }
-  return data || {};
 }
 
 /** 받은 친구 요청 목록 조회 */
@@ -116,26 +99,25 @@ export async function getReceivedFriendRequestsList({
   limit: number;
 }) {
   const cursor = { name, accountId };
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/friends/requests/received?cursor=${encodeURIComponent(
-    JSON.stringify(cursor)
-  )}&limit=${limit}`;
+  try {
+    const targetUrl = `${baseUrl}/friends/requests/received?cursor=${encodeURIComponent(
+      JSON.stringify(cursor)
+    )}&limit=${limit}`;
 
-  const response = await fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data: lighty.FriendRequestListResponse = await response.json();
 
-  const data: lighty.FriendRequestListResponse = await response.json();
-  if (!response.ok) {
+    return data;
+  } catch (error) {
     throw new Error("친구 요청 목록 조회에 실패하였습니다.");
   }
-  return data;
 }
 
 /** 보낸 친구 요청 목록 조회 */
@@ -149,26 +131,24 @@ export async function getSentFriendRequestsList({
   limit: number;
 }) {
   const cursor = { name, accountId };
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/friends/requests/sent?cursor=${encodeURIComponent(
-    JSON.stringify(cursor)
-  )}&limit=${limit}`;
+  try {
+    const targetUrl = `${baseUrl}/friends/requests/sent?cursor=${encodeURIComponent(
+      JSON.stringify(cursor)
+    )}&limit=${limit}`;
 
-  const response = await fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const data: lighty.FriendRequestListResponse = await response.json();
-  if (!response.ok) {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data: lighty.FriendRequestListResponse = await response.json();
+    return data;
+  } catch (error) {
     throw new Error("보낸 친구 요청 목록 조회에 실패하였습니다.");
   }
-  return data;
 }
 
 /** 친구 검색 */
@@ -183,37 +163,25 @@ export async function getSearchFriends({
   limit: number;
   search: string;
 }) {
+  const cursor = { name, accountId };
+  const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const cursor = { name, accountId };
-
-    const backendUrl = validateBackendUrl();
-    const token = validateAuth();
-
-    const targetUrl = `${backendUrl}/friends/search?cursor=${encodeURIComponent(
+    const targetUrl = `${baseUrl}/friends/search?cursor=${encodeURIComponent(
       JSON.stringify(cursor)
     )}&limit=${limit}&search=${search}`;
 
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithAuth(targetUrl, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
     });
 
-    if (response.status === 400) {
-      alert("검색어는 2자 이상 20자 이하만 가능합니다.");
-      return;
-    }
-
-    if (!response.ok) {
-      console.log("친구 검색 중 에러가 발생하였습니다.");
-    }
-
     const data: lighty.FriendListResponse = await response.json();
-
     return data;
   } catch (error) {
-    console.error("Error during login:", error);
+    if (error instanceof Response && error.status === 400) {
+      throw new Error("검색어는 2자 이상 20자 이하만 가능합니다.");
+    }
+    if (error instanceof Response) {
+      console.log("친구 검색 중 에러가 발생하였습니다.");
+    }
   }
 }

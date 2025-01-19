@@ -1,39 +1,27 @@
-import { ERROR_MESSAGES } from "@/constants/errorMessages";
-import STORAGE_KEYS from "@/constants/storageKeys";
-
 import * as lighty from "lighty-type";
+import { API_CONFIG, fetchWithAuth } from "./shared";
+
+type PaginationParams = {
+  cursor: string;
+  limit: number;
+  minDate: string;
+  maxDate: string;
+};
 
 /** 참여 모임 목록 조회 */
-/** 첫 커서는 현재 날짜 */
 export async function getGatherings({
   cursor,
   limit,
   minDate,
   maxDate,
-}: {
-  cursor: string | null;
-  limit: number;
-  minDate: string;
-  maxDate: string;
-}) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+}: PaginationParams) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const response = await fetchWithAuth(
+    `${baseUrl}/gatherings?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+    { method: "GET" }
+  );
 
-  const targetUrl = `${backendUrl}/gatherings?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`;
-
-  const response = await fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("참여한 그룹 목록 조회를 실패하였습니다,");
-  }
-  const data: lighty.GatheringListResponse = await response.json();
-
-  return data;
+  return response.json();
 }
 
 /** 모임 상세 조회 */
@@ -42,244 +30,158 @@ export async function getGatheringDetail({
 }: {
   gatheringId: string;
 }) {
-  if (gatheringId == "") return;
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  if (!gatheringId) return;
 
-  const targetUrl = `${backendUrl}/gatherings/${gatheringId}`;
-
-  const response = await fetch(targetUrl, {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const response = await fetchWithAuth(`${baseUrl}/gatherings/${gatheringId}`, {
     method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   });
 
-  if (!response.ok) {
-    throw new Error("그룹 상세 정보 조회를 실패하였습니다,");
-  }
-  const data: lighty.GatheringDetailResponse = await response.json();
-
-  return data;
+  return response.json();
 }
 
+/** 모임 생성 */
 export async function postGathering({
   gathering,
 }: {
   gathering: lighty.CreateGatheringRequest;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/gatherings`;
-  const response = await makePostRequest(targetUrl, token, gathering);
+  try {
+    const response = await fetchWithAuth(`${baseUrl}/gatherings`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(gathering),
+    });
 
-  if (response.ok) {
     return { message: "초대장을 성공적으로 발송하였습니다" };
+  } catch (error) {
+    if (error instanceof Response && error.status === 400) {
+      throw new Error(
+        "입력값 검증 실패, friendIds에 친구가 아닌 회원이 존재합니다"
+      );
+    }
+    throw new Error("모임 생성에 실패하였습니다");
   }
-  if (response.status === 400) {
-    console.log("입력값 검증 실패, friendIds에 친구가 아닌 회원이 존재합니다");
-  }
-
-  if (!response.ok) {
-    throw new Error(`모임 생성에 실패하였습니다`);
-  }
-
-  return { message: "초대장을 성공적으로 발송하였습니다" };
 }
 
+/** 모임 초대장 이미지 업로드 */
 export async function postGatheringInvitationImage({ file }: { file: File }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
-
-  const targetUrl = `${backendUrl}/gatherings/invitation/image`;
-
+  const baseUrl = API_CONFIG.getBaseUrl();
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: formData,
-  });
+  try {
+    const response = await fetch(`${baseUrl}/gatherings/invitation/image`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_CONFIG.getHeaders().Authorization}`,
+      },
+      body: formData,
+    });
 
-  if (response.status === 400) {
-    console.log("업로드 가능한 형식의 이미지가 아닙니다.");
+    if (!response.ok) {
+      if (response.status === 400) {
+        throw new Error("업로드 가능한 형식의 이미지가 아닙니다.");
+      }
+      throw new Error("모임 초대장 이미지 업로드에 실패하였습니다.");
+    }
+
+    const data = await response.json();
+    return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
+  } catch (error) {
+    if (error instanceof Error) throw error;
+    throw new Error("이미지 업로드 중 오류가 발생했습니다.");
   }
-
-  if (!response.ok) {
-    throw new Error(`모임 초대장 이미지 업로드에 실패하였습니다.`);
-  }
-
-  const data: { imageUrl: string } = await response.json();
-
-  return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
 }
 
+/** 모임 초대 수락 */
 export async function postAcceptGatheringInvitation({
   invitationId,
 }: {
   invitationId: string;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/gatherings/${invitationId}/accept`;
+  try {
+    await fetchWithAuth(`${baseUrl}/gatherings/${invitationId}/accept`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ invitationId }),
+    });
 
-  const response = await makePostRequest(targetUrl, token, { invitationId });
-
-  if (response.ok) {
     return { message: "모임을 수락하였습니다." };
+  } catch (error) {
+    if (error instanceof Response && error.status === 400) {
+      throw new Error("입력값 검증 실패");
+    }
+    throw new Error("모임 수락 실패");
   }
-  if (response.status === 400) {
-    throw new Error(`입력값 검증 실패`);
-  }
-  if (!response.ok) {
-    throw new Error(`모임 수락 실패`);
-  }
-  return { message: "모임을 수락하였습니다." };
 }
 
+/** 모임 초대 거절 */
 export async function postRejectGatheringInvitation({
   invitationId,
 }: {
   invitationId: string;
 }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/gatherings/${invitationId}/reject`;
+  try {
+    await fetchWithAuth(`${baseUrl}/gatherings/${invitationId}/reject`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ invitationId }),
+    });
 
-  const response = await makePostRequest(targetUrl, token, { invitationId });
-
-  if (response.ok) {
     return { message: "모임을 성공적으로 거절하였습니다." };
+  } catch (error) {
+    if (error instanceof Response && error.status === 400) {
+      throw new Error("입력값 검증 실패");
+    }
+    throw new Error("모임 거절 실패");
   }
-  if (response.status === 400) {
-    throw new Error(`입력값 검증 실패`);
-  }
-  if (!response.ok) {
-    throw new Error(`모임 거절 실패`);
-  }
-  return { message: "모임을 성공적으로 거절하였습니다." };
 }
 
 /** 받은 모임 초대 목록 조회 */
-/** 첫 커서는 현재 날짜 */
 export async function getReceivedInvitationToGatheringList({
   cursor,
   limit,
   minDate,
   maxDate,
-}: {
-  cursor: string;
-  limit: number;
-  minDate: string;
-  maxDate: string;
-}) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+}: PaginationParams) {
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/gatherings/invitations/received?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`;
+  try {
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings/invitations/received?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      { method: "GET" }
+    );
 
-  const response = await makeGetRequest(targetUrl, token);
-
-  if (response.status === 400) {
-    throw new Error(`받은 모임 초대 목록 조회 실패`);
+    return response.json();
+  } catch {
+    throw new Error("받은 모임 초대 목록 조회 실패");
   }
-  if (!response.ok) {
-    throw new Error(`받은 모임 초대 목록 조회 실패`);
-  }
-  const data: lighty.GatheringInvitationListResponse = await response.json();
-
-  return data;
 }
 
 /** 보낸 모임 초대 목록 조회 */
-/** 첫 커서는 현재 날짜 */
 export async function getSentInvitationToGatheringList({
   cursor,
   limit,
   minDate,
   maxDate,
-}: {
-  cursor: string;
-  limit: number;
-  minDate: string;
-  maxDate: string;
-}) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+}: PaginationParams) {
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/gatherings/invitations/sent?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`;
+  try {
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings/invitations/sent?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      { method: "GET" }
+    );
 
-  const response = await makeGetRequest(targetUrl, token);
-
-  if (response.status === 400) {
-    throw new Error(`보낸 모임 초대 목록 조회 실패`);
+    return response.json();
+  } catch {
+    throw new Error("보낸 모임 초대 목록 조회 실패");
   }
-  if (!response.ok) {
-    throw new Error(`보낸 모임 초대 목록 조회 실패`);
-  }
-  const data: lighty.GatheringInvitationListResponse = await response.json();
-
-  return data;
-}
-
-function validateBackendUrl(): string {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error(ERROR_MESSAGES.NO_BACKEND_URL);
-  }
-  return backendUrl;
-}
-
-function validateAuth(): string {
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error(ERROR_MESSAGES.NO_AUTH);
-  }
-  return token;
-}
-
-async function makePostRequest(
-  backendUrl: string,
-  token: string,
-  body:
-    | lighty.CreateGatheringRequest
-    | { invitationId: string }
-    | {
-        cursor: string;
-        limit: number;
-        minDate: string;
-        maxDate: string;
-      }
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
-  });
-}
-
-async function makeGetRequest(
-  backendUrl: string,
-  token: string
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
 }
