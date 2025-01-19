@@ -13,8 +13,10 @@ export async function postFriends({ userId }: { userId: string }) {
       },
       body: JSON.stringify({ userId }),
     });
+    console.log(response);
     return { message: "친구요청을 성공적으로 보냈습니다" };
   } catch (error) {
+    console.log(error);
     throw new Error("Failed to friend request");
   }
 }
@@ -42,6 +44,7 @@ export async function getFriends({
     const data: lighty.FriendListResponse = await response.json();
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("친구 목록 조회에 실패하였습니다.");
   }
 }
@@ -58,8 +61,10 @@ export async function postAcceptFriend({ friendId }: { friendId: string }) {
         "Content-Type": "application/json",
       },
     });
+    console.log(response);
     return { message: "친구 요청을 수락하였습니다" };
   } catch (error) {
+    console.log(error);
     throw new Error("친구 요청 수락에 실패하였습니다,");
   }
 }
@@ -79,6 +84,7 @@ export async function postRejectFriend({ friendId }: { friendId: string }) {
     const data = await response.json();
     return { message: "친구 요청을 성공적으로 거절했습니다.", data };
   } catch (error) {
+    console.log(error);
     throw new Error("친구 요청 거절에 실패하였습니다.");
   }
 }
@@ -111,6 +117,7 @@ export async function getReceivedFriendRequestsList({
 
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("친구 요청 목록 조회에 실패하였습니다.");
   }
 }
@@ -142,6 +149,7 @@ export async function getSentFriendRequestsList({
     const data: lighty.FriendRequestListResponse = await response.json();
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("보낸 친구 요청 목록 조회에 실패하였습니다.");
   }
 }

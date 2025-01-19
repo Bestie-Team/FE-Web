@@ -64,7 +64,9 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
         throw new Error("로그인 처리 중 문제가 발생했습니다.");
     }
   } catch (error) {
-    alert("로그인 요청에 실패했습니다.");
+    if (error instanceof Response) {
+      throw new Error("로그인 처리 중 문제 발생");
+    }
   }
 }
 

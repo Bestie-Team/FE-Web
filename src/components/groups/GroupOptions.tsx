@@ -23,12 +23,7 @@ export default function GroupOptions({ isOwner }: { isOwner: boolean }) {
     >
       <OptionsSelectIcon />
       {opened && (
-        <DropdownMenu
-          type="group"
-          ref={ref}
-          items={menuItems}
-          className={styles.menu}
-        />
+        <DropdownMenu ref={ref} items={menuItems} className={styles.menu} />
       )}
     </div>
   );

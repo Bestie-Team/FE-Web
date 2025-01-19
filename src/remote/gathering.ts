@@ -2,7 +2,7 @@ import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 
 type PaginationParams = {
-  cursor: string;
+  cursor: string | null;
   limit: number;
   minDate: string;
   maxDate: string;
@@ -60,7 +60,7 @@ export async function postGathering({
       method: "POST",
       body: JSON.stringify(gathering),
     });
-
+    console.log(response);
     return { message: "초대장을 성공적으로 발송하였습니다" };
   } catch (error) {
     if (error instanceof Response && error.status === 400) {

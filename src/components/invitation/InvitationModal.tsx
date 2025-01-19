@@ -123,13 +123,6 @@ export default function InvitationModal({
   );
 }
 
-const groupMemberImages = [
-  "https://cdn.lighty.today/bini.JPG",
-  "https://cdn.lighty.today/binanton_jp.jpeg",
-  "https://cdn.lighty.today/ocean.JPG",
-  "https://cdn.lighty.today/groom.JPG",
-];
-
 const styles = {
   dimmed: "flex flex-col justify-center items-center",
 

@@ -3,14 +3,13 @@ import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
 import { addHours, differenceInDays } from "date-fns";
-import { GatheringDetailResponse } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
-import * as lighty from "lighty-type";
+import { GatheringDetailResponse } from "@/models/gathering";
 
 export default function GatheringBannerContainer({
   gathering,
 }: {
-  gathering: lighty.GatheringDetailResponse;
+  gathering: GatheringDetailResponse;
 }) {
   const date = addHours(new Date(gathering.gatheringDate), 9);
   const diff = differenceInDays(new Date(), new Date(date));

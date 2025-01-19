@@ -1,10 +1,5 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
-import {
-  API_CONFIG,
-  fetchWithAuth,
-  validateAuth,
-  validateBackendUrl,
-} from "./shared";
+import { API_CONFIG, fetchWithAuth } from "./shared";
 
 export async function handleProfileImageUpdate(imageFile: { file: File }) {
   try {
@@ -52,11 +47,9 @@ export async function postProfileImage(imageFile: { file: File }) {
 }
 
 export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const backendUrl = validateBackendUrl();
-    const token = validateAuth();
-
-    const targetUrl = `${backendUrl}/users/profile/image`;
+    const targetUrl = `${baseUrl}/users/profile/image`;
 
     const response = await fetch(targetUrl, {
       method: "PATCH",

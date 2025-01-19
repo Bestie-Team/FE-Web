@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import "./CalendarWithBorder.css";
-import { addHours, format, formatDate } from "date-fns";
+import { addHours, format } from "date-fns";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
@@ -10,7 +10,6 @@ import Flex from "../Flex";
 import React from "react";
 import CalendarLightyIcon from "../Icon/CalendarLightyIcon";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
-import { formatToKoreanTime } from "@/utils/makeUTC";
 
 const Calendar = dynamic(() => import("react-calendar"), {
   ssr: false,

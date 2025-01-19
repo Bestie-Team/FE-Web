@@ -79,6 +79,7 @@ export async function getFeedMine({
 
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("내가 작성한 피드 조회를 실패하였습니다,");
   }
 }
@@ -121,6 +122,7 @@ export async function postGatheringFeed({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gatheringFeed),
     });
+    console.log(response);
 
     return { message: "모임 피드를 성공적으로 작성하였습니다." };
   } catch (error) {

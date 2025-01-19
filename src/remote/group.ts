@@ -71,6 +71,7 @@ export async function getGroups({
     const data: lighty.GroupListResponse = await response.json();
     return data;
   } catch (e) {
+    console.log(e);
     throw new Error("참여한 그룹 목록 조회를 실패하였습니다,");
   }
 }
@@ -91,8 +92,10 @@ export async function postGroupMember({
       method: "POST",
       body: JSON.stringify(userIds),
     });
+    console.log(response);
     return { message: "그룹원을 성공적으로 추가하였습니다." };
   } catch (e) {
+    console.log(e);
     throw new Error("그룹원 추가를 실패하였습니다,");
   }
 }
@@ -105,8 +108,10 @@ export async function deleteGroupMember({ groupId }: { groupId: string }) {
     const response = await fetchWithAuth(targetUrl, {
       method: "DELETE",
     });
+    console.log(response);
     return { message: "그룹에서 성공적으로 나갔습니다." };
   } catch (error) {
+    console.log(error);
     throw new Error("그룹 나기기에 실패하였습니다.");
   }
 }
@@ -117,11 +122,12 @@ export async function deleteGroup({ groupId }: { groupId: string }) {
   try {
     const targetUrl = `${baseUrl}/groups/${groupId}`;
     const response = await fetchWithAuth(targetUrl, { method: "DELETE" });
-
+    console.log(response);
     return {
       message: "그룹을 성공적으로 삭제하였습니다.",
     };
   } catch (error) {
+    console.log(error);
     return {
       message: "그룹을 성공적으로 삭제하였습니다.",
     };

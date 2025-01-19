@@ -1,8 +1,8 @@
 import { newGatheringInfo } from "@/atoms/gathering";
-import { GatheringType } from "@/constants/gathering";
 import * as lighty from "lighty-type";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
+import { GatheringType } from "@/models/gathering";
 
 const AnimatedTabButton = () => {
   const [selectedGathering, setSelectedGathering] =

@@ -7,11 +7,9 @@ import { Dispatch, SetStateAction } from "react";
 export type FeedType = "나의피드" | "전체";
 export default function MyFeed({
   feeds,
-  type,
   onClickFeed,
 }: {
   feeds: Feed[] | null;
-  type: FeedType;
   onClickFeed: Dispatch<SetStateAction<string>>;
 }) {
   if (!feeds) return;

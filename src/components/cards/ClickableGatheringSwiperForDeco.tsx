@@ -5,14 +5,14 @@ import Spacing from "../shared/Spacing";
 import clsx from "clsx";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
-import { GatheringResponse } from "@/models/gathering";
+import { Feed } from "@/models/feed";
 
 export default function ClickableGatheringSwiperForDeco({
   gathering,
   onImageClick,
   selectedGatheringId,
 }: {
-  gathering: GatheringResponse[];
+  gathering: Feed[];
   onImageClick?: (
     groupId: {
       id: string;
@@ -60,47 +60,43 @@ export default function ClickableGatheringSwiperForDeco({
         grabCursor={true}
         className="custom-swiper w-full h-[340px]"
       >
-        {gathering.map(
-          ({ invitationImageUrl, id, name, description, date }, idx) => (
-            <SwiperSlide
-              onClick={() =>
-                handleGatheringClick({
-                  id,
-                  name,
-                  description,
-                  invitationImageUrl,
-                  date,
-                })
-              }
-              className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
-              key={`gathering_${id}`}
-            >
-              <Image
-                src={invitationImageUrl}
-                alt={`gathering${idx + 1}`}
-                className={styles.image}
-                width={270}
-                height={320}
-              />
-              <div className={styles.gatheringInfoWrapper}>
-                <span className="text-T3">{name}</span>
-                <Spacing size={6} />
-                <span className="text-C2 text-grayscale-600">
-                  {description}
-                </span>
-              </div>
-              {id === selectedGatheringId ? (
-                <Flex
-                  align="center"
-                  justify="center"
-                  className={styles.checkWrapper}
-                >
-                  <CheckIcon />
-                </Flex>
-              ) : null}
-            </SwiperSlide>
-          )
-        )}
+        {gathering.map(({ gathering, id, content }, idx) => (
+          <SwiperSlide
+            onClick={() =>
+              handleGatheringClick({
+                id,
+                name: gathering?.name || "",
+                description: gathering?.description || "",
+                invitationImageUrl: "",
+                date: gathering?.gatheringDate || "",
+              })
+            }
+            className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
+            key={`gathering_${id}`}
+          >
+            <Image
+              src={""}
+              alt={`gathering${idx + 1}`}
+              className={styles.image}
+              width={270}
+              height={320}
+            />
+            <div className={styles.gatheringInfoWrapper}>
+              <span className="text-T3">{gathering?.name}</span>
+              <Spacing size={6} />
+              <span className="text-C2 text-grayscale-600">{content}</span>
+            </div>
+            {id === selectedGatheringId ? (
+              <Flex
+                align="center"
+                justify="center"
+                className={styles.checkWrapper}
+              >
+                <CheckIcon />
+              </Flex>
+            ) : null}
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

@@ -4,7 +4,6 @@ import Flex from "../shared/Flex";
 import LightyLogo from "../shared/Icon/LightyLogo";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import { GATHERINGS_PASSED } from "@/constants/gathering";
 import { cardSelectedGatheringAtom } from "@/atoms/card";
 import { GatheringResponse } from "@/models/gathering";
 import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
@@ -36,7 +35,10 @@ export default function ChoosingGatheringToDecorate({
     setCardSelectedGathering(gatheringInfo as Partial<GatheringResponse>);
   };
 
-  const gatheringsPassed = GATHERINGS_PASSED;
+  const feeds = data?.feeds;
+  if (!feeds) {
+    return <div>작성할 수 있는 피드가 없네여~</div>;
+  }
   return (
     <Flex direction="column" className="bg-base-white h-screen pt-[48px]">
       <Flex direction="column" className="px-[24px]">
@@ -53,7 +55,7 @@ export default function ChoosingGatheringToDecorate({
       </Flex>
       <Spacing size={40} />
       <ClickableGatheringSwiperForDeco
-        gathering={gatheringsPassed}
+        gathering={feeds}
         onImageClick={handleImageClick}
         selectedGatheringId={cardSelectedGathering?.id || null}
       />

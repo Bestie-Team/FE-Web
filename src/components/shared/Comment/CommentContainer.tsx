@@ -43,7 +43,7 @@ export default function CommentContainer({
   const { mutate: postComment } = useMakeComment({
     feedId: selectedFeedId,
     content: newComment,
-    onSuccess: async (data: { message: string }) => {
+    onSuccess: async () => {
       toast.success("댓글을 등록하였습니다.");
       await queryClient.invalidateQueries({
         queryKey: ["get/comments", { feedId: selectedFeedId }],
@@ -57,7 +57,7 @@ export default function CommentContainer({
 
   const { mutate: deleteComment } = useDeleteComment({
     commentId: selectedCommentId,
-    onSuccess: async (data: { message: string }) => {
+    onSuccess: async () => {
       toast.success("댓글을 삭제했습니다");
       await queryClient.invalidateQueries({
         queryKey: ["get/comments", { feedId: selectedFeedId }],
