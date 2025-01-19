@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Flex from "../Flex";
-import Spacing from "../Spacing";
-import ArrowRightWithBody from "../Icon/ArrowRightWithBody";
+import Flex from "./Flex";
+import Spacing from "./Spacing";
+import ArrowRightWithBody from "./Icon/ArrowRightWithBody";
 
 export default function Banner() {
   return (
