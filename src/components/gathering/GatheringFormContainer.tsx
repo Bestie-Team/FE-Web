@@ -11,7 +11,7 @@ import GatheringInput from "../shared/Input/GatheringInput";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import CalendarBottomSheet from "../shared/BottomSheet/CalendarBottomSheet";
+import CalendarBottomSheet from "../shared/BottomDrawer/CalendarBottomSheet";
 import { isValid } from "date-fns";
 import getHeader from "@/utils/getHeader";
 import EmptyLogoIcon from "../shared/Icon/EmptyLogoIcon";

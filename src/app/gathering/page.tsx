@@ -15,8 +15,8 @@ import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
 import { GatheringInWhich } from "@/models/gathering";
-import MemoriesBottomSheet from "@/components/shared/BottomSheet/MemoriesBottomSheet";
-import TabBar from "@/components/shared/Tab/TabBar";
+import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
+import TabBar from "@/components/shared/Panel/Panel";
 
 export default function MyGatheringPage() {
   const pathname = usePathname();

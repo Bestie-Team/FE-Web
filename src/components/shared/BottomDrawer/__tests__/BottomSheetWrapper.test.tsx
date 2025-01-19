@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import BottomSheetWrapper from "@/components/shared/BottomSheet/shared/BottomSheetWrapper";
+import BottomSheetWrapper from "@/components/shared/BottomDrawer/shared/BottomSheetWrapper";
 
 describe("BottomSheetWrapper", () => {
   test("open이 false일 때 컴포넌트가 렌더링되지 않는가", () => {

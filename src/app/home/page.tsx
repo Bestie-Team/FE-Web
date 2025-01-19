@@ -7,7 +7,7 @@ import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
 import Banner from "@/components/shared/Banner/Banner";
-import WelcomeBottomSheet from "@/components/shared/BottomSheet/WelcomeBottomSheet";
+import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
 import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/Icon/ArrowRightIcon";
 import Spacing from "@/components/shared/Spacing";

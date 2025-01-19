@@ -11,7 +11,7 @@ import UserFriendsListContainer from "@/components/friends/UserFriendsListContai
 import SentReceivedFriendRequestsList from "@/components/friends/SentReceivedFriendRequestsList";
 import useDebounce from "@/hooks/debounce";
 import SearchedFriendsListContainer from "@/components/friends/SearchedFriendsListContainer";
-import TabBar from "@/components/shared/Tab/TabBar";
+import TabBar from "@/components/shared/Panel/Panel";
 
 export default function FriendsPage() {
   const containerRef = useRef<HTMLDivElement>(null);

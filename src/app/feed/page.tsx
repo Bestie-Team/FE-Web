@@ -17,8 +17,8 @@ import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
 import { useTabs } from "@/hooks/useTabs";
-import TabBar from "@/components/shared/Tab/TabBar";
-import MemoriesBottomSheet from "@/components/shared/BottomSheet/MemoriesBottomSheet";
+import TabBar from "@/components/shared/Panel/Panel";
+import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 
 export default function FeedPage() {
   const [selectedFeed, setSelectedFeed] = useState<string>("");

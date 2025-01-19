@@ -10,8 +10,8 @@ import SearchIcon from "../Icon/SearchIcon";
 import PencilIcon from "../Icon/PencilIcon";
 import Button from "../Button/Button";
 import Input from "./Input";
-import BottomSheetWrapper from "../BottomSheet/shared/BottomSheetWrapper";
-import ActionItem from "../BottomSheet/ActionItem";
+import BottomSheetWrapper from "../BottomDrawer/shared/BottomSheetWrapper";
+import ActionItem from "../BottomDrawer/ActionItem";
 
 interface GatheringInputProps {
   type: "date" | "address";

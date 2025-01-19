@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import SheetOpenBtnContainer from "./BottomSheet/shared/SheetOpenBtnContainer";
+import SheetOpenBtnContainer from "./BottomDrawer/shared/SheetOpenBtnContainer";
 import NAV_ITEMS from "@/constants/navBarConstants";
 import { useProfileImage } from "@/hooks/useProfileImage";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";

@@ -4,7 +4,7 @@ import LightySelect from "@/components/shared/Select";
 import { SelectOptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import TabBar from "@/components/shared/Tab/TabBar";
+import TabBar from "@/components/shared/Panel/Panel";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
