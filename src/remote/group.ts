@@ -65,8 +65,11 @@ export async function getGroups({
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/groups?cursor=${cursor}&limit=${limit}`;
   try {
-    const response = await fetchWithAuth(targetUrl, { method: "GET" });
-    return response.json();
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: lighty.GroupListResponse = await response.json();
+    return data;
   } catch (e) {
     throw new Error("참여한 그룹 목록 조회를 실패하였습니다,");
   }
@@ -85,7 +88,7 @@ export async function postGroupMember({
   try {
     const response = await fetchWithAuth(targetUrl, {
       headers: { "Content-Type": "application/json" },
-      method: "GET",
+      method: "POST",
       body: JSON.stringify(userIds),
     });
     return { message: "그룹원을 성공적으로 추가하였습니다." };

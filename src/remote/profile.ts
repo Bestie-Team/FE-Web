@@ -1,5 +1,10 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { validateAuth, validateBackendUrl } from "./shared";
+import {
+  API_CONFIG,
+  fetchWithAuth,
+  validateAuth,
+  validateBackendUrl,
+} from "./shared";
 
 export async function handleProfileImageUpdate(imageFile: { file: File }) {
   try {
@@ -21,8 +26,8 @@ export async function handleProfileImageUpdate(imageFile: { file: File }) {
 
 export async function postProfileImage(imageFile: { file: File }) {
   try {
-    const backendUrl = validateBackendUrl();
-    const token = validateAuth();
+    const baseUrl = API_CONFIG.getBaseUrl();
+    const targetUrl = `${baseUrl}/users/profile/image`;
 
     if (!imageFile || !imageFile.file) {
       throw new Error("이미지 파일을 선택해주세요.");
@@ -30,28 +35,13 @@ export async function postProfileImage(imageFile: { file: File }) {
     const formData = new FormData();
     formData.append("file", imageFile.file);
 
-    const targetUrl = `${backendUrl}/users/profile/image`;
-
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithAuth(targetUrl, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       body: formData,
     });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || "이미지 업로드 중 문제가 발생했습니다.");
-    }
-
     const data: { imageUrl: string } = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
-
-      return data.imageUrl;
-    }
+    localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
+    return data.imageUrl;
   } catch (error) {
     throw new Error(
       error instanceof Error
@@ -72,7 +62,6 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ profileImageUrl: imageUrl.profileImageUrl }),
     });

@@ -16,12 +16,18 @@ export async function getGatherings({
   maxDate,
 }: PaginationParams) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const response = await fetchWithAuth(
-    `${baseUrl}/gatherings?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
-    { method: "GET" }
-  );
-
-  return response.json();
+  try {
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      { method: "GET" }
+    );
+    const data: lighty.GatheringListResponse = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Response) {
+      throw new Error("모임 조회를 실패하였습니다.");
+    }
+  }
 }
 
 /** 모임 상세 조회 */

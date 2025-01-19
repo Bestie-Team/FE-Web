@@ -1,19 +1,18 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
-import STORAGE_KEYS from "@/constants/storageKeys";
 import { FeedCommentResponse } from "@/models/feed";
 import { API_CONFIG, fetchWithAuth } from "./shared";
-
+interface CommentResponse {
+  message: string;
+}
 /** 피드 댓글 조회 */
 export async function getFeedComments({ feedId }: { feedId: string }) {
   const baseUrl = API_CONFIG.getBaseUrl();
 
   try {
     const targetUrl = `${baseUrl}/feed-comments?feedId=${feedId}`;
-
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
-
     const data: FeedCommentResponse[] = await response.json();
     return data;
   } catch (error) {
@@ -28,79 +27,39 @@ export async function postMakeComment({
 }: {
   feedId: string;
   content: string;
-}) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
-
-  const response = await makePostRequest(
-    `${backendUrl}/feed-comments`,
-    token,
-    feedId,
-    content
-  );
-
-  if (response.ok) {
+}): Promise<CommentResponse | undefined> {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    if (!feedId || !content.trim()) {
+      throw new Error("feedId와 content는 필수값입니다.");
+    }
+    const targetUrl = `${baseUrl}/feed-comments`;
+    const response = await fetchWithAuth(targetUrl, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ feedId, content }),
+    });
     return { message: "피드 댓글을 성공적으로 작성하였습니다." };
+  } catch (error) {
+    if (error instanceof Response) {
+      handleResponse(error);
+    }
   }
-
-  return handleResponse(response);
 }
 
 /** 댓글 삭제하기  */
 export async function deleteFeedComment({ commentId }: { commentId: string }) {
-  const backendUrl = validateBackendUrl();
-  const token = validateAuth();
+  const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${backendUrl}/feed-comments/${commentId}`;
-
-  const response = await fetch(targetUrl, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (response.ok) {
+  try {
+    const targetUrl = `${baseUrl}/feed-comments/${commentId}`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "DELETE",
+    });
     return { message: "댓글을 성공적으로 삭제하였습니다." };
-  }
-  if (!response.ok) {
+  } catch (error) {
     throw new Error("댓글 삭제에 실패하였습니다.");
   }
-  return { message: "댓글을 성공적으로 삭제하였습니다." };
-}
-
-function validateBackendUrl(): string {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error(ERROR_MESSAGES.NO_BACKEND_URL);
-  }
-  return backendUrl;
-}
-
-function validateAuth(): string {
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error(ERROR_MESSAGES.NO_AUTH);
-  }
-  return token;
-}
-
-async function makePostRequest(
-  backendUrl: string,
-  token: string,
-  feedId: string,
-  content: string
-): Promise<Response> {
-  const targetUrl = `${backendUrl}`;
-
-  return fetch(targetUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ feedId, content }),
-  });
 }
 
 async function handleResponse(response: Response) {

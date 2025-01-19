@@ -2,24 +2,21 @@ import * as lighty from "lighty-type";
 import { handleProfileImageUpdate } from "./profile";
 import { UploadType } from "@/components/shared/AddPhoto";
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { validateBackendUrl } from "./shared";
-
-const backendUrl = validateBackendUrl();
+import { API_CONFIG, fetchWithAuth } from "./shared";
 
 export async function postLogin({ accessToken }: lighty.LoginRequest) {
+  const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const targetUrl = `${backendUrl}/auth/google/login`;
-    const response = await fetch(targetUrl, {
+    const targetUrl = `${baseUrl}/auth/google/login`;
+    const response = await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
       },
       body: JSON.stringify({
         accessToken,
       }),
     });
-
     const data = await response.json();
 
     if (response.ok) {
@@ -72,8 +69,9 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
 }
 
 export async function postRegister(RegisterRequest: UploadType) {
+  const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const targetUrl = `${backendUrl}/auth/register`;
+    const targetUrl = `${baseUrl}/auth/register`;
     const response = await fetch(targetUrl, {
       method: "POST",
       headers: {
@@ -103,10 +101,10 @@ export async function postRegister(RegisterRequest: UploadType) {
           file: RegisterRequest.profileImageUrl as File,
         });
       }
-    } else {
-      alert("회원 가입 중 문제가 발생했습니다.");
     }
   } catch (error) {
-    console.error("Error during login:", error);
+    if (error instanceof Response) {
+      throw new Error("Error during login:");
+    }
   }
 }

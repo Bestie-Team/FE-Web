@@ -6,7 +6,6 @@ export async function postFriends({ userId }: { userId: string }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const targetUrl = `${baseUrl}/friends`;
-
     const response = await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: {
@@ -14,7 +13,6 @@ export async function postFriends({ userId }: { userId: string }) {
       },
       body: JSON.stringify({ userId }),
     });
-
     return { message: "친구요청을 성공적으로 보냈습니다" };
   } catch (error) {
     throw new Error("Failed to friend request");
@@ -40,9 +38,6 @@ export async function getFriends({
   try {
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
     const data: lighty.FriendListResponse = await response.json();
     return data;
