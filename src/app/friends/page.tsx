@@ -1,5 +1,4 @@
 "use client";
-import TabBar from "@/components/shared/Tab/TabBar";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { friendSearchAtom, friendsSelectedTabAtom } from "@/atoms/friends";
 import Spacing from "@/components/shared/Spacing";
@@ -12,6 +11,7 @@ import UserFriendsListContainer from "@/components/friends/UserFriendsListContai
 import SentReceivedFriendRequestsList from "@/components/friends/SentReceivedFriendRequestsList";
 import useDebounce from "@/hooks/debounce";
 import SearchedFriendsListContainer from "@/components/friends/SearchedFriendsListContainer";
+import TabBar from "@/components/shared/Tab/TabBar";
 
 export default function FriendsPage() {
   const containerRef = useRef<HTMLDivElement>(null);

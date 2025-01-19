@@ -7,10 +7,7 @@ import "swiper/css";
 
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import FilterBar from "@/components/shared/FilterBar";
-import TabBar from "@/components/shared/Tab/TabBar";
 import Gathering from "@/components/gathering/Gathering";
-import MemoriesBottomSheet from "@/components/shared/BottomSheet/MemoriesBottomSheet";
-
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { usePathname } from "next/navigation";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -18,6 +15,8 @@ import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
 import { GatheringInWhich } from "@/models/gathering";
+import MemoriesBottomSheet from "@/components/shared/BottomSheet/MemoriesBottomSheet";
+import TabBar from "@/components/shared/Tab/TabBar";
 
 export default function MyGatheringPage() {
   const pathname = usePathname();
