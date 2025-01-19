@@ -28,6 +28,12 @@
   }
 }
 
+@layer utilities {
+  .translate-y-full {
+    transform: translateY(100%);
+  }
+}
+
 .react-select__placeholder {
   color: "#0A0A0At" !important;
 }

@@ -1,80 +1,62 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
 import SheetOpenBtnContainer from "./BottomSheet/shared/SheetOpenBtnContainer";
-import { useRecoilState } from "recoil";
-import { locationStatusAtom } from "@/atoms/location";
 import NAV_ITEMS from "@/constants/navBarConstants";
-import STORAGE_KEYS from "@/constants/storageKeys";
+import { useProfileImage } from "@/hooks/useProfileImage";
+import { useActiveNavigation } from "@/hooks/useActiveNavigation";
+import { NavLink } from "./NavBar/NavLink";
+import { useRecoilValue } from "recoil";
+import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
 
-export default function NavBar() {
-  const [activeBtn, setActiveBtn] = useRecoilState<number>(locationStatusAtom);
-  const [isClient, setIsClient] = useState<boolean>(false);
-  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
-
-  const pathname = usePathname();
-
-  const defaultBtn = useMemo(() => {
-    const index = NAV_ITEMS.findIndex((item) => pathname.startsWith(item.href));
-    return index === -1 ? 0 : index;
-  }, [pathname]);
-
-  useEffect(() => {
-    setActiveBtn(defaultBtn);
-  }, []);
+const NavBar = () => {
+  const [isClient, setIsClient] = useState(false);
+  const profileImageUrl = useProfileImage();
+  const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
+  const isVisible = useRecoilValue(scrollAtom);
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
 
   useEffect(() => {
     setIsClient(true);
-    const imageUrlAfterSignup = localStorage.getItem(
-      STORAGE_KEYS.PROFILE_IMAGE_URL
-    );
-
-    if (imageUrlAfterSignup != null) {
-      setProfileImageUrl(imageUrlAfterSignup);
-    }
-    const user_info = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-
-    if (user_info != null) {
-      const storedImageUrl: { accountId: string; profileImageUrl: string } =
-        JSON.parse(user_info);
-      setProfileImageUrl(storedImageUrl.profileImageUrl);
-    }
   }, []);
 
-  if (!isClient) {
-    return null;
-  }
+  if (!isClient) return null;
 
-  const $portalRoot = document.getElementById("root-portal");
-  if ($portalRoot == null) return null;
+  const portalRoot = document.getElementById("root-portal");
+  if (!portalRoot) return null;
+
+  const showSheetButton =
+    ["/feed", "/home"].some((path) => pathname.startsWith(path)) ||
+    pathname.endsWith("/gathering");
+
+  const opacity = 1 - scrollProgress * 2;
+  const clampedOpacity = Math.max(0, Math.min(opacity, 1));
 
   return createPortal(
-    <div className={NavBarWrapperStyle}>
-      {NAV_ITEMS.map((item, idx) => {
-        const isActive = idx === activeBtn;
-        return (
-          <Link
-            key={item.href.slice(1)}
-            href={item.href}
-            className={iconWrapperStyle}
-            onMouseDown={() => setActiveBtn(idx)}
-          >
-            {item.icon(isActive, profileImageUrl ? `${profileImageUrl}` : "")}
-          </Link>
-        );
-      })}
+    <nav
+      style={{ opacity: clampedOpacity }}
+      className={`
+      fixed bottom-0 bg-base-white w-full max-w-[430px] 
+      flex justify-between px-3 pt-1 pb-5 
+      border-t border-grayscale-10 mx-auto
+      transition-all duration-300 ease-in-out
+      ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
+    `}
+    >
+      {NAV_ITEMS.map((item, idx) => (
+        <NavLink
+          key={item.href.slice(1)}
+          href={item.href}
+          isActive={idx === activeBtn}
+          onClick={() => setActiveBtn(idx)}
+          icon={item.icon}
+          profileImageUrl={profileImageUrl}
+        />
+      ))}
 
-      {(pathname.startsWith("/feed") ||
-        pathname.startsWith("/home") ||
-        pathname.endsWith("/gathering")) && <SheetOpenBtnContainer tooltip />}
-    </div>,
-    $portalRoot
+      {showSheetButton && <SheetOpenBtnContainer tooltip />}
+    </nav>,
+    portalRoot
   );
-}
+};
 
-const NavBarWrapperStyle =
-  "fixed bottom-0 bg-base-white w-full max-w-[430px] flex justify-between px-[12px] pt-[4px] pb-[20px] border-t-[1px] border-grayscale-10 mx-auto";
-
-const iconWrapperStyle =
-  "flex justify-center w-[64px] h-[44px] items-center transition-transform duration-300 hover:animate-shrink-grow";
+export default NavBar;

@@ -23,6 +23,7 @@ export default function SchedulePage() {
 
   return (
     <div
+      id="scrollable-container"
       ref={containerRef}
       className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
     >

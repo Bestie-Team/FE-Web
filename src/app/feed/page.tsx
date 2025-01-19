@@ -51,6 +51,7 @@ export default function FeedPage() {
 
   return (
     <div
+      id="scrollable-container"
       ref={containerRef}
       className="relative overflow-y-scroll no-scrollbar pt-[48px]"
     >

@@ -1,28 +1,27 @@
 "use client";
 import SettingsMenu from "@/components/my/SettingsMenu";
 import MyMainInfo from "@/components/my/MyMainInfo";
-import UserProfile from "@/components/my/UserProfile";
+// import UserProfile from "@/components/my/UserProfile";
 import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
-import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function MyPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const header = getHeader(pathname);
+  // const [isClient, setIsClient] = useState<boolean>(false);
   const hasShadow = useScrollShadow(containerRef);
   const [open, setOpen] = useState(false);
   const [privatePolicyOpen, setPrivatePolicyOpen] = useState(false);
-  const [isClient, setIsClient] = useState<boolean>(false);
-  const [profileInfo, setProfileInfo] = useState<
-    { profileImageUrl: string; accountId: string } | undefined
-  >(undefined);
+  // const [profileInfo, setProfileInfo] = useState<
+  //   { profileImageUrl: string; accountId: string } | undefined
+  // >(undefined);
 
   const onClickTermOfUse = (term?: string) => {
     if (term && term === "privatePolicy") {
@@ -30,42 +29,39 @@ export default function MyPage() {
     } else setOpen(true);
   };
 
-  useEffect(() => {
-    setIsClient(true);
+  // useEffect(() => {
+  //   setIsClient(true);
 
-    const imageUrlAfterSignup = localStorage.getItem(
-      STORAGE_KEYS.PROFILE_IMAGE_URL
-    );
-    const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+  //   const imageUrlAfterSignup = localStorage.getItem(
+  //     STORAGE_KEYS.PROFILE_IMAGE_URL
+  //   );
+  //   const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
 
-    if (imageUrlAfterSignup != null && userInfoSession != null) {
-      const userInfo: { accountId: string; profileImageUrl: string } =
-        JSON.parse(userInfoSession);
+  //   if (imageUrlAfterSignup != null && userInfoSession != null) {
+  //     const userInfo: { accountId: string; profileImageUrl: string } =
+  //       JSON.parse(userInfoSession);
 
-      setProfileInfo((prev) => ({
-        ...prev,
-        profileImageUrl: imageUrlAfterSignup,
-        accountId: userInfo.accountId,
-      }));
-      return;
-    } else if (userInfoSession != null) {
-      const userInfo: { accountId: string; profileImageUrl: string } =
-        JSON.parse(userInfoSession);
-      setProfileInfo((prev) => ({
-        ...prev,
-        profileImageUrl: userInfo.profileImageUrl,
-        accountId: userInfo.accountId,
-      }));
-      return;
-    }
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
+  //     setProfileInfo((prev) => ({
+  //       ...prev,
+  //       profileImageUrl: imageUrlAfterSignup,
+  //       accountId: userInfo.accountId,
+  //     }));
+  //     return;
+  //   } else if (userInfoSession != null) {
+  //     const userInfo: { accountId: string; profileImageUrl: string } =
+  //       JSON.parse(userInfoSession);
+  //     setProfileInfo((prev) => ({
+  //       ...prev,
+  //       profileImageUrl: userInfo.profileImageUrl,
+  //       accountId: userInfo.accountId,
+  //     }));
+  //     return;
+  //   }
+  // }, []);
 
   return (
     <div
+      id="scrollable-container"
       ref={containerRef}
       className="h-screen bg-base-white overflow-y-scroll no-scrollbar"
     >
@@ -73,16 +69,16 @@ export default function MyPage() {
         className={clsx(
           styles.headerWrapper,
           hasShadow ? "shadow-bottom" : "",
-          open || privatePolicyOpen ? "" : "z-10"
+          open || privatePolicyOpen ? "" : "z-20"
         )}
       >
         {header}
       </div>
       <Spacing size={68} />
-      <UserProfile
+      {/* <UserProfile
         userProfileImage={profileInfo?.profileImageUrl}
         userAccountId={profileInfo?.accountId}
-      />
+      /> */}
       <Spacing size={12} />
       <MyMainInfo />
       <Spacing size={16} />
@@ -130,7 +126,7 @@ export default function MyPage() {
 
 const styles = {
   headerWrapper:
-    "h-[48px] fixed max-w-[430px] w-full transition-shadow duration-300",
+    "z-20 h-[48px] fixed max-w-[430px] w-full transition-shadow duration-300",
   letter: "cursor-pointer",
 
   termsWrapper: "w-full py-[8px] px-[20px] text-C5 text-grayscale-300",

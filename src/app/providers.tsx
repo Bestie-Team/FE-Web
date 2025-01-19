@@ -17,6 +17,7 @@ import NavBar from "@/components/shared/NavBar";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
+import { useScroll } from "@/hooks/useScroll";
 
 const queryClient = new QueryClient();
 
@@ -77,12 +78,13 @@ export const NextProvider = ({ children }: Props) => {
 
 const NextLayout = ({ children }: Props) => {
   const pathname = usePathname();
+  useScroll(pathname, "scrollable-container");
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-  }, []);
+  }, [pathname]);
   {
     return (
       <div
