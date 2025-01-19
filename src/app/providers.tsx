@@ -63,7 +63,9 @@ export const NextProvider = ({ children }: Props) => {
         <RecoilRoot>
           <AuthProvider>{children}</AuthProvider>
           <ToastContainer
-            autoClose={1000}
+            position="top-center"
+            hideProgressBar
+            autoClose={3000}
             pauseOnFocusLoss={false}
             pauseOnHover={false}
           />

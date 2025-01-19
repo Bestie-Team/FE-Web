@@ -3,12 +3,12 @@ import { newGroupAtom } from "@/atoms/group";
 import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
 import AddGroupPhoto from "@/components/groups/AddGroupPhoto";
 import useMakeGroup from "@/components/groups/hooks/useMakeGroup";
-import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
+import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
-import FeedIcon from "@/components/shared/icons/FeedIcon";
-import PencilIcon from "@/components/shared/icons/PencilIcon";
-import UserIcon from "@/components/shared/icons/UserIcon";
-import Input from "@/components/shared/inputs/Input";
+import FeedIcon from "@/components/shared/Icon/FeedIcon";
+import PencilIcon from "@/components/shared/Icon/PencilIcon";
+import UserIcon from "@/components/shared/Icon/UserIcon";
+import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
 import * as lighty from "lighty-type";
 import getHeader from "@/utils/getHeader";
@@ -16,9 +16,10 @@ import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import InviteFriends from "@/components/friends/InviteFriends";
-import DotSpinner from "@/components/shared/spinners/DotSpinner";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export default function NewGroupPage() {
   const queryClient = useQueryClient();
@@ -38,7 +39,7 @@ export default function NewGroupPage() {
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
-      console.log(data);
+      toast.success(data.message);
     },
   });
 

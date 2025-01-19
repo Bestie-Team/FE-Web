@@ -3,11 +3,17 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRouter } from "next/navigation";
 import Spacing from "../shared/Spacing";
-import { GATHERINGS } from "@/constants/gathering";
+import { Gathering } from "@/models/gathering";
+import { formatToDisplay } from "@/utils/makeUTC";
 
-export default function GatheringSwiper({ percent }: { percent?: number }) {
+export default function GatheringSwiper({
+  percent,
+  gatherings,
+}: {
+  percent?: number;
+  gatherings: Gathering[];
+}) {
   const router = useRouter();
-  const expectedGatherings = GATHERINGS;
 
   return (
     <Swiper
@@ -19,28 +25,32 @@ export default function GatheringSwiper({ percent }: { percent?: number }) {
       }}
       className="custom-swiper w-full"
     >
-      {expectedGatherings.map(({ invitationImageUrl, id, name, date }, idx) => (
-        <SwiperSlide
-          onClick={() => {
-            router.push(`/gathering/${id}`);
-          }}
-          className={styles.slide}
-          key={`slide${idx}`}
-        >
-          <Image
-            src={invitationImageUrl}
-            alt={`invitationImage${idx + 1}`}
-            className={styles.image}
-            width={340}
-            height={360}
-          />
-          <div className={styles.gatheringImageInfo}>
-            <span>{name}</span>
-            <Spacing size={4} />
-            <span className={styles.date}>{date}</span>
-          </div>
-        </SwiperSlide>
-      ))}
+      {gatherings.map(
+        ({ invitationImageUrl, id, name, gatheringDate }, idx) => (
+          <SwiperSlide
+            onClick={() => {
+              router.push(`/gathering/${id}`);
+            }}
+            className={styles.slide}
+            key={`slide${idx}`}
+          >
+            <Image
+              src={invitationImageUrl}
+              alt={`invitationImage${idx + 1}`}
+              className={styles.image}
+              width={340}
+              height={360}
+            />
+            <div className={styles.gatheringImageInfo}>
+              <span>{name}</span>
+              <Spacing size={4} />
+              <span className={styles.date}>
+                {formatToDisplay(gatheringDate).slice(0, 10)}
+              </span>
+            </div>
+          </SwiperSlide>
+        )
+      )}
     </Swiper>
   );
 }

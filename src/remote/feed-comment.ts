@@ -49,6 +49,29 @@ export async function postMakeComment({
   return handleResponse(response);
 }
 
+/** 댓글 삭제하기  */
+export async function deleteFeedComment({ commentId }: { commentId: string }) {
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+
+  const targetUrl = `${backendUrl}/feed-comments/${commentId}`;
+
+  const response = await fetch(targetUrl, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.ok) {
+    return { message: "댓글을 성공적으로 삭제하였습니다." };
+  }
+  if (!response.ok) {
+    throw new Error("댓글 삭제에 실패하였습니다.");
+  }
+  return { message: "댓글을 성공적으로 삭제하였습니다." };
+}
+
 function validateBackendUrl(): string {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (!backendUrl) {

@@ -6,17 +6,19 @@ import GatheringSwiper from "@/components/gathering/GatheringSwiper";
 import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
-import Banner from "@/components/shared/banner/Banner";
-import WelcomeBottomSheet from "@/components/shared/bottomSheet/WelcomeBottomSheet";
+import Banner from "@/components/shared/Banner/Banner";
+import WelcomeBottomSheet from "@/components/shared/BottomSheet/WelcomeBottomSheet";
 import Flex from "@/components/shared/Flex";
-import ArrowRightIcon from "@/components/shared/icons/ArrowRightIcon";
+import ArrowRightIcon from "@/components/shared/Icon/ArrowRightIcon";
 import Spacing from "@/components/shared/Spacing";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import getHeader from "@/utils/getHeader";
 import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
-import { GatheringInWhich } from "@/constants/gathering";
+import { getWeekDates } from "@/utils/getThisWeekDates";
+import useGatherings from "@/components/gathering/hooks/useGatherings";
+import { GatheringInWhich } from "@/models/gathering";
 
 export default function HomePage() {
   useChangeHeaderStyle();
@@ -34,6 +36,23 @@ export default function HomePage() {
     }
   }, []);
 
+  const sevenDays = getWeekDates();
+
+  const min = new Date(sevenDays[0]);
+  min.setUTCHours(0, 0, 0, 0);
+  const minDate = min.toISOString();
+
+  const max = new Date(sevenDays[6]);
+  max.setUTCHours(0, 0, 0, 0);
+  const maxDate = max.toISOString();
+
+  const { data: this_week } = useGatherings({
+    cursor: minDate,
+    limit: 10,
+    minDate,
+    maxDate,
+  });
+
   return (
     <div
       id="scrollable-container"
@@ -45,7 +64,9 @@ export default function HomePage() {
       <Spacing size={40} />
       <DateSlider />
       <Spacing size={8} />
-      <GatheringSwiper percent={2.2} />
+      {this_week ? (
+        <GatheringSwiper percent={2.2} gatherings={this_week?.gatherings} />
+      ) : null}
       <Banner />
       <Flex direction="column" align="center">
         <Flex className="w-full px-[20px]" align="center">

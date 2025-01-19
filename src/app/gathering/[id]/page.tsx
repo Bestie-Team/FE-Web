@@ -4,9 +4,9 @@ import GatheringInfoContainer from "@/components/shared/LightyInfoContainer";
 import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
 import GroupLeaderContainer from "@/components/shared/GroupLeaderContainer";
 import Flex from "@/components/shared/Flex";
-import CalendarIcon from "@/components/shared/icons/CalendarIcon";
-import MapPinIcon from "@/components/shared/icons/MapPinIcon";
-import UserIcon from "@/components/shared/icons/UserIcon";
+import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
+import MapPinIcon from "@/components/shared/Icon/MapPinIcon";
+import UserIcon from "@/components/shared/Icon/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import Image from "next/image";
 import getHeader from "@/utils/getHeader";
@@ -22,8 +22,12 @@ export default function GatheringDetailPage({
   const pathname = usePathname();
   const header = getHeader(pathname);
   const gatheringId = params.id;
-  const { data: selectedGathering } = useGatheringDetail({ gatheringId });
-
+  const { data: selectedGathering, isPending } = useGatheringDetail({
+    gatheringId,
+  });
+  if (isPending) {
+    return <div>기다려~</div>;
+  }
   if (!selectedGathering) {
     return <div>모임을 찾을 수 없습니다.</div>;
   }
@@ -42,14 +46,8 @@ export default function GatheringDetailPage({
         icon={<CalendarIcon width="20" height="20" />}
         title={<span className={styles.title}>모임 장소</span>}
         content={
-          <Flex className={styles.contentWrapper}>
-            <Flex direction="column" className="flex-grow">
-              <span className="text-T5">{address}</span>
-              <Spacing size={4.16} />
-              {/* <span className="text-C2 text-grayscale-400">
-                서울 성동구 서울숲2길 18-14 1층
-              </span> */}
-            </Flex>
+          <Flex className={styles.contentWrapper} align="center">
+            <span className="text-T5 flex-grow">{address}</span>
             <Spacing size={8} direction="horizontal" />
             <Image
               className="rounded-[10.8px] width-[36px] height-[36px]"

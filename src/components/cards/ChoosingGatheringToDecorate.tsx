@@ -1,13 +1,14 @@
 "use client";
 import { useRecoilState } from "recoil";
 import Flex from "../shared/Flex";
-import LightyLogo from "../shared/icons/LightyLogo";
+import LightyLogo from "../shared/Icon/LightyLogo";
 import Spacing from "../shared/Spacing";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { GATHERINGS_PASSED } from "@/constants/gathering";
 import { cardSelectedGatheringAtom } from "@/atoms/card";
 import { GatheringResponse } from "@/models/gathering";
 import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
+import useFeedMine from "../feeds/hooks/useFeedMine";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -18,7 +19,10 @@ export default function ChoosingGatheringToDecorate({
     Partial<GatheringResponse>
   >(cardSelectedGatheringAtom);
 
-  const gatheringsPassed = GATHERINGS_PASSED;
+  const minDate = new Date("2025-01-01").toISOString();
+  const maxDate = new Date("2025-12-31").toISOString();
+
+  const { data } = useFeedMine({ order: "DESC", minDate, maxDate, limit: 20 });
 
   const handleImageClick = (
     gatheringInfo: {
@@ -32,6 +36,7 @@ export default function ChoosingGatheringToDecorate({
     setCardSelectedGathering(gatheringInfo as Partial<GatheringResponse>);
   };
 
+  const gatheringsPassed = GATHERINGS_PASSED;
   return (
     <Flex direction="column" className="bg-base-white h-screen pt-[48px]">
       <Flex direction="column" className="px-[24px]">

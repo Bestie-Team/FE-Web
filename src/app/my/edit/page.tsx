@@ -1,8 +1,8 @@
 "use client";
 import AddPhoto from "@/components/shared/AddPhoto";
-import FixedBottomButton from "@/components/shared/buttons/FixedBottomButton";
+import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
-import Input from "@/components/shared/inputs/Input";
+import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import { usePathname } from "next/navigation";

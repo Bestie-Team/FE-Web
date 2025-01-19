@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import CloseIcon2 from "../shared/icons/CloseIcon2";
+import CloseIcon2 from "../shared/Icon/CloseIcon2";
 
 interface TermOfUseProps {
   label: string;

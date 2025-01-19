@@ -1,18 +1,30 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import Flex from "./Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { groupDeleteAskModalAtom } from "@/atoms/group";
+import { commentDeleteAskModalAtom } from "@/atoms/modal";
+import { selectedCommentIdAtom } from "@/atoms/comment";
 
 interface DropdownMenuProps {
+  commentId?: string;
   items: string[];
   className?: string;
-  type: "default" | "friend" | "group";
 }
 
 const DropdownMenu = forwardRef<HTMLElement, DropdownMenuProps>(
-  ({ items, className, type }, ref) => {
-    const setModalOpen = useSetRecoilState(groupDeleteAskModalAtom);
+  ({ items, className, commentId }, ref) => {
+    const [isHovered, setIsHovered] = useState<number | boolean>(false);
+    // const setModalOpen = useSetRecoilState(groupDeleteAskModalAtom);
+    const setModalOpen = useSetRecoilState(commentDeleteAskModalAtom);
+    const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
+    const handleItemClick = (item: string) => {
+      console.log("Item clicked:", item);
+      console.log("commentId:", commentId);
+      if (item.includes("삭제")) {
+        setSelectedCommentId(commentId || "");
+        setModalOpen(true);
+      }
+    };
     return (
       <div
         ref={ref as React.Ref<HTMLDivElement>}
@@ -23,6 +35,7 @@ const DropdownMenu = forwardRef<HTMLElement, DropdownMenuProps>(
       >
         <Flex
           direction="column"
+          align="center"
           className={styles.wrapper}
           style={{
             boxShadow: styles.shadow,
@@ -30,21 +43,24 @@ const DropdownMenu = forwardRef<HTMLElement, DropdownMenuProps>(
         >
           {items.map((item, index) => {
             return (
-              <button
-                key={`${item}${index}`}
-                className={`text-B4 w-[99px] py-[12px] text-left border-b-[1px] ${
-                  index === items.length - 1
-                    ? "border-b-base-white"
-                    : "border-b-grayscale-50"
-                } ${
-                  index === items.length - 1 &&
-                  type === "friend" &&
-                  "text-point-red50"
-                }`}
-                onClick={() => setModalOpen(true)}
-              >
-                {item}
-              </button>
+              <React.Fragment key={`${item}${index}`}>
+                <button
+                  style={{
+                    backgroundColor: isHovered === index ? "#f4f4f4" : "white",
+                  }}
+                  onMouseEnter={() => setIsHovered(index)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  className={`text-B4  w-[131px] rounded-[8px] px-[16px] py-[10px] text-left ${
+                    item.includes("삭제") && "text-point-red50"
+                  }`}
+                  onMouseDown={() => handleItemClick(item)}
+                >
+                  {item}
+                </button>
+                {index < items.length - 1 ? (
+                  <div className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]" />
+                ) : null}
+              </React.Fragment>
             );
           })}
         </Flex>
@@ -58,7 +74,7 @@ DropdownMenu.displayName = "DropdownMenu";
 export default DropdownMenu;
 
 const styles = {
-  wrapper: "bg-base-white rounded-[12px] px-[16px] py-[4px] gap-[6px]",
+  wrapper: "w-full bg-base-white rounded-[12px] px-[4px] py-[5px]",
   animation: "selectMenuBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
   shadow: "0px 0px 16px 0px #0000001F",
 };

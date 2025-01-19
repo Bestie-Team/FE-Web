@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import PlusIcon from "../shared/icons/PlusIcon";
+import PlusIcon from "../shared/Icon/PlusIcon";
 import { GroupInfoResponse } from "@/models/group";
-import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
 
 export default function FriendItem({
   friendInfo,
   groupInfo,
 }: {
-  friendInfo?: UserInfo;
+  friendInfo?: lighty.User;
   groupInfo?: GroupInfoResponse;
 }) {
   return (

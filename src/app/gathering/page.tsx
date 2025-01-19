@@ -7,33 +7,33 @@ import "swiper/css";
 
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import FilterBar from "@/components/shared/FilterBar";
-import TabBar from "@/components/shared/tab/TabBar";
+import TabBar from "@/components/shared/Tab/TabBar";
 import Gathering from "@/components/gathering/Gathering";
-import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+import MemoriesBottomSheet from "@/components/shared/BottomSheet/MemoriesBottomSheet";
 
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { usePathname } from "next/navigation";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
-import { useGatheringTabs } from "@/hooks/useGatheringTabs";
-import { GatheringInWhich } from "@/constants/gathering";
+import { useTabs } from "@/hooks/useTabs";
+import { GatheringInWhich } from "@/models/gathering";
 
 export default function MyGatheringPage() {
   const pathname = usePathname();
   const header = getHeader(pathname);
 
-  const resetNewGatheringInfo = useResetRecoilState(newGatheringInfo);
+  const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
 
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
-    useGatheringTabs();
+    useTabs();
   const containerRef = useRef<HTMLDivElement>(null);
   const hasShadow = useScrollShadow(containerRef);
 
   useEffect(() => {
-    resetNewGatheringInfo();
-  }, [resetNewGatheringInfo]);
+    reset();
+  }, [reset]);
 
   return (
     <div
@@ -102,10 +102,10 @@ function GatheringSwiper({
       spaceBetween={2}
       direction="horizontal"
     >
-      {[GatheringInWhich.HOME, GatheringInWhich.GATHERING].map((which) => (
+      {["예정", "완료"].map((which) => (
         <SwiperSlide key={which}>
           <Suspense fallback={<div>로딩중</div>}>
-            <Gathering where={which} />
+            <Gathering where={GatheringInWhich.GATHERING} which={which} />
           </Suspense>
         </SwiperSlide>
       ))}

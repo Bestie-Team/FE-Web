@@ -11,10 +11,10 @@ import {
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
-import SheetOpenBtnContainer from "../shared/bottomSheet/shared/SheetOpenBtnContainer";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
+import SheetOpenBtnContainer from "../shared/BottomSheet/shared/SheetOpenBtnContainer";
 import * as fabric from "fabric";
-import DecoStickerBottomSheet from "../shared/bottomSheet/DecoStickerBottomSheet";
+import DecoStickerBottomSheet from "../shared/BottomSheet/DecoStickerBottomSheet";
 import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 

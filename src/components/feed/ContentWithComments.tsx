@@ -1,6 +1,6 @@
 import { commentModalStateAtom } from "@/atoms/feed";
 import Flex from "../shared/Flex";
-import MessageIcon from "../shared/icons/MessageIcon";
+import MessageIcon from "../shared/Icon/MessageIcon";
 import Spacing from "../shared/Spacing";
 import { useSetRecoilState } from "recoil";
 
@@ -13,8 +13,8 @@ export default function ContentWithComments({
 }) {
   const setModalOpen = useSetRecoilState(commentModalStateAtom);
   return (
-    <Flex direction="column" className="py-0 px-[24px]">
-      <div className="text-B4 text-grayscale-800 pr-[12px]">{content}</div>
+    <div className={styles.wrapper}>
+      <div className={styles.content}>{content}</div>
       <Spacing size={4} />
       <Flex align="center">
         <MessageIcon
@@ -32,6 +32,11 @@ export default function ContentWithComments({
           {commentCount}
         </span>
       </Flex>
-    </Flex>
+    </div>
   );
 }
+const styles = {
+  wrapper: "pl-6 pr-4 max-w-[430px]",
+  content:
+    "break-words whitespace-normal overflow-wrap-anywhere text-B4 text-grayscale-800 pr-3",
+};

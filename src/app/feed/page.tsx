@@ -1,10 +1,10 @@
 "use client";
 import FilterBar from "@/components/shared/FilterBar";
-import TabBar from "@/components/shared/tab/TabBar";
+import TabBar from "@/components/shared/Tab/TabBar";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
-import CommentContainer from "@/components/shared/comments/CommentContainer";
+import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import { useRecoilState } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";
 import { recordModalStateAtom } from "@/atoms/record";
@@ -13,16 +13,17 @@ import "swiper/css";
 import { useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
-import MemoriesBottomSheet from "@/components/shared/bottomSheet/MemoriesBottomSheet";
+import MemoriesBottomSheet from "@/components/shared/BottomSheet/MemoriesBottomSheet";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
-import { useFeedTabs } from "@/hooks/useFeedTabs";
-import useFeed from "@/components/feeds/hooks/useFeed";
+import useFeedAll from "@/components/feeds/hooks/useFeedAll";
+import useFeedMine from "@/components/feeds/hooks/useFeedMine";
+import { useTabs } from "@/hooks/useTabs";
 
 export default function FeedPage() {
   const [selectedFeed, setSelectedFeed] = useState<string>("");
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
-    useFeedTabs();
+    useTabs();
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const header = getHeader(pathname);
@@ -34,7 +35,14 @@ export default function FeedPage() {
     useRecoilState(recordModalStateAtom);
   const minDate = new Date("2025-01-01").toISOString();
   const maxDate = new Date("2025-12-31").toISOString();
-  const { data: feed } = useFeed({
+  const { data: feedAll } = useFeedAll({
+    order: "DESC",
+    minDate,
+    maxDate,
+    limit: 10,
+  });
+
+  const { data: everyFeed } = useFeedMine({
     order: "DESC",
     minDate,
     maxDate,
@@ -59,7 +67,7 @@ export default function FeedPage() {
         />
         <FilterBar />
       </div>
-      {feed ? (
+      {feedAll ? (
         <Swiper
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
@@ -73,11 +81,21 @@ export default function FeedPage() {
           className="custom-swiper w-full"
         >
           <SwiperSlide>
-            <Feed which="1" feeds={feed?.feeds} onClickFeed={setSelectedFeed} />
+            <Feed
+              type="전체"
+              feeds={feedAll.feeds}
+              onClickFeed={setSelectedFeed}
+            />
           </SwiperSlide>
-          {/* <SwiperSlide>
-            <Feed which="2" />
-          </SwiperSlide> */}
+          {everyFeed ? (
+            <SwiperSlide>
+              <Feed
+                type="나의피드"
+                feeds={everyFeed.feeds}
+                onClickFeed={setSelectedFeed}
+              />
+            </SwiperSlide>
+          ) : null}
         </Swiper>
       ) : null}
       {recordModalOpen ? (

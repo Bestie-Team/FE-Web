@@ -75,7 +75,7 @@ export async function postGathering({
   const response = await makePostRequest(targetUrl, token, gathering);
 
   if (response.ok) {
-    return { message: "모임을 성공적으로 생성하였습니다." };
+    return { message: "초대장을 성공적으로 발송하였습니다" };
   }
   if (response.status === 400) {
     console.log("입력값 검증 실패, friendIds에 친구가 아닌 회원이 존재합니다");
@@ -85,7 +85,7 @@ export async function postGathering({
     throw new Error(`모임 생성에 실패하였습니다`);
   }
 
-  return response.json();
+  return { message: "초대장을 성공적으로 발송하였습니다" };
 }
 
 export async function postGatheringInvitationImage({ file }: { file: File }) {

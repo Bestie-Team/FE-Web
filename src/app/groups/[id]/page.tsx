@@ -3,15 +3,14 @@ import GatheringMembersSlider from "@/components/gathering/GatheringMembersConta
 import GroupLeaderContainer from "@/components/shared/GroupLeaderContainer";
 import GroupBannerContainer from "@/components/groups/GroupBannerContainer";
 import Flex from "@/components/shared/Flex";
-import UserIcon from "@/components/shared/icons/UserIcon";
+import UserIcon from "@/components/shared/Icon/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
-import PencilIcon from "@/components/shared/icons/PencilIcon";
-import Button from "@/components/shared/buttons/Button";
+import PencilIcon from "@/components/shared/Icon/PencilIcon";
+import Button from "@/components/shared/Button/Button";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { groupDeleteAskModalAtom } from "@/atoms/group";
-import Modal from "@/components/shared/modal";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
@@ -21,6 +20,7 @@ import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer"
 import useGroup from "@/components/groups/hooks/useGroups";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
+import Modal from "@/components/shared/Modal/Modal";
 
 export default function GroupDetailPage({
   params,

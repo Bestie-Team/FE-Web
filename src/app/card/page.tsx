@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
 import ChooseFrame from "@/components/cards/ChooseFrame";
 import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
-import ArrowLeftIcon from "@/components/shared/icons/ArrowLeftIcon";
+import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 
 export default function Page() {

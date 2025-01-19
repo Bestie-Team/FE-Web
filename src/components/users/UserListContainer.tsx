@@ -2,9 +2,9 @@ import React from "react";
 import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import Modal from "../shared/modal";
 import { SetterOrUpdater } from "recoil";
 import UserListItem from "./UserListItem";
+import Modal from "../shared/Modal/Modal";
 
 export default function UserListContainer({
   searchedFriends,

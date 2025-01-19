@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
@@ -31,7 +31,7 @@ export default function StepToInvitation({
           width={110}
           height={108}
         />
-        <FixedBottomButton label={"초대장 만들기"} onClick={() => setStep(3)} />
+        <FixedBottomButton label={"초대장 만들기"} onClick={() => setStep(4)} />
       </Flex>
     </div>
   );

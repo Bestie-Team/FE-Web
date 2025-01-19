@@ -1,5 +1,5 @@
 "use client";
-import { PlusCircleButtonSmall } from "./buttons/BottomSheetOpenButton";
+import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
 import * as lighty from "lighty-type";
 import { useEffect, useState } from "react";

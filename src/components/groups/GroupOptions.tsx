@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
-import OptionsSelectIcon from "../shared/icons/OptionsSelectIcon";
+import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import DropdownMenu from "../shared/DropdownMenu";
 
 export default function GroupOptions({ isOwner }: { isOwner: boolean }) {

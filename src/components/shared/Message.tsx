@@ -1,6 +1,6 @@
 import Flex from "./Flex";
-import CloseIcon from "./icons/CloseIcon";
-import PencilIcon from "./icons/PencilIcon";
+import CloseIcon from "./Icon/CloseIcon";
+import PencilIcon from "./Icon/PencilIcon";
 import Spacing from "./Spacing";
 
 export default function Message() {

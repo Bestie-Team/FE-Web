@@ -1,6 +1,6 @@
 import React from "react";
 import Flex from "../shared/Flex";
-import TimelineButton from "../shared/icons/TimelineButton";
+import TimelineButton from "../shared/Icon/TimelineButton";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
 

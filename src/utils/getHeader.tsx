@@ -3,7 +3,7 @@ import {
   Header,
   HeaderWithBackBtn,
 } from "@/components/shared/Header";
-import ShareIcon from "@/components/shared/icons/ShareIcon";
+import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import React from "react";
 import handleShare from "./handleShare";
 

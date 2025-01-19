@@ -1,7 +1,7 @@
 "use client";
 import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
-import LightyCalendarWithBorder from "@/components/shared/calendar/CalendarWithBorder";
-import LightySelect from "@/components/shared/filter";
+import LightyCalendarWithBorder from "@/components/shared/Calender/CalendarWithBorder";
+import LightySelect from "@/components/shared/Select";
 import { SelectOptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
@@ -57,7 +57,7 @@ const options = [
     label: "2025",
   },
   {
-    value: "2024",
-    label: "2024",
+    value: "2026",
+    label: "2026",
   },
 ];

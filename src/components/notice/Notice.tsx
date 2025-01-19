@@ -1,5 +1,5 @@
 import Flex from "../shared/Flex";
-import ArrowLeftIcon from "../shared/icons/ArrowLeftIcon";
+import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Spacing from "../shared/Spacing";
 import TodayNotice from "./TodayNotice";
 

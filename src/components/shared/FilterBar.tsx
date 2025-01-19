@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import LightySelect from "./filter";
+import LightySelect from "./Select";
 
 const yearOptions = [
   { value: "2025", label: "2025" },

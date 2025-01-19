@@ -1,7 +1,7 @@
 "use client";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
-import SearchInput from "@/components/shared/inputs/SearchBar";
+import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { Dispatch, SetStateAction } from "react";
 

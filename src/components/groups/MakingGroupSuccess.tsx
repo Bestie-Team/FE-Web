@@ -4,9 +4,9 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import * as lighty from "lighty-type";
-import CheckSpinner from "../shared/spinners/CheckSpinner";
+import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import NewGroupContainer from "./NewGroupContainer";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 
 export default function MakingGroupSuccess({
   group,

@@ -1,12 +1,12 @@
 import { useSetRecoilState } from "recoil";
-import Tooltip from "../../tootlips/Tooltip";
+import Tooltip from "../../Tooltip/Tooltip";
 import { homeModalStateAtom } from "@/atoms/home";
 import { usePathname } from "next/navigation";
 import { recordModalStateAtom } from "@/atoms/record";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
 import { cardDecorateModalStateAtom } from "@/atoms/card";
-import BottomSheetOpenButton from "../../buttons/BottomSheetOpenButton";
-import LightyDeco from "../../icons/LightyDeco";
+import BottomSheetOpenButton from "../../Button/BottomSheetOpenButton";
+import LightyDeco from "../../Icon/LightyDeco";
 
 export default function SheetOpenBtnContainer({
   tooltip = false,

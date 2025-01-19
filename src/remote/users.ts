@@ -1,5 +1,6 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
 import * as lighty from "lighty-type";
+import { validateAuth, validateBackendUrl } from "./shared";
 
 /** 유저 검색 */
 export async function getSearchUsers({
@@ -15,18 +16,12 @@ export async function getSearchUsers({
 }) {
   const cursor = { name, accountId };
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+
   const targetUrl = `${backendUrl}/users/search?cursor=${encodeURIComponent(
     JSON.stringify(cursor)
   )}&limit=${limit}&search=${search}`;
-
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
 
   const response = await fetch(targetUrl, {
     method: "GET",

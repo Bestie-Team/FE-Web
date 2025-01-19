@@ -22,6 +22,6 @@ export default function useSearchUsers({
     },
     staleTime: 0,
     enabled: enabled,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: "always",
   });
 }

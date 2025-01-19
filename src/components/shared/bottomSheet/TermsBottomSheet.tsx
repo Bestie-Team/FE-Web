@@ -1,11 +1,11 @@
 import React, { MouseEvent, useCallback, useState } from "react";
-import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import Button from "../buttons/Button";
-import CheckInCircleIcon from "../icons/CheckInCircleIcon";
-import NArrowRightIcon from "../icons/NArrowRightIcon";
+import Button from "../Button/Button";
+import CheckInCircleIcon from "../Icon/CheckInCircleIcon";
+import NArrowRightIcon from "../Icon/NArrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function TermsBottomSheet({
   onClose,

@@ -1,10 +1,10 @@
 "use client";
 import { useRecoilState } from "recoil";
 import Flex from "../shared/Flex";
-import LightyLogo from "../shared/icons/LightyLogo";
+import LightyLogo from "../shared/Icon/LightyLogo";
 import Spacing from "../shared/Spacing";
 import { recordGatheringAtom } from "@/atoms/record";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import { Gathering } from "@/models/gathering";
 

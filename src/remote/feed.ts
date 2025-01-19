@@ -1,8 +1,8 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
-import STORAGE_KEYS from "@/constants/storageKeys";
 import { FeedResponse } from "@/models/feed";
 import * as lighty from "lighty-type";
 import { v4 as uuidv4 } from "uuid";
+import { validateAuth, validateBackendUrl } from "./shared";
 
 const uuid = uuidv4();
 
@@ -11,9 +11,9 @@ export type FeedSuccessResponse = {
   message: string;
 };
 
-/** 피드 목록 조회 */
+/** 모든 피드 목록 조회 */
 /** 첫 커서는 현재 날짜 */
-export async function getFeeds({
+export async function getFeedAll({
   order,
   minDate,
   maxDate,
@@ -43,6 +43,44 @@ export async function getFeeds({
 
   if (!response.ok) {
     throw new Error("피드 조회를 실패하였습니다,");
+  }
+  const data: FeedResponse = await response.json();
+
+  return data;
+}
+
+/** 자신이 작성한 피드 목록 조회 */
+/** 첫 커서는 현재 날짜 */
+export async function getFeedMine({
+  order,
+  minDate,
+  maxDate,
+  limit,
+}: {
+  order: "DESC" | "ASC";
+  minDate: string;
+  maxDate: string;
+  limit: number;
+}) {
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+  const cursor = {
+    createdAt: order === "DESC" ? maxDate : minDate,
+    id: uuid,
+  };
+  const targetUrl = `${backendUrl}/feeds/my?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
+    JSON.stringify(cursor)
+  )}&limit=${limit}`;
+
+  const response = await fetch(targetUrl, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("내가 작성한 피드 조회를 실패하였습니다,");
   }
   const data: FeedResponse = await response.json();
 
@@ -141,22 +179,6 @@ export async function patchFeed({
   }
 
   return handleResponse(response);
-}
-
-function validateBackendUrl(): string {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error(ERROR_MESSAGES.NO_BACKEND_URL);
-  }
-  return backendUrl;
-}
-
-function validateAuth(): string {
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error(ERROR_MESSAGES.NO_AUTH);
-  }
-  return token;
 }
 
 async function makePostRequest(

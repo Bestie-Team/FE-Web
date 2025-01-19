@@ -3,12 +3,12 @@ import React from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import Options from "../shared/Options";
-import Button from "../shared/buttons/Button";
+import Options, { MENU_TYPES } from "../shared/Options";
+import Button from "../shared/Button/Button";
 import * as lighty from "lighty-type";
 import useAcceptFriendRequest from "./hooks/useAcceptFriendRequest";
 import { useQueryClient } from "@tanstack/react-query";
-import DotSpinner from "../shared/spinners/DotSpinner";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
 
 export default function FriendListItem({
@@ -79,7 +79,7 @@ export default function FriendListItem({
       </Flex>
       {type === "friend" ? (
         <div className={clsx(styles.iconContainer)}>
-          <Options width="2.5" height="14.17" type="friend" />
+          <Options width="2.5" height="14.17" type={MENU_TYPES.FRIEND} />
         </div>
       ) : null}
       {type === "receivedRequest" ? (

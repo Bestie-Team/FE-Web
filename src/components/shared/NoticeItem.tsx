@@ -1,5 +1,5 @@
 import Flex from "./Flex";
-import ArrowRightIcon from "./icons/ArrowRightIcon";
+import ArrowRightIcon from "./Icon/ArrowRightIcon";
 import Spacing from "./Spacing";
 
 interface NoticeProps {

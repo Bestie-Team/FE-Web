@@ -1,18 +1,14 @@
 import Dimmed from "../shared/Dimmed";
-import CloseIcon from "../shared/icons/CloseIcon";
+import CloseIcon from "../shared/Icon/CloseIcon";
 import Spacing from "../shared/Spacing";
-import Image from "next/image";
 import Flex from "../shared/Flex";
-import CalendarIcon from "../shared/icons/CalendarIcon";
-import MapPinIcon from "../shared/icons/MapPinIcon";
-import Button from "../shared/buttons/Button";
-import GroupMemberImages from "../shared/GroupMemberImages";
-import { formatToKoreanTime } from "@/utils/makeUTC";
+import Button from "../shared/Button/Button";
 import { useRecoilValue } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
 import useAcceptInvitationToGathering from "../gathering/hooks/useAcceptInvitationToGathering";
 import useRejectInvitationToGathering from "../gathering/hooks/useRejectInvitationToGathering";
 import { SuccessResponse } from "@/models/response";
+import { VerticalInvitationCard } from "./VerticalInvitationCard";
 
 export default function InvitationModal({
   selectedTab,
@@ -33,11 +29,6 @@ export default function InvitationModal({
   });
 
   if (!selectedInvitation) return;
-
-  const { name, description, gatheringDate, address, sender } =
-    selectedInvitation;
-
-  const convertedTime = formatToKoreanTime(gatheringDate).slice(11);
 
   const handleAccept = () => {
     accept();
@@ -63,7 +54,7 @@ export default function InvitationModal({
           }}
         />
         <Spacing size={8} />
-        <div className="relative">
+        {/*  <div className="relative">
           <Image
             src="/vertical_invitation.png"
             alt="verticalBar"
@@ -72,7 +63,7 @@ export default function InvitationModal({
           />
           <Flex direction="column" className={styles.mainContentWrapper}>
             <Image
-              src={"https://cdn.lighty.today/dishes.jpg"}
+              src={invitation_image_url||"https://cdn.lighty.today/dishes.jpg"}
               className={styles.image}
               width={300}
               height={210}
@@ -111,7 +102,8 @@ export default function InvitationModal({
             <Spacing direction="horizontal" size={4} />
             <span className="text-B3">{sender}</span>
           </Flex>
-        </div>
+        </div>} */}
+        <VerticalInvitationCard invitation={selectedInvitation} />
         {selectedTab === "1" ? (
           <>
             <Spacing size={16} />

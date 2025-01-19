@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import LightyIcon from "./shared/icons/LightyIcon";
-import Tooltip from "./shared/tootlips/Tooltip";
-import Button from "./shared/buttons/Button";
+import LightyIcon from "./shared/Icon/LightyIcon";
+import Tooltip from "./shared/Tooltip/Tooltip";
+import Button from "./shared/Button/Button";
 import clsx from "clsx";
-import LargeLightyLogo from "./shared/icons/LargeLightyLogo";
+import LargeLightyLogo from "./shared/Icon/LargeLightyLogo";
 import oAuthButtons from "@/constants/oAuthButtons";
 import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";

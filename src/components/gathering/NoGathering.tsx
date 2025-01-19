@@ -1,5 +1,5 @@
 import Flex from "../shared/Flex";
-import LightyLogoForNavBar from "../shared/icons/LightyLogoForNavBar";
+import LightyLogoForNavBar from "../shared/Icon/LightyLogoForNavBar";
 import Spacing from "../shared/Spacing";
 
 export default function NoGathering() {

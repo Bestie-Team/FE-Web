@@ -4,7 +4,7 @@ import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { useRecoilValue } from "recoil";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 
 export default function ChooseFrame({ onNext }: { onNext: () => void }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);

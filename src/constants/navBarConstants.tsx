@@ -1,7 +1,7 @@
-import CalendarIcon from "@/components/shared/icons/CalendarIcon";
-import FeedIcon from "@/components/shared/icons/FeedIcon";
-import HomeIcon from "@/components/shared/icons/HomeIcon";
-import LightyLogoForNavBar from "@/components/shared/icons/LightyLogoForNavBar";
+import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
+import FeedIcon from "@/components/shared/Icon/FeedIcon";
+import HomeIcon from "@/components/shared/Icon/HomeIcon";
+import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
 import Image from "next/image";
 
 interface NavItem {
@@ -38,7 +38,7 @@ const NAV_ITEMS: NavItem[] = [
     href: "/my",
     icon: (isActive: boolean, src?: string) => (
       <Image
-        className={`border-2 rounded-full aspect-square ${
+        className={`box-content border-[1.7px] rounded-full aspect-square ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}
         src={src || "https://cdn.lighty.today/cute.jpg"}

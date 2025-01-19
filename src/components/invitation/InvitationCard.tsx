@@ -1,17 +1,17 @@
 import Image from "next/image";
-import Button from "../shared/buttons/Button";
+import Button from "../shared/Button/Button";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import * as lighty from "lighty-type";
 import { useSetRecoilState } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
 import { addHours, differenceInDays } from "date-fns";
+import { GatheringInvitation } from "@/models/gathering";
 
 export default function InvitationCard({
   invitation,
   onClickOpen,
 }: {
-  invitation: lighty.GatheringInvitation;
+  invitation: GatheringInvitation;
   onClickOpen: (value: boolean) => void;
 }) {
   const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
@@ -43,7 +43,7 @@ export default function InvitationCard({
           <span className="text-B4 flex-grow">{sender}</span>
           <Spacing size={4} direction="horizontal" />
           <span className="text-C2 text-grayscale-300">
-            {diff <= 0 ? `${diff}일 전` : `${diff}일 지남`}
+            {diff <= 0 ? `${Math.abs(diff)}일 전` : `${diff}일 지남`}
           </span>
         </Flex>
         <Button

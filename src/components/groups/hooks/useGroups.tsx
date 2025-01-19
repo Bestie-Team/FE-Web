@@ -11,6 +11,6 @@ export default function useGroup({
   return useQuery({
     queryKey: ["groups"],
     queryFn: () => getGroups({ cursor, limit }),
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: "always",
   });
 }

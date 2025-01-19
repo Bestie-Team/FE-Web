@@ -2,8 +2,8 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { GroupInfoResponse } from "@/models/group";
-import CloseIcon from "../shared/icons/CloseIcon";
-import CheckIcon from "../shared/icons/CheckIcon";
+import CloseIcon from "../shared/Icon/CloseIcon";
+import CheckIcon from "../shared/Icon/CheckIcon";
 import * as lighty from "lighty-type";
 interface Props {
   friendInfo?: lighty.User;
@@ -16,7 +16,6 @@ export default function DeletableFriendItem({
   groupInfo,
   onClickDelete,
 }: Props) {
-  console.log(friendInfo);
   return (
     <Flex direction="column" className={style.container}>
       <div className="relative p-[6px]">

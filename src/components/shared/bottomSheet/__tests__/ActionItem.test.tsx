@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LightyLogo from "../../icons/LightyLogo";
+import LightyLogo from "../../Icon/LightyLogo";
 import ActionItem from "../ActionItem";
 describe("ActionItem", () => {
   test("title과 subTitle, icon이 올바르게 렌더링되는가", () => {

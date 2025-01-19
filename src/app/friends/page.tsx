@@ -1,9 +1,9 @@
 "use client";
-import TabBar from "@/components/shared/tab/TabBar";
+import TabBar from "@/components/shared/Tab/TabBar";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { friendSearchAtom, friendsSelectedTabAtom } from "@/atoms/friends";
 import Spacing from "@/components/shared/Spacing";
-import SearchInput from "@/components/shared/inputs/SearchBar";
+import SearchInput from "@/components/shared/Input/SearchBar";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import clsx from "clsx";
 import { useRef } from "react";
@@ -20,7 +20,7 @@ export default function FriendsPage() {
   const search = useRecoilValue(friendSearchAtom);
   const debouncedSearch = useDebounce(search);
 
-  const renderContent = () => {
+  const renderSelectedTabContent = () => {
     if (selectedTab === "1") {
       return debouncedSearch.length > 0 ? (
         <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
@@ -28,14 +28,12 @@ export default function FriendsPage() {
         <UserFriendsListContainer />
       );
     }
-
     if (selectedTab === "2") {
       return <SentReceivedFriendRequestsList />;
     }
-
     return null;
   };
-  console.log(debouncedSearch);
+
   return (
     <div
       ref={containerRef}
@@ -65,7 +63,7 @@ export default function FriendsPage() {
           <Spacing size={20} />
         </div>
       </div>
-      {renderContent()}
+      {renderSelectedTabContent()}
     </div>
   );
 }

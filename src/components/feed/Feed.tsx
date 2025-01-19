@@ -4,13 +4,14 @@ import Flex from "@/components/shared/Flex";
 import { Feed } from "@/models/feed";
 import { Dispatch, SetStateAction } from "react";
 
+export type FeedType = "나의피드" | "전체";
 export default function MyFeed({
   feeds,
-  which,
+  type,
   onClickFeed,
 }: {
   feeds: Feed[] | null;
-  which: string;
+  type: FeedType;
   onClickFeed: Dispatch<SetStateAction<string>>;
 }) {
   if (!feeds) return;
@@ -19,11 +20,7 @@ export default function MyFeed({
       <Flex direction="column">
         {feeds?.length > 0 ? (
           feeds.map((feed) => (
-            <MemoryCard
-              key={feed.id}
-              feed={which === "1" ? feed : feed}
-              onClick={onClickFeed}
-            />
+            <MemoryCard key={feed.id} feed={feed} onClick={onClickFeed} />
           ))
         ) : (
           <NoFeed />

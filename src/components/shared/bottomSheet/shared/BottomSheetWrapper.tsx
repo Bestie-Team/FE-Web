@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Dimmed from "../../Dimmed";
 import Flex from "../../Flex";
 import clsx from "clsx";
-import RectIcon from "../../icons/RectIcon";
+import RectIcon from "../../Icon/RectIcon";
 
 export default function BottomSheetWrapper({
   open = true,

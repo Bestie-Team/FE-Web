@@ -1,59 +1,82 @@
 "use client";
+
 import React from "react";
 import DropdownMenu from "./DropdownMenu";
 import { useDropdown } from "@/hooks/useDropdown";
-import OptionsSelectIcon from "./icons/OptionsSelectIcon";
+import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
 
-export default function Options({
-  width,
-  height,
-  type = "default",
-  color,
-}: {
+export const MENU_TYPES = {
+  COMMENT: "comment",
+  DEFAULT: "default",
+  FRIEND: "friend",
+  GROUP: "group",
+} as const;
+
+type MenuType = (typeof MENU_TYPES)[keyof typeof MENU_TYPES];
+
+const MENU_CONFIGS = {
+  [MENU_TYPES.COMMENT]: {
+    items: ["삭제하기"],
+    className: "absolute -bottom-[42px] -right-[24px]",
+  },
+  [MENU_TYPES.DEFAULT]: {
+    items: ["숨기기", "수정하기", "삭제하기"],
+    className: "absolute -bottom-[162px] right-[4px]",
+  },
+  [MENU_TYPES.FRIEND]: {
+    items: ["친구 삭제", "유저 신고하기"],
+    className: "absolute -bottom-[104px] -right-[4px]",
+  },
+  [MENU_TYPES.GROUP]: {
+    items: ["그룹 나가기", "그룹 신고하기"],
+    className: "absolute -bottom-[104px] -right-[4px]",
+  },
+};
+
+interface OptionsProps {
+  commentId?: string;
   width?: string;
   height?: string;
   color?: string;
-  type: "default" | "friend" | "group";
-}) {
+  type: MenuType;
+}
+
+export default function Options({
+  commentId,
+  width = "24px",
+  height = "24px",
+  color,
+  type = MENU_TYPES.DEFAULT,
+}: OptionsProps) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
+
+  const isDefaultOrComment =
+    type === MENU_TYPES.DEFAULT || type === MENU_TYPES.COMMENT;
+  const containerClassName = `
+    cursor-pointer 
+    relative 
+    flex 
+    justify-center 
+    ${isDefaultOrComment ? "pt-[5.5px] pb-[4px]" : ""}
+  `.trim();
+
   return (
     <div
       ref={btnRef}
-      test-id="options-icon"
-      onClick={toggleDropdown}
-      style={{
-        width: "24px",
-        height: "24px",
-      }}
-      className={
-        type === "default"
-          ? "cursor-pointer relative flex justify-center pt-[3px] pb-[4px]"
-          : "cursor-pointer relative flex justify-center pt-[4.5px]"
-      }
+      data-testid="options-icon"
+      onMouseDown={toggleDropdown}
+      style={{ width, height }}
+      className={containerClassName}
     >
       <OptionsSelectIcon width={width} height={height} color={color} />
       {opened && (
         <DropdownMenu
-          type={type}
+          commentId={commentId}
           ref={ref}
-          items={
-            type === "default"
-              ? menuItems
-              : type === "friend"
-              ? friend.menu
-              : menuItems_group
-          }
-          className={
-            type === "default"
-              ? "absolute -bottom-[162px] right-[4px]"
-              : "absolute -bottom-[104px] -right-[4px]"
-          }
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
         />
       )}
     </div>
   );
 }
-const menuItems = ["숨기기", "수정하기", "삭제하기"];
-const friend = { menu: ["친구 삭제", "유저 신고하기"], actions: [] };
-
-const menuItems_group = ["그룹 나가기", "그룹 신고하기"];

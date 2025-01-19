@@ -1,4 +1,5 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
+import { validateAuth, validateBackendUrl } from "./shared";
 
 export async function handleProfileImageUpdate(imageFile: { file: File }) {
   try {
@@ -20,20 +21,14 @@ export async function handleProfileImageUpdate(imageFile: { file: File }) {
 
 export async function postProfileImage(imageFile: { file: File }) {
   try {
+    const backendUrl = validateBackendUrl();
+    const token = validateAuth();
+
     if (!imageFile || !imageFile.file) {
       throw new Error("이미지 파일을 선택해주세요.");
     }
     const formData = new FormData();
     formData.append("file", imageFile.file);
-
-    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    if (!token) {
-      throw new Error("로그인이 필요합니다.");
-    }
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    if (!backendUrl) {
-      throw new Error("백엔드 URL이 설정되지 않았습니다.");
-    }
 
     const targetUrl = `${backendUrl}/users/profile/image`;
 
@@ -68,15 +63,8 @@ export async function postProfileImage(imageFile: { file: File }) {
 
 export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
   try {
-    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    if (!token) {
-      throw new Error("로그인이 필요합니다.");
-    }
-
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    if (!backendUrl) {
-      throw new Error("백엔드 URL이 설정되지 않았습니다.");
-    }
+    const backendUrl = validateBackendUrl();
+    const token = validateAuth();
 
     const targetUrl = `${backendUrl}/users/profile/image`;
 
@@ -95,7 +83,6 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
         errorText || "프로필 이미지 업데이트 중 문제가 발생했습니다."
       );
     }
-
     console.log("프로필 이미지가 성공적으로 업데이트되었습니다.");
     return true;
   } catch (error) {

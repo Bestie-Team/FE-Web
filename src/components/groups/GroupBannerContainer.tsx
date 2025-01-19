@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import ArrowLeftIcon from "../shared/icons/ArrowLeftIcon";
+import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";

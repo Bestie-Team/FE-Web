@@ -1,10 +1,10 @@
 "use client";
 import InvitationCard from "@/components/invitation/InvitationCard";
-import LightySelect from "@/components/shared/filter";
+import LightySelect from "@/components/shared/Select";
 import { SelectOptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import TabBar from "@/components/shared/tab/TabBar";
+import TabBar from "@/components/shared/Tab/TabBar";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -12,11 +12,11 @@ import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import useScrollShadow from "@/hooks/useScrollShadow";
-import { useInvitationTabs } from "@/hooks/useInvitationTabs";
+import { useTabs } from "@/hooks/useTabs";
 import useReceivedInvitationToGathering from "@/components/gathering/hooks/useReceivedInvitationToGathering";
-import * as lighty from "lighty-type";
 import useSentInvitationToGathering from "@/components/gathering/hooks/useSentInvitationToGathering";
 import InvitationModal from "@/components/invitation/InvitationModal";
+import { GatheringInvitation } from "@/models/gathering";
 
 export default function InvitationPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,12 +39,12 @@ export default function InvitationPage() {
     []
   );
   const [invitations, setInvitations] = useState<{
-    received: lighty.GatheringInvitation[];
-    sent: lighty.GatheringInvitation[];
+    received: GatheringInvitation[];
+    sent: GatheringInvitation[];
   }>({ received: [], sent: [] });
 
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
-    useInvitationTabs();
+    useTabs();
 
   const { data: received, isSuccess } =
     useReceivedInvitationToGathering(queryParams);
@@ -118,13 +118,13 @@ export default function InvitationPage() {
           <Flex direction="column" className="pt-[120px]">
             {invitations.sent?.map((invitation) => {
               return (
-                <>
+                <React.Fragment key={invitation.id}>
                   <InvitationCard
                     onClickOpen={setModalOpen}
                     invitation={invitation}
                   />
                   <Spacing size={24} />
-                </>
+                </React.Fragment>
               );
             })}
           </Flex>

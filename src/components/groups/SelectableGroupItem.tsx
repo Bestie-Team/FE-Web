@@ -2,7 +2,7 @@ import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import * as lighty from "lighty-type";
-import CheckIcon from "../shared/icons/CheckIcon";
+import CheckIcon from "../shared/Icon/CheckIcon";
 import clsx from "clsx";
 
 interface Props {

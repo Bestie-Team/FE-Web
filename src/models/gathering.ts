@@ -47,5 +47,27 @@ export interface GatheringDetailResponse {
   hostUser: lighty.User;
   members: lighty.User[];
 }
+export interface GatheringInvitation {
+  id: string;
+  name: string;
+  description: string;
+  sender: string;
+  createdAt: string;
+  gatheringDate: string;
+  invitation_image_url: string;
+  address: string;
+  groupName: string | null;
+  members: lighty.User[];
+}
 
 export type GatheringInWhichType = "GATHERING" | "HOME";
+
+export const GatheringType = {
+  GROUP: "GROUP" as lighty.GatheringType,
+  FRIEND: "FRIEND" as lighty.GatheringType,
+};
+
+export const GatheringInWhich = {
+  GATHERING: "GATHERING" as GatheringInWhichType,
+  HOME: "HOME" as GatheringInWhichType,
+};

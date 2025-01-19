@@ -1,14 +1,24 @@
 import Flex from "../shared/Flex";
-import CalendarLightyIcon from "../shared/icons/CalendarLightyIcon";
+import CalendarLightyIcon from "../shared/Icon/CalendarLightyIcon";
 
-export default function DateItem({ date, day }: { date: number; day: string }) {
+export default function DateItem({
+  day,
+  date,
+  icon,
+}: {
+  day: string;
+  date: number;
+  icon?: boolean;
+}) {
   return (
     <Flex direction="column" align="center" className={styles.container}>
       <div className={styles.day}>{day}</div>
       <div className={styles.date}>{date}</div>
-      <div>
-        <CalendarLightyIcon />
-      </div>
+      {icon ? (
+        <div>
+          <CalendarLightyIcon />
+        </div>
+      ) : null}
     </Flex>
   );
 }

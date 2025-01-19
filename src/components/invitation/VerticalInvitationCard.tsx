@@ -3,22 +3,24 @@ import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
-import MapPinIcon from "../shared/icons/MapPinIcon";
-import CalendarIcon from "../shared/icons/CalendarIcon";
+import MapPinIcon from "../shared/Icon/MapPinIcon";
+import CalendarIcon from "../shared/Icon/CalendarIcon";
 import AddGatheringPhoto from "../gathering/AddGatheringPhoto";
 import { SetterOrUpdater } from "recoil";
-import { useAuth } from "../shared/providers/AuthProvider";
 import { formatToKoreanTime } from "@/utils/makeUTC";
+import { GatheringInvitation } from "@/models/gathering";
 
-export default function VerticalInvitationCard({
+export default function UploadableVerticalInvitationCard({
   gathering,
+  invitation,
   setGathering,
+  userId,
 }: {
-  gathering: lighty.CreateGatheringRequest;
-  setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
+  gathering?: lighty.CreateGatheringRequest;
+  invitation?: GatheringInvitation;
+  setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
+  userId?: string;
 }) {
-  const { userInfo } = useAuth();
-  const time = formatToKoreanTime(gathering.gatheringDate);
   return (
     <Flex
       direction="column"
@@ -29,6 +31,32 @@ export default function VerticalInvitationCard({
         borderRadius: "20px",
       }}
     >
+      <VerticalInvitationCard
+        userId={userId}
+        invitation={invitation}
+        gathering={gathering}
+        setGathering={setGathering}
+      />
+    </Flex>
+  );
+}
+
+export function VerticalInvitationCard({
+  gathering,
+  invitation,
+  setGathering,
+  userId,
+}: {
+  userId?: string;
+  gathering?: lighty.CreateGatheringRequest;
+  invitation?: GatheringInvitation;
+  setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
+}) {
+  if (gathering && setGathering && !invitation) {
+    const { name, invitationImageUrl, gatheringDate, description, address } =
+      gathering;
+    const time = formatToKoreanTime(gatheringDate);
+    return (
       <div className="relative">
         <Image
           src="/vertical_invitation.png"
@@ -38,14 +66,14 @@ export default function VerticalInvitationCard({
         />
         <Flex direction="column" className={styles.mainContentWrapper}>
           <AddGatheringPhoto
-            image={gathering.invitationImageUrl}
+            image={invitationImageUrl}
             setImage={setGathering}
           />
 
           <Spacing size={10} />
-          <span className="text-T1 pl-[4px]">{gathering.name}</span>
+          <span className="text-T1 pl-[4px]">{name}</span>
           <span className="text-B4 pl-[4px] text-grayscale-600">
-            {gathering.description}
+            {description}
           </span>
         </Flex>
         <Flex direction="column" className={styles.subContentWrapper}>
@@ -57,20 +85,74 @@ export default function VerticalInvitationCard({
           <Flex align="center">
             <MapPinIcon />
             <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">{gathering.address}</span>
+            <span className="text-B4">{address}</span>
           </Flex>
         </Flex>
         <div className={styles.groupMemberImagesWrapper}></div>
         <Flex align="center" className={styles.fromWrapper}>
           <span className="text-T5 text-grayscale-300">from</span>
           <Spacing direction="horizontal" size={4} />
-          <span className="text-B3">{userInfo?.accountId}</span>
+          <span className="text-B3">{userId}</span>
         </Flex>
       </div>
-    </Flex>
-  );
+    );
+  }
+  if (invitation && !gathering) {
+    const {
+      name,
+      description,
+      invitation_image_url,
+      gatheringDate,
+      address,
+      sender,
+    } = invitation;
+    const time = formatToKoreanTime(gatheringDate);
+    return (
+      <div className="relative">
+        <Image
+          src="/vertical_invitation.png"
+          alt="verticalBar"
+          width={330}
+          height={460}
+        />
+        <Flex direction="column" className={styles.mainContentWrapper}>
+          <Image
+            src={invitation_image_url || "https://cdn.lighty.today/dishes.jpg"}
+            className={styles.image}
+            width={300}
+            height={210}
+            alt="invitationImage"
+          />
+          <Spacing size={10} />
+          <span className="text-T1 pl-[4px]">{name}</span>
+          <span className="text-B4 pl-[4px] text-grayscale-600">
+            {description}
+          </span>
+        </Flex>
+        <Flex direction="column" className={styles.subContentWrapper}>
+          <Flex align="center">
+            <CalendarIcon width="14" height="14" color="#AEAEAE" />
+            <Spacing direction="horizontal" size={8} />
+            <span className="text-B4">{time}</span>
+          </Flex>
+          <Flex align="center">
+            <MapPinIcon />
+            <Spacing direction="horizontal" size={8} />
+            <span className="text-B4">{address}</span>
+          </Flex>
+        </Flex>
+        <div className={styles.groupMemberImagesWrapper}></div>
+        <Flex align="center" className={styles.fromWrapper}>
+          <span className="text-T5 text-grayscale-300">from</span>
+          <Spacing direction="horizontal" size={4} />
+          <span className="text-B3">{sender}</span>
+        </Flex>
+      </div>
+    );
+  }
 }
 const styles = {
+  image: "h-[210px] object-cover rounded-[12px]",
   mainContentWrapper: "absolute p-[15px] left-0 top-0",
   subContentWrapper: "absolute pl-[4px] left-[15px] top-[332px]",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-[4px]",

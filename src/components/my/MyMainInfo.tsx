@@ -1,10 +1,10 @@
 import React from "react";
 import Flex from "../shared/Flex";
-import EmptyLogoIcon from "../shared/icons/EmptyLogoIcon";
-import UserIcon from "../shared/icons/UserIcon";
+import EmptyLogoIcon from "../shared/Icon/EmptyLogoIcon";
+import UserIcon from "../shared/Icon/UserIcon";
 import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
-import FolderIcon from "../shared/icons/FolderIcon";
+import FolderIcon from "../shared/Icon/FolderIcon";
 
 export default function MyMainInfo() {
   const router = useRouter();

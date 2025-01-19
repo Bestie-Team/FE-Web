@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import Image from "next/image";
 import clsx from "clsx";
-import { pastel_stickers, sparkle_stickers } from "@/constants/stickers";
+import { pastel_stickers, sparkle_stickers } from "@/constants/photoCard";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function DecoStickerBottomSheet({
   open = true,

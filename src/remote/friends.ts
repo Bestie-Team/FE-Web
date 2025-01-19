@@ -1,18 +1,13 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
 import * as lighty from "lighty-type";
+import { validateAuth, validateBackendUrl } from "./shared";
 
 /** 친구 요청 */
 export async function postFriends({ userId }: { userId: string }) {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
-  const targetUrl = `${backendUrl}/friends`;
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
 
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
+  const targetUrl = `${backendUrl}/friends`;
 
   const response = await fetch(targetUrl, {
     method: "POST",
@@ -26,7 +21,6 @@ export async function postFriends({ userId }: { userId: string }) {
   if (response.ok) {
     return { message: "친구요청을 성공적으로 보냈습니다" };
   }
-
   if (!response.ok) {
     throw new Error("Failed to friend request");
   }
@@ -45,19 +39,12 @@ export async function getFriends({
   limit: number;
 }) {
   const cursor = { name, accountId };
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
   const targetUrl = `${backendUrl}/friends?cursor=${encodeURIComponent(
     JSON.stringify(cursor)
   )}&limit=${limit}`;
-
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
 
   const response = await fetch(targetUrl, {
     method: "GET",
@@ -77,16 +64,10 @@ export async function getFriends({
 
 /** 친구 요청 수락 */
 export async function postAcceptFriend({ friendId }: { friendId: string }) {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
-  const targetUrl = `${backendUrl}/friends/${friendId}/accept`;
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
 
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
+  const targetUrl = `${backendUrl}/friends/${friendId}/accept`;
 
   const response = await fetch(targetUrl, {
     method: "POST",
@@ -104,16 +85,10 @@ export async function postAcceptFriend({ friendId }: { friendId: string }) {
 
 /** 친구 요청 거절 */
 export async function postRejectFriend({ friendId }: { friendId: string }) {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
-  const targetUrl = `${backendUrl}/friends/${friendId}/reject`;
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
 
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
+  const targetUrl = `${backendUrl}/friends/${friendId}/reject`;
 
   const response = await fetch(targetUrl, {
     method: "POST",
@@ -141,18 +116,12 @@ export async function getReceivedFriendRequestsList({
   limit: number;
 }) {
   const cursor = { name, accountId };
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+
   const targetUrl = `${backendUrl}/friends/requests/received?cursor=${encodeURIComponent(
     JSON.stringify(cursor)
   )}&limit=${limit}`;
-
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
 
   const response = await fetch(targetUrl, {
     method: "GET",
@@ -180,18 +149,12 @@ export async function getSentFriendRequestsList({
   limit: number;
 }) {
   const cursor = { name, accountId };
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+
   const targetUrl = `${backendUrl}/friends/requests/sent?cursor=${encodeURIComponent(
     JSON.stringify(cursor)
   )}&limit=${limit}`;
-
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
 
   const response = await fetch(targetUrl, {
     method: "GET",
@@ -223,18 +186,12 @@ export async function getSearchFriends({
   try {
     const cursor = { name, accountId };
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-    if (!backendUrl) {
-      throw new Error("백엔드 URL이 설정되지 않았습니다.");
-    }
+    const backendUrl = validateBackendUrl();
+    const token = validateAuth();
+
     const targetUrl = `${backendUrl}/friends/search?cursor=${encodeURIComponent(
       JSON.stringify(cursor)
     )}&limit=${limit}&search=${search}`;
-
-    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    if (!token) {
-      throw new Error("로그인이 필요합니다.");
-    }
 
     const response = await fetch(targetUrl, {
       method: "GET",
@@ -257,7 +214,6 @@ export async function getSearchFriends({
 
     return data;
   } catch (error) {
-    alert("친구 검색에 실패했습니다.");
     console.error("Error during login:", error);
   }
 }

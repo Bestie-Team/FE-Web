@@ -3,7 +3,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Spacing from "../shared/Spacing";
 import clsx from "clsx";
-import CheckIcon from "../shared/icons/CheckIcon";
+import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Gathering } from "@/models/gathering";
 

@@ -1,13 +1,13 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import Button from "../buttons/Button";
-import CalendarWithTime from "../calendar/CalendarWithTime";
+import Button from "../Button/Button";
+import CalendarWithTime from "../Calender/CalendarWithTime";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { gatheringSelectedDateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { format } from "date-fns";
 import makeUTC from "@/utils/makeUTC";
 import { useState } from "react";
+import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function CalendarBottomSheet({
   open = true,

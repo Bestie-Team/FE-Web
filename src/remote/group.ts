@@ -1,6 +1,5 @@
-import { ERROR_MESSAGES } from "@/constants/errorMessages";
-import STORAGE_KEYS from "@/constants/storageKeys";
 import * as lighty from "lighty-type";
+import { validateAuth, validateBackendUrl } from "./shared";
 
 export async function postGroupCoverImage({ file }: { file: File }) {
   const backendUrl = validateBackendUrl();
@@ -24,11 +23,9 @@ export async function postGroupCoverImage({ file }: { file: File }) {
   if (response.status === 400) {
     throw new Error("지원하지 않는 파일 형식입니다.");
   }
-
   if (response.status === 413) {
     throw new Error("업로드 가능한 파일 사이즈를 초과하였습니다.");
   }
-
   if (!response.ok) {
     throw new Error("Failed to delete group member");
   }
@@ -52,7 +49,7 @@ export async function postGroup({
   const response = await makePostRequest(targetUrl, token, group);
 
   if (response.status === 201) {
-    return { message: "그룹 생성 성공" };
+    return { message: "그룹을 성공적으로 만들었어요", data: null };
   }
   if (response.status === 400) {
     throw new Error("친구가 아닌 회원이 존재합니다.");
@@ -62,7 +59,7 @@ export async function postGroup({
     throw new Error("그룹 생성에 실패하였습니다.");
   }
   const data = await response.json();
-  return { message: "그룹 생성 성공", data };
+  return { message: "그룹을 성공적으로 만들었어요", data };
 }
 
 /** 참여 그룹 목록 조회 */
@@ -74,16 +71,11 @@ export async function getGroups({
   cursor: string | null;
   limit: number;
 }) {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error("백엔드 URL이 설정되지 않았습니다.");
-  }
+  const backendUrl = validateBackendUrl();
+  const token = validateAuth();
+
   const targetUrl = `${backendUrl}/groups?cursor=${cursor}&limit=${limit}`;
 
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error("로그인이 필요합니다.");
-  }
   const response = await makeGetRequest(targetUrl, token);
 
   if (!response.ok) {
@@ -170,22 +162,6 @@ export async function deleteGroup({ groupId }: { groupId: string }) {
   return {
     message: "그룹을 성공적으로 삭제하였습니다.",
   };
-}
-
-function validateBackendUrl(): string {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    throw new Error(ERROR_MESSAGES.NO_BACKEND_URL);
-  }
-  return backendUrl;
-}
-
-function validateAuth(): string {
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  if (!token) {
-    throw new Error(ERROR_MESSAGES.NO_AUTH);
-  }
-  return token;
 }
 
 async function makePostRequest(

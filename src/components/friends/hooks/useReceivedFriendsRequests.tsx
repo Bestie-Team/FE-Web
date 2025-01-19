@@ -15,6 +15,6 @@ export default function useReceivedFriendsRequests({
     queryFn: () => {
       return getReceivedFriendRequestsList({ name, accountId, limit });
     },
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: "always",
   });
 }

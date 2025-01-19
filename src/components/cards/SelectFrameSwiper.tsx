@@ -10,6 +10,7 @@ import { Navigation } from "swiper/modules";
 import { NavigationOptions } from "swiper/types";
 import { cardFrameAtom, cardSelectedGatheringAtom } from "@/atoms/card";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { frames } from "@/constants/photoCard";
 
 export default function SelectFrameSwiper() {
   const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
@@ -19,12 +20,6 @@ export default function SelectFrameSwiper() {
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
-  const frames = [
-    "/frame1.jpeg",
-    "/frame2.jpeg",
-    "/frame3.jpeg",
-    "/frame4.jpeg",
-  ];
   const frameNames = ["ribbon", "zebra", "green", "check"];
 
   useEffect(() => {

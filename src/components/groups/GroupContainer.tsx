@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import ArrowRightIcon from "../shared/icons/ArrowRightIcon";
+import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";

@@ -1,6 +1,6 @@
-import ArrowLeftIcon from "../shared/icons/ArrowLeftIcon";
+import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Spacing from "../shared/Spacing";
-import AddFriendIcon from "../shared/icons/AddFriendIcon";
+import AddFriendIcon from "../shared/Icon/AddFriendIcon";
 import { useRouter } from "next/navigation";
 
 export default function FriendsPageHeader({

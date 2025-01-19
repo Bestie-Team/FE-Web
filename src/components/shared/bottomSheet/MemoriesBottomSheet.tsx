@@ -1,12 +1,12 @@
 import React from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import ActionItem from "./ActionItem";
 import { useRouter } from "next/navigation";
 import Text from "../Text";
-import UserIcon from "../icons/UserIcon";
-import PencilIcon from "../icons/PencilIcon";
-import PicturesIcon from "../icons/PicturesIcon";
+import UserIcon from "../Icon/UserIcon";
+import PencilIcon from "../Icon/PencilIcon";
+import PicturesIcon from "../Icon/PicturesIcon";
+import ActionItem from "./ActionItem";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function MemoriesBottomSheet({

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
-import PhotoIcon from "../shared/icons/PhotoIcon";
+import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import * as lighty from "lighty-type";

@@ -3,10 +3,10 @@ import { usePathname, useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
-import DotSpinner from "../shared/spinners/DotSpinner";
-import CheckSpinner from "../shared/spinners/CheckSpinner";
+import DotSpinner from "../shared/Spinner/DotSpinner";
+import CheckSpinner from "../shared/Spinner/CheckSpinner";
 
 export default function MakingGatheringStatus({
   isSuccess,

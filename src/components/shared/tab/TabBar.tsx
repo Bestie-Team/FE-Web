@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import TabButton from "./TabButton";
 import clsx from "clsx";
+import TabButton from "./TabButton";
 
 export default function TabBar({
   title1,

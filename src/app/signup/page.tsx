@@ -1,5 +1,5 @@
 "use client";
-import LightyIcon from "@/components/shared/icons/LightyIcon";
+import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
 import UploadProfileForm from "@/components/UploadProfileForm";
 import getHeader from "@/utils/getHeader";

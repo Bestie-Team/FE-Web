@@ -37,7 +37,7 @@ export default function makeUTC({
 export function formatToKoreanTime(utcISOString: string) {
   const formattedDate = format(
     addHours(new Date(utcISOString), 9),
-    "yyyy-MM-dd a hh:mm",
+    "yyyy.MM.dd a hh:mm",
     { locale: ko }
   );
 

@@ -3,7 +3,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import Flex from "../shared/Flex";
-import { PlusCircleButtonSmall } from "../shared/buttons/BottomSheetOpenButton";
+import { PlusCircleButtonSmall } from "../shared/Button/BottomSheetOpenButton";
 import Spacing from "../shared/Spacing";
 import { useEffect, useState } from "react";
 

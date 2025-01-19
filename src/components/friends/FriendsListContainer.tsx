@@ -2,11 +2,11 @@ import React from "react";
 import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import Button from "../shared/buttons/Button";
+import Button from "../shared/Button/Button";
 import Link from "next/link";
-import Modal from "../shared/modal";
 import FriendListItem from "./FriendListItem";
 import { SetterOrUpdater } from "recoil";
+import Modal from "../shared/Modal/Modal";
 
 export default function FriendsListContainer({
   friends,

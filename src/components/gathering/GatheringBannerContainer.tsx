@@ -5,11 +5,12 @@ import Spacing from "../shared/Spacing";
 import { addHours, differenceInDays } from "date-fns";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
+import * as lighty from "lighty-type";
 
 export default function GatheringBannerContainer({
   gathering,
 }: {
-  gathering: GatheringDetailResponse;
+  gathering: lighty.GatheringDetailResponse;
 }) {
   const date = addHours(new Date(gathering.gatheringDate), 9);
   const diff = differenceInDays(new Date(), new Date(date));

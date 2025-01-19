@@ -2,14 +2,13 @@ import * as lighty from "lighty-type";
 import { handleProfileImageUpdate } from "./profile";
 import { UploadType } from "@/components/shared/AddPhoto";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import { validateBackendUrl } from "./shared";
+
+const backendUrl = validateBackendUrl();
 
 export async function postLogin({ accessToken }: lighty.LoginRequest) {
   try {
-    if (!process.env.NEXT_PUBLIC_BACKEND_URL) {
-      throw new Error("Backend URL is not configured");
-    }
-
-    const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
+    const targetUrl = `${backendUrl}/auth/google/login`;
     const response = await fetch(targetUrl, {
       method: "POST",
       headers: {
@@ -69,13 +68,12 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
     }
   } catch (error) {
     alert("로그인 요청에 실패했습니다.");
-    console.error("Error during login:", error);
   }
 }
 
 export async function postRegister(RegisterRequest: UploadType) {
   try {
-    const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`;
+    const targetUrl = `${backendUrl}/auth/register`;
     const response = await fetch(targetUrl, {
       method: "POST",
       headers: {
@@ -110,6 +108,5 @@ export async function postRegister(RegisterRequest: UploadType) {
     }
   } catch (error) {
     console.error("Error during login:", error);
-    alert("회원 가입 요청에 실패했습니다.");
   }
 }

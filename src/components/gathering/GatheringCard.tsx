@@ -2,22 +2,27 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import Button from "../shared/buttons/Button";
-import PencilIcon from "../shared/icons/PencilIcon";
-import { Gathering, GatheringInWhichType } from "@/models/gathering";
+import Button from "../shared/Button/Button";
+import PencilIcon from "../shared/Icon/PencilIcon";
+import {
+  Gathering,
+  GatheringInWhich,
+  GatheringInWhichType,
+} from "@/models/gathering";
 import { addHours, differenceInDays } from "date-fns";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
-import { GatheringInWhich } from "@/constants/gathering";
 
 export default function GatheringCard({
   gathering,
   where,
+  which,
 }: {
   gathering: Gathering;
   where: GatheringInWhichType;
+  which?: string;
 }) {
   //기록할 모임의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
@@ -53,7 +58,7 @@ export default function GatheringCard({
         style={{
           background: styles.gradation,
         }}
-        className="absolute inset-0"
+        className="absolute bottom-0 left-0 right-0 h-[73.8%]"
       />
       <Flex direction="column" className={styles.textWrapper}>
         <span className="text-T4 truncate">{name}</span>
@@ -66,7 +71,7 @@ export default function GatheringCard({
           </span>
         </Flex>
       </Flex>
-      {where === GatheringInWhich.GATHERING ? (
+      {which === "완료" ? (
         <Button className={styles.button} onClick={handleClickGathering}>
           <PencilIcon color="#0A0A0A" />
         </Button>
@@ -80,8 +85,8 @@ const styles = {
     "relative rounded-[16px] overflow-hidden aspect-square cursor-pointer",
   image: "object-cover object-center w-full h-full",
   gradation:
-    "linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.9) 100%)",
-
+    // "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%)",
+    "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper: "absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white",
   date: "w-full text-C2 text-grayscale-100",
 

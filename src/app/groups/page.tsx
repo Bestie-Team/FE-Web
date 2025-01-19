@@ -1,7 +1,7 @@
 "use client";
 import GroupContainer from "@/components/groups/GroupContainer";
 import useGroup from "@/components/groups/hooks/useGroups";
-import Button from "@/components/shared/buttons/Button";
+import Button from "@/components/shared/Button/Button";
 import Flex from "@/components/shared/Flex";
 import * as lighty from "lighty-type";
 import Spacing from "@/components/shared/Spacing";

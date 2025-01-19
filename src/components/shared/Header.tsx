@@ -1,16 +1,16 @@
 import React from "react";
-import EmptySquareIcon from "./icons/EmptySquareIcon";
-import ArrowLeftIcon from "./icons/ArrowLeftIcon";
+import EmptySquareIcon from "./Icon/EmptySquareIcon";
+import ArrowLeftIcon from "./Icon/ArrowLeftIcon";
 import clsx from "clsx";
-import LightyIcon from "./icons/LightyIcon";
-import MailIcon from "./icons/MailIcon";
-import { DotIcon } from "./icons/DotIcon";
-import LightyLetterLogo from "./icons/LightyLetterLogo";
+import LightyIcon from "./Icon/LightyIcon";
+import MailIcon from "./Icon/MailIcon";
+import { DotIcon } from "./Icon/DotIcon";
+import LightyLetterLogo from "./Icon/LightyLetterLogo";
 import Spacing from "./Spacing";
 import { useRecoilValue } from "recoil";
 import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
 import { useRouter } from "next/navigation";
-import NoticeIcon from "./icons/NoticeIcon";
+import NoticeIcon from "./Icon/NoticeIcon";
 import Flex from "./Flex";
 
 export function Header({

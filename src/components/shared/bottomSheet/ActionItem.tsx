@@ -1,6 +1,6 @@
-import Button from "../buttons/Button";
+import Button from "../Button/Button";
 import Flex from "../Flex";
-import ArrowRightIcon from "../icons/ArrowRightIcon";
+import ArrowRightIcon from "../Icon/ArrowRightIcon";
 import Spacing from "../Spacing";
 
 export default function ActionItem({

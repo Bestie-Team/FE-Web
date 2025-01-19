@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { DotIcon } from "../icons/DotIcon";
+import { DotIcon } from "../Icon/DotIcon";
 
 type Props = {
   title: string;

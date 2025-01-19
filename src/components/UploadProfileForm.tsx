@@ -8,8 +8,8 @@ import React, {
 } from "react";
 import * as lighty from "lighty-type";
 import AddPhoto, { UploadType } from "./shared/AddPhoto";
-import Input from "./shared/inputs/Input";
-import FixedBottomButton from "./shared/buttons/FixedBottomButton";
+import Input from "./shared/Input/Input";
+import FixedBottomButton from "./shared/Button/FixedBottomButton";
 import Spacing from "./shared/Spacing";
 import Flex from "./shared/Flex";
 import validator from "validator";

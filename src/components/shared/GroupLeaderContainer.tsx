@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "./Flex";
 import Spacing from "./Spacing";
-import Button from "./buttons/Button";
+import Button from "./Button/Button";
 import * as lighty from "lighty-type";
 
 export default function GroupLeaderContainer({

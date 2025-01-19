@@ -2,13 +2,13 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
-import Modal from "../shared/modal";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { newGroupMembersAtom, selectedFriendsAtom } from "@/atoms/friends";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
 import * as lighty from "lighty-type";
 import useFriends from "./hooks/useFriends";
+import Modal from "../shared/Modal/Modal";
 
 export default function SelectFriendsContainer({
   paddingTop,

@@ -3,7 +3,7 @@ import { TogetherInfo } from "../feed/InfoBar";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import EditPhotoSwiper from "./UploadPhotoSwiper";
-import FixedBottomButton from "../shared/buttons/FixedBottomButton";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import { useRecoilValue } from "recoil";
@@ -15,7 +15,7 @@ import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import MakingFeedStatus from "./MakingFeedStatus";
-import DotSpinner from "../shared/spinners/DotSpinner";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 import { toast } from "react-toastify";
 
 export default function CreatingPostToRecord({
