@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
-import DropdownMenu from "./DropdownMenu";
 import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
+import FeedDropdownMenu from "./DropDownMenu/FeedDropDownMenu";
+import CommentDropdownMenu from "./DropDownMenu/CommentDropDownMenu";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
@@ -21,7 +22,7 @@ const MENU_CONFIGS = {
   },
   [MENU_TYPES.DEFAULT]: {
     items: ["숨기기", "수정하기", "삭제하기"],
-    className: "absolute -bottom-[162px] right-[4px]",
+    className: "z-100 absolute -bottom-[162px] right-[4px]",
   },
   [MENU_TYPES.FRIEND]: {
     items: ["친구 삭제", "유저 신고하기"],
@@ -34,7 +35,7 @@ const MENU_CONFIGS = {
 };
 
 interface OptionsProps {
-  commentId?: string;
+  selectedId?: string;
   width?: string;
   height?: string;
   color?: string;
@@ -42,7 +43,7 @@ interface OptionsProps {
 }
 
 export default function Options({
-  commentId,
+  selectedId,
   width = "24px",
   height = "24px",
   color,
@@ -53,8 +54,8 @@ export default function Options({
   const isDefaultOrComment =
     type === MENU_TYPES.DEFAULT || type === MENU_TYPES.COMMENT;
   const containerClassName = `
-    cursor-pointer 
-    relative 
+    relative
+    cursor-pointer  
     flex 
     justify-center 
     ${isDefaultOrComment ? "pt-[5.5px] pb-[4px]" : ""}
@@ -64,14 +65,26 @@ export default function Options({
     <div
       ref={btnRef}
       data-testid="options-icon"
-      onMouseDown={toggleDropdown}
+      onClick={toggleDropdown}
       style={{ width, height }}
       className={containerClassName}
     >
-      <OptionsSelectIcon width={width} height={height} color={color} />
-      {opened && (
-        <DropdownMenu
-          commentId={commentId}
+      <OptionsSelectIcon
+        width={type === "comment" ? "2px" : ""}
+        height={type === "comment" ? "11.3px" : ""}
+        color={color}
+      />
+      {opened && type === MENU_TYPES.COMMENT && (
+        <CommentDropdownMenu
+          selectedId={selectedId}
+          ref={ref}
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
+        />
+      )}
+      {opened && type === MENU_TYPES.DEFAULT && (
+        <FeedDropdownMenu
+          selectedId={selectedId}
           ref={ref}
           items={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}

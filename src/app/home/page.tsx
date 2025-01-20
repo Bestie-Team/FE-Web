@@ -15,7 +15,7 @@ import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import getHeader from "@/utils/getHeader";
 import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { getWeekDates } from "@/utils/getThisWeekDates";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { GatheringInWhich } from "@/models/gathering";
@@ -37,14 +37,8 @@ export default function HomePage() {
   }, []);
 
   const sevenDays = getWeekDates();
-
-  const min = new Date(sevenDays[0]);
-  min.setUTCHours(0, 0, 0, 0);
-  const minDate = min.toISOString();
-
-  const max = new Date(sevenDays[6]);
-  max.setUTCHours(0, 0, 0, 0);
-  const maxDate = max.toISOString();
+  const minDate = useMemo(() => new Date(sevenDays[0]).toISOString(), []);
+  const maxDate = useMemo(() => new Date(sevenDays[6]).toISOString(), []);
 
   const { data: this_week } = useGatherings({
     cursor: minDate,

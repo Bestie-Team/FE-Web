@@ -42,8 +42,8 @@ export async function getGatheringDetail({
   const response = await fetchWithAuth(`${baseUrl}/gatherings/${gatheringId}`, {
     method: "GET",
   });
-
-  return response.json();
+  const data: lighty.GatheringDetailResponse = await response.json();
+  return data;
 }
 
 /** 모임 생성 */

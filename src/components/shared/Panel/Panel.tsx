@@ -3,7 +3,9 @@ import React from "react";
 import clsx from "clsx";
 import TabButton from "./TabButton";
 
-export default function TabBar({
+export type PanelLength = "short" | "medium" | "long";
+
+export default function Panel({
   title1,
   title2,
   long,
@@ -13,7 +15,7 @@ export default function TabBar({
 }: {
   title1?: string;
   title2?: string;
-  long: "short" | "medium" | "long";
+  long: PanelLength;
   bgColor?: string;
   onClick: (tabName: "1" | "2") => void;
   selectedTab: "1" | "2";

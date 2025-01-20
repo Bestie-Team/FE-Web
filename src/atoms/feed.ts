@@ -14,3 +14,8 @@ export const feedAnimationStatusAtom = atom<boolean>({
   key: "feed/animationStatus",
   default: false,
 });
+
+export const selectedFeedIdAtom = atom<string>({
+  key: "selected/feed/delete",
+  default: "",
+});

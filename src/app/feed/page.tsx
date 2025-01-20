@@ -1,4 +1,5 @@
 "use client";
+import React, { useRef, useState, useMemo } from "react";
 import FilterBar from "@/components/shared/FilterBar";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
@@ -8,8 +9,6 @@ import { useRecoilState } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";
 import { recordModalStateAtom } from "@/atoms/record";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
@@ -17,11 +16,11 @@ import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
 import { useTabs } from "@/hooks/useTabs";
-import TabBar from "@/components/shared/Panel/Panel";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
+import Panel from "@/components/shared/Panel/Panel";
 
 export default function FeedPage() {
-  const [selectedFeed, setSelectedFeed] = useState<string>("");
+  const [selectedFeed, setSelectedFeed] = useState("");
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,8 +32,10 @@ export default function FeedPage() {
   );
   const [recordModalOpen, setRecordModalOpen] =
     useRecoilState(recordModalStateAtom);
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
+
+  const minDate = useMemo(() => new Date("2025-01-01").toISOString(), []);
+  const maxDate = useMemo(() => new Date("2025-12-31").toISOString(), []);
+
   const { data: feedAll } = useFeedAll({
     order: "DESC",
     minDate,
@@ -42,24 +43,53 @@ export default function FeedPage() {
     limit: 10,
   });
 
-  const { data: everyFeed } = useFeedMine({
+  const { data: feedMine } = useFeedMine({
     order: "DESC",
     minDate,
     maxDate,
     limit: 10,
   });
 
+  const renderSwipers = useMemo(() => {
+    if (!feedAll) return null;
+
+    return (
+      <Swiper
+        initialSlide={Number(selectedTab) - 1}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => {
+          handleSlideChange(swiper.activeIndex);
+        }}
+        slidesPerView={1}
+        spaceBetween={2}
+        className="custom-swiper w-full"
+      >
+        <SwiperSlide>
+          <Feed feeds={feedAll.feeds} onClickFeed={setSelectedFeed} />
+        </SwiperSlide>
+
+        {feedMine && (
+          <SwiperSlide>
+            <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeed} />
+          </SwiperSlide>
+        )}
+      </Swiper>
+    );
+  }, [feedAll, feedMine, selectedTab, swiperRef, handleSlideChange]);
+
   return (
     <div
       id="scrollable-container"
       ref={containerRef}
-      className="relative overflow-y-scroll no-scrollbar pt-[48px]"
+      className="z-0 relative overflow-y-scroll no-scrollbar pt-[48px]"
     >
       {header}
       <div
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
-        <TabBar
+        <Panel
           selectedTab={selectedTab}
           long="medium"
           title1="전체"
@@ -68,43 +98,19 @@ export default function FeedPage() {
         />
         <FilterBar />
       </div>
-      {feedAll ? (
-        <Swiper
-          initialSlide={Number(selectedTab) - 1}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          onSlideChange={(swiper) => {
-            handleSlideChange(swiper.activeIndex);
-          }}
-          slidesPerView={1}
-          spaceBetween={2}
-          className="custom-swiper w-full"
-        >
-          <SwiperSlide>
-            <Feed feeds={feedAll.feeds} onClickFeed={setSelectedFeed} />
-          </SwiperSlide>
-          {everyFeed ? (
-            <SwiperSlide>
-              <Feed feeds={everyFeed.feeds} onClickFeed={setSelectedFeed} />
-            </SwiperSlide>
-          ) : null}
-        </Swiper>
-      ) : null}
+      {renderSwipers}
       {recordModalOpen ? (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}
           open={recordModalOpen}
         />
       ) : null}
-      {commentModalOpen ? (
+      {commentModalOpen && (
         <CommentContainer
           selectedFeedId={selectedFeed}
-          onClose={() => {
-            setCommentModalOpen(false);
-          }}
+          onClose={() => setCommentModalOpen(false)}
         />
-      ) : null}
+      )}
     </div>
   );
 }

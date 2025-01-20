@@ -25,3 +25,6 @@ export const TIMES = [
   "11:00",
   "11:30",
 ];
+
+export const minDate = new Date("2025-01-01").toISOString();
+export const maxDate = new Date("2025-12-31").toISOString();

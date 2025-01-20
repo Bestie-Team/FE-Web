@@ -1,30 +1,31 @@
 import React, { forwardRef, useState } from "react";
-import Flex from "./Flex";
+import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { commentDeleteAskModalAtom } from "@/atoms/modal";
-import { selectedCommentIdAtom } from "@/atoms/comment";
+import { feedDeleteAskModalAtom } from "@/atoms/modal";
+import { selectedFeedIdAtom } from "@/atoms/feed";
 
-interface DropdownMenuProps {
-  commentId?: string;
+interface FeedDropdownMenuProps {
+  selectedId?: string;
   items: string[];
   className?: string;
 }
 
-const DropdownMenu = forwardRef<HTMLElement, DropdownMenuProps>(
-  ({ items, className, commentId }, ref) => {
+const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
+  ({ items, className, selectedId }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    // const setModalOpen = useSetRecoilState(groupDeleteAskModalAtom);
-    const setModalOpen = useSetRecoilState(commentDeleteAskModalAtom);
-    const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
+    const setModalOpen = useSetRecoilState(feedDeleteAskModalAtom);
+    const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
+
     const handleItemClick = (item: string) => {
-      console.log("Item clicked:", item);
-      console.log("commentId:", commentId);
+      console.log("selectedId:", selectedId, item);
       if (item.includes("삭제")) {
-        setSelectedCommentId(commentId || "");
+        setSelectedFeedId(selectedId || "");
         setModalOpen(true);
+        console.log("setmodalopentrue");
       }
     };
+
     return (
       <div
         ref={ref as React.Ref<HTMLDivElement>}
@@ -69,9 +70,9 @@ const DropdownMenu = forwardRef<HTMLElement, DropdownMenuProps>(
   }
 );
 
-DropdownMenu.displayName = "DropdownMenu";
+FeedDropdownMenu.displayName = "FeedDropdownMenu";
 
-export default DropdownMenu;
+export default FeedDropdownMenu;
 
 const styles = {
   wrapper: "w-full bg-base-white rounded-[12px] px-[4px] py-[5px]",

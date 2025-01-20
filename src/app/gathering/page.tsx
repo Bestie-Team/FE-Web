@@ -1,10 +1,9 @@
 "use client";
 
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef, memo } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import FilterBar from "@/components/shared/FilterBar";
 import Gathering from "@/components/gathering/Gathering";
@@ -16,62 +15,26 @@ import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
 import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
-import TabBar from "@/components/shared/Panel/Panel";
+import useGatherings from "@/components/gathering/hooks/useGatherings";
+import Panel from "@/components/shared/Panel/Panel";
 
-export default function MyGatheringPage() {
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+type TabName = "1" | "2";
 
-  const reset = useResetRecoilState(newGatheringInfo);
-  const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
-
-  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
-    useTabs();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasShadow = useScrollShadow(containerRef);
-
-  useEffect(() => {
-    reset();
-  }, [reset]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
-    >
-      {header}
-      <FilterAndTabs
-        hasShadow={hasShadow}
-        onTabClick={handleTabClick}
-        selectedTab={selectedTab}
-      />
-      <GatheringSwiper
-        selectedTab={selectedTab}
-        swiperRef={swiperRef}
-        onSlideChange={(index) => handleSlideChange(index)}
-      />
-      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
-    </div>
-  );
-}
-
-function FilterAndTabs({
-  hasShadow,
-  onTabClick,
-  selectedTab,
-}: {
+type FilterAndTabsProps = {
   hasShadow: boolean;
-  onTabClick: (tabName: "1" | "2") => void;
-  selectedTab: "1" | "2";
-}) {
-  return (
+  onTabClick: (tabName: TabName) => void;
+  selectedTab: TabName;
+};
+
+const FilterAndTabs = memo(
+  ({ hasShadow, onTabClick, selectedTab }: FilterAndTabsProps) => (
     <div
       className={clsx(
         "max-w-[430px] pl-[20px] flex flex-col w-full bg-base-white transition-shadow duration-300",
-        hasShadow ? "shadow-bottom" : ""
+        hasShadow && "shadow-bottom"
       )}
     >
-      <TabBar
+      <Panel
         selectedTab={selectedTab}
         long="short"
         title1="예정"
@@ -80,19 +43,19 @@ function FilterAndTabs({
       />
       <FilterBar />
     </div>
-  );
-}
+  )
+);
 
-function GatheringSwiper({
-  selectedTab,
-  swiperRef,
-  onSlideChange,
-}: {
-  selectedTab: string;
-  swiperRef: React.MutableRefObject<SwiperType | null>;
-  onSlideChange: (index: number) => void;
-}) {
-  return (
+const GatheringSwiper = memo(
+  ({
+    selectedTab,
+    swiperRef,
+    onSlideChange,
+  }: {
+    selectedTab: TabName;
+    swiperRef: React.MutableRefObject<SwiperType | null>;
+    onSlideChange: (index: number) => void;
+  }) => (
     <Swiper
       initialSlide={Number(selectedTab) - 1}
       onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -109,5 +72,54 @@ function GatheringSwiper({
         </SwiperSlide>
       ))}
     </Swiper>
+  )
+);
+
+export default function MyGatheringPage() {
+  const pathname = usePathname();
+  const header = getHeader(pathname);
+  const reset = useResetRecoilState(newGatheringInfo);
+  const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
+  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
+    useTabs();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasShadow = useScrollShadow(containerRef);
+
+  const minDate = new Date("2025-01-01").toISOString();
+  const maxDate = new Date("2025-12-31").toISOString();
+  const { data } = useGatherings({
+    cursor: minDate,
+    limit: 5,
+    minDate,
+    maxDate,
+  });
+  const myGatherings = data?.gatherings;
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
+    >
+      {header}
+      <FilterAndTabs
+        hasShadow={hasShadow}
+        onTabClick={handleTabClick}
+        selectedTab={selectedTab}
+      />
+      {myGatherings?.length ? (
+        <GatheringSwiper
+          selectedTab={selectedTab}
+          swiperRef={swiperRef}
+          onSlideChange={(index) => handleSlideChange(index)}
+        />
+      ) : (
+        <div>아직 모임이 없네요!</div>
+      )}
+      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
+    </div>
   );
 }

@@ -16,6 +16,7 @@ export default function CommentItem({
   if (!comment) return;
 
   const isMe = userInfo?.accountId === comment.writer.accountId;
+  console.log(userInfo?.accountId, comment.writer.accountId);
   const { writer, content, createdAt } = comment;
   const time = formatDate(addHours(new Date(createdAt), 9));
   return (
@@ -31,11 +32,11 @@ export default function CommentItem({
           <>
             <Spacing direction="horizontal" size={8} />
             <Options
-              width="12"
-              height="12"
+              width="16"
+              height="16"
               color="#0A0A0A"
               type="comment"
-              commentId={comment.id}
+              selectedId={comment.id}
             />
           </>
         )}

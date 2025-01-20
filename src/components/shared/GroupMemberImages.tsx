@@ -12,7 +12,7 @@ export default function GroupMemberImages({
   gap,
 }: {
   members?: lighty.User[];
-  memberImageUrls?: string[];
+  memberImageUrls?: (string | null)[];
   maxLength?: number;
   width?: number;
   height?: number;

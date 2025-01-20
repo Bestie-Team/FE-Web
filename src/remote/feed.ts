@@ -34,7 +34,7 @@ export async function getFeedAll({
       JSON.stringify(cursor)
     )}&limit=${limit}`;
 
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
 
@@ -166,7 +166,7 @@ export async function patchFeed({
   feedId: string;
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/${feedId}`;
+  const targetUrl = `${baseUrl}/feeds/${feedId}`;
   try {
     const response = await fetchWithAuth(targetUrl, {
       method: "PATCH",
@@ -180,6 +180,21 @@ export async function patchFeed({
     if (error instanceof Response) {
       return handleResponse(error);
     }
+  }
+}
+
+/** 피드 삭제 */
+export async function deleteFeed({ feedId }: { feedId: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/feeds/${feedId}`;
+  try {
+    await fetchWithAuth(targetUrl, {
+      method: "DELETE",
+    });
+
+    return { message: "피드를 성공적으로 삭제하였습니다." };
+  } catch (error) {
+    throw new Error("피드를 삭제하지 못하였습니다.");
   }
 }
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
-import DropdownMenu from "../shared/DropdownMenu";
+import DropdownMenu from "../shared/DropDownMenu/CommentDropDownMenu";
 
 export default function GroupOptions({ isOwner }: { isOwner: boolean }) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();

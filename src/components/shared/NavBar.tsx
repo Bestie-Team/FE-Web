@@ -33,12 +33,12 @@ const NavBar = () => {
 
   return createPortal(
     <nav
-      style={{ opacity: clampedOpacity }}
+      style={{ opacity: !clampedOpacity ? 1 : clampedOpacity }}
       className={`
       fixed bottom-0 bg-base-white w-full max-w-[430px] 
       flex justify-between px-3 pt-1 pb-5 
       border-t border-grayscale-10 mx-auto
-      transition-all duration-300 ease-in-out
+      transition-all duration-900 ease-in-out
       ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
     `}
     >

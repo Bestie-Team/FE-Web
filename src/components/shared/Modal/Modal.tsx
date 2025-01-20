@@ -3,6 +3,8 @@ import Dimmed from "../Dimmed";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../Button/Button";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function Modal({
   title = "해당 유저를 신고할까요?",
@@ -19,7 +21,19 @@ export default function Modal({
   right?: string;
   onClose: () => void;
 }) {
-  return (
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
+  const $portalRoot = document.getElementById("root-portal");
+  if ($portalRoot == null) return null;
+  return createPortal(
     <Dimmed className={styles.dimmed}>
       <Flex align="center" direction="column" className={styles.modalWrapper}>
         <div className="text-T3 text-center">{title}</div>
@@ -51,7 +65,8 @@ export default function Modal({
           ) : null}
         </Flex>
       </Flex>
-    </Dimmed>
+    </Dimmed>,
+    $portalRoot
   );
 }
 

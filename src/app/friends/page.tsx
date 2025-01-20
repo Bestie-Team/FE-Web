@@ -5,13 +5,14 @@ import Spacing from "@/components/shared/Spacing";
 import SearchInput from "@/components/shared/Input/SearchBar";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import clsx from "clsx";
-import { useRef } from "react";
+import { useRef, useMemo, useCallback } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import UserFriendsListContainer from "@/components/friends/UserFriendsListContainer";
 import SentReceivedFriendRequestsList from "@/components/friends/SentReceivedFriendRequestsList";
 import useDebounce from "@/hooks/debounce";
 import SearchedFriendsListContainer from "@/components/friends/SearchedFriendsListContainer";
-import TabBar from "@/components/shared/Panel/Panel";
+import { PanelLength } from "@/components/shared/Panel/Panel";
+import Panel from "@/components/shared/Panel/Panel";
 
 export default function FriendsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,7 +21,7 @@ export default function FriendsPage() {
   const search = useRecoilValue(friendSearchAtom);
   const debouncedSearch = useDebounce(search);
 
-  const renderSelectedTabContent = () => {
+  const renderSelectedTabContent = useCallback(() => {
     if (selectedTab === "1") {
       return debouncedSearch.length > 0 ? (
         <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
@@ -32,7 +33,18 @@ export default function FriendsPage() {
       return <SentReceivedFriendRequestsList />;
     }
     return null;
-  };
+  }, [selectedTab, debouncedSearch]);
+
+  const PanelProps = useMemo(
+    () => ({
+      title1: "전체",
+      title2: "요청",
+      long: "short" as PanelLength,
+      selectedTab,
+      onClick: setSelectedTab,
+    }),
+    [selectedTab, setSelectedTab]
+  );
 
   return (
     <div
@@ -47,13 +59,7 @@ export default function FriendsPage() {
       >
         <FriendsPageHeader label="친구" addFriendIcon />
         <div className="px-[20px]">
-          <TabBar
-            title1="전체"
-            title2="요청"
-            long="short"
-            selectedTab={selectedTab}
-            onClick={(selected) => setSelectedTab(selected)}
-          />
+          <Panel {...PanelProps} />
           <Spacing size={20} />
           <SearchInput
             type="friends"
