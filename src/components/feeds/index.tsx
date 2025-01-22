@@ -10,7 +10,7 @@ import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
 
 export default function Record() {
   const [step, setStep] = useState(1);
-  const [kind, setKind] = useState();
+  const [kind, setKind] = useState<string>("");
 
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
   const { data: gathering_data } = useGatherings({
@@ -41,12 +41,14 @@ export default function Record() {
     setStep((prev) => prev + 1);
   };
 
-  const handleCreateFeed = () => {};
+  const handleCreateFeed = () => {
+    setKind("common");
+  };
 
   return (
     <>
       {step === 1 ? <ChoosingKindOfMemory /> : null}
-      {kind === 2 ? <></> : null}
+      {kind === "common" ? <></> : null}
       {step === 2 ? (
         <ChoosingGatheringToRecord
           onNext={handleSelectGathering}

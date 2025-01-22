@@ -14,8 +14,9 @@ export default function MemoryCard({
   feed: Feed;
   onClick: Dispatch<SetStateAction<string>>;
 }) {
-  if (!feed?.gathering?.id) return;
-  const { data } = useGatheringDetail({ gatheringId: feed.gathering.id });
+  const { data } = useGatheringDetail({
+    gatheringId: feed.gathering?.id || "",
+  });
   const writer = feed?.writer;
   const others = data?.members.filter((member) => member.id !== writer.id);
 
@@ -23,7 +24,7 @@ export default function MemoryCard({
     others?.push(data?.hostUser);
   }
   const othersImageUrl = others?.map((other) => other.profileImageUrl);
-
+  if (!feed?.gathering?.id) return;
   if (!writer || !othersImageUrl) return;
   return (
     <Flex

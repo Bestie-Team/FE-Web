@@ -26,55 +26,6 @@ type FilterAndTabsProps = {
   selectedTab: TabName;
 };
 
-const FilterAndTabs = memo(
-  ({ hasShadow, onTabClick, selectedTab }: FilterAndTabsProps) => (
-    <div
-      className={clsx(
-        "max-w-[430px] pl-[20px] flex flex-col w-full bg-base-white transition-shadow duration-300",
-        hasShadow && "shadow-bottom"
-      )}
-    >
-      <Panel
-        selectedTab={selectedTab}
-        long="short"
-        title1="예정"
-        title2="완료"
-        onClick={onTabClick}
-      />
-      <FilterBar />
-    </div>
-  )
-);
-
-const GatheringSwiper = memo(
-  ({
-    selectedTab,
-    swiperRef,
-    onSlideChange,
-  }: {
-    selectedTab: TabName;
-    swiperRef: React.MutableRefObject<SwiperType | null>;
-    onSlideChange: (index: number) => void;
-  }) => (
-    <Swiper
-      initialSlide={Number(selectedTab) - 1}
-      onSwiper={(swiper) => (swiperRef.current = swiper)}
-      onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
-      slidesPerView={1}
-      spaceBetween={2}
-      direction="horizontal"
-    >
-      {["예정", "완료"].map((which) => (
-        <SwiperSlide key={which}>
-          <Suspense fallback={<div>로딩중</div>}>
-            <Gathering where={GatheringInWhich.GATHERING} which={which} />
-          </Suspense>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  )
-);
-
 export default function MyGatheringPage() {
   const pathname = usePathname();
   const header = getHeader(pathname);
@@ -123,3 +74,52 @@ export default function MyGatheringPage() {
     </div>
   );
 }
+
+const FilterAndTabs = memo(
+  ({ hasShadow, onTabClick, selectedTab }: FilterAndTabsProps) => (
+    <div
+      className={clsx(
+        "max-w-[430px] pl-[20px] flex flex-col w-full bg-base-white transition-shadow duration-300",
+        hasShadow && "shadow-bottom"
+      )}
+    >
+      <Panel
+        selectedTab={selectedTab}
+        long="short"
+        title1="예정"
+        title2="완료"
+        onClick={onTabClick}
+      />
+      <FilterBar />
+    </div>
+  )
+);
+
+const GatheringSwiper = memo(
+  ({
+    selectedTab,
+    swiperRef,
+    onSlideChange,
+  }: {
+    selectedTab: TabName;
+    swiperRef: React.MutableRefObject<SwiperType | null>;
+    onSlideChange: (index: number) => void;
+  }) => (
+    <Swiper
+      initialSlide={Number(selectedTab) - 1}
+      onSwiper={(swiper) => (swiperRef.current = swiper)}
+      onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
+      slidesPerView={1}
+      spaceBetween={2}
+      direction="horizontal"
+    >
+      {["예정", "완료"].map((which) => (
+        <SwiperSlide key={which}>
+          <Suspense fallback={<div>로딩중</div>}>
+            <Gathering where={GatheringInWhich.GATHERING} which={which} />
+          </Suspense>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  )
+);

@@ -12,7 +12,6 @@ import Image from "next/image";
 import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
-import * as lighty from "lighty-type";
 
 export default function GatheringDetailPage({
   params,

@@ -1,5 +1,6 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
+import { GatheringDetailResponse } from "@/models/gathering";
 
 type PaginationParams = {
   cursor: string | null;
@@ -42,7 +43,7 @@ export async function getGatheringDetail({
   const response = await fetchWithAuth(`${baseUrl}/gatherings/${gatheringId}`, {
     method: "GET",
   });
-  const data: lighty.GatheringDetailResponse = await response.json();
+  const data: GatheringDetailResponse = await response.json();
   return data;
 }
 

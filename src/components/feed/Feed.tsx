@@ -23,7 +23,7 @@ export default function MyFeed({
   const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
     feedDeleteAskModalAtom
   );
-  if (!feeds) return;
+
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
   const queryClient = useQueryClient();
 
@@ -45,6 +45,7 @@ export default function MyFeed({
     },
   });
 
+  if (!feeds) return;
   return (
     <div className="pt-[107px] pb-[111px] animate-fadeIn">
       <Flex direction="column">

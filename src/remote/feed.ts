@@ -194,6 +194,7 @@ export async function deleteFeed({ feedId }: { feedId: string }) {
 
     return { message: "피드를 성공적으로 삭제하였습니다." };
   } catch (error) {
+    console.log(error);
     throw new Error("피드를 삭제하지 못하였습니다.");
   }
 }
