@@ -123,3 +123,6 @@ const GatheringSwiper = memo(
     </Swiper>
   )
 );
+
+FilterAndTabs.displayName = "FilterAndTabs";
+GatheringSwiper.displayName = "GatheringSwiper";
