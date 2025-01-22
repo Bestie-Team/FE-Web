@@ -70,9 +70,7 @@ export default function SelectFrameSwiper() {
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      src={
-                        selectedGathering?.invitationImageUrl || "/IMG_5062.jpg"
-                      }
+                      src={"/IMG_5062.jpg"}
                       width={230}
                       height={230}
                       style={{
