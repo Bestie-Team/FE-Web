@@ -5,6 +5,7 @@ import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
 import FeedDropdownMenu from "./DropDownMenu/FeedDropDownMenu";
 import CommentDropdownMenu from "./DropDownMenu/CommentDropDownMenu";
+import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
@@ -74,6 +75,14 @@ export default function Options({
         height={type === "comment" ? "11.3px" : ""}
         color={color}
       />
+      {opened && type === MENU_TYPES.FRIEND && (
+        <FriendDropdownMenu
+          selectedId={selectedId}
+          ref={ref}
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
+        />
+      )}
       {opened && type === MENU_TYPES.COMMENT && (
         <CommentDropdownMenu
           selectedId={selectedId}

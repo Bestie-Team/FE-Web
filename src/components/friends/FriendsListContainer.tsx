@@ -30,19 +30,18 @@ export default function FriendsListContainer({
           paddingBottom: "60px",
           paddingLeft: "20px",
           paddingRight: "20px",
+          gap: "16px",
         }}
       >
         <ul>
           {searchedFriends?.map((friendItem, idx) => {
             return (
-              <React.Fragment key={`${friendItem.accountId}`}>
-                <FriendListItem
-                  friendInfo={friendItem}
-                  idx={idx}
-                  type="friend"
-                />
-                <Spacing size={16} />
-              </React.Fragment>
+              <FriendListItem
+                key={`${friendItem.accountId}`}
+                friendInfo={friendItem}
+                idx={idx}
+                type="friend"
+              />
             );
           })}
         </ul>

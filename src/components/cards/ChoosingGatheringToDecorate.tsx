@@ -36,9 +36,32 @@ export default function ChoosingGatheringToDecorate({
   };
 
   const feeds = data?.feeds;
-  if (!feeds) {
-    return <div>작성할 수 있는 피드가 없네여~</div>;
-  }
+  // if (feeds && feeds?.length < 1) {
+  //   return <div>작성할 수 있는 피드가 없네여~</div>;
+  // }
+  console.log(feeds);
+  const feed = {
+    id: "12345",
+    content:
+      "오늘 지연이 생파 완전 꿀잼이었다..!! 애들아 앞으로 더 자주 보자 💖",
+    images: [""],
+    commentCount: 2,
+    writer: {
+      id: "",
+      accountId: "",
+      name: "",
+      profileImageUrl: null,
+    },
+    createdAt: new Date().toISOString(),
+    gathering: {
+      id: "00000",
+      name: "지연이 생일 파티🎂",
+      description:
+        "오늘 지연이 생파 완전 꿀잼이었다..!! 애들아 앞으로 더 자주 보자 💖",
+      gatheringDate: "",
+      invitationImageUrl: "/IMG_5062.jpg",
+    },
+  };
   return (
     <Flex direction="column" className="bg-base-white h-screen pt-[48px]">
       <Flex direction="column" className="px-[24px]">
@@ -55,7 +78,7 @@ export default function ChoosingGatheringToDecorate({
       </Flex>
       <Spacing size={40} />
       <ClickableGatheringSwiperForDeco
-        gathering={feeds}
+        gathering={[feed]}
         onImageClick={handleImageClick}
         selectedGatheringId={cardSelectedGathering?.id || null}
       />

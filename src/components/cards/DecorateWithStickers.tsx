@@ -38,6 +38,9 @@ export default function DecorateWithStickers() {
     "/frame2.jpeg",
     "/frame3.jpeg",
     "/frame4.jpeg",
+    "/frame5.jpeg",
+    "/frame6.jpeg",
+    "/frame7.jpeg",
   ];
 
   useEffect(() => {

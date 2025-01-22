@@ -5,11 +5,12 @@ import { Gathering } from "@/models/gathering";
 import useGatherings from "../gathering/hooks/useGatherings";
 import { sortGatherings } from "@/utils/sortGatherings";
 import CreatingPostToRecord from "./CreatingPostToRecord";
+import { minDate, maxDate } from "@/constants/time";
+import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
 
 export default function Record() {
   const [step, setStep] = useState(1);
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
+  const [kind, setKind] = useState();
 
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
   const { data: gathering_data } = useGatherings({
@@ -44,13 +45,15 @@ export default function Record() {
 
   return (
     <>
-      {step === 1 ? (
+      {step === 1 ? <ChoosingKindOfMemory /> : null}
+      {kind === 2 ? <></> : null}
+      {step === 2 ? (
         <ChoosingGatheringToRecord
           onNext={handleSelectGathering}
           gathering={sortedGathering?.passed}
         />
       ) : null}
-      {step === 2 ? <CreatingPostToRecord onNext={handleCreateFeed} /> : null}
+      {step === 3 ? <CreatingPostToRecord onNext={handleCreateFeed} /> : null}
     </>
   );
 }

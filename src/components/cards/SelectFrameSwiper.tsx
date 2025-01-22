@@ -20,7 +20,15 @@ export default function SelectFrameSwiper() {
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
-  const frameNames = ["ribbon", "zebra", "green", "check"];
+  const frameNames = [
+    "ribbon",
+    "zebra",
+    "green",
+    "check_yellow",
+    "check_pink",
+    "check_purple",
+    "check_blue",
+  ];
 
   useEffect(() => {
     onChangeFrame(0);
@@ -62,7 +70,9 @@ export default function SelectFrameSwiper() {
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      src={selectedGathering?.invitationImageUrl || ""}
+                      src={
+                        selectedGathering?.invitationImageUrl || "/IMG_5062.jpg"
+                      }
                       width={230}
                       height={230}
                       style={{

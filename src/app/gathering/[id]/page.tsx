@@ -10,17 +10,16 @@ import UserIcon from "@/components/shared/Icon/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import Image from "next/image";
 import getHeader from "@/utils/getHeader";
-import { usePathname } from "next/navigation";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
+import * as lighty from "lighty-type";
 
 export default function GatheringDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/gathering/1234");
   const gatheringId = params.id;
   const { data: selectedGathering, isPending } = useGatheringDetail({
     gatheringId,

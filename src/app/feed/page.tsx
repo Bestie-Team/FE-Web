@@ -11,7 +11,6 @@ import { recordModalStateAtom } from "@/atoms/record";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
@@ -24,8 +23,7 @@ export default function FeedPage() {
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
   const containerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/feed");
   const hasShadow = useScrollShadow(containerRef);
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom

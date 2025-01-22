@@ -79,7 +79,7 @@ export default function FriendListItem({
       </Flex>
       {type === "friend" ? (
         <div className={clsx(styles.iconContainer)}>
-          <Options width="2.5" height="14.17" type={MENU_TYPES.FRIEND} />
+          <Options width="2.5px" height="14.17px" type={MENU_TYPES.FRIEND} />
         </div>
       ) : null}
       {type === "receivedRequest" ? (

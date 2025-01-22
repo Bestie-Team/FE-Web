@@ -75,7 +75,7 @@ export default function ClickableGatheringSwiperForDeco({
             key={`gathering_${id}`}
           >
             <Image
-              src={""}
+              src={gathering?.invitationImageUrl || ""}
               alt={`gathering${idx + 1}`}
               className={styles.image}
               width={270}

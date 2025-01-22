@@ -33,7 +33,7 @@ const NavBar = () => {
 
   return createPortal(
     <nav
-      style={{ opacity: !clampedOpacity ? 1 : clampedOpacity }}
+      style={{ opacity: clampedOpacity }}
       className={`
       fixed bottom-0 bg-base-white w-full max-w-[430px] 
       flex justify-between px-3 pt-1 pb-5 
