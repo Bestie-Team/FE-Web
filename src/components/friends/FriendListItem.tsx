@@ -10,6 +10,8 @@ import useAcceptFriendRequest from "./hooks/useAcceptFriendRequest";
 import { useQueryClient } from "@tanstack/react-query";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
+import { useSetRecoilState } from "recoil";
+import { selectedFriendAtom } from "@/atoms/friends";
 
 export default function FriendListItem({
   requestId,
@@ -27,7 +29,7 @@ export default function FriendListItem({
   clicked?: boolean;
 }) {
   const queryClient = useQueryClient();
-
+  const setSelectedFriend = useSetRecoilState(selectedFriendAtom);
   const { mutate: accept, isPending } = useAcceptFriendRequest({
     friendId: requestId ? requestId : "",
     onSuccess: (data: { message: string }) => {
@@ -78,7 +80,13 @@ export default function FriendListItem({
         <span className={styles.name}>{friendInfo?.name || "김땡땡"}</span>
       </Flex>
       {type === "friend" ? (
-        <div className={clsx(styles.iconContainer)}>
+        <div
+          style={{
+            zIndex: 10,
+          }}
+          className={clsx(styles.iconContainer)}
+          onClick={() => setSelectedFriend(friendInfo.id)}
+        >
           <Options width="2.5px" height="14.17px" type={MENU_TYPES.FRIEND} />
         </div>
       ) : null}
@@ -98,7 +106,7 @@ export default function FriendListItem({
 }
 
 const styles = {
-  iconContainer: "flex justify-center items-center w-[20px] h-[20px]",
+  iconContainer: "flex justify-center items-center w-[20px] h-[20px] z-10",
 
   li: "bg-base-white flex py-[14px] px-[16px] rounded-[20px] items-center cursor-pointer border",
 

@@ -1,4 +1,5 @@
 import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
@@ -7,58 +8,27 @@ import Link from "next/link";
 import FriendListItem from "./FriendListItem";
 import { SetterOrUpdater } from "recoil";
 import Modal from "../shared/Modal/Modal";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function FriendsListContainer({
   friends,
-  searchedFriends,
+  hasMore,
+  loadMore,
+  isFetching,
   isModalOpen,
   setIsModalOpen,
 }: {
   friends?: lighty.User[];
-  searchedFriends?: lighty.User[];
+  hasMore: boolean;
+  isFetching: boolean;
+  loadMore: () => void;
   isModalOpen: boolean;
   setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
-  if (searchedFriends) {
-    return (
-      <Flex
-        direction="column"
-        style={{
-          height: "100dvh",
-          backgroundColor: "#F4F4F4",
-          paddingTop: "177px",
-          paddingBottom: "60px",
-          paddingLeft: "20px",
-          paddingRight: "20px",
-          gap: "16px",
-        }}
-      >
-        <ul>
-          {searchedFriends?.map((friendItem, idx) => {
-            return (
-              <FriendListItem
-                key={`${friendItem.accountId}`}
-                friendInfo={friendItem}
-                idx={idx}
-                type="friend"
-              />
-            );
-          })}
-        </ul>
-      </Flex>
-    );
-  }
   return (
-    <Flex
-      direction="column"
-      style={{
-        height: "100dvh",
-        backgroundColor: "#F4F4F4",
-        paddingTop: "177px",
-        paddingBottom: "60px",
-        paddingLeft: "20px",
-        paddingRight: "20px",
-      }}
+    <div
+      id="scrollableDiv"
+      className="flex flex-col h-screen bg-grayscale-50 pt-[177px] pb-15 px-5 overflow-y-scroll no-scrollbar"
     >
       <span className="text-T5">{`친구 ${friends?.length}`}</span>
       <Spacing size={12} />
@@ -81,20 +51,30 @@ export default function FriendsListContainer({
           </Button>
         </Flex>
       ) : (
-        <ul>
-          {friends?.map((friendItem, idx) => {
-            return (
-              <React.Fragment key={`${friendItem.accountId}`}>
-                <FriendListItem
-                  friendInfo={friendItem}
-                  idx={idx}
-                  type="friend"
-                />
-                <Spacing size={16} />
-              </React.Fragment>
-            );
-          })}
-        </ul>
+        <InfiniteScroll
+          className="!overflow-visible"
+          dataLength={friends?.length ?? 0}
+          hasMore={hasMore}
+          loader={<DotSpinner />}
+          next={loadMore}
+          scrollThreshold="10px"
+          scrollableTarget="scrollableDiv"
+        >
+          <ul>
+            {friends?.map((friendItem, idx) => {
+              return (
+                <React.Fragment key={`${friendItem.accountId}`}>
+                  <FriendListItem
+                    friendInfo={friendItem}
+                    idx={idx}
+                    type="friend"
+                  />
+                  <Spacing size={16} />
+                </React.Fragment>
+              );
+            })}
+          </ul>
+        </InfiniteScroll>
       )}
       {isModalOpen ? (
         <Modal
@@ -104,6 +84,9 @@ export default function FriendsListContainer({
           }}
         />
       ) : null}
-    </Flex>
+    </div>
   );
 }
+const styles = {
+  iconContainer: "flex justify-center items-center w-[20px] h-[20px]",
+};

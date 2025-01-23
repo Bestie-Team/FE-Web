@@ -2,17 +2,17 @@ import { atom } from "recoil";
 import * as lighty from "lighty-type";
 
 export const friendsSelectedTabAtom = atom<"1" | "2">({
-  key: "friend/selectedTab",
+  key: "friends/selectedTab",
   default: "1",
 });
 
 export const selectedFriendsAtom = atom<lighty.User[]>({
-  key: "friend/selectedFriends",
+  key: "friends/groups/selectedFriends",
   default: [],
 });
 
 export const newGroupMembersAtom = atom<lighty.User[]>({
-  key: "newGroup/selectedFriends",
+  key: "friends/newGroup/selectedFriends",
   default: [],
 });
 
@@ -33,5 +33,10 @@ export const userSearchAtom = atom<string>({
 
 export const friendSearchAtom = atom<string>({
   key: "friends/search/friends",
+  default: "",
+});
+
+export const selectedFriendAtom = atom<string>({
+  key: "friends/selectedFriend",
   default: "",
 });

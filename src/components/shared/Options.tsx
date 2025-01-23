@@ -6,12 +6,14 @@ import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
 import FeedDropdownMenu from "./DropDownMenu/FeedDropDownMenu";
 import CommentDropdownMenu from "./DropDownMenu/CommentDropDownMenu";
 import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
+import { Feed } from "@/models/feed";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
   DEFAULT: "default",
   FRIEND: "friend",
   GROUP: "group",
+  FEED: "feed",
 } as const;
 
 type MenuType = (typeof MENU_TYPES)[keyof typeof MENU_TYPES];
@@ -25,6 +27,11 @@ const MENU_CONFIGS = {
     items: ["숨기기", "수정하기", "삭제하기"],
     className: "z-100 absolute -bottom-[162px] right-[4px]",
   },
+  [MENU_TYPES.FEED]: {
+    items: ["숨기기"],
+    className: "z-100 absolute -bottom-[42px] right-[4px]",
+  },
+
   [MENU_TYPES.FRIEND]: {
     items: ["친구 삭제", "유저 신고하기"],
     className: "absolute -bottom-[104px] -right-[4px]",
@@ -36,7 +43,9 @@ const MENU_CONFIGS = {
 };
 
 interface OptionsProps {
-  selectedId?: string;
+  feed?: Feed;
+  isMine?: boolean;
+  selectedCommentId?: string;
   width?: string;
   height?: string;
   color?: string;
@@ -44,7 +53,9 @@ interface OptionsProps {
 }
 
 export default function Options({
-  selectedId,
+  feed,
+  isMine,
+  selectedCommentId,
   width = "24px",
   height = "24px",
   color,
@@ -53,7 +64,9 @@ export default function Options({
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
 
   const isDefaultOrComment =
-    type === MENU_TYPES.DEFAULT || type === MENU_TYPES.COMMENT;
+    type === MENU_TYPES.DEFAULT ||
+    type === MENU_TYPES.COMMENT ||
+    type === MENU_TYPES.FEED;
   const containerClassName = `
     relative
     cursor-pointer  
@@ -77,7 +90,7 @@ export default function Options({
       />
       {opened && type === MENU_TYPES.FRIEND && (
         <FriendDropdownMenu
-          selectedId={selectedId}
+          selectedId={feed?.id}
           ref={ref}
           items={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}
@@ -85,15 +98,23 @@ export default function Options({
       )}
       {opened && type === MENU_TYPES.COMMENT && (
         <CommentDropdownMenu
-          selectedId={selectedId}
+          ref={ref}
+          selectedCommentId={selectedCommentId}
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
+        />
+      )}
+      {opened && type === MENU_TYPES.DEFAULT && feed && isMine && (
+        <FeedDropdownMenu
+          feed={feed}
           ref={ref}
           items={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}
         />
       )}
-      {opened && type === MENU_TYPES.DEFAULT && (
+      {opened && type === MENU_TYPES.FEED && feed && !isMine && (
         <FeedDropdownMenu
-          selectedId={selectedId}
+          feed={feed}
           ref={ref}
           items={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}

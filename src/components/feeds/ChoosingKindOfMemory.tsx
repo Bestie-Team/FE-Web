@@ -3,8 +3,19 @@ import Flex from "../shared/Flex";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
+import clsx from "clsx";
+import { Dispatch, SetStateAction } from "react";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
 
-export default function ChoosingKindOfMemory() {
+export default function ChoosingKindOfMemory({
+  add,
+  setAdd,
+  setStep,
+}: {
+  add: number;
+  setAdd: Dispatch<SetStateAction<number>>;
+  setStep: Dispatch<SetStateAction<number>>;
+}) {
   const header = getHeader("/record");
   return (
     <div className="h-screen bg-grayscale-50 pt-12">
@@ -18,19 +29,49 @@ export default function ChoosingKindOfMemory() {
       </Flex>
       <Spacing size={36} />
       <Flex direction="column" className="px-6 gap-5 text-T5">
-        <Item title="일반 추억" subTitle="자유롭게 나의 추억을 기록해요" />
         <Item
-          title="라이티 모임 추억"
-          subTitle="라이티에서 만든 모임의 추억을 기록해요"
+          title="일반 추억"
+          subTitle="자유롭게 나의 추억을 기록해요"
+          onClick={() => setAdd(1.5)}
+          clicked={add === 1.5}
+        />
+        <Item
+          title="라이티 약속 추억"
+          subTitle="라이티에서 만든 약속의 추억을 기록해요"
+          onClick={() => setAdd(1)}
+          clicked={add === 1}
         />
       </Flex>
+      <FixedBottomButton
+        disabled={add < 1}
+        label={"다음"}
+        onClick={() => {
+          setStep((prev) => prev + add);
+        }}
+      />
     </div>
   );
 }
 
-const Item = ({ title, subTitle }: { title: string; subTitle: string }) => {
+const Item = ({
+  title,
+  subTitle,
+  onClick,
+  clicked,
+}: {
+  title: string;
+  subTitle: string;
+  onClick: () => void;
+  clicked: boolean;
+}) => {
   return (
-    <Flex className="bg-base-white rounded-2xl px-4 py-5 gap-3 cursor-pointer">
+    <Flex
+      onClick={onClick}
+      className={clsx(
+        "bg-base-white rounded-2xl px-4 py-5 gap-3 cursor-pointer",
+        clicked && "border-[1px] border-grayscale-900"
+      )}
+    >
       <Image
         src={"/lighty_square.png"}
         width={40}

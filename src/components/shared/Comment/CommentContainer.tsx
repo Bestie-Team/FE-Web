@@ -8,15 +8,10 @@ import Button from "../Button/Button";
 import ArrowUpIcon from "../Icon/ArrowUpIcon";
 import useMakeComment from "@/components/feeds/hooks/useMakeComment";
 import useFeedComments from "@/components/feeds/hooks/useGetComments";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { commentDeleteAskModalAtom } from "@/atoms/modal";
-import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { toast } from "react-toastify";
-import { selectedCommentIdAtom } from "@/atoms/comment";
 import { useQueryClient } from "@tanstack/react-query";
 import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
-import Modal from "../Modal/Modal";
 
 export default function CommentContainer({
   selectedFeedId,
@@ -26,11 +21,9 @@ export default function CommentContainer({
   onClose: () => void;
 }) {
   const queryClient = useQueryClient();
+
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
-  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
-    commentDeleteAskModalAtom
-  );
 
   const minDate = new Date("2025-01-01").toISOString();
   const maxDate = new Date("2025-12-31").toISOString();
@@ -38,8 +31,8 @@ export default function CommentContainer({
   const order = "DESC";
   const limit = 10;
 
-  const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const { data: comments } = useFeedComments({ feedId: selectedFeedId });
+
   const { mutate: postComment } = useMakeComment({
     feedId: selectedFeedId,
     content: newComment,
@@ -53,19 +46,6 @@ export default function CommentContainer({
       });
     },
     onError: (error) => console.log(error),
-  });
-
-  const { mutate: deleteComment } = useDeleteComment({
-    commentId: selectedCommentId,
-    onSuccess: async () => {
-      toast.success("댓글을 삭제했습니다");
-      await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId: selectedFeedId }],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds", { order, minDate, maxDate, limit }],
-      });
-    },
   });
 
   const handleAnimationEnd = () => {
@@ -117,16 +97,6 @@ export default function CommentContainer({
           </div>
         </Flex>
       </div>
-      {deleteModalOpen ? (
-        <Modal
-          title="댓글을 삭제하시겠어요?"
-          content="댓글 정보가 전부 삭제되며 이는 복구할 수 없어요."
-          left="취소"
-          right="삭제하기"
-          action={() => deleteComment()}
-          onClose={() => setDeleteModalOpen(false)}
-        />
-      ) : null}
     </Dimmed>
   );
 }

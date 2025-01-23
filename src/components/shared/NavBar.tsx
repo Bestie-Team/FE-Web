@@ -33,20 +33,22 @@ const NavBar = () => {
 
   return createPortal(
     <nav
-      style={{ opacity: clampedOpacity }}
+      style={{
+        opacity: isVisible ? clampedOpacity : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(100%)",
+      }}
       className={`
       fixed bottom-0 bg-base-white w-full max-w-[430px] 
-      flex justify-between px-3 pt-1 pb-5 
+      flex justify-between px-3 pt-1 pb-5
       border-t border-grayscale-10 mx-auto
       transition-all duration-900 ease-in-out
-      ${isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
     `}
     >
       {NAV_ITEMS.map((item, idx) => (
         <NavLink
           key={item.href.slice(1)}
           href={item.href}
-          isActive={idx === activeBtn}
+          isActive={idx === activeBtn || pathname === item.href}
           onClick={() => setActiveBtn(idx)}
           icon={item.icon}
           profileImageUrl={profileImageUrl}

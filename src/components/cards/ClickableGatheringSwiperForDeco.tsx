@@ -110,7 +110,7 @@ const styles = {
   image: "slide-img object-cover w-[270px] h-[320px]",
 
   gatheringInfoWrapper:
-    "bg-base-white flex flex-col w-full absolute bottom-[-2px] pl-[20px] pt-[12px] pb-[24px] rounded-b-[20px] z-10",
+    "bg-base-white flex flex-col w-full absolute bottom-[-2px] px-5 pt-3 pb-6 rounded-b-[20px] z-10",
 
   checkWrapper: "absolute rounded-[20px] inset-0 bg-[#00000080] pb-[79px]",
 };

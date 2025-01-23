@@ -11,9 +11,14 @@ export const newGroupAtom = atom<lighty.CreateGroupRequest>({
   },
 });
 
-export const myGroupAtom = atom<lighty.Group[]>({
-  key: "groupList/my",
-  default: [],
+export const selectedGroupAtom = atom<lighty.CreateGroupRequest>({
+  key: "group/selected",
+  default: {
+    name: "",
+    description: "",
+    friendIds: [""],
+    groupImageUrl: "",
+  },
 });
 
 export const groupDeleteAskModalAtom = atom<boolean>({

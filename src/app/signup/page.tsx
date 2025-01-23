@@ -3,11 +3,9 @@ import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
 import UploadProfileForm from "@/components/UploadProfileForm";
 import getHeader from "@/utils/getHeader";
-import { usePathname } from "next/navigation";
 
 export default function SignupPage() {
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/signup");
   return (
     <div className="flex flex-col gap-[24px] bg-base-white h-screen">
       {header}

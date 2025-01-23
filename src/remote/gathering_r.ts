@@ -103,7 +103,7 @@ class GatheringAPI {
     gatheringId: string
   ): Promise<lighty.GatheringDetailResponse> {
     if (!gatheringId) {
-      throw new Error("모임 ID가 필요합니다.");
+      throw new Error("약속 ID가 필요합니다.");
     }
 
     const { data, status } =
@@ -135,7 +135,7 @@ class GatheringAPI {
     }
 
     if (status !== 200) {
-      throw new Error("모임 생성에 실패하였습니다");
+      throw new Error("약속 생성에 실패하였습니다");
     }
 
     return { message: "초대장을 성공적으로 발송하였습니다" };
@@ -160,7 +160,7 @@ class GatheringAPI {
     }
 
     if (status !== 200 || !data) {
-      throw new Error("모임 초대장 이미지 업로드에 실패하였습니다.");
+      throw new Error("약속 초대장 이미지 업로드에 실패하였습니다.");
     }
 
     return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
@@ -185,11 +185,11 @@ class GatheringAPI {
     }
 
     if (status !== 200) {
-      throw new Error(`모임 ${action === "accept" ? "수락" : "거절"} 실패`);
+      throw new Error(`약속 ${action === "accept" ? "수락" : "거절"} 실패`);
     }
 
     return {
-      message: `모임을 ${
+      message: `약속을 ${
         action === "accept" ? "수락하였습니다" : "성공적으로 거절하였습니다"
       }`,
     };
@@ -214,7 +214,7 @@ class GatheringAPI {
 
     if (status !== 200 || !data) {
       throw new Error(
-        `${type === "received" ? "받은" : "보낸"} 모임 초대 목록 조회 실패`
+        `${type === "received" ? "받은" : "보낸"} 약속 초대 목록 조회 실패`
       );
     }
 

@@ -8,14 +8,14 @@ import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import useUserDetail from "@/components/users/hooks/useUserDetail";
 
 export default function MyPage() {
+  const { data: user } = useUserDetail();
   const containerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/my");
   const hasShadow = useScrollShadow(containerRef);
   const [open, setOpen] = useState(false);
   const [privatePolicyOpen, setPrivatePolicyOpen] = useState(false);
@@ -49,6 +49,11 @@ export default function MyPage() {
         profileImageUrl: imageUrlFromSignup,
         accountId: userInfo?.accountId,
       });
+    } else if (user) {
+      setProfileInfo({
+        profileImageUrl: user.profileImageUrl as string,
+        accountId: user.accountId,
+      });
     } else if (userInfoSession != null) {
       const userInfo: { accountId: string; profileImageUrl: string } =
         JSON.parse(userInfoSession);
@@ -56,7 +61,7 @@ export default function MyPage() {
       return;
     }
   }, []);
-
+  if (!user) return;
   return (
     <div
       id="scrollable-container"
@@ -76,9 +81,14 @@ export default function MyPage() {
       <UserProfile
         userProfileImage={profileInfo?.profileImageUrl}
         userAccountId={profileInfo?.accountId}
+        userName={user?.name}
       />
       <Spacing size={12} />
-      <MyMainInfo />
+      <MyMainInfo
+        groupCount={user?.groupCount}
+        feedCount={user?.feedCount}
+        friendsCount={user?.friendCount}
+      />
       <Spacing size={16} />
       <SettingsMenu />
       <div className={styles.termsWrapper}>

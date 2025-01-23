@@ -4,23 +4,26 @@ import Spacing from "../shared/Spacing";
 import Options from "../shared/Options";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
+import { Feed } from "@/models/feed";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function InfoBar({
-  writer,
   memberImageUrls,
-  selectedId,
+  feed,
 }: {
-  writer: lighty.User;
   memberImageUrls: (string | null)[];
-  selectedId: string;
+  feed: Feed;
 }) {
+  const { userInfo } = useAuth();
+  const isMine = feed.writer.accountId === userInfo?.accountId;
+
   return (
     <Flex align="center" className="px-[20px]">
-      <WriterInfo writer={writer} />
+      <WriterInfo writer={feed.writer} />
       <div style={{ flexGrow: 1 }} />
       <TogetherInfo memberImageUrls={memberImageUrls} />
       <Spacing direction="horizontal" size={12} />
-      <Options type="default" selectedId={selectedId} />
+      <Options type={isMine ? "default" : "feed"} feed={feed} isMine={isMine} />
     </Flex>
   );
 }

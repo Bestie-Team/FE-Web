@@ -18,7 +18,6 @@ import EmptyLogoIcon from "../shared/Icon/EmptyLogoIcon";
 import AnimatedTabButton from "../shared/Button/AnimatedTabButton";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import CalendarIcon from "../shared/Icon/CalendarIcon";
-import { usePathname } from "next/navigation";
 import { SetterOrUpdater } from "recoil";
 
 export default function GatheringFormContainer({
@@ -47,9 +46,8 @@ export default function GatheringFormContainer({
     } else return true;
   };
 
-  const pathname = usePathname();
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const header = getHeader(pathname);
+  const header = getHeader("/gathering/new");
   return (
     <div className="h-screen bg-base-white pt-[48px]">
       {header}
@@ -58,7 +56,7 @@ export default function GatheringFormContainer({
         <Flex align="center" className="h-[50px]">
           <EmptyLogoIcon color="#0A0A0A" />
           <Spacing size={4} direction="horizontal" />
-          <span className="text-T5 flex-grow">모임 형태</span>
+          <span className="text-T5 flex-grow">약속 형태</span>
           <AnimatedTabButton />
         </Flex>
         <Spacing size={24} />
@@ -70,12 +68,12 @@ export default function GatheringFormContainer({
           onChange={(e) =>
             setGathering((prev) => ({ ...prev, name: e.target.value }))
           }
-          placeholder="모임 이름을 입력해 주세요."
+          placeholder="약속 이름을 입력해 주세요."
           label={
             <>
               <PencilIcon width="16" height="16" color="#0A0A0A" />
               <Spacing direction="horizontal" size={4} />
-              <span>모임 이름</span>
+              <span>약속 이름</span>
             </>
           }
         />
@@ -91,12 +89,12 @@ export default function GatheringFormContainer({
               description: e.target.value,
             }))
           }
-          placeholder="모임 이름을 설명해 주세요."
+          placeholder="약속 이름을 설명해 주세요."
           label={
             <>
               <FeedIcon width="16" height="16" color="#0A0A0A" />
               <Spacing direction="horizontal" size={4} />
-              <span>모임 설명</span>
+              <span>약속 설명</span>
             </>
           }
         />
@@ -146,7 +144,7 @@ export default function GatheringFormContainer({
               <>
                 <CalendarIcon width="16" height="16" color="#0A0A0A" />
                 <Spacing direction="horizontal" size={4} />
-                <span>모임 일정</span>
+                <span>약속 일정</span>
               </>
             }
           />
@@ -158,7 +156,7 @@ export default function GatheringFormContainer({
               <>
                 <MapPinIcon width="16" height="16" color="#0A0A0A" />
                 <Spacing direction="horizontal" size={4} />
-                <span>모임 장소</span>
+                <span>약속 장소</span>
               </>
             }
           />

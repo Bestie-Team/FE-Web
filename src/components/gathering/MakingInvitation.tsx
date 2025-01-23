@@ -1,5 +1,4 @@
 import getHeader from "@/utils/getHeader";
-import { usePathname } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
@@ -20,8 +19,7 @@ export default function MakingInvitation({
 }) {
   const reset = useResetRecoilState(newGatheringInfo);
   const { userInfo } = useAuth();
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/gathering/new");
   const {
     mutate: makeGathering,
     isPending,

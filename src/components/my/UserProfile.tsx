@@ -5,11 +5,12 @@ import Spacing from "../shared/Spacing";
 export default function UserProfile({
   userProfileImage,
   userAccountId,
+  userName,
 }: {
   userProfileImage?: string;
   userAccountId?: string;
+  userName?: string;
 }) {
-  const name = "이찬영";
   const accountId = "antinitony";
 
   return (
@@ -29,7 +30,7 @@ export default function UserProfile({
           {userAccountId ? userAccountId : accountId}
         </span>
         <Spacing size={4} />
-        <span className="text-B4 text-grayscale-400">{name}</span>
+        <span className="text-B4 text-grayscale-400">{userName}</span>
       </Flex>
     </Flex>
   );

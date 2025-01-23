@@ -3,12 +3,10 @@ import Dimmed from "../Dimmed";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../Button/Button";
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 
 export default function Modal({
   title = "해당 유저를 신고할까요?",
-  content = "신고 시, 친구 목록에서 삭제 되며 상대는 친구 요청을 다시 보낼 수 없어요.",
+  content,
   action,
   left = "취소",
   right,
@@ -21,19 +19,20 @@ export default function Modal({
   right?: string;
   onClose: () => void;
 }) {
-  const [isClient, setIsClient] = useState(false);
+  // const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsClient(true);
+  // }, []);
 
-  if (!isClient) {
-    return null;
-  }
+  // if (!isClient) {
+  //   return null;
+  // }
 
-  const $portalRoot = document.getElementById("root-portal");
-  if ($portalRoot == null) return null;
-  return createPortal(
+  // const $portalRoot = document.getElementById("root-portal");
+  // if ($portalRoot == null) return null;
+  return (
+    // createPortal(
     <Dimmed className={styles.dimmed}>
       <Flex align="center" direction="column" className={styles.modalWrapper}>
         <div className="text-T3 text-center">{title}</div>
@@ -65,16 +64,16 @@ export default function Modal({
           ) : null}
         </Flex>
       </Flex>
-    </Dimmed>,
-    $portalRoot
+    </Dimmed>
+    // $portalRoot
   );
 }
 
 const styles = {
-  dimmed: "flex justify-center items-center",
+  dimmed: "flex justify-center items-center z-200",
 
   modalWrapper:
-    "bg-base-white rounded-[20px] w-[268px] pt-[28px] pb-[20px] px-[30px]",
+    "bg-base-white rounded-[20px] w-[268px] pt-[28px] pb-[20px] px-[30px] z-201",
   button: "w-[104px] py-[14px] rounded-full text-T6",
 
   content: "text-B3 text-grayscale-600 text-center max-w-[168px]",

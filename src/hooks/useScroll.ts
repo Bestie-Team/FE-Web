@@ -24,15 +24,17 @@ export const useScroll = (
           ? scrollElement.scrollTop
           : window.scrollY;
 
-      // 계산된 스크롤 진행도 (0 ~ 1 사이 값)
       const maxScrollHeight =
         scrollElement instanceof HTMLElement
           ? scrollElement.scrollHeight - scrollElement.clientHeight
           : document.documentElement.scrollHeight -
             document.documentElement.clientHeight;
 
-      const progress = Math.min(currentScrollPos / maxScrollHeight, 1);
-      setScrollProgress(progress);
+      // 스크롤 가능한 경우에만 진행도 계산
+      if (maxScrollHeight > 0) {
+        const progress = Math.min(currentScrollPos / maxScrollHeight, 1);
+        setScrollProgress(progress);
+      }
 
       // 스크롤 방향 및 변화량 계산
       const isScrollingDown = currentScrollPos > prevScrollPos;
@@ -43,6 +45,9 @@ export const useScroll = (
         setPrevScrollPos(currentScrollPos);
       }
     };
+
+    // 초기 상태에서 네비게이션을 보이게 설정
+    setIsVisible(true);
 
     if (!scrollElement) return;
 

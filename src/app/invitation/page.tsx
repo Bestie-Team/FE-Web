@@ -7,7 +7,6 @@ import Spacing from "@/components/shared/Spacing";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import useScrollShadow from "@/hooks/useScrollShadow";
@@ -21,8 +20,7 @@ import Panel from "@/components/shared/Panel/Panel";
 export default function InvitationPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasShadow = useScrollShadow(containerRef);
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/invitation");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",

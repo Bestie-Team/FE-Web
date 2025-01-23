@@ -54,7 +54,7 @@ export default function AddPhoto({
     reader.readAsDataURL(file);
   };
   useEffect(() => {
-    if (pathname === "/my") {
+    if (pathname === "/my" || pathname === "/my/edit") {
       mutate();
     }
   }, [file]);

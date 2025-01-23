@@ -97,13 +97,13 @@ export default function GatheringInput({
         >
           {addressSearch === 1 ? (
             <Flex direction="column" className={styles.bottomSheetContainer}>
-              <span className="text-T3">모임 장소</span>
+              <span className="text-T3">약속 장소</span>
               <ActionItem
                 onClick={() => {
                   setAddressSearch(2);
                 }}
                 title="장소 검색하기"
-                subTitle="모임 장소를 검색해서 선택할 수 있어요."
+                subTitle="약속 장소를 검색해서 선택할 수 있어요."
                 icon={<SearchIcon width="20" height="20" color={"white"} />}
               />
               <ActionItem
@@ -111,7 +111,7 @@ export default function GatheringInput({
                   setAddressSearch(3);
                 }}
                 title="장소 직접 입력하기"
-                subTitle="모임 장소를 직접 입력할 수 있어요."
+                subTitle="약속 장소를 직접 입력할 수 있어요."
                 icon={<PencilIcon color={"white"} />}
               />
             </Flex>
@@ -139,7 +139,7 @@ export default function GatheringInput({
                 </Button>
               </Flex>
               <Input
-                placeholder="모임 장소를 입력해주세요."
+                placeholder="약속 장소를 입력해주세요."
                 value={writtenAddress}
                 onChange={(e) => setWrittenAddress(e.target.value)}
               />

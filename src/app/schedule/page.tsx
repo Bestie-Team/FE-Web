@@ -8,13 +8,11 @@ import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 
 export default function SchedulePage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/schedule");
   const hasShadow = useScrollShadow(containerRef);
   const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",

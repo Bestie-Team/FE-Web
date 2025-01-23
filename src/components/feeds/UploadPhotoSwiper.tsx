@@ -8,15 +8,19 @@ import Spacing from "../shared/Spacing";
 import { useEffect, useState } from "react";
 
 export default function UploadPhotoSwiper({
+  feedInfoToEdit,
   filesToUpload,
   onImageClick,
   setFilesToUpload,
 }: {
+  feedInfoToEdit?: { content: string; images: string[] };
   filesToUpload: File[];
   onImageClick?: (groupId: string) => void;
   setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
 }) {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(
+    feedInfoToEdit?.images ? feedInfoToEdit.images : []
+  );
   const maxImages = 5;
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,37 +57,39 @@ export default function UploadPhotoSwiper({
         grabCursor={true}
         className="custom-swiper w-full h-[250px]"
       >
-        <SwiperSlide className={styles.slide}>
-          <>
-            <Image
-              alt="empty"
-              className="slide-img w-[240px] h-[250px]"
-              src={"https://cdn.lighty.today/rectEdit.png"}
-              width={240}
-              height={250}
-            />
-            <div className={styles.inputWrapper}>
-              <label className="cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                  multiple
-                />
-                <Flex direction="column" align="center">
-                  <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
-                  <Spacing size={6} />
-                  <span>
-                    <span className="text-T6 text-grayscale-300">사진</span>
-                    <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
-                    <span className="text-T6 text-grayscale-300">/5</span>
-                  </span>
-                </Flex>
-              </label>
-            </div>
-          </>
-        </SwiperSlide>
+        {feedInfoToEdit ? null : (
+          <SwiperSlide className={styles.slide}>
+            <>
+              <Image
+                alt="empty"
+                className="slide-img w-[240px] h-[250px]"
+                src={"https://cdn.lighty.today/rectEdit.png"}
+                width={240}
+                height={250}
+              />
+              <div className={styles.inputWrapper}>
+                <label className="cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    multiple
+                  />
+                  <Flex direction="column" align="center">
+                    <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
+                    <Spacing size={6} />
+                    <span>
+                      <span className="text-T6 text-grayscale-300">사진</span>
+                      <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
+                      <span className="text-T6 text-grayscale-300">/5</span>
+                    </span>
+                  </Flex>
+                </label>
+              </div>
+            </>
+          </SwiperSlide>
+        )}
         {images.map((imageUrl, idx) => (
           <SwiperSlide
             onClick={() => {

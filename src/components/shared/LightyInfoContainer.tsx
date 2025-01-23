@@ -12,7 +12,6 @@ export default function LightyInfoContainer({
   icon,
   title,
   content,
-  editBtn,
 }: GatheringInfoContainerProps) {
   return (
     <Flex
@@ -23,7 +22,6 @@ export default function LightyInfoContainer({
         {icon}
         <Spacing size={4} direction="horizontal" />
         {title}
-        {editBtn ? editBtn : null}
       </Flex>
       <Spacing size={18} />
       <Flex>{content}</Flex>

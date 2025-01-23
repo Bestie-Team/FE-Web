@@ -36,7 +36,7 @@ export default function CommentItem({
               height="16"
               color="#0A0A0A"
               type="comment"
-              selectedId={comment.id}
+              selectedCommentId={comment.id}
             />
           </>
         )}

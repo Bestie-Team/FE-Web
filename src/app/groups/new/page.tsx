@@ -12,7 +12,6 @@ import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
 import * as lighty from "lighty-type";
 import getHeader from "@/utils/getHeader";
-import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import InviteFriends from "@/components/friends/InviteFriends";
@@ -23,8 +22,7 @@ import { toast } from "react-toastify";
 
 export default function NewGroupPage() {
   const queryClient = useQueryClient();
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/groups/new");
   const [newGroup, setNewGroup] =
     useRecoilState<lighty.CreateGroupRequest>(newGroupAtom);
   const [step, setStep] = useState(1);

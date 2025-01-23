@@ -27,6 +27,7 @@ export function Header({
       style={{
         top: 0,
         position: "fixed",
+        zIndex: 1,
       }}
       className={clsx(
         styles.universalHeaderWrapper,

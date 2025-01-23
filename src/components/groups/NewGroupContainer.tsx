@@ -49,7 +49,7 @@ export default function NewGroupContainer({
         </Flex>
         <Spacing size={12} />
         <Flex align="center">
-          <span className={styles.font}>모임횟수</span>
+          <span className={styles.font}>약속횟수</span>
           <Spacing size={2} direction="horizontal" />
           <span className="text-B4">0</span>
           <div className={styles.bar} />

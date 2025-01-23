@@ -6,21 +6,34 @@ import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
 import FolderIcon from "../shared/Icon/FolderIcon";
 
-export default function MyMainInfo() {
+export default function MyMainInfo({
+  groupCount,
+  feedCount,
+  friendsCount,
+}: {
+  groupCount: number;
+  feedCount: number;
+  friendsCount: number;
+}) {
   const router = useRouter();
   const boxes = [
     {
       label: "친구 그룹",
       icon: <FolderIcon width="16" height="16" color="#979797" />,
-      value: 10,
+      value: groupCount,
       link: "/groups",
     },
-    { label: "작성 피드", icon: <EmptyLogoIcon />, value: 20, link: "/feed" },
+    {
+      label: "작성 피드",
+      icon: <EmptyLogoIcon />,
+      value: feedCount,
+      link: "/feed",
+    },
     {
       label: "친구",
       icon: <UserIcon width="16" height="16" color="#979797" />,
       link: "/friends",
-      value: 30,
+      value: friendsCount,
     },
   ];
 

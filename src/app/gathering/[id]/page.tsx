@@ -27,7 +27,7 @@ export default function GatheringDetailPage({
     return <div>기다려~</div>;
   }
   if (!selectedGathering) {
-    return <div>모임을 찾을 수 없습니다.</div>;
+    return <div>약속을 찾을 수 없습니다.</div>;
   }
 
   const { gatheringDate, members, hostUser, address } = selectedGathering;
@@ -42,7 +42,7 @@ export default function GatheringDetailPage({
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<CalendarIcon width="20" height="20" />}
-        title={<span className={styles.title}>모임 장소</span>}
+        title={<span className={styles.title}>약속 장소</span>}
         content={
           <Flex className={styles.contentWrapper} align="center">
             <span className="text-T5 flex-grow">{address}</span>
@@ -60,7 +60,7 @@ export default function GatheringDetailPage({
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
         icon={<MapPinIcon width="20" height="20" color="#0A0A0A" />}
-        title={<span className={styles.title}>모임 시간</span>}
+        title={<span className={styles.title}>약속 시간</span>}
         content={
           <Flex className={styles.contentWrapper}>
             <span>{convertedDate.slice(0, 10)}</span>
@@ -75,7 +75,7 @@ export default function GatheringDetailPage({
       <GatheringInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
         title={
-          <span className={styles.title}>{`모임 멤버 ${members.length}`}</span>
+          <span className={styles.title}>{`약속 멤버 ${members.length}`}</span>
         }
         content={<GatheringMembersSlider members={members} />}
       />

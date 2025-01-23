@@ -13,7 +13,6 @@ import ArrowRightIcon from "@/components/shared/Icon/ArrowRightIcon";
 import Spacing from "@/components/shared/Spacing";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import getHeader from "@/utils/getHeader";
-import { usePathname } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { useEffect, useMemo } from "react";
 import { getWeekDates } from "@/utils/getThisWeekDates";
@@ -22,8 +21,7 @@ import { GatheringInWhich } from "@/models/gathering";
 
 export default function HomePage() {
   useChangeHeaderStyle();
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/home");
   const [isNew, setIsNew] = useRecoilState(homeModalStateAtom);
 
   useEffect(() => {

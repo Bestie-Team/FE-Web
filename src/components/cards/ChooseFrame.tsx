@@ -12,7 +12,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
   return (
     <Flex className="bg-grayscale-50 h-screen" direction="column">
       <Spacing size={88} />
-      <Flex className="px-[24px]" direction="column">
+      <Flex className="px-6" direction="column">
         <span className="text-T2">프레임을 선택해 주세요</span>
         <Spacing size={16} />
         <span className="text-B3">나만의 특별한 카드를 만들어봐요</span>

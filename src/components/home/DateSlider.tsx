@@ -40,7 +40,7 @@ export default function DateSlider() {
       <Flex align="center" className={styles.titleWrapper}>
         <CalendarColoredIcon />
         <Spacing size={4} direction="horizontal" />
-        <div className={styles.title}> 이번 주 모임</div>
+        <div className={styles.title}> 이번 주 약속</div>
         <Link className="cursor-pointer" href={"/schedule"}>
           <ArrowRightIcon />
         </Link>

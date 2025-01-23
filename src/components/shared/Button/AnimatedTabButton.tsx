@@ -9,8 +9,8 @@ const AnimatedTabButton = () => {
     useRecoilState<lighty.CreateGatheringRequest>(newGatheringInfo);
 
   const tabs = [
-    { id: GatheringType.FRIEND, label: "일반 모임" },
-    { id: GatheringType.GROUP, label: "그룹 모임" },
+    { id: GatheringType.FRIEND, label: "일반 약속" },
+    { id: GatheringType.GROUP, label: "그룹 약속" },
   ];
 
   return (

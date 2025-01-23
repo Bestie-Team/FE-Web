@@ -29,17 +29,13 @@ export default function MemoryCard({
   return (
     <Flex
       direction="column"
-      className="py-[12px]"
+      className="py-3"
       onClick={() => {
         onClick(feed.id);
       }}
     >
       {othersImageUrl.length > 0 ? (
-        <InfoBar
-          memberImageUrls={othersImageUrl}
-          writer={writer}
-          selectedId={feed.id}
-        />
+        <InfoBar memberImageUrls={othersImageUrl} feed={feed} />
       ) : null}
       <Spacing size={12} />
       <PhotoSwiper feed={feed} type="feed" />

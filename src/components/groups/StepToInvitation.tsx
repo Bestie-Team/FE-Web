@@ -1,5 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
@@ -12,8 +11,7 @@ export default function StepToInvitation({
 }: {
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/gathering/new");
   return (
     <div className="flex flex-col bg-base-white h-full">
       {header}

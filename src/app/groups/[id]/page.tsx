@@ -99,9 +99,6 @@ export default function GroupDetailPage({
         <LightyInfoContainer
           icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
           title={<span className={styles.title}>그룹 소개</span>}
-          editBtn={
-            isOwner ? <Button className={styles.button}>편집</Button> : null
-          }
           content={
             <Flex className={styles.contentWrapper}>
               <span>{description}</span>
@@ -114,14 +111,7 @@ export default function GroupDetailPage({
           title={
             <span
               className={styles.title}
-            >{`모임 멤버 ${members.length}`}</span>
-          }
-          editBtn={
-            isOwner ? (
-              <Button className={styles.button} onClick={handleAddMember}>
-                추가
-              </Button>
-            ) : null
+            >{`약속 멤버 ${members.length}`}</span>
           }
           content={<GatheringMembersSlider members={members} />}
         />

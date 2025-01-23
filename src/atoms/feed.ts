@@ -1,21 +1,17 @@
+import { Feed } from "@/models/feed";
 import { atom } from "recoil";
 
 export const commentModalStateAtom = atom<boolean>({
-  key: "commentModal",
-  default: false,
-});
-
-export const feedSelectedTabAtom = atom<"1" | "2">({
-  key: "feed/selectedTab",
-  default: "1",
-});
-
-export const feedAnimationStatusAtom = atom<boolean>({
-  key: "feed/animationStatus",
+  key: "feed/commentModal",
   default: false,
 });
 
 export const selectedFeedIdAtom = atom<string>({
-  key: "selected/feed/delete",
+  key: "feed/selectedId/delete",
   default: "",
+});
+
+export const selectedFeedInfoAtom = atom<Feed | null>({
+  key: "feed/selectedInfo/delete",
+  default: null,
 });

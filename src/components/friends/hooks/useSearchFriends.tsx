@@ -1,26 +1,37 @@
 import { getSearchFriends } from "@/remote/friends";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import * as lighty from "lighty-type";
+import { useCallback } from "react";
 
 export default function useSearchFriends({
-  name,
-  accountId,
-  limit,
   search,
   enabled,
 }: {
-  name: string;
-  accountId: string;
-  limit: number;
   search: string;
   enabled: boolean;
 }) {
-  return useQuery({
-    queryKey: ["friends", { name, accountId, limit, search, enabled }],
-    queryFn: (): Promise<lighty.FriendListResponse | undefined> => {
-      return getSearchFriends({ name, accountId, limit, search });
+  const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
+    queryKey: ["friends", { search, enabled }],
+    queryFn: ({ pageParam }): Promise<lighty.FriendListResponse> => {
+      return getSearchFriends({ ...pageParam, limit: 10, search });
     },
-    staleTime: 0,
+    getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    initialPageParam: {
+      name: "가",
+      accountId: "a",
+    },
+    refetchOnWindowFocus: "always",
     enabled: enabled,
   });
+
+  const loadMore = useCallback(() => {
+    if (hasNextPage === false || isFetching) {
+      return;
+    }
+    fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetching]);
+
+  const friends = data?.pages.map(({ users }) => users).flat();
+
+  return { data: friends, loadMore, isFetching, hasNextPage };
 }

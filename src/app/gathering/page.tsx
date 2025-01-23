@@ -8,7 +8,6 @@ import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import FilterBar from "@/components/shared/FilterBar";
 import Gathering from "@/components/gathering/Gathering";
 import useScrollShadow from "@/hooks/useScrollShadow";
-import { usePathname } from "next/navigation";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
@@ -27,8 +26,7 @@ type FilterAndTabsProps = {
 };
 
 export default function MyGatheringPage() {
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/gathering");
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
@@ -68,7 +66,7 @@ export default function MyGatheringPage() {
           onSlideChange={(index) => handleSlideChange(index)}
         />
       ) : (
-        <div>아직 모임이 없네요!</div>
+        <div>아직 약속이 없네요!</div>
       )}
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>

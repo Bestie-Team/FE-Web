@@ -21,6 +21,22 @@ export async function postFriends({ userId }: { userId: string }) {
   }
 }
 
+/** 친구 요청 */
+export async function deleteFriend({ friendId }: { friendId: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/friends?userId=${friendId}`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "DELETE",
+    });
+    console.log(response);
+    return { message: "친구 삭제 성공적으로 보냈습니다" };
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to delete friend");
+  }
+}
+
 /** 친구 목록 조회 */
 export async function getFriends({
   name,
@@ -183,8 +199,6 @@ export async function getSearchFriends({
     if (error instanceof Response && error.status === 400) {
       throw new Error("검색어는 2자 이상 20자 이하만 가능합니다.");
     }
-    if (error instanceof Response) {
-      console.log("친구 검색 중 에러가 발생하였습니다.");
-    }
+    throw new Error("친구 검색 중 에러가 발생하였습니다.");
   }
 }

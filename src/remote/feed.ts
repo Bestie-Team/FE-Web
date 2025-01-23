@@ -84,7 +84,7 @@ export async function getFeedMine({
   }
 }
 
-/** 모임 피드 사진 업로드 생성 */
+/** 약속 피드 사진 업로드 생성 */
 export async function uploadFeedImages({ files }: { files: File[] }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
@@ -108,7 +108,7 @@ export async function uploadFeedImages({ files }: { files: File[] }) {
   }
 }
 
-/** 모임 피드 생성 */
+/** 약속 피드 생성 */
 export async function postGatheringFeed({
   gatheringFeed,
 }: {
@@ -124,7 +124,7 @@ export async function postGatheringFeed({
     });
     console.log(response);
 
-    return { message: "모임 피드를 성공적으로 작성하였습니다." };
+    return { message: "약속 피드를 성공적으로 작성하였습니다." };
   } catch (error) {
     if (error instanceof Response) {
       return handleResponse(error);
@@ -165,13 +165,14 @@ export async function patchFeed({
   content: string;
   feedId: string;
 }) {
+  console.log(feedId, "feedid");
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/${feedId}`;
   try {
     const response = await fetchWithAuth(targetUrl, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(content),
+      body: JSON.stringify({ content }),
     });
 
     const data = await response.json();
@@ -196,6 +197,22 @@ export async function deleteFeed({ feedId }: { feedId: string }) {
   } catch (error) {
     console.log(error);
     throw new Error("피드를 삭제하지 못하였습니다.");
+  }
+}
+
+/** 피드 숨김 */
+export async function hideFeed({ feedId }: { feedId: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/feeds/${feedId}/block`;
+  try {
+    await fetchWithAuth(targetUrl, {
+      method: "POST",
+    });
+
+    return { message: "피드를 성공적으로 숨겼어요." };
+  } catch (error) {
+    console.log(error);
+    throw new Error("피드를 숨기지 못하였습니다.");
   }
 }
 

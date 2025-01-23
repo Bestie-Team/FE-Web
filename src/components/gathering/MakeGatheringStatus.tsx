@@ -1,5 +1,5 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
@@ -13,8 +13,7 @@ export default function MakingGatheringStatus({
 }: {
   isSuccess: boolean;
 }) {
-  const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = getHeader("/gathering/new");
   const router = useRouter();
   return (
     <div className="flex flex-col bg-base-white h-full">

@@ -31,12 +31,12 @@ export default function ChoosingGatheringToRecord({
           <Spacing size={28} />
           <LightyLogo />
           <Spacing size={16} />
-          <span className="text-T2">어떤 모임의</span>
+          <span className="text-T2">어떤 약속의</span>
           <Spacing size={7} />
           <span className="text-T2">추억을 기록할까요?</span>
           <Spacing size={16} />
           <span className="text-B3 text-grayscale-500">
-            작성한 기록은 모임에 참여한 이들만 볼 수 있어요
+            작성한 기록은 약속에 참여한 이들만 볼 수 있어요
           </span>
         </Flex>
         <Spacing size={40} />

@@ -14,7 +14,7 @@ export default function NoGathering() {
       </div>
       <Spacing size={13} />
       <span className="text-T4 text-grayscale-300">
-        아직 예정된 모임이 없어요
+        아직 예정된 약속이 없어요
       </span>
     </Flex>
   );

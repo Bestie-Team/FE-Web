@@ -9,7 +9,7 @@ import {
   GatheringInWhich,
   GatheringInWhichType,
 } from "@/models/gathering";
-import { addHours, differenceInDays } from "date-fns";
+import { addHours, differenceInDays, format } from "date-fns";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
@@ -24,7 +24,7 @@ export default function GatheringCard({
   where: GatheringInWhichType;
   which?: string;
 }) {
-  //기록할 모임의 id 저장
+  //기록할 약속의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
 
   const { invitationImageUrl, name, gatheringDate } = gathering;
@@ -64,7 +64,7 @@ export default function GatheringCard({
         <span className="text-T4 truncate">{name}</span>
         <Spacing size={4} />
         <Flex className={styles.date}>
-          <span className="flex-grow">날짜</span>
+          <span className="flex-grow">{format(date, "yyyy.MM.dd")}</span>
           <Spacing size={4} direction="horizontal" />
           <span className="tracking-widest">
             {diff >= 0 ? `D+${diff}` : `D${diff}`}

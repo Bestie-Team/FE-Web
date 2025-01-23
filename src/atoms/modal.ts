@@ -1,16 +1,26 @@
 import { atom } from "recoil";
 
-export const reportModalAtom = atom<boolean>({
-  key: "friends/report",
+export const commentDeleteModalAtom = atom<boolean>({
+  key: "modal/commentDelete",
   default: false,
 });
 
-export const commentDeleteAskModalAtom = atom<boolean>({
-  key: "comment/delete",
+export const feedDeleteModalAtom = atom<boolean>({
+  key: "modal/feedDelete",
   default: false,
 });
 
-export const feedDeleteAskModalAtom = atom<boolean>({
-  key: "feed/delete",
+export const friendDeleteModalAtom = atom<boolean>({
+  key: "modal/friendDelete",
+  default: false,
+});
+
+export const feedHideModalAtom = atom<boolean>({
+  key: "modal/feedHide",
+  default: false,
+});
+
+export const recordModalAtom = atom<boolean>({
+  key: "modal/record",
   default: false,
 });

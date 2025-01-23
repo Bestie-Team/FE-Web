@@ -22,6 +22,7 @@ export default function FriendsPage() {
   const debouncedSearch = useDebounce(search);
 
   const renderSelectedTabContent = useCallback(() => {
+    // 전체
     if (selectedTab === "1") {
       return debouncedSearch.length > 0 ? (
         <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
@@ -29,6 +30,7 @@ export default function FriendsPage() {
         <UserFriendsListContainer />
       );
     }
+    // 요청
     if (selectedTab === "2") {
       return <SentReceivedFriendRequestsList />;
     }
@@ -53,7 +55,7 @@ export default function FriendsPage() {
     >
       <div
         className={clsx(
-          "max-w-[430px] fixed w-full z-10 bg-grayscale-50",
+          "max-w-[430px] fixed w-full z-1 bg-grayscale-50",
           hasShadow ? "shadow-bottom" : ""
         )}
       >

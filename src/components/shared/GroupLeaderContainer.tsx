@@ -32,7 +32,7 @@ export default function GroupLeaderContainer({
       <Button className={styles.buttonWrapper}>
         <Flex align="center" justify="space-between" style={{ gap: "6px" }}>
           <div className="pb-[2px]">👑</div>
-          <span>모임장</span>
+          <span>약속장</span>
         </Flex>
       </Button>
     </Flex>
