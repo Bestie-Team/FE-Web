@@ -67,6 +67,9 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
 export async function postRegister(RegisterRequest: UploadType) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
+    if (RegisterRequest.accountId == "" || RegisterRequest.name == "") {
+      throw new Error("이름과 아이디가 유효하지 않습니다");
+    }
     const targetUrl = `${baseUrl}/auth/register`;
     const response = await fetch(targetUrl, {
       method: "POST",
@@ -98,9 +101,11 @@ export async function postRegister(RegisterRequest: UploadType) {
         });
       }
     }
+    return { message: "회원가입을 축하합니다" };
   } catch (error) {
     if (error instanceof Response) {
-      throw new Error("Error during login:");
+      throw new Error("Error during signup");
     }
+    throw new Error("Error during signup");
   }
 }

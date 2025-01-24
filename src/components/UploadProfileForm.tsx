@@ -13,12 +13,15 @@ import FixedBottomButton from "./shared/Button/FixedBottomButton";
 import Spacing from "./shared/Spacing";
 import Flex from "./shared/Flex";
 import validator from "validator";
-import { postRegister } from "@/remote/auth";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import TermsBottomSheet from "./shared/BottomDrawer/TermsBottomSheet";
+import useSignup from "./users/hooks/useSignup";
+import { toast } from "react-toastify";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
 export default function UploadProfileForm() {
+  const [modalOpen, setModalOpen] = useState(false);
   const [formValues, setFormValues] = useState<UploadType>({
     email: "",
     name: "",
@@ -39,6 +42,16 @@ export default function UploadProfileForm() {
       [e.target.name]: e.target.value,
     }));
   }, []);
+
+  const { mutate } = useSignup({
+    ...formValues,
+    name: oauthData?.name || "",
+    email: oauthData?.email || "",
+    provider: oauthData?.provider as Provider,
+    onSuccess: (data) => {
+      toast.success(data.message);
+    },
+  });
 
   const errors = useMemo(() => validate(formValues), [formValues]);
 
@@ -85,7 +98,7 @@ export default function UploadProfileForm() {
         *계정 아이디는 프로필에 노출되며, 친구 추가 시 활용돼요!
       </span>
       <FixedBottomButton
-        label="라이티 시작하기"
+        label={"다음"}
         disabled={
           isValidate === false ||
           formValues.profileImageUrl == null ||
@@ -93,14 +106,15 @@ export default function UploadProfileForm() {
           formValues.name == null
         }
         onClick={() => {
-          postRegister({
-            ...formValues,
-            name: oauthData.name,
-            email: oauthData.email,
-            provider: oauthData.provider as Provider,
-          });
+          setModalOpen(true);
         }}
       />
+      {modalOpen ? (
+        <TermsBottomSheet
+          onClose={() => setModalOpen(false)}
+          handleSignup={mutate}
+        />
+      ) : null}
     </Flex>
   );
 }

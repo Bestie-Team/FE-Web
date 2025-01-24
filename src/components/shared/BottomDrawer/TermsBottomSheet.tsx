@@ -10,9 +10,11 @@ import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 export default function TermsBottomSheet({
   onClose,
   open = true,
+  handleSignup,
 }: {
   onClose: () => void;
   open?: boolean;
+  handleSignup: () => void;
 }) {
   const [termsAgreements, setTermsAgreements] = useState(() => {
     return 약관목록.reduce<Record<string, boolean>>(
@@ -82,14 +84,23 @@ export default function TermsBottomSheet({
         </Flex>
       </Flex>
       <div className={styles.buttonWrapper}>
-        <Button className={styles.button}>라이티 시작하기</Button>
+        <Button
+          color="#0a0a0a"
+          className={styles.button}
+          onClick={handleSignup}
+          disabled={
+            termsAgreements["01"] === false || termsAgreements["02"] === false
+          }
+        >
+          라이티 시작하기
+        </Button>
       </div>
     </BottomSheetWrapper>
   );
 }
 const styles = {
   button:
-    "rounded-full text-[14px] font-[600] py-[18px] bg-[#D8D8D8] w-full text-base-white",
+    "rounded-full text-[14px] font-[600] py-[18px] w-full text-base-white",
   buttonWrapper: "pt-[12px] pb-[10px] px-[20px]",
   list: "text-B3 flex items-center px-[12px] cursor-pointer",
 };

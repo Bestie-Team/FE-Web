@@ -6,6 +6,7 @@ import getHeader from "@/utils/getHeader";
 
 export default function SignupPage() {
   const header = getHeader("/signup");
+
   return (
     <div className="flex flex-col gap-[24px] bg-base-white h-screen">
       {header}

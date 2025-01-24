@@ -9,7 +9,7 @@ export const 약관목록 = [
   },
   {
     id: "03",
-    title: "(필수) 홍보 및 마케팅 이용 동의",
+    title: "(선택) 홍보 및 마케팅 이용 동의",
     link: "https://www.google.com",
   },
 ] as Term[];

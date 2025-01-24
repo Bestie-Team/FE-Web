@@ -93,10 +93,11 @@ const NextLayout = ({ children }: Props) => {
   }, [pathname]);
 
   useEffect(() => {
-    if (!isAuthenticated && pathname != "/") {
+    const publicPaths = ["/", "/signup"];
+    if (!isAuthenticated && !publicPaths.includes(pathname)) {
       router.replace("/");
     }
-  }, [router, isAuthenticated, pathname]);
+  }, [isAuthenticated, pathname, router]);
 
   {
     return (

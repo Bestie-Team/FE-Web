@@ -13,17 +13,18 @@ import Spacing from "@/components/shared/Spacing";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getWeekDates } from "@/utils/getThisWeekDates";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
+import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
 
 export default function HomePage() {
   useChangeHeaderStyle();
   const header = getHeader("/home");
-  const [isNew, setIsNew] = useRecoilState(homeModalStateAtom);
-
+  const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
+  const [isNew, setIsNew] = useState(false);
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const refParam = urlParams.get("ref");
@@ -67,13 +68,14 @@ export default function HomePage() {
         </Flex>
         <Gathering where={GatheringInWhich.HOME} className="pt-[16px]" />
       </Flex>
-      {isNew && (
+      {isModalOpen && (
         <MemoriesBottomSheet
           onClose={() => {
-            setIsNew(false);
+            setIsModalOpen(false);
           }}
         />
       )}
+      {isNew && <WelcomeBottomSheet onClose={() => setIsNew(false)} />}
       <Spacing size={87} />
     </div>
   );
