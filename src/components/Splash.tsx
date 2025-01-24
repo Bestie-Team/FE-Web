@@ -8,20 +8,29 @@ import LargeLightyLogo from "./shared/Icon/LargeLightyLogo";
 import oAuthButtons from "@/constants/oAuthButtons";
 import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
+import { useAuth } from "./shared/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export default function Splash() {
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     router.replace("/home");
-  //   }
-  // }, [router, status]);
-
-  const login = useGoogleLogin({
+  const router = useRouter();
+  const { login } = useAuth();
+  const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      await postLogin({ accessToken: credentialResponse.access_token });
+      const user_info = await postLogin({
+        accessToken: credentialResponse.access_token,
+      });
+      if (user_info) {
+        login(user_info?.accessToken, {
+          profileImageUrl: user_info?.profileImageUrl,
+          accountId: user_info?.accountId,
+        });
+        router.push("/home");
+      }
     },
     onError: (error) => {
       console.log(error);
+      toast.error("로그인에 실패했어요");
     },
   });
 
@@ -48,12 +57,9 @@ export default function Splash() {
           {oAuthButtons.map(({ color, provider, label, icon }, idx) => (
             <Button
               key={idx}
-              className={clsx(
-                styles.oAuthButton,
-                "hover:animate-shrink-grow-less transition-transform duration-300"
-              )}
+              className={clsx(styles.oAuthButton)}
               onClick={() => {
-                login();
+                googleLogin();
                 console.log(provider);
               }}
               color={color}
@@ -82,7 +88,7 @@ export default function Splash() {
 
 const styles = {
   oAuthButton:
-    "w-full h-[50px] flex items-center justify-center gap-[12px] px-6 py-4 rounded-full",
+    "w-full h-[50px] flex items-center justify-center gap-[12px] px-6 py-4 rounded-full hover:animate-shrink-grow-less transition-transform duration-300",
   loginButtonWrapper: "flex flex-col justify-center items-center gap-3",
   buttonContainer:
     "flex flex-col gap-[26.5px] px-[20px] mb-[55px] text-grayscale-900 text-T5",

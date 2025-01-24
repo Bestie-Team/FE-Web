@@ -11,7 +11,7 @@ import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { groupDeleteAskModalAtom } from "@/atoms/group";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
-import { useAuth } from "@/components/shared/providers/AuthProvider";
+// import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -30,7 +30,7 @@ export default function GroupDetailPage({
   const selectedFriends = useRecoilValue(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { userInfo } = useAuth();
+  // const { userInfo } = useAuth();
   const dateCursor = new Date().toISOString();
   const { data: group_data } = useGroup({ cursor: dateCursor, limit: 50 });
   const [modalOpen, setModalOpen] = useRecoilState(groupDeleteAskModalAtom);
@@ -42,7 +42,7 @@ export default function GroupDetailPage({
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
-      toast.success("그룹을 성공적으로 삭제하였습니다.");
+      toast.success("그룹을 성공적으로 삭제하였습니다");
       router.push("/groups");
     },
   });

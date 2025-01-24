@@ -17,7 +17,7 @@ export async function getFeedComments({ feedId }: { feedId: string }) {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("피드 댓글 조회를 실패하였습니다,");
+    throw new Error("피드 댓글 조회를 실패하였습니다");
   }
 }
 
@@ -41,7 +41,7 @@ export async function postMakeComment({
       body: JSON.stringify({ feedId, content }),
     });
     console.log(response);
-    return { message: "피드 댓글을 성공적으로 작성하였습니다." };
+    return { message: "피드 댓글을 성공적으로 작성하였습니다" };
   } catch (error) {
     if (error instanceof Response) {
       handleResponse(error);
@@ -59,10 +59,10 @@ export async function deleteFeedComment({ commentId }: { commentId: string }) {
       method: "DELETE",
     });
     console.log(response);
-    return { message: "댓글을 성공적으로 삭제하였습니다." };
+    return { message: "댓글을 성공적으로 삭제하였습니다" };
   } catch (error) {
     console.log(error);
-    throw new Error("댓글 삭제에 실패하였습니다.");
+    throw new Error("댓글 삭제에 실패하였습니다");
   }
 }
 

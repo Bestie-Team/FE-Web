@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "react-toastify/ReactToastify.min.css";
 import NextLayout, { NextProvider } from "./providers";
 
 const pretendard = localFont({

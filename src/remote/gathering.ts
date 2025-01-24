@@ -26,7 +26,7 @@ export async function getGatherings({
     return data;
   } catch (error) {
     if (error instanceof Response) {
-      throw new Error("약속 조회를 실패하였습니다.");
+      throw new Error("약속 조회를 실패하였습니다");
     }
   }
 }
@@ -90,16 +90,16 @@ export async function postGatheringInvitationImage({ file }: { file: File }) {
 
     if (!response.ok) {
       if (response.status === 400) {
-        throw new Error("업로드 가능한 형식의 이미지가 아닙니다.");
+        throw new Error("업로드 가능한 형식의 이미지가 아닙니다");
       }
-      throw new Error("약속 초대장 이미지 업로드에 실패하였습니다.");
+      throw new Error("약속 초대장 이미지 업로드에 실패하였습니다");
     }
 
     const data = await response.json();
-    return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
+    return { ...data, message: "이미지를 성공적으로 업로드하였습니다" };
   } catch (error) {
     if (error instanceof Error) throw error;
-    throw new Error("이미지 업로드 중 오류가 발생했습니다.");
+    throw new Error("이미지 업로드 중 오류가 발생했습니다");
   }
 }
 
@@ -118,7 +118,7 @@ export async function postAcceptGatheringInvitation({
       body: JSON.stringify({ invitationId }),
     });
 
-    return { message: "약속을 수락하였습니다." };
+    return { message: "약속을 수락하였습니다" };
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
       throw new Error("입력값 검증 실패");
@@ -142,7 +142,7 @@ export async function postRejectGatheringInvitation({
       body: JSON.stringify({ invitationId }),
     });
 
-    return { message: "약속을 성공적으로 거절하였습니다." };
+    return { message: "약속을 성공적으로 거절하였습니다" };
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
       throw new Error("입력값 검증 실패");

@@ -16,14 +16,14 @@ export async function postGroupCoverImage({ file }: { file: File }) {
     const data: { imageUrl: string } = await response.json();
     return {
       url: data.imageUrl,
-      message: "그룹이미지를 성공적으로 업로드하였습니다.",
+      message: "그룹이미지를 성공적으로 업로드하였습니다",
     };
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
-      throw new Error("지원하지 않는 파일 형식입니다.");
+      throw new Error("지원하지 않는 파일 형식입니다");
     }
     if (error instanceof Response && error.status === 413) {
-      throw new Error("업로드 가능한 파일 사이즈를 초과하였습니다.");
+      throw new Error("업로드 가능한 파일 사이즈를 초과하였습니다");
     }
     throw new Error("Failed to delete group member");
   }
@@ -47,9 +47,9 @@ export async function postGroup({
     return { message: "그룹을 성공적으로 만들었어요", data };
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
-      throw new Error("친구가 아닌 회원이 존재합니다.");
+      throw new Error("친구가 아닌 회원이 존재합니다");
     }
-    throw new Error("그룹 생성에 실패하였습니다.");
+    throw new Error("그룹 생성에 실패하였습니다");
   }
 }
 
@@ -72,7 +72,7 @@ export async function getGroups({
     return data;
   } catch (e) {
     console.log(e);
-    throw new Error("참여한 그룹 목록 조회를 실패하였습니다,");
+    throw new Error("참여한 그룹 목록 조회를 실패하였습니다");
   }
 }
 
@@ -93,10 +93,10 @@ export async function postGroupMember({
       body: JSON.stringify(userIds),
     });
     console.log(response);
-    return { message: "그룹원을 성공적으로 추가하였습니다." };
+    return { message: "그룹원을 성공적으로 추가하였습니다" };
   } catch (e) {
     console.log(e);
-    throw new Error("그룹원 추가를 실패하였습니다,");
+    throw new Error("그룹원 추가를 실패하였습니다");
   }
 }
 
@@ -109,10 +109,10 @@ export async function deleteGroupMember({ groupId }: { groupId: string }) {
       method: "DELETE",
     });
     console.log(response);
-    return { message: "그룹에서 성공적으로 나갔습니다." };
+    return { message: "그룹에서 성공적으로 나갔습니다" };
   } catch (error) {
     console.log(error);
-    throw new Error("그룹 나기기에 실패하였습니다.");
+    throw new Error("그룹 나기기에 실패하였습니다");
   }
 }
 
@@ -124,12 +124,12 @@ export async function deleteGroup({ groupId }: { groupId: string }) {
     const response = await fetchWithAuth(targetUrl, { method: "DELETE" });
     console.log(response);
     return {
-      message: "그룹을 성공적으로 삭제하였습니다.",
+      message: "그룹을 성공적으로 삭제하였습니다",
     };
   } catch (error) {
     console.log(error);
     return {
-      message: "그룹을 성공적으로 삭제하였습니다.",
+      message: "그룹을 성공적으로 삭제하였습니다",
     };
   }
 }

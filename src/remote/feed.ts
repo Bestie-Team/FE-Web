@@ -43,9 +43,9 @@ export async function getFeedAll({
     return data;
   } catch (error) {
     if (error instanceof Response) {
-      throw new Error("피드 조회를 실패하였습니다,");
+      throw new Error("피드 조회를 실패하였습니다");
     }
-    throw new Error("피드 조회를 실패하였습니다,");
+    throw new Error("피드 조회를 실패하였습니다");
   }
 }
 
@@ -80,7 +80,7 @@ export async function getFeedMine({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("내가 작성한 피드 조회를 실패하였습니다,");
+    throw new Error("내가 작성한 피드 조회를 실패하였습니다");
   }
 }
 
@@ -124,7 +124,7 @@ export async function postGatheringFeed({
     });
     console.log(response);
 
-    return { message: "약속 피드를 성공적으로 작성하였습니다." };
+    return { message: "약속 피드를 성공적으로 작성하였습니다" };
   } catch (error) {
     if (error instanceof Response) {
       return handleResponse(error);
@@ -165,7 +165,6 @@ export async function patchFeed({
   content: string;
   feedId: string;
 }) {
-  console.log(feedId, "feedid");
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/${feedId}`;
   try {
@@ -193,10 +192,10 @@ export async function deleteFeed({ feedId }: { feedId: string }) {
       method: "DELETE",
     });
 
-    return { message: "피드를 성공적으로 삭제하였습니다." };
+    return { message: "피드를 성공적으로 삭제하였습니다" };
   } catch (error) {
     console.log(error);
-    throw new Error("피드를 삭제하지 못하였습니다.");
+    throw new Error("피드를 삭제하지 못하였습니다");
   }
 }
 
@@ -209,10 +208,10 @@ export async function hideFeed({ feedId }: { feedId: string }) {
       method: "POST",
     });
 
-    return { message: "피드를 성공적으로 숨겼어요." };
+    return { message: "피드를 성공적으로 숨겼어요" };
   } catch (error) {
     console.log(error);
-    throw new Error("피드를 숨기지 못하였습니다.");
+    throw new Error("피드를 숨기지 못하였습니다");
   }
 }
 

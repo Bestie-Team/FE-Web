@@ -130,20 +130,12 @@ export default function FeedPage() {
         className="custom-swiper w-full !z-0"
       >
         <SwiperSlide>
-          <Feed
-            type="전체"
-            feeds={feedAll.feeds}
-            onClickFeed={setSelectedFeedId}
-          />
+          <Feed feeds={feedAll.feeds} onClickFeed={setSelectedFeedId} />
         </SwiperSlide>
 
         {feedMine && (
           <SwiperSlide>
-            <Feed
-              type={"나의피드"}
-              feeds={feedMine.feeds}
-              onClickFeed={setSelectedFeedId}
-            />
+            <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
           </SwiperSlide>
         )}
       </Swiper>

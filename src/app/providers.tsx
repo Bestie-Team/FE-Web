@@ -14,8 +14,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
 import NavBar from "@/components/shared/NavBar";
-import { usePathname } from "next/navigation";
-import { AuthProvider } from "@/components/shared/providers/AuthProvider";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  AuthProvider,
+  useAuth,
+} from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import { useScroll } from "@/hooks/useScroll";
 
@@ -66,7 +69,7 @@ export const NextProvider = ({ children }: Props) => {
           <ToastContainer
             position="top-center"
             hideProgressBar
-            autoClose={3000}
+            autoClose={4000}
             pauseOnFocusLoss={false}
             pauseOnHover={false}
           />
@@ -77,7 +80,10 @@ export const NextProvider = ({ children }: Props) => {
 };
 
 const NextLayout = ({ children }: Props) => {
+  const { isAuthenticated } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
+
   useScroll(pathname, "scrollable-container");
   useEffect(() => {
     window.scrollTo({
@@ -85,6 +91,13 @@ const NextLayout = ({ children }: Props) => {
       behavior: "smooth",
     });
   }, [pathname]);
+
+  useEffect(() => {
+    if (!isAuthenticated && pathname != "/") {
+      router.replace("/");
+    }
+  }, [router, isAuthenticated, pathname]);
+
   {
     return (
       <div
@@ -99,7 +112,6 @@ const NextLayout = ({ children }: Props) => {
       >
         <>{children}</>
         {pathname === "/home" ||
-        pathname === "/" ||
         pathname === "/gathering" ||
         pathname === "/feed" ||
         pathname === "/schedule" ||

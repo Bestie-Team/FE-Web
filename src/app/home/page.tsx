@@ -7,7 +7,6 @@ import DateSlider from "@/components/home/DateSlider";
 import FriendsSlider from "@/components/home/FriendsSlider";
 import HomeBannerContainer from "@/components/home/HomeBannerContainer";
 import Banner from "@/components/shared/Banner";
-import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
 import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/Icon/ArrowRightIcon";
 import Spacing from "@/components/shared/Spacing";
@@ -18,6 +17,7 @@ import { useEffect, useMemo } from "react";
 import { getWeekDates } from "@/utils/getThisWeekDates";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { GatheringInWhich } from "@/models/gathering";
+import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 
 export default function HomePage() {
   useChangeHeaderStyle();
@@ -68,7 +68,7 @@ export default function HomePage() {
         <Gathering where={GatheringInWhich.HOME} className="pt-[16px]" />
       </Flex>
       {isNew && (
-        <WelcomeBottomSheet
+        <MemoriesBottomSheet
           onClose={() => {
             setIsNew(false);
           }}

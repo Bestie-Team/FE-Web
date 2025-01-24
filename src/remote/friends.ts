@@ -61,7 +61,7 @@ export async function getFriends({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("친구 목록 조회에 실패하였습니다.");
+    throw new Error("친구 목록 조회에 실패하였습니다");
   }
 }
 
@@ -81,7 +81,7 @@ export async function postAcceptFriend({ friendId }: { friendId: string }) {
     return { message: "친구 요청을 수락하였습니다" };
   } catch (error) {
     console.log(error);
-    throw new Error("친구 요청 수락에 실패하였습니다,");
+    throw new Error("친구 요청 수락에 실패하였습니다");
   }
 }
 
@@ -98,10 +98,10 @@ export async function postRejectFriend({ friendId }: { friendId: string }) {
       },
     });
     const data = await response.json();
-    return { message: "친구 요청을 성공적으로 거절했습니다.", data };
+    return { message: "친구 요청을 성공적으로 거절했습니다", data };
   } catch (error) {
     console.log(error);
-    throw new Error("친구 요청 거절에 실패하였습니다.");
+    throw new Error("친구 요청 거절에 실패하였습니다");
   }
 }
 
@@ -134,7 +134,7 @@ export async function getReceivedFriendRequestsList({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("친구 요청 목록 조회에 실패하였습니다.");
+    throw new Error("친구 요청 목록 조회에 실패하였습니다");
   }
 }
 
@@ -166,7 +166,7 @@ export async function getSentFriendRequestsList({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("보낸 친구 요청 목록 조회에 실패하였습니다.");
+    throw new Error("보낸 친구 요청 목록 조회에 실패하였습니다");
   }
 }
 
@@ -197,8 +197,8 @@ export async function getSearchFriends({
     return data;
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
-      throw new Error("검색어는 2자 이상 20자 이하만 가능합니다.");
+      throw new Error("검색어는 2자 이상 20자 이하만 가능합니다");
     }
-    throw new Error("친구 검색 중 에러가 발생하였습니다.");
+    throw new Error("친구 검색 중 에러가 발생하였습니다");
   }
 }

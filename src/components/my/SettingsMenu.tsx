@@ -1,8 +1,6 @@
-import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
-import STORAGE_KEYS from "@/constants/storageKeys";
 
 export interface SettingsItem {
   title: string;
@@ -10,17 +8,7 @@ export interface SettingsItem {
   link: { href: string; target?: string };
 }
 
-export default function SettingsMenu() {
-  const router = useRouter();
-  const handleLogout = async (title: string) => {
-    if (title === "로그아웃") {
-      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-      sessionStorage.removeItem(STORAGE_KEYS.USER_INFO);
-      localStorage.removeItem(STORAGE_KEYS.PROFILE_IMAGE_URL);
-      router.push("/");
-    }
-  };
-
+export default function SettingsMenu({ logout }: { logout: () => void }) {
   return (
     <Flex direction="column" className="pt-[32px] gap-[36px]">
       {settings.map((setting) => {
@@ -31,7 +19,14 @@ export default function SettingsMenu() {
             </span>
             {setting.list.map((list: SettingsItem, idx) => {
               return (
-                <ul key={idx} onClick={() => handleLogout(list.title)}>
+                <ul
+                  key={idx}
+                  onClick={() => {
+                    if (list.title === "로그아웃") {
+                      logout();
+                    }
+                  }}
+                >
                   <Spacing size={8} />
                   <SettingsMenuItem list={list} link={list.link} />
                 </ul>

@@ -11,9 +11,13 @@ import Link from "next/link";
 import getHeader from "@/utils/getHeader";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export default function MyPage() {
   const { data: user } = useUserDetail();
+  const { logout } = useAuth();
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const header = getHeader("/my");
   const hasShadow = useScrollShadow(containerRef);
@@ -27,6 +31,11 @@ export default function MyPage() {
     if (term && term === "privatePolicy") {
       setPrivatePolicyOpen(true);
     } else setOpen(true);
+  };
+
+  const handleLogout = async () => {
+    router.push("/");
+    logout();
   };
 
   useEffect(() => {
@@ -62,6 +71,7 @@ export default function MyPage() {
     }
   }, []);
   if (!user) return;
+
   return (
     <div
       id="scrollable-container"
@@ -90,7 +100,7 @@ export default function MyPage() {
         friendsCount={user?.friendCount}
       />
       <Spacing size={16} />
-      <SettingsMenu />
+      <SettingsMenu logout={handleLogout} />
       <div className={styles.termsWrapper}>
         <Link
           href={

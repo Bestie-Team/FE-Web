@@ -21,19 +21,19 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
   const data = await response.json();
   if (response.ok) {
     const user_info: lighty.LoginResponse = data;
-    console.log(user_info);
-    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
-    sessionStorage.setItem(
-      STORAGE_KEYS.USER_INFO,
-      JSON.stringify({
-        accountId: user_info.accountId,
-        profileImageUrl: user_info.profileImageUrl,
-      })
-    );
+    // console.log(user_info);
+    // localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
+    // sessionStorage.setItem(
+    //   STORAGE_KEYS.USER_INFO,
+    //   JSON.stringify({
+    //     accountId: user_info.accountId,
+    //     profileImageUrl: user_info.profileImageUrl,
+    //   })
+    // );
 
-    const returnUrl = "/home";
-    window.location.href = returnUrl;
-    return;
+    // const returnUrl = "/home";
+    // window.location.href = returnUrl;
+    return user_info;
   }
 
   switch (response.status) {

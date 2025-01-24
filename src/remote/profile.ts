@@ -7,14 +7,14 @@ export async function handleProfileImageUpdate(imageFile: { file: File }) {
     if (imageUrl) {
       const isPatched = await patchProfileImage({ profileImageUrl: imageUrl });
       if (isPatched) {
-        return { message: "프로필 이미지가 정상적으로 업로드 되었습니다." };
+        return { message: "프로필 이미지가 정상적으로 업로드 되었습니다" };
       }
     }
   } catch (error) {
     throw new Error(
       error instanceof Error
         ? error.message
-        : "이미지 업로드 요청에 실패했습니다."
+        : "이미지 업로드 요청에 실패했습니다"
     );
   }
 }
@@ -25,7 +25,7 @@ export async function postProfileImage(imageFile: { file: File }) {
     const targetUrl = `${baseUrl}/users/profile/image`;
 
     if (!imageFile || !imageFile.file) {
-      throw new Error("이미지 파일을 선택해주세요.");
+      throw new Error("이미지 파일을 선택해주세요");
     }
     const formData = new FormData();
     formData.append("file", imageFile.file);
@@ -62,17 +62,17 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        errorText || "프로필 이미지 업데이트 중 문제가 발생했습니다."
+        errorText || "프로필 이미지 업데이트 중 문제가 발생했습니다"
       );
     }
-    console.log("프로필 이미지가 성공적으로 업데이트되었습니다.");
+    console.log("프로필 이미지가 성공적으로 업데이트되었습니다");
     return true;
   } catch (error) {
     console.error("Error during updating profile image:", error);
     throw new Error(
       error instanceof Error
         ? error.message
-        : "프로필 이미지 업데이트 요청에 실패했습니다."
+        : "프로필 이미지 업데이트 요청에 실패했습니다"
     );
   }
 }

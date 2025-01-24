@@ -2,7 +2,7 @@ export interface UserDetail {
   id: string;
   accountId: string;
   name: string;
-  profileImageUrl: string;
+  profileImageUrl: string | null;
   email: string;
   provider: "KAKAO" | "GOOGLE" | "APPLE";
   groupCount: number;
