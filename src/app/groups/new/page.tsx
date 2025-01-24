@@ -48,6 +48,7 @@ export default function NewGroupPage() {
   if (isSuccess) {
     return <MakingGroupSuccess group={newGroup} />;
   }
+
   if (step === 1) {
     return (
       <div className="h-screen bg-base-white">

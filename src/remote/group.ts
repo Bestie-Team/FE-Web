@@ -8,16 +8,17 @@ export async function postGroupCoverImage({ file }: { file: File }) {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithAuth(targetUrl, {
       method: "POST",
       body: formData,
     });
-
-    const data: { imageUrl: string } = await response.json();
-    return {
-      url: data.imageUrl,
-      message: "그룹이미지를 성공적으로 업로드하였습니다",
-    };
+    if (response.ok) {
+      const data: { imageUrl: string } = await response.json();
+      return {
+        url: data.imageUrl,
+        message: "그룹이미지를 성공적으로 업로드하였습니다",
+      };
+    }
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
       throw new Error("지원하지 않는 파일 형식입니다");
@@ -25,7 +26,7 @@ export async function postGroupCoverImage({ file }: { file: File }) {
     if (error instanceof Response && error.status === 413) {
       throw new Error("업로드 가능한 파일 사이즈를 초과하였습니다");
     }
-    throw new Error("Failed to delete group member");
+    throw new Error("Failed to upload group cover Image");
   }
 }
 

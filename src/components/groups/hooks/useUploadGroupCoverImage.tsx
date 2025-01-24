@@ -11,6 +11,10 @@ export default function useUploadGroupCoverImage({
   return useMutation({
     mutationKey: ["upload/group/image", file],
     mutationFn: () => postGroupCoverImage({ file }),
-    onSuccess: (data) => onSuccess(data),
+    onSuccess: (data) => {
+      if (data) {
+        onSuccess(data);
+      }
+    },
   });
 }

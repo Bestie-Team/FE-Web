@@ -6,7 +6,6 @@ import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import * as lighty from "lighty-type";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
-import { toast } from "react-toastify";
 
 export default function AddGroupPhoto({
   image,
@@ -16,31 +15,24 @@ export default function AddGroupPhoto({
   setImage: SetterOrUpdater<lighty.CreateGroupRequest>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
+
   const { mutate: uploadGroupCover } = useUploadGroupCoverImage({
     file: groupImageFile as File,
     onSuccess: (data) => {
-      toast.success(data.message);
+      console.log(data.message);
       setImage((prev) => ({
         ...prev,
         groupImageUrl: data.url,
       }));
     },
   });
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
 
     if (file) {
       setGroupImageFile(file);
       const reader = new FileReader();
-      reader.onload = (event) => {
-        const selectedImage = event.target?.result;
-        if (selectedImage && typeof selectedImage === "string") {
-          setImage((prev) => ({
-            ...prev,
-            groupImageUrl: selectedImage,
-          }));
-        }
-      };
       reader.readAsDataURL(file);
     }
   };
