@@ -12,6 +12,7 @@ import Image from "next/image";
 import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function GatheringDetailPage({
   params,
@@ -20,12 +21,14 @@ export default function GatheringDetailPage({
 }) {
   const header = getHeader("/gathering/1234");
   const gatheringId = params.id;
-  const { data: selectedGathering, isPending } = useGatheringDetail({
+  const {
+    data: selectedGathering,
+    isPending,
+    isError,
+  } = useGatheringDetail({
     gatheringId,
   });
-  if (isPending) {
-    return <div>기다려~</div>;
-  }
+
   if (!selectedGathering) {
     return <div>약속을 찾을 수 없습니다.</div>;
   }
@@ -33,7 +36,7 @@ export default function GatheringDetailPage({
   const { gatheringDate, members, hostUser, address } = selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);
-
+  if (isPending || isError) return <FullPageLoader />;
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       {header}

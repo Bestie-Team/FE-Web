@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom } from "@/atoms/modal";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
@@ -17,7 +18,7 @@ export default function UserFriendsListContainer() {
   );
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
 
-  const { data, loadMore, hasNextPage } = useFriends();
+  const { data, loadMore, hasNextPage, isFetching } = useFriends();
 
   const { mutate: deleteComment } = useDeleteFriend({
     friendId: selectedFriendId,
@@ -29,7 +30,7 @@ export default function UserFriendsListContainer() {
     },
   });
 
-  if (!data) return;
+  if (!data || isFetching) return <DotSpinner />;
   return (
     <>
       <FriendsListContainer

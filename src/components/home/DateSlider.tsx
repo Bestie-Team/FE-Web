@@ -8,6 +8,7 @@ import { getWeekDates } from "@/utils/getThisWeekDates";
 import { addHours, getDate, getDay } from "date-fns";
 import Link from "next/link";
 import useGatherings from "../gathering/hooks/useGatherings";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function DateSlider() {
   const sevenDays = getWeekDates();
@@ -20,7 +21,11 @@ export default function DateSlider() {
   max.setUTCHours(0, 0, 0, 0);
   const maxDate = max.toISOString();
 
-  const { data: this_week } = useGatherings({
+  const {
+    data: this_week,
+    isFetching,
+    isError,
+  } = useGatherings({
     cursor: minDate,
     limit: 10,
     minDate,
@@ -46,18 +51,22 @@ export default function DateSlider() {
         </Link>
       </Flex>
       <Spacing size={12} />
-      <Flex className={styles.dateWrapper} justify="space-between">
-        {sevenDays.map((date, i) => {
-          return (
-            <DateItem
-              date={getDate(date)}
-              day={DAYS_IN_KOREAN[getDay(date)]}
-              key={i}
-              icon={gathering_days?.includes(getDate(date))}
-            />
-          );
-        })}
-      </Flex>
+      {isFetching || isError ? (
+        <DotSpinner />
+      ) : (
+        <Flex className={styles.dateWrapper} justify="space-between">
+          {sevenDays.map((date, i) => {
+            return (
+              <DateItem
+                date={getDate(date)}
+                day={DAYS_IN_KOREAN[getDay(date)]}
+                key={i}
+                icon={gathering_days?.includes(getDate(date))}
+              />
+            );
+          })}
+        </Flex>
+      )}
     </Flex>
   );
 }

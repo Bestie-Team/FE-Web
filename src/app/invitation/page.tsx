@@ -16,6 +16,7 @@ import useSentInvitationToGathering from "@/components/gathering/hooks/useSentIn
 import InvitationModal from "@/components/invitation/InvitationModal";
 import { GatheringInvitation } from "@/models/gathering";
 import Panel from "@/components/shared/Panel/Panel";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function InvitationPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -44,11 +45,19 @@ export default function InvitationPage() {
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
     useTabs();
 
-  const { data: received, isSuccess } =
-    useReceivedInvitationToGathering(queryParams);
+  const {
+    data: received,
+    isSuccess,
+    isFetching,
+    isError,
+  } = useReceivedInvitationToGathering(queryParams);
 
-  const { data: sent, isSuccess: sent_isSuccess } =
-    useSentInvitationToGathering(queryParams);
+  const {
+    data: sent,
+    isSuccess: sent_isSuccess,
+    isFetching: isFetching_s,
+    isError: isError_s,
+  } = useSentInvitationToGathering(queryParams);
 
   useEffect(() => {
     if (isSuccess && received?.invitations) {
@@ -98,34 +107,42 @@ export default function InvitationPage() {
         className="custom-swiper w-full"
       >
         <SwiperSlide>
-          <Flex direction="column" className="pt-[120px]">
-            {invitations.received?.map((invitation) => {
-              return (
-                <React.Fragment key={invitation.id}>
-                  <InvitationCard
-                    onClickOpen={setModalOpen}
-                    invitation={invitation}
-                  />
-                  <Spacing size={24} />
-                </React.Fragment>
-              );
-            })}
-          </Flex>
+          {isFetching || isError ? (
+            <DotSpinner />
+          ) : (
+            <Flex direction="column" className="pt-[120px]">
+              {invitations.received?.map((invitation) => {
+                return (
+                  <React.Fragment key={invitation.id}>
+                    <InvitationCard
+                      onClickOpen={setModalOpen}
+                      invitation={invitation}
+                    />
+                    <Spacing size={24} />
+                  </React.Fragment>
+                );
+              })}
+            </Flex>
+          )}
         </SwiperSlide>
         <SwiperSlide>
-          <Flex direction="column" className="pt-[120px]">
-            {invitations.sent?.map((invitation) => {
-              return (
-                <React.Fragment key={invitation.id}>
-                  <InvitationCard
-                    onClickOpen={setModalOpen}
-                    invitation={invitation}
-                  />
-                  <Spacing size={24} />
-                </React.Fragment>
-              );
-            })}
-          </Flex>
+          {isFetching_s || isError_s ? (
+            <DotSpinner />
+          ) : (
+            <Flex direction="column" className="pt-[120px]">
+              {invitations.sent?.map((invitation) => {
+                return (
+                  <React.Fragment key={invitation.id}>
+                    <InvitationCard
+                      onClickOpen={setModalOpen}
+                      invitation={invitation}
+                    />
+                    <Spacing size={24} />
+                  </React.Fragment>
+                );
+              })}
+            </Flex>
+          )}
         </SwiperSlide>
       </Swiper>
       {isModalOpen ? (

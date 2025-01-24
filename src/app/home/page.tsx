@@ -19,6 +19,7 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function HomePage() {
   useChangeHeaderStyle();
@@ -39,12 +40,17 @@ export default function HomePage() {
   const minDate = useMemo(() => new Date(sevenDays[0]).toISOString(), []);
   const maxDate = useMemo(() => new Date(sevenDays[6]).toISOString(), []);
 
-  const { data: this_week } = useGatherings({
+  const {
+    data: this_week,
+    isFetching,
+    isError,
+  } = useGatherings({
     cursor: minDate,
     limit: 10,
     minDate,
     maxDate,
   });
+  if (!this_week || isFetching || isError) return <FullPageLoader />;
 
   return (
     <div

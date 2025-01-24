@@ -1,11 +1,12 @@
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 import FriendListItem from "./FriendListItem";
 import useReceivedFriendsRequests from "./hooks/useReceivedFriendsRequests";
 import useSentFriendsRequests from "./hooks/useSentFriendsRequests";
 
 export default function SentReceivedFriendRequestsList() {
-  const { data: received } = useReceivedFriendsRequests({
+  const { data: received, isFetching } = useReceivedFriendsRequests({
     name: "가",
     accountId: "a",
     limit: 30,
@@ -24,6 +25,7 @@ export default function SentReceivedFriendRequestsList() {
     sender: request.sender,
     requestId: request.id,
   }));
+  if (isFetching) return <DotSpinner />;
   return (
     <Flex
       direction="column"

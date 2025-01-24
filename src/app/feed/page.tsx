@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
 import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function FeedPage() {
   const [selectedFeedId, setSelectedFeedId] = useState("");
@@ -55,14 +56,14 @@ export default function FeedPage() {
   const limit = 10;
   const queryClient = useQueryClient();
 
-  const { data: feedAll } = useFeedAll({
+  const { data: feedAll, isFetching } = useFeedAll({
     order: "DESC",
     minDate,
     maxDate,
     limit: 10,
   });
 
-  const { data: feedMine } = useFeedMine({
+  const { data: feedMine, isFetching: isFetchingMine } = useFeedMine({
     order: "DESC",
     minDate,
     maxDate,
@@ -129,14 +130,22 @@ export default function FeedPage() {
         spaceBetween={2}
         className="custom-swiper w-full !z-0"
       >
-        <SwiperSlide>
-          <Feed feeds={feedAll.feeds} onClickFeed={setSelectedFeedId} />
-        </SwiperSlide>
-
-        {feedMine && (
+        {isFetching ? (
+          <DotSpinner />
+        ) : (
           <SwiperSlide>
-            <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
+            <Feed feeds={feedAll.feeds} onClickFeed={setSelectedFeedId} />
           </SwiperSlide>
+        )}
+
+        {isFetchingMine ? (
+          <DotSpinner />
+        ) : (
+          feedMine && (
+            <SwiperSlide>
+              <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
+            </SwiperSlide>
+          )
         )}
       </Swiper>
     );

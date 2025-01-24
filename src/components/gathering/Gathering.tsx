@@ -23,7 +23,11 @@ export default function Gathering({ className, where, which }: GatheringProps) {
   const maxDate = new Date("2025-12-31").toISOString();
 
   const [gatherings, setGatherings] = useState<GatheringType[]>([]);
-  const { data: gathering_data } = useGatherings({
+  const {
+    data: gathering_data,
+    isFetching,
+    isError,
+  } = useGatherings({
     cursor: minDate,
     limit: 50,
     minDate: minDate,
@@ -57,15 +61,16 @@ export default function Gathering({ className, where, which }: GatheringProps) {
         which={which}
       />
     ));
-
   return (
     <div className={clsx("pb-[111px] w-full px-[20px]", className)}>
       {which === "완료" && pathname.endsWith("gathering") && <Message />}
-      <div className="grid grid-cols-2 gap-4">
-        {which === "예정"
-          ? sortedGathering && renderGatherings(sortedGathering.expecting)
-          : sortedGathering && renderGatherings(sortedGathering.passed)}
-      </div>
+      {isFetching || isError ? (
+        <div className="grid grid-cols-2 gap-4">
+          {which === "예정"
+            ? sortedGathering && renderGatherings(sortedGathering.expecting)
+            : sortedGathering && renderGatherings(sortedGathering.passed)}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -21,6 +21,7 @@ import { selectedFriendsAtom } from "@/atoms/friends";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
 import { toast } from "react-toastify";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function GroupDetailPage({
   params,
@@ -32,7 +33,11 @@ export default function GroupDetailPage({
   const router = useRouter();
   // const { userInfo } = useAuth();
   const dateCursor = new Date().toISOString();
-  const { data: group_data } = useGroup({ cursor: dateCursor, limit: 50 });
+  const {
+    data: group_data,
+    isFetching,
+    isError,
+  } = useGroup({ cursor: dateCursor, limit: 50 });
   const [modalOpen, setModalOpen] = useRecoilState(groupDeleteAskModalAtom);
   const [openList, setOpenList] = useState<boolean>(false);
 
@@ -72,7 +77,7 @@ export default function GroupDetailPage({
   // const handleAddMember = () => {
   //   setOpenList(true);
   // };
-
+  if (isFetching || isError) return <FullPageLoader />;
   if (openList === true) {
     return (
       <SelectFriendsContainer

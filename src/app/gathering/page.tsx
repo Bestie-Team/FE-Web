@@ -16,6 +16,8 @@ import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
+import NoGathering from "@/components/gathering/NoGathering";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 type TabName = "1" | "2";
 
@@ -36,7 +38,7 @@ export default function MyGatheringPage() {
 
   const minDate = new Date("2025-01-01").toISOString();
   const maxDate = new Date("2025-12-31").toISOString();
-  const { data } = useGatherings({
+  const { data, isFetching, isError } = useGatherings({
     cursor: minDate,
     limit: 5,
     minDate,
@@ -59,14 +61,16 @@ export default function MyGatheringPage() {
         onTabClick={handleTabClick}
         selectedTab={selectedTab}
       />
-      {myGatherings?.length ? (
+      {isFetching || isError ? (
+        <DotSpinner />
+      ) : myGatherings && myGatherings.length > 0 ? (
         <GatheringSwiper
           selectedTab={selectedTab}
           swiperRef={swiperRef}
           onSlideChange={(index) => handleSlideChange(index)}
         />
       ) : (
-        <div>아직 약속이 없네요!</div>
+        <NoGathering />
       )}
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>

@@ -10,6 +10,7 @@ import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function GroupsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +22,11 @@ export default function GroupsPage() {
   const dateCursor = new Date().toISOString();
   const [groupCursor, setGroupCursor] = useState<string | null>(dateCursor);
   const [groups, setGroups] = useState<lighty.Group[]>([]);
-  const { data: group_data } = useGroup({ cursor: groupCursor, limit: 50 });
+  const {
+    data: group_data,
+    isFetching,
+    isError,
+  } = useGroup({ cursor: groupCursor, limit: 50 });
 
   useEffect(() => {
     if (group_data) {
@@ -56,7 +61,8 @@ export default function GroupsPage() {
       >
         {header}
       </div>
-      {groups != null ? (
+
+      {isFetching || isError ? (
         <Flex direction="column" className="pt-[68px] p-[20px] text-T4">
           <Flex align="center">
             <span>전체 그룹</span>
@@ -85,7 +91,9 @@ export default function GroupsPage() {
             );
           })}
         </Flex>
-      ) : null}
+      ) : (
+        <DotSpinner />
+      )}
     </div>
   );
 }

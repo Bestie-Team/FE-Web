@@ -45,8 +45,8 @@ export default function MemoriesBottomSheet({
 const actions = [
   {
     icon: <UserIcon width="18" height="18" color="#fff" />,
-    title: "약속 약속 만들기",
-    subTitle: "약속 약속을 만들고 친구들에게 약속 초대장을 보내요",
+    title: "모임 약속 만들기",
+    subTitle: "모임 약속을 만들고 친구들에게 약속 초대장을 보내요",
     link: "/gathering/new",
   },
   {
