@@ -10,7 +10,7 @@ import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function GroupsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,6 +63,8 @@ export default function GroupsPage() {
       </div>
 
       {isFetching || isError ? (
+        <FullPageLoader />
+      ) : (
         <Flex direction="column" className="pt-[68px] p-[20px] text-T4">
           <Flex align="center">
             <span>전체 그룹</span>
@@ -91,8 +93,6 @@ export default function GroupsPage() {
             );
           })}
         </Flex>
-      ) : (
-        <DotSpinner />
       )}
     </div>
   );
