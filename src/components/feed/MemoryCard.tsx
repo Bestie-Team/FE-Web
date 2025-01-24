@@ -14,7 +14,7 @@ export default function MemoryCard({
   feed: Feed;
   onClick: Dispatch<SetStateAction<string>>;
 }) {
-  const { data } = useGatheringDetail({
+  const { data, isFetching } = useGatheringDetail({
     gatheringId: feed.gathering?.id || "",
   });
   const writer = feed?.writer;

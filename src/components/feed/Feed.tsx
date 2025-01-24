@@ -10,10 +10,9 @@ export default function MyFeed({
   feeds,
   onClickFeed,
 }: {
-  feeds: Feed[] | null;
+  feeds: Feed[];
   onClickFeed: Dispatch<SetStateAction<string>>;
 }) {
-  if (!feeds) return;
   return (
     <div className="pt-[107px] pb-[111px] animate-fadeIn">
       <Flex direction="column">

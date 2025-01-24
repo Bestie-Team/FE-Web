@@ -115,8 +115,6 @@ export default function FeedPage() {
   });
 
   const renderSwipers = useMemo(() => {
-    if (!feedAll) return null;
-
     return (
       <Swiper
         initialSlide={Number(selectedTab) - 1}
@@ -133,9 +131,11 @@ export default function FeedPage() {
         {isFetching ? (
           <DotSpinner />
         ) : (
-          <SwiperSlide>
-            <Feed feeds={feedAll.feeds} onClickFeed={setSelectedFeedId} />
-          </SwiperSlide>
+          feedAll && (
+            <SwiperSlide>
+              <Feed feeds={feedAll?.feeds} onClickFeed={setSelectedFeedId} />
+            </SwiperSlide>
+          )
         )}
 
         {isFetchingMine ? (
@@ -149,7 +149,15 @@ export default function FeedPage() {
         )}
       </Swiper>
     );
-  }, [feedAll, feedMine, selectedTab, swiperRef, handleSlideChange]);
+  }, [
+    feedAll,
+    feedMine,
+    selectedTab,
+    swiperRef,
+    handleSlideChange,
+    isFetching,
+    isFetchingMine,
+  ]);
 
   return (
     <div
