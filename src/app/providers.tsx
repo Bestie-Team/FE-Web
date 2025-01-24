@@ -83,7 +83,6 @@ const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-
   useScroll(pathname, "scrollable-container");
   useEffect(() => {
     window.scrollTo({
