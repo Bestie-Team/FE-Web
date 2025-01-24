@@ -72,7 +72,7 @@ export default function ProfileImageDisplay({
           }}
           className={imageWrapperStyle}
         >
-          {userImage ? (
+          {newImage ? (
             <Image
               src={newImage}
               alt="upload_image"

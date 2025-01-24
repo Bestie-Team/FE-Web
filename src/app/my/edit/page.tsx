@@ -20,6 +20,7 @@ export default function EditPage() {
     accountId: data?.accountId || "",
     profileImageUrl: data?.profileImageUrl || "",
   });
+  // const{mutate} = usepatch()
   const header = getHeader("/my/edit");
 
   return (
