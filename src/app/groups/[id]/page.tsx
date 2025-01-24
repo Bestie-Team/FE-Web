@@ -68,7 +68,6 @@ export default function GroupDetailPage({
 
   const { description, members, owner, groupImageUrl } = selectedGroup;
   // const isOwner = userInfo?.accountId === owner.accountId;
-  const groupMemberIds = members.map((member) => member.id);
 
   // const handleAddMember = () => {
   //   setOpenList(true);
@@ -83,7 +82,6 @@ export default function GroupDetailPage({
           setOpenList(false);
           addMember();
         }}
-        exceptIds={groupMemberIds}
       />
     );
   }

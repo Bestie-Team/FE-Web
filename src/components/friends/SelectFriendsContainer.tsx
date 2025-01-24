@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
@@ -13,13 +13,11 @@ import Modal from "../shared/Modal/Modal";
 export default function SelectFriendsContainer({
   paddingTop,
   action,
-  exceptIds,
   setStep,
   isNew,
 }: {
   paddingTop?: string;
   action?: () => void;
-  exceptIds?: string[];
   setStep?: Dispatch<SetStateAction<number>>;
   isNew: boolean;
 }) {
@@ -32,29 +30,8 @@ export default function SelectFriendsContainer({
   const setFriendsToNewGroup = useSetRecoilState<lighty.User[] | []>(
     newGroupMembersAtom
   );
-  const [friends, setFriends] = useState<lighty.User[] | []>([]);
-  const [cursor, setCursor] = useState<lighty.UserCursor | null>();
 
-  const { data } = useFriends({
-    name: cursor?.name ?? "가가",
-    accountId: cursor?.accountId ?? "aaaaa",
-    limit: 30,
-  });
-
-  useEffect(() => {
-    if (!data?.users) return;
-    if (exceptIds && exceptIds.length > 0) {
-      const nonMemberUsers = data?.users.filter(
-        (user) => !exceptIds.includes(user.id)
-      );
-      setFriends(nonMemberUsers);
-    } else {
-      setFriends(data?.users);
-    }
-    if (data?.nextCursor) {
-      setCursor(data?.nextCursor);
-    }
-  }, [data]);
+  const { data: friends } = useFriends();
 
   const toggleItemClick = (idx: number) => {
     if (clickedItems.length >= 10 && !clickedItems.includes(idx)) {
@@ -86,6 +63,8 @@ export default function SelectFriendsContainer({
 
     return null;
   };
+
+  if (!friends) return;
 
   const handleSubmitSelection = () => {
     const clickedFriends = clickedItems.map((idx) => friends[idx]);
