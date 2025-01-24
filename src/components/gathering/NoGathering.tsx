@@ -4,11 +4,7 @@ import Spacing from "../shared/Spacing";
 
 export default function NoGathering() {
   return (
-    <Flex
-      direction="column"
-      align="center"
-      className="pt-[200px] bg-grayscale-10"
-    >
+    <Flex direction="column" align="center" className="pt-[200px] h-screen">
       <div className="w-[40px] h-[40px] p-[5px]">
         <LightyLogoForNavBar width="30" height="30" color="#D8D8D8" />
       </div>

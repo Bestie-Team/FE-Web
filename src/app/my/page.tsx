@@ -133,7 +133,7 @@ export default function MyPage() {
               <ins>개인 정보 처리방침</ins>
             </Link>
           </div>
-          <Spacing size={80} />
+          <Spacing size={120} />
           {open || privatePolicyOpen ? (
             <TermOfUse
               label={open ? "이용 약관" : "개인 정보 처리방침"}
