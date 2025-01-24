@@ -14,13 +14,11 @@ export default function FriendsListContainer({
   friends,
   hasMore,
   loadMore,
-  isFetching,
   isModalOpen,
   setIsModalOpen,
 }: {
   friends?: lighty.User[];
   hasMore: boolean;
-  isFetching: boolean;
   loadMore: () => void;
   isModalOpen: boolean;
   setIsModalOpen: SetterOrUpdater<boolean>;
@@ -87,6 +85,3 @@ export default function FriendsListContainer({
     </div>
   );
 }
-const styles = {
-  iconContainer: "flex justify-center items-center w-[20px] h-[20px]",
-};

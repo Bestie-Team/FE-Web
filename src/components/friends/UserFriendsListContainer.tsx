@@ -17,7 +17,7 @@ export default function UserFriendsListContainer() {
   );
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
 
-  const { data, loadMore, hasNextPage, isFetching } = useFriends();
+  const { data, loadMore, hasNextPage } = useFriends();
 
   const { mutate: deleteComment } = useDeleteFriend({
     friendId: selectedFriendId,
@@ -33,7 +33,6 @@ export default function UserFriendsListContainer() {
   return (
     <>
       <FriendsListContainer
-        isFetching={isFetching}
         friends={data}
         hasMore={hasNextPage}
         loadMore={loadMore}

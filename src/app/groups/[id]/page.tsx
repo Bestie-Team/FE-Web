@@ -7,7 +7,6 @@ import UserIcon from "@/components/shared/Icon/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/Icon/PencilIcon";
-import Button from "@/components/shared/Button/Button";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { groupDeleteAskModalAtom } from "@/atoms/group";
@@ -21,6 +20,7 @@ import useGroup from "@/components/groups/hooks/useGroups";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
+import { toast } from "react-toastify";
 
 export default function GroupDetailPage({
   params,
@@ -42,10 +42,11 @@ export default function GroupDetailPage({
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
-      alert("그룹을 성공적으로 삭제하였습니다.");
+      toast.success("그룹을 성공적으로 삭제하였습니다.");
       router.push("/groups");
     },
   });
+
   const { mutate: addMember } = useAddGroupMember({
     groupId: params.id,
     friendIds: selectedFriends.map((friend) => friend.id),
@@ -53,7 +54,7 @@ export default function GroupDetailPage({
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
-      alert(data.message);
+      toast.success(data.message);
     },
   });
 
@@ -66,12 +67,12 @@ export default function GroupDetailPage({
   }
 
   const { description, members, owner, groupImageUrl } = selectedGroup;
-  const isOwner = userInfo?.accountId === owner.accountId;
+  // const isOwner = userInfo?.accountId === owner.accountId;
   const groupMemberIds = members.map((member) => member.id);
 
-  const handleAddMember = () => {
-    setOpenList(true);
-  };
+  // const handleAddMember = () => {
+  //   setOpenList(true);
+  // };
 
   if (openList === true) {
     return (

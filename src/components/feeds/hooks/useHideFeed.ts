@@ -1,4 +1,4 @@
-import { hideFeed, patchFeed } from "@/remote/feed";
+import { hideFeed } from "@/remote/feed";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useHideFeed({

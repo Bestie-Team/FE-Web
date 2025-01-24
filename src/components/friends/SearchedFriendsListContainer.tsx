@@ -9,14 +9,13 @@ export default function SearchedFriendsListContainer({
 }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const { data, loadMore, isFetching, hasNextPage } = useSearchFriends({
+  const { data, loadMore, hasNextPage } = useSearchFriends({
     search: debouncedSearch,
     enabled: debouncedSearch.length >= 2,
   });
 
   return (
     <FriendsListContainer
-      isFetching={isFetching}
       hasMore={hasNextPage}
       loadMore={loadMore}
       friends={data}

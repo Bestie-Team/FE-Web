@@ -29,6 +29,7 @@ export async function getSearchUsers({
     if (error instanceof Response && error.status === 400) {
       throw new Error("검색어는 2자 이상 20자 이하만 가능합니다.");
     }
+
     throw new Error("친구 검색 중 에러가 발생했습니다.");
   }
 }
@@ -43,6 +44,7 @@ export async function getUserDetail() {
     const data: lighty.UserDetailResponse = await response.json();
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error("친구 검색 중 에러가 발생했습니다.");
   }
 }

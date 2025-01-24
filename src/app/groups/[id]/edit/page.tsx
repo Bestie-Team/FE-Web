@@ -10,7 +10,6 @@ import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import UserIcon from "@/components/shared/Icon/UserIcon";
 import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import getHeader from "@/utils/getHeader";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -82,10 +81,7 @@ export default function GroupEditPage() {
             setStep={setStep}
           />
         </form>
-        <FixedBottomButton
-          label={isPending ? <DotSpinner /> : "그룹 생성하기"}
-          onClick={handleMakeGroup}
-        />
+        <FixedBottomButton label={"그룹 생성하기"} onClick={() => {}} />
       </div>
     );
   } else if (step === 2) {

@@ -5,12 +5,11 @@ import { Feed } from "@/models/feed";
 import { Dispatch, SetStateAction } from "react";
 
 export type FeedType = "나의피드" | "전체";
+
 export default function MyFeed({
-  type,
   feeds,
   onClickFeed,
 }: {
-  type: FeedType;
   feeds: Feed[] | null;
   onClickFeed: Dispatch<SetStateAction<string>>;
 }) {
