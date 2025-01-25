@@ -71,14 +71,18 @@ export default function EditingFeed() {
       >
         {header}
       </div>
-      <FeedForm
-        edit={uploadImages}
-        filesToUpload={filesToUpload}
-        setFilesToUpload={setFilesToUpload}
-        feedInfoToEdit={feedInfo}
-        setFeedInfoToEdit={setFeedInfo}
-      />
-      {(isPending || isUploading) && <FullPageLoader />}
+
+      {isPending || isUploading ? (
+        <FullPageLoader />
+      ) : (
+        <FeedForm
+          edit={uploadImages}
+          filesToUpload={filesToUpload}
+          setFilesToUpload={setFilesToUpload}
+          feedInfoToEdit={feedInfo}
+          setFeedInfoToEdit={setFeedInfo}
+        />
+      )}
     </div>
   );
 }

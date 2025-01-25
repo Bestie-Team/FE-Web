@@ -72,7 +72,7 @@ export default function CreatingFeed() {
       >
         {header}
       </div>
-      {isPending ? (
+      {isPending || isUploading ? (
         <DotSpinner />
       ) : (
         <FeedForm
