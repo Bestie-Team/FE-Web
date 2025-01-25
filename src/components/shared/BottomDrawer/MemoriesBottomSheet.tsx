@@ -19,7 +19,7 @@ export default function MemoriesBottomSheet({
   const router = useRouter();
   return (
     <BottomSheetWrapper onClose={onClose} open={open}>
-      <Flex direction="column" className="p-[24px] pt-[4px]">
+      <Flex direction="column" className="p-6 pt-1">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
         {actions.map((action) => {
           return (

@@ -32,7 +32,7 @@ export default function ActionItem({
 }
 
 const styles = {
-  container: "py-[12px] w-full",
+  container: "py-[12px] w-full hover:animate-tinkle",
 
   descWrapper: "flex-grow cursor-pointer items-center",
   button:

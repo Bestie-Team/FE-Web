@@ -26,7 +26,7 @@ export default function TermOfUse({ label, onClick }: TermOfUseProps) {
 
   return createPortal(
     <div className={containerStyle}>
-      <Flex align="center" className="h-[48px]">
+      <Flex align="center" className="h-12">
         <div
           onClick={onClick}
           className="pl-[17px] py-[10px] pr-[3px] cursor-pointer"

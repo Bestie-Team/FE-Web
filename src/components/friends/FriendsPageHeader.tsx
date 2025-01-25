@@ -27,7 +27,7 @@ export default function FriendsPageHeader({
       <Spacing size={6} direction="horizontal" />
       {addFriendIcon ? (
         <div
-          className="p-[4px] cursor-pointer"
+          className="p-[4px] cursor-pointer hover:animate-shrink-grow"
           onClick={() => {
             router.push("/friends/search");
           }}
@@ -41,7 +41,7 @@ export default function FriendsPageHeader({
 
 const styles = {
   arrowIconContainer:
-    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer",
+    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow",
 
   headerWrapper: "bg-grayscale-50 pr-[20px] flex w-full items-center h-[48px]",
 };

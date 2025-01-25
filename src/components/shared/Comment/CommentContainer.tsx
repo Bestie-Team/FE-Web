@@ -76,7 +76,7 @@ export default function CommentContainer({
           <Flex justify="center" className="w-full pt-[6px] pb-[18px]">
             <RectIcon />
           </Flex>
-          <div className="pl-[24px] text-T3">댓글</div>
+          <div className="pl-6 text-T3">댓글</div>
           <Spacing size={12} />
           <Flex direction="column" className={styles.commentWrapper}>
             {comments?.map((comment) => (
@@ -102,11 +102,10 @@ export default function CommentContainer({
 }
 
 const styles = {
-  commentWrapper: "w-full gap-4 p-[20px] pt-[16px] h-[272px] overflow-hidden",
+  commentWrapper: "w-full gap-4 p-5 pt-4 h-[272px] overflow-hidden",
   bottomSheetContainer:
     "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-10 pb-[34px]",
-  inputWrapper:
-    "relative px-[20px] py-[12px] w-full border-t-[1px] border-grayscale-50",
+  inputWrapper: "relative px-5 py-3 w-full border-t-[1px] border-grayscale-50",
   submitButton:
-    "bg-base-white p-[8px] rounded-full absolute right-[39px] top-[20.5px]",
+    "bg-base-white p-2 rounded-full absolute right-[39px] top-[20.5px]",
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 
 interface ScrollState {
   isVisible: boolean;
@@ -15,77 +15,92 @@ export function useScrollNew(
     scrollProgress: 0,
     isPastThreshold: false,
   });
-  console.log("scrollElementId", scrollElementId);
   const prevScrollPosRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
-  const calculateScrollState = useCallback(() => {
-    const scrollElement = scrollElementId
+  const scrollElement = useMemo(() => {
+    if (typeof window === "undefined") return null;
+    return scrollElementId
       ? document.getElementById(scrollElementId)
       : document.documentElement;
+  }, [scrollElementId]);
 
+  const calculateScrollState = useCallback(() => {
     if (!scrollElement) return;
 
     const lastKnownScrollPosition = scrollElement.scrollTop;
     const maxScrollHeight =
       scrollElement.scrollHeight - scrollElement.clientHeight;
 
-    // Calculate scroll progress
     const scrollProgress =
       maxScrollHeight > 0
         ? Math.min(lastKnownScrollPosition / maxScrollHeight, 1)
         : 0;
 
-    // Calculate scroll direction and changes
     const isScrollingDown = lastKnownScrollPosition > prevScrollPosRef.current;
     const scrollDifference = Math.abs(
       lastKnownScrollPosition - prevScrollPosRef.current
     );
 
-    setScrollState((prevState) => ({
-      isVisible:
-        scrollDifference > threshold ? !isScrollingDown : prevState.isVisible,
-      scrollProgress,
-      isPastThreshold: lastKnownScrollPosition > threshold,
-    }));
+    setScrollState((prevState) => {
+      const newState = {
+        isVisible:
+          scrollDifference > threshold ? !isScrollingDown : prevState.isVisible,
+        scrollProgress,
+        isPastThreshold: lastKnownScrollPosition > threshold,
+      };
+
+      // Only update state if there's a change
+      return JSON.stringify(newState) !== JSON.stringify(prevState)
+        ? newState
+        : prevState;
+    });
 
     prevScrollPosRef.current = lastKnownScrollPosition;
-  }, [scrollElementId, threshold]);
+  }, [scrollElement, threshold]);
+
+  const debouncedCalculateScrollState = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    rafRef.current = requestAnimationFrame(calculateScrollState);
+  }, [calculateScrollState]);
 
   useEffect(() => {
-    const scrollElement = scrollElementId
-      ? document.getElementById(scrollElementId)
-      : window;
-
     if (!scrollElement) return;
 
     // Initial calculation
     calculateScrollState();
 
     // Scroll event listener
-    const handleScroll = () => {
-      window.requestAnimationFrame(calculateScrollState);
-    };
+    const handleScroll = debouncedCalculateScrollState;
 
-    scrollElement.addEventListener("scroll", handleScroll, { passive: true });
+    const targetElement = scrollElementId ? scrollElement : window;
+    targetElement.addEventListener("scroll", handleScroll, { passive: true });
 
-    // Visibility change handler
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         calculateScrollState();
       }
     };
 
-    // Page visibility and focus events
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("focus", calculateScrollState);
 
-    // Cleanup
     return () => {
-      scrollElement.removeEventListener("scroll", handleScroll);
+      targetElement.removeEventListener("scroll", handleScroll);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("focus", calculateScrollState);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
-  }, [calculateScrollState, scrollElementId]);
+  }, [
+    scrollElement,
+    scrollElementId,
+    calculateScrollState,
+    debouncedCalculateScrollState,
+  ]);
 
   return scrollState;
 }

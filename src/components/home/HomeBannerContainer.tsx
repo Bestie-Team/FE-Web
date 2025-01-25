@@ -14,7 +14,7 @@ export default function HomeBannerContainer() {
           alt="homeBanner"
           src="https://cdn.lighty.today/strawberry.jpeg"
           width={600}
-          height={434}
+          height={420}
           className={styles.homeBannerImage}
         />
         <Flex direction="column" className={styles.textWrapper}>
@@ -32,9 +32,9 @@ export default function HomeBannerContainer() {
 }
 
 const styles = {
-  homeBannerImage: "h-[434px] object-cover",
+  homeBannerImage: "h-[420px] object-cover",
 
-  textWrapper: "absolute bottom-0 left-0 pl-[28px] pb-[32px]",
+  textWrapper: "absolute bottom-0 left-0 pl-6 pb-8",
   subTitle:
     "text-base-white font-[500] text-[14px] leading-[24px] tracking-[-0.42px]",
   title: "text-base-white text-T1",

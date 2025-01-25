@@ -27,7 +27,7 @@ export function Header({
       style={{
         top: 0,
         position: "fixed",
-        zIndex: 5,
+        zIndex: 10,
       }}
       className={clsx(
         styles.universalHeaderWrapper,
@@ -70,6 +70,7 @@ export function HeaderWithBackBtn({
         "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-[20px]"
       )}
       style={{
+        zIndex: 5,
         position: "fixed",
         top: 0,
         backgroundColor: color ? color : "transparent",
@@ -115,6 +116,7 @@ export function BackgroundReversibleHeader() {
     <div
       style={{
         top: 0,
+        zIndex: 10,
         position: "fixed",
         background: bgColor,
         transition: "background-color 0.5s ease",
@@ -162,11 +164,11 @@ export function BackgroundReversibleHeader() {
 
 const styles = {
   universalHeaderWrapper:
-    "z-20 min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white",
+    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white",
   arrowIconContainer:
-    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer",
+    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow",
   iconWrapperStyle:
-    "flex justify-center items-center w-[40px] h-[40px] p-[8px] cursor-pointer",
+    "flex justify-center items-center w-[40px] h-[40px] p-[8px] cursor-pointer  hover:animate-shrink-grow-less",
   lightyIconContainer: "h-[40px] py-[10px]",
   squareIconContainer: "w-[44px] h-[44px] py-[10px] pr-[20px]",
 };

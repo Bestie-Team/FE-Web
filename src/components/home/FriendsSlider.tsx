@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
 import { useRouter } from "next/navigation";
-import useFriends from "../friends/hooks/useFriends";
+import { useFriendsAll } from "../friends/hooks/useFriends";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function FriendsSlider() {
   const router = useRouter();
-  const { data, isFetching } = useFriends();
+  const { data, isFetching } = useFriendsAll();
+  const [hide, setHide] = useState(true);
   if (!data) return;
+  const twelveFriends = data.slice(0, 12);
+  const showingFriends = () => {
+    if (hide) {
+      return data.map((friend, i) => {
+        return (
+          <React.Fragment key={`friendItem${i}`}>
+            <FriendItem friendInfo={friend} />
+            <Spacing size={4} direction="horizontal" />
+          </React.Fragment>
+        );
+      });
+    } else {
+      return twelveFriends.map((friend, i) => {
+        return (
+          <React.Fragment key={`friendItem${i}`}>
+            <FriendItem friendInfo={friend} />
+            <Spacing size={4} direction="horizontal" />
+          </React.Fragment>
+        );
+      });
+    }
+  };
 
   return (
     <div className="w-max-[430px] pl-[20px] overflow-scroll no-scrollbar">
@@ -23,20 +46,14 @@ export default function FriendsSlider() {
               router.push("/friends/search");
             }}
           />
-          {data.map((friend, i) => {
-            return (
-              <React.Fragment key={`friendItem${i}`}>
-                <FriendItem friendInfo={friend} />
-                <Spacing size={4} direction="horizontal" />
-              </React.Fragment>
-            );
-          })}
-
-          <SeeMoreItem
-            onClick={() => {
-              console.log("친구를 추가하라");
-            }}
-          />
+          {showingFriends()}
+          {data.length > 12 ? (
+            <SeeMoreItem
+              onClick={() => {
+                setHide(false);
+              }}
+            />
+          ) : null}
         </Flex>
       )}
     </div>

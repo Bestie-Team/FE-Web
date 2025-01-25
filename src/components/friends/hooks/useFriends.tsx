@@ -30,3 +30,28 @@ function useFriends() {
 }
 
 export default useFriends;
+
+export function useFriendsAll() {
+  const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
+    queryKey: ["friends/all", { accountId: "aaaa", limit: 100 }],
+    queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
+      return getFriends({ ...pageParam, limit: 100 });
+    },
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    initialPageParam: {
+      name: "가가",
+      accountId: "aaaaa",
+    },
+  });
+
+  const loadMore = useCallback(() => {
+    if (hasNextPage === false || isFetching) {
+      return;
+    }
+    fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetching]);
+
+  const friends = data?.pages.map(({ users }) => users).flat();
+
+  return { data: friends, loadMore, isFetching, hasNextPage };
+}

@@ -92,12 +92,12 @@ export default function Splash() {
 
 const styles = {
   oAuthButton:
-    "w-full h-[50px] flex items-center justify-center gap-[12px] px-6 py-4 rounded-full hover:animate-shrink-grow-less transition-transform duration-300",
+    "w-full h-[50px] flex items-center justify-center gap-3 px-6 py-4 rounded-full hover:animate-shrink-grow-less",
   loginButtonWrapper: "flex flex-col justify-center items-center gap-3",
   buttonContainer:
-    "flex flex-col gap-[26.5px] px-[20px] mb-[55px] text-grayscale-900 text-T5",
+    "flex flex-col gap-[26.5px] px-5 mb-[55px] text-grayscale-900 text-T5",
 
-  textWrapper: "text-C5 text-base-white flex justify-center gap-[4px] h-[14px]",
+  textWrapper: "text-C5 text-base-white flex justify-center gap-1 h-[14px]",
   centerWrapper: "flex flex-col gap-[26px] items-center text-base-white",
 
   splashContainer:

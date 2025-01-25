@@ -17,7 +17,7 @@ export const NavLink = ({
 }: NavLinkProps) => (
   <Link
     href={href}
-    className="flex justify-center w-[64px] h-[44px] items-center transition-transform duration-300 hover:animate-shrink-grow"
+    className="flex justify-center w-16 h-[44px] items-center hover:animate-shrink-grow"
     onMouseDown={onClick}
   >
     {icon(isActive, profileImageUrl ?? "")}
