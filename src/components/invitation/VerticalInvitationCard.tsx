@@ -55,7 +55,7 @@ export function VerticalInvitationCard({
   if (gathering && setGathering && !invitation) {
     const { name, invitationImageUrl, gatheringDate, description, address } =
       gathering;
-    const time = formatToKoreanTime(gatheringDate);
+
     return (
       <div className="relative">
         <Image
@@ -80,7 +80,9 @@ export function VerticalInvitationCard({
           <Flex align="center">
             <CalendarIcon width="14" height="14" color="#AEAEAE" />
             <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">{time}</span>
+            <span className="text-B4">
+              {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
+            </span>
           </Flex>
           <Flex align="center">
             <MapPinIcon />
@@ -107,7 +109,6 @@ export function VerticalInvitationCard({
       sender,
     } = invitation;
 
-    const time = formatToKoreanTime(gatheringDate);
     return (
       <div className="relative">
         <Image
@@ -134,7 +135,9 @@ export function VerticalInvitationCard({
           <Flex align="center">
             <CalendarIcon width="14" height="14" color="#AEAEAE" />
             <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">{time}</span>
+            <span className="text-B4">
+              {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
+            </span>
           </Flex>
           <Flex align="center">
             <MapPinIcon />
