@@ -72,7 +72,7 @@ export default function DateSlider() {
 }
 
 const styles = {
-  titleWrapper: "px-[20px] w-full",
+  titleWrapper: "px-5 w-full",
   title: "text-T3 flex-grow",
 
   dateWrapper: "w-[330px] mx-auto my-0 px-0 py-[10px]",

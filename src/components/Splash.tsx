@@ -41,7 +41,7 @@ export default function Splash() {
   return (
     <div className={styles.splashContainer}>
       <div className={styles.centerWrapper}>
-        <div className="flex flex-col items-center gap-[4px]">
+        <div className="flex flex-col items-center gap-1">
           <div className="text-B3 text-base-white mt-[200px]">
             소중한 당신의 추억을 빛내줄
           </div>
@@ -56,7 +56,7 @@ export default function Splash() {
             title="SNS로 간편하게 시작하기"
             color="#686868"
             closeButton={false}
-            className="py-[8px] !px-[12px] rounded-[8px]"
+            className="py-2 !px-3 rounded-[8px]"
           />
           {oAuthButtons.map(({ color, provider, label, icon }, idx) => (
             <Button

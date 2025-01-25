@@ -34,9 +34,7 @@ export default function PhotoSwiper({
         <SwiperSlide
           className={clsx(
             "relative",
-            type === "home"
-              ? "rounded-[16px] shadow-bottom mt-[8px] mb-[52px]"
-              : ""
+            type === "home" ? "rounded-[16px] shadow-bottom mt-2 mb-[52px]" : ""
           )}
           key={`slide${idx}`}
         >
@@ -72,8 +70,8 @@ export default function PhotoSwiper({
 
 const styles = {
   feedImageInfo:
-    "flex justify-between w-full absolute bottom-0 text-base-white text-C2 px-[16px] py-[10px] rounded-b-[16px] bg-[#00000080]",
+    "flex justify-between w-full absolute bottom-0 text-base-white text-C2 px-4 py-[10px] rounded-b-[16px] bg-[#00000080]",
   gatheringImageInfo:
-    "flex flex-col justify-between w-full absolute bottom-[-0.5px] text-grayscale-900 text-T5 p-[12px] pt-[8px] rounded-b-[16px] bg-base-white",
+    "flex flex-col justify-between w-full absolute bottom-[-0.5px] text-grayscale-900 text-T5 p-3 pt-2 rounded-b-[16px] bg-base-white",
   image: "slide-img object-cover rounded-[16px] aspect-[17/18]",
 };

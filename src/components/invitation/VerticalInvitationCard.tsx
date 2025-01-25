@@ -126,10 +126,8 @@ export function VerticalInvitationCard({
             alt="invitationImage"
           />
           <Spacing size={10} />
-          <span className="text-T1 pl-[4px]">{name}</span>
-          <span className="text-B4 pl-[4px] text-grayscale-600">
-            {description}
-          </span>
+          <span className="text-T1 pl-1">{name}</span>
+          <span className="text-B4 pl-1 text-grayscale-600">{description}</span>
         </Flex>
         <Flex direction="column" className={styles.subContentWrapper}>
           <Flex align="center">
@@ -158,11 +156,11 @@ export function VerticalInvitationCard({
 const styles = {
   image: "h-[210px] object-cover rounded-[12px]",
   mainContentWrapper: "absolute p-[15px] left-0 top-0",
-  subContentWrapper: "absolute pl-[4px] left-[15px] top-[332px]",
-  groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-[4px]",
-  fromWrapper: "absolute pr-[4px] right-[15px] bottom-[22px]",
+  subContentWrapper: "absolute pl-1 left-[15px] top-[332px]",
+  groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",
+  fromWrapper: "absolute pr-1 right-[15px] bottom-[22px]",
   rejectBtn:
-    "bg-grayscale-100 px-[24px] py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200",
+    "bg-grayscale-100 px-6 py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200",
   acceptBtn:
-    "bg-grayscale-900 px-[24px] py-[14px] text-base-white rounded-[36px] text-T6",
+    "bg-grayscale-900 px-6 py-[14px] text-base-white rounded-[36px] text-T6",
 };

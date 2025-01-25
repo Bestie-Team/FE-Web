@@ -30,4 +30,4 @@ export default function TabButton({
   );
 }
 
-const textStyle = "h-[39px] pt-[10px] pb-[8px] flex items-center text-T4";
+const textStyle = "h-[39px] pt-[10px] pb-2 flex items-center text-T4";

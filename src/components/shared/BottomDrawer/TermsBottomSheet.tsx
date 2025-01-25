@@ -41,7 +41,7 @@ export default function TermsBottomSheet({
 
   return (
     <BottomSheetWrapper onClose={onClose} open={open}>
-      <Flex direction="column" className="p-[24px] pt-[8px] pb-[32px]">
+      <Flex direction="column" className="p-6 pt-2 pb-8">
         <Flex direction="column" className="text-T3">
           <span>서비스 이용을 위해</span>
           <Spacing size={7} />
@@ -50,7 +50,7 @@ export default function TermsBottomSheet({
           <div
             onClick={(e) => handleAllCheck(e, !isAllChecked)}
             className={
-              "text-B3 p-[16px] rounded-full border flex items-center border-[#D8D8D8]"
+              "text-B3 p-4 rounded-full border flex items-center border-[#D8D8D8]"
             }
           >
             <CheckInCircleIcon width="20" height="20" checked={isAllChecked} />
@@ -101,6 +101,6 @@ export default function TermsBottomSheet({
 const styles = {
   button:
     "rounded-full text-[14px] font-[600] py-[18px] w-full text-base-white",
-  buttonWrapper: "pt-[12px] pb-[10px] px-[20px]",
-  list: "text-B3 flex items-center px-[12px] cursor-pointer",
+  buttonWrapper: "pt-3 pb-[10px] px-5",
+  list: "text-B3 flex items-center px-3 cursor-pointer",
 };

@@ -10,11 +10,11 @@ export interface SettingsItem {
 
 export default function SettingsMenu({ logout }: { logout: () => void }) {
   return (
-    <Flex direction="column" className="pt-[32px] gap-[36px]">
+    <Flex direction="column" className="pt-8 gap-9">
       {settings.map((setting) => {
         return (
           <ul key={setting.category} className="flex flex-col">
-            <span className="px-[20px] text-C1 text-grayscale-400">
+            <span className="px-5 text-C1 text-grayscale-400">
               {setting.category}
             </span>
             {setting.list.map((list: SettingsItem, idx) => {

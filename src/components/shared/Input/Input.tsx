@@ -78,8 +78,8 @@ export default function Input({
 
 const height = `h-[50px]`;
 const styles = {
-  inputWrapper: `w-full ${height} px-[20px] rounded-[40px] flex items-center gap-[16px] justify-between bg-grayscale-10 border transition-all duration-300`,
+  inputWrapper: `w-full ${height} px-5 rounded-[40px] flex items-center gap-4 justify-between bg-grayscale-10 border transition-all duration-300`,
   input:
     "flex-grow bg-transparent outline-none text-[16px] font-[500] leading-[22.86px] tracking-[-0.48px] bg-grayscale-10 transform origin-left scale-[0.875]",
-  helpMessage: "pl-[8px] text-C2 text-[#FA6767] inline-block mt-[6px]",
+  helpMessage: "pl-2 text-C2 text-[#FA6767] inline-block mt-[6px]",
 };

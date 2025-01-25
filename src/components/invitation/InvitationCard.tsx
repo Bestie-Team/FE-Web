@@ -62,12 +62,11 @@ export default function InvitationCard({
 }
 
 const styles = {
-  container: "w-full h-full px-[20px]",
+  container: "w-full h-full px-5",
   mainContentWrapper:
-    "h-[173px] w-full max-w-[196px] gap-[54px] absolute py-[24px] pl-[20px] left-0 top-0",
-  subContentWrapper:
-    "w-full max-w-[188px] absolute pl-[20px] py-[24px] left-0 bottom-0",
+    "h-[173px] w-full max-w-[196px] gap-[54px] absolute py-6 pl-5 left-0 top-0",
+  subContentWrapper: "w-full max-w-[188px] absolute pl-5 py-6 left-0 bottom-0",
 
   button:
-    "absolute right-[20px] bottom-[24px] h-fit text-C1 flex-none px-[24px] py-[12px] rounded-[36px] text-base-white",
+    "absolute right-[20px] bottom-[24px] h-fit text-C1 flex-none px-6 py-3 rounded-[36px] text-base-white",
 };

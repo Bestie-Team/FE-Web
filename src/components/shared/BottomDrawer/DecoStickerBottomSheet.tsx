@@ -28,7 +28,7 @@ export default function DecoStickerBottomSheet({
   const selectedStickers = stickers();
   return (
     <BottomSheetWrapper bar onClose={onClose} open={open} bright={true}>
-      <Flex direction="column" className="p-[24px] pt-[4px]" align="center">
+      <Flex direction="column" className="p-6 pt-1" align="center">
         <div>
           <Flex>
             {decoKinds.map((kind) => (
@@ -77,7 +77,7 @@ export default function DecoStickerBottomSheet({
 }
 
 const styles = {
-  stickerKind: "py-[8px] px-[12px] text-B2 cursor-pointer",
+  stickerKind: "py-2 px-3 text-B2 cursor-pointer",
   wrapper: "grid grid-cols-4 grid-rows-3 gap-5 w-fit",
-  box: "bg-grayscale-50 rounded-[12px] w-[64px] h-[64px]",
+  box: "bg-grayscale-50 rounded-[12px] w-16 h-16",
 };

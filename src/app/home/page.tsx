@@ -34,7 +34,6 @@ export default function HomePage() {
     const imageUrlFromSignup = localStorage.getItem(
       STORAGE_KEYS.PROFILE_IMAGE_URL
     );
-    const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
     if (refParam === "signup") {
       setIsNew(true);
       setUserInfo((prev) => ({

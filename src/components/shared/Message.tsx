@@ -17,7 +17,7 @@ export default function Message() {
 
 const styles = {
   messageContainer:
-    "px-[16px] py-[14px] rounded-[10px] bg-grayscale-50 items-center mb-[20px]",
+    "px-4 py-[14px] rounded-[10px] bg-grayscale-50 items-center mb-5",
 
   text: "flex-grow text-B3",
 };

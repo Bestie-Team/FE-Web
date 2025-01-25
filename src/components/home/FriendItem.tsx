@@ -22,7 +22,7 @@ export default function FriendItem({
             groupInfo?.imageUrl ||
             "/lighty_square.png"
           }
-          className="rounded-full object-cover w-[56px] h-[56px]"
+          className="rounded-full object-cover w-14 h-14"
           width={56}
           height={56}
         />
@@ -92,4 +92,4 @@ export function SeeMoreItem({ onClick }: { onClick: () => void }) {
 }
 
 const iconWrapperStyle =
-  "relative rounded-full w-[56px] h-[56px] border-[1px] border-[#E9E9E9] cursor-pointer";
+  "relative rounded-full w-14 h-14 border-[1px] border-[#E9E9E9] cursor-pointer";

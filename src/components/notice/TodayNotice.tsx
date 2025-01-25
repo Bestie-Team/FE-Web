@@ -4,7 +4,7 @@ import ReportNoticeItem from "./ReportNoticeItem";
 
 export default function TodayNotice() {
   return (
-    <Flex direction="column" className="px-[20px]">
+    <Flex direction="column" className="px-5">
       <span className="text-T4">오늘의 알림</span>
       <Spacing size={12} />
       <ReportNoticeItem />

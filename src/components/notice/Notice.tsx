@@ -6,7 +6,7 @@ import TodayNotice from "./TodayNotice";
 export default function Notice() {
   return (
     <Flex direction="column" className="h-screen bg-grayscale-50">
-      <Flex align="center" className="h-[48px]">
+      <Flex align="center" className="h-12">
         <div
           className={arrowIconContainerStyle}
           onClick={() => {
@@ -24,4 +24,4 @@ export default function Notice() {
   );
 }
 const arrowIconContainerStyle =
-  "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer";
+  "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer";

@@ -16,11 +16,11 @@ export default function NoticeItem({
   description,
 }: NoticeProps) {
   return (
-    <Flex className="p-[16px] rounded-[16px] bg-base-white">
+    <Flex className="p-4 rounded-[16px] bg-base-white">
       <Flex
         align="center"
         justify="center"
-        className="w-[32px] h-[32px] rounded-full bg-grayscale-50"
+        className="w-8 h-8 rounded-full bg-grayscale-50"
       >
         {icon}
       </Flex>

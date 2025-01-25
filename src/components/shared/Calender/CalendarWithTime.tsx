@@ -22,7 +22,7 @@ export default function CalendarWithTime({
     <Flex direction="column" className="w-[340px]">
       <LightyCalendar />
       <Spacing size={16} />
-      <Flex className="px-[12px]">
+      <Flex className="px-3">
         <Button
           onClick={() => setAmpm("오전")}
           className={clsx(
@@ -69,6 +69,6 @@ export default function CalendarWithTime({
 }
 
 const styles = {
-  timeWrapper: "gap-[8px] overflow-x-scroll no-scrollbar px-[12px]",
+  timeWrapper: "gap-2 overflow-x-scroll no-scrollbar px-3",
   button: "py-[10px] px-[18px] rounded-[40px] text-B4 border",
 };

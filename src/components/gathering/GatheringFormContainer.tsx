@@ -49,9 +49,9 @@ export default function GatheringFormContainer({
   const [calendarOpen, setCalendarOpen] = useState(false);
   const header = getHeader("/gathering/new");
   return (
-    <div className="h-screen bg-base-white pt-[48px]">
+    <div className="h-screen bg-base-white pt-12">
       {header}
-      <form className="flex flex-col px-[20px]">
+      <form className="flex flex-col px-5">
         <Spacing size={16} />
         <Flex align="center" className="h-[50px]">
           <EmptyLogoIcon color="#0A0A0A" />

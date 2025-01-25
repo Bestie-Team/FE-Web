@@ -40,11 +40,11 @@ export default function GroupLeaderContainer({
 }
 
 const styles = {
-  leaderInfoContainer: "w-full px-[20px] py-[16px] bg-base-white text-B3",
+  leaderInfoContainer: "w-full px-5 py-4 bg-base-white text-B3",
 
   leaderImage:
-    "object-cover rounded-full border-[1.27px] border-base-white h-[36px] w-[36px]",
+    "object-cover rounded-full border-[1.27px] border-base-white h-9 w-9",
 
   buttonWrapper:
-    "text-C1 text-base-white bg-grayscale-900 px-[12px] py-[8px] rounded-[8px] h-fit",
+    "text-C1 text-base-white bg-grayscale-900 px-3 py-2 rounded-[8px] h-fit",
 };

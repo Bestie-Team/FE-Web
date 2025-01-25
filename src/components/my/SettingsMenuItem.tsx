@@ -47,4 +47,4 @@ export default function SettingsMenuItem({
 }
 
 const liStyle =
-  "px-[20px] flex justify-between items-center py-[20px] cursor-pointer hover:bg-grayscale-10 h-[54px]";
+  "px-5 flex justify-between items-center py-5 cursor-pointer hover:bg-grayscale-10 h-[54px]";

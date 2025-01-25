@@ -35,7 +35,7 @@ export default function FriendsSlider() {
   };
 
   return (
-    <div className="w-max-[430px] pl-[20px] overflow-scroll no-scrollbar">
+    <div className="w-max-[430px] pl-5 overflow-scroll no-scrollbar">
       <Spacing size={16} />
       {isFetching ? (
         <DotSpinner />

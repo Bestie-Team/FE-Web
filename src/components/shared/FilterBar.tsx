@@ -53,5 +53,4 @@ export default function FilterBar() {
   );
 }
 
-const filterBarWrapperStyle =
-  "max-w-[430px] flex justify-between pt-[16px] pb-[12px]";
+const filterBarWrapperStyle = "max-w-[430px] flex justify-between pt-4 pb-3";

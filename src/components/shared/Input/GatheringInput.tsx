@@ -116,10 +116,7 @@ export default function GatheringInput({
               />
             </Flex>
           ) : addressSearch === 2 ? (
-            <DaumPostcodeEmbed
-              onComplete={handleComplete}
-              className="px-[24px]"
-            />
+            <DaumPostcodeEmbed onComplete={handleComplete} className="px-6" />
           ) : (
             <Flex direction="column" className={styles.bottomSheetContainer}>
               <Flex justify="space-between">
@@ -152,8 +149,8 @@ export default function GatheringInput({
 }
 
 const styles = {
-  inputWrapper: `w-full text-B3 text-center min-h-[103px] px-[20px] py-[20px] rounded-[20px] cursor-pointer flex flex-col items-center justify-center outline-none text-[14px] focus:outline-none bg-grayscale-10 border transition-all duration-300`,
+  inputWrapper: `w-full text-B3 text-center min-h-[103px] px-5 py-5 rounded-[20px] cursor-pointer flex flex-col items-center justify-center outline-none text-[14px] focus:outline-none bg-grayscale-10 border transition-all duration-300`,
   button:
-    "py-[10px] px-[12px] bg-grayscale-900 rounded-[10px] text-base-white text-C2",
-  bottomSheetContainer: "p-[24px] pt-[4px] gap-[20px]",
+    "py-[10px] px-3 bg-grayscale-900 rounded-[10px] text-base-white text-C2",
+  bottomSheetContainer: "p-6 pt-1 gap-5",
 };

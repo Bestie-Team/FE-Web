@@ -14,10 +14,7 @@ export default function LightyInfoContainer({
   content,
 }: GatheringInfoContainerProps) {
   return (
-    <Flex
-      direction="column"
-      className="pt-[24px] px-[20px] pb-[32px] bg-base-white"
-    >
+    <Flex direction="column" className="pt-6 px-5 pb-8 bg-base-white">
       <Flex align="center">
         {icon}
         <Spacing size={4} direction="horizontal" />

@@ -32,11 +32,11 @@ export default function ActionItem({
 }
 
 const styles = {
-  container: "py-[12px] w-full hover:animate-tinkle",
+  container: "py-3 w-full hover:animate-tinkle",
 
   descWrapper: "flex-grow cursor-pointer items-center",
   button:
-    "bg-grayscale-900 w-[40px] h-[40px] flex justify-center items-center rounded-full cursor-default",
+    "bg-grayscale-900 w-10 h-10 flex justify-center items-center rounded-full cursor-default",
 
   subTitle: "text-C2 text-grayscale-400",
 };

@@ -31,7 +31,7 @@ export default function TimelineItem({ imageUrl }: { imageUrl: string }) {
 }
 
 const styles = {
-  date: "text-C2 text-grayscale-600 px-[12px] py-[6px] rounded-[12px] bg-grayscale-50",
+  date: "text-C2 text-grayscale-600 px-3 py-[6px] rounded-[12px] bg-grayscale-50",
 
-  image: "rounded-[12px] w-[56px] h-[56px]",
+  image: "rounded-[12px] w-14 h-14",
 };

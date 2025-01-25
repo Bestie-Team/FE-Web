@@ -73,7 +73,7 @@ const styles = {
   dimmed: "flex justify-center items-center z-200",
 
   modalWrapper:
-    "bg-base-white rounded-[20px] w-[268px] pt-[28px] pb-[20px] px-[30px] z-201",
+    "bg-base-white rounded-[20px] w-[268px] pt-[28px] pb-5 px-[30px] z-201",
   button: "w-[104px] py-[14px] rounded-full text-T6",
 
   content: "text-B3 text-grayscale-600 text-center max-w-[168px]",

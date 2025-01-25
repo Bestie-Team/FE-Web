@@ -22,7 +22,7 @@ export default function UpcomingSchedule() {
 }
 
 const styles = {
-  scheduleContainer: "w-[350px] px-[5px] pb-[80px]",
+  scheduleContainer: "w-[350px] px-[5px] pb-20",
   timelineWrapper:
     "absolute top-[10px] left-[7.5px] w-[1px] h-full bg-grayscale-100",
 };
