@@ -10,9 +10,13 @@ import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import { useAuth } from "./shared/providers/AuthProvider";
+import usePatchProfileImage from "./my/hooks/usePatchProfileImage";
 
 export default function Splash() {
   const { login } = useAuth();
+  const { mutate: patchProfileImage } = usePatchProfileImage({
+    onError: (error) => console.log(error),
+  });
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       const user_info = await postLogin({
@@ -23,6 +27,9 @@ export default function Splash() {
           profileImageUrl: user_info?.profileImageUrl,
           accountId: user_info?.accountId,
         });
+        if (user_info?.profileImageUrl) {
+          patchProfileImage({ profileImageUrl: user_info?.profileImageUrl });
+        }
       }
     },
     onError: (error) => {

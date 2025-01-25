@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import useUpdateProfile from "../my/hooks/useUpdateProfile";
 
-export interface UploadType {
+export interface RegisterRequestType {
   email: string;
   name: string;
   accountId: string;
@@ -21,7 +21,7 @@ export default function AddPhoto({
 }: {
   small?: boolean;
   imageUrl?: string | null;
-  setImageUrl?: React.Dispatch<React.SetStateAction<UploadType>>;
+  setImageUrl?: React.Dispatch<React.SetStateAction<RegisterRequestType>>;
 }) {
   const pathname = usePathname();
   const [file, setFile] = useState<File | null>(null);

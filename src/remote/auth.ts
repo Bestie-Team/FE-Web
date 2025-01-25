@@ -1,8 +1,8 @@
 import * as lighty from "lighty-type";
-import { handleProfileImageUpdate } from "./profile";
-import { UploadType } from "@/components/shared/AddPhoto";
+import { postProfileImage } from "./profile";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG } from "./shared";
+import { RegisterRequestType } from "@/components/shared/AddPhoto";
 
 export async function postLogin({ accessToken }: lighty.LoginRequest) {
   const baseUrl = API_CONFIG.getBaseUrl();
@@ -63,57 +63,53 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
   }
 }
 
-export async function postRegister(RegisterRequest: UploadType) {
-  const baseUrl = API_CONFIG.getBaseUrl();
+export async function registerUser(RegisterRequest: RegisterRequestType) {
+  if (!RegisterRequest.accountId || !RegisterRequest.name) {
+    throw new Error("이름과 아이디가 유효하지 않습니다");
+  }
+
   try {
-    if (RegisterRequest.accountId == "" || RegisterRequest.name == "") {
-      throw new Error("이름과 아이디가 유효하지 않습니다");
-    }
-    const targetUrl = `${baseUrl}/auth/register`;
-    const response = await fetch(targetUrl, {
+    const baseUrl = API_CONFIG.getBaseUrl();
+    const response = await fetch(`${baseUrl}/auth/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...RegisterRequest,
         profileImageUrl: null,
       }),
     });
 
+    // Check if registration was successful
+    if (!response.ok) {
+      throw new Error("회원가입에 실패했습니다");
+    }
+
     const data: lighty.RegisterResponse = await response.json();
 
-    if (response.ok) {
-      if (RegisterRequest.profileImageUrl) {
-        const newUserProfileImageUrl = await handleProfileImageUpdate({
-          file: RegisterRequest.profileImageUrl as File,
-        });
-
-        sessionStorage.setItem(
-          STORAGE_KEYS.USER_INFO,
-          JSON.stringify({
-            accessToken: data.accessToken,
-            accountId: data.accountId,
-            profileImageUrl: newUserProfileImageUrl?.imageUrl,
-          })
-        );
-        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
-      }
-      sessionStorage.setItem(
-        STORAGE_KEYS.USER_INFO,
-        JSON.stringify({
-          accessToken: data.accessToken,
-          accountId: data.accountId,
-        })
-      );
-      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
-      window.location.href = "/home?ref=signup";
+    let profileImageUrl = null;
+    if (RegisterRequest.profileImageUrl) {
+      const uploadResult = await postProfileImage({
+        file: RegisterRequest.profileImageUrl as File,
+      });
+      profileImageUrl = uploadResult?.imageUrl;
     }
+
+    // Store user information
+    const userInfo = {
+      accessToken: data.accessToken,
+      accountId: data.accountId,
+      ...(profileImageUrl && { profileImageUrl }),
+    };
+
+    sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
+    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
+
+    // Redirect to home page
+    window.location.href = "/home?ref=signup";
+
     return { message: "회원가입을 축하합니다" };
   } catch (error) {
-    if (error instanceof Response) {
-      throw new Error("Error during signup");
-    }
-    throw new Error("Error during signup");
+    console.error("Registration error:", error);
+    throw error;
   }
 }

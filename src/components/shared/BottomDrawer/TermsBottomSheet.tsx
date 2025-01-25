@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useState } from "react";
+import React, { Fragment, MouseEvent, useCallback, useState } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../Button/Button";
@@ -60,8 +60,8 @@ export default function TermsBottomSheet({
           <Spacing size={24} />
           {약관목록.map(({ title, id }, idx) => {
             return (
-              <>
-                <li key={id} className={styles.list}>
+              <Fragment key={id}>
+                <li className={styles.list}>
                   <CheckInCircleIcon
                     width="20"
                     height="20"
@@ -78,7 +78,7 @@ export default function TermsBottomSheet({
                   <NArrowRightIcon checked={termsAgreements[id]} />
                 </li>
                 {idx < 약관목록.length - 1 ? <Spacing size={20} /> : null}
-              </>
+              </Fragment>
             );
           })}
         </Flex>

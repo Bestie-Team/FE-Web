@@ -1,4 +1,4 @@
-import { postRegister } from "@/remote/auth";
+import { registerUser } from "@/remote/auth";
 import { useMutation } from "@tanstack/react-query";
 import * as lighty from "lighty-type";
 
@@ -26,9 +26,13 @@ export default function useSignup({
   onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({
-    mutationKey: ["register"],
+    mutationKey: ["register", email, provider],
     mutationFn: () =>
-      postRegister({ email, name, accountId, profileImageUrl, provider }),
-    onSuccess: (data: { message: string }) => onSuccess(data),
+      registerUser({ email, name, accountId, profileImageUrl, provider }),
+    onSuccess: (data: { message: string } | undefined) => {
+      if (data) {
+        onSuccess(data);
+      }
+    },
   });
 }

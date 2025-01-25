@@ -1,27 +1,6 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 
-export async function handleProfileImageUpdate(imageFile: { file: File }) {
-  try {
-    const imageUrl = await postProfileImage(imageFile);
-    if (imageUrl) {
-      const isPatched = await patchProfileImage({ profileImageUrl: imageUrl });
-      if (isPatched) {
-        return {
-          message: "프로필 이미지가 정상적으로 업로드 되었습니다",
-          imageUrl,
-        };
-      }
-    }
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "이미지 업로드 요청에 실패했습니다"
-    );
-  }
-}
-
 export async function postProfileImage(imageFile: { file: File }) {
   try {
     const baseUrl = API_CONFIG.getBaseUrl();
@@ -33,13 +12,13 @@ export async function postProfileImage(imageFile: { file: File }) {
     const formData = new FormData();
     formData.append("file", imageFile.file);
 
-    const response = await fetchWithAuth(targetUrl, {
+    const response = await fetch(targetUrl, {
       method: "POST",
       body: formData,
     });
     const data: { imageUrl: string } = await response.json();
     localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
-    return data.imageUrl;
+    return { imageUrl: data.imageUrl };
   } catch (error) {
     throw new Error(
       error instanceof Error
@@ -54,7 +33,7 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
   try {
     const targetUrl = `${baseUrl}/users/profile/image`;
 
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithAuth(targetUrl, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +48,7 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
       );
     }
     console.log("프로필 이미지가 성공적으로 업데이트되었습니다");
-    return true;
+    return { message: "프로필 이미지가 성공적으로 업데이트되었습니다" };
   } catch (error) {
     console.error("Error during updating profile image:", error);
     throw new Error(

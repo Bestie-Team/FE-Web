@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import * as lighty from "lighty-type";
-import AddPhoto, { UploadType } from "./shared/AddPhoto";
+import AddPhoto, { RegisterRequestType } from "./shared/AddPhoto";
 import Input from "./shared/Input/Input";
 import FixedBottomButton from "./shared/Button/FixedBottomButton";
 import Spacing from "./shared/Spacing";
@@ -22,7 +22,7 @@ export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
 export default function UploadProfileForm() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [formValues, setFormValues] = useState<UploadType>({
+  const [formValues, setFormValues] = useState<RegisterRequestType>({
     email: "",
     name: "",
     accountId: "",
@@ -119,7 +119,7 @@ export default function UploadProfileForm() {
   );
 }
 
-function validate(formValues: UploadType) {
+function validate(formValues: RegisterRequestType) {
   const errors: Partial<{
     email: string;
     name: string;

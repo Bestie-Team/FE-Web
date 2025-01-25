@@ -19,7 +19,7 @@ export default function usePostProfileImage({
         return await postProfileImage({ file });
       }
     },
-    onSuccess: (imageUrl) => onSuccess(imageUrl),
+    onSuccess: (data: { imageUrl: string }) => onSuccess(data.imageUrl),
     onError: (error: Error) => onError(error),
   });
 }
