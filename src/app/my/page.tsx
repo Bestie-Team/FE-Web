@@ -14,8 +14,12 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { useScroll } from "@/hooks/useScroll";
 
 export default function MyPage() {
+  const [scrollReady, setScrollReady] = useState(false);
+  useScroll("/my", scrollReady ? "scrollable-container" : undefined);
+
   const { data: user, isFetching, isError } = useUserDetail();
   const { logout } = useAuth();
   const router = useRouter();
@@ -71,6 +75,12 @@ export default function MyPage() {
       return;
     }
   }, []);
+
+  useEffect(() => {
+    if (user && !isFetching && !isError) {
+      setScrollReady(true);
+    }
+  }, [user, isFetching, isError]);
 
   if (!user) return;
 

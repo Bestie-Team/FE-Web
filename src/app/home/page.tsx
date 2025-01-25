@@ -20,9 +20,12 @@ import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useScroll } from "@/hooks/useScroll";
 
 export default function HomePage() {
-  useChangeHeaderStyle();
+  const [scrollReady, setScrollReady] = useState(false);
+  useScroll("/home", scrollReady ? "scrollable-container" : undefined);
+  useChangeHeaderStyle({ scrollReady });
   const header = getHeader("/home");
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
@@ -51,39 +54,46 @@ export default function HomePage() {
     minDate,
     maxDate,
   });
-  if (!this_week || isFetching || isError) return <FullPageLoader />;
 
-  return (
-    <div
-      id="scrollable-container"
-      className="bg-base-white overflow-y-scroll no-scrollbar"
-    >
-      {header}
-      <HomeBannerContainer />
-      <FriendsSlider />
-      <Spacing size={40} />
-      <DateSlider />
-      <Spacing size={8} />
-      {this_week ? (
-        <GatheringSwiper percent={2.2} gatherings={this_week?.gatherings} />
-      ) : null}
-      <Banner />
-      <Flex direction="column" align="center">
-        <Flex className="w-full px-[20px]" align="center">
-          <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
-          <ArrowRightIcon width="16" height="16" color="#808080" />
+  useEffect(() => {
+    if (this_week && !isFetching && !isError) {
+      setScrollReady(true);
+    }
+  }, [this_week, isFetching, isError]);
+
+  if (!this_week || isFetching || isError) return <FullPageLoader />;
+  else
+    return (
+      <div
+        id="scrollable-container"
+        className="bg-base-white overflow-y-scroll no-scrollbar"
+      >
+        {header}
+        <HomeBannerContainer />
+        <FriendsSlider />
+        <Spacing size={40} />
+        <DateSlider />
+        <Spacing size={8} />
+        {this_week ? (
+          <GatheringSwiper percent={2.2} gatherings={this_week?.gatherings} />
+        ) : null}
+        <Banner />
+        <Flex direction="column" align="center">
+          <Flex className="w-full px-[20px]" align="center">
+            <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
+            <ArrowRightIcon width="16" height="16" color="#808080" />
+          </Flex>
+          <Gathering where={GatheringInWhich.HOME} className="pt-[16px]" />
         </Flex>
-        <Gathering where={GatheringInWhich.HOME} className="pt-[16px]" />
-      </Flex>
-      {isModalOpen && (
-        <MemoriesBottomSheet
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        />
-      )}
-      {isNew && <WelcomeBottomSheet onClose={() => setIsNew(false)} />}
-      <Spacing size={87} />
-    </div>
-  );
+        {isModalOpen && (
+          <MemoriesBottomSheet
+            onClose={() => {
+              setIsModalOpen(false);
+            }}
+          />
+        )}
+        {isNew && <WelcomeBottomSheet onClose={() => setIsNew(false)} />}
+        <Spacing size={87} />
+      </div>
+    );
 }

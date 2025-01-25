@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import FilterBar from "@/components/shared/FilterBar";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
@@ -30,8 +30,12 @@ import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { useScroll } from "@/hooks/useScroll";
 
 export default function FeedPage() {
+  const [scrollReady, setScrollReady] = useState(false);
+  useScroll("/feed", scrollReady ? "scrollable-container" : undefined);
+
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const [commentDeleteModalOpen, setCommentDeleteModalOpen] = useRecoilState(
@@ -113,6 +117,12 @@ export default function FeedPage() {
       toast.error("피드를 숨기지 못했어요");
     },
   });
+
+  useEffect(() => {
+    if (feedAll && feedMine && !isFetching && !isFetchingMine) {
+      setScrollReady(true);
+    }
+  }, [feedAll, feedMine, isFetching, isFetchingMine]);
 
   const renderSwipers = useMemo(() => {
     return (

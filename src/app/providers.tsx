@@ -83,17 +83,21 @@ const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-  useScroll(pathname, "scrollable-container");
+
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (typeof window !== "undefined") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   }, [pathname]);
 
   useEffect(() => {
-    const publicPaths = ["/", "/signup"];
-    if (!isAuthenticated && !publicPaths.includes(pathname)) {
+    const publicPaths = ["/signup"];
+    const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
+
+    if (!isAuthenticated && !isPublicPath) {
       router.replace("/");
     }
   }, [isAuthenticated, pathname, router]);

@@ -5,8 +5,12 @@ import DotSpinner from "./Spinner/DotSpinner";
 
 function FullPageLoader({ message }: { message?: string }) {
   return (
-    <Flex
+    <div
+      id="fullPageLoader"
       style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         zIndex: 10,
         position: "fixed",
         top: 0,
@@ -16,8 +20,6 @@ function FullPageLoader({ message }: { message?: string }) {
         opacity: 0.4,
         backgroundColor: "#f8f8f8",
       }}
-      justify="center"
-      align="center"
     >
       <Flex direction="column" align="center">
         <DotSpinner width={40} height={40} />
@@ -28,7 +30,7 @@ function FullPageLoader({ message }: { message?: string }) {
           </>
         ) : null}
       </Flex>
-    </Flex>
+    </div>
   );
 }
 

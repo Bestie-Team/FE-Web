@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useRef, memo } from "react";
+import React, { Suspense, useEffect, useRef, memo, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -18,6 +18,7 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { useScroll } from "@/hooks/useScroll";
 
 type TabName = "1" | "2";
 
@@ -28,6 +29,9 @@ type FilterAndTabsProps = {
 };
 
 export default function MyGatheringPage() {
+  const [scrollReady, setScrollReady] = useState(false);
+  useScroll("/gathering", scrollReady ? "scrollable-container" : undefined);
+
   const header = getHeader("/gathering");
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
@@ -50,9 +54,16 @@ export default function MyGatheringPage() {
     reset();
   }, [reset]);
 
+  useEffect(() => {
+    if (data && !isFetching && !isError) {
+      setScrollReady(true);
+    }
+  }, [data, isFetching, isError]);
+
   return (
     <div
       ref={containerRef}
+      id="scrollable-container"
       className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
     >
       {header}
