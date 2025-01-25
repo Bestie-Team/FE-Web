@@ -1,4 +1,4 @@
-import { handleProfileImageUpdate } from "@/remote/profile";
+import { updateProfileImage } from "@/remote/profile";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useUpdateProfile({
@@ -14,7 +14,7 @@ export default function useUpdateProfile({
       if (file == null) throw new Error("업로드할 파일이 없습니다.");
       else {
         console.log(file);
-        return await handleProfileImageUpdate({ file });
+        return await updateProfileImage({ file });
       }
     },
     onError: (error: Error) => onError(error),

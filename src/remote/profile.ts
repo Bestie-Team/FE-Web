@@ -58,3 +58,28 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
     );
   }
 }
+
+export async function updateProfileImage(imageFile: { file: File }) {
+  try {
+    const { imageUrl } = await postProfileImage(imageFile);
+    console.log("Image uploaded successfully:", imageUrl);
+
+    const updateResponse = await patchProfileImage({
+      profileImageUrl: imageUrl,
+    });
+    console.log(updateResponse.message);
+
+    return {
+      success: true,
+      message: "프로필 이미지가 성공적으로 업로드 및 업데이트되었습니다",
+      imageUrl,
+    };
+  } catch (error) {
+    console.error("Error during profile image update process:", error);
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "프로필 이미지 업로드 및 업데이트 중 문제가 발생했습니다"
+    );
+  }
+}
