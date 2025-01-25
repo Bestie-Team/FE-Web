@@ -15,7 +15,6 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import useScroll from "@/hooks/useScroll";
 
 export default function MyPage() {
   const [scrollReady, setScrollReady] = useState(false);
@@ -24,8 +23,6 @@ export default function MyPage() {
   const [profileInfo, setProfileInfo] = useState<
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
-
-  useScroll(scrollReady ? "scrollable-container" : undefined);
 
   const { data: user, isFetching, isError } = useUserDetail();
   const { logout } = useAuth();
@@ -81,11 +78,7 @@ export default function MyPage() {
   if (!user) return null;
 
   return (
-    <div
-      id="scrollable-container"
-      ref={containerRef}
-      className="h-screen bg-base-white overflow-y-scroll no-scrollbar"
-    >
+    <div ref={containerRef}>
       <div
         className={clsx(
           styles.headerWrapper,

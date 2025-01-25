@@ -1,6 +1,6 @@
 "use client";
-import { RecoilRoot } from "recoil";
-import React from "react";
+import { RecoilRoot, useSetRecoilState } from "recoil";
+import React, { useState } from "react";
 interface Props {
   children?: React.ReactNode;
 }
@@ -20,6 +20,9 @@ import {
   useAuth,
 } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
+import { useScrollNew } from "@/hooks/useScrollNew";
+import { isVisibleAtom, scrollProgressAtom } from "@/atoms/scroll";
+import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 
 const queryClient = new QueryClient();
 
@@ -80,11 +83,16 @@ export const NextProvider = ({ children }: Props) => {
 
 const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
   const pathname = usePathname();
   const router = useRouter();
 
+  useChangeHeaderStyle({ scrollReady: isClient });
+
   useEffect(() => {
     if (typeof window !== "undefined") {
+      setIsClient(true);
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -112,6 +120,8 @@ const NextLayout = ({ children }: Props) => {
           flexDirection: "column",
           height: "100%",
         }}
+        id="scrollable-container"
+        className="bg-base-white overflow-y-scroll no-scrollbar"
       >
         <>{children}</>
         {pathname === "/home" ||

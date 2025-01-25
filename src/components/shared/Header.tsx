@@ -8,10 +8,10 @@ import { DotIcon } from "./Icon/DotIcon";
 import LightyLetterLogo from "./Icon/LightyLetterLogo";
 import Spacing from "./Spacing";
 import { useRecoilValue } from "recoil";
-import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
 import { useRouter } from "next/navigation";
 import NoticeIcon from "./Icon/NoticeIcon";
 import Flex from "./Flex";
+import { bgColorAtom, fontColorAtom } from "@/atoms/scroll";
 
 export function Header({
   pageName,
@@ -109,9 +109,8 @@ export function HeaderWithBackBtn({
 
 export function BackgroundReversibleHeader() {
   const router = useRouter();
-  const bgColor = useRecoilValue(headerBgColorAtom);
-  const fontColor = useRecoilValue(headerFontColorAtom);
-
+  const fontColor = useRecoilValue(fontColorAtom);
+  const bgColor = useRecoilValue(bgColorAtom);
   return (
     <div
       style={{

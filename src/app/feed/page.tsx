@@ -30,12 +30,8 @@ import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import useScroll from "@/hooks/useScroll";
 
 export default function FeedPage() {
-  const [scrollReady, setScrollReady] = useState(false);
-  useScroll(scrollReady ? "scrollable-container" : undefined);
-
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const [commentDeleteModalOpen, setCommentDeleteModalOpen] = useRecoilState(
@@ -118,11 +114,11 @@ export default function FeedPage() {
     },
   });
 
-  useEffect(() => {
-    if (!isFetching && !isFetchingMine) {
-      setScrollReady(true);
-    }
-  }, [feedAll, feedMine, isFetching, isFetchingMine]);
+  // useEffect(() => {
+  //   if (!isFetching && !isFetchingMine) {
+  //     setScrollReady(true);
+  //   }
+  // }, [feedAll, feedMine, isFetching, isFetchingMine]);
 
   const renderSwipers = useMemo(() => {
     return (
@@ -170,11 +166,7 @@ export default function FeedPage() {
   ]);
 
   return (
-    <div
-      id="scrollable-container"
-      ref={containerRef}
-      className="relative overflow-y-scroll no-scrollbar pt-[48px]"
-    >
+    <div id="scrollable-container" ref={containerRef} className="pt-[48px]">
       {header}
       <div
         style={{

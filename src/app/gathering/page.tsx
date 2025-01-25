@@ -18,7 +18,6 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import useScroll from "@/hooks/useScroll";
 
 type TabName = "1" | "2";
 
@@ -29,9 +28,6 @@ type FilterAndTabsProps = {
 };
 
 export default function MyGatheringPage() {
-  const [scrollReady, setScrollReady] = useState(false);
-  useScroll(scrollReady ? "scrollable-container" : undefined);
-
   const header = getHeader("/gathering");
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
@@ -54,18 +50,14 @@ export default function MyGatheringPage() {
     reset();
   }, [reset]);
 
-  useEffect(() => {
-    if (data && !isFetching && !isError) {
-      setScrollReady(true);
-    }
-  }, [data, isFetching, isError]);
+  // useEffect(() => {
+  //   if (data && !isFetching && !isError) {
+  //     setScrollReady(true);
+  //   }
+  // }, [data, isFetching, isError]);
 
   return (
-    <div
-      ref={containerRef}
-      id="scrollable-container"
-      className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
-    >
+    <div ref={containerRef} className="pt-[48px]">
       {header}
       <FilterAndTabs
         hasShadow={hasShadow}

@@ -7,6 +7,7 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function FeedForm({
   edit,
@@ -19,7 +20,7 @@ export default function FeedForm({
   selectedGatheringId,
 }: {
   edit?: () => void;
-  onNext?: (feedInfo: lighty.CreateGatheringFeedRequest) => void;
+  onNext?: () => void;
   feedInfo?: lighty.CreateGatheringFeedRequest;
   setFeedInfo?: Dispatch<SetStateAction<lighty.CreateGatheringFeedRequest>>;
   feedInfoToEdit?: { content: string; images: string[] };
@@ -34,16 +35,15 @@ export default function FeedForm({
 }) {
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
 
-  const { mutate: uploadImages } = useUploadFeedImages({
+  const { mutate: uploadImages, isPending } = useUploadFeedImages({
     files: filesToUpload,
     gatheringId: selectedGatheringId || "",
     onSuccess: (data: { imageUrls: string[]; message: string }) => {
-      console.log(data);
-      setFilesToUpload([]);
+      console.log("FeedImageUploaded", data);
       if (setFeedInfo) {
         setFeedInfo((prev) => ({
           ...(prev as lighty.CreateGatheringFeedRequest),
-          images: data.imageUrls,
+          imageUrls: data.imageUrls,
         }));
       } else if (setFeedInfoToEdit) {
         setFeedInfoToEdit((prev) => ({
@@ -51,7 +51,9 @@ export default function FeedForm({
           images: data.imageUrls,
         }));
       }
+      setFilesToUpload([]);
     },
+    onError: (error) => console.log(error),
   });
 
   return (
@@ -104,13 +106,13 @@ export default function FeedForm({
         </div>
       </Flex>
       <FixedBottomButton
-        label={edit ? "수정 완료" : "기록 완료"}
+        label={isPending ? <DotSpinner /> : edit ? "수정 완료" : "기록 완료"}
         onClick={() => {
-          if (onNext && feedInfo) {
-            uploadImages();
-            onNext(feedInfo);
-          } else if (edit) {
+          if (edit) {
             edit();
+          } else if (onNext && feedInfo) {
+            uploadImages();
+            onNext();
           }
         }}
       />

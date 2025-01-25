@@ -5,10 +5,12 @@ export default function useUploadFeedImages({
   files,
   gatheringId,
   onSuccess,
+  onError,
 }: {
   files: File[];
   gatheringId: string;
   onSuccess: (data: { imageUrls: string[]; message: string }) => void;
+  onError: (error: Error) => void;
 }) {
   return useMutation({
     mutationKey: ["upload", "feed/images", gatheringId],
@@ -22,5 +24,6 @@ export default function useUploadFeedImages({
     onSuccess: (data: { imageUrls: string[]; message: string }) => {
       onSuccess(data);
     },
+    onError: (error) => onError(error),
   });
 }

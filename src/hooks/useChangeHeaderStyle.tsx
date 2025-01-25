@@ -1,23 +1,32 @@
+import { useEffect, useState } from "react";
+import { useScrollNew } from "./useScrollNew";
 import { useSetRecoilState } from "recoil";
-import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
-import { useEffect } from "react";
-import useScroll from "./useScroll";
+import {
+  bgColorAtom,
+  fontColorAtom,
+  isVisibleAtom,
+  scrollProgressAtom,
+} from "@/atoms/scroll";
 
 export default function useChangeHeaderStyle({
   scrollReady,
 }: {
   scrollReady: boolean;
 }) {
-  // const isPastThreshold = useScrollThreshold(
-  //   92,
-  //   scrollReady ? "scrollable-container" : undefined
-  // );
-  const { isPastThreshold } = useScroll(
+  const setBgColor = useSetRecoilState(bgColorAtom);
+  const setFontColor = useSetRecoilState(fontColorAtom);
+  const setIsVisible = useSetRecoilState(isVisibleAtom);
+  const setScrollProgress = useSetRecoilState(scrollProgressAtom);
+
+  const { isPastThreshold, isVisible, scrollProgress } = useScrollNew(
     scrollReady ? "scrollable-container" : undefined,
     92
   );
-  const setBgColor = useSetRecoilState(headerBgColorAtom);
-  const setFontColor = useSetRecoilState(headerFontColorAtom);
+
+  useEffect(() => {
+    setScrollProgress(scrollProgress);
+    setIsVisible(isVisible);
+  }, [isVisible, scrollProgress]);
 
   useEffect(() => {
     if (isPastThreshold) {

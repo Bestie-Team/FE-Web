@@ -106,6 +106,7 @@ export function VerticalInvitationCard({
       address,
       sender,
     } = invitation;
+
     const time = formatToKoreanTime(gatheringDate);
     return (
       <div className="relative">

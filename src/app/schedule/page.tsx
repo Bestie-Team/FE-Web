@@ -9,10 +9,8 @@ import useScrollShadow from "@/hooks/useScrollShadow";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { useRef, useState } from "react";
-import useScroll from "@/hooks/useScroll";
 
 export default function SchedulePage() {
-  useScroll("scrollable-container");
   const containerRef = useRef<HTMLDivElement>(null);
   const header = getHeader("/schedule");
   const hasShadow = useScrollShadow(containerRef);
@@ -22,11 +20,7 @@ export default function SchedulePage() {
   });
 
   return (
-    <div
-      id="scrollable-container"
-      ref={containerRef}
-      className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]"
-    >
+    <div ref={containerRef} className="pt-[48px]">
       {header}
       <div className={clsx(styles.header, hasShadow ? "shadow-bottom" : "")}>
         <LightySelect

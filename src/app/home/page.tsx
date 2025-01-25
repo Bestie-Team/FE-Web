@@ -10,7 +10,6 @@ import Banner from "@/components/shared/Banner";
 import Flex from "@/components/shared/Flex";
 import ArrowRightIcon from "@/components/shared/Icon/ArrowRightIcon";
 import Spacing from "@/components/shared/Spacing";
-import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
 import { useEffect, useMemo, useState } from "react";
@@ -20,12 +19,8 @@ import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import useScroll from "@/hooks/useScroll";
 
 export default function HomePage() {
-  const [scrollReady, setScrollReady] = useState(false);
-  useScroll(scrollReady ? "scrollable-container" : undefined);
-  useChangeHeaderStyle({ scrollReady });
   const header = getHeader("/home");
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
@@ -55,19 +50,10 @@ export default function HomePage() {
     maxDate,
   });
 
-  useEffect(() => {
-    if (!isFetching && !isError) {
-      setScrollReady(true);
-    }
-  }, [this_week, isFetching, isError]);
-  console.log(scrollReady);
   if (!this_week || isFetching || isError) return <FullPageLoader />;
   else
     return (
-      <div
-        id="scrollable-container"
-        className="bg-base-white overflow-y-scroll no-scrollbar"
-      >
+      <div>
         {header}
         <HomeBannerContainer />
         <FriendsSlider />

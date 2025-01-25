@@ -40,21 +40,19 @@ export default function Record() {
     setStep((prev) => prev + 1);
   };
 
-  const handleCreateFeed = () => {};
-
   return (
     <>
       {step === 1 ? (
         <ChoosingKindOfMemory add={add} setAdd={setAdd} setStep={setStep} />
       ) : null}
-      {step === 2.5 ? <CreatingFeed onNext={handleCreateFeed} /> : null}
+      {step === 2.5 ? <CreatingFeed /> : null}
       {step === 2 ? (
         <ChoosingGatheringToRecord
           onNext={handleSelectGathering}
           gathering={sortedGathering?.passed}
         />
       ) : null}
-      {step === 3 ? <CreatingFeed onNext={handleCreateFeed} /> : null}
+      {step === 3 ? <CreatingFeed /> : null}
     </>
   );
 }
