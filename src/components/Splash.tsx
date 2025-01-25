@@ -10,10 +10,8 @@ import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import { useAuth } from "./shared/providers/AuthProvider";
-import { useRouter } from "next/navigation";
 
 export default function Splash() {
-  const router = useRouter();
   const { login } = useAuth();
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
@@ -25,7 +23,6 @@ export default function Splash() {
           profileImageUrl: user_info?.profileImageUrl,
           accountId: user_info?.accountId,
         });
-        router.push("/home");
       }
     },
     onError: (error) => {

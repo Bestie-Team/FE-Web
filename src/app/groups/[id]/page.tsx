@@ -10,7 +10,6 @@ import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
-// import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -32,7 +31,6 @@ export default function GroupDetailPage({
   const selectedFriends = useRecoilValue(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
-  // const { userInfo } = useAuth();
   const dateCursor = new Date().toISOString();
   const {
     data: group_data,
@@ -52,7 +50,7 @@ export default function GroupDetailPage({
         queryKey: ["groups"],
       });
       toast.success("그룹을 성공적으로 삭제하였습니다");
-      router.push("/groups");
+      router.replace("/groups");
     },
   });
 
@@ -63,7 +61,7 @@ export default function GroupDetailPage({
         queryKey: ["groups"],
       });
       toast.success("그룹을 나갔습니다");
-      router.push("/groups");
+      router.replace("/groups");
     },
   });
 

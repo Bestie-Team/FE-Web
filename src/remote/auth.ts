@@ -30,9 +30,8 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
     //     profileImageUrl: user_info.profileImageUrl,
     //   })
     // );
-
-    // const returnUrl = "/home";
-    // window.location.href = returnUrl;
+    const returnUrl = "/home";
+    window.location.href = returnUrl;
     return user_info;
   }
 
@@ -85,8 +84,21 @@ export async function postRegister(RegisterRequest: UploadType) {
     const data: lighty.RegisterResponse = await response.json();
 
     if (response.ok) {
-      window.location.href = "/home?ref=signup";
+      if (RegisterRequest.profileImageUrl) {
+        const newUserProfileImageUrl = await handleProfileImageUpdate({
+          file: RegisterRequest.profileImageUrl as File,
+        });
 
+        sessionStorage.setItem(
+          STORAGE_KEYS.USER_INFO,
+          JSON.stringify({
+            accessToken: data.accessToken,
+            accountId: data.accountId,
+            profileImageUrl: newUserProfileImageUrl?.imageUrl,
+          })
+        );
+        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
+      }
       sessionStorage.setItem(
         STORAGE_KEYS.USER_INFO,
         JSON.stringify({
@@ -95,11 +107,7 @@ export async function postRegister(RegisterRequest: UploadType) {
         })
       );
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
-      if (RegisterRequest.profileImageUrl) {
-        await handleProfileImageUpdate({
-          file: RegisterRequest.profileImageUrl as File,
-        });
-      }
+      window.location.href = "/home?ref=signup";
     }
     return { message: "회원가입을 축하합니다" };
   } catch (error) {

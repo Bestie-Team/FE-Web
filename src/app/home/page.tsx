@@ -26,6 +26,7 @@ export default function HomePage() {
   const header = getHeader("/home");
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
+
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const refParam = urlParams.get("ref");

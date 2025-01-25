@@ -7,7 +7,10 @@ export async function handleProfileImageUpdate(imageFile: { file: File }) {
     if (imageUrl) {
       const isPatched = await patchProfileImage({ profileImageUrl: imageUrl });
       if (isPatched) {
-        return { message: "프로필 이미지가 정상적으로 업로드 되었습니다" };
+        return {
+          message: "프로필 이미지가 정상적으로 업로드 되었습니다",
+          imageUrl,
+        };
       }
     }
   } catch (error) {

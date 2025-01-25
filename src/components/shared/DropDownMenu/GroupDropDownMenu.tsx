@@ -5,13 +5,12 @@ import { useSetRecoilState } from "recoil";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 
 interface GroupDropdownMenuProps {
-  selectedGroupId?: string;
   items: string[];
   className?: string;
 }
 
 const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
-  ({ items, className, selectedGroupId }, ref) => {
+  ({ items, className }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setDeleteModalOpen = useSetRecoilState(groupDeleteModalAtom);
     const setExitModalOpen = useSetRecoilState(groupExitModalAtom);
