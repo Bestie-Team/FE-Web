@@ -36,7 +36,7 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
           className={styles.wrapper}
           style={{
             boxShadow: styles.shadow,
-            zIndex: "5 !important",
+            zIndex: 5,
           }}
         >
           {items.map((item, index) => {

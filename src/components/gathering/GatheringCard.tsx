@@ -45,8 +45,9 @@ export default function GatheringCard({
     >
       <Image
         src={
-          invitationImageUrl.startsWith("https://example")
-            ? "/bag.jpeg"
+          invitationImageUrl.startsWith("https://example") ||
+          !invitationImageUrl
+            ? "/lighty_square.jpeg"
             : invitationImageUrl
         }
         className={styles.image}

@@ -23,7 +23,7 @@ export default function AddFriendsSlider({
 
   const onClickDelete = (friend: lighty.User) => {
     const changedFriends = friends.filter(
-      (friendItem) => friendItem.accountId !== friend.id
+      (friendItem) => friendItem.id !== friend.id
     );
 
     setFriends(changedFriends);

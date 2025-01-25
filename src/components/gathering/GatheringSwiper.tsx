@@ -35,7 +35,7 @@ export default function GatheringSwiper({
             key={`slide${idx}`}
           >
             <Image
-              src={invitationImageUrl}
+              src={invitationImageUrl || "/lighty_square.png"}
               alt={`invitationImage${idx + 1}`}
               className={styles.image}
               width={340}
