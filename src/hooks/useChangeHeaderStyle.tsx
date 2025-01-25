@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useScrollNew } from "./useScrollNew";
 import { useSetRecoilState } from "recoil";
 import {

@@ -1,5 +1,5 @@
 "use client";
-import { RecoilRoot, useSetRecoilState } from "recoil";
+import { RecoilRoot } from "recoil";
 import React, { useState } from "react";
 interface Props {
   children?: React.ReactNode;
@@ -20,8 +20,6 @@ import {
   useAuth,
 } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
-import { useScrollNew } from "@/hooks/useScrollNew";
-import { isVisibleAtom, scrollProgressAtom } from "@/atoms/scroll";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 
 const queryClient = new QueryClient();

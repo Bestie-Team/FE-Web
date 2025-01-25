@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, { useRef, useState, useMemo } from "react";
 import FilterBar from "@/components/shared/FilterBar";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
