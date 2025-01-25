@@ -9,7 +9,6 @@ import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { groupDeleteAskModalAtom } from "@/atoms/group";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 // import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
@@ -22,6 +21,8 @@ import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
 import { toast } from "react-toastify";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
+import useExitGroup from "@/components/groups/hooks/useExitGroup";
 
 export default function GroupDetailPage({
   params,
@@ -38,7 +39,10 @@ export default function GroupDetailPage({
     isFetching,
     isError,
   } = useGroup({ cursor: dateCursor, limit: 50 });
-  const [modalOpen, setModalOpen] = useRecoilState(groupDeleteAskModalAtom);
+  const [deleteModalOpen, setDeleteModalOpen] =
+    useRecoilState(groupDeleteModalAtom);
+  const [exitModalOpen, setExitModalOpen] = useRecoilState(groupExitModalAtom);
+
   const [openList, setOpenList] = useState<boolean>(false);
 
   const { mutate: deleteGroup } = useDeleteGroup({
@@ -48,6 +52,17 @@ export default function GroupDetailPage({
         queryKey: ["groups"],
       });
       toast.success("그룹을 성공적으로 삭제하였습니다");
+      router.push("/groups");
+    },
+  });
+
+  const { mutate: exitGroup } = useExitGroup({
+    groupId: params.id,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["groups"],
+      });
+      toast.success("그룹을 나갔습니다");
       router.push("/groups");
     },
   });
@@ -67,17 +82,14 @@ export default function GroupDetailPage({
     (group) => group.id === params.id
   );
 
+  if (isFetching || isError) return <FullPageLoader />;
+
   if (!selectedGroup) {
     return <div>그룹을 찾을 수 없습니다.</div>;
   }
 
   const { description, members, owner, groupImageUrl } = selectedGroup;
-  // const isOwner = userInfo?.accountId === owner.accountId;
 
-  // const handleAddMember = () => {
-  //   setOpenList(true);
-  // };
-  if (isFetching || isError) return <FullPageLoader />;
   if (openList === true) {
     return (
       <SelectFriendsContainer
@@ -119,14 +131,23 @@ export default function GroupDetailPage({
           }
           content={<GatheringMembersSlider members={members} />}
         />
-        {modalOpen && (
+        {deleteModalOpen && (
           <Modal
             title="그룹을 삭제하시겠어요?"
             content="그룹 관련 정보가 전부 삭제되며 이는 복구할 수 없어요."
             left="취소"
             right="삭제하기"
             action={() => deleteGroup()}
-            onClose={() => setModalOpen(false)}
+            onClose={() => setDeleteModalOpen(false)}
+          />
+        )}
+        {exitModalOpen && (
+          <Modal
+            title="그룹을 나가시겠어요?"
+            left="취소"
+            right="나가기"
+            action={() => exitGroup()}
+            onClose={() => setExitModalOpen(false)}
           />
         )}
       </Flex>

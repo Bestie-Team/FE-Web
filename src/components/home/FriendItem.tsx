@@ -20,7 +20,7 @@ export default function FriendItem({
           src={
             friendInfo?.profileImageUrl ||
             groupInfo?.imageUrl ||
-            "https://cdn.lighty.today/bini.JPG"
+            "/lighty_square.png"
           }
           className="rounded-full object-cover w-[56px] h-[56px]"
           width={56}

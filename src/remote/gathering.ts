@@ -80,13 +80,13 @@ export async function postGatheringInvitationImage({ file }: { file: File }) {
   formData.append("file", file);
 
   try {
-    const response = await fetch(`${baseUrl}/gatherings/invitation/image`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${API_CONFIG.getHeaders().Authorization}`,
-      },
-      body: formData,
-    });
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings/invitation/image`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       if (response.status === 400) {

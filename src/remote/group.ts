@@ -130,7 +130,25 @@ export async function deleteGroup({ groupId }: { groupId: string }) {
   } catch (error) {
     console.log(error);
     return {
-      message: "그룹을 성공적으로 삭제하였습니다",
+      message: "그룹을 삭제하지 못했어요",
+    };
+  }
+}
+
+/** 그룹 나가기 (그룹원) */
+export async function exitGroup({ groupId }: { groupId: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/groups/${groupId}/members`;
+    const response = await fetchWithAuth(targetUrl, { method: "DELETE" });
+    console.log(response);
+    return {
+      message: "그룹을 성공적으로 나갔습니다",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: "그룹을 나가지 못했어요",
     };
   }
 }

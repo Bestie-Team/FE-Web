@@ -2,7 +2,7 @@
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
-import DropdownMenu from "../shared/DropDownMenu/CommentDropDownMenu";
+import GroupDropdownMenu from "../shared/DropDownMenu/GroupDropDownMenu";
 
 export default function GroupOptions({ isOwner }: { isOwner: boolean }) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
@@ -23,7 +23,11 @@ export default function GroupOptions({ isOwner }: { isOwner: boolean }) {
     >
       <OptionsSelectIcon />
       {opened && (
-        <DropdownMenu ref={ref} items={menuItems} className={styles.menu} />
+        <GroupDropdownMenu
+          ref={ref}
+          items={menuItems}
+          className={styles.menu}
+        />
       )}
     </div>
   );

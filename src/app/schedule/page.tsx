@@ -47,7 +47,7 @@ export default function SchedulePage() {
 
 const styles = {
   header: "max-w-[430px] fixed z-10 w-full pl-[20px] bg-base-white",
-  container: "items-center mt-[62px] px-[20px] overflow-x-scroll no-scrollbar",
+  container: "items-center mt-[64px] px-[20px] overflow-x-scroll no-scrollbar",
 };
 
 const options = [

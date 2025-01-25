@@ -24,3 +24,13 @@ export const recordModalAtom = atom<boolean>({
   key: "modal/record",
   default: false,
 });
+
+export const groupDeleteModalAtom = atom<boolean>({
+  key: "modal/groupDelete",
+  default: false,
+});
+
+export const groupExitModalAtom = atom<boolean>({
+  key: "modal/groupExit",
+  default: false,
+});

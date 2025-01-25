@@ -12,7 +12,7 @@ export const newGroupAtom = atom<lighty.CreateGroupRequest>({
 });
 
 export const selectedGroupAtom = atom<lighty.CreateGroupRequest>({
-  key: "group/selected",
+  key: "group/selected/info",
   default: {
     name: "",
     description: "",
@@ -21,7 +21,7 @@ export const selectedGroupAtom = atom<lighty.CreateGroupRequest>({
   },
 });
 
-export const groupDeleteAskModalAtom = atom<boolean>({
-  key: "group/delete/modal",
-  default: false,
+export const selectedGroupIdAtom = atom<string>({
+  key: "group/selected/id",
+  default: "",
 });

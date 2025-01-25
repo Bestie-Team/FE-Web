@@ -14,15 +14,14 @@ export const useProfileImage = () => {
       STORAGE_KEYS.PROFILE_IMAGE_URL
     );
     const userInfoStr = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-
-    if (imageUrlAfterSignup) {
-      setProfileImageUrl(imageUrlAfterSignup);
-      return;
-    }
-
     if (userInfoStr) {
       const userInfo: UserInfo = JSON.parse(userInfoStr);
       setProfileImageUrl(userInfo.profileImageUrl);
+      return;
+    }
+    if (imageUrlAfterSignup) {
+      setProfileImageUrl(imageUrlAfterSignup);
+      return;
     }
   }, []);
 
