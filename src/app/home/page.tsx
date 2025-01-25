@@ -60,7 +60,7 @@ export default function HomePage() {
       setScrollReady(true);
     }
   }, [this_week, isFetching, isError]);
-
+  console.log(scrollReady);
   if (!this_week || isFetching || isError) return <FullPageLoader />;
   else
     return (

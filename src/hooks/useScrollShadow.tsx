@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-function useScrollShadow(elementRef: React.RefObject<HTMLElement>) {
+function useScrollShadow(elementRef?: React.RefObject<HTMLElement>) {
   const [hasShadow, setHasShadow] = useState(false);
 
   useEffect(() => {
-    const element = elementRef.current;
+    const element = elementRef?.current;
     if (!element) return;
 
     let lastKnownScrollY = 0;

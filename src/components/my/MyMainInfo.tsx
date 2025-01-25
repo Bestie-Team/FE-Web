@@ -38,23 +38,22 @@ export default function MyMainInfo({
   ];
 
   return (
-    <Flex className="py-0 px-[20px]" justify="center">
+    <Flex className="py-0 px-[20px] gap-[14px]" justify="center">
       {boxes.map((box, idx) => {
         return (
-          <React.Fragment key={box.label}>
-            <div className={boxStyle} onMouseDown={() => router.push(box.link)}>
-              <div>{box.icon}</div>
-              <Spacing size={4} />
-              <span className="text-C1 text-grayscale-400 flex-none">
-                {box.label}
-              </span>
-              <Spacing size={8} />
-              <span className="text-T4">{box.value}</span>
-            </div>
-            {idx !== boxes.length - 1 && (
-              <Spacing direction="horizontal" size={14} />
-            )}
-          </React.Fragment>
+          <div
+            key={idx}
+            className={boxStyle}
+            onMouseDown={() => router.push(box.link)}
+          >
+            <div>{box.icon}</div>
+            <Spacing size={4} />
+            <span className="text-C1 text-grayscale-400 flex-none">
+              {box.label}
+            </span>
+            <Spacing size={8} />
+            <span className="text-T4">{box.value}</span>
+          </div>
         );
       })}
     </Flex>

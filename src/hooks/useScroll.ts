@@ -16,9 +16,9 @@ export const useScroll = (
       ? (document.getElementById(scrollElementId) as HTMLElement | null)
       : window;
 
-    const handleScroll = () => {
-      if (!scrollElement) return;
+    if (!scrollElement) return;
 
+    const handleScroll = () => {
       const currentScrollPos =
         scrollElement instanceof HTMLElement
           ? scrollElement.scrollTop

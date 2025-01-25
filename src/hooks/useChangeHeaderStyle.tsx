@@ -1,6 +1,7 @@
 import useScrollThreshold from "./useScrollThreshold";
 import { useSetRecoilState } from "recoil";
 import { headerBgColorAtom, headerFontColorAtom } from "@/atoms/header";
+import { useEffect } from "react";
 
 export default function useChangeHeaderStyle({
   scrollReady,
@@ -14,11 +15,13 @@ export default function useChangeHeaderStyle({
   const setBgColor = useSetRecoilState(headerBgColorAtom);
   const setFontColor = useSetRecoilState(headerFontColorAtom);
 
-  if (isPastThreshold) {
-    setBgColor("#fff");
-    setFontColor("#0A0A0A");
-  } else {
-    setBgColor("transparent");
-    setFontColor("#fff");
-  }
+  useEffect(() => {
+    if (isPastThreshold) {
+      setBgColor("#fff");
+      setFontColor("#0A0A0A");
+    } else {
+      setBgColor("transparent");
+      setFontColor("#fff");
+    }
+  }, [isPastThreshold, setBgColor, setFontColor]);
 }

@@ -84,8 +84,8 @@ export default function Options({
       className={containerClassName}
     >
       <OptionsSelectIcon
-        width={type === "comment" ? "2px" : ""}
-        height={type === "comment" ? "11.3px" : ""}
+        width={type === "comment" ? "2px" : undefined}
+        height={type === "comment" ? "11.3px" : undefined}
         color={color}
       />
       {opened && type === MENU_TYPES.FRIEND && (
