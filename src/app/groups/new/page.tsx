@@ -15,12 +15,14 @@ import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import InviteFriends from "@/components/friends/InviteFriends";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function NewGroupPage() {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const header = getHeader("/groups/new");
   const [newGroup, setNewGroup] =
@@ -34,6 +36,7 @@ export default function NewGroupPage() {
   } = useMakeGroup({
     group: newGroup,
     onSuccess: async (data) => {
+      router.push("/groups");
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
@@ -104,10 +107,8 @@ export default function NewGroupPage() {
             setStep={setStep}
           />
         </form>
-        <FixedBottomButton
-          label={isPending ? <DotSpinner /> : "그룹 생성하기"}
-          onClick={handleMakeGroup}
-        />
+        <FixedBottomButton label={"그룹 생성하기"} onClick={handleMakeGroup} />
+        {isPending ? <FullPageLoader /> : null}
       </div>
     );
   } else if (step === 2) {

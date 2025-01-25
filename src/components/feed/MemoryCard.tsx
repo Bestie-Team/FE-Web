@@ -24,6 +24,7 @@ export default function MemoryCard({
     others?.push(data?.hostUser);
   }
   const othersImageUrl = others?.map((other) => other.profileImageUrl);
+  // 친구 약속일 때 (그룹약속 아니고)
   if (!feed?.gathering?.id) return;
   if (!writer || !othersImageUrl) return;
   return (

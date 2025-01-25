@@ -31,8 +31,8 @@ export default function EditingFeed() {
     content: feedInfo.content,
     feedId: selectedFeedInfo?.id || "",
     onSuccess: (data) => {
-      toast.success(data.message);
       router.replace("/feed");
+      toast.success(data.message);
     },
     onError: (error) => {
       console.log(error);

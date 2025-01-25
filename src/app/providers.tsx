@@ -69,7 +69,7 @@ export const NextProvider = ({ children }: Props) => {
           <ToastContainer
             position="top-center"
             hideProgressBar
-            autoClose={4000}
+            autoClose={false}
             pauseOnFocusLoss={false}
             pauseOnHover={false}
           />

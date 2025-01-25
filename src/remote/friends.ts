@@ -91,14 +91,14 @@ export async function postRejectFriend({ friendId }: { friendId: string }) {
   try {
     const targetUrl = `${baseUrl}/friends/${friendId}/reject`;
 
-    const response = await fetchWithAuth(targetUrl, {
+    await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json();
-    return { message: "친구 요청을 성공적으로 거절했습니다", data };
+
+    return { message: "친구 요청을 성공적으로 거절했습니다" };
   } catch (error) {
     console.log(error);
     throw new Error("친구 요청 거절에 실패하였습니다");

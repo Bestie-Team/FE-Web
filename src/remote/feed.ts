@@ -117,12 +117,11 @@ export async function postGatheringFeed({
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/gatherings`;
   try {
-    const response = await fetchWithAuth(targetUrl, {
+    await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gatheringFeed),
     });
-    console.log(response);
 
     return { message: "약속 피드를 성공적으로 작성하였습니다" };
   } catch (error) {
@@ -141,15 +140,13 @@ export async function postFriendFeed({
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const targetUrl = `${baseUrl}/feeds/friends`;
-    const response = await fetchWithAuth(targetUrl, {
+    await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(friendFeed),
     });
 
-    const data = await response.json();
-
-    return { message: data };
+    return { message: "일반 피드를 작성하였습니다" };
   } catch (error) {
     if (error instanceof Response) {
       handleResponse(error);
@@ -168,14 +165,13 @@ export async function patchFeed({
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/${feedId}`;
   try {
-    const response = await fetchWithAuth(targetUrl, {
+    await fetchWithAuth(targetUrl, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
     });
 
-    const data = await response.json();
-    return { message: data };
+    return { message: "피드를 수정 완료" };
   } catch (error) {
     if (error instanceof Response) {
       return handleResponse(error);

@@ -39,13 +39,12 @@ export async function postGroup({
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/groups`;
   try {
-    const response = await fetchWithAuth(targetUrl, {
+    await fetchWithAuth(targetUrl, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(group),
     });
-    const data = await response.json();
-    return { message: "그룹을 성공적으로 만들었어요", data };
+    return { message: "그룹을 성공적으로 만들었어요" };
   } catch (error) {
     if (error instanceof Response && error.status === 400) {
       throw new Error("친구가 아닌 회원이 존재합니다");

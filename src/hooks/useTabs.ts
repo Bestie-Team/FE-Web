@@ -30,5 +30,6 @@ export const useTabs = () => {
     handleTabClick,
     handleSlideChange,
     swiperRef,
+    setSelectedTab,
   };
 };

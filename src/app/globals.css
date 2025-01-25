@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import "react-toastify/ReactToastify.min.css"; */
+@import "react-toastify/ReactToastify.min.css";
 
 :root {
   --background: #ffffff;
@@ -21,6 +21,14 @@
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container--top-center,
+  .Toastify__toast-container--top-left,
+  .Toastify__toast-container--top-right {
+    top: 31 !important;
+    transform: translateX(0) !important;
+  }
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

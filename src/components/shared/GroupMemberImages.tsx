@@ -38,7 +38,7 @@ export default function GroupMemberImages({
         <Image
           key={`group${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src={imageUrl || "https://cdn.lighty.today/anton.PNG"}
+          src={imageUrl || "/lighty_square.png"}
           width={width ? width : 28}
           height={height ? height : 28}
           className={clsx(styles.groupImage, imageWidthHeight)}
