@@ -26,8 +26,9 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
         ref={ref as React.Ref<HTMLDivElement>}
         style={{
           animation: styles.animation,
+          zIndex: 10,
         }}
-        className={clsx("z-10", className)}
+        className={clsx("bg-base-white", className)}
       >
         <Flex
           direction="column"
@@ -35,6 +36,7 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
           className={styles.wrapper}
           style={{
             boxShadow: styles.shadow,
+            zIndex: "5 !important",
           }}
         >
           {items.map((item, index) => {

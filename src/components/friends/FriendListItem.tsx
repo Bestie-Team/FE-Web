@@ -81,9 +81,6 @@ export default function FriendListItem({
       </Flex>
       {type === "friend" ? (
         <div
-          style={{
-            zIndex: 10,
-          }}
           className={clsx(styles.iconContainer)}
           onClick={() => setSelectedFriend(friendInfo.id)}
         >
@@ -106,7 +103,7 @@ export default function FriendListItem({
 }
 
 const styles = {
-  iconContainer: "flex justify-center items-center w-[20px] h-[20px] z-10",
+  iconContainer: "flex justify-center items-center w-[20px] h-[20px]",
 
   li: "bg-base-white flex py-[14px] px-[16px] rounded-[20px] items-center cursor-pointer border",
 
