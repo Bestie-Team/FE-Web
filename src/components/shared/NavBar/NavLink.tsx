@@ -5,7 +5,7 @@ interface NavLinkProps {
   isActive: boolean;
   onClick: () => void;
   icon: (isActive: boolean, profileUrl: string) => React.ReactNode;
-  profileImageUrl: string | null;
+  profileImageUrl?: string | null;
 }
 
 export const NavLink = ({
@@ -17,7 +17,7 @@ export const NavLink = ({
 }: NavLinkProps) => (
   <Link
     href={href}
-    className="flex justify-center w-16 h-[44px] items-center hover:animate-shrink-grow"
+    className="flex justify-center w-16 h-11 items-center hover:animate-shrink-grow"
     onMouseDown={onClick}
   >
     {icon(isActive, profileImageUrl ?? "")}

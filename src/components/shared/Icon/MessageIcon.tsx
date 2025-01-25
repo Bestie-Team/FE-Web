@@ -10,7 +10,7 @@ export default function MessageIcon({
   return (
     <svg
       style={{
-        cursor: "hover",
+        cursor: "pointer",
       }}
       width={width ?? "16"}
       height={height ?? "16"}

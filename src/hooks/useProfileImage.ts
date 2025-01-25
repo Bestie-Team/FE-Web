@@ -9,18 +9,13 @@ interface UserInfo {
 export const useProfileImage = () => {
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
+  if (typeof window === "undefined") return null;
   useEffect(() => {
-    const imageUrlAfterSignup = localStorage.getItem(
-      STORAGE_KEYS.PROFILE_IMAGE_URL
-    );
     const userInfoStr = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
     if (userInfoStr) {
+      console.log(userInfoStr);
       const userInfo: UserInfo = JSON.parse(userInfoStr);
       setProfileImageUrl(userInfo.profileImageUrl);
-      return;
-    }
-    if (imageUrlAfterSignup) {
-      setProfileImageUrl(imageUrlAfterSignup);
       return;
     }
   }, []);

@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import SheetOpenBtnContainer from "./BottomDrawer/shared/SheetOpenBtnContainer";
 import NAV_ITEMS from "@/constants/navBarConstants";
-import { useProfileImage } from "@/hooks/useProfileImage";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import { useRecoilValue } from "recoil";
 import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
+import { useAuth } from "./providers/AuthProvider";
 
 const NavBar = () => {
+  const { userInfo } = useAuth();
   const [isClient, setIsClient] = useState(false);
-  const profileImageUrl = useProfileImage();
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
   const isVisible = useRecoilValue(scrollAtom);
   const scrollProgress = useRecoilValue(scrollProgressAtom);
@@ -51,7 +51,7 @@ const NavBar = () => {
           isActive={idx === activeBtn || pathname === item.href}
           onClick={() => setActiveBtn(idx)}
           icon={item.icon}
-          profileImageUrl={profileImageUrl}
+          profileImageUrl={userInfo?.profileImageUrl}
         />
       ))}
 

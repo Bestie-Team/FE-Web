@@ -41,7 +41,7 @@ const NAV_ITEMS: NavItem[] = [
         className={`box-content border-[1.7px] rounded-full aspect-square ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}
-        src={src || "https://cdn.lighty.today/cute.jpg"}
+        src={src || "/lighty_square.png"}
         width={24}
         height={24}
         alt="profileImage"

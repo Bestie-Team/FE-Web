@@ -8,6 +8,7 @@ export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 interface AuthContextType {
   token: string | null;
   userInfo: UserInfoMini | null;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfoMini | null>>;
   login: (authToken: string, user: UserInfoMini) => void;
   logout: () => void;
   isAuthenticated: boolean;
@@ -50,6 +51,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const contextValue = {
     token,
     userInfo,
+    setUserInfo,
     login,
     logout,
     isAuthenticated: !!token,

@@ -61,7 +61,7 @@ export default function GroupMemberImages({
 
 const styles = {
   groupImage:
-    "object-cover rounded-full overflow-hidden border-[1px] border-base-white aspect-square",
+    "object-cover bg-base-white rounded-full overflow-hidden border-[1px] border-base-white aspect-square",
   circle:
     "text-C4 flex items-center justify-center text-base-white bg-grayscale-300 border-[1px] border-base-white rounded-full overflow-hidden aspect-square",
 };

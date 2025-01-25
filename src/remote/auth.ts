@@ -95,14 +95,14 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
     }
 
     // Store user information
+    const accessToken = data.accessToken;
     const userInfo = {
-      accessToken: data.accessToken,
       accountId: data.accountId,
       ...(profileImageUrl && { profileImageUrl }),
     };
 
     sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
-    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.accessToken);
+    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
 
     // Redirect to home page
     window.location.href = "/home?ref=signup";
