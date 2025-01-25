@@ -31,19 +31,19 @@ export function Header({
       }}
       className={clsx(
         styles.universalHeaderWrapper,
-        "pl-[20px] text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
+        "pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px]"
       )}
     >
       <span>{pageName}</span>
       {square && (
-        <div className="w-[44px] h-[44px] py-[10px]">
+        <div className="w-11 h-11 py-[10px]">
           <EmptySquareIcon />
         </div>
       )}
       {icon && (
         <>
           <Spacing size={8} />
-          <div className="pr-[20px]">{icon}</div>
+          <div className="pr-5">{icon}</div>
         </>
       )}
     </div>
@@ -67,7 +67,7 @@ export function HeaderWithBackBtn({
     <div
       className={clsx(
         styles.universalHeaderWrapper,
-        "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-[20px]"
+        "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5"
       )}
       style={{
         zIndex: 5,
@@ -121,10 +121,7 @@ export function BackgroundReversibleHeader() {
         background: bgColor,
         transition: "background-color 0.5s ease",
       }}
-      className={clsx(
-        styles.universalHeaderWrapper,
-        "fixed pl-[20px] text-T4 px-[20px]"
-      )}
+      className={clsx(styles.universalHeaderWrapper, "fixed text-T4 px-5")}
     >
       <div className={styles.lightyIconContainer}>
         <LightyIcon color={fontColor} />
@@ -164,11 +161,11 @@ export function BackgroundReversibleHeader() {
 
 const styles = {
   universalHeaderWrapper:
-    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-[48px] bg-base-white",
+    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-12 bg-base-white",
   arrowIconContainer:
-    "w-[40px] h-[40px] py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow",
+    "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow",
   iconWrapperStyle:
-    "flex justify-center items-center w-[40px] h-[40px] p-[8px] cursor-pointer  hover:animate-shrink-grow-less",
-  lightyIconContainer: "h-[40px] py-[10px]",
-  squareIconContainer: "w-[44px] h-[44px] py-[10px] pr-[20px]",
+    "flex justify-center items-center w-10 h-10 p-2 cursor-pointer  hover:animate-shrink-grow-less",
+  lightyIconContainer: "h-10 py-[10px]",
+  squareIconContainer: "w-11 h-11 py-[10px] pr-5",
 };

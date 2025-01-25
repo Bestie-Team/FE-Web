@@ -31,12 +31,8 @@ export default function GroupDetailPage({
   const selectedFriends = useRecoilValue(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const dateCursor = new Date().toISOString();
-  const {
-    data: group_data,
-    isFetching,
-    isError,
-  } = useGroup({ cursor: dateCursor, limit: 50 });
+  const { data: group_data, isFetching } = useGroup();
+
   const [deleteModalOpen, setDeleteModalOpen] =
     useRecoilState(groupDeleteModalAtom);
   const [exitModalOpen, setExitModalOpen] = useRecoilState(groupExitModalAtom);
@@ -82,11 +78,9 @@ export default function GroupDetailPage({
     },
   });
 
-  const selectedGroup = group_data?.groups.find(
-    (group) => group.id === params.id
-  );
+  const selectedGroup = group_data?.find((group) => group.id === params.id);
 
-  if (isFetching || isError) return <FullPageLoader />;
+  if (isFetching) return <FullPageLoader />;
 
   if (!selectedGroup) {
     return <div>그룹을 찾을 수 없습니다.</div>;
