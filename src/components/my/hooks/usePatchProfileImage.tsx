@@ -1,4 +1,4 @@
-import { patchProfileImage, postProfileImage } from "@/remote/profile";
+import { patchProfileImage } from "@/remote/profile";
 import { useMutation } from "@tanstack/react-query";
 
 export default function usePatchProfileImage({
