@@ -64,7 +64,7 @@ export default function Gathering({ className, where, which }: GatheringProps) {
     ));
 
   return (
-    <div className={clsx("pb-[111px] w-full px-[20px]", className)}>
+    <div className={clsx("pb-[111px] w-full px-5", className)}>
       {which === "완료" && pathname.endsWith("gathering") && <Message />}
       {isFetching || isError ? (
         <DotSpinner />

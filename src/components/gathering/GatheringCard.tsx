@@ -91,6 +91,5 @@ const styles = {
   textWrapper: "absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white",
   date: "w-full text-C2 text-grayscale-100",
 
-  button:
-    "absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-[8px]",
+  button: "absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-2",
 };

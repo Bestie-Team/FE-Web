@@ -75,11 +75,11 @@ export default function HomePage() {
         ) : null}
         <Banner />
         <Flex direction="column" align="center">
-          <Flex className="w-full px-[20px]" align="center">
+          <Flex className="w-full px-5" align="center">
             <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
             <ArrowRightIcon width="16" height="16" color="#808080" />
           </Flex>
-          <Gathering where={GatheringInWhich.HOME} className="pt-[16px]" />
+          <Gathering where={GatheringInWhich.HOME} className="pt-4" />
         </Flex>
         {isModalOpen && (
           <MemoriesBottomSheet
