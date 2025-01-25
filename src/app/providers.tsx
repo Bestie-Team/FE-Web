@@ -20,7 +20,6 @@ import {
   useAuth,
 } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
-import { useScroll } from "@/hooks/useScroll";
 
 const queryClient = new QueryClient();
 

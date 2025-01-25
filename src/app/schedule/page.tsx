@@ -8,11 +8,10 @@ import Spacing from "@/components/shared/Spacing";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useScroll } from "@/hooks/useScroll";
 
 export default function SchedulePage() {
-  // const [scrollReady, setScrollReady] = useState(false);
   useScroll("/schedule", "scrollable-container");
   const containerRef = useRef<HTMLDivElement>(null);
   const header = getHeader("/schedule");
