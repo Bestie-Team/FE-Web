@@ -30,11 +30,11 @@ import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { useScroll } from "@/hooks/useScroll";
+import useScroll from "@/hooks/useScroll";
 
 export default function FeedPage() {
   const [scrollReady, setScrollReady] = useState(false);
-  useScroll("/feed", scrollReady ? "scrollable-container" : undefined);
+  useScroll(scrollReady ? "scrollable-container" : undefined);
 
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);

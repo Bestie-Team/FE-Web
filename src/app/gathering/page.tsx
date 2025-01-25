@@ -18,7 +18,7 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { useScroll } from "@/hooks/useScroll";
+import useScroll from "@/hooks/useScroll";
 
 type TabName = "1" | "2";
 
@@ -30,7 +30,7 @@ type FilterAndTabsProps = {
 
 export default function MyGatheringPage() {
   const [scrollReady, setScrollReady] = useState(false);
-  useScroll("/gathering", scrollReady ? "scrollable-container" : undefined);
+  useScroll(scrollReady ? "scrollable-container" : undefined);
 
   const header = getHeader("/gathering");
   const reset = useResetRecoilState(newGatheringInfo);

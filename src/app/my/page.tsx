@@ -15,7 +15,7 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { useScroll } from "@/hooks/useScroll";
+import useScroll from "@/hooks/useScroll";
 
 export default function MyPage() {
   const [scrollReady, setScrollReady] = useState(false);
@@ -25,7 +25,7 @@ export default function MyPage() {
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
 
-  useScroll("/my", scrollReady ? "scrollable-container" : undefined);
+  useScroll(scrollReady ? "scrollable-container" : undefined);
 
   const { data: user, isFetching, isError } = useUserDetail();
   const { logout } = useAuth();

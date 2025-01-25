@@ -9,10 +9,10 @@ import useScrollShadow from "@/hooks/useScrollShadow";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { useRef, useState } from "react";
-import { useScroll } from "@/hooks/useScroll";
+import useScroll from "@/hooks/useScroll";
 
 export default function SchedulePage() {
-  useScroll("/schedule", "scrollable-container");
+  useScroll("scrollable-container");
   const containerRef = useRef<HTMLDivElement>(null);
   const header = getHeader("/schedule");
   const hasShadow = useScrollShadow(containerRef);

@@ -20,11 +20,11 @@ import { GatheringInWhich } from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import WelcomeBottomSheet from "@/components/shared/BottomDrawer/WelcomeBottomSheet";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import { useScroll } from "@/hooks/useScroll";
+import useScroll from "@/hooks/useScroll";
 
 export default function HomePage() {
   const [scrollReady, setScrollReady] = useState(false);
-  useScroll("/home", scrollReady ? "scrollable-container" : undefined);
+  useScroll(scrollReady ? "scrollable-container" : undefined);
   useChangeHeaderStyle({ scrollReady });
   const header = getHeader("/home");
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
