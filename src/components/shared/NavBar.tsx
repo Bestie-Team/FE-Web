@@ -39,7 +39,7 @@ const NavBar = () => {
       }}
       className={`
       fixed bottom-0 bg-base-white w-full max-w-[430px] 
-      flex justify-between px-3 pt-1 pb-5
+      flex justify-between px-3 pt-1 pb-2
       border-t border-grayscale-10 mx-auto
       transition-all duration-900 ease-in-out
     `}
