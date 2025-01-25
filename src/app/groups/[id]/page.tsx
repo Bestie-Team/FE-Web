@@ -49,6 +49,9 @@ export default function GroupDetailPage({
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
+      });
       toast.success("그룹을 성공적으로 삭제하였습니다");
       router.replace("/groups");
     },
@@ -59,6 +62,9 @@ export default function GroupDetailPage({
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
       });
       toast.success("그룹을 나갔습니다");
       router.replace("/groups");

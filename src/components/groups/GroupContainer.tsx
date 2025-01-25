@@ -16,7 +16,7 @@ export default function GroupContainer({
   className?: string;
 }) {
   const { name, description, groupImageUrl, gatheringCount, members } = group;
-
+  const memberProfileImages = members.map((member) => member.profileImageUrl);
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -61,7 +61,7 @@ export default function GroupContainer({
             width={24}
             height={24}
             gap={8}
-            memberImageUrls={images}
+            memberImageUrls={memberProfileImages}
           />
         </Flex>
       </Flex>
@@ -77,10 +77,3 @@ const styles = {
   font: "text-C2 text-grayscale-300",
   bar: "mx-[12px] bg-grayscale-100 h-[13px] w-[1px]",
 };
-
-const images = [
-  "https://cdn.lighty.today/bini.JPG",
-  "https://cdn.lighty.today/binanton_jp.jpeg",
-  "https://cdn.lighty.today/ocean.JPG",
-  "https://cdn.lighty.today/groom.JPG",
-];
