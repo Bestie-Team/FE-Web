@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import EditPhotoSwiper from "./UploadPhotoSwiper";
@@ -6,23 +6,24 @@ import { TogetherInfo } from "../feed/InfoBar";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
-import useUploadFeedImages from "./hooks/useUploadFeedImages";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function FeedForm({
+  uploadImages,
   edit,
-  onNext,
   feedInfo,
   setFeedInfo,
+  filesToUpload,
+  setFilesToUpload,
   feedInfoToEdit,
   setFeedInfoToEdit,
   selectedGathering,
-  selectedGatheringId,
 }: {
   edit?: () => void;
-  onNext?: () => void;
+  uploadImages?: () => void;
   feedInfo?: lighty.CreateGatheringFeedRequest;
   setFeedInfo?: Dispatch<SetStateAction<lighty.CreateGatheringFeedRequest>>;
+  filesToUpload: File[];
+  setFilesToUpload: Dispatch<SetStateAction<File[]>>;
   feedInfoToEdit?: { content: string; images: string[] };
   setFeedInfoToEdit?: Dispatch<
     SetStateAction<{
@@ -31,32 +32,7 @@ export default function FeedForm({
     }>
   >;
   selectedGathering?: GatheringDetailResponse;
-  selectedGatheringId?: string;
 }) {
-  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-
-  const { mutate: uploadImages, isPending } = useUploadFeedImages({
-    files: filesToUpload,
-    gatheringId: selectedGatheringId || "",
-    onSuccess: (data: { imageUrls: string[]; message: string }) => {
-      console.log("FeedImageUploaded", data);
-      if (setFeedInfo && onNext) {
-        setFeedInfo((prev) => ({
-          ...(prev as lighty.CreateGatheringFeedRequest),
-          imageUrls: data.imageUrls,
-        }));
-        onNext();
-      } else if (setFeedInfoToEdit) {
-        setFeedInfoToEdit((prev) => ({
-          ...prev,
-          images: data.imageUrls,
-        }));
-      }
-      setFilesToUpload([]);
-    },
-    onError: (error) => console.log(error),
-  });
-
   return (
     <>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
@@ -107,11 +83,11 @@ export default function FeedForm({
         </div>
       </Flex>
       <FixedBottomButton
-        label={isPending ? <DotSpinner /> : edit ? "수정 완료" : "기록 완료"}
+        label={edit ? "수정 완료" : "기록 완료"}
         onClick={() => {
           if (edit) {
             edit();
-          } else if (onNext && feedInfo) {
+          } else if (feedInfo && uploadImages) {
             uploadImages();
           }
         }}

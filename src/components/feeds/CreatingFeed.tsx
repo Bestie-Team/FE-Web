@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
@@ -11,6 +11,7 @@ import clsx from "clsx";
 import { toast } from "react-toastify";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import useUploadFeedImages from "./hooks/useUploadFeedImages";
 
 export default function CreatingFeed() {
   const pathname = usePathname();
@@ -19,6 +20,7 @@ export default function CreatingFeed() {
   const header = getHeader(pathname);
   const hasShadow = useScrollShadow(containerRef);
   const selectedGatheringId = useRecoilValue(recordGatheringAtom);
+  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
     gatheringId: selectedGatheringId ? selectedGatheringId : "",
     imageUrls: [],
@@ -33,16 +35,36 @@ export default function CreatingFeed() {
 
     onError: (error) => {
       toast.error(error.message);
-
-      // router.replace("/feed");
     },
   });
+
+  const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
+    files: filesToUpload,
+    gatheringId: selectedGatheringId || "",
+    onSuccess: (data: { imageUrls: string[]; message: string }) => {
+      console.log("FeedImageUploaded", data);
+      if (setFeedInfo) {
+        setFeedInfo((prev) => ({
+          ...(prev as lighty.CreateGatheringFeedRequest),
+          imageUrls: data.imageUrls,
+        }));
+      }
+      setFilesToUpload([]);
+    },
+    onError: (error) => console.log(error),
+  });
+
   const { data: selectedGathering } = useGatheringDetail({
     gatheringId: selectedGatheringId ? selectedGatheringId : "",
   });
 
-  if (!selectedGathering || selectedGatheringId == null) return null;
+  useEffect(() => {
+    if (feedInfo.imageUrls.length > 0) {
+      makeGatheringFeed();
+    }
+  }, [feedInfo.imageUrls]);
 
+  if (!selectedGathering || selectedGatheringId == null) return null;
   return (
     <div className={styles.container} ref={containerRef}>
       <div
@@ -54,11 +76,12 @@ export default function CreatingFeed() {
         <DotSpinner />
       ) : (
         <FeedForm
-          onNext={makeGatheringFeed}
+          uploadImages={uploadImages}
           feedInfo={feedInfo}
           setFeedInfo={setFeedInfo}
+          filesToUpload={filesToUpload}
+          setFilesToUpload={setFilesToUpload}
           selectedGathering={selectedGathering}
-          selectedGatheringId={selectedGatheringId}
         />
       )}
     </div>

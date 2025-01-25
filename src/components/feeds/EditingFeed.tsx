@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { useRecoilValue } from "recoil";
 import getHeader from "@/utils/getHeader";
@@ -10,12 +10,14 @@ import useEditFeed from "./hooks/useEditFeed";
 import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import FullPageLoader from "../shared/FullPageLoader";
+import useUploadFeedImages from "./hooks/useUploadFeedImages";
 
 export default function EditingFeed() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const header = getHeader("/feed/edit");
   const hasShadow = useScrollShadow(containerRef);
+  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const selectedFeedInfo = useRecoilValue(selectedFeedInfoAtom);
   const [feedInfo, setFeedInfo] = useState<{
     content: string;
@@ -37,6 +39,29 @@ export default function EditingFeed() {
       console.log(selectedFeedInfo?.id);
     },
   });
+
+  const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
+    files: filesToUpload,
+    gatheringId: selectedFeedInfo?.gathering?.id || "",
+    onSuccess: (data: { imageUrls: string[]; message: string }) => {
+      console.log("FeedImageUploaded", data);
+      if (data.imageUrls) {
+        setFeedInfo((prev) => ({
+          ...prev,
+          images: data.imageUrls,
+        }));
+      }
+      setFilesToUpload([]);
+    },
+    onError: (error) => console.log(error),
+  });
+
+  useEffect(() => {
+    if (feedInfo.images.length > 0) {
+      editingFeed();
+    }
+  }, [feedInfo.images]);
+
   if (!selectedFeedInfo || selectedFeedInfo == null) return null;
 
   return (
@@ -47,11 +72,13 @@ export default function EditingFeed() {
         {header}
       </div>
       <FeedForm
-        edit={editingFeed}
+        edit={uploadImages}
+        filesToUpload={filesToUpload}
+        setFilesToUpload={setFilesToUpload}
         feedInfoToEdit={feedInfo}
         setFeedInfoToEdit={setFeedInfo}
       />
-      {isPending && <FullPageLoader />}
+      {(isPending || isUploading) && <FullPageLoader />}
     </div>
   );
 }
