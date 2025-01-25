@@ -77,7 +77,7 @@ export default function MyPage() {
   }, []);
 
   useEffect(() => {
-    if (user && !isFetching && !isError) {
+    if (!isFetching && !isError) {
       setScrollReady(true);
     }
   }, [user, isFetching, isError]);

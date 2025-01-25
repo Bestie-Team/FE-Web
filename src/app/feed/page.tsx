@@ -119,7 +119,7 @@ export default function FeedPage() {
   });
 
   useEffect(() => {
-    if (feedAll && feedMine && !isFetching && !isFetchingMine) {
+    if (!isFetching && !isFetchingMine) {
       setScrollReady(true);
     }
   }, [feedAll, feedMine, isFetching, isFetchingMine]);

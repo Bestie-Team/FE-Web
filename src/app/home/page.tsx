@@ -56,7 +56,7 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    if (this_week && !isFetching && !isError) {
+    if (!isFetching && !isError) {
       setScrollReady(true);
     }
   }, [this_week, isFetching, isError]);

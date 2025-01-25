@@ -23,7 +23,6 @@ export const useScroll = (
         scrollElement instanceof HTMLElement
           ? scrollElement.scrollTop
           : window.scrollY;
-      console.log("currentscroll", currentScrollPos);
       const maxScrollHeight =
         scrollElement instanceof HTMLElement
           ? scrollElement.scrollHeight - scrollElement.clientHeight
