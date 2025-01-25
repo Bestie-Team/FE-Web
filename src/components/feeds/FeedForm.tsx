@@ -40,11 +40,12 @@ export default function FeedForm({
     gatheringId: selectedGatheringId || "",
     onSuccess: (data: { imageUrls: string[]; message: string }) => {
       console.log("FeedImageUploaded", data);
-      if (setFeedInfo) {
+      if (setFeedInfo && onNext) {
         setFeedInfo((prev) => ({
           ...(prev as lighty.CreateGatheringFeedRequest),
           imageUrls: data.imageUrls,
         }));
+        onNext();
       } else if (setFeedInfoToEdit) {
         setFeedInfoToEdit((prev) => ({
           ...prev,
@@ -112,7 +113,6 @@ export default function FeedForm({
             edit();
           } else if (onNext && feedInfo) {
             uploadImages();
-            onNext();
           }
         }}
       />
