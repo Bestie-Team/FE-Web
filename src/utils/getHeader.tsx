@@ -12,7 +12,6 @@ export default function getHeader(pathname: string) {
     [key: string]: React.ReactNode | null;
   } = {
     "/signin": null,
-    "/": <BackgroundReversibleHeader />,
     "/invitation": (
       <HeaderWithBackBtn pageName="초대장" color="white" backToHome={true} />
     ),
@@ -51,6 +50,8 @@ export default function getHeader(pathname: string) {
       ) : (
         <HeaderWithBackBtn pageName="나의 그룹" color="#f4f4f4" />
       ),
+    "/": <BackgroundReversibleHeader />,
+    "/?ref=signup": <BackgroundReversibleHeader />,
   };
 
   const matchedHeader = Object.keys(headerConfig).find((key) =>
