@@ -2,7 +2,7 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
-import { addHours, differenceInDays } from "date-fns";
+import { differenceInDays } from "date-fns";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 
@@ -11,9 +11,9 @@ export default function GatheringBannerContainer({
 }: {
   gathering: GatheringDetailResponse;
 }) {
-  const date = addHours(new Date(gathering.gatheringDate), 9);
-  const diff = differenceInDays(new Date(), new Date(date));
-  const displayingDate = formatToDisplay(gathering.gatheringDate);
+  const date = new Date(gathering.gatheringDate);
+  const diff = differenceInDays(new Date(), date);
+  const displayingDate = formatToDisplay(date);
   return (
     <Flex>
       <div className="relative">

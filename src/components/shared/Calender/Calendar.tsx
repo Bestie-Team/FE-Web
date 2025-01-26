@@ -19,7 +19,7 @@ export default function LightyCalendar() {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
-
+  console.log(selectedDate);
   return (
     <Calendar
       onChange={setSelectedDate}

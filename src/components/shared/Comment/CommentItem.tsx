@@ -3,7 +3,6 @@ import Flex from "../Flex";
 import Options from "../Options";
 import Spacing from "../Spacing";
 import { useAuth } from "../providers/AuthProvider";
-import { addHours } from "date-fns";
 import { formatDate } from "@/utils/formatDate";
 import clsx from "clsx";
 
@@ -18,7 +17,7 @@ export default function CommentItem({
   const isMe = userInfo?.accountId === comment.writer.accountId;
   console.log(userInfo?.accountId, comment.writer.accountId);
   const { writer, content, createdAt } = comment;
-  const time = formatDate(addHours(new Date(createdAt), 9));
+  const time = formatDate(new Date(createdAt));
   return (
     <Flex
       align="center"

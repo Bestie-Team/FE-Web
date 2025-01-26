@@ -1,5 +1,4 @@
-import { subHours } from "date-fns";
-import { format, addHours } from "date-fns";
+import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
 export default function makeUTC({
@@ -30,26 +29,23 @@ export default function makeUTC({
     throw new Error("Invalid date or time format");
   }
 
-  const utcDateTime = subHours(kstDateTime, 9);
+  const utcDateTime = kstDateTime;
+
   return utcDateTime.toISOString();
 }
 
 export function formatToKoreanTime(utcISOString: string) {
-  const formattedDate = format(
-    addHours(new Date(utcISOString), 9),
-    "yyyy.MM.dd a hh:mm",
-    { locale: ko }
-  );
+  const formattedDate = format(new Date(utcISOString), "yyyy.MM.dd a hh:mm", {
+    locale: ko,
+  });
 
   return formattedDate;
 }
 
-export function formatToDisplay(utcISOString: string) {
-  const formattedDate = format(
-    addHours(new Date(utcISOString), 9),
-    "yyyy.MM.dd (E) a h:mm",
-    { locale: ko }
-  );
+export function formatToDisplay(utcISOString: Date) {
+  const formattedDate = format(utcISOString, "yyyy.MM.dd (E) a h:mm", {
+    locale: ko,
+  });
 
   return formattedDate;
 }
