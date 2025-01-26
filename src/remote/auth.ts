@@ -21,15 +21,15 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
   const data = await response.json();
   if (response.ok) {
     const user_info: lighty.LoginResponse = data;
-    // console.log(user_info);
-    // localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
-    // sessionStorage.setItem(
-    //   STORAGE_KEYS.USER_INFO,
-    //   JSON.stringify({
-    //     accountId: user_info.accountId,
-    //     profileImageUrl: user_info.profileImageUrl,
-    //   })
-    // );
+    console.log(user_info);
+    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
+    sessionStorage.setItem(
+      STORAGE_KEYS.USER_INFO,
+      JSON.stringify({
+        accountId: user_info.accountId,
+        profileImageUrl: user_info.profileImageUrl,
+      })
+    );
     const returnUrl = "/home";
     window.location.href = returnUrl;
     return user_info;
@@ -79,7 +79,6 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
       }),
     });
 
-    // Check if registration was successful
     if (!response.ok) {
       throw new Error("회원가입에 실패했습니다");
     }
@@ -104,7 +103,6 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
     sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
 
-    // Redirect to home page
     window.location.href = "/home?ref=signup";
 
     return { message: "회원가입을 축하합니다" };

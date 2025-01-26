@@ -13,24 +13,11 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import usePatchProfileImage from "./my/hooks/usePatchProfileImage";
 
 export default function Splash() {
-  const { login } = useAuth();
-  const { mutate: patchProfileImage } = usePatchProfileImage({
-    onError: (error) => console.log(error),
-  });
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      const user_info = await postLogin({
+      await postLogin({
         accessToken: credentialResponse.access_token,
       });
-      if (user_info) {
-        login(user_info?.accessToken, {
-          profileImageUrl: user_info?.profileImageUrl,
-          accountId: user_info?.accountId,
-        });
-        if (user_info?.profileImageUrl) {
-          patchProfileImage({ profileImageUrl: user_info?.profileImageUrl });
-        }
-      }
     },
     onError: (error) => {
       console.log(error);
