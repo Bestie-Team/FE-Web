@@ -8,11 +8,9 @@ import { GatheringDetailResponse } from "@/models/gathering";
 
 export default function GatheringBannerContainer({
   gathering,
-  imageLoaded,
   setImageLoaded,
 }: {
   gathering: GatheringDetailResponse;
-  imageLoaded: boolean;
   setImageLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const date = new Date(gathering.gatheringDate);

@@ -45,7 +45,6 @@ export default function GatheringDetailPage({
       <GatheringBannerContainer
         gathering={selectedGathering}
         setImageLoaded={setImageLoaded}
-        imageLoaded={imageLoaded}
       />
       <GroupLeaderContainer groupLeader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />
