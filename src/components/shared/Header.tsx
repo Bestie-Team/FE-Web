@@ -27,7 +27,7 @@ export function Header({
       style={{
         top: 0,
         position: "fixed",
-        zIndex: 10,
+        zIndex: 12,
       }}
       className={clsx(
         styles.universalHeaderWrapper,
@@ -70,7 +70,7 @@ export function HeaderWithBackBtn({
         "text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5"
       )}
       style={{
-        zIndex: 5,
+        zIndex: 12,
         position: "fixed",
         top: 0,
         backgroundColor: color ? color : "transparent",
@@ -116,7 +116,7 @@ export function BackgroundReversibleHeader() {
     <div
       style={{
         top: 0,
-        zIndex: 10,
+        zIndex: 12,
         position: "fixed",
         background: bgColor,
         transition: "background-color 0.5s ease",

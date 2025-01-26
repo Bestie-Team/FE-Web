@@ -132,7 +132,7 @@ export default function FeedPage() {
         }}
         slidesPerView={1}
         spaceBetween={2}
-        className="custom-swiper w-full !z-0"
+        className="custom-swiper w-full !z-5"
       >
         {isFetching ? (
           <DotSpinner />
@@ -166,12 +166,10 @@ export default function FeedPage() {
   ]);
 
   return (
-    <div id="scrollable-container" ref={containerRef} className="pt-[48px]">
+    <div ref={containerRef} className="pt-[48px]">
       {header}
       <div
-        style={{
-          zIndex: 1,
-        }}
+        id="filter"
         className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
       >
         <Panel

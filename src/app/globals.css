@@ -42,6 +42,10 @@
   }
 }
 
+#filter {
+  z-index: 12 !important;
+}
+
 .react-select__placeholder {
   color: "#0A0A0At" !important;
 }
