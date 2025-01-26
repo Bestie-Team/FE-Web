@@ -11,7 +11,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   {
-    href: "/home",
+    href: "/",
     icon: (isActive: boolean) => (
       <HomeIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),

@@ -51,7 +51,7 @@ export default function MakingGatheringStatus({
         <FixedBottomButton
           label={"홈으로 가기"}
           onClick={() => {
-            router.push("/home");
+            router.push("/");
           }}
         />
       </Flex>

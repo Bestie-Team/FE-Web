@@ -122,7 +122,7 @@ const NextLayout = ({ children }: Props) => {
         className="bg-base-white overflow-y-scroll no-scrollbar"
       >
         <>{children}</>
-        {pathname === "/home" ||
+        {(pathname === "/" && isAuthenticated) ||
         pathname === "/gathering" ||
         pathname === "/feed" ||
         pathname === "/schedule" ||

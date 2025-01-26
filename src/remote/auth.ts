@@ -30,8 +30,7 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
         profileImageUrl: user_info.profileImageUrl,
       })
     );
-    const returnUrl = "/home";
-    window.location.href = returnUrl;
+
     return user_info;
   }
 
@@ -103,7 +102,7 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
     sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
 
-    window.location.href = "/home?ref=signup";
+    window.location.href = "/?ref=signup";
 
     return { message: "회원가입을 축하합니다" };
   } catch (error) {

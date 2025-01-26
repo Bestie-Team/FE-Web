@@ -80,7 +80,7 @@ export function HeaderWithBackBtn({
         className={styles.arrowIconContainer}
         onClick={() => {
           if (backToHome) {
-            window.location.href = "/home";
+            window.location.href = "/";
           } else {
             window.history.back();
           }
@@ -131,7 +131,7 @@ export function BackgroundReversibleHeader() {
         color={fontColor}
         pointer
         onClick={() => {
-          router.push("/home");
+          router.push("/");
         }}
       />
       <div className="flex-1" />

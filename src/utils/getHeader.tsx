@@ -12,7 +12,7 @@ export default function getHeader(pathname: string) {
     [key: string]: React.ReactNode | null;
   } = {
     "/signin": null,
-    "/home": <BackgroundReversibleHeader />,
+    "/": <BackgroundReversibleHeader />,
     "/invitation": (
       <HeaderWithBackBtn pageName="초대장" color="white" backToHome={true} />
     ),

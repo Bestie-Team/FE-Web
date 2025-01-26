@@ -15,14 +15,14 @@ export default function SheetOpenBtnContainer({
 }) {
   const pathname = usePathname();
   const getModalStateAtom = () => {
-    if (pathname.startsWith("/home")) return homeModalStateAtom;
+    if (pathname.endsWith("/")) return homeModalStateAtom;
     if (pathname.endsWith("/gathering")) return gatheringModalStateAtom;
     if (pathname.startsWith("/card")) return cardDecorateModalStateAtom;
     return recordModalAtom;
   };
 
   const getModalTooltip = () => {
-    if (pathname === "/home") return "추억 피드를 등록해보세요!";
+    if (pathname === "/") return "추억 피드를 등록해보세요!";
     if (pathname === "/feed") return "추억 피드를 등록해보세요!";
     if (pathname === "/gathering") return "추억 피드를 등록해보세요!";
     if (pathname.startsWith("/card")) return "👀 스티커로 꾸며보세요!";

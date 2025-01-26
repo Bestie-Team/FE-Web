@@ -28,7 +28,7 @@ export default function MakingGroupSuccess({
         <NewGroupContainer className="shadow-sm" group={group} />
         <FixedBottomButton
           label={"홈으로 이동하기"}
-          onClick={() => router.push("/home")}
+          onClick={() => router.push("/")}
         />
       </Flex>
     </div>

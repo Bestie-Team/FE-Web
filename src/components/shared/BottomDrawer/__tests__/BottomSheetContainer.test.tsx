@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import SheetOpenBtnContainer from "../shared/SheetOpenBtnContainer";
 
 jest.mock("next/navigation", () => ({
-  usePathname: jest.fn(() => "/home"),
+  usePathname: jest.fn(() => "/"),
 }));
 jest.mock("recoil", () => ({
   ...jest.requireActual("recoil"),
@@ -15,7 +15,7 @@ describe("SheetOpenBtnContainer", () => {
   test("버튼 클릭 시 setModalOpen함수를 호출하는가", () => {
     const modalOpen = jest.fn();
     (useSetRecoilState as jest.Mock).mockReturnValue(modalOpen);
-    const mockPathname = "/home";
+    const mockPathname = "/";
     (usePathname as jest.Mock).mockReturnValue(mockPathname);
 
     render(
