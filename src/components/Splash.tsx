@@ -9,13 +9,18 @@ import oAuthButtons from "@/constants/oAuthButtons";
 import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
+import { useAuth } from "./shared/providers/AuthProvider";
 
 export default function Splash() {
+  const { login } = useAuth();
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      await postLogin({
+      const userInfo = await postLogin({
         accessToken: credentialResponse.access_token,
       });
+      if (userInfo) {
+        login(userInfo);
+      }
     },
     onError: (error) => {
       console.log(error);

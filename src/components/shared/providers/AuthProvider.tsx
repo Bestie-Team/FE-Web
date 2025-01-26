@@ -2,6 +2,7 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
+import * as lighty from "lighty-type";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -9,7 +10,7 @@ interface AuthContextType {
   token: string | null;
   userInfo: UserInfoMini | null;
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfoMini | null>>;
-  login: (authToken: string, user: UserInfoMini) => void;
+  login: (userInfo: lighty.LoginResponse) => void;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -34,11 +35,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   });
 
-  const login = (authToken: string, user: UserInfoMini) => {
-    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, authToken);
-    sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(user));
-    setToken(authToken);
-    setUserInfo(user);
+  const login = (userInfo: lighty.LoginResponse) => {
+    setToken(userInfo.accessToken);
+    setUserInfo({
+      accountId: userInfo.accountId,
+      profileImageUrl: userInfo.profileImageUrl,
+    });
   };
 
   const logout = () => {

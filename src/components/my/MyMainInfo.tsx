@@ -5,6 +5,7 @@ import UserIcon from "../shared/Icon/UserIcon";
 import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
 import FolderIcon from "../shared/Icon/FolderIcon";
+import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 
 export default function MyMainInfo({
   groupCount,
@@ -16,6 +17,7 @@ export default function MyMainInfo({
   friendsCount: number;
 }) {
   const router = useRouter();
+  const { setActiveBtn } = useActiveNavigation();
   const boxes = [
     {
       label: "친구 그룹",
@@ -44,7 +46,14 @@ export default function MyMainInfo({
           <div
             key={idx}
             className={boxStyle}
-            onMouseDown={() => router.push(box.link)}
+            onMouseDown={() => {
+              if (box.label == "작성피드") {
+                setActiveBtn(2);
+                router.push(box.link);
+              } else {
+                router.push(box.link);
+              }
+            }}
           >
             <div>{box.icon}</div>
             <Spacing size={4} />

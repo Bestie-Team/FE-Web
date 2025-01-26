@@ -21,7 +21,7 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
   const data = await response.json();
   if (response.ok) {
     const user_info: lighty.LoginResponse = data;
-    console.log(user_info);
+
     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
     sessionStorage.setItem(
       STORAGE_KEYS.USER_INFO,

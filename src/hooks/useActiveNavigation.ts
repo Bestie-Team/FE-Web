@@ -8,13 +8,10 @@ export const useActiveNavigation = () => {
   const [activeBtn, setActiveBtn] = useRecoilState(locationStatusAtom);
   const pathname = usePathname();
 
-  const defaultBtn = NAV_ITEMS.findIndex((item) =>
-    pathname.startsWith(item.href)
-  );
-
+  const defaultBtn = NAV_ITEMS.findIndex((item) => pathname == item.href);
   useEffect(() => {
     setActiveBtn(defaultBtn === -1 ? 0 : defaultBtn);
-  }, []);
+  }, [pathname]);
 
   return {
     activeBtn,

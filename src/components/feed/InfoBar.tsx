@@ -29,7 +29,6 @@ export default function InfoBar({
 }
 
 function WriterInfo({ writer }: { writer: lighty.User }) {
-  console.log(writer);
   return (
     <Flex>
       <Image
