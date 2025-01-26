@@ -40,7 +40,9 @@ export default function PhotoSwiper({
         >
           <Image
             priority
-            src={image}
+            placeholder="blur"
+            blurDataURL="/lighty.jpg"
+            src={image || "/lighty.jpg"}
             alt={`img${idx + 1}`}
             className={styles.image}
             width={340}

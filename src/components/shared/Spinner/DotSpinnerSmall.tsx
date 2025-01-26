@@ -9,6 +9,7 @@ export default function DotSpinnerSmall({
     <div
       id="fullPageLoader"
       style={{
+        height: "full",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

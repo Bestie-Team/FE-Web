@@ -114,12 +114,6 @@ export default function FeedPage() {
     },
   });
 
-  // useEffect(() => {
-  //   if (!isFetching && !isFetchingMine) {
-  //     setScrollReady(true);
-  //   }
-  // }, [feedAll, feedMine, isFetching, isFetchingMine]);
-
   const renderSwipers = useMemo(() => {
     return (
       <Swiper

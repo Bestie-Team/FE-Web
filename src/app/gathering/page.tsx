@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useRef, memo } from "react";
+import React, { useEffect, useRef, memo } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -12,7 +12,10 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
-import { GatheringInWhich } from "@/models/gathering";
+import {
+  Gathering as GatheringType,
+  GatheringInWhich,
+} from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
@@ -40,7 +43,7 @@ export default function MyGatheringPage() {
   const maxDate = new Date("2025-12-31").toISOString();
   const { data, isFetching, isError } = useGatherings({
     cursor: minDate,
-    limit: 5,
+    limit: 50,
     minDate,
     maxDate,
   });
@@ -49,12 +52,6 @@ export default function MyGatheringPage() {
   useEffect(() => {
     reset();
   }, [reset]);
-
-  // useEffect(() => {
-  //   if (data && !isFetching && !isError) {
-  //     setScrollReady(true);
-  //   }
-  // }, [data, isFetching, isError]);
 
   return (
     <div ref={containerRef} className="pt-[48px]">
@@ -65,9 +62,10 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
       />
       {isFetching || isError ? (
-        <DotSpinner />
+        <DotSpinner width={36} height={36} />
       ) : myGatherings && myGatherings.length > 0 ? (
         <GatheringSwiper
+          myGatherings={myGatherings}
           selectedTab={selectedTab}
           swiperRef={swiperRef}
           onSlideChange={(index) => handleSlideChange(index)}
@@ -102,10 +100,12 @@ const FilterAndTabs = memo(
 
 const GatheringSwiper = memo(
   ({
+    myGatherings,
     selectedTab,
     swiperRef,
     onSlideChange,
   }: {
+    myGatherings: GatheringType[];
     selectedTab: TabName;
     swiperRef: React.MutableRefObject<SwiperType | null>;
     onSlideChange: (index: number) => void;
@@ -120,9 +120,11 @@ const GatheringSwiper = memo(
     >
       {["예정", "완료"].map((which) => (
         <SwiperSlide key={which}>
-          <Suspense fallback={<div>로딩중</div>}>
-            <Gathering where={GatheringInWhich.GATHERING} which={which} />
-          </Suspense>
+          <Gathering
+            where={GatheringInWhich.GATHERING}
+            which={which}
+            myGatherings={myGatherings}
+          />
         </SwiperSlide>
       ))}
     </Swiper>

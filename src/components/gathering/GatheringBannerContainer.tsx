@@ -19,11 +19,10 @@ export default function GatheringBannerContainer({
       <div className="relative">
         <Image
           priority
+          placeholder="blur"
+          blurDataURL="/lighty.jpg"
           alt="gatheringBanner"
-          src={
-            gathering.invitationImageUrl ||
-            "https://cdn.lighty.today/gathering.png"
-          }
+          src={gathering.invitationImageUrl || "/lighty.jpg"}
           width={600}
           height={434}
           className="h-[434px] object-cover"

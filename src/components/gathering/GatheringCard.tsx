@@ -14,6 +14,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
+import { gatheringImageUrlAtom } from "@/atoms/gathering";
 
 export default function GatheringCard({
   gathering,
@@ -26,7 +27,7 @@ export default function GatheringCard({
 }) {
   //기록할 약속의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
-
+  const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
   const { invitationImageUrl, name, gatheringDate } = gathering;
   const router = useRouter();
   const date = addHours(new Date(gatheringDate), 9);
@@ -34,20 +35,29 @@ export default function GatheringCard({
 
   const handleClickGathering = () => {
     if (where === GatheringInWhich.HOME) {
+      setInvitationUrl(invitationImageUrl);
       router.push(`/gathering/${gathering.id}`);
-    } else setGatheringId(gathering.id);
+    } else {
+      setGatheringId(gathering.id);
+      setInvitationUrl(invitationImageUrl);
+    }
   };
 
   return (
     <div
       className={styles.gatheringWrapper}
-      onClick={() => router.push(`/gathering/${gathering.id}`)}
+      onClick={() => {
+        setInvitationUrl(invitationImageUrl);
+        router.push(`/gathering/${gathering.id}`);
+      }}
     >
       <Image
+        placeholder="blur"
+        blurDataURL="/lighty.jpg"
         src={
           invitationImageUrl.startsWith("https://example") ||
           !invitationImageUrl
-            ? "/lighty_square.jpeg"
+            ? "/lighty.jpg"
             : invitationImageUrl
         }
         className={styles.image}

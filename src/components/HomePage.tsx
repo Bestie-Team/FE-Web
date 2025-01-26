@@ -74,7 +74,13 @@ export default function HomePage() {
           <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
           <ArrowRightIcon width="16" height="16" color="#808080" />
         </Flex>
-        <Gathering where={GatheringInWhich.HOME} className="pt-4" />
+        {this_week ? (
+          <Gathering
+            where={GatheringInWhich.HOME}
+            className="pt-4"
+            myGatherings={this_week.gatherings}
+          />
+        ) : null}
       </Flex>
       {isModalOpen && (
         <MemoriesBottomSheet

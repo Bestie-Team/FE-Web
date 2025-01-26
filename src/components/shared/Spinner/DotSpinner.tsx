@@ -18,16 +18,16 @@ export default function DotSpinner({
         right: 0,
         bottom: 0,
         left: 0,
-        opacity: 0.7,
-        backgroundColor: "white",
+        opacity: 1,
+        backgroundColor: "transparent",
       }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 100 100"
         style={{
-          width: width ?? 18.67,
-          height: height ?? 18.67,
+          width: width ?? 32,
+          height: height ?? 32,
         }}
       >
         <style jsx>{`

@@ -28,3 +28,8 @@ export const newGatheringInfo = atom<lighty.CreateGatheringRequest>({
     invitationImageUrl: "",
   },
 });
+
+export const gatheringImageUrlAtom = atom<string>({
+  key: "gathering/invitationImageUrl",
+  default: "",
+});
