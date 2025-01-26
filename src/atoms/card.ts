@@ -1,5 +1,4 @@
 import { Feed } from "@/models/feed";
-import { GatheringResponse } from "@/models/gathering";
 import { atom } from "recoil";
 
 export const cardImageUrlAtom = atom<string>({

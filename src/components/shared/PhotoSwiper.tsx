@@ -17,8 +17,8 @@ export default function PhotoSwiper({
 }) {
   const formattedDate = formatToDisplay(
     feed.gathering?.gatheringDate
-      ? feed.gathering?.gatheringDate
-      : feed.createdAt
+      ? new Date(feed.gathering?.gatheringDate)
+      : new Date(feed.createdAt)
   ).slice(0, 10);
   return (
     <Swiper

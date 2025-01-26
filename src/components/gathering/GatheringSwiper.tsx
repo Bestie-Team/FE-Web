@@ -45,7 +45,7 @@ export default function GatheringSwiper({
               <span>{name}</span>
               <Spacing size={4} />
               <span className={styles.date}>
-                {formatToDisplay(gatheringDate).slice(0, 10)}
+                {formatToDisplay(new Date(gatheringDate)).slice(0, 10)}
               </span>
             </div>
           </SwiperSlide>
