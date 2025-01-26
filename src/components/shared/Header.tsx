@@ -52,13 +52,13 @@ export function Header({
 
 export function HeaderWithBackBtn({
   pageName,
-  square = false,
+  backToHome = false,
   fontColor,
   color,
   icon,
 }: {
   pageName: string;
-  square?: boolean;
+  backToHome?: boolean;
   fontColor?: string;
   color?: string;
   icon?: React.ReactNode;
@@ -79,7 +79,11 @@ export function HeaderWithBackBtn({
       <div
         className={styles.arrowIconContainer}
         onClick={() => {
-          window.history.back();
+          if (backToHome) {
+            window.location.href = "/home";
+          } else {
+            window.history.back();
+          }
         }}
       >
         <ArrowLeftIcon color={fontColor} />
@@ -93,11 +97,7 @@ export function HeaderWithBackBtn({
         {pageName}
       </div>
       <Spacing size={6} />
-      {square && (
-        <div className={styles.squareIconContainer}>
-          <EmptySquareIcon />
-        </div>
-      )}
+
       {icon && (
         <>
           <Spacing size={6} />

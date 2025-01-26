@@ -9,6 +9,9 @@ import MakingGatheringStatus from "./MakeGatheringStatus";
 import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCard";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { newGatheringInfo } from "@/atoms/gathering";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import FullPageLoader from "../shared/FullPageLoader";
 
 export default function MakingInvitation({
   gathering,
@@ -20,12 +23,17 @@ export default function MakingInvitation({
   const reset = useResetRecoilState(newGatheringInfo);
   const { userInfo } = useAuth();
   const header = getHeader("/gathering/new");
+  const router = useRouter();
   const {
     mutate: makeGathering,
     isPending,
     isSuccess,
   } = useMakeGathering({
     gathering,
+    onSuccess: (data: { message: string }) => {
+      router.replace("/invitation");
+      toast.success(data.message);
+    },
   });
 
   if (isPending || isSuccess) {
@@ -35,6 +43,7 @@ export default function MakingInvitation({
     <div className="flex flex-col bg-grayscale-50 h-full">
       {header}
       <Flex direction="column" className="h-screen pt-[50px]" align="center">
+        {isPending ? <FullPageLoader /> : null}
         <Spacing size={40} />
         <span className="text-T2">초대장에 이미지를 채워주세요!</span>
         <Spacing size={30} />

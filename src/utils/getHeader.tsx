@@ -13,7 +13,9 @@ export default function getHeader(pathname: string) {
   } = {
     "/signin": null,
     "/home": <BackgroundReversibleHeader />,
-    "/invitation": <HeaderWithBackBtn pageName="초대장" color="white" />,
+    "/invitation": (
+      <HeaderWithBackBtn pageName="초대장" color="white" backToHome={true} />
+    ),
     "/signup": <HeaderWithBackBtn pageName="프로필 생성" color="white" />,
     "/feed": pathname.endsWith("edit") ? (
       <Header pageName="피드 수정" />

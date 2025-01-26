@@ -4,11 +4,14 @@ import * as lighty from "lighty-type";
 
 export default function useMakeGathering({
   gathering,
+  onSuccess,
 }: {
   gathering: lighty.CreateGatheringRequest;
+  onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({
     mutationKey: ["make/gathering", gathering.name, gathering.description],
     mutationFn: () => postGathering({ gathering }),
+    onSuccess: (data: { message: string }) => onSuccess(data),
   });
 }
