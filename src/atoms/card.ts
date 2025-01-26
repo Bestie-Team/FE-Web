@@ -1,3 +1,4 @@
+import { Feed } from "@/models/feed";
 import { GatheringResponse } from "@/models/gathering";
 import { atom } from "recoil";
 
@@ -11,13 +12,16 @@ export const cardFrameAtom = atom<number>({
   default: 0,
 });
 
-export const cardSelectedGatheringAtom = atom<Partial<GatheringResponse>>({
-  key: "card/gathering",
+export const cardSelectedFeedAtom = atom<
+  Partial<Feed> & { name: string; imageUrl: string; date: string }
+>({
+  key: "card/feed",
   default: {
     id: "",
     name: "",
-    description: "",
-    invitationImageUrl: "",
+    content: "",
+    imageUrl: "",
+    date: "",
   },
 });
 

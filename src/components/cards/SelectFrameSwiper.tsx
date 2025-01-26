@@ -8,12 +8,13 @@ import clsx from "clsx";
 import { useEffect, useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { NavigationOptions } from "swiper/types";
-import { cardFrameAtom, cardSelectedGatheringAtom } from "@/atoms/card";
+import { cardFrameAtom, cardSelectedFeedAtom } from "@/atoms/card";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { frames } from "@/constants/photoCard";
+import { format } from "date-fns";
 
 export default function SelectFrameSwiper() {
-  const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
+  const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
   const setSelectedFrame = useSetRecoilState(cardFrameAtom);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -70,7 +71,7 @@ export default function SelectFrameSwiper() {
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      src={"/IMG_5062.jpg"}
+                      src={selectedFeed.imageUrl}
                       width={230}
                       height={230}
                       style={{
@@ -80,17 +81,15 @@ export default function SelectFrameSwiper() {
                       className={styles.image}
                     />
                   </div>
-                  <Flex direction="column" className="px-[20px] py-[15px]">
+                  <Flex direction="column" className="px-5 py-[15px]">
                     <span className={styles.textWrapper}>
-                      {selectedGathering.name}
+                      {selectedFeed.name}
                     </span>
                     <Spacing size={8} />
-                    <span className="text-C5">
-                      {selectedGathering.description}
-                    </span>
+                    <span className="text-C5">{selectedFeed.content}</span>
                     <Spacing size={16} />
                     <span className={styles.dateWrapper}>
-                      {selectedGathering.date}
+                      {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
                     </span>
                   </Flex>
                 </div>
@@ -117,7 +116,7 @@ const styles = {
   nextButton: "absolute top-[167px] right-[32px] z-10 transform cursor-pointer",
   frameWrapper: "relative p-[22px] h-[390px] shadow-custom rounded-[20px]",
   frame: "absolute inset-0 h-full w-full z-[-1] rounded-[20px]",
-  swiperContainer: "relative w-full bg-gray-100",
+  swiperContainer: "relative w-full bg-gray-50",
 
   frameName:
     "w-fit bg-base-white text-C1 py-[12px] px-[16px] border rounded-[12px] mx-auto",

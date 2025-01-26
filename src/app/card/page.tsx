@@ -5,6 +5,7 @@ import ChooseFrame from "@/components/cards/ChooseFrame";
 import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
@@ -22,8 +23,13 @@ export default function Page() {
   };
 
   return (
-    <div className="bg-grayscale-50">
-      <header className={styles.header}>
+    <div className="bg-grayscale-50 h-screen">
+      <header
+        className={clsx(
+          styles.header,
+          step === 1 ? "bg-base-white" : "bg-grayscale-50"
+        )}
+      >
         <div
           className="py-[10px] pl-[17px] pr-[3px] cursor-pointer"
           onClick={() => {
@@ -37,7 +43,6 @@ export default function Page() {
         </div>
         <span className="text-T3">{getHeaderName()}</span>
       </header>
-
       {step === 1 && (
         <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
       )}

@@ -69,7 +69,7 @@ export default function BigClickableGatheringSwiper({
 }
 
 const styles = {
-  swiperContainer: "relative w-full bg-gray-100",
+  swiperContainer: "relative w-full bg-gray-50",
 
   slide:
     "relative !h-[320px] my-auto shadow-custom rounded-[20px] overflow-hidden",

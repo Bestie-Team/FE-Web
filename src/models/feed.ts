@@ -1,4 +1,4 @@
-import { Gathering } from "./gathering";
+import { FeedGathering, Gathering } from "./gathering";
 import * as lighty from "lighty-type";
 
 export interface Feed {
@@ -8,7 +8,7 @@ export interface Feed {
   commentCount: number;
   writer: lighty.User;
   createdAt: string;
-  gathering: Gathering | null;
+  gathering: FeedGathering | null;
 }
 
 export interface FeedResponse {

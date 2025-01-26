@@ -7,7 +7,7 @@ import {
   cardDecorateModalStateAtom,
   cardFrameAtom,
   cardImageUrlAtom,
-  cardSelectedGatheringAtom,
+  cardSelectedFeedAtom,
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
@@ -17,6 +17,7 @@ import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/BottomDrawer/DecoStickerBottomSheet";
 import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
+import { format } from "date-fns";
 
 export default function DecorateWithStickers() {
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
@@ -28,7 +29,7 @@ export default function DecorateWithStickers() {
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
   const stageRef = React.useRef<HTMLDivElement | null>(null);
   const [deco, setDeco] = useState<boolean>(false);
-  const selectedGathering = useRecoilValue(cardSelectedGatheringAtom);
+  const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -137,7 +138,7 @@ export default function DecorateWithStickers() {
     const applyCrop = async () => {
       try {
         const croppedImageUrl = await cropAndResizeImage(
-          selectedGathering.invitationImageUrl as string,
+          selectedFeed.imageUrl as string,
           230, // 원하는 너비
           250 // 원하는 높이
         );
@@ -148,11 +149,11 @@ export default function DecorateWithStickers() {
     };
 
     applyCrop();
-  }, [selectedGathering.invitationImageUrl]);
+  }, [selectedFeed.imageUrl]);
 
   return (
-    <div className="h-screen flex flex-col pt-[72px] px-[20px] items-center">
-      <Flex justify="space-between" className="px-[20px] w-full" align="center">
+    <div className="h-screen flex flex-col pt-[72px] px-5 items-center">
+      <Flex justify="space-between" className="px-5 w-full" align="center">
         <span className="text-B4 text-grayscale-500">
           점선 영역이 이미지 영역이에요!
         </span>
@@ -191,18 +192,13 @@ export default function DecorateWithStickers() {
                   />
                 )}
               </div>
-              <Flex
-                direction="column"
-                className="px-[20px] py-[10px] pb-[20px] h-[100px]"
-              >
-                <span className={styles.textWrapper}>
-                  {selectedGathering.name}
-                </span>
+              <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
+                <span className={styles.textWrapper}>{selectedFeed.name}</span>
                 <Spacing size={8} />
-                <span className="text-C5">{selectedGathering.description}</span>
-                <Spacing size={16} />
+                <span className="text-C5">{selectedFeed.content}</span>
+                <Spacing size={12} />
                 <span className={styles.dateWrapper}>
-                  {selectedGathering.date}
+                  {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
                 </span>
               </Flex>
             </div>
@@ -248,9 +244,9 @@ const styles = {
     "absolute flex justify-center items-center z-10 bg-grayscale-10 inset-0 opacity-50",
   frame: "rounded-[20px] w-[282px] h-[372px]",
   button:
-    "absolute z-10 py-[10px] px-[12px] text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
+    "absolute z-10 py-[10px] px-3 text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
   saveButton:
-    "w-[120px] px-[12px] py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
+    "w-[120px] px-3 py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
   cardContainer:
     "relative flex justify-center items-center rounded-[20px] w-[282px] h-[453px]",
   cardWrapper:

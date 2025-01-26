@@ -8,45 +8,45 @@ import Flex from "../shared/Flex";
 import { Feed } from "@/models/feed";
 
 export default function ClickableGatheringSwiperForDeco({
-  gathering,
+  feed,
   onImageClick,
-  selectedGatheringId,
+  selectedFeedId,
 }: {
-  gathering: Feed[];
+  feed: Feed[];
   onImageClick?: (
-    groupId: {
+    feedInfo: {
       id: string;
       name: string;
-      description: string;
-      invitationImageUrl: string;
+      content: string;
+      imageUrl: string;
       date: string;
     } | null
   ) => void;
-  selectedGatheringId: string | null;
+  selectedFeedId: string | null;
 }) {
   const handleGatheringClick = ({
     id,
     name,
-    description,
-    invitationImageUrl,
+    content,
+    imageUrl,
     date,
   }: {
     id: string;
     name: string;
-    description: string;
-    invitationImageUrl: string;
+    content: string;
+    imageUrl: string;
     date: string;
   }) => {
     if (onImageClick) {
-      if (selectedGatheringId === id) {
+      if (selectedFeedId === id) {
         onImageClick(null);
         return;
       }
       onImageClick({
         id,
         name,
-        description,
-        invitationImageUrl,
+        content,
+        imageUrl,
         date,
       });
     } else return;
@@ -60,23 +60,23 @@ export default function ClickableGatheringSwiperForDeco({
         grabCursor={true}
         className="custom-swiper w-full h-[340px]"
       >
-        {gathering.map(({ gathering, id, content }, idx) => (
+        {feed.map(({ gathering, id, content, images }, idx) => (
           <SwiperSlide
             onClick={() =>
               handleGatheringClick({
                 id,
                 name: gathering?.name || "",
-                description: gathering?.description || "",
-                invitationImageUrl: "",
+                content: content || "",
+                imageUrl: images[0] || "",
                 date: gathering?.gatheringDate || "",
               })
             }
-            className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
-            key={`gathering_${id}`}
+            className={clsx(styles.slide, idx === 0 && "ml-5")}
+            key={`feed${id}`}
           >
             <Image
-              src={gathering?.invitationImageUrl || ""}
-              alt={`gathering${idx + 1}`}
+              src={images[0] || ""}
+              alt={`feed${idx + 1}`}
               className={styles.image}
               width={270}
               height={320}
@@ -86,7 +86,7 @@ export default function ClickableGatheringSwiperForDeco({
               <Spacing size={6} />
               <span className="text-C2 text-grayscale-600">{content}</span>
             </div>
-            {id === selectedGatheringId ? (
+            {id === selectedFeedId ? (
               <Flex
                 align="center"
                 justify="center"
@@ -103,7 +103,7 @@ export default function ClickableGatheringSwiperForDeco({
 }
 
 const styles = {
-  swiperContainer: "relative w-full bg-gray-100",
+  swiperContainer: "relative w-full bg-gray-50",
 
   slide:
     "relative !h-[320px] my-auto shadow-custom rounded-[20px] overflow-hidden",
