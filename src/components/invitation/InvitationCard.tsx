@@ -6,6 +6,7 @@ import { useSetRecoilState } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
 import { differenceInDays } from "date-fns";
 import { GatheringInvitation } from "@/models/gathering";
+import { useState } from "react";
 
 export default function InvitationCard({
   invitation,
@@ -15,6 +16,8 @@ export default function InvitationCard({
   onClickOpen: (value: boolean) => void;
 }) {
   const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const { name, description, sender, gatheringDate } = invitation;
   const date = new Date(gatheringDate);
   const diff = differenceInDays(new Date(), new Date(date));
@@ -24,38 +27,51 @@ export default function InvitationCard({
     <Flex className={styles.container} justify="center">
       <div className="relative">
         <Image
+          priority
           src="https://cdn.lighty.today/invitation.png"
           className="w-full flex-grow"
           width={350}
           height={169}
           alt="invitationImage"
+          onLoadingComplete={() => setImageLoaded(true)}
         />
-        <Flex direction="column" className={styles.mainContentWrapper}>
-          <Flex direction="column" justify="space-between" className="w-full">
-            <span className="text-T3">{name}♡✧。</span>
-            <Spacing size={8} />
-            <span className="text-C2 text-grayscale-500">{description}</span>
-          </Flex>
-        </Flex>
-        <Flex align="center" className={styles.subContentWrapper}>
-          <span className="text-B4 text-grayscale-300">from</span>
-          <Spacing size={4} direction="horizontal" />
-          <span className="text-B4 flex-grow">{sender}</span>
-          <Spacing size={4} direction="horizontal" />
-          <span className="text-C2 text-grayscale-300">
-            {diff <= 0 ? `${Math.abs(diff)}일 전` : `${diff}일 지남`}
-          </span>
-        </Flex>
-        <Button
-          onClick={() => {
-            setSelectedInvitation(invitation);
-            onClickOpen(true);
-          }}
-          color="#0A0A0A"
-          className={styles.button}
-        >
-          열기
-        </Button>
+
+        {imageLoaded && (
+          <>
+            <Flex direction="column" className={styles.mainContentWrapper}>
+              <Flex
+                direction="column"
+                justify="space-between"
+                className="w-full"
+              >
+                <span className="text-T3">{name} ♡✧。</span>
+                <Spacing size={8} />
+                <span className="text-C2 text-grayscale-500">
+                  {description}
+                </span>
+              </Flex>
+            </Flex>
+            <Flex align="center" className={styles.subContentWrapper}>
+              <span className="text-B4 text-grayscale-300">from</span>
+              <Spacing size={4} direction="horizontal" />
+              <span className="text-B4 flex-grow">{sender}</span>
+              <Spacing size={4} direction="horizontal" />
+              <span className="text-C2 text-grayscale-300">
+                {diff <= 0 ? `${Math.abs(diff)}일 전` : `${diff}일 지남`}
+              </span>
+            </Flex>
+            <Button
+              onClick={() => {
+                setSelectedInvitation(invitation);
+                onClickOpen(true);
+              }}
+              color="#0A0A0A"
+              className={styles.button}
+            >
+              열기
+            </Button>
+          </>
+        )}
       </div>
     </Flex>
   );

@@ -54,55 +54,6 @@ export default function InvitationModal({
           }}
         />
         <Spacing size={8} />
-        {/*  <div className="relative">
-          <Image
-            src="/vertical_invitation.png"
-            alt="verticalBar"
-            width={330}
-            height={460}
-          />
-          <Flex direction="column" className={styles.mainContentWrapper}>
-            <Image
-              src={invitation_image_url||"https://cdn.lighty.today/dishes.jpg"}
-              className={styles.image}
-              width={300}
-              height={210}
-              alt="invitationImage"
-            />
-            <Spacing size={10} />
-            <span className="text-T1 pl-[4px]">{name}</span>
-            <span className="text-B4 pl-[4px] text-grayscale-600">
-              {description}
-            </span>
-          </Flex>
-          <Flex direction="column" className={styles.subContentWrapper}>
-            <Flex align="center">
-              <CalendarIcon width="14" height="14" color="#AEAEAE" />
-              <Spacing direction="horizontal" size={8} />
-              <span className="text-B4">{name}</span>
-              <Spacing direction="horizontal" size={8} />
-              <span className="text-B4">{convertedTime}</span>
-            </Flex>
-            <Flex align="center">
-              <MapPinIcon />
-              <Spacing direction="horizontal" size={8} />
-              <span className="text-B4">{address}</span>
-            </Flex>
-          </Flex>
-          <div className={styles.groupMemberImagesWrapper}>
-            <GroupMemberImages
-              width={34}
-              height={34}
-              gap={6}
-              memberImageUrls={groupMemberImages}
-            />
-          </div>
-          <Flex align="center" className={styles.fromWrapper}>
-            <span className="text-T5 text-grayscale-300">from</span>
-            <Spacing direction="horizontal" size={4} />
-            <span className="text-B3">{sender}</span>
-          </Flex>
-        </div>} */}
         <VerticalInvitationCard invitation={selectedInvitation} />
         {selectedTab === "1" ? (
           <>

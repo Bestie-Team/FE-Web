@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
@@ -52,6 +52,7 @@ export function VerticalInvitationCard({
   invitation?: GatheringInvitation;
   setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   if (gathering && setGathering && !invitation) {
     const { name, invitationImageUrl, gatheringDate, description, address } =
       gathering;
@@ -63,39 +64,44 @@ export function VerticalInvitationCard({
           alt="verticalBar"
           width={330}
           height={460}
+          onLoadingComplete={() => setImageLoaded(true)}
         />
-        <Flex direction="column" className={styles.mainContentWrapper}>
-          <AddGatheringPhoto
-            image={invitationImageUrl}
-            setImage={setGathering}
-          />
+        {imageLoaded && (
+          <>
+            <Flex direction="column" className={styles.mainContentWrapper}>
+              <AddGatheringPhoto
+                image={invitationImageUrl}
+                setImage={setGathering}
+              />
 
-          <Spacing size={10} />
-          <span className="text-T1 pl-[4px]">{name}</span>
-          <span className="text-B4 pl-[4px] text-grayscale-600">
-            {description}
-          </span>
-        </Flex>
-        <Flex direction="column" className={styles.subContentWrapper}>
-          <Flex align="center">
-            <CalendarIcon width="14" height="14" color="#AEAEAE" />
-            <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">
-              {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
-            </span>
-          </Flex>
-          <Flex align="center">
-            <MapPinIcon />
-            <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">{address}</span>
-          </Flex>
-        </Flex>
-        <div className={styles.groupMemberImagesWrapper}></div>
-        <Flex align="center" className={styles.fromWrapper}>
-          <span className="text-T5 text-grayscale-300">from</span>
-          <Spacing direction="horizontal" size={4} />
-          <span className="text-B3">{userId}</span>
-        </Flex>
+              <Spacing size={10} />
+              <span className="text-T1 pl-[4px]">{name}</span>
+              <span className="text-B4 pl-[4px] text-grayscale-600">
+                {description}
+              </span>
+            </Flex>
+            <Flex direction="column" className={styles.subContentWrapper}>
+              <Flex align="center">
+                <CalendarIcon width="14" height="14" color="#AEAEAE" />
+                <Spacing direction="horizontal" size={8} />
+                <span className="text-B4">
+                  {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
+                </span>
+              </Flex>
+              <Flex align="center">
+                <MapPinIcon />
+                <Spacing direction="horizontal" size={8} />
+                <span className="text-B4">{address}</span>
+              </Flex>
+            </Flex>
+            <div className={styles.groupMemberImagesWrapper}></div>
+            <Flex align="center" className={styles.fromWrapper}>
+              <span className="text-T5 text-grayscale-300">from</span>
+              <Spacing direction="horizontal" size={4} />
+              <span className="text-B3">{userId}</span>
+            </Flex>
+          </>
+        )}
       </div>
     );
   }
@@ -117,42 +123,47 @@ export function VerticalInvitationCard({
           alt="verticalBar"
           width={330}
           height={460}
+          onLoadingComplete={() => setImageLoaded(true)}
         />
-        <Flex direction="column" className={styles.mainContentWrapper}>
-          <Image
-            priority
-            placeholder="blur"
-            blurDataURL="/lighty.jpg"
-            src={invitation_image_url || "/lighty.jpg"}
-            className={styles.image}
-            width={300}
-            height={210}
-            alt="invitationImage"
-          />
-          <Spacing size={10} />
-          <span className="text-T1 pl-1">{name}</span>
-          <span className="text-B4 pl-1 text-grayscale-600">{description}</span>
-        </Flex>
-        <Flex direction="column" className={styles.subContentWrapper}>
-          <Flex align="center">
-            <CalendarIcon width="14" height="14" color="#AEAEAE" />
-            <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">
-              {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
-            </span>
-          </Flex>
-          <Flex align="center">
-            <MapPinIcon />
-            <Spacing direction="horizontal" size={8} />
-            <span className="text-B4">{address}</span>
-          </Flex>
-        </Flex>
-        <div className={styles.groupMemberImagesWrapper}></div>
-        <Flex align="center" className={styles.fromWrapper}>
-          <span className="text-T5 text-grayscale-300">from</span>
-          <Spacing direction="horizontal" size={4} />
-          <span className="text-B3">{sender}</span>
-        </Flex>
+        {imageLoaded && (
+          <>
+            <Flex direction="column" className={styles.mainContentWrapper}>
+              <Image
+                priority
+                src={invitation_image_url || "/lighty.jpg"}
+                className={styles.image}
+                width={300}
+                height={210}
+                alt="invitationImage"
+              />
+              <Spacing size={10} />
+              <span className="text-T1 pl-1">{name}</span>
+              <span className="text-B4 pl-1 text-grayscale-600">
+                {description}
+              </span>
+            </Flex>
+            <Flex direction="column" className={styles.subContentWrapper}>
+              <Flex align="center">
+                <CalendarIcon width="14" height="14" color="#AEAEAE" />
+                <Spacing direction="horizontal" size={8} />
+                <span className="text-B4">
+                  {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
+                </span>
+              </Flex>
+              <Flex align="center">
+                <MapPinIcon />
+                <Spacing direction="horizontal" size={8} />
+                <span className="text-B4">{address}</span>
+              </Flex>
+            </Flex>
+            <div className={styles.groupMemberImagesWrapper}></div>
+            <Flex align="center" className={styles.fromWrapper}>
+              <span className="text-T5 text-grayscale-300">from</span>
+              <Spacing direction="horizontal" size={4} />
+              <span className="text-B3">{sender}</span>
+            </Flex>
+          </>
+        )}
       </div>
     );
   }

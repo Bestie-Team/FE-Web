@@ -13,6 +13,7 @@ import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useState } from "react";
 
 export default function GatheringDetailPage({
   params,
@@ -20,6 +21,7 @@ export default function GatheringDetailPage({
   params: { id: string };
 }) {
   const header = getHeader("/gathering/1234");
+  const [imageLoaded, setImageLoaded] = useState(false);
   const gatheringId = params.id;
   const {
     data: selectedGathering,
@@ -40,7 +42,11 @@ export default function GatheringDetailPage({
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       {header}
-      <GatheringBannerContainer gathering={selectedGathering} />
+      <GatheringBannerContainer
+        gathering={selectedGathering}
+        setImageLoaded={setImageLoaded}
+        imageLoaded={imageLoaded}
+      />
       <GroupLeaderContainer groupLeader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />
       <GatheringInfoContainer
@@ -82,6 +88,7 @@ export default function GatheringDetailPage({
         }
         content={<GatheringMembersSlider members={members} />}
       />
+      {imageLoaded === false ? <FullPageLoader /> : null}
     </Flex>
   );
 }

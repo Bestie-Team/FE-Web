@@ -18,6 +18,7 @@ export default function SchedulePage() {
     value: "2025",
     label: "2025",
   });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div ref={containerRef} className="pt-12">
@@ -33,7 +34,9 @@ export default function SchedulePage() {
         <Spacing size={20} />
       </div>
       <Flex direction="column" className={styles.container}>
-        <LightyCalendarWithBorder />
+        <div className="!h-[408px]">
+          <LightyCalendarWithBorder />
+        </div>
         <Spacing size={28} />
         <UpcomingSchedule />
       </Flex>

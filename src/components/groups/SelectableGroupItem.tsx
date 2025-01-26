@@ -57,7 +57,7 @@ export default function SelectableGroupItem({
 
 const style = {
   container: "w-fit shrink-0 !w-[70px]",
-  wrapper: "relative p-[6px] cursor-pointer !h-[72px]",
+  wrapper: "relative p-[6px] cursor-pointer !h-[68px]",
 
   circleWrapper: "relative rounded-full border-[1.2px] border-grayscale-100",
   clickedCircleWrapper: "relative rounded-full border-dashed border-[2px]",

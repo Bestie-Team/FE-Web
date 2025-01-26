@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
@@ -8,8 +8,12 @@ import { GatheringDetailResponse } from "@/models/gathering";
 
 export default function GatheringBannerContainer({
   gathering,
+  imageLoaded,
+  setImageLoaded,
 }: {
   gathering: GatheringDetailResponse;
+  imageLoaded: boolean;
+  setImageLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const date = new Date(gathering.gatheringDate);
   const diff = differenceInDays(new Date(), date);
@@ -19,13 +23,12 @@ export default function GatheringBannerContainer({
       <div className="relative">
         <Image
           priority
-          placeholder="blur"
-          blurDataURL="/lighty.jpg"
           alt="gatheringBanner"
           src={gathering.invitationImageUrl || "/lighty.jpg"}
           width={600}
           height={434}
           className="h-[434px] object-cover"
+          onLoadingComplete={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-[#00000080]" />
         <Flex justify="space-between" className={styles.wrapper}>

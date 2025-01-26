@@ -19,6 +19,8 @@ import AnimatedTabButton from "../shared/Button/AnimatedTabButton";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import CalendarIcon from "../shared/Icon/CalendarIcon";
 import { SetterOrUpdater } from "recoil";
+import useGroup from "../groups/hooks/useGroups";
+import FullPageLoader from "../shared/FullPageLoader";
 
 export default function GatheringFormContainer({
   setStep,
@@ -48,6 +50,8 @@ export default function GatheringFormContainer({
 
   const [calendarOpen, setCalendarOpen] = useState(false);
   const header = getHeader("/gathering/new");
+  const { data: group_data, isFetching } = useGroup();
+
   return (
     <div className="h-screen bg-base-white pt-12">
       {header}
@@ -113,12 +117,13 @@ export default function GatheringFormContainer({
             setStep={setStep}
             type="gathering"
           />
-        ) : (
+        ) : group_data ? (
           <AddGroupSlider
+            group_data={group_data}
             setGatheringInfo={setGathering}
             gatheringInfo={gathering}
           />
-        )}
+        ) : null}
         <Spacing size={36} />
         <div className="grid grid-cols-2 gap-4">
           <GatheringInput
@@ -173,6 +178,7 @@ export default function GatheringFormContainer({
         onClose={() => setCalendarOpen(false)}
         open={calendarOpen}
       />
+      {isFetching ? <FullPageLoader /> : null}
     </div>
   );
 }
