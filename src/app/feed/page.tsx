@@ -134,7 +134,7 @@ export default function FeedPage() {
         spaceBetween={2}
         className="custom-swiper w-full !z-5"
       >
-        {isFetching ? (
+        {isFetching || isFetchingMine ? (
           <DotSpinner />
         ) : (
           feedAll && (
@@ -143,15 +143,10 @@ export default function FeedPage() {
             </SwiperSlide>
           )
         )}
-
-        {isFetchingMine ? (
-          <DotSpinner />
-        ) : (
-          feedMine && (
-            <SwiperSlide>
-              <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
-            </SwiperSlide>
-          )
+        {feedMine && (
+          <SwiperSlide>
+            <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
+          </SwiperSlide>
         )}
       </Swiper>
     );

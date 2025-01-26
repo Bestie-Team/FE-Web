@@ -95,21 +95,21 @@ export default function InvitationPage() {
           />
         </div>
       </div>
-      <Swiper
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        onSlideChange={(swiper) => {
-          handleSlideChange(swiper.activeIndex);
-        }}
-        slidesPerView={1}
-        spaceBetween={2}
-        className="custom-swiper w-full"
-      >
-        <SwiperSlide>
-          {isFetching || isError ? (
-            <DotSpinner />
-          ) : (
+      {isFetching || isError ? (
+        <DotSpinner />
+      ) : (
+        <Swiper
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          onSlideChange={(swiper) => {
+            handleSlideChange(swiper.activeIndex);
+          }}
+          slidesPerView={1}
+          spaceBetween={2}
+          className="custom-swiper w-full"
+        >
+          <SwiperSlide>
             <Flex direction="column" className="pt-[120px]">
               {invitations.received?.map((invitation) => {
                 return (
@@ -123,12 +123,8 @@ export default function InvitationPage() {
                 );
               })}
             </Flex>
-          )}
-        </SwiperSlide>
-        <SwiperSlide>
-          {isFetching_s || isError_s ? (
-            <DotSpinner />
-          ) : (
+          </SwiperSlide>
+          <SwiperSlide>
             <Flex direction="column" className="pt-[120px]">
               {invitations.sent?.map((invitation) => {
                 return (
@@ -142,9 +138,9 @@ export default function InvitationPage() {
                 );
               })}
             </Flex>
-          )}
-        </SwiperSlide>
-      </Swiper>
+          </SwiperSlide>
+        </Swiper>
+      )}
       {isModalOpen ? (
         <InvitationModal
           onClickClose={setModalOpen}

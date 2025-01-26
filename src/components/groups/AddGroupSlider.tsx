@@ -3,7 +3,7 @@ import { SetterOrUpdater } from "recoil";
 import SelectableGroupItem from "./SelectableGroupItem";
 import * as lighty from "lighty-type";
 import useGroup from "./hooks/useGroups";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function AddGroupSlider({
   gatheringInfo,
@@ -18,7 +18,7 @@ export default function AddGroupSlider({
     <div className="w-full">
       <Flex className="overflow-scroll no-scrollbar">
         {isFetching ? (
-          <DotSpinner />
+          <DotSpinnerSmall />
         ) : (
           group_data.map((group, i) => (
             <SelectableGroupItem

@@ -1,4 +1,4 @@
-export default function DotSpinner({
+export default function DotSpinnerSmall({
   width,
   height,
 }: {
@@ -12,14 +12,7 @@ export default function DotSpinner({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 20,
-        position: "fixed",
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        opacity: 0.7,
-        backgroundColor: "white",
+        width: "full",
       }}
     >
       <svg

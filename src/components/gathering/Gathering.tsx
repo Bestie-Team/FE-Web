@@ -10,7 +10,7 @@ import Message from "../shared/Message";
 import { sortGatherings } from "@/utils/sortGatherings";
 import useGatherings from "./hooks/useGatherings";
 import { useEffect, useState } from "react";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 type GatheringProps = {
   className?: string;
@@ -67,7 +67,7 @@ export default function Gathering({ className, where, which }: GatheringProps) {
     <div className={clsx("pb-[111px] w-full px-5", className)}>
       {which === "완료" && pathname.endsWith("gathering") && <Message />}
       {isFetching || isError ? (
-        <DotSpinner />
+        <DotSpinnerSmall />
       ) : (
         <div className="grid grid-cols-2 gap-4">
           {which === "예정"

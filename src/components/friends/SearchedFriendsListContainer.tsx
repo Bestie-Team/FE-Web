@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FriendsListContainer from "./FriendsListContainer";
 import useSearchFriends from "./hooks/useSearchFriends";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function SearchedFriendsListContainer({
   debouncedSearch,
@@ -14,7 +14,7 @@ export default function SearchedFriendsListContainer({
     search: debouncedSearch,
     enabled: debouncedSearch.length >= 2,
   });
-  if (isFetching) return <DotSpinner />;
+  if (isFetching) return <DotSpinnerSmall />;
   return (
     <FriendsListContainer
       hasMore={hasNextPage}

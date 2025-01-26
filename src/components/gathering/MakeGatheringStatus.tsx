@@ -5,8 +5,8 @@ import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function MakingGatheringStatus({
   isSuccess,
@@ -21,7 +21,7 @@ export default function MakingGatheringStatus({
       <Flex direction="column" className="h-screen pt-[106px]" align="center">
         <Spacing size={140} />
         {isSuccess === false ? (
-          <DotSpinner width={28} height={28} />
+          <DotSpinnerSmall width={28} height={28} />
         ) : (
           <CheckSpinner />
         )}

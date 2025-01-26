@@ -8,7 +8,7 @@ import { getWeekDates } from "@/utils/getThisWeekDates";
 import { addHours, getDate, getDay } from "date-fns";
 import Link from "next/link";
 import useGatherings from "../gathering/hooks/useGatherings";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function DateSlider() {
   const sevenDays = getWeekDates();
@@ -52,7 +52,7 @@ export default function DateSlider() {
       </Flex>
       <Spacing size={12} />
       {isFetching || isError ? (
-        <DotSpinner />
+        <DotSpinnerSmall />
       ) : (
         <Flex className={styles.dateWrapper} justify="space-between">
           {sevenDays.map((date, i) => {

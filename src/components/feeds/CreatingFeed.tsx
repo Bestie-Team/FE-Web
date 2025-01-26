@@ -10,10 +10,13 @@ import FeedForm from "./FeedForm";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
+import FullPageLoader from "../shared/FullPageLoader";
+import { QueryClient } from "@tanstack/react-query";
+import { maxDate, minDate } from "@/constants/time";
 
 export default function CreatingFeed() {
+  const queryClient = new QueryClient();
   const pathname = usePathname();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +31,18 @@ export default function CreatingFeed() {
   });
   const { mutate: makeGatheringFeed, isPending } = useMakeGatheringFeed({
     feedRequest: feedInfo,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({
+        queryKey: [
+          "get/feeds/mine",
+          {
+            order: "DESC",
+            minDate: minDate.slice(0, 10),
+            maxDate: maxDate.slice(0, 10),
+            limit: 10,
+          },
+        ],
+      });
       toast.success(data.message);
       router.replace("/feed");
     },
@@ -73,7 +87,7 @@ export default function CreatingFeed() {
         {header}
       </div>
       {isPending || isUploading ? (
-        <DotSpinner />
+        <FullPageLoader />
       ) : (
         <FeedForm
           uploadImages={uploadImages}

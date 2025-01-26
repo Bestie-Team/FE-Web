@@ -6,12 +6,12 @@ import clsx from "clsx";
 import Button from "../shared/Button/Button";
 import * as lighty from "lighty-type";
 import useRequestFriend from "../friends/hooks/useRequestFriend";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
 import { userSearchAtom } from "@/atoms/friends";
 import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { toast } from "react-toastify";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function UserListItem({
   userInfo,
@@ -64,7 +64,7 @@ export default function UserListItem({
         <span className={styles.name}>{userInfo?.name || "김땡땡"}</span>
       </Flex>
       <Button className={styles.inviteBtn} onClick={mutate}>
-        {isPending ? <DotSpinner /> : "친구 신청"}
+        {isPending ? <DotSpinnerSmall /> : "친구 신청"}
       </Button>
     </li>
   );

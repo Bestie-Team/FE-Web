@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom } from "@/atoms/modal";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ export default function UserFriendsListContainer() {
     },
   });
 
-  if (!data || isFetching) return <DotSpinner />;
+  if (!data || isFetching) return <DotSpinnerSmall />;
   return (
     <>
       <FriendsListContainer

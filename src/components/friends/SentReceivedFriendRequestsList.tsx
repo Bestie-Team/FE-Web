@@ -1,6 +1,6 @@
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import FriendListItem from "./FriendListItem";
 import useReceivedFriendsRequests from "./hooks/useReceivedFriendsRequests";
 import useSentFriendsRequests from "./hooks/useSentFriendsRequests";
@@ -25,7 +25,7 @@ export default function SentReceivedFriendRequestsList() {
     sender: request.sender,
     requestId: request.id,
   }));
-  if (isFetching) return <DotSpinner />;
+  if (isFetching) return <DotSpinnerSmall />;
   return (
     <Flex
       direction="column"

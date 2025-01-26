@@ -8,7 +8,7 @@ import Link from "next/link";
 import FriendListItem from "./FriendListItem";
 import { SetterOrUpdater } from "recoil";
 import Modal from "../shared/Modal/Modal";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function FriendsListContainer({
   friends,
@@ -53,7 +53,7 @@ export default function FriendsListContainer({
           className="!overflow-visible"
           dataLength={friends?.length ?? 0}
           hasMore={hasMore}
-          loader={<DotSpinner />}
+          loader={<DotSpinnerSmall />}
           next={loadMore}
           scrollThreshold="10px"
           scrollableTarget="scrollableDiv"
