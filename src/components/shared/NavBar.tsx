@@ -25,7 +25,7 @@ const NavBar = () => {
   if (!portalRoot) return null;
 
   const showSheetButton =
-    ["/feed", "/"].some((path) => pathname.startsWith(path)) ||
+    ["/feed"].some((path) => pathname.startsWith(path)) ||
     pathname.endsWith("/gathering");
 
   const opacity = 1 - scrollProgress * 2;
@@ -55,7 +55,9 @@ const NavBar = () => {
         />
       ))}
 
-      {showSheetButton && <SheetOpenBtnContainer tooltip />}
+      {(showSheetButton || pathname === "/") && (
+        <SheetOpenBtnContainer tooltip />
+      )}
     </nav>,
     portalRoot
   );
