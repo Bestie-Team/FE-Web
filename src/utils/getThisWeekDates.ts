@@ -9,6 +9,7 @@ export const getWeekDates = () => {
   for (let i = 0; i < 7; i++) {
     const date = new Date(startOfWeek); // 매번 새로운 날짜 객체 생성
     date.setDate(startOfWeek.getDate() + i);
+    date.setHours(0, 0, 0, 0);
     weekDays.push(date);
   }
 

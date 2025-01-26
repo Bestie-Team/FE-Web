@@ -11,7 +11,6 @@ import { useAuth } from "../shared/providers/AuthProvider";
 import { newGatheringInfo } from "@/atoms/gathering";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import FullPageLoader from "../shared/FullPageLoader";
 
 export default function MakingInvitation({
   gathering,
@@ -44,7 +43,6 @@ export default function MakingInvitation({
     <div className="flex flex-col bg-grayscale-50 h-full">
       {header}
       <Flex direction="column" className="h-screen pt-[50px]" align="center">
-        {isPending ? <FullPageLoader /> : null}
         <Spacing size={40} />
         <span className="text-T2">초대장에 이미지를 채워주세요!</span>
         <Spacing size={30} />

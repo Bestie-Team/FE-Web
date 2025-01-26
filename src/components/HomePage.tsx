@@ -23,8 +23,10 @@ import { GatheringInWhich } from "@/models/gathering";
 export default function HomePage() {
   const { setUserInfo } = useAuth();
   const header = getHeader("/");
+
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
+
   const sevenDays = getWeekDates();
   const minDate = useMemo(() => new Date(sevenDays[0]).toISOString(), []);
   const maxDate = useMemo(() => new Date(sevenDays[6]).toISOString(), []);
@@ -57,6 +59,8 @@ export default function HomePage() {
   }, []);
 
   if (!this_week || isFetching || isError) return <FullPageLoader />;
+  console.log(this_week);
+
   return (
     <div>
       {header}

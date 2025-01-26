@@ -8,10 +8,13 @@ import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function FriendsSlider() {
   const router = useRouter();
-  const { data, isFetching } = useFriendsAll();
   const [hide, setHide] = useState(true);
+
+  const { data, isFetching } = useFriendsAll();
+
   if (!data) return;
   const twelveFriends = data.slice(0, 12);
+
   const showingFriends = () => {
     if (hide) {
       return data.map((friend, i) => {

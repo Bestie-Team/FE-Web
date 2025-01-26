@@ -17,7 +17,7 @@ function FullPageLoader({ message }: { message?: string }) {
         right: 0,
         bottom: 0,
         left: 0,
-        opacity: 0.4,
+        opacity: 0.2,
         backgroundColor: "#f8f8f8",
       }}
     >
