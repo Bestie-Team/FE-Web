@@ -112,6 +112,7 @@ export function VerticalInvitationCard({
     return (
       <div className="relative">
         <Image
+          priority
           src="/vertical_invitation.png"
           alt="verticalBar"
           width={330}
@@ -119,7 +120,10 @@ export function VerticalInvitationCard({
         />
         <Flex direction="column" className={styles.mainContentWrapper}>
           <Image
-            src={invitation_image_url || "https://cdn.lighty.today/dishes.jpg"}
+            priority
+            placeholder="blur"
+            blurDataURL="/lighty.jpg"
+            src={invitation_image_url || "/lighty.jpg"}
             className={styles.image}
             width={300}
             height={210}

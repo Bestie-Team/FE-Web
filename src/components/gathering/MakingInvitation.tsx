@@ -31,7 +31,8 @@ export default function MakingInvitation({
   } = useMakeGathering({
     gathering,
     onSuccess: (data: { message: string }) => {
-      router.replace("/invitation");
+      router.replace("/");
+      reset();
       toast.success(data.message);
     },
   });
@@ -57,7 +58,6 @@ export default function MakingInvitation({
           label={"초대장 만들기"}
           onClick={() => {
             makeGathering();
-            reset();
           }}
         />
       </Flex>
