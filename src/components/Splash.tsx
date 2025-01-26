@@ -9,8 +9,6 @@ import oAuthButtons from "@/constants/oAuthButtons";
 import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
-import { useAuth } from "./shared/providers/AuthProvider";
-import usePatchProfileImage from "./my/hooks/usePatchProfileImage";
 
 export default function Splash() {
   const googleLogin = useGoogleLogin({
