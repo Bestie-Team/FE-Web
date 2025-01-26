@@ -95,7 +95,7 @@ export default function InvitationPage() {
           />
         </div>
       </div>
-      {isFetching || isError ? (
+      {isFetching || isError || isFetching_s || isError_s ? (
         <DotSpinner />
       ) : (
         <Swiper
