@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import "./CalendarWithBorder.css";
-import { addHours, format } from "date-fns";
+import { format } from "date-fns";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
@@ -37,10 +37,7 @@ export default function LightyCalendarWithBorder() {
 
   if (gatherings?.gatherings) {
     for (let i = 0; i < gatherings.gatherings.length; i++) {
-      const converted = addHours(
-        new Date(gatherings.gatherings[i].gatheringDate),
-        9
-      );
+      const converted = new Date(gatherings.gatherings[i].gatheringDate);
       datesWithIcons.push(converted);
     }
   }

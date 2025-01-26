@@ -9,7 +9,7 @@ import {
   GatheringInWhich,
   GatheringInWhichType,
 } from "@/models/gathering";
-import { addHours, differenceInDays, format } from "date-fns";
+import { differenceInDays, format } from "date-fns";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
@@ -30,7 +30,7 @@ export default function GatheringCard({
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
   const { invitationImageUrl, name, gatheringDate } = gathering;
   const router = useRouter();
-  const date = addHours(new Date(gatheringDate), 9);
+  const date = new Date(gatheringDate);
   const diff = differenceInDays(new Date(), date);
 
   const handleClickGathering = () => {

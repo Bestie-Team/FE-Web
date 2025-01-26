@@ -5,7 +5,7 @@ import CalendarColoredIcon from "../shared/Icon/CalendarColoredIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import DateItem from "./DateItem";
 import { getWeekDates } from "@/utils/getThisWeekDates";
-import { addHours, getDate, getDay } from "date-fns";
+import { getDate, getDay } from "date-fns";
 import Link from "next/link";
 import useGatherings from "../gathering/hooks/useGatherings";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
@@ -35,7 +35,7 @@ export default function DateSlider() {
   const gatherings_this_week = this_week?.gatherings;
 
   const gathering_days = gatherings_this_week?.map((gatherings) =>
-    getDate(addHours(new Date(gatherings.gatheringDate), 9))
+    getDate(new Date(gatherings.gatheringDate))
   );
 
   const DAYS_IN_KOREAN = ["일", "월", "화", "수", "목", "금", "토"];

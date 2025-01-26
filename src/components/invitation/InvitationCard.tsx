@@ -4,7 +4,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { useSetRecoilState } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
-import { addHours, differenceInDays } from "date-fns";
+import { differenceInDays } from "date-fns";
 import { GatheringInvitation } from "@/models/gathering";
 
 export default function InvitationCard({
@@ -16,7 +16,7 @@ export default function InvitationCard({
 }) {
   const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
   const { name, description, sender, gatheringDate } = invitation;
-  const date = addHours(new Date(gatheringDate), 9);
+  const date = new Date(gatheringDate);
   const diff = differenceInDays(new Date(), new Date(date));
 
   if (!invitation) return null;
