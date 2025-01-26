@@ -34,9 +34,9 @@ export default function SelectableGroupItem({
             src={
               groupInfo?.groupImageUrl || "https://cdn.lighty.today/bini.JPG"
             }
-            className={style.image}
-            width={56}
-            height={56}
+            className={clsx(clicked ? style.clickedImage : style.image)}
+            width={clicked ? 56 : 56.8}
+            height={clicked ? 56 : 56.8}
           />
           {clicked ? (
             <div className={style.checkContainer}>
@@ -56,12 +56,13 @@ export default function SelectableGroupItem({
 }
 
 const style = {
-  container: "w-fit shrink-0 w-[70px]",
-  wrapper: "relative p-[6px] cursor-pointer",
+  container: "w-fit shrink-0 !w-[70px]",
+  wrapper: "relative p-[6px] cursor-pointer !h-[72px]",
 
   circleWrapper: "relative rounded-full border-[1.2px] border-grayscale-100",
   clickedCircleWrapper: "relative rounded-full border-dashed border-[2px]",
-  image: "rounded-full object-cover w-[56px] h-[56px]",
+  image: "rounded-full object-cover w-[56.8px] h-[56.8px]",
+  clickedImage: "rounded-full object-cover w-[56px] h-[56px]",
   checkContainer:
     "absolute inset-0 flex items-center justify-center rounded-full bg-[#00000066] p-[2px]",
 };
