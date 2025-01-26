@@ -18,7 +18,6 @@ export default function SchedulePage() {
     value: "2025",
     label: "2025",
   });
-  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div ref={containerRef} className="pt-12">
