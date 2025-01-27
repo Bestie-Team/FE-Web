@@ -24,78 +24,35 @@ import { scrollProgressAtom } from "@/atoms/scroll";
 
 type TabName = "1" | "2";
 
-type FilterAndTabsProps = {
-  hasShadow: boolean;
-  onTabClick: (tabName: TabName) => void;
-  selectedTab: TabName;
-};
-
-export default function MyGatheringPage() {
-  const header = getHeader("/gathering");
-  const reset = useResetRecoilState(newGatheringInfo);
-  const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
-  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
-    useTabs();
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
-
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
-  const { data, isFetching, isError } = useGatherings({
-    cursor: minDate,
-    limit: 50,
-    minDate,
-    maxDate,
-  });
-  const myGatherings = data?.gatherings;
-
-  useEffect(() => {
-    reset();
-  }, [reset]);
-
-  return (
-    <div>
-      {header}
-      <FilterAndTabs
-        hasShadow={scrollProgress > 0.01}
-        onTabClick={handleTabClick}
-        selectedTab={selectedTab}
-      />
-      {isFetching || isError ? (
-        <DotSpinner width={36} height={36} />
-      ) : myGatherings && myGatherings.length > 0 ? (
-        <GatheringSwiper
-          myGatherings={myGatherings}
-          selectedTab={selectedTab}
-          swiperRef={swiperRef}
-          onSlideChange={(index) => handleSlideChange(index)}
-        />
-      ) : (
-        <NoGathering />
-      )}
-      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
-    </div>
-  );
-}
-
-const FilterAndTabs = memo(
-  ({ hasShadow, onTabClick, selectedTab }: FilterAndTabsProps) => (
-    <Flex
-      id="filter"
-      justify="space-between"
-      className={clsx(
-        "pt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
-        hasShadow && "shadow-bottom"
-      )}
-    >
-      <Panel
-        selectedTab={selectedTab}
-        long="short"
-        title1="예정"
-        title2="완료"
-        onClick={onTabClick}
-      />
-    </Flex>
-  )
+const Header = React.memo(
+  ({
+    shadow,
+    selectedTab,
+    handleTabClick,
+  }: {
+    shadow: boolean;
+    selectedTab: "1" | "2";
+    handleTabClick: (tab: "1" | "2") => void;
+  }) => {
+    return (
+      <>
+        {getHeader("/gathering")}
+        <Flex
+          id="filter"
+          justify="space-between"
+          className={clsx(styles.panelWrapper, shadow && "shadow-bottom")}
+        >
+          <Panel
+            selectedTab={selectedTab}
+            long="short"
+            title1="예정"
+            title2="완료"
+            onClick={handleTabClick}
+          />
+        </Flex>
+      </>
+    );
+  }
 );
 
 const GatheringSwiper = memo(
@@ -131,5 +88,56 @@ const GatheringSwiper = memo(
   )
 );
 
-FilterAndTabs.displayName = "FilterAndTabs";
+Header.displayName = "Header";
 GatheringSwiper.displayName = "GatheringSwiper";
+
+export default function MyGatheringPage() {
+  const reset = useResetRecoilState(newGatheringInfo);
+  const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
+  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
+    useTabs();
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
+
+  const minDate = new Date("2025-01-01").toISOString();
+  const maxDate = new Date("2025-12-31").toISOString();
+  const { data, isFetching, isError } = useGatherings({
+    cursor: minDate,
+    limit: 50,
+    minDate,
+    maxDate,
+  });
+  const myGatherings = data?.gatherings;
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
+
+  return (
+    <div>
+      <Header
+        shadow={scrollProgress > 0.01}
+        selectedTab={selectedTab}
+        handleTabClick={handleTabClick}
+      />
+
+      {isFetching || isError ? (
+        <DotSpinner width={36} height={36} />
+      ) : myGatherings && myGatherings.length > 0 ? (
+        <GatheringSwiper
+          myGatherings={myGatherings}
+          selectedTab={selectedTab}
+          swiperRef={swiperRef}
+          onSlideChange={(index) => handleSlideChange(index)}
+        />
+      ) : (
+        <NoGathering />
+      )}
+      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
+    </div>
+  );
+}
+
+const styles = {
+  panelWrapper:
+    "pt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import HomeBannerContainer from "./home/HomeBannerContainer";
 import FriendsSlider from "./home/FriendsSlider";
 import Spacing from "./shared/Spacing";
@@ -18,18 +18,59 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import { getWeekDates } from "@/utils/getThisWeekDates";
 import useGatherings from "./gathering/hooks/useGatherings";
 import FullPageLoader from "./shared/FullPageLoader";
-import { GatheringInWhich } from "@/models/gathering";
+import {
+  Gathering as GatheringType,
+  GatheringInWhich,
+} from "@/models/gathering";
+
+const Header = React.memo(() => {
+  const header = getHeader("/");
+  return <>{header}</>;
+});
+
+const MemoizedGatheringSwiper = React.memo(
+  ({ gatherings }: { gatherings: GatheringType[] }) => (
+    <GatheringSwiper percent={2.2} gatherings={gatherings} />
+  )
+);
+
+const MemoizedGathering = React.memo(
+  ({ gatherings }: { gatherings: GatheringType[] }) => (
+    <Gathering
+      where={GatheringInWhich.HOME}
+      className="pt-4"
+      myGatherings={gatherings}
+    />
+  )
+);
+
+Header.displayName = "Header";
+MemoizedGatheringSwiper.displayName = "MemoizedGatheringSwiper";
+MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
   const { setUserInfo } = useAuth();
-  const header = getHeader("/");
 
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
 
-  const sevenDays = getWeekDates();
-  const minDate = useMemo(() => new Date(sevenDays[0]).toISOString(), []);
-  const maxDate = useMemo(() => new Date(sevenDays[6]).toISOString(), []);
+  const sevenDays = useMemo(() => getWeekDates(), []);
+  const minDate = useMemo(
+    () => new Date(sevenDays[0]).toISOString(),
+    [sevenDays]
+  );
+  const maxDate = useMemo(
+    () => new Date(sevenDays[6]).toISOString(),
+    [sevenDays]
+  );
+  const handleCloseMemoriesModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, [setIsModalOpen]);
+
+  const handleCloseWelcomeModal = useCallback(() => {
+    setIsNew(false);
+  }, []);
+
   const {
     data: this_week,
     isFetching,
@@ -63,14 +104,14 @@ export default function HomePage() {
 
   return (
     <div>
-      {header}
+      <Header />
       <HomeBannerContainer />
       <FriendsSlider />
       <Spacing size={40} />
       <DateSlider />
       <Spacing size={8} />
       {this_week ? (
-        <GatheringSwiper percent={2.2} gatherings={this_week?.gatherings} />
+        <MemoizedGatheringSwiper gatherings={this_week?.gatherings} />
       ) : null}
       <Banner />
       <Flex direction="column" align="center">
@@ -79,21 +120,11 @@ export default function HomePage() {
           <ArrowRightIcon width="16" height="16" color="#808080" />
         </Flex>
         {this_week ? (
-          <Gathering
-            where={GatheringInWhich.HOME}
-            className="pt-4"
-            myGatherings={this_week.gatherings}
-          />
+          <MemoizedGathering gatherings={this_week.gatherings} />
         ) : null}
       </Flex>
-      {isModalOpen && (
-        <MemoriesBottomSheet
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        />
-      )}
-      {isNew && <WelcomeBottomSheet onClose={() => setIsNew(false)} />}
+      {isModalOpen && <MemoriesBottomSheet onClose={handleCloseWelcomeModal} />}
+      {isNew && <WelcomeBottomSheet onClose={handleCloseMemoriesModal} />}
       <Spacing size={87} />
     </div>
   );

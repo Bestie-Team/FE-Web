@@ -30,36 +30,32 @@ import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { scrollProgressAtom } from "@/atoms/scroll";
 
-const Header = React.memo(() => {
-  return getHeader("/feed");
-});
-
-const FilterPanel = React.memo(
+const Header = React.memo(
   ({
-    scrollProgress,
+    shadow,
     selectedTab,
-    onTabClick,
+    handleTabClick,
   }: {
-    scrollProgress: number;
+    shadow: boolean;
     selectedTab: "1" | "2";
-    onTabClick: (tab: "1" | "2") => void;
+    handleTabClick: (tab: "1" | "2") => void;
   }) => {
     return (
-      <div
-        id="filter"
-        className={clsx(
-          filterWrapperStyle,
-          scrollProgress > 0.1 ? "shadow-bottom" : ""
-        )}
-      >
-        <Panel
-          selectedTab={selectedTab}
-          long="medium"
-          title1="전체"
-          title2="나의 피드"
-          onClick={onTabClick}
-        />
-      </div>
+      <>
+        <div
+          id="filter"
+          className={clsx(filterWrapperStyle, shadow ? "shadow-bottom" : "")}
+        >
+          <Panel
+            selectedTab={selectedTab}
+            long="medium"
+            title1="전체"
+            title2="나의 피드"
+            onClick={handleTabClick}
+          />
+        </div>
+        {getHeader("/feed")}
+      </>
     );
   }
 );
@@ -120,6 +116,10 @@ const FeedModals = React.memo(
     );
   }
 );
+
+Header.displayName = "Header";
+FeedModals.displayName = "FeedModals";
+
 export default function FeedPage() {
   const queryClient = useQueryClient();
   const scrollProgress = useRecoilValue(scrollProgressAtom);
@@ -230,14 +230,15 @@ export default function FeedPage() {
     isFetching,
     isFetchingMine,
   ]);
+
   return (
     <div>
-      <Header />
-      <FilterPanel
-        scrollProgress={scrollProgress}
+      <Header
+        shadow={scrollProgress > 0.1}
         selectedTab={selectedTab}
-        onTabClick={handleTabClick}
+        handleTabClick={handleTabClick}
       />
+
       {renderSwipers}
 
       {recordModalOpen && (

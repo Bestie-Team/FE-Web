@@ -1,3 +1,4 @@
+import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
@@ -7,8 +8,7 @@ export interface SettingsItem {
   info: null | string[];
   link: { href: string; target?: string };
 }
-
-export default function SettingsMenu({ logout }: { logout: () => void }) {
+const SettingsMenu = React.memo(({ logout }: { logout: () => void }) => {
   return (
     <Flex direction="column" className="pt-8 gap-9">
       {settings.map((setting) => {
@@ -37,7 +37,11 @@ export default function SettingsMenu({ logout }: { logout: () => void }) {
       })}
     </Flex>
   );
-}
+});
+
+SettingsMenu.displayName = "SettingsMenu";
+
+export default SettingsMenu;
 
 const settings = [
   {

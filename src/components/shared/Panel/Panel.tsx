@@ -14,6 +14,7 @@ export default function Panel({
   onClick,
   bgColor,
   selectedTab,
+  year = true,
 }: {
   title1?: string;
   title2?: string;
@@ -21,6 +22,7 @@ export default function Panel({
   bgColor?: string;
   onClick: (tabName: "1" | "2") => void;
   selectedTab: "1" | "2";
+  year?: boolean;
 }) {
   return (
     <Flex
@@ -47,7 +49,7 @@ export default function Panel({
         {long === "medium" && <BottomLine activeTab={selectedTab} />}
         {long === "short" && <ShortBottomLine activeTab={selectedTab} />}
       </div>
-      <YearFilter />
+      {year && <YearFilter />}
     </Flex>
   );
 }

@@ -13,21 +13,12 @@ import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
 
 const Header = React.memo(
-  ({
-    pathname,
-    scrollProgress,
-  }: {
-    pathname: string;
-    scrollProgress: number;
-  }) => {
+  ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
     const header = getHeader(pathname);
     return (
       <div
         style={{ zIndex: 12 }}
-        className={clsx(
-          styles.headerWrapper,
-          scrollProgress > 0.1 ? "shadow-bottom" : ""
-        )}
+        className={clsx(styles.headerWrapper, shadow ? "shadow-bottom" : "")}
       >
         {header}
       </div>
@@ -56,6 +47,9 @@ const GroupList = React.memo(
   }
 );
 
+Header.displayName = "Header";
+GroupList.displayName = "GroupList";
+
 export default function GroupsPage() {
   const router = useRouter();
   const scrollProgress = useRecoilValue(scrollProgressAtom);
@@ -79,8 +73,7 @@ export default function GroupsPage() {
 
   return (
     <div className="bg-grayscale-50">
-      <Header pathname={pathname} scrollProgress={scrollProgress} />
-
+      <Header pathname={pathname} shadow={scrollProgress > 0.1} />
       {isFetching ? (
         <FullPageLoader />
       ) : (

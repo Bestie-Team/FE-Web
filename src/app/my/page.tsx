@@ -21,16 +21,17 @@ const Header = React.memo(
   ({
     open,
     privatePolicyOpen,
+    shadow,
   }: {
     open: boolean;
     privatePolicyOpen: boolean;
+    shadow: boolean;
   }) => {
-    const scrollProgress = useRecoilValue(scrollProgressAtom);
     return (
       <header
         className={clsx(
           styles.headerWrapper,
-          scrollProgress > 0.01 && "shadow-bottom",
+          shadow && "shadow-bottom",
           open || privatePolicyOpen ? "" : "z-20"
         )}
       >
@@ -40,6 +41,8 @@ const Header = React.memo(
   }
 );
 
+Header.displayName = "Header";
+
 export default function MyPage() {
   const [modalState, setModalState] = useState<
     "none" | "open" | "privatePolicy"
@@ -47,7 +50,7 @@ export default function MyPage() {
   const [profileInfo, setProfileInfo] = useState<
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
-
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const { data: user, isFetching, isError } = useUserDetail();
   const { logout } = useAuth();
   const router = useRouter();
@@ -104,6 +107,7 @@ export default function MyPage() {
   return (
     <div>
       <Header
+        shadow={scrollProgress > 0.01}
         open={modalState === "open"}
         privatePolicyOpen={modalState === "privatePolicy"}
       />

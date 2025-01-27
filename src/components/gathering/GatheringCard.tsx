@@ -10,7 +10,7 @@ import {
   GatheringInWhichType,
 } from "@/models/gathering";
 import { differenceInDays, format } from "date-fns";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
@@ -28,29 +28,26 @@ export default function GatheringCard({
   //기록할 약속의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
-  const { invitationImageUrl, name, gatheringDate } = gathering;
   const router = useRouter();
-  const date = new Date(gatheringDate);
-  const diff = differenceInDays(new Date(), date);
 
-  const handleClickGathering = () => {
+  const { date, diff } = useMemo(() => {
+    const date = new Date(gathering.gatheringDate);
+    const diff = differenceInDays(new Date(), date);
+    return { date, diff };
+  }, [gathering.gatheringDate]);
+
+  const handleClickGathering = useCallback(() => {
+    setInvitationUrl(gathering.invitationImageUrl);
     if (where === GatheringInWhich.HOME) {
-      setInvitationUrl(invitationImageUrl);
       router.push(`/gathering/${gathering.id}`);
     } else {
       setGatheringId(gathering.id);
-      setInvitationUrl(invitationImageUrl);
     }
-  };
+  }, [gathering, where, setGatheringId, setInvitationUrl, router]);
 
+  const { invitationImageUrl, name } = gathering;
   return (
-    <div
-      className={styles.gatheringWrapper}
-      onClick={() => {
-        setInvitationUrl(invitationImageUrl);
-        router.push(`/gathering/${gathering.id}`);
-      }}
-    >
+    <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
       <Image
         placeholder="blur"
         blurDataURL="/lighty.jpg"

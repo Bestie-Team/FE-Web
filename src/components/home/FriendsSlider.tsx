@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
@@ -10,32 +10,20 @@ export default function FriendsSlider() {
   const router = useRouter();
   const [hide, setHide] = useState(true);
 
-  const { data, isFetching } = useFriendsAll();
+  const { data = [], isFetching } = useFriendsAll();
 
-  if (!data) return;
-  const twelveFriends = data.slice(0, 12);
+  const displayedFriends = useMemo(
+    () => (hide ? data.slice(0, 12) : data),
+    [data, hide]
+  );
 
-  const showingFriends = () => {
-    if (hide) {
-      return data.map((friend, i) => {
-        return (
-          <React.Fragment key={`friendItem${i}`}>
-            <FriendItem friendInfo={friend} />
-            <Spacing size={4} direction="horizontal" />
-          </React.Fragment>
-        );
-      });
-    } else {
-      return twelveFriends.map((friend, i) => {
-        return (
-          <React.Fragment key={`friendItem${i}`}>
-            <FriendItem friendInfo={friend} />
-            <Spacing size={4} direction="horizontal" />
-          </React.Fragment>
-        );
-      });
-    }
-  };
+  const renderFriends = () =>
+    displayedFriends.map((friend, i) => (
+      <React.Fragment key={`friendItem${i}`}>
+        <FriendItem friendInfo={friend} />
+        <Spacing size={4} direction="horizontal" />
+      </React.Fragment>
+    ));
 
   return (
     <div className="w-max-[430px] pl-5 overflow-scroll no-scrollbar">
@@ -49,7 +37,7 @@ export default function FriendsSlider() {
               router.push("/friends/search");
             }}
           />
-          {showingFriends()}
+          {renderFriends()}
           {data.length > 12 ? (
             <SeeMoreItem
               onClick={() => {
