@@ -5,7 +5,7 @@ import Spacing from "../shared/Spacing";
 import { differenceInDays } from "date-fns";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
-
+const DEFAULT_BG_IMAGE = "/lighty.jpg";
 export default function GatheringBannerContainer({
   gathering,
   setImageLoaded,
@@ -22,7 +22,7 @@ export default function GatheringBannerContainer({
         <Image
           priority
           alt="gatheringBanner"
-          src={gathering.invitationImageUrl || "/lighty.jpg"}
+          src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
           width={600}
           height={434}
           className="h-[434px] object-cover"

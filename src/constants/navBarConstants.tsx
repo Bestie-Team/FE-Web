@@ -3,6 +3,7 @@ import FeedIcon from "@/components/shared/Icon/FeedIcon";
 import HomeIcon from "@/components/shared/Icon/HomeIcon";
 import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
 import Image from "next/image";
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 interface NavItem {
   href: string;
@@ -41,7 +42,7 @@ const NAV_ITEMS: NavItem[] = [
         className={`box-content border-[1.7px] rounded-full aspect-square ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}
-        src={src || "/lighty_square.png"}
+        src={src || DEFAULT_IMAGE}
         width={24}
         height={24}
         alt="profileImage"

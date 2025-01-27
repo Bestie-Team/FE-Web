@@ -3,6 +3,8 @@ import Flex from "./Flex";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 
+const DEFAULT_IMAGE = "/lighty_square.png";
+
 export default function GroupMemberImages({
   members,
   memberImageUrls,
@@ -38,7 +40,7 @@ export default function GroupMemberImages({
         <Image
           key={`group${i}`}
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src={imageUrl || "/lighty_square.png"}
+          src={imageUrl || DEFAULT_IMAGE}
           width={width ? width : 28}
           height={height ? height : 28}
           className={clsx(styles.groupImage, imageWidthHeight)}

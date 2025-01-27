@@ -6,6 +6,7 @@ import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import { Feed } from "@/models/feed";
 import { useAuth } from "../shared/providers/AuthProvider";
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 export default function InfoBar({
   memberImageUrls,
@@ -32,7 +33,7 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
     <Flex>
       <Image
-        src={writer.profileImageUrl || "/lighty_square.png"}
+        src={writer.profileImageUrl || DEFAULT_IMAGE}
         width={36}
         height={36}
         className="w-[36px] h-[36px] rounded-full overflow-hidden"

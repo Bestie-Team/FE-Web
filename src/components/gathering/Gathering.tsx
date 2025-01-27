@@ -38,7 +38,13 @@ export default function Gathering({
     ));
 
   return (
-    <div className={clsx("z-0 pt-[110px] pb-[111px] w-full px-5", className)}>
+    <div
+      className={clsx(
+        "z-0 pt-[12px] pb-[111px] w-full px-5",
+        pathname.startsWith("/gathering") && "pt-[110px]",
+        className
+      )}
+    >
       {which === "완료" && pathname.endsWith("gathering") && <Message />}
       <div className="grid grid-cols-2 gap-4">
         {which === "예정"

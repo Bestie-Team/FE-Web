@@ -10,6 +10,7 @@ interface Props {
   groupInfo?: GroupInfoResponse;
   onClickDelete: () => void;
 }
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 export default function DeletableFriendItem({
   friendInfo,
@@ -25,7 +26,7 @@ export default function DeletableFriendItem({
             src={
               friendInfo?.profileImageUrl ||
               groupInfo?.imageUrl ||
-              "/lighty_square.png"
+              DEFAULT_IMAGE
             }
             className={style.image}
             width={56}

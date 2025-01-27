@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, memo } from "react";
+import React, { useEffect } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -55,41 +55,38 @@ const Header = React.memo(
   }
 );
 
-const GatheringSwiper = memo(
-  ({
-    myGatherings,
-    selectedTab,
-    swiperRef,
-    onSlideChange,
-  }: {
-    myGatherings: GatheringType[];
-    selectedTab: TabName;
-    swiperRef: React.MutableRefObject<SwiperType | null>;
-    onSlideChange: (index: number) => void;
-  }) => (
-    <Swiper
-      initialSlide={Number(selectedTab) - 1}
-      onSwiper={(swiper) => (swiperRef.current = swiper)}
-      onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
-      slidesPerView={1}
-      spaceBetween={2}
-      direction="horizontal"
-    >
-      {["예정", "완료"].map((which) => (
-        <SwiperSlide key={which}>
-          <Gathering
-            where={GatheringInWhich.GATHERING}
-            which={which}
-            myGatherings={myGatherings}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  )
+const GatheringSwiper = ({
+  myGatherings,
+  selectedTab,
+  swiperRef,
+  onSlideChange,
+}: {
+  myGatherings: GatheringType[];
+  selectedTab: TabName;
+  swiperRef: React.MutableRefObject<SwiperType | null>;
+  onSlideChange: (index: number) => void;
+}) => (
+  <Swiper
+    initialSlide={Number(selectedTab) - 1}
+    onSwiper={(swiper) => (swiperRef.current = swiper)}
+    onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
+    slidesPerView={1}
+    spaceBetween={2}
+    direction="horizontal"
+  >
+    {["예정", "완료"].map((which) => (
+      <SwiperSlide key={which}>
+        <Gathering
+          where={GatheringInWhich.GATHERING}
+          which={which}
+          myGatherings={myGatherings}
+        />
+      </SwiperSlide>
+    ))}
+  </Swiper>
 );
 
 Header.displayName = "Header";
-GatheringSwiper.displayName = "GatheringSwiper";
 
 export default function MyGatheringPage() {
   const reset = useResetRecoilState(newGatheringInfo);

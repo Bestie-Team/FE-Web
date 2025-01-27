@@ -10,11 +10,14 @@ import {
   GatheringInWhichType,
 } from "@/models/gathering";
 import { differenceInDays, format } from "date-fns";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
+import Skeleton from "../Skeleton";
+
+const DEFAULT_IMAGE = "/lighty.jpg";
 
 export default function GatheringCard({
   gathering,
@@ -28,6 +31,7 @@ export default function GatheringCard({
   //기록할 약속의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
+  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   const { date, diff } = useMemo(() => {
@@ -47,46 +51,54 @@ export default function GatheringCard({
 
   const { invitationImageUrl, name } = gathering;
   return (
-    <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
-      <Image
-        placeholder="blur"
-        blurDataURL="/lighty.jpg"
-        src={
-          invitationImageUrl.startsWith("https://example") ||
-          !invitationImageUrl
-            ? "/lighty.jpg"
-            : invitationImageUrl
-        }
-        className={styles.image}
-        alt={name}
-        width={168}
-        height={168}
-      />
-      <div
-        style={{
-          background: styles.gradation,
-        }}
-        className="absolute bottom-0 left-0 right-0 h-[73.8%]"
-      />
-      <Flex direction="column" className={styles.textWrapper}>
-        <span className="text-T4 truncate">{name}</span>
-        <Spacing size={4} />
-        <Flex className={styles.date}>
-          <span className="flex-grow">{format(date, "yyyy.MM.dd")}</span>
-          <Spacing size={4} direction="horizontal" />
-          <span className="tracking-widest">
-            {diff >= 0 ? `D+${diff}` : `D${diff}`}
-          </span>
+    <div className="relative">
+      {isLoaded == false && <GatheringCardSkeleton />}
+      <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
+        <Image
+          src={
+            invitationImageUrl.startsWith("https://example") ||
+            !invitationImageUrl
+              ? DEFAULT_IMAGE
+              : invitationImageUrl
+          }
+          className={styles.image}
+          alt={name}
+          width={168}
+          height={168}
+          onLoadingComplete={() => setIsLoaded(true)}
+        />
+        <div
+          style={{
+            background: styles.gradation,
+          }}
+          className="absolute bottom-0 left-0 right-0 h-[73.8%]"
+        />
+        <Flex direction="column" className={styles.textWrapper}>
+          <span className="text-T4 truncate">{name}</span>
+          <Spacing size={4} />
+          <Flex className={styles.date}>
+            <span className="flex-grow">{format(date, "yyyy.MM.dd")}</span>
+            <Spacing size={4} direction="horizontal" />
+            <span className="tracking-widest">
+              {diff >= 0 ? `D+${diff}` : `D${diff}`}
+            </span>
+          </Flex>
         </Flex>
-      </Flex>
-      {which === "완료" ? (
-        <Button className={styles.button} onClick={handleClickGathering}>
-          <PencilIcon color="#0A0A0A" />
-        </Button>
-      ) : null}
+        {which === "완료" ? (
+          <Button className={styles.button} onClick={handleClickGathering}>
+            <PencilIcon color="#0A0A0A" />
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 }
+
+const GatheringCardSkeleton = () => {
+  return (
+    <Skeleton className="w-full h-full rounded-[16px] absolute inset-0 z-10" />
+  );
+};
 
 const styles = {
   gatheringWrapper:

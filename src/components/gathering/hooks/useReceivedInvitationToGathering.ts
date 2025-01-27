@@ -13,12 +13,7 @@ export default function useReceivedInvitationToGathering({
   maxDate: string;
 }) {
   return useQuery({
-    queryKey: [
-      "received",
-      "gathering/invitation",
-      { cursor, limit },
-      { minDate, maxDate },
-    ],
+    queryKey: ["received", "gathering/invitation", { limit, minDate, maxDate }],
     queryFn: async () => {
       const result = await getReceivedInvitationToGatheringList({
         cursor,

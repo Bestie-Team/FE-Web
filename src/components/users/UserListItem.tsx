@@ -12,6 +12,7 @@ import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { toast } from "react-toastify";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 export default function UserListItem({
   userInfo,
@@ -51,7 +52,7 @@ export default function UserListItem({
     >
       <Image
         alt="friendProfile"
-        src={userInfo?.profileImageUrl || "/lighty_square.png"}
+        src={userInfo?.profileImageUrl || DEFAULT_IMAGE}
         width={36}
         height={36}
         className={styles.img}

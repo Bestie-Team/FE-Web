@@ -4,6 +4,7 @@ import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 export default function NewGroupContainer({
   group,
@@ -36,7 +37,7 @@ export default function NewGroupContainer({
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={groupImageUrl || "/lighty_square.png"}
+              src={groupImageUrl || DEFAULT_IMAGE}
             />
           </div>
           <Spacing size={12} direction="horizontal" />

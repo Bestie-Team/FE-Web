@@ -4,6 +4,7 @@ import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/Icon/PlusIcon";
 import { GroupInfoResponse } from "@/models/group";
 import * as lighty from "lighty-type";
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 export default function FriendItem({
   friendInfo,
@@ -18,9 +19,7 @@ export default function FriendItem({
         <Image
           alt="friendImage"
           src={
-            friendInfo?.profileImageUrl ||
-            groupInfo?.imageUrl ||
-            "/lighty_square.png"
+            friendInfo?.profileImageUrl || groupInfo?.imageUrl || DEFAULT_IMAGE
           }
           className="rounded-full object-cover w-14 h-14"
           width={56}

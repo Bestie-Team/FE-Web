@@ -27,10 +27,11 @@ export default function InvitationPage() {
       cursor: new Date().toISOString(),
       minDate: new Date("2025-01-01").toISOString(),
       maxDate: new Date("2025-12-31").toISOString(),
-      limit: 10,
+      limit: 20,
     }),
     []
   );
+
   const [invitations, setInvitations] = useState<{
     received: GatheringInvitation[];
     sent: GatheringInvitation[];

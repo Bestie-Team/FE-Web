@@ -6,6 +6,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
+const DEFAULT_IMAGE = "/lighty.jpg";
 
 export default function ChoosingKindOfMemory({
   add,
@@ -72,12 +73,7 @@ const Item = ({
         clicked && "border-[1px] border-grayscale-900"
       )}
     >
-      <Image
-        src={"/lighty_square.png"}
-        width={40}
-        height={40}
-        alt="lighty_square"
-      />
+      <Image src={DEFAULT_IMAGE} width={40} height={40} alt="lighty_square" />
       <Flex direction="column">
         <span>{title}</span>
         <Spacing size={6} />

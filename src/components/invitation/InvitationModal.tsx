@@ -9,7 +9,14 @@ import useAcceptInvitationToGathering from "../gathering/hooks/useAcceptInvitati
 import useRejectInvitationToGathering from "../gathering/hooks/useRejectInvitationToGathering";
 import { SuccessResponse } from "@/models/response";
 import { VerticalInvitationCard } from "./VerticalInvitationCard";
+import { QueryClient } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
+const qParams = {
+  minDate: new Date("2025-01-01").toISOString(),
+  maxDate: new Date("2025-12-31").toISOString(),
+  limit: 20,
+};
 export default function InvitationModal({
   selectedTab,
   onClickClose,
@@ -20,7 +27,12 @@ export default function InvitationModal({
   const selectedInvitation = useRecoilValue(selectedInvitationAtom);
   const { mutate: accept } = useAcceptInvitationToGathering({
     invitationId: selectedInvitation?.id || "",
-    onSuccess: (data: SuccessResponse) => alert(data.message),
+    onSuccess: async (data: SuccessResponse) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["received", "gathering/invitation", qParams],
+      });
+      alert(data.message);
+    },
   });
 
   const { mutate: reject } = useRejectInvitationToGathering({
