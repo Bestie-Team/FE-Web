@@ -1,6 +1,7 @@
 import React from "react";
 
 interface FlexProps {
+  id?: string;
   align?: "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
   justify?:
     | "flex-start"
@@ -19,6 +20,7 @@ interface FlexProps {
 }
 
 const Flex: React.FC<FlexProps> = ({
+  id,
   align,
   justify,
   direction,
@@ -39,6 +41,7 @@ const Flex: React.FC<FlexProps> = ({
 
   return (
     <div
+      id={id}
       ref={ref}
       onClick={onClick}
       onMouseDown={onMouseDown}

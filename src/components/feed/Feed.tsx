@@ -14,7 +14,7 @@ export default function MyFeed({
   onClickFeed: Dispatch<SetStateAction<string>>;
 }) {
   return (
-    <div className="pt-[107px] pb-[111px] animate-fadeIn">
+    <div className="pt-[90px] pb-[111px] animate-fadeIn">
       <Flex direction="column">
         {feeds?.length > 0 ? (
           feeds.map((feed) => (

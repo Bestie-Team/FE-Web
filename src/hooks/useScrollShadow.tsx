@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useScrollShadow(elementRef?: React.RefObject<HTMLElement>) {
+function useScrollShadowByRef(elementRef?: React.RefObject<HTMLElement>) {
   const [hasShadow, setHasShadow] = useState(false);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ function useScrollShadow(elementRef?: React.RefObject<HTMLElement>) {
   return hasShadow;
 }
 
-export default useScrollShadow;
+export default useScrollShadowByRef;

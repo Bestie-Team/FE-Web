@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, memo } from "react";
+import React, { useEffect, memo } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
-import FilterBar from "@/components/shared/FilterBar";
 import Gathering from "@/components/gathering/Gathering";
-import useScrollShadow from "@/hooks/useScrollShadow";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
@@ -21,6 +19,8 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import Flex from "@/components/shared/Flex";
+import { scrollProgressAtom } from "@/atoms/scroll";
 
 type TabName = "1" | "2";
 
@@ -36,8 +36,7 @@ export default function MyGatheringPage() {
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasShadow = useScrollShadow(containerRef);
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
 
   const minDate = new Date("2025-01-01").toISOString();
   const maxDate = new Date("2025-12-31").toISOString();
@@ -54,10 +53,10 @@ export default function MyGatheringPage() {
   }, [reset]);
 
   return (
-    <div ref={containerRef} className="pt-[48px]">
+    <div>
       {header}
       <FilterAndTabs
-        hasShadow={hasShadow}
+        hasShadow={scrollProgress > 0.01}
         onTabClick={handleTabClick}
         selectedTab={selectedTab}
       />
@@ -80,9 +79,11 @@ export default function MyGatheringPage() {
 
 const FilterAndTabs = memo(
   ({ hasShadow, onTabClick, selectedTab }: FilterAndTabsProps) => (
-    <div
+    <Flex
+      id="filter"
+      justify="space-between"
       className={clsx(
-        "max-w-[430px] pl-[20px] flex flex-col w-full bg-base-white transition-shadow duration-300",
+        "pt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
         hasShadow && "shadow-bottom"
       )}
     >
@@ -93,8 +94,7 @@ const FilterAndTabs = memo(
         title2="완료"
         onClick={onTabClick}
       />
-      <FilterBar />
-    </div>
+    </Flex>
   )
 );
 

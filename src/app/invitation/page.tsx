@@ -1,15 +1,12 @@
 "use client";
 import InvitationCard from "@/components/invitation/InvitationCard";
-import LightySelect from "@/components/shared/Select";
-import { SelectOptionType } from "@/components/shared/FilterBar";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import useScrollShadow from "@/hooks/useScrollShadow";
 import { useTabs } from "@/hooks/useTabs";
 import useReceivedInvitationToGathering from "@/components/gathering/hooks/useReceivedInvitationToGathering";
 import useSentInvitationToGathering from "@/components/gathering/hooks/useSentInvitationToGathering";
@@ -17,16 +14,13 @@ import InvitationModal from "@/components/invitation/InvitationModal";
 import { GatheringInvitation } from "@/models/gathering";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { useRecoilValue } from "recoil";
+import { scrollProgressAtom } from "@/atoms/scroll";
 
 export default function InvitationPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasShadow = useScrollShadow(containerRef);
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const header = getHeader("/invitation");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [year, setYear] = useState<SelectOptionType | null>({
-    value: "2025",
-    label: "2025",
-  });
 
   const queryParams = useMemo(
     () => ({
@@ -72,10 +66,16 @@ export default function InvitationPage() {
   }, [sent_isSuccess, sent]);
 
   return (
-    <div className="bg-base-white h-screen overflow-y-scroll no-scrollbar pt-[48px]">
-      <div className={clsx(filterStyle, hasShadow ? "shadow-bottom" : "")}>
+    <div>
+      <div
+        id="filter"
+        className={clsx(
+          filterStyle,
+          scrollProgress > 0.01 ? "shadow-bottom" : ""
+        )}
+      >
         {header}
-        <div className="w-full px-[20px]">
+        <div className="w-full px-5">
           <Panel
             bgColor="transparent"
             selectedTab={selectedTab}
@@ -83,15 +83,6 @@ export default function InvitationPage() {
             title2="보낸 초대"
             long="long"
             onClick={handleTabClick}
-          />
-        </div>
-        <div className="py-[16px] px-[20px]">
-          <LightySelect
-            borderColor="#E9E9E9"
-            placeholder="년도"
-            options={options}
-            selected={year}
-            setSelected={setYear}
           />
         </div>
       </div>
@@ -110,7 +101,7 @@ export default function InvitationPage() {
           className="custom-swiper w-full"
         >
           <SwiperSlide>
-            <Flex direction="column" className="pt-[120px]">
+            <Flex direction="column" className="pt-[110px]">
               {invitations.received?.map((invitation) => {
                 return (
                   <React.Fragment key={invitation.id}>
@@ -125,7 +116,7 @@ export default function InvitationPage() {
             </Flex>
           </SwiperSlide>
           <SwiperSlide>
-            <Flex direction="column" className="pt-[120px]">
+            <Flex direction="column" className="pt-[110px]">
               {invitations.sent?.map((invitation) => {
                 return (
                   <React.Fragment key={invitation.id}>
@@ -152,7 +143,7 @@ export default function InvitationPage() {
 }
 
 const filterStyle =
-  "max-w-[430px] z-10 fixed flex flex-col w-full bg-base-white";
+  "max-w-[430px] pt-12 fixed flex flex-col w-full bg-base-white";
 
 const options = [
   {

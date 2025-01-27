@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { useScrollNew } from "./useScrollNew";
 import { useSetRecoilState } from "recoil";
 import {
@@ -18,23 +18,39 @@ export default function useChangeHeaderStyle({
   const setIsVisible = useSetRecoilState(isVisibleAtom);
   const setScrollProgress = useSetRecoilState(scrollProgressAtom);
 
+  const scrollContainer = useMemo(
+    () => (scrollReady ? "scrollable-container" : undefined),
+    [scrollReady]
+  );
+
   const { isPastThreshold, isVisible, scrollProgress } = useScrollNew(
-    scrollReady ? "scrollable-container" : undefined,
+    scrollContainer,
     92
   );
 
-  useEffect(() => {
+  const updateScrollState = useCallback(() => {
     setScrollProgress(scrollProgress);
     setIsVisible(isVisible);
-  }, [isVisible, scrollProgress]);
+  }, [isVisible, scrollProgress, setScrollProgress, setIsVisible]);
+
+  const updateColors = useCallback(() => {
+    const newBgColor = isPastThreshold ? "#fff" : "transparent";
+    const newFontColor = isPastThreshold ? "#0A0A0A" : "#fff";
+
+    setBgColor(newBgColor);
+    setFontColor(newFontColor);
+  }, [isPastThreshold, setBgColor, setFontColor]);
 
   useEffect(() => {
-    if (isPastThreshold) {
-      setBgColor("#fff");
-      setFontColor("#0A0A0A");
-    } else {
-      setBgColor("transparent");
-      setFontColor("#fff");
-    }
-  }, [isPastThreshold, setBgColor, setFontColor]);
+    updateScrollState();
+  }, [updateScrollState]);
+
+  useEffect(() => {
+    updateColors();
+  }, [updateColors]);
+
+  // 디버깅을 위한 렌더링 로그 (개발 시에만 사용)
+  // useEffect(() => {
+  //   console.log('Component rendered');
+  // });
 }

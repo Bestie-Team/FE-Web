@@ -1,6 +1,6 @@
 import Select, { StylesConfig } from "react-select";
 import { Dispatch, SetStateAction } from "react";
-import { SelectOptionType } from "../shared/FilterBar";
+import { SelectOptionType } from "../shared/YearFilter";
 import useNoKeyboardUp from "@/hooks/useNoKeyboardUp";
 
 interface SelectProps {

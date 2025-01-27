@@ -2,6 +2,8 @@
 import React from "react";
 import clsx from "clsx";
 import TabButton from "./TabButton";
+import Flex from "../Flex";
+import YearFilter from "../YearFilter";
 
 export type PanelLength = "short" | "medium" | "long";
 
@@ -21,11 +23,12 @@ export default function Panel({
   selectedTab: "1" | "2";
 }) {
   return (
-    <div
+    <Flex
+      justify="space-between"
       style={{
         backgroundColor: bgColor ? "#fff" : "",
       }}
-      className={clsx(tabContainerStyle)}
+      className={tabContainerStyle}
     >
       <div className={tabWrapperStyle}>
         <TabButton
@@ -44,7 +47,8 @@ export default function Panel({
         {long === "medium" && <BottomLine activeTab={selectedTab} />}
         {long === "short" && <ShortBottomLine activeTab={selectedTab} />}
       </div>
-    </div>
+      <YearFilter />
+    </Flex>
   );
 }
 

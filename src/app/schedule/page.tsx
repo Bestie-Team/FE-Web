@@ -2,27 +2,33 @@
 import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
 import LightyCalendarWithBorder from "@/components/shared/Calender/CalendarWithBorder";
 import LightySelect from "@/components/shared/Select";
-import { SelectOptionType } from "@/components/shared/FilterBar";
+import { SelectOptionType } from "@/components/shared/YearFilter";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import useScrollShadow from "@/hooks/useScrollShadow";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { scrollProgressAtom } from "@/atoms/scroll";
 
 export default function SchedulePage() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const header = getHeader("/schedule");
-  const hasShadow = useScrollShadow(containerRef);
   const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",
     label: "2025",
   });
 
   return (
-    <div ref={containerRef} className="pt-12">
+    <div>
       {header}
-      <div className={clsx(styles.header, hasShadow ? "shadow-bottom" : "")}>
+      <div
+        id="filter"
+        className={clsx(
+          styles.header,
+          scrollProgress > 0.01 ? "shadow-bottom" : ""
+        )}
+      >
         <LightySelect
           borderColor="#E9E9E9"
           placeholder="년도"
@@ -30,7 +36,6 @@ export default function SchedulePage() {
           selected={year}
           setSelected={setYear}
         />
-        <Spacing size={20} />
       </div>
       <Flex direction="column" className={styles.container}>
         <div className="!h-[408px]">
@@ -44,8 +49,8 @@ export default function SchedulePage() {
 }
 
 const styles = {
-  header: "max-w-[430px] fixed z-10 w-full pl-5 bg-base-white",
-  container: "items-center h-screen mt-16 px-5 overflow-x-scroll no-scrollbar",
+  header: "max-w-[430px] fixed pt-12 w-full pl-5 bg-base-white",
+  container: "items-center h-screen mt-24 px-5 overflow-x-scroll no-scrollbar",
 };
 
 const options = [

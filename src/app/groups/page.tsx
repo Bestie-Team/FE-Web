@@ -4,20 +4,62 @@ import useGroup from "@/components/groups/hooks/useGroups";
 import Button from "@/components/shared/Button/Button";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import useScrollShadow from "@/hooks/useScrollShadow";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useRecoilValue } from "recoil";
+import { scrollProgressAtom } from "@/atoms/scroll";
+
+const Header = React.memo(
+  ({
+    pathname,
+    scrollProgress,
+  }: {
+    pathname: string;
+    scrollProgress: number;
+  }) => {
+    const header = getHeader(pathname);
+    return (
+      <div
+        style={{ zIndex: 12 }}
+        className={clsx(
+          styles.headerWrapper,
+          scrollProgress > 0.1 ? "shadow-bottom" : ""
+        )}
+      >
+        {header}
+      </div>
+    );
+  }
+);
+
+const GroupList = React.memo(
+  ({
+    groups,
+    onGroupClick,
+  }: {
+    groups: any[];
+    onGroupClick: (id: string) => void;
+  }) => {
+    return groups.map((group, idx) => (
+      <React.Fragment key={`${group.id}_${idx}`}>
+        <Spacing size={16} />
+        <GroupContainer
+          group={group}
+          className="cursor-pointer"
+          onClick={() => onGroupClick(group.id)}
+        />
+      </React.Fragment>
+    ));
+  }
+);
 
 export default function GroupsPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasShadow = useScrollShadow(containerRef);
   const router = useRouter();
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const pathname = usePathname();
-  const header = getHeader(pathname);
-  const MemoizedGroupContainer = React.memo(GroupContainer);
   const { data: groups, isFetching } = useGroup();
 
   const handleGroupClick = useCallback(
@@ -27,21 +69,18 @@ export default function GroupsPage() {
     [router]
   );
 
-  if (!groups) return;
+  const handleAddGroup = useCallback(() => {
+    router.push("/groups/new");
+  }, [router]);
+
+  const groupCount = useMemo(() => groups?.length || 0, [groups]);
+
+  if (!groups) return null;
 
   return (
-    <div
-      className="h-screen overflow-y-scroll no-scrollbar bg-grayscale-50"
-      ref={containerRef}
-    >
-      <div
-        style={{
-          zIndex: 5,
-        }}
-        className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
-      >
-        {header}
-      </div>
+    <div className="bg-grayscale-50">
+      <Header pathname={pathname} scrollProgress={scrollProgress} />
+
       {isFetching ? (
         <FullPageLoader />
       ) : (
@@ -49,29 +88,14 @@ export default function GroupsPage() {
           <Flex align="center">
             <span>전체 그룹</span>
             <Spacing size={4} direction="horizontal" />
-            <span className="flex-grow">{groups?.length}</span>
+            <span className="flex-grow">{groupCount}</span>
             <Spacing size={4} direction="horizontal" />
-            <Button
-              className={styles.button}
-              onClick={() => {
-                router.push("/groups/new");
-              }}
-            >
+            <Button className={styles.button} onClick={handleAddGroup}>
               그룹 추가
             </Button>
           </Flex>
-          {groups.map((group, idx) => {
-            return (
-              <React.Fragment key={`${group.id}_${idx}`}>
-                <Spacing size={16} />
-                <MemoizedGroupContainer
-                  group={group}
-                  className="cursor-pointer"
-                  onClick={() => handleGroupClick(group.id)}
-                />
-              </React.Fragment>
-            );
-          })}
+
+          <GroupList groups={groups} onGroupClick={handleGroupClick} />
         </Flex>
       )}
     </div>

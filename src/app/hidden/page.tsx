@@ -1,5 +1,5 @@
 "use client";
-import FilterBar from "@/components/shared/FilterBar";
+import FilterBar from "@/components/shared/YearFilter";
 // import CommentContainer from "@/components/shared/comments/CommentContainer";
 import { useRecoilState } from "recoil";
 // import { commentModalStateAtom } from "@/atoms/feed";

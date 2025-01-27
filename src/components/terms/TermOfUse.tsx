@@ -1,6 +1,4 @@
 "use client";
-import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import CloseIcon2 from "../shared/Icon/CloseIcon2";
@@ -11,21 +9,15 @@ interface TermOfUseProps {
 }
 
 export default function TermOfUse({ label, onClick }: TermOfUseProps) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
-
-  const $portalRoot = document.getElementById("root-portal");
-  if ($portalRoot == null) return null;
-
-  return createPortal(
-    <div className={containerStyle}>
+  return (
+    <div
+      style={{
+        zIndex: 20,
+        inset: 0,
+        position: "fixed",
+      }}
+      className={containerStyle}
+    >
       <Flex align="center" className="h-12">
         <div
           onClick={onClick}
@@ -36,9 +28,8 @@ export default function TermOfUse({ label, onClick }: TermOfUseProps) {
         <Spacing direction="horizontal" size={6} />
         <span className="text-T3">{label}</span>
       </Flex>
-    </div>,
-    $portalRoot
+    </div>
   );
 }
 
-const containerStyle = `z-20 bg-base-white animate-slide-up w-full max-w-[430px] min-w-[350px] h-screen`;
+const containerStyle = `bg-base-white animate-slide-up w-full max-w-[430px] min-w-[350px] h-screen`;
