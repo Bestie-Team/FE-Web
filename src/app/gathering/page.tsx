@@ -21,6 +21,7 @@ import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Flex from "@/components/shared/Flex";
 import { scrollProgressAtom } from "@/atoms/scroll";
+import Spacing from "@/components/shared/Spacing";
 
 type TabName = "1" | "2";
 
@@ -76,6 +77,7 @@ const GatheringSwiper = ({
   >
     {["예정", "완료"].map((which) => (
       <SwiperSlide key={which}>
+        <Spacing size={98} />
         <Gathering
           where={GatheringInWhich.GATHERING}
           which={which}

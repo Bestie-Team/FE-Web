@@ -10,12 +10,11 @@ import {
   GatheringInWhichType,
 } from "@/models/gathering";
 import { differenceInDays, format } from "date-fns";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
-import Skeleton from "../Skeleton";
 
 const DEFAULT_IMAGE = "/lighty.jpg";
 
@@ -31,7 +30,6 @@ export default function GatheringCard({
   //기록할 약속의 id 저장
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
-  const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
 
   const { date, diff } = useMemo(() => {
@@ -52,7 +50,6 @@ export default function GatheringCard({
   const { invitationImageUrl, name } = gathering;
   return (
     <div className="relative">
-      {isLoaded == false && <GatheringCardSkeleton />}
       <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
         <Image
           src={
@@ -65,7 +62,6 @@ export default function GatheringCard({
           alt={name}
           width={168}
           height={168}
-          onLoadingComplete={() => setIsLoaded(true)}
         />
         <div
           style={{
@@ -94,11 +90,11 @@ export default function GatheringCard({
   );
 }
 
-const GatheringCardSkeleton = () => {
-  return (
-    <Skeleton className="w-full h-full rounded-[16px] absolute inset-0 z-10" />
-  );
-};
+// const GatheringCardSkeleton = () => {
+//   return (
+//     <Skeleton className="w-full h-full rounded-[16px] absolute inset-0 z-10" />
+//   );
+// };
 
 const styles = {
   gatheringWrapper:
