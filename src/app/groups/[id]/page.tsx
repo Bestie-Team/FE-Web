@@ -38,6 +38,7 @@ export default function GroupDetailPage({
   const [exitModalOpen, setExitModalOpen] = useRecoilState(groupExitModalAtom);
 
   const [openList, setOpenList] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const { mutate: deleteGroup } = useDeleteGroup({
     groupId: params.id,
@@ -103,7 +104,12 @@ export default function GroupDetailPage({
   if (openList === false)
     return (
       <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-        <GroupBannerContainer imageUrl={groupImageUrl} owner={owner} />
+        <GroupBannerContainer
+          imageUrl={groupImageUrl}
+          owner={owner}
+          setIsLoaded={setIsLoaded}
+        />
+        {isLoaded === false && <FullPageLoader />}
         <GroupInfoContainer group={selectedGroup} />
         <div className={styles.dividerWrapper}>
           <div className={styles.divider} />

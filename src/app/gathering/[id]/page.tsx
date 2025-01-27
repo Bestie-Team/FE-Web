@@ -1,6 +1,5 @@
 "use client";
 import GatheringBannerContainer from "@/components/gathering/GatheringBannerContainer";
-import GatheringInfoContainer from "@/components/shared/LightyInfoContainer";
 import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
 import GroupLeaderContainer from "@/components/shared/GroupLeaderContainer";
 import Flex from "@/components/shared/Flex";
@@ -14,6 +13,8 @@ import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useState } from "react";
+import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
+import { MAP } from "@/constants/images";
 
 export default function GatheringDetailPage({
   params,
@@ -48,7 +49,7 @@ export default function GatheringDetailPage({
       />
       <GroupLeaderContainer groupLeader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />
-      <GatheringInfoContainer
+      <LightyInfoContainer
         icon={<CalendarIcon width="20" height="20" />}
         title={<span className={styles.title}>약속 장소</span>}
         content={
@@ -60,13 +61,13 @@ export default function GatheringDetailPage({
               alt="mapIcon"
               width={36}
               height={36}
-              src={"https://cdn.lighty.today/map.png"}
+              src={MAP}
             />
           </Flex>
         }
       />
       <Spacing size={10} color="#f4f4f4" />
-      <GatheringInfoContainer
+      <LightyInfoContainer
         icon={<MapPinIcon width="20" height="20" color="#0A0A0A" />}
         title={<span className={styles.title}>약속 시간</span>}
         content={
@@ -80,7 +81,7 @@ export default function GatheringDetailPage({
         }
       />
       <Spacing size={10} color="#f4f4f4" />
-      <GatheringInfoContainer
+      <LightyInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
         title={
           <span className={styles.title}>{`약속 멤버 ${members.length}`}</span>
@@ -97,5 +98,5 @@ const styles = {
 
   title: "font-[700] text-[16px] leading-[20.8px]",
   contentWrapper:
-    "w-full px-[20px] py-[16px] border-[1px] border-grayscale-100 rounded-[12px] text-B3",
+    "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-[12px] text-B3",
 };

@@ -31,13 +31,13 @@ export default function GroupContainer({
     >
       <Flex direction="column" className="flex-grow">
         <Flex align="center">
-          <div className="w-[48px] h-[48px]">
+          <div className="w-12 h-12">
             <Image
               alt="leaderImg"
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={groupImageUrl || "https://cdn.lighty.today/cute.jpg"}
+              src={groupImageUrl || "/lighty_square.png"}
             />
           </div>
           <Spacing size={12} direction="horizontal" />
@@ -71,9 +71,9 @@ export default function GroupContainer({
 }
 
 const styles = {
-  leaderImage: "object-cover rounded-full h-[48px]",
-  groupContainer: "bg-base-white gap-[12px] p-[20px] rounded-[16px]",
+  leaderImage: "object-cover rounded-full h-12",
+  groupContainer: "bg-base-white gap-3 p-5 rounded-[16px]",
 
   font: "text-C2 text-grayscale-300",
-  bar: "mx-[12px] bg-grayscale-100 h-[13px] w-[1px]",
+  bar: "mx-3 bg-grayscale-100 h-[13px] w-[1px]",
 };

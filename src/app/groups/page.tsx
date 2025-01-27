@@ -45,7 +45,7 @@ export default function GroupsPage() {
       {isFetching ? (
         <FullPageLoader />
       ) : (
-        <Flex direction="column" className="pt-[68px] p-[20px] text-T4">
+        <Flex direction="column" className="pt-[68px] p-5 text-T4">
           <Flex align="center">
             <span>전체 그룹</span>
             <Spacing size={4} direction="horizontal" />
@@ -80,7 +80,7 @@ export default function GroupsPage() {
 
 const styles = {
   headerWrapper:
-    "h-[48px] fixed max-w-[430px] w-full transition-shadow duration-300",
+    "h-12 fixed max-w-[430px] w-full transition-shadow duration-300",
   button:
-    "py-[8px] px-[12px] bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform",
+    "py-2 px-3 bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform",
 };

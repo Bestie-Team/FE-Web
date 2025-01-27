@@ -8,7 +8,7 @@ export default function SignupPage() {
   const header = getHeader("/signup");
 
   return (
-    <div className="flex flex-col gap-[24px] bg-base-white h-screen">
+    <div className="flex flex-col gap-6 bg-base-white h-screen">
       {header}
       <Spacing size={28} />
       <div className={styles.container}>
@@ -27,6 +27,6 @@ export default function SignupPage() {
 }
 
 const styles = {
-  container: "flex flex-col gap-[16px] px-[24px]",
+  container: "flex flex-col gap-4 px-6",
   greeting: "flex flex-col gap-[7px] text-T2",
 };

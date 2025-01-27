@@ -7,6 +7,7 @@ import { selectedInvitationAtom } from "@/atoms/invitation";
 import { differenceInDays } from "date-fns";
 import { GatheringInvitation } from "@/models/gathering";
 import { useState } from "react";
+import { INVITATION } from "@/constants/images";
 
 export default function InvitationCard({
   invitation,
@@ -28,7 +29,7 @@ export default function InvitationCard({
       <div className="relative">
         <Image
           priority
-          src="https://cdn.lighty.today/invitation.png"
+          src={INVITATION}
           className="w-full flex-grow"
           width={350}
           height={169}

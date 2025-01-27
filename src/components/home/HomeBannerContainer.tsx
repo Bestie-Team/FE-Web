@@ -1,6 +1,7 @@
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
+import { HOME_BANNER } from "@/constants/images";
 
 export default function HomeBannerContainer() {
   const subTitle = "Welcome To Lighty";
@@ -12,7 +13,7 @@ export default function HomeBannerContainer() {
         <Image
           priority
           alt="homeBanner"
-          src="https://cdn.lighty.today/strawberry.jpeg"
+          src={HOME_BANNER}
           width={600}
           height={420}
           className={styles.homeBannerImage}

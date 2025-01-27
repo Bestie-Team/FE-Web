@@ -31,13 +31,13 @@ export default function NewGroupContainer({
     >
       <Flex direction="column" className="flex-grow">
         <Flex align="center">
-          <div className="w-[48px] h-[48px]">
+          <div className="w-12 h-12">
             <Image
               alt="leaderImg"
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={groupImageUrl || "https://cdn.lighty.today/cute.jpg"}
+              src={groupImageUrl || "/lighty_square.png"}
             />
           </div>
           <Spacing size={12} direction="horizontal" />
@@ -57,12 +57,6 @@ export default function NewGroupContainer({
           <Spacing size={2} direction="horizontal" />
           <span className="text-B4">{friendIds.length}</span>
           <Spacing size={12} direction="horizontal" />
-          <GroupMemberImages
-            width={24}
-            height={24}
-            gap={8}
-            memberImageUrls={images}
-          />
         </Flex>
       </Flex>
       <ArrowRightIcon color="#979797" />
@@ -71,16 +65,9 @@ export default function NewGroupContainer({
 }
 
 const styles = {
-  leaderImage: "object-cover rounded-full h-[48px]",
-  groupContainer: "bg-base-white gap-[12px] p-[20px] rounded-[16px]",
+  leaderImage: "object-cover rounded-full h-12",
+  groupContainer: "bg-base-white gap-3 p-5 rounded-[16px]",
 
   font: "text-C2 text-grayscale-300",
-  bar: "mx-[12px] bg-grayscale-100 h-[13px] w-[1px]",
+  bar: "mx-3 bg-grayscale-100 h-[13px] w-[1px]",
 };
-
-const images = [
-  "https://cdn.lighty.today/bini.JPG",
-  "https://cdn.lighty.today/binanton_jp.jpeg",
-  "https://cdn.lighty.today/ocean.JPG",
-  "https://cdn.lighty.today/groom.JPG",
-];

@@ -12,6 +12,6 @@ export const selectedFeedIdAtom = atom<string>({
 });
 
 export const selectedFeedInfoAtom = atom<Feed | null>({
-  key: "feed/selectedInfo/delete",
+  key: "feed/selectedInfo/edit",
   default: null,
 });

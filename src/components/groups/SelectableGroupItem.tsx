@@ -31,9 +31,7 @@ export default function SelectableGroupItem({
         >
           <Image
             alt="groupImage"
-            src={
-              groupInfo?.groupImageUrl || "https://cdn.lighty.today/bini.JPG"
-            }
+            src={groupInfo?.groupImageUrl || "/lighty_square.png"}
             className={clsx(clicked ? style.clickedImage : style.image)}
             width={clicked ? 56 : 56.8}
             height={clicked ? 56 : 56.8}

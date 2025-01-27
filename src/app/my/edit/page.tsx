@@ -20,7 +20,6 @@ export default function EditPage() {
     accountId: data?.accountId || "",
     profileImageUrl: data?.profileImageUrl || "",
   });
-  // const{mutate} = usepatch()
   const header = getHeader("/my/edit");
 
   return (
@@ -29,9 +28,9 @@ export default function EditPage() {
       {isFetching || isError ? (
         <DotSpinner />
       ) : (
-        <Flex direction="column" className="px-[20px]">
+        <Flex direction="column" className="px-5">
           <Spacing size={58} />
-          <Flex justify="center" className="py-[12px] ">
+          <Flex justify="center" className="py-3">
             <ProfileImageDisplay
               small={false}
               userImage={data?.profileImageUrl}

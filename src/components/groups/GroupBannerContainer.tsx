@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Flex from "../shared/Flex";
@@ -11,9 +11,11 @@ import { useAuth } from "../shared/providers/AuthProvider";
 export default function GroupBannerContainer({
   imageUrl,
   owner,
+  setIsLoaded,
 }: {
   imageUrl: string;
   owner: lighty.User;
+  setIsLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const router = useRouter();
   const { accountId } = owner;
@@ -24,10 +26,11 @@ export default function GroupBannerContainer({
       <Image
         priority
         alt="groupBannerImage"
-        src={imageUrl || "https://cdn.lighty.today/gathering.png"}
+        src={imageUrl || "/lighty_square.png"}
         width={600}
         height={316}
         className="h-[316px] object-cover"
+        onLoadingComplete={() => setIsLoaded(true)}
       />
       <div className={styles.shade} />
       <Flex align="center" className={styles.headerWrapper}>
@@ -51,7 +54,7 @@ export default function GroupBannerContainer({
 const styles = {
   shade: "absolute inset-0 bg-transparent-black-50",
   headerWrapper:
-    "w-full before:h-[48px] absolute left-0 top-0 pl-[17px] pr-[20px] items-center",
+    "w-full before:h-[48px] absolute left-0 top-0 pl-[17px] pr-5 items-center",
 
   headerFont: "flex-grow text-T3 text-base-white",
 };

@@ -21,7 +21,7 @@ export default function GroupLeaderContainer({
           alt="leader"
           width={36}
           height={36}
-          src={profileImageUrl || "https://cdn.lighty.today/hi.jpeg"}
+          src={profileImageUrl || "/lighty_square.png"}
           className={styles.leaderImage}
         />
         <Spacing direction="horizontal" size={8} />
@@ -43,7 +43,7 @@ const styles = {
   leaderInfoContainer: "w-full px-5 py-4 bg-base-white text-B3",
 
   leaderImage:
-    "object-cover rounded-full border-[1.27px] border-base-white h-9 w-9",
+    "object-cover rounded-full border-[1.27px] border-base-white h-[36px] w-[36px]",
 
   buttonWrapper:
     "text-C1 text-base-white bg-grayscale-900 px-3 py-2 rounded-[8px] h-fit",

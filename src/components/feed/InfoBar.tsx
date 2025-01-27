@@ -32,7 +32,7 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
     <Flex>
       <Image
-        src={writer.profileImageUrl || "https://cdn.lighty.today/anton.PNG"}
+        src={writer.profileImageUrl || "/lighty_square.png"}
         width={36}
         height={36}
         className="w-[36px] h-[36px] rounded-full overflow-hidden"

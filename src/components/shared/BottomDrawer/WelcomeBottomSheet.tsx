@@ -4,6 +4,7 @@ import Flex from "../Flex";
 import Button from "../Button/Button";
 import clsx from "clsx";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
+import { FIREWORKS } from "@/constants/images";
 
 export default function WelcomeBottomSheet({
   onClose,
@@ -26,7 +27,7 @@ export default function WelcomeBottomSheet({
           width={176}
           height={180}
           alt="welcomeImg"
-          src={"https://cdn.lighty.today/welcome.png"}
+          src={FIREWORKS}
         />
         <div className={styles.buttonWrapper}>
           <Button

@@ -16,7 +16,6 @@ import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
 
 export default function GroupEditPage() {
-  //   const queryClient = useQueryClient();
   const header = getHeader("/groups/*/edit");
   const selectedGroup =
     useRecoilValue<lighty.CreateGroupRequest>(selectedGroupAtom);
@@ -27,7 +26,7 @@ export default function GroupEditPage() {
     return (
       <div className="h-screen bg-base-white">
         {header}
-        <form className="flex flex-col px-[20px] pt-[48px]">
+        <form className="flex flex-col px-5 pt-12">
           <Spacing size={24} />
           <AddGroupPhoto
             image={groupInfo.groupImageUrl}
@@ -81,7 +80,7 @@ export default function GroupEditPage() {
             setStep={setStep}
           />
         </form>
-        <FixedBottomButton label={"그룹 생성하기"} onClick={() => {}} />
+        <FixedBottomButton label={"그룹 수정 완료"} onClick={() => {}} />
       </div>
     );
   } else if (step === 2) {

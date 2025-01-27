@@ -48,15 +48,15 @@ export default function NewGroupPage() {
     makeGroup();
   };
 
-  if (isSuccess) {
-    return <MakingGroupSuccess group={newGroup} />;
+  if (isSuccess || isPending) {
+    return <MakingGroupSuccess group={newGroup} isPending={isPending} />;
   }
 
   if (step === 1) {
     return (
       <div className="h-screen bg-base-white">
         {header}
-        <form className="flex flex-col px-[20px] pt-[48px]">
+        <form className="flex flex-col px-5 pt-12">
           <Spacing size={24} />
           <AddGroupPhoto
             image={newGroup.groupImageUrl}
@@ -108,7 +108,6 @@ export default function NewGroupPage() {
           />
         </form>
         <FixedBottomButton label={"그룹 생성하기"} onClick={handleMakeGroup} />
-        {isPending ? <FullPageLoader /> : null}
       </div>
     );
   } else if (step === 2) {

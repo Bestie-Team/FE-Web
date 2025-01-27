@@ -6,22 +6,11 @@ import { TogetherInfo } from "../feed/InfoBar";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
+import { Feed } from "@/models/feed";
 
-export default function FeedForm({
-  uploadImages,
-  edit,
-  feedInfo,
-  setFeedInfo,
-  filesToUpload,
-  setFilesToUpload,
-  feedInfoToEdit,
-  setFeedInfoToEdit,
-  selectedGathering,
-}: {
+interface EditFeedFormInterface {
   edit?: () => void;
-  uploadImages?: () => void;
-  feedInfo?: lighty.CreateGatheringFeedRequest;
-  setFeedInfo?: Dispatch<SetStateAction<lighty.CreateGatheringFeedRequest>>;
+  originalFeed?: Feed;
   filesToUpload: File[];
   setFilesToUpload: Dispatch<SetStateAction<File[]>>;
   feedInfoToEdit?: { content: string; images: string[] };
@@ -31,8 +20,29 @@ export default function FeedForm({
       images: string[];
     }>
   >;
+}
+
+interface CreateFeedFormInterface {
+  uploadImages?: () => void;
+  feedInfo?: lighty.CreateGatheringFeedRequest;
+  setFeedInfo?: Dispatch<SetStateAction<lighty.CreateGatheringFeedRequest>>;
+  filesToUpload: File[];
+  setFilesToUpload: Dispatch<SetStateAction<File[]>>;
   selectedGathering?: GatheringDetailResponse;
-}) {
+}
+
+export default function FeedForm({
+  uploadImages,
+  originalFeed,
+  edit,
+  feedInfo,
+  setFeedInfo,
+  filesToUpload,
+  setFilesToUpload,
+  feedInfoToEdit,
+  setFeedInfoToEdit,
+  selectedGathering,
+}: EditFeedFormInterface & CreateFeedFormInterface) {
   return (
     <>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
@@ -82,16 +92,30 @@ export default function FeedForm({
           <span className="text-grayscale-300 text-B4">{` / 150`}</span>
         </div>
       </Flex>
-      <FixedBottomButton
-        label={edit ? "수정 완료" : "기록 완료"}
-        onClick={() => {
-          if (edit) {
-            edit();
-          } else if (feedInfo && uploadImages) {
-            uploadImages();
+      {edit ? (
+        <FixedBottomButton
+          label={"수정 완료"}
+          disabled={
+            originalFeed?.content == feedInfoToEdit?.content &&
+            originalFeed?.images == feedInfoToEdit?.images
           }
-        }}
-      />
+          onClick={() => {
+            if (edit) {
+              edit();
+            }
+          }}
+        />
+      ) : (
+        <FixedBottomButton
+          label={"기록 완료"}
+          disabled={filesToUpload.length == 0 || !feedInfo?.content}
+          onClick={() => {
+            if (feedInfo && uploadImages) {
+              uploadImages();
+            }
+          }}
+        />
+      )}
     </>
   );
 }

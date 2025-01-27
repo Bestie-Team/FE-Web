@@ -18,31 +18,31 @@ export default function EditingFeed() {
   const header = getHeader("/feed/edit");
   const hasShadow = useScrollShadow(containerRef);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-  const selectedFeedInfo = useRecoilValue(selectedFeedInfoAtom);
+  const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
   const [feedInfo, setFeedInfo] = useState<{
     content: string;
     images: string[];
   }>({
-    content: selectedFeedInfo?.content || "",
-    images: selectedFeedInfo?.images || [],
+    content: originalFeedValue?.content || "",
+    images: originalFeedValue?.images || [],
   });
 
   const { mutate: editingFeed, isPending } = useEditFeed({
     content: feedInfo.content,
-    feedId: selectedFeedInfo?.id || "",
+    feedId: originalFeedValue?.id || "",
     onSuccess: (data) => {
       router.replace("/feed");
       toast.success(data.message);
     },
     onError: (error) => {
       console.log(error);
-      console.log(selectedFeedInfo?.id);
+      console.log(originalFeedValue?.id);
     },
   });
 
   const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
     files: filesToUpload,
-    gatheringId: selectedFeedInfo?.gathering?.id || "",
+    gatheringId: originalFeedValue?.gathering?.id || "",
     onSuccess: (data: { imageUrls: string[]; message: string }) => {
       console.log("FeedImageUploaded", data);
       if (data.imageUrls) {
@@ -57,12 +57,16 @@ export default function EditingFeed() {
   });
 
   useEffect(() => {
-    if (feedInfo.images.length > 0) {
+    if (
+      feedInfo.images.length > 0 &&
+      (feedInfo.content != originalFeedValue?.content ||
+        feedInfo.images != originalFeedValue?.images)
+    ) {
       editingFeed();
     }
   }, [feedInfo.images]);
 
-  if (!selectedFeedInfo || selectedFeedInfo == null) return null;
+  if (!originalFeedValue || originalFeedValue == null) return null;
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -71,12 +75,12 @@ export default function EditingFeed() {
       >
         {header}
       </div>
-
       {isPending || isUploading ? (
         <FullPageLoader />
       ) : (
         <FeedForm
           edit={uploadImages}
+          originalFeed={originalFeedValue}
           filesToUpload={filesToUpload}
           setFilesToUpload={setFilesToUpload}
           feedInfoToEdit={feedInfo}

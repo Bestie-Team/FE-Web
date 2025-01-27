@@ -6,6 +6,7 @@ import Flex from "../shared/Flex";
 import { PlusCircleButtonSmall } from "../shared/Button/BottomSheetOpenButton";
 import Spacing from "../shared/Spacing";
 import { useEffect, useState } from "react";
+import { SQUARE } from "@/constants/images";
 
 export default function UploadPhotoSwiper({
   feedInfoToEdit,
@@ -63,7 +64,7 @@ export default function UploadPhotoSwiper({
               <Image
                 alt="empty"
                 className="slide-img w-[240px] h-[250px]"
-                src={"https://cdn.lighty.today/rectEdit.png"}
+                src={SQUARE}
                 width={240}
                 height={250}
               />
