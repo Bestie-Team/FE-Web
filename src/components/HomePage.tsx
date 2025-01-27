@@ -43,7 +43,6 @@ const MemoizedGathering = React.memo(
     />
   )
 );
-
 Header.displayName = "Header";
 MemoizedGatheringSwiper.displayName = "MemoizedGatheringSwiper";
 MemoizedGathering.displayName = "MemoizedGathering";
@@ -123,8 +122,10 @@ export default function HomePage() {
           <MemoizedGathering gatherings={this_week.gatherings} />
         ) : null}
       </Flex>
-      {isModalOpen && <MemoriesBottomSheet onClose={handleCloseWelcomeModal} />}
-      {isNew && <WelcomeBottomSheet onClose={handleCloseMemoriesModal} />}
+      {isModalOpen && (
+        <MemoriesBottomSheet onClose={handleCloseMemoriesModal} />
+      )}
+      {isNew && <WelcomeBottomSheet onClose={handleCloseWelcomeModal} />}
       <Spacing size={87} />
     </div>
   );
