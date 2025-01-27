@@ -1,6 +1,5 @@
 "use client";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
 import {
   GatheringInWhichType,
   Gathering as GatheringType,
@@ -22,8 +21,6 @@ export default function Gathering({
   where,
   which,
 }: GatheringProps) {
-  const pathname = usePathname();
-
   const sortedGathering =
     myGatherings.length > 0 ? sortGatherings(myGatherings) : null;
 
