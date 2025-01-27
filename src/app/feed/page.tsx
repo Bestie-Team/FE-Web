@@ -146,50 +146,41 @@ export default function FeedPage() {
     ...queryParams,
   });
 
-  const handleDeleteFeed = useCallback(async () => {
-    const { mutate } = useDeleteFeed({
-      feedId: selectedFeedId,
-      onSuccess: async (data) => {
-        toast.success(data.message);
-        await queryClient.invalidateQueries({
-          queryKey: ["get/feeds/mine", queryParams],
-        });
-      },
-    });
-    mutate();
-  }, [selectedFeedId, queryClient, queryParams]);
+  const { mutate: deleteFeed } = useDeleteFeed({
+    feedId: selectedFeedId,
+    onSuccess: async (data) => {
+      toast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine", queryParams],
+      });
+    },
+  });
 
-  const handleDeleteComment = useCallback(async () => {
-    const { mutate } = useDeleteComment({
-      commentId: selectedCommentId,
-      onSuccess: async () => {
-        toast.success("댓글을 삭제했습니다");
-        await queryClient.invalidateQueries({
-          queryKey: ["get/comments", { feedId: selectedFeedId }],
-        });
-        await queryClient.invalidateQueries({
-          queryKey: ["get/feeds", queryParams],
-        });
-      },
-    });
-    mutate();
-  }, [selectedCommentId, selectedFeedId, queryClient, queryParams]);
+  const { mutate: deleteComment } = useDeleteComment({
+    commentId: selectedCommentId,
+    onSuccess: async () => {
+      toast.success("댓글을 삭제했습니다");
+      await queryClient.invalidateQueries({
+        queryKey: ["get/comments", { feedId: selectedFeedId }],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds", queryParams],
+      });
+    },
+  });
 
-  const handleHideFeed = useCallback(async () => {
-    const { mutate } = useHideFeed({
-      feedId: selectedFeedId,
-      onSuccess: async () => {
-        toast.success("피드를 숨겼어요");
-        await queryClient.invalidateQueries({
-          queryKey: ["get/feeds/all", queryParams],
-        });
-      },
-      onError: () => {
-        toast.error("피드를 숨기지 못했어요");
-      },
-    });
-    mutate();
-  }, [selectedFeedId, queryClient, queryParams]);
+  const { mutate: hideFeed } = useHideFeed({
+    feedId: selectedFeedId,
+    onSuccess: async () => {
+      toast.success("피드를 숨겼어요");
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all", queryParams],
+      });
+    },
+    onError: () => {
+      toast.error("피드를 숨기지 못했어요");
+    },
+  });
 
   const renderSwipers = useMemo(() => {
     if (isFetching || isFetchingMine) {
@@ -255,9 +246,9 @@ export default function FeedPage() {
       )}
       <FeedModals
         selectedFeedId={selectedFeedId}
-        onDeleteFeed={handleDeleteFeed}
-        onDeleteComment={handleDeleteComment}
-        onHideFeed={handleHideFeed}
+        onDeleteFeed={deleteFeed}
+        onDeleteComment={deleteComment}
+        onHideFeed={hideFeed}
       />
     </div>
   );

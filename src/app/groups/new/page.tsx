@@ -19,7 +19,6 @@ import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function NewGroupPage() {
   const router = useRouter();

@@ -144,14 +144,3 @@ export default function InvitationPage() {
 
 const filterStyle =
   "max-w-[430px] pt-12 fixed flex flex-col w-full bg-base-white";
-
-const options = [
-  {
-    value: "2025",
-    label: "2025",
-  },
-  {
-    value: "2026",
-    label: "2026",
-  },
-];

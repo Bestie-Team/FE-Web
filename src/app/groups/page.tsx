@@ -11,6 +11,7 @@ import React, { useCallback, useMemo } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
+import { Group } from "lighty-type";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
@@ -31,7 +32,7 @@ const GroupList = React.memo(
     groups,
     onGroupClick,
   }: {
-    groups: any[];
+    groups: Group[];
     onGroupClick: (id: string) => void;
   }) => {
     return groups.map((group, idx) => (

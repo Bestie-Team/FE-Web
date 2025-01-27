@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
@@ -26,7 +20,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isClient, setIsClient] = useState(false);
   const [token, setToken] = useState<string | null>(() => {
     if (typeof window === "undefined") return null;
     else {

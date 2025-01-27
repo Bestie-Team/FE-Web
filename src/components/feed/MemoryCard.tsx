@@ -19,7 +19,6 @@ export default function MemoryCard({
   });
   const writer = feed?.writer;
 
-  if (!feed?.gathering?.id || !writer) return null;
   const others = useMemo(() => {
     if (!data?.members) return [];
     const filteredMembers = data.members.filter(
@@ -30,6 +29,7 @@ export default function MemoryCard({
     }
     return filteredMembers;
   }, [data?.members, data?.hostUser, writer.id]);
+
   const othersImageUrl = useMemo(
     () => others.map((other) => other.profileImageUrl),
     [others]
@@ -37,6 +37,8 @@ export default function MemoryCard({
   const handleClick = useCallback(() => {
     onClick(feed.id);
   }, [onClick, feed.id]);
+
+  if (!feed?.gathering?.id || !writer) return null;
 
   // 친구 약속일 때 (그룹약속 아니고)
   return (
