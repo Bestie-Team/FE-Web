@@ -18,24 +18,18 @@ import InviteFriends from "@/components/friends/InviteFriends";
 import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 export default function NewGroupPage() {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const header = getHeader("/groups/new");
   const [newGroup, setNewGroup] =
     useRecoilState<lighty.CreateGroupRequest>(newGroupAtom);
   const [step, setStep] = useState(1);
 
-  const {
-    mutate: makeGroup,
-    isPending,
-    isSuccess,
-  } = useMakeGroup({
+  const { mutate: makeGroup, isPending } = useMakeGroup({
     group: newGroup,
     onSuccess: async (data) => {
-      router.push("/groups");
+      setStep(0);
       await queryClient.invalidateQueries({
         queryKey: ["groups"],
       });
@@ -47,7 +41,7 @@ export default function NewGroupPage() {
     makeGroup();
   };
 
-  if (isSuccess || isPending) {
+  if (step === 0 || isPending) {
     return <MakingGroupSuccess group={newGroup} isPending={isPending} />;
   }
 
