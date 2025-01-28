@@ -9,24 +9,25 @@ import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function MakingGatheringStatus({
-  isSuccess,
+  isPending,
 }: {
-  isSuccess: boolean;
+  isPending: boolean;
 }) {
   const header = getHeader("/gathering/new");
   const router = useRouter();
+  console.log(isPending);
   return (
     <div className="flex flex-col bg-base-white h-full">
       {header}
       <Flex direction="column" className="h-screen pt-[106px]" align="center">
         <Spacing size={140} />
-        {isSuccess === false ? (
+        {isPending === true ? (
           <DotSpinnerSmall width={28} height={28} />
         ) : (
           <CheckSpinner />
         )}
         <Spacing size={20} />
-        {isSuccess === false ? (
+        {isPending === true ? (
           <span className="text-T2">초대장 보내는 중</span>
         ) : (
           <span className="text-T2">
@@ -51,7 +52,7 @@ export default function MakingGatheringStatus({
         <FixedBottomButton
           label={"홈으로 가기"}
           onClick={() => {
-            router.push("/");
+            router.replace("/");
           }}
         />
       </Flex>

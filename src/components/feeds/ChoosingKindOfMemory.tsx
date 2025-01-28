@@ -6,7 +6,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-const DEFAULT_IMAGE = "/lighty.jpg";
+const DEFAULT_IMAGE = "/lighty_square.png";
 
 export default function ChoosingKindOfMemory({
   add,

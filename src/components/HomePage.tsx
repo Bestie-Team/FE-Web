@@ -22,6 +22,7 @@ import {
   Gathering as GatheringType,
   GatheringInWhich,
 } from "@/models/gathering";
+import { NoGatheringHome } from "./gathering/NoGathering";
 
 const Header = React.memo(() => {
   const header = getHeader("/");
@@ -118,9 +119,11 @@ export default function HomePage() {
           <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
           <ArrowRightIcon width="16" height="16" color="#808080" />
         </Flex>
-        {this_week ? (
+        {this_week.gatherings.length > 0 ? (
           <MemoizedGathering gatherings={this_week.gatherings} />
-        ) : null}
+        ) : (
+          <NoGatheringHome />
+        )}
       </Flex>
       {isModalOpen && (
         <MemoriesBottomSheet onClose={handleCloseMemoriesModal} />

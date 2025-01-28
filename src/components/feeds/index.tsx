@@ -7,6 +7,7 @@ import { sortGatherings } from "@/utils/sortGatherings";
 import { minDate, maxDate } from "@/constants/time";
 import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
 import CreatingFeed from "./CreatingFeed";
+import CreatingFeedNoGathering from "./CreateFeedNoGathering";
 
 export default function Record() {
   const [step, setStep] = useState(1);
@@ -45,6 +46,7 @@ export default function Record() {
       {step === 1 ? (
         <ChoosingKindOfMemory add={add} setAdd={setAdd} setStep={setStep} />
       ) : null}
+      {step === 1.5 ? <CreatingFeedNoGathering /> : null}
       {step === 2.5 ? <CreatingFeed /> : null}
       {step === 2 ? (
         <ChoosingGatheringToRecord
