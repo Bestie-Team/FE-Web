@@ -1,7 +1,6 @@
-import Flex from "./Flex";
 import Text from "./Text";
 import Spacing from "./Spacing";
-import DotSpinner from "./Spinner/DotSpinner";
+import { Spinner } from "./Spinner/DotSpinner";
 
 function FullPageLoader({ message }: { message?: string }) {
   return (
@@ -11,25 +10,34 @@ function FullPageLoader({ message }: { message?: string }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 10,
+        zIndex: 100,
         position: "fixed",
         top: 0,
         right: 0,
         bottom: 0,
         left: 0,
-        opacity: 0.2,
-        backgroundColor: "#f8f8f8",
+        opacity: 1,
+        backgroundColor: "#E9E9E9",
       }}
     >
-      <Flex direction="column" align="center">
-        <DotSpinner width={40} height={40} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#00000080",
+          padding: "11px",
+          borderRadius: "12px",
+        }}
+      >
+        <Spinner />
         {message != null ? (
           <>
             <Spacing size={120} />
             <Text>{message}</Text>
           </>
         ) : null}
-      </Flex>
+      </div>
     </div>
   );
 }

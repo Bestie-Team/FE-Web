@@ -25,10 +25,21 @@
   .Toastify__toast-container--top-center,
   .Toastify__toast-container--top-left,
   .Toastify__toast-container--top-right {
-    top: 31 !important;
+    margin-top: 31px !important;
     transform: translateX(0) !important;
+    width: 100% !important;
+  }
+  .Toastify__toast-container {
+    width: 100% !important;
+  }
+  .Toastify__toast {
+    width: fit-content !important;
+    border-radius: 40px;
+    left: 50%;
+    transform: translateX(-50%) !important;
   }
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -109,8 +120,8 @@ input:-internal-autofill-selected {
 .Toastify__toast-body {
   display: flex;
   align-items: center;
-  flex: 0 0 1;
-  width: full;
+  justify-content: center;
+  width: 100% !important;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
@@ -119,14 +130,17 @@ input:-internal-autofill-selected {
   padding: 0;
 }
 .Toastify__toast-icon {
-  width: 24px;
+  width: 20px;
+  flex-shrink: 1;
 }
 .Toastify__toast-body > div {
   align-items: center;
-  width: full;
 }
 .Toastify__toast-body > div:first-child {
   margin-inline-end: 8px;
+}
+.Toastify__toast-body > div:last-child {
+  flex: none;
 }
 
 .Toastify__toast-body > div > svg {
@@ -135,9 +149,10 @@ input:-internal-autofill-selected {
 }
 
 .Toastify__toast {
+  width: 100%;
   justify-content: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   padding-left: 20px;
   padding-right: 20px;
 }

@@ -73,7 +73,7 @@ export default function GroupsPage() {
   if (!groups) return null;
 
   return (
-    <div className="bg-grayscale-50">
+    <div className="bg-grayscale-50 h-screen">
       <Header pathname={pathname} shadow={scrollProgress > 0.1} />
       {isFetching ? (
         <FullPageLoader />
