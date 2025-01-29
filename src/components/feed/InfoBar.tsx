@@ -6,7 +6,7 @@ import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import { Feed } from "@/models/feed";
 import { useAuth } from "../shared/providers/AuthProvider";
-const DEFAULT_IMAGE = "/lighty_square.png";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function InfoBar({
   memberImageUrls,

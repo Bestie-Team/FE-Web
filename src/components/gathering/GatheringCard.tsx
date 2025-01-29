@@ -16,7 +16,7 @@ import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom, recordStepAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
 
-const DEFAULT_IMAGE = "/lighty.jpg";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
 export default function GatheringCard({
   gathering,

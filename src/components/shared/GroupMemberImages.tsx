@@ -3,7 +3,7 @@ import Flex from "./Flex";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 
-const DEFAULT_IMAGE = "/lighty_square.png";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function GroupMemberImages({
   members,

@@ -35,13 +35,13 @@ export default function DecorateWithStickers() {
   const ref = useRef<HTMLDivElement>(null);
 
   const frames = [
-    "/frame1.jpeg",
-    "/frame2.jpeg",
-    "/frame3.jpeg",
-    "/frame4.jpeg",
-    "/frame5.jpeg",
-    "/frame6.jpeg",
-    "/frame7.jpeg",
+    "https://cdn.lighty.today/frame1.jpeg",
+    "https://cdn.lighty.today/frame2.jpeg",
+    "https://cdn.lighty.today/frame3.jpeg",
+    "https://cdn.lighty.today/frame4.jpeg",
+    "https://cdn.lighty.today/frame5.jpeg",
+    "https://cdn.lighty.today/frame6.jpeg",
+    "https://cdn.lighty.today/frame7.jpeg",
   ];
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import FeedIcon from "@/components/shared/Icon/FeedIcon";
 import HomeIcon from "@/components/shared/Icon/HomeIcon";
 import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
 import Image from "next/image";
-const DEFAULT_IMAGE = "/lighty_square.png";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 interface NavItem {
   href: string;

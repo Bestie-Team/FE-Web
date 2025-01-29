@@ -42,10 +42,20 @@ export default function SelectFrameSwiper() {
   return (
     <div className={styles.swiperContainer}>
       <div ref={prevRef} className={styles.prevButton}>
-        <Image src="/swiper-left.png" alt="prev" width={56} height={56} />
+        <Image
+          src="https://cdn.lighty.today/swiper-left.png"
+          alt="prev"
+          width={56}
+          height={56}
+        />
       </div>
       <div ref={nextRef} className={styles.nextButton}>
-        <Image src="/swiper-right.png" alt="next" width={56} height={56} />
+        <Image
+          src="https://cdn.lighty.today/swiper-right.png"
+          alt="next"
+          width={56}
+          height={56}
+        />
       </div>
       <Swiper
         navigation={{

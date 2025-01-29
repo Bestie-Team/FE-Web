@@ -37,7 +37,9 @@ export default function GroupContainer({
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={groupImageUrl || "/lighty_square.png"}
+              src={
+                groupImageUrl || "https://cdn.lighty.today/lighty_square.png"
+              }
             />
           </div>
           <Spacing size={12} direction="horizontal" />

@@ -10,7 +10,7 @@ interface Props {
   groupInfo?: GroupInfoResponse;
   onClickDelete: () => void;
 }
-const DEFAULT_IMAGE = "/lighty_square.png";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function DeletableFriendItem({
   friendInfo,

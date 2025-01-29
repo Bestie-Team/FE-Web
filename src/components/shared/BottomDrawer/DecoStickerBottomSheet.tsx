@@ -19,9 +19,9 @@ export default function DecoStickerBottomSheet({
   const decoKinds = ["파스텔", "큐빅", "빈티지", "이벤트"];
   const stickers = () => {
     if (selectedKind === "파스텔") {
-      return { stickers: pastel_stickers, path: `/deco_stickers/pastel` };
+      return { stickers: pastel_stickers, path: `deco_stickers/pastel` };
     } else if (selectedKind === "큐빅")
-      return { stickers: sparkle_stickers, path: `/deco_stickers/sparkle` };
+      return { stickers: sparkle_stickers, path: `deco_stickers/sparkle` };
     else return null;
   };
 
@@ -61,7 +61,7 @@ export default function DecoStickerBottomSheet({
                       onClick={() =>
                         handleSticker(`${selectedStickers.path}/${sticker}`)
                       }
-                      src={`${selectedStickers.path}/${sticker}`}
+                      src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
                       alt={`sticker${idx}`}
                       width={64}
                       height={64}

@@ -12,7 +12,7 @@ import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { toast } from "react-toastify";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
-const DEFAULT_IMAGE = "/lighty_square.png";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function UserListItem({
   userInfo,

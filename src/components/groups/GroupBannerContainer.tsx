@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import GroupOptions from "./GroupOptions";
 import * as lighty from "lighty-type";
 import { useAuth } from "../shared/providers/AuthProvider";
-const DEFAULT_IMAGE = "/lighty_square.png";
+const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function GroupBannerContainer({
   imageUrl,
