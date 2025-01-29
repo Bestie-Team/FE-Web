@@ -4,11 +4,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Button from "../shared/Button/Button";
 import PencilIcon from "../shared/Icon/PencilIcon";
-import {
-  Gathering,
-  GatheringInWhich,
-  GatheringInWhichType,
-} from "@/models/gathering";
+import { Gathering } from "@/models/gathering";
 import { differenceInDays, format } from "date-fns";
 import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
