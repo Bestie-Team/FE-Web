@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
-import { differenceInDays } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 const DEFAULT_BG_IMAGE = "https://cdn.lighty.today/lighty.jpg";
@@ -14,7 +14,7 @@ export default function GatheringBannerContainer({
   setImageLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const date = new Date(gathering.gatheringDate);
-  const diff = differenceInDays(new Date(), date);
+  const diff = differenceInCalendarDays(new Date(), date);
   const displayingDate = formatToDisplay(date);
   return (
     <Flex>

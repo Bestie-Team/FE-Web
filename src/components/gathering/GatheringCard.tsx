@@ -5,7 +5,7 @@ import Spacing from "../shared/Spacing";
 import Button from "../shared/Button/Button";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import { Gathering } from "@/models/gathering";
-import { differenceInDays, format } from "date-fns";
+import { differenceInCalendarDays, format } from "date-fns";
 import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
@@ -29,7 +29,7 @@ export default function GatheringCard({
 
   const { date, diff } = useMemo(() => {
     const date = new Date(gathering.gatheringDate);
-    const diff = differenceInDays(new Date(), date);
+    const diff = differenceInCalendarDays(new Date(), date);
     return { date, diff };
   }, [gathering.gatheringDate]);
 

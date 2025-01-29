@@ -3,25 +3,36 @@ import Flex from "../shared/Flex";
 import TimelineButton from "../shared/Icon/TimelineButton";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
+import { Gathering } from "@/models/gathering";
+import { formatToDisplay } from "@/utils/makeUTC";
+import { differenceInCalendarDays } from "date-fns";
 
-export default function TimelineItem({ imageUrl }: { imageUrl: string }) {
-  const diff = "D-3";
-
+export default function TimelineItem({
+  upcomingGathering,
+}: {
+  upcomingGathering: Gathering;
+}) {
+  const diff = differenceInCalendarDays(
+    new Date(),
+    new Date(upcomingGathering.gatheringDate)
+  );
   return (
     <Flex className="w-full" justify="space-between">
       <Flex>
         <TimelineButton />
         <Spacing size={8} direction="horizontal" />
-        <span className="text-T4">{diff}</span>
+        <span className="text-T4">{`D${diff}`}</span>
         <Spacing size={24} direction="horizontal" />
         <Flex direction="column" justify="space-between">
-          <span className="text-T4">christmas party</span>
-          <div className={styles.date}>2024. 12. 24. 오후 6:00</div>
+          <span className="text-T4">{upcomingGathering.name}</span>
+          <div className={styles.date}>
+            {formatToDisplay(new Date(upcomingGathering.gatheringDate))}
+          </div>
         </Flex>
       </Flex>
       <Image
         alt="timelineImage"
-        src={imageUrl}
+        src={upcomingGathering.invitationImageUrl}
         width={56}
         height={56}
         className={styles.image}

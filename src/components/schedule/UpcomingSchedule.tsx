@@ -2,17 +2,22 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import TimelineItem from "./TimelineItem";
+import { Gathering } from "@/models/gathering";
 
-export default function UpcomingSchedule() {
+export default function UpcomingSchedule({
+  gatherings,
+}: {
+  gatherings: Gathering[];
+}) {
   return (
     <Flex direction="column" className={styles.scheduleContainer}>
       <span className="text-T3">다가오는 일정</span>
       <Spacing size={32} />
       <div className="relative">
         <div className={styles.timelineWrapper} />
-        {schedules.map((schedule, i) => (
+        {gatherings?.map((gathering, i) => (
           <React.Fragment key={i}>
-            <TimelineItem imageUrl={schedule} />
+            <TimelineItem upcomingGathering={gathering} />
             <Spacing size={48} />
           </React.Fragment>
         ))}

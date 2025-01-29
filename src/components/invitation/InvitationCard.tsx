@@ -4,7 +4,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { useSetRecoilState } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
-import { differenceInDays } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 import { GatheringInvitation } from "@/models/gathering";
 import { useState } from "react";
 import { INVITATION } from "@/constants/images";
@@ -21,7 +21,7 @@ export default function InvitationCard({
 
   const { name, description, sender, gatheringDate } = invitation;
   const date = new Date(gatheringDate);
-  const diff = differenceInDays(new Date(), new Date(date));
+  const diff = differenceInCalendarDays(new Date(), new Date(date));
 
   if (!invitation) return null;
   return (
