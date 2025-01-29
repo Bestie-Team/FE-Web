@@ -56,38 +56,39 @@ const Header = React.memo(
   }
 );
 
-const GatheringSwiper = ({
-  myGatherings,
-  selectedTab,
-  swiperRef,
-  onSlideChange,
-}: {
-  myGatherings: GatheringType[];
-  selectedTab: TabName;
-  swiperRef: React.MutableRefObject<SwiperType | null>;
-  onSlideChange: (index: number) => void;
-}) => (
-  <Swiper
-    initialSlide={Number(selectedTab) - 1}
-    onSwiper={(swiper) => (swiperRef.current = swiper)}
-    onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
-    slidesPerView={1}
-    spaceBetween={2}
-    direction="horizontal"
-  >
-    {["예정", "완료"].map((which) => (
-      <SwiperSlide key={which}>
-        <Spacing size={98} />
-        <Gathering
-          where={GatheringInWhich.GATHERING}
-          which={which}
-          myGatherings={myGatherings}
-        />
-      </SwiperSlide>
-    ))}
-  </Swiper>
+const GatheringSwiper = React.memo(
+  ({
+    myGatherings,
+    selectedTab,
+    swiperRef,
+    onSlideChange,
+  }: {
+    myGatherings: GatheringType[];
+    selectedTab: TabName;
+    swiperRef: React.MutableRefObject<SwiperType | null>;
+    onSlideChange: (index: number) => void;
+  }) => (
+    <Swiper
+      initialSlide={Number(selectedTab) - 1}
+      onSwiper={(swiper) => (swiperRef.current = swiper)}
+      onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
+      slidesPerView={1}
+      spaceBetween={2}
+      direction="horizontal"
+    >
+      {["예정", "완료"].map((which) => (
+        <SwiperSlide key={which}>
+          <Spacing size={98} />
+          <Gathering
+            where={GatheringInWhich.GATHERING}
+            which={which}
+            myGatherings={myGatherings}
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  )
 );
-
 Header.displayName = "Header";
 
 export default function MyGatheringPage() {
