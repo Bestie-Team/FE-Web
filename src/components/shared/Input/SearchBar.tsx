@@ -8,11 +8,11 @@ import { friendToRecordAtom } from "@/atoms/record";
 export default function SearchInput({
   className,
   placeholder,
-  type,
+  type = "default",
 }: {
   className?: string;
   placeholder: string;
-  type: "users" | "friends" | "record" | "default";
+  type?: "users" | "friends" | "record" | "default";
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
