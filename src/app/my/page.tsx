@@ -51,7 +51,7 @@ export default function MyPage() {
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
   const scrollProgress = useRecoilValue(scrollProgressAtom);
-  const { data: user, isFetching, isError } = useUserDetail();
+  const { data: user, isFetching } = useUserDetail();
   const { logout } = useAuth();
   const router = useRouter();
 

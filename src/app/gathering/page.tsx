@@ -90,6 +90,7 @@ const GatheringSwiper = React.memo(
   )
 );
 Header.displayName = "Header";
+GatheringSwiper.displayName = "GatheringSwiper";
 
 export default function MyGatheringPage() {
   const reset = useResetRecoilState(newGatheringInfo);
