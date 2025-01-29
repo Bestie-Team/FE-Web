@@ -6,6 +6,11 @@ export const recordGatheringAtom = atom<string | null>({
 });
 
 export const friendToRecordAtom = atom<string>({
-  key: "friends/search/record",
+  key: "record/friends/search",
   default: "",
+});
+
+export const recordStepAtom = atom<number>({
+  key: "record/step",
+  default: 1,
 });

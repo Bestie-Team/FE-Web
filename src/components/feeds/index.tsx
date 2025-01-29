@@ -8,13 +8,13 @@ import { minDate, maxDate } from "@/constants/time";
 import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
 import CreatingFeed from "./CreatingFeed";
 import CreatingFeedNoGathering from "./CreatingFeedNoGathering";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
-import { friendToRecordAtom } from "@/atoms/record";
+import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import ChooseFriendToShare from "./ChooseFriendToShare";
 
 export default function Record() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useRecoilState(recordStepAtom);
   const [add, setAdd] = useState<number>(0);
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
   const { data: gathering_data } = useGatherings({

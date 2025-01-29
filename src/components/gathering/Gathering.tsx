@@ -26,12 +26,7 @@ export default function Gathering({
 
   const renderGatherings = (gatheringsList: GatheringType[]) =>
     gatheringsList.map((gathering) => (
-      <GatheringCard
-        key={gathering.id}
-        gathering={gathering}
-        where={where}
-        which={which}
-      />
+      <GatheringCard key={gathering.id} gathering={gathering} which={which} />
     ));
 
   return (

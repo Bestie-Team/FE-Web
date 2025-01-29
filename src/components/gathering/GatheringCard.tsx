@@ -13,21 +13,20 @@ import { differenceInDays, format } from "date-fns";
 import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
-import { recordGatheringAtom } from "@/atoms/record";
+import { recordGatheringAtom, recordStepAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
 
 const DEFAULT_IMAGE = "/lighty.jpg";
 
 export default function GatheringCard({
   gathering,
-  where,
   which,
 }: {
   gathering: Gathering;
-  where: GatheringInWhichType;
   which?: string;
 }) {
   //기록할 약속의 id 저장
+  const setStep = useSetRecoilState(recordStepAtom);
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
   const router = useRouter();
@@ -40,12 +39,14 @@ export default function GatheringCard({
 
   const handleClickGathering = useCallback(() => {
     setInvitationUrl(gathering.invitationImageUrl);
-    if (where === GatheringInWhich.HOME) {
+    if (which === "예정") {
       router.push(`/gathering/${gathering.id}`);
     } else {
       setGatheringId(gathering.id);
+      router.push("/record");
+      setStep(3);
     }
-  }, [gathering, where, setGatheringId, setInvitationUrl, router]);
+  }, [gathering, which, setGatheringId, setInvitationUrl, router]);
 
   const { invitationImageUrl, name } = gathering;
   return (
