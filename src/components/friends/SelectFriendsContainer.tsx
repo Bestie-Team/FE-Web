@@ -11,11 +11,13 @@ import useFriends from "./hooks/useFriends";
 import Modal from "../shared/Modal/Modal";
 
 export default function SelectFriendsContainer({
+  type = "default",
   paddingTop,
   action,
   setStep,
   isNew,
 }: {
+  type?: "default" | "record";
   paddingTop?: string;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;
@@ -78,6 +80,12 @@ export default function SelectFriendsContainer({
     setStep?.(1);
   };
 
+  const getLabel = () => {
+    if (type == "record" && clickedItems.length == 0)
+      return "공유 없이 시작하기";
+    return `${clickedItems.length}명 선택 완료`;
+  };
+
   return (
     <Flex
       direction="column"
@@ -96,7 +104,7 @@ export default function SelectFriendsContainer({
               <FriendListItem
                 friendInfo={friendItem}
                 idx={idx}
-                type="friend"
+                type="select"
                 onClick={() => {
                   toggleItemClick(idx);
                 }}
@@ -109,7 +117,7 @@ export default function SelectFriendsContainer({
       </ul>
       <FixedBottomButton
         bgColor="bg-grayscale-50"
-        label={`${clickedItems.length}명 선택 완료`}
+        label={getLabel()}
         disabled={clickedItems.length < 1}
         onClick={
           isNew ? handleSubmitSelectionToNewGroup : handleSubmitSelection

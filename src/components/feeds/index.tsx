@@ -7,7 +7,11 @@ import { sortGatherings } from "@/utils/sortGatherings";
 import { minDate, maxDate } from "@/constants/time";
 import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
 import CreatingFeed from "./CreatingFeed";
-import CreatingFeedNoGathering from "./CreateFeedNoGathering";
+import CreatingFeedNoGathering from "./CreatingFeedNoGathering";
+import { useRecoilValue } from "recoil";
+import useDebounce from "@/hooks/debounce";
+import { friendToRecordAtom } from "@/atoms/record";
+import ChooseFriendToShare from "./ChooseFriendToShare";
 
 export default function Record() {
   const [step, setStep] = useState(1);
@@ -19,6 +23,9 @@ export default function Record() {
     minDate: minDate,
     maxDate: maxDate,
   });
+
+  const search = useRecoilValue(friendToRecordAtom);
+  const debouncedSearch = useDebounce(search);
 
   //일단 무한스크롤 구현 전짜기 이렇게 저장
   useEffect(() => {
@@ -46,8 +53,10 @@ export default function Record() {
       {step === 1 ? (
         <ChoosingKindOfMemory add={add} setAdd={setAdd} setStep={setStep} />
       ) : null}
-      {step === 1.5 ? <CreatingFeedNoGathering /> : null}
-      {step === 2.5 ? <CreatingFeed /> : null}
+      {step === 2.5 ? (
+        <ChooseFriendToShare debouncedSearch={debouncedSearch} />
+      ) : null}
+      {step === 3.5 ? <CreatingFeedNoGathering /> : null}
       {step === 2 ? (
         <ChoosingGatheringToRecord
           onNext={handleSelectGathering}

@@ -3,6 +3,7 @@ import SearchIcon from "../Icon/SearchIcon";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { friendSearchAtom, userSearchAtom } from "@/atoms/friends";
+import { friendToRecordAtom } from "@/atoms/record";
 
 export default function SearchInput({
   className,
@@ -11,12 +12,13 @@ export default function SearchInput({
 }: {
   className?: string;
   placeholder: string;
-  type?: "users" | "friends";
+  type: "users" | "friends" | "record" | "default";
 }) {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const setUserSearch = useSetRecoilState(userSearchAtom);
   const setFriendSearch = useSetRecoilState(friendSearchAtom);
+  const setFriendToRecord = useSetRecoilState(friendToRecordAtom);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
 
@@ -25,6 +27,8 @@ export default function SearchInput({
       setUserSearch(event.target.value);
     } else if (type === "friends") {
       setFriendSearch(event.target.value);
+    } else if (type === "record") {
+      setFriendToRecord(event.target.value);
     }
     setInputValue(event.target.value);
   };

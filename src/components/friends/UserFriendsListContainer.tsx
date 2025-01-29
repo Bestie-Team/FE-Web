@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useFriends from "./hooks/useFriends";
 import { friendsModalStateAtom, selectedFriendAtom } from "@/atoms/friends";
@@ -9,6 +9,33 @@ import { toast } from "react-toastify";
 import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom } from "@/atoms/modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+
+const DeleteFriendModal = memo(
+  ({
+    isOpen,
+    onClose,
+    onDelete,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    onDelete: () => void;
+  }) => {
+    if (!isOpen) return null;
+
+    return (
+      <Modal
+        title="친구를 삭제하시겠어요?"
+        content="복구할 수 없어요."
+        left="취소"
+        right="삭제하기"
+        action={onDelete}
+        onClose={onClose}
+      />
+    );
+  }
+);
+
+DeleteFriendModal.displayName = "DeleteFriendModal";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
@@ -30,7 +57,12 @@ export default function UserFriendsListContainer() {
     },
   });
 
+  const handleCloseModal = useCallback(() => {
+    setDeleteFriendModalOpen(false);
+  }, [setDeleteFriendModalOpen]);
+
   if (!data || isFetching) return <DotSpinnerSmall />;
+
   return (
     <>
       <FriendsListContainer
@@ -40,16 +72,13 @@ export default function UserFriendsListContainer() {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
-      {deleteFriendModalOpen ? (
-        <Modal
-          title="친구를 삭제하시겠어요?"
-          content=" 복구할 수 없어요."
-          left="취소"
-          right="삭제하기"
-          action={() => deleteComment()}
-          onClose={() => setDeleteFriendModalOpen(false)}
+      {
+        <DeleteFriendModal
+          isOpen={deleteFriendModalOpen}
+          onClose={handleCloseModal}
+          onDelete={deleteComment}
         />
-      ) : null}
+      }
     </>
   );
 }

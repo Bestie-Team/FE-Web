@@ -99,12 +99,14 @@ export default function MyGatheringPage() {
 
   const minDate = new Date("2025-01-01").toISOString();
   const maxDate = new Date("2025-12-31").toISOString();
+
   const { data, isFetching, isError } = useGatherings({
     cursor: minDate,
     limit: 50,
     minDate,
     maxDate,
   });
+
   const myGatherings = data?.gatherings;
 
   useEffect(() => {

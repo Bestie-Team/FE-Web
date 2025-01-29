@@ -44,6 +44,7 @@ export default function ChoosingKindOfMemory({
         />
       </Flex>
       <FixedBottomButton
+        bgColor="#f4f4f4"
         disabled={add < 1}
         label={"다음"}
         onClick={() => {

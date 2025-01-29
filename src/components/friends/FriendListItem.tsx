@@ -23,7 +23,7 @@ export default function FriendListItem({
 }: {
   requestId?: string;
   friendInfo: lighty.User;
-  type: "friend" | "receivedRequest" | "sentRequest";
+  type: "friend" | "receivedRequest" | "sentRequest" | "select";
   idx: number;
   onClick?: () => void;
   clicked?: boolean;
@@ -95,6 +95,11 @@ export default function FriendListItem({
           </Button>
         </Flex>
       ) : null}
+      {type === "select" ? (
+        <Flex>
+          <Button className={styles.selectBtn}>선택</Button>
+        </Flex>
+      ) : null}
     </li>
   );
 }
@@ -108,7 +113,8 @@ const styles = {
   name: "text-C2 text-grayscale-400",
   inviteBtn:
     "text-C2 py-[8px] px-[12px] rounded-[8px] border border-grayscale-100 hover:!bg-grayscale-10",
-
+  selectBtn:
+    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit",
   acceptBtn:
     "flex items-center px-[12px] py-[8px] rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit",
 

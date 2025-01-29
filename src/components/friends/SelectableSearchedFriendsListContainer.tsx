@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import FriendsListContainer from "./FriendsListContainer";
 import useSearchFriends from "./hooks/useSearchFriends";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import SelectFriendsContainer from "./SelectFriendsContainer";
 
-export default function SearchedFriendsListContainer({
+export default function SelectableSearchedFriendsListContainer({
   debouncedSearch,
 }: {
   debouncedSearch: string;
@@ -17,7 +18,7 @@ export default function SearchedFriendsListContainer({
 
   if (isFetching) return <DotSpinnerSmall />;
 
-  return (
+  return true ? (
     <FriendsListContainer
       hasMore={hasNextPage}
       loadMore={loadMore}
@@ -25,5 +26,7 @@ export default function SearchedFriendsListContainer({
       isModalOpen={isModalOpen}
       setIsModalOpen={setIsModalOpen}
     />
+  ) : (
+    <SelectFriendsContainer isNew={false} />
   );
 }

@@ -26,7 +26,7 @@ export default function FriendsListContainer({
   return (
     <div
       id="scrollableDiv"
-      className="flex flex-col h-screen bg-grayscale-50 pt-[177px] pb-15 px-5 overflow-y-scroll no-scrollbar"
+      className="flex flex-col h-screen bg-grayscale-50 pb-15 px-5 overflow-y-scroll no-scrollbar"
     >
       <span className="text-T5">{`친구 ${friends?.length}`}</span>
       <Spacing size={12} />

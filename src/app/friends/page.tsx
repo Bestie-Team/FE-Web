@@ -22,9 +22,15 @@ export default function FriendsPage() {
     // 전체
     if (selectedTab === "1") {
       return debouncedSearch.length > 0 ? (
-        <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
+        <>
+          <Spacing size={177} />
+          <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
+        </>
       ) : (
-        <UserFriendsListContainer />
+        <>
+          <Spacing size={177} />
+          <UserFriendsListContainer />
+        </>
       );
     }
     // 요청
