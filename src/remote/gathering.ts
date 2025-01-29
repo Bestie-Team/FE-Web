@@ -165,9 +165,10 @@ export async function getReceivedInvitationToGatheringList({
       `${baseUrl}/gatherings/invitations/received?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
-
-    return response.json();
-  } catch {
+    const data: lighty.GatheringInvitationListResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
     throw new Error("받은 약속 초대 목록 조회 실패");
   }
 }
@@ -186,8 +187,8 @@ export async function getSentInvitationToGatheringList({
       `${baseUrl}/gatherings/invitations/sent?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
-
-    return response.json();
+    const data: lighty.GatheringInvitationListResponse = await response.json();
+    return data;
   } catch {
     throw new Error("보낸 약속 초대 목록 조회 실패");
   }

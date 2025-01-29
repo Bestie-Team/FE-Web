@@ -2,7 +2,7 @@
 import InvitationCard from "@/components/invitation/InvitationCard";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import getHeader from "@/utils/getHeader";
@@ -11,60 +11,34 @@ import { useTabs } from "@/hooks/useTabs";
 import useReceivedInvitationToGathering from "@/components/gathering/hooks/useReceivedInvitationToGathering";
 import useSentInvitationToGathering from "@/components/gathering/hooks/useSentInvitationToGathering";
 import InvitationModal from "@/components/invitation/InvitationModal";
-import { GatheringInvitation } from "@/models/gathering";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
+import InfiniteScroll from "react-infinite-scroll-component";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 export default function InvitationPage() {
   const scrollProgress = useRecoilValue(scrollProgressAtom);
   const header = getHeader("/invitation");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const queryParams = useMemo(
-    () => ({
-      cursor: new Date().toISOString(),
-      minDate: new Date("2025-01-01").toISOString(),
-      maxDate: new Date("2025-12-31").toISOString(),
-      limit: 20,
-    }),
-    []
-  );
-
-  const [invitations, setInvitations] = useState<{
-    received: GatheringInvitation[];
-    sent: GatheringInvitation[];
-  }>({ received: [], sent: [] });
-
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
     useTabs();
 
   const {
     data: received,
-    isSuccess,
     isFetching,
-    isError,
-  } = useReceivedInvitationToGathering(queryParams);
+    loadMore,
+    hasNextPage,
+  } = useReceivedInvitationToGathering();
 
   const {
     data: sent,
-    isSuccess: sent_isSuccess,
     isFetching: isFetching_s,
-    isError: isError_s,
-  } = useSentInvitationToGathering(queryParams);
-
-  useEffect(() => {
-    if (isSuccess && received?.invitations) {
-      setInvitations((prev) => ({ ...prev, received: received.invitations }));
-    }
-  }, [isSuccess, received]);
-
-  useEffect(() => {
-    if (sent_isSuccess && sent?.invitations) {
-      setInvitations((prev) => ({ ...prev, sent: sent.invitations }));
-    }
-  }, [sent_isSuccess, sent]);
+    loadMore: loadMore_s,
+    hasNextPage: hasNextPage_s,
+  } = useSentInvitationToGathering();
 
   return (
     <div>
@@ -87,7 +61,7 @@ export default function InvitationPage() {
           />
         </div>
       </div>
-      {isFetching || isError || isFetching_s || isError_s ? (
+      {isFetching || isFetching_s ? (
         <DotSpinner />
       ) : (
         <Swiper
@@ -102,34 +76,58 @@ export default function InvitationPage() {
           className="custom-swiper w-full"
         >
           <SwiperSlide>
-            <Flex direction="column" className="pt-[110px]">
-              {invitations.received?.map((invitation) => {
-                return (
-                  <React.Fragment key={invitation.id}>
-                    <InvitationCard
-                      onClickOpen={setModalOpen}
-                      invitation={invitation}
-                    />
-                    <Spacing size={24} />
-                  </React.Fragment>
-                );
-              })}
-            </Flex>
+            {received && received.length > 0 && (
+              <InfiniteScroll
+                className="!overflow-visible"
+                dataLength={received?.length ?? 0}
+                hasMore={hasNextPage}
+                loader={<DotSpinnerSmall />}
+                next={loadMore}
+                scrollThreshold="10px"
+                scrollableTarget="scrollableDiv"
+              >
+                <Flex direction="column" className="pt-[110px]">
+                  {received?.map((invitation) => {
+                    return (
+                      <React.Fragment key={invitation.id}>
+                        <InvitationCard
+                          onClickOpen={setModalOpen}
+                          invitation={invitation}
+                        />
+                        <Spacing size={24} />
+                      </React.Fragment>
+                    );
+                  })}
+                </Flex>
+              </InfiniteScroll>
+            )}
           </SwiperSlide>
           <SwiperSlide>
-            <Flex direction="column" className="pt-[110px]">
-              {invitations.sent?.map((invitation) => {
-                return (
-                  <React.Fragment key={invitation.id}>
-                    <InvitationCard
-                      onClickOpen={setModalOpen}
-                      invitation={invitation}
-                    />
-                    <Spacing size={24} />
-                  </React.Fragment>
-                );
-              })}
-            </Flex>
+            {sent && sent.length > 0 && (
+              <InfiniteScroll
+                className="!overflow-visible"
+                dataLength={sent?.length ?? 0}
+                hasMore={hasNextPage_s}
+                loader={<DotSpinnerSmall />}
+                next={loadMore_s}
+                scrollThreshold="10px"
+                scrollableTarget="scrollableDiv"
+              >
+                <Flex direction="column" className="pt-[110px]">
+                  {sent?.map((invitation) => {
+                    return (
+                      <React.Fragment key={invitation.id}>
+                        <InvitationCard
+                          onClickOpen={setModalOpen}
+                          invitation={invitation}
+                        />
+                        <Spacing size={24} />
+                      </React.Fragment>
+                    );
+                  })}
+                </Flex>
+              </InfiniteScroll>
+            )}
           </SwiperSlide>
         </Swiper>
       )}
