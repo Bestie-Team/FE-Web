@@ -1,10 +1,4 @@
-export default function DotSpinner({
-  width,
-  height,
-}: {
-  width?: number;
-  height?: number;
-}) {
+export default function DotSpinner() {
   return (
     <div
       id="fullPageLoader"

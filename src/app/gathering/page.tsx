@@ -124,7 +124,7 @@ export default function MyGatheringPage() {
       />
 
       {isFetching || isError ? (
-        <DotSpinner width={36} height={36} />
+        <DotSpinner />
       ) : myGatherings && myGatherings.length > 0 ? (
         <GatheringSwiper
           myGatherings={myGatherings}

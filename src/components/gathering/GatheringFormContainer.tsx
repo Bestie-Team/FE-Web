@@ -117,6 +117,8 @@ export default function GatheringFormContainer({
             setStep={setStep}
             type="gathering"
           />
+        ) : isFetching ? (
+          <FullPageLoader />
         ) : group_data ? (
           <AddGroupSlider
             group_data={group_data}
@@ -178,7 +180,6 @@ export default function GatheringFormContainer({
         onClose={() => setCalendarOpen(false)}
         open={calendarOpen}
       />
-      {isFetching ? <FullPageLoader /> : null}
     </div>
   );
 }
