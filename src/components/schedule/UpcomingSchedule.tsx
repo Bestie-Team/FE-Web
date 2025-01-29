@@ -31,8 +31,3 @@ const styles = {
   timelineWrapper:
     "absolute top-[10px] left-[7.5px] w-[1px] h-full bg-grayscale-100",
 };
-
-const schedules = [
-  "https://cdn.lighty.today/b_cake.jpeg",
-  "https://cdn.lighty.today/santa.jpeg",
-];

@@ -15,6 +15,11 @@ import { maxDate, minDate } from "@/constants/time";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
 
+const MemoizedUpcomingSchedule = React.memo(
+  ({ gathering }: { gathering: Gathering[] }) => (
+    <UpcomingSchedule gatherings={gathering} />
+  )
+);
 const Header = React.memo(
   ({
     year,
@@ -47,6 +52,7 @@ const Header = React.memo(
 );
 
 Header.displayName = "Header";
+MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
 
 export default function SchedulePage() {
   const { data: upcoming, isFetching } = useGatherings({
@@ -55,13 +61,7 @@ export default function SchedulePage() {
     limit: 30,
     cursor: minDate,
   });
-
   const scrollProgress = useRecoilValue(scrollProgressAtom);
-  const MemoizedUpcomingSchedule = React.memo(
-    ({ gathering }: { gathering: Gathering[] }) => (
-      <UpcomingSchedule gatherings={gathering} />
-    )
-  );
   const MemoizedLightyCalendarWithBorder = React.memo(LightyCalendarWithBorder);
   const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",
