@@ -12,8 +12,10 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import ChooseFriendToShare from "./ChooseFriendToShare";
+import FullPageLoader from "../shared/FullPageLoader";
 
 export default function Record() {
+  const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useRecoilState(recordStepAtom);
   const [add, setAdd] = useState<number>(0);
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
@@ -47,6 +49,14 @@ export default function Record() {
   const handleSelectGathering = () => {
     setStep((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <>

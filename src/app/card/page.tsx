@@ -1,14 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
 import ChooseFrame from "@/components/cards/ChooseFrame";
 import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const handleGatheringChange = () => {
     setStep(step + 1);
@@ -21,6 +23,14 @@ export default function Page() {
       return "프레임 선택";
     } else return "포토 카드";
   };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div className="bg-grayscale-50 h-screen">

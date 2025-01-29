@@ -7,7 +7,7 @@ import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
@@ -53,6 +53,8 @@ GroupList.displayName = "GroupList";
 
 export default function GroupsPage() {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
   const scrollProgress = useRecoilValue(scrollProgressAtom);
   const pathname = usePathname();
   const { data: groups, isFetching } = useGroup();
@@ -71,6 +73,14 @@ export default function GroupsPage() {
   const groupCount = useMemo(() => groups?.length || 0, [groups]);
 
   if (!groups) return null;
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div className="bg-grayscale-50 h-screen">

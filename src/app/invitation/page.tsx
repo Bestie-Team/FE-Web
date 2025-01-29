@@ -2,7 +2,7 @@
 import InvitationCard from "@/components/invitation/InvitationCard";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import getHeader from "@/utils/getHeader";
@@ -17,8 +17,10 @@ import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function InvitationPage() {
+  const [isClient, setIsClient] = useState(false);
   const scrollProgress = useRecoilValue(scrollProgressAtom);
   const header = getHeader("/invitation");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -39,6 +41,14 @@ export default function InvitationPage() {
     loadMore: loadMore_s,
     hasNextPage: hasNextPage_s,
   } = useSentInvitationToGathering();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div>

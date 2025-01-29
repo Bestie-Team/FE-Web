@@ -1,11 +1,22 @@
 "use client";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
 import UploadProfileForm from "@/components/UploadProfileForm";
 import getHeader from "@/utils/getHeader";
+import { useEffect, useState } from "react";
 
 export default function SignupPage() {
+  const [isClient, setIsClient] = useState(false);
   const header = getHeader("/signup");
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div className="flex flex-col gap-6 bg-base-white h-screen">

@@ -5,15 +5,17 @@ import Spacing from "@/components/shared/Spacing";
 import SearchInput from "@/components/shared/Input/SearchBar";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import clsx from "clsx";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect, useState } from "react";
 import UserFriendsListContainer from "@/components/friends/UserFriendsListContainer";
 import SentReceivedFriendRequestsList from "@/components/friends/SentReceivedFriendRequestsList";
 import useDebounce from "@/hooks/debounce";
 import SearchedFriendsListContainer from "@/components/friends/SearchedFriendsListContainer";
 import { PanelLength } from "@/components/shared/Panel/Panel";
 import Panel from "@/components/shared/Panel/Panel";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function FriendsPage() {
+  const [isClient, setIsClient] = useState(false);
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
   const search = useRecoilValue(friendSearchAtom);
   const debouncedSearch = useDebounce(search);
@@ -50,6 +52,14 @@ export default function FriendsPage() {
     }),
     [selectedTab, setSelectedTab]
   );
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div className="bg-grayscale-50">

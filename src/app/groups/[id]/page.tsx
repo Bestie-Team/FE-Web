@@ -12,7 +12,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
 import useGroup from "@/components/groups/hooks/useGroups";
 import { selectedFriendsAtom } from "@/atoms/friends";
@@ -28,6 +28,7 @@ export default function GroupDetailPage({
 }: {
   params: { id: string };
 }) {
+  const [isClient, setIsClient] = useState(false);
   const selectedFriends = useRecoilValue(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -81,7 +82,11 @@ export default function GroupDetailPage({
 
   const selectedGroup = group_data?.find((group) => group.id === params.id);
 
-  if (isFetching) return <FullPageLoader />;
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (isFetching || !isClient) return <FullPageLoader />;
 
   if (!selectedGroup) {
     return <div>그룹을 찾을 수 없습니다.</div>;

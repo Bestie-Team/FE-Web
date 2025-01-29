@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -29,6 +29,7 @@ import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { scrollProgressAtom } from "@/atoms/scroll";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 const Header = React.memo(
   ({
@@ -122,6 +123,7 @@ FeedModals.displayName = "FeedModals";
 
 export default function FeedPage() {
   const queryClient = useQueryClient();
+  const [isClient, setIsClient] = useState(false);
   const scrollProgress = useRecoilValue(scrollProgressAtom);
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
@@ -221,7 +223,13 @@ export default function FeedPage() {
     isFetching,
     isFetchingMine,
   ]);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
   return (
     <div>
       <Header

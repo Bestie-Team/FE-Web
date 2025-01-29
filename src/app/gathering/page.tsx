@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -22,6 +22,7 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Flex from "@/components/shared/Flex";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import Spacing from "@/components/shared/Spacing";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 type TabName = "1" | "2";
 
@@ -93,6 +94,7 @@ Header.displayName = "Header";
 GatheringSwiper.displayName = "GatheringSwiper";
 
 export default function MyGatheringPage() {
+  const [isClient, setIsClient] = useState(false);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
@@ -114,6 +116,14 @@ export default function MyGatheringPage() {
   useEffect(() => {
     reset();
   }, [reset]);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div>

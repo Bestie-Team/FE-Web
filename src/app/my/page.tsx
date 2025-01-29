@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import { useRecoilValue } from "recoil";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 const Header = React.memo(
   ({
@@ -44,6 +45,7 @@ const Header = React.memo(
 Header.displayName = "Header";
 
 export default function MyPage() {
+  const [isClient, setIsClient] = useState(false);
   const [modalState, setModalState] = useState<
     "none" | "open" | "privatePolicy"
   >("none");
@@ -94,8 +96,13 @@ export default function MyPage() {
     setProfileInfo(initializeProfileInfo());
   }, [user]);
 
-  if (!user) return null;
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
   return (
     <div>
       <Header
@@ -105,7 +112,7 @@ export default function MyPage() {
       />
       {isFetching ? (
         <DotSpinner />
-      ) : (
+      ) : user ? (
         <main className="pt-[68px]">
           <UserProfile
             userProfileImage={profileInfo?.profileImageUrl}
@@ -148,7 +155,7 @@ export default function MyPage() {
             />
           )}
         </main>
-      )}
+      ) : null}
     </div>
   );
 }

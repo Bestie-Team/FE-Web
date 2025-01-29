@@ -13,13 +13,15 @@ import Spacing from "@/components/shared/Spacing";
 import * as lighty from "lighty-type";
 import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InviteFriends from "@/components/friends/InviteFriends";
 import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function NewGroupPage() {
+  const [isClient, setIsClient] = useState(false);
   const queryClient = useQueryClient();
   const header = getHeader("/groups/new");
   const [newGroup, setNewGroup] =
@@ -40,6 +42,14 @@ export default function NewGroupPage() {
   const handleMakeGroup = async () => {
     makeGroup();
   };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   if (step === 0 || isPending) {
     return <MakingGroupSuccess group={newGroup} isPending={isPending} />;

@@ -1,6 +1,6 @@
 "use client";
 import { newGatheringInfo } from "@/atoms/gathering";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import MakingInvitation from "@/components/gathering/MakingInvitation";
 import StepToInvitation from "@/components/groups/StepToInvitation";
@@ -10,8 +10,10 @@ import GatheringFormContainer from "@/components/gathering/GatheringFormContaine
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import { toast } from "react-toastify";
 import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function NewGatheringPage() {
+  const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
   const reset = useResetRecoilState(newGatheringInfo);
 
@@ -26,6 +28,13 @@ export default function NewGatheringPage() {
       reset();
     },
   });
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   if (isPending || step === 0) {
     return <MakingGatheringStatus isPending={isPending} />;

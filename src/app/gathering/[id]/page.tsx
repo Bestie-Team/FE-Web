@@ -12,7 +12,7 @@ import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import { MAP } from "@/constants/images";
 
@@ -22,6 +22,8 @@ export default function GatheringDetailPage({
   params: { id: string };
 }) {
   const header = getHeader("/gathering/1234");
+
+  const [isClient, setIsClient] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const gatheringId = params.id;
   const {
@@ -36,10 +38,15 @@ export default function GatheringDetailPage({
     return <div>약속을 찾을 수 없습니다.</div>;
   }
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const { gatheringDate, members, hostUser, address } = selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);
-  if (isPending || isError) return <FullPageLoader />;
+  if (!isClient || isPending || isError) return <FullPageLoader />;
+
   return (
     <Flex direction="column" className="w-full h-screen bg-grayscale-50">
       {header}

@@ -11,17 +11,27 @@ import UserIcon from "@/components/shared/Icon/UserIcon";
 import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function GroupEditPage() {
   const header = getHeader("/groups/*/edit");
+  const [isClient, setIsClient] = useState(false);
   const selectedGroup =
     useRecoilValue<lighty.CreateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
 
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
   if (step === 1) {
     return (
       <div className="h-screen bg-base-white">

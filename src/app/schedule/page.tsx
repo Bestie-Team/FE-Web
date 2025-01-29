@@ -7,13 +7,14 @@ import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { maxDate, minDate } from "@/constants/time";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 const MemoizedUpcomingSchedule = React.memo(
   ({ gathering }: { gathering: Gathering[] }) => (
@@ -55,6 +56,7 @@ Header.displayName = "Header";
 MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
 
 export default function SchedulePage() {
+  const [isClient, setIsClient] = useState(false);
   const { data: upcoming, isFetching } = useGatherings({
     minDate,
     maxDate,
@@ -71,6 +73,14 @@ export default function SchedulePage() {
   const upcomingGatherings = upcoming?.gatherings.filter(
     (gathering) => new Date(gathering.gatheringDate) >= new Date()
   );
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div>
