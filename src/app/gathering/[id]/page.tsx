@@ -34,14 +34,13 @@ export default function GatheringDetailPage({
     gatheringId,
   });
 
-  if (!selectedGathering) {
-    return <div>약속을 찾을 수 없습니다.</div>;
-  }
-
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  if (!selectedGathering) {
+    return <div>약속을 찾을 수 없습니다.</div>;
+  }
   const { gatheringDate, members, hostUser, address } = selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);

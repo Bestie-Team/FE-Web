@@ -72,11 +72,11 @@ export default function GroupsPage() {
 
   const groupCount = useMemo(() => groups?.length || 0, [groups]);
 
-  if (!groups) return null;
-
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  if (!groups) return null;
 
   if (!isClient) {
     return <FullPageLoader />;
