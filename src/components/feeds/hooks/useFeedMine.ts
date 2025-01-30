@@ -1,5 +1,5 @@
 import { getFeedMine } from "@/remote/feed";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 const uuid = uuidv4();
 import * as lighty from "lighty-type";

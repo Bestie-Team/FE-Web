@@ -1,9 +1,6 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import * as lighty from "lighty-type";
-import { v4 as uuidv4 } from "uuid";
 import { API_CONFIG, fetchWithAuth } from "./shared";
-
-const uuid = uuidv4();
 
 // 응답 타입 정의
 export type FeedSuccessResponse = {

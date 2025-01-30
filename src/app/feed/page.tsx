@@ -138,7 +138,7 @@ export default function FeedPage() {
       order: "DESC" as const,
       minDate: minDate(),
       maxDate: maxDate(),
-      limit: 10,
+      limit: 2,
     }),
     []
   );

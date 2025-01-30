@@ -3,7 +3,6 @@ import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
 import * as lighty from "lighty-type";
-import { Feed } from "@/models/feed";
 import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
 import InfoBar from "./InfoBar";
 import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
