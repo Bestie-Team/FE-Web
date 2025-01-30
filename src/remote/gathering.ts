@@ -167,7 +167,9 @@ export async function getReceivedInvitationToGatheringList({
 
   try {
     const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/invitations/received?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      `${baseUrl}/gatherings/invitations/received?cursor=${encodeURIComponent(
+        JSON.stringify(cursor)
+      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
     const data: lighty.GatheringInvitationListResponse = await response.json();
@@ -189,7 +191,9 @@ export async function getSentInvitationToGatheringList({
 
   try {
     const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/invitations/sent?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      `${baseUrl}/gatherings/invitations/sent?cursor=${encodeURIComponent(
+        JSON.stringify(cursor)
+      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
     const data: lighty.GatheringInvitationListResponse = await response.json();
