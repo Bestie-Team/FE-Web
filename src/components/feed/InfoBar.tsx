@@ -4,7 +4,6 @@ import Spacing from "../shared/Spacing";
 import Options from "../shared/Options";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
-import { Feed } from "@/models/feed";
 import { useAuth } from "../shared/providers/AuthProvider";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
@@ -13,7 +12,7 @@ export default function InfoBar({
   feed,
 }: {
   memberImageUrls: (string | null)[];
-  feed: Feed;
+  feed: lighty.Feed;
 }) {
   const { userInfo } = useAuth();
   const isMine = feed.writer.accountId === userInfo?.accountId;
@@ -32,16 +31,14 @@ export default function InfoBar({
 function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
     <Flex>
-      <div className="w-9 h-9">
-        <Image
-          layout="intrinsic"
-          src={writer.profileImageUrl || DEFAULT_IMAGE}
-          width={36}
-          height={36}
-          className="w-[36px] h-[36px] rounded-full overflow-hidden"
-          alt="writer"
-        />
-      </div>
+      <Image
+        layout="fixed"
+        src={writer.profileImageUrl || DEFAULT_IMAGE}
+        width={36}
+        height={36}
+        className="w-9 h-9 object-cover rounded-full overflow-hidden"
+        alt="writer"
+      />
       <Spacing direction="horizontal" size={6} />
       <Flex style={{ width: "full" }} direction="column">
         <div className="text-T5 flex-none">{writer.name}</div>

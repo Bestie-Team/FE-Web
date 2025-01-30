@@ -51,7 +51,7 @@ export default function InvitationPage() {
   }
 
   return (
-    <div>
+    <div id="scrollableDiv">
       <div
         id="filter"
         className={clsx(

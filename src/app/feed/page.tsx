@@ -31,6 +31,8 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { maxDate, minDate } from "@/constants/time";
+import InfiniteScroll from "react-infinite-scroll-component";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const Header = React.memo(
   ({
@@ -141,10 +143,12 @@ export default function FeedPage() {
     []
   );
 
-  const { data: feedAll, isFetching } = useFeedAll({ ...queryParams });
-  const { data: feedMine, isFetching: isFetchingMine } = useFeedMine({
-    ...queryParams,
-  });
+  const { data: feedAll, loadMore, hasNextPage } = useFeedAll(queryParams);
+  const {
+    data: feedMine,
+    loadMore: loadMore_mine,
+    hasNextPage: hasNextPage_mine,
+  } = useFeedMine(queryParams);
 
   const { mutate: deleteFeed } = useDeleteFeed({
     feedId: selectedFeedId,
@@ -186,7 +190,7 @@ export default function FeedPage() {
   });
 
   const renderSwipers = useMemo(() => {
-    if (isFetching || isFetchingMine) {
+    if (!feedAll || !feedMine) {
       return <DotSpinner />;
     }
 
@@ -201,16 +205,40 @@ export default function FeedPage() {
         }}
         slidesPerView={1}
         spaceBetween={2}
-        className="custom-swiper w-full !z-5"
+        className="custom-swiper w-full !z-5 h-screen"
       >
         {feedMine && (
-          <SwiperSlide>
-            <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
+          <SwiperSlide
+            id="scrollableDiv1"
+            className="h-full overflow-y-auto no-scrollbar"
+          >
+            <InfiniteScroll
+              dataLength={feedMine?.length ?? 0}
+              hasMore={hasNextPage_mine}
+              loader={<DotSpinnerSmall />}
+              next={loadMore_mine}
+              scrollThreshold="10px"
+              scrollableTarget="scrollableDiv1"
+            >
+              <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
+            </InfiniteScroll>
           </SwiperSlide>
         )}
         {feedAll && (
-          <SwiperSlide>
-            <Feed feeds={feedAll?.feeds} onClickFeed={setSelectedFeedId} />
+          <SwiperSlide
+            id="scrollableDiv2"
+            className="no-scrollbar h-screen overflow-y-auto"
+          >
+            <InfiniteScroll
+              dataLength={feedAll?.length ?? 0}
+              hasMore={hasNextPage}
+              loader={<DotSpinnerSmall />}
+              next={loadMore}
+              scrollThreshold="10px"
+              scrollableTarget="scrollableDiv_2"
+            >
+              <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+            </InfiniteScroll>
           </SwiperSlide>
         )}
       </Swiper>
@@ -221,8 +249,8 @@ export default function FeedPage() {
     selectedTab,
     swiperRef,
     handleSlideChange,
-    isFetching,
-    isFetchingMine,
+    hasNextPage,
+    hasNextPage_mine,
   ]);
 
   useEffect(() => {
@@ -233,15 +261,13 @@ export default function FeedPage() {
     return <FullPageLoader />;
   }
   return (
-    <div>
+    <div className="h-screen">
       <Header
         shadow={scrollProgress > 0.1}
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-
       {renderSwipers}
-
       {recordModalOpen && (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}

@@ -3,7 +3,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Spacing from "./Spacing";
 import clsx from "clsx";
-import { Feed } from "@/models/feed";
+import * as lighty from "lighty-type";
 import { formatToDisplay } from "@/utils/makeUTC";
 
 export default function PhotoSwiper({
@@ -11,7 +11,7 @@ export default function PhotoSwiper({
   percent,
   type,
 }: {
-  feed: Feed;
+  feed: lighty.Feed;
   percent?: number;
   type?: "home" | "feed";
 }) {

@@ -1,57 +1,88 @@
 "use client";
 import FilterBar from "@/components/shared/YearFilter";
-// import CommentContainer from "@/components/shared/comments/CommentContainer";
-import { useRecoilState } from "recoil";
-// import { commentModalStateAtom } from "@/atoms/feed";
-import useScrollShadow from "@/hooks/useScrollShadow";
+import { useRecoilState, useRecoilValue } from "recoil";
 import clsx from "clsx";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import getHeader from "@/utils/getHeader";
-import { useRef } from "react";
 import { recordModalAtom } from "@/atoms/modal";
+import { scrollProgressAtom } from "@/atoms/scroll";
+import Feed from "@/components/feed/Feed";
+import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
+import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 export default function FeedPage() {
+  const [isClient, setIsClient] = useState(false);
   const header = getHeader("/hidden");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasShadow = useScrollShadow(containerRef);
-  // const [commentModalOpen, setCommentModalOpen] = useRecoilState(
-  //   commentModalStateAtom
-  // );
+  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
+  const {
+    data: hiddenFeed,
+    hasNextPage,
+    loadMore,
+  } = useFeedHidden({ limit: 2 });
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return <FullPageLoader />;
 
   return (
     <div
-      ref={containerRef}
-      className="overflow-y-scroll no-scrollbar pt-[48px]"
+      className="h-screen pt-[48px] overflow-y-scroll no-scrollbar"
+      id="scrollableDiv"
     >
       {header}
-      <div
-        className={clsx(filterWrapperStyle, hasShadow ? "shadow-bottom" : "")}
-      >
-        <div className="px-[20px]">
+      {!hiddenFeed ? (
+        <FullPageLoader />
+      ) : (
+        <>
           <div
-            style={{
-              backgroundColor: "#fff",
-            }}
-            className={tabContainerStyle}
+            className={clsx(
+              filterWrapperStyle,
+              scrollProgress > 0.1 ? "shadow-bottom" : ""
+            )}
           >
-            <div className={tabWrapperStyle}>
-              <TabButton
-                title={"숨김 피드 3"}
-                onMouseDown={() => {}}
-                current={true}
-                fresh={"never"}
-              />
-              <BottomLine />
+            <div
+              style={{
+                backgroundColor: "#fff",
+              }}
+              className={tabContainerStyle}
+            >
+              <div className={tabWrapperStyle}>
+                <TabButton
+                  title={`숨김 피드`}
+                  onMouseDown={() => {}}
+                  current={true}
+                  fresh={"never"}
+                />
+                <BottomLine />
+              </div>
+              <FilterBar />
             </div>
           </div>
-          <FilterBar />
-        </div>
-      </div>
-
-      {/* <Feed which="1" /> */}
+          <InfiniteScroll
+            // className="!overflow-visible"
+            dataLength={hiddenFeed?.length ?? 0}
+            hasMore={hasNextPage}
+            loader={<DotSpinnerSmall />}
+            next={loadMore}
+            scrollThreshold="10px"
+            scrollableTarget="scrollableDiv"
+          >
+            <Feed
+              feeds={hiddenFeed}
+              onClickFeed={() => {}}
+              className="!pt-[48px]"
+            />
+          </InfiniteScroll>
+        </>
+      )}
 
       {recordModalOpen ? (
         <MemoriesBottomSheet
@@ -59,19 +90,12 @@ export default function FeedPage() {
           open={recordModalOpen}
         />
       ) : null}
-      {/* {commentModalOpen ? (
-        <CommentContainer
-          onClose={() => {
-            setCommentModalOpen(false);
-          }}
-        />
-      ) : null} */}
     </div>
   );
 }
 
 const filterWrapperStyle =
-  "max-w-[430px] fixed z-10 flex flex-col w-full bg-base-white transition-shadow duration-300";
+  "max-w-[430px] fixed z-10 flex w-full bg-base-white transition-shadow duration-300";
 
-const tabContainerStyle = "max-w-[430px] w-full";
-const tabWrapperStyle = "relative flex gap-[16px]";
+const tabContainerStyle = "flex w-full px-5 justify-between";
+const tabWrapperStyle = "w-fit";

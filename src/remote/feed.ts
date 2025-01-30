@@ -1,5 +1,4 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
-import { FeedResponse } from "@/models/feed";
 import * as lighty from "lighty-type";
 import { v4 as uuidv4 } from "uuid";
 import { API_CONFIG, fetchWithAuth } from "./shared";
@@ -18,16 +17,14 @@ export async function getFeedAll({
   minDate,
   maxDate,
   limit,
+  cursor,
 }: {
   order: "DESC" | "ASC";
   minDate: string;
   maxDate: string;
   limit: number;
+  cursor: { createdAt: string; id: string };
 }) {
-  const cursor = {
-    createdAt: order === "DESC" ? maxDate : minDate,
-    id: uuid,
-  };
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const targetUrl = `${baseUrl}/feeds?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
@@ -38,7 +35,7 @@ export async function getFeedAll({
       method: "GET",
     });
 
-    const data: FeedResponse = await response.json();
+    const data: lighty.FeedListResponse = await response.json();
 
     return data;
   } catch (error) {
@@ -52,21 +49,19 @@ export async function getFeedAll({
 /** 자신이 작성한 피드 목록 조회 */
 /** 첫 커서는 현재 날짜 */
 export async function getFeedMine({
+  cursor,
   order,
   minDate,
   maxDate,
   limit,
 }: {
+  cursor: { createdAt: string; id: string };
   order: "DESC" | "ASC";
   minDate: string;
   maxDate: string;
   limit: number;
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const cursor = {
-    createdAt: order === "DESC" ? maxDate : minDate,
-    id: uuid,
-  };
   try {
     const targetUrl = `${baseUrl}/feeds/my?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
       JSON.stringify(cursor)
@@ -75,12 +70,39 @@ export async function getFeedMine({
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
-    const data: FeedResponse = await response.json();
+    const data: lighty.FeedListResponse = await response.json();
 
     return data;
   } catch (error) {
     console.log(error);
     throw new Error("내가 작성한 피드 조회를 실패하였습니다");
+  }
+}
+
+/** 숨긴 피드 조회 */
+export async function getFeedHidden({
+  cursor,
+  limit,
+}: {
+  cursor: { createdAt: string; id: string };
+  limit: number;
+}) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+
+  try {
+    const targetUrl = `${baseUrl}/feeds/blocked?cursor=${encodeURIComponent(
+      JSON.stringify(cursor)
+    )}&limit=${limit}`;
+
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: lighty.FeedListResponse = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("숨긴 피드 조회를 실패하였습니다");
   }
 }
 
@@ -113,7 +135,7 @@ export async function postGatheringFeed({
   gatheringFeed,
 }: {
   gatheringFeed: lighty.CreateGatheringFeedRequest;
-}) {
+}): Promise<{ message: string } | void> {
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/gatherings`;
   try {
@@ -122,7 +144,6 @@ export async function postGatheringFeed({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gatheringFeed),
     });
-
     return { message: "약속 피드를 성공적으로 작성하였습니다" };
   } catch (error) {
     if (error instanceof Response) {
@@ -151,6 +172,7 @@ export async function postFriendFeed({
     if (error instanceof Response) {
       handleResponse(error);
     }
+    throw error;
   }
 }
 
@@ -176,6 +198,7 @@ export async function patchFeed({
     if (error instanceof Response) {
       return handleResponse(error);
     }
+    throw error;
   }
 }
 

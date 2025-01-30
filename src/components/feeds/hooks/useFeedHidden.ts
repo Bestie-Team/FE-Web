@@ -1,34 +1,26 @@
-import { useCallback } from "react";
-import { getFeedAll } from "@/remote/feed";
+import { getFeedHidden } from "@/remote/feed";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
-const uuid = uuidv4();
 import * as lighty from "lighty-type";
 
-export default function useFeedAll({
-  order,
-  minDate,
-  maxDate,
-  limit,
-}: {
-  order: "DESC" | "ASC";
-  minDate: string;
-  maxDate: string;
-  limit: number;
-}) {
+const uuid = uuidv4();
+
+export default function useFeedHidden({ limit }: { limit: number }) {
   const cursor = {
-    createdAt: order === "DESC" ? maxDate : minDate,
+    createdAt: new Date().toISOString(),
     id: uuid,
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["get/feeds/all"],
+    queryKey: ["get/feeds/hidden"],
     queryFn: async ({ pageParam: cursor }): Promise<lighty.FeedListResponse> =>
-      getFeedAll({ cursor, order, minDate, maxDate, limit }),
+      getFeedHidden({ cursor, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
     refetchOnWindowFocus: "always",
     throwOnError: true,
   });
+
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {
       return;
