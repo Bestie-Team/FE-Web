@@ -19,12 +19,20 @@ export const TIMES = [
   "8:30",
   "9:00",
   "9:30",
-  "9:30",
   "10:00",
   "10:30",
   "11:00",
   "11:30",
 ];
 
-export const minDate = new Date("2025-01-01").toISOString();
-export const maxDate = new Date("2025-12-31").toISOString();
+export const minDate = () => {
+  const date = new Date("2025-01-01");
+  date.setTime(date.getTime() - 9 * 60 * 60 * 1000);
+  return date.toISOString();
+};
+
+export const maxDate = () => {
+  const date = new Date("2025-12-31");
+  date.setTime(date.getTime() - 9 * 60 * 60 * 1000);
+  return date.toISOString();
+};

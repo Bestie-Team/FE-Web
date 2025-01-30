@@ -16,8 +16,8 @@ export default function UpcomingSchedule({
       <div className="relative">
         <div className={styles.timelineWrapper} />
         {gatherings?.map((gathering, i) => (
-          <React.Fragment key={i}>
-            <TimelineItem upcomingGathering={gathering} />
+          <React.Fragment>
+            <TimelineItem key={i} upcomingGathering={gathering} />
             <Spacing size={48} />
           </React.Fragment>
         ))}

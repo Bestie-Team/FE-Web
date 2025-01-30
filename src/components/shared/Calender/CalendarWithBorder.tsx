@@ -7,66 +7,73 @@ import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
 import { gatheringSelectedDateAtom } from "@/atoms/gathering";
 import Flex from "../Flex";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import CalendarLightyIcon from "../Icon/CalendarLightyIcon";
-import useGatherings from "@/components/gathering/hooks/useGatherings";
+import { Gathering } from "@/models/gathering";
 
 const Calendar = dynamic(() => import("react-calendar"), {
   ssr: false,
 });
 
 type ValuePiece = Date | null;
-
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function LightyCalendarWithBorder() {
+export default function LightyCalendarWithBorder({
+  gatherings,
+}: {
+  gatherings: Gathering[];
+}) {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
 
-  const { data: gatherings } = useGatherings({
-    cursor: minDate,
-    limit: 500,
-    minDate,
-    maxDate,
-  });
+  const handleDateChange = useCallback(
+    (newDate: Value) => {
+      if (newDate !== selectedDate) {
+        setSelectedDate(newDate);
+      }
+    },
+    [selectedDate, setSelectedDate]
+  );
+  const datesWithIcons = useMemo(() => {
+    if (!gatherings) return [];
+    return gatherings.map((gathering) => new Date(gathering.gatheringDate));
+  }, [gatherings]);
 
-  const datesWithIcons: Date[] = [];
+  const renderIcon = useCallback(
+    (date: Date) => {
+      const isSpecialDate = datesWithIcons.some(
+        (specialDate) =>
+          specialDate.getFullYear() === date.getFullYear() &&
+          specialDate.getMonth() === date.getMonth() &&
+          specialDate.getDate() === date.getDate()
+      );
 
-  if (gatherings?.gatherings) {
-    for (let i = 0; i < gatherings.gatherings.length; i++) {
-      const converted = new Date(gatherings.gatherings[i].gatheringDate);
-      datesWithIcons.push(converted);
-    }
-  }
+      return isSpecialDate ? (
+        <Flex
+          justify="center"
+          className="!z-999 w-full absolute bottom-[-10px]"
+        >
+          <CalendarLightyIcon />
+        </Flex>
+      ) : null;
+    },
+    [datesWithIcons]
+  );
 
-  const renderIcon = (date: Date) => {
-    const isSpecialDate = datesWithIcons.some(
-      (specialDate) =>
-        specialDate.getFullYear() === date.getFullYear() &&
-        specialDate.getMonth() === date.getMonth() &&
-        specialDate.getDate() === date.getDate()
-    );
+  const returnClassName = useCallback(
+    (date: Date) => {
+      const isSpecialDate = datesWithIcons.some(
+        (specialDate) =>
+          specialDate.getFullYear() === date.getFullYear() &&
+          specialDate.getMonth() === date.getMonth() &&
+          specialDate.getDate() === date.getDate()
+      );
 
-    return isSpecialDate ? (
-      <Flex justify="center" className="!z-999 w-full absolute bottom-[-10px]">
-        <CalendarLightyIcon />
-      </Flex>
-    ) : null;
-  };
-
-  const returnClassName = (date: Date) => {
-    const isSpecialDate = datesWithIcons.some(
-      (specialDate) =>
-        specialDate.getFullYear() === date.getFullYear() &&
-        specialDate.getMonth() === date.getMonth() &&
-        specialDate.getDate() === date.getDate()
-    );
-
-    return isSpecialDate ? "special-date !overflow-visible" : null;
-  };
+      return isSpecialDate ? "special-date !overflow-visible" : null;
+    },
+    [datesWithIcons]
+  );
 
   return (
     <Calendar
@@ -82,7 +89,7 @@ export default function LightyCalendarWithBorder() {
         }
         return null;
       }}
-      onChange={setSelectedDate}
+      onChange={handleDateChange}
       value={selectedDate}
       formatDay={(locale, date) => format(date, "d")}
       showNeighboringMonth={false}

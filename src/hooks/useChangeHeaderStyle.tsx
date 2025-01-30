@@ -48,9 +48,4 @@ export default function useChangeHeaderStyle({
   useEffect(() => {
     updateColors();
   }, [updateColors]);
-
-  // 디버깅을 위한 렌더링 로그 (개발 시에만 사용)
-  // useEffect(() => {
-  //   console.log('Component rendered');
-  // });
 }

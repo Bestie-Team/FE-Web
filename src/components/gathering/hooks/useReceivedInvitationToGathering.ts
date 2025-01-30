@@ -6,6 +6,7 @@ import { maxDate, minDate } from "@/constants/time";
 
 export default function useReceivedInvitationToGathering() {
   const cursor = new Date().toISOString();
+
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["received", "gathering/invitation"],
     queryFn: async ({
@@ -14,12 +15,13 @@ export default function useReceivedInvitationToGathering() {
       return getReceivedInvitationToGatheringList({
         cursor,
         limit: 20,
-        minDate: minDate,
-        maxDate: maxDate,
+        minDate: minDate(),
+        maxDate: maxDate(),
       });
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
+    refetchOnWindowFocus: "always",
   });
 
   const loadMore = useCallback(() => {

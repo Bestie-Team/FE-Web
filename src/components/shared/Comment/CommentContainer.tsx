@@ -25,12 +25,6 @@ export default function CommentContainer({
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
 
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
-
-  const order = "DESC";
-  const limit = 10;
-
   const { data: comments } = useFeedComments({ feedId: selectedFeedId });
 
   const { mutate: postComment } = useMakeComment({
@@ -42,7 +36,7 @@ export default function CommentContainer({
         queryKey: ["get/comments", { feedId: selectedFeedId }],
       });
       await queryClient.invalidateQueries({
-        queryKey: ["get/feeds", { order, minDate, maxDate, limit }],
+        queryKey: ["get/feeds/all"],
       });
     },
     onError: (error) => console.log(error),

@@ -14,7 +14,7 @@ export default function useGatherings({
   maxDate: string;
 }) {
   return useQuery({
-    queryKey: ["gatherings", { cursor, limit }, { minDate, maxDate }],
+    queryKey: ["gatherings", { minDate, maxDate }],
     queryFn: () => getGatherings({ cursor, limit, minDate, maxDate }),
   });
 }

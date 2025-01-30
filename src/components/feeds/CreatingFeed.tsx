@@ -37,8 +37,8 @@ export default function CreatingFeed() {
           "get/feeds/mine",
           {
             order: "DESC",
-            minDate: minDate.slice(0, 10),
-            maxDate: maxDate.slice(0, 10),
+            minDate: minDate(),
+            maxDate: maxDate(),
             limit: 10,
           },
         ],

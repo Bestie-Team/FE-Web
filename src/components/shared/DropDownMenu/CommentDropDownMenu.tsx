@@ -18,8 +18,6 @@ const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
     const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
 
     const handleItemClick = (item: string) => {
-      console.log("Item clicked:", item);
-      console.log("selectedId:", selectedCommentId);
       if (item.includes("삭제")) {
         setSelectedCommentId(selectedCommentId || "");
         setModalOpen(true);

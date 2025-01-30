@@ -7,7 +7,13 @@ import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useRecoilValue } from "recoil";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
@@ -56,13 +62,17 @@ Header.displayName = "Header";
 MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
 
 export default function SchedulePage() {
+  const queryParams = useMemo(
+    () => ({
+      cursor: minDate(),
+      minDate: minDate(),
+      maxDate: maxDate(),
+      limit: 400,
+    }),
+    []
+  );
   const [isClient, setIsClient] = useState(false);
-  const { data: upcoming, isFetching } = useGatherings({
-    minDate,
-    maxDate,
-    limit: 30,
-    cursor: minDate,
-  });
+  const { data: upcoming, isFetching } = useGatherings(queryParams);
   const scrollProgress = useRecoilValue(scrollProgressAtom);
   const MemoizedLightyCalendarWithBorder = React.memo(LightyCalendarWithBorder);
   const [year, setYear] = useState<SelectOptionType | null>({
@@ -83,12 +93,17 @@ export default function SchedulePage() {
   }
 
   return (
-    <div>
+    <div className="h-screen">
       <Header year={year} setYear={setYear} shadow={scrollProgress > 0.1} />
-
       <Flex direction="column" className={styles.container}>
         <div className="!h-[408px]">
-          <MemoizedLightyCalendarWithBorder />
+          {isFetching || !upcoming ? (
+            <DotSpinner />
+          ) : (
+            <MemoizedLightyCalendarWithBorder
+              gatherings={upcoming?.gatherings}
+            />
+          )}
         </div>
         <Spacing size={28} />
         {isFetching || !upcomingGatherings ? (
@@ -103,7 +118,7 @@ export default function SchedulePage() {
 
 const styles = {
   header: "max-w-[430px] fixed pt-12 w-full pl-5 bg-base-white",
-  container: "items-center h-screen mt-24 px-5 overflow-x-scroll no-scrollbar",
+  container: "items-center mt-24 px-5",
 };
 
 const options = [

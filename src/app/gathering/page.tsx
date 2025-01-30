@@ -16,6 +16,7 @@ import Flex from "@/components/shared/Flex";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import dynamic from "next/dynamic";
+import { maxDate, minDate } from "@/constants/time";
 
 const Header = React.memo(
   ({
@@ -65,14 +66,11 @@ export default function MyGatheringPage() {
     useTabs();
   const scrollProgress = useRecoilValue(scrollProgressAtom);
 
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
-
   const { data, isFetching, isError } = useGatherings({
-    cursor: minDate,
+    cursor: minDate(),
     limit: 50,
-    minDate,
-    maxDate,
+    minDate: minDate(),
+    maxDate: maxDate(),
   });
 
   const myGatherings = data?.gatherings;

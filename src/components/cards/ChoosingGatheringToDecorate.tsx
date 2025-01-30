@@ -9,6 +9,7 @@ import useFeedMine from "../feeds/hooks/useFeedMine";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import { Feed } from "@/models/feed";
 import { cardSelectedFeedAtom } from "@/atoms/card";
+import { maxDate, minDate } from "@/constants/time";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -19,13 +20,10 @@ export default function ChoosingGatheringToDecorate({
     Partial<Feed> & { name: string; imageUrl: string; date: string }
   >(cardSelectedFeedAtom);
 
-  const minDate = new Date("2025-01-01").toISOString();
-  const maxDate = new Date("2025-12-31").toISOString();
-
   const { data, isFetching } = useFeedMine({
     order: "DESC",
-    minDate,
-    maxDate,
+    minDate: minDate(),
+    maxDate: maxDate(),
     limit: 20,
   });
 

@@ -15,12 +15,13 @@ export default function useSentInvitationToGathering() {
       return getSentInvitationToGatheringList({
         cursor,
         limit: 20,
-        minDate: minDate,
-        maxDate: maxDate,
+        minDate: minDate(),
+        maxDate: maxDate(),
       });
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
+    refetchOnWindowFocus: "always",
   });
 
   const loadMore = useCallback(() => {

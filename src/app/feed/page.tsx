@@ -30,6 +30,7 @@ import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { scrollProgressAtom } from "@/atoms/scroll";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { maxDate, minDate } from "@/constants/time";
 
 const Header = React.memo(
   ({
@@ -63,17 +64,14 @@ const Header = React.memo(
 
 const FeedModals = React.memo(
   ({
-    selectedFeedId,
     onDeleteFeed,
     onDeleteComment,
     onHideFeed,
   }: {
-    selectedFeedId: string;
     onDeleteFeed: () => void;
     onDeleteComment: () => void;
     onHideFeed: () => void;
   }) => {
-    console.log(selectedFeedId);
     const [deleteModalOpen, setDeleteModalOpen] =
       useRecoilState(feedDeleteModalAtom);
     const [commentDeleteModalOpen, setCommentDeleteModalOpen] = useRecoilState(
@@ -136,8 +134,8 @@ export default function FeedPage() {
   const queryParams = useMemo(
     () => ({
       order: "DESC" as const,
-      minDate: new Date("2025-01-01").toISOString(),
-      maxDate: new Date("2025-12-31").toISOString(),
+      minDate: minDate(),
+      maxDate: maxDate(),
       limit: 10,
     }),
     []
@@ -257,7 +255,6 @@ export default function FeedPage() {
         />
       )}
       <FeedModals
-        selectedFeedId={selectedFeedId}
         onDeleteFeed={deleteFeed}
         onDeleteComment={deleteComment}
         onHideFeed={hideFeed}
