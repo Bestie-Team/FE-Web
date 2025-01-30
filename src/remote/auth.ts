@@ -1,5 +1,5 @@
 import * as lighty from "lighty-type";
-import { postProfileImage } from "./profile";
+import { postProfileImageWithToken } from "./profile";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG } from "./shared";
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
@@ -86,7 +86,8 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
 
     let profileImageUrl = null;
     if (RegisterRequest.profileImageUrl) {
-      const uploadResult = await postProfileImage({
+      const uploadResult = await postProfileImageWithToken({
+        token: data.accessToken,
         file: RegisterRequest.profileImageUrl as File,
       });
       profileImageUrl = uploadResult?.imageUrl;

@@ -6,10 +6,11 @@ import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import { useRecoilValue } from "recoil";
 import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
-import { useAuth } from "./providers/AuthProvider";
+import useUserDetail from "../users/hooks/useUserDetail";
+import DotSpinnerSmall from "./Spinner/DotSpinnerSmall";
 
 const NavBar = () => {
-  const { userInfo } = useAuth();
+  const { data: user, isFetching } = useUserDetail();
   const [isClient, setIsClient] = useState(false);
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
   const isVisible = useRecoilValue(scrollAtom);
@@ -44,16 +45,20 @@ const NavBar = () => {
       transition-all duration-900 ease-in-out
     `}
     >
-      {NAV_ITEMS.map((item, idx) => (
-        <NavLink
-          key={item.href.slice(1)}
-          href={item.href}
-          isActive={idx === activeBtn || pathname === item.href}
-          onClick={() => setActiveBtn(idx)}
-          icon={item.icon}
-          profileImageUrl={userInfo?.profileImageUrl}
-        />
-      ))}
+      {isFetching ? (
+        <DotSpinnerSmall />
+      ) : (
+        NAV_ITEMS.map((item, idx) => (
+          <NavLink
+            key={item.href.slice(1)}
+            href={item.href}
+            isActive={idx === activeBtn || pathname === item.href}
+            onClick={() => setActiveBtn(idx)}
+            icon={item.icon}
+            profileImageUrl={user?.profileImageUrl}
+          />
+        ))
+      )}
 
       {(showSheetButton || pathname === "/") && (
         <SheetOpenBtnContainer tooltip />

@@ -1,21 +1,58 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 
-export async function postProfileImage(imageFile: { file: File }) {
+export async function postProfileImageWithToken({
+  file,
+  token,
+}: {
+  file: File;
+  token: string;
+}) {
   try {
     const baseUrl = API_CONFIG.getBaseUrl();
     const targetUrl = `${baseUrl}/users/profile/image`;
 
-    if (!imageFile || !imageFile.file) {
+    if (!file || !file) {
       throw new Error("이미지 파일을 선택해주세요");
     }
     const formData = new FormData();
-    formData.append("file", imageFile.file);
+    formData.append("file", file);
 
     const response = await fetch(targetUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       method: "POST",
       body: formData,
     });
+    const data: { imageUrl: string } = await response.json();
+    localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
+    return { imageUrl: data.imageUrl };
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "프로필 이미지 업로드중 문제 발생"
+    );
+  }
+}
+
+export async function postProfileImage({ file }: { file: File }) {
+  try {
+    const baseUrl = API_CONFIG.getBaseUrl();
+    const targetUrl = `${baseUrl}/users/profile/image`;
+
+    if (!file || !file) {
+      throw new Error("이미지 파일을 선택해주세요");
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetchWithAuth(targetUrl, {
+      method: "POST",
+      body: formData,
+    });
+
     const data: { imageUrl: string } = await response.json();
     localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
     return { imageUrl: data.imageUrl };
@@ -61,7 +98,7 @@ export async function patchProfileImage(imageUrl: { profileImageUrl: string }) {
 
 export async function updateProfileImage(imageFile: { file: File }) {
   try {
-    const { imageUrl } = await postProfileImage(imageFile);
+    const { imageUrl } = await postProfileImage({ file: imageFile.file });
     console.log("Image uploaded successfully:", imageUrl);
 
     const updateResponse = await patchProfileImage({
