@@ -4,7 +4,7 @@ import TabButton from "./TabButton";
 import Flex from "../Flex";
 import YearFilter from "../YearFilter";
 
-export type PanelLength = "short" | "medium" | "long";
+export type PanelLength = "short" | "medium" | "long" | "longer";
 
 export default function Panel({
   title1,
@@ -45,6 +45,7 @@ export default function Panel({
           fresh={true}
         />
         {long === "long" && <LongBottomLine activeTab={selectedTab} />}
+        {long === "longer" && <LongerBottomLine activeTab={selectedTab} />}
         {long === "medium" && <BottomLine activeTab={selectedTab} />}
         {long === "short" && <ShortBottomLine activeTab={selectedTab} />}
       </div>
@@ -81,6 +82,16 @@ function ShortBottomLine({ activeTab }: { activeTab: string }) {
     <div
       className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
         activeTab === "1" ? "translate-x-0" : "translate-x-[46px]"
+      }`}
+    />
+  );
+}
+
+function LongerBottomLine({ activeTab }: { activeTab: string }) {
+  return (
+    <div
+      className={`absolute bottom-0 w-[38px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+        activeTab === "1" ? "translate-x-0" : "!w-[68px] translate-x-[59px]"
       }`}
     />
   );

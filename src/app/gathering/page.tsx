@@ -1,19 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Swiper as SwiperType } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
-import Gathering from "@/components/gathering/Gathering";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
-import {
-  Gathering as GatheringType,
-  GatheringInWhich,
-} from "@/models/gathering";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
@@ -21,10 +14,8 @@ import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Flex from "@/components/shared/Flex";
 import { scrollProgressAtom } from "@/atoms/scroll";
-import Spacing from "@/components/shared/Spacing";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-
-type TabName = "1" | "2";
+import dynamic from "next/dynamic";
 
 const Header = React.memo(
   ({
@@ -57,41 +48,14 @@ const Header = React.memo(
   }
 );
 
-const GatheringSwiper = React.memo(
-  ({
-    myGatherings,
-    selectedTab,
-    swiperRef,
-    onSlideChange,
-  }: {
-    myGatherings: GatheringType[];
-    selectedTab: TabName;
-    swiperRef: React.MutableRefObject<SwiperType | null>;
-    onSlideChange: (index: number) => void;
-  }) => (
-    <Swiper
-      initialSlide={Number(selectedTab) - 1}
-      onSwiper={(swiper) => (swiperRef.current = swiper)}
-      onSlideChange={(swiper) => onSlideChange(swiper.activeIndex)}
-      slidesPerView={1}
-      spaceBetween={2}
-      direction="horizontal"
-    >
-      {["예정", "완료"].map((which) => (
-        <SwiperSlide key={which}>
-          <Spacing size={98} />
-          <Gathering
-            where={GatheringInWhich.GATHERING}
-            which={which}
-            myGatherings={myGatherings}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  )
+const GatheringPageSwiper = dynamic(
+  () => import("../../components/gathering/GatheringPageSwiper"),
+  {
+    ssr: false,
+  }
 );
+
 Header.displayName = "Header";
-GatheringSwiper.displayName = "GatheringSwiper";
 
 export default function MyGatheringPage() {
   const [isClient, setIsClient] = useState(false);
@@ -132,11 +96,10 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-
       {isFetching || isError ? (
         <DotSpinner />
       ) : myGatherings && myGatherings.length > 0 ? (
-        <GatheringSwiper
+        <GatheringPageSwiper
           myGatherings={myGatherings}
           selectedTab={selectedTab}
           swiperRef={swiperRef}

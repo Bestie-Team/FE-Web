@@ -49,9 +49,9 @@ const Header = React.memo(
         >
           <Panel
             selectedTab={selectedTab}
-            long="medium"
-            title1="전체"
-            title2="나의 피드"
+            long="longer"
+            title1="MINE"
+            title2="FRIEND'S"
             onClick={handleTabClick}
           />
         </div>
@@ -202,14 +202,14 @@ export default function FeedPage() {
         spaceBetween={2}
         className="custom-swiper w-full !z-5"
       >
-        {feedAll && (
-          <SwiperSlide>
-            <Feed feeds={feedAll?.feeds} onClickFeed={setSelectedFeedId} />
-          </SwiperSlide>
-        )}
         {feedMine && (
           <SwiperSlide>
             <Feed feeds={feedMine.feeds} onClickFeed={setSelectedFeedId} />
+          </SwiperSlide>
+        )}
+        {feedAll && (
+          <SwiperSlide>
+            <Feed feeds={feedAll?.feeds} onClickFeed={setSelectedFeedId} />
           </SwiperSlide>
         )}
       </Swiper>
@@ -223,6 +223,7 @@ export default function FeedPage() {
     isFetching,
     isFetchingMine,
   ]);
+
   useEffect(() => {
     setIsClient(true);
   }, []);

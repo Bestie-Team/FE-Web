@@ -19,7 +19,7 @@ export default function getHeader(pathname: string) {
     "/feed": pathname.endsWith("edit") ? (
       <Header pageName="피드 수정" />
     ) : (
-      <Header pageName="추억피드" />
+      <Header pageName="추억 피드" />
     ),
     "/hidden": <HeaderWithBackBtn pageName="피드 관리" color="white" />,
     "/record": <HeaderWithBackBtn pageName="기록하기" color="#f4f4f4" />,
