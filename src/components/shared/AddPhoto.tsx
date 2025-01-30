@@ -88,11 +88,15 @@ export default function AddPhoto({
           {imageUrl || image ? (
             <Image
               priority
-              layout="intrinsic"
+              layout="fixed"
               src={imageUrl ? imageUrl : image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}
+              style={{
+                width: small ? 64 : 74.67,
+                height: small ? 64 : 74.67,
+              }}
               className="object-cover"
             />
           ) : (
