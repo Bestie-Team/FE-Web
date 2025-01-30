@@ -92,9 +92,10 @@ export default function MyPage() {
 
       return undefined;
     };
-
-    setProfileInfo(initializeProfileInfo());
-  }, [user]);
+    if (isClient) {
+      setProfileInfo(initializeProfileInfo());
+    }
+  }, [user, isClient]);
 
   useEffect(() => {
     setIsClient(true);
@@ -103,6 +104,7 @@ export default function MyPage() {
   if (!isClient) {
     return <FullPageLoader />;
   }
+
   return (
     <div>
       <Header
@@ -112,7 +114,9 @@ export default function MyPage() {
       />
       {isFetching ? (
         <DotSpinner />
-      ) : user ? (
+      ) : !user ? (
+        <FullPageLoader />
+      ) : (
         <main className="pt-[68px]">
           <UserProfile
             userProfileImage={profileInfo?.profileImageUrl}
@@ -155,7 +159,7 @@ export default function MyPage() {
             />
           )}
         </main>
-      ) : null}
+      )}
     </div>
   );
 }
