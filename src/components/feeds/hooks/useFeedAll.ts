@@ -13,8 +13,9 @@ export default function useFeedAll({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["get/feeds/all", { order, minDate, maxDate, limit }],
+    queryKey: ["get/feeds/all"],
     queryFn: () => getFeedAll({ order, minDate, maxDate, limit }),
+    refetchOnWindowFocus: "always",
     throwOnError: true,
   });
 }

@@ -13,16 +13,9 @@ export default function useFeedMine({
   limit: number;
 }) {
   return useQuery({
-    queryKey: [
-      "get/feeds/mine",
-      {
-        order,
-        minDate: minDate.slice(0, 10),
-        maxDate: maxDate.slice(0, 10),
-        limit,
-      },
-    ],
+    queryKey: ["get/feeds/mine"],
     queryFn: () => getFeedMine({ order, minDate, maxDate, limit }),
     throwOnError: true,
+    refetchOnWindowFocus: "always",
   });
 }

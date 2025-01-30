@@ -49,9 +49,9 @@ const Header = React.memo(
         >
           <Panel
             selectedTab={selectedTab}
-            long="longer"
-            title1="MINE"
-            title2="FRIEND'S"
+            long="short"
+            title1="마이"
+            title2="전체"
             onClick={handleTabClick}
           />
         </div>
@@ -176,7 +176,10 @@ export default function FeedPage() {
     onSuccess: async () => {
       toast.success("피드를 숨겼어요");
       await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all", queryParams],
+        queryKey: ["get/feeds/all"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine"],
       });
     },
     onError: () => {
