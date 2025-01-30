@@ -38,18 +38,16 @@ const NAV_ITEMS: NavItem[] = [
   {
     href: "/my",
     icon: (isActive: boolean, src?: string) => (
-      <div className="w-6 h-6">
-        <Image
-          layout="intrinsic"
-          className={`box-content border-[1.7px] rounded-full aspect-square ${
-            isActive ? "border-grayscale-900" : "border-none"
-          }`}
-          src={src || DEFAULT_IMAGE}
-          width={24}
-          height={24}
-          alt="profileImage"
-        />
-      </div>
+      <Image
+        layout="fixed"
+        className={`w-6 h-6 box-content border-[1.7px] rounded-full object-cover ${
+          isActive ? "border-grayscale-900" : "border-none"
+        }`}
+        src={src || DEFAULT_IMAGE}
+        width={24}
+        height={24}
+        alt="profileImage"
+      />
     ),
   },
 ];

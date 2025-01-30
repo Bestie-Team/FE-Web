@@ -125,7 +125,7 @@ export default function UploadProfileForm() {
   return (
     <Flex direction="column">
       <div className="mx-auto w-21 py-3">
-        <AddPhoto setImageUrl={setFormValues} />
+        <AddPhoto setImageUrl={setFormValues} uploadable />
       </div>
       <Spacing size={16} />
       {

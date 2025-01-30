@@ -23,7 +23,7 @@ export default function UserProfile({
         paddingBottom: "12px",
       }}
     >
-      <AddPhoto imageUrl={userProfileImage} />
+      <AddPhoto imageUrl={userProfileImage} uploadable={false} />
       <Spacing size={8} />
       <Flex direction="column" align="center">
         <span className="text-T3 leading-[23px]">

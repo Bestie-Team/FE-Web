@@ -5,6 +5,9 @@ import * as lighty from "lighty-type";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import useUpdateProfile from "../my/hooks/useUpdateProfile";
+import clsx from "clsx";
+import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
+import PlusIcon from "./Icon/PlusIcon";
 
 export interface RegisterRequestType {
   email: string;
@@ -15,10 +18,12 @@ export interface RegisterRequestType {
 }
 
 export default function AddPhoto({
+  uploadable,
   small,
   imageUrl,
   setImageUrl,
 }: {
+  uploadable: boolean;
   small?: boolean;
   imageUrl?: string | null;
   setImageUrl?: React.Dispatch<React.SetStateAction<RegisterRequestType>>;
@@ -56,7 +61,7 @@ export default function AddPhoto({
   };
 
   useEffect(() => {
-    if ((pathname === "/my" || pathname === "/my/edit") && !!file) {
+    if (pathname === "/my/edit" && !!file) {
       console.log(file);
       mutate();
     }
@@ -76,7 +81,10 @@ export default function AddPhoto({
           height: small ? `72px` : "84px",
           padding: small ? "4px" : "4.67px",
         }}
-        className={uploadContainerStyle}
+        className={clsx(
+          uploadContainerStyle,
+          uploadable ? "cursor-pointer" : ""
+        )}
       >
         <div
           style={{
@@ -103,6 +111,7 @@ export default function AddPhoto({
             <PhotoIcon />
           )}
         </div>
+
         <PlusCircleButtonSmall
           style={{
             bottom: small ? `2px` : "4.33px",
@@ -110,14 +119,30 @@ export default function AddPhoto({
           }}
           className="absolute bottom-[4.33px] right-[4.33px]"
         />
-        <input
-          className="hidden"
-          id="fileInput"
-          type="file"
-          accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
-          name="imageUrl"
-          onChange={handleFileChange}
-        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: small ? `2px` : "4.33px",
+            right: small ? `2px` : "4.33px",
+          }}
+          className="bg-grayscale-900 rounded-full w-6 h-6 flex items-center justify-center"
+        >
+          {uploadable ? (
+            <PlusIcon width="13.71" height="13.71" />
+          ) : (
+            <EmptyLogoIcon width="13.71" height="13.71" color="white" />
+          )}
+        </div>
+        {uploadable ? (
+          <input
+            className="hidden"
+            id="fileInput"
+            type="file"
+            accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
+            name="imageUrl"
+            onChange={handleFileChange}
+          />
+        ) : null}
       </div>
     </label>
   );
@@ -146,4 +171,4 @@ function PhotoIcon() {
 const imageWrapperStyle =
   "flex justify-center items-center rounded-full bg-grayscale-50 overflow-hidden";
 
-const uploadContainerStyle = "relative flex cursor-pointer";
+const uploadContainerStyle = "relative flex";
