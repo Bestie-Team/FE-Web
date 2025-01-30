@@ -1,9 +1,9 @@
 import MemoryCard from "@/components/feed/MemoryCard";
 import NoFeed from "@/components/feed/NoFeed";
 import Flex from "@/components/shared/Flex";
+import { Feed } from "@/models/feed";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
-import * as lighty from "lighty-type";
 
 export type FeedType = "나의피드" | "전체";
 
@@ -12,7 +12,7 @@ export default function MyFeed({
   onClickFeed,
   className,
 }: {
-  feeds: lighty.Feed[];
+  feeds: Feed[];
   onClickFeed: Dispatch<SetStateAction<string>>;
   className?: string;
 }) {

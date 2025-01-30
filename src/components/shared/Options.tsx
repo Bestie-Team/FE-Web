@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import * as lighty from "lighty-type";
 import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
 import FeedDropdownMenu from "./DropDownMenu/FeedDropDownMenu";
 import CommentDropdownMenu from "./DropDownMenu/CommentDropDownMenu";
 import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
+import { Feed } from "@/models/feed";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
@@ -43,7 +43,7 @@ const MENU_CONFIGS = {
 };
 
 interface OptionsProps {
-  feed?: lighty.Feed;
+  feed?: Feed;
   isMine?: boolean;
   selectedCommentId?: string;
   width?: string;

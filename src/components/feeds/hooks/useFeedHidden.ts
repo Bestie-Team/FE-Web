@@ -2,7 +2,7 @@ import { getFeedHidden } from "@/remote/feed";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
-import * as lighty from "lighty-type";
+import { FeedResponse } from "@/models/feed";
 
 const uuid = uuidv4();
 
@@ -13,7 +13,7 @@ export default function useFeedHidden({ limit }: { limit: number }) {
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["get/feeds/hidden"],
-    queryFn: async ({ pageParam: cursor }): Promise<lighty.FeedListResponse> =>
+    queryFn: async ({ pageParam: cursor }): Promise<FeedResponse> =>
       getFeedHidden({ cursor, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,

@@ -7,9 +7,9 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
 import useFeedMine from "../feeds/hooks/useFeedMine";
 import DotSpinner from "../shared/Spinner/DotSpinner";
-import { Feed } from "@/models/feed";
 import { cardSelectedFeedAtom } from "@/atoms/card";
 import { maxDate, minDate } from "@/constants/time";
+import { Feed } from "@/models/feed";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -45,7 +45,7 @@ export default function ChoosingGatheringToDecorate({
     );
   };
 
-  const feeds = data?.feeds;
+  const feeds = data;
 
   return (
     <Flex direction="column" className="bg-base-white h-screen pt-12">

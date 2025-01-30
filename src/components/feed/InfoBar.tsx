@@ -5,6 +5,7 @@ import Options from "../shared/Options";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import { useAuth } from "../shared/providers/AuthProvider";
+import { Feed } from "@/models/feed";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function InfoBar({
@@ -12,7 +13,7 @@ export default function InfoBar({
   feed,
 }: {
   memberImageUrls: (string | null)[];
-  feed: lighty.Feed;
+  feed: Feed;
 }) {
   const { userInfo } = useAuth();
   const isMine = feed.writer.accountId === userInfo?.accountId;

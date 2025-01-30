@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import { Feed } from "@/models/feed";
 import { atom } from "recoil";
 
 export const commentModalStateAtom = atom<boolean>({
@@ -11,7 +11,7 @@ export const selectedFeedIdAtom = atom<string>({
   default: "",
 });
 
-export const selectedFeedInfoAtom = atom<lighty.Feed | null>({
+export const selectedFeedInfoAtom = atom<Feed | null>({
   key: "feed/selectedInfo/edit",
   default: null,
 });

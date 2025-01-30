@@ -1,6 +1,7 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
+import { FeedResponse } from "@/models/feed";
 
 // 응답 타입 정의
 export type FeedSuccessResponse = {
@@ -32,7 +33,7 @@ export async function getFeedAll({
       method: "GET",
     });
 
-    const data: lighty.FeedListResponse = await response.json();
+    const data: FeedResponse = await response.json();
 
     return data;
   } catch (error) {
@@ -67,7 +68,7 @@ export async function getFeedMine({
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
-    const data: lighty.FeedListResponse = await response.json();
+    const data: FeedResponse = await response.json();
 
     return data;
   } catch (error) {
@@ -94,7 +95,7 @@ export async function getFeedHidden({
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
-    const data: lighty.FeedListResponse = await response.json();
+    const data: FeedResponse = await response.json();
 
     return data;
   } catch (error) {

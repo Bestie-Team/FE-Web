@@ -5,9 +5,9 @@ import { useSetRecoilState } from "recoil";
 import { feedDeleteModalAtom, feedHideModalAtom } from "@/atoms/modal";
 import { selectedFeedIdAtom, selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
-import * as lighty from "lighty-type";
+import { Feed } from "@/models/feed";
 interface FeedDropdownMenuProps {
-  feed: lighty.Feed;
+  feed: Feed;
   items: string[];
   className?: string;
 }

@@ -2,16 +2,16 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
-import * as lighty from "lighty-type";
 import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
 import InfoBar from "./InfoBar";
 import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
+import { Feed } from "@/models/feed";
 
 export default function MemoryCard({
   feed,
   onClick,
 }: {
-  feed: lighty.Feed;
+  feed: Feed;
   onClick: Dispatch<SetStateAction<string>>;
 }) {
   const { data } = useGatheringDetail({

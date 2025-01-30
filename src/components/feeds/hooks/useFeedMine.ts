@@ -1,10 +1,10 @@
 import { getFeedMine } from "@/remote/feed";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-const uuid = uuidv4();
-import * as lighty from "lighty-type";
 import { useCallback } from "react";
+import { FeedResponse } from "@/models/feed";
 
+const uuid = uuidv4();
 export default function useFeedMine({
   order,
   minDate,
@@ -22,7 +22,7 @@ export default function useFeedMine({
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["get/feeds/mine"],
-    queryFn: async ({ pageParam: cursor }): Promise<lighty.FeedListResponse> =>
+    queryFn: async ({ pageParam: cursor }): Promise<FeedResponse> =>
       getFeedMine({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
