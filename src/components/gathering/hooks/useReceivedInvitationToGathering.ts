@@ -9,7 +9,7 @@ export default function useReceivedInvitationToGathering() {
   const todayDate = getTodayDate();
   const cursor = new Date(todayDate).toISOString();
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["received", "gathering/invitation", { cursor }],
+    queryKey: ["received", "gathering/invitation"],
     queryFn: async ({
       pageParam: cursor,
     }): Promise<lighty.GatheringInvitationListResponse> => {
