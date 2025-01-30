@@ -20,7 +20,6 @@ export default function Record() {
   const [add, setAdd] = useState<number>(0);
   const [gatherings, setGatherings] = useState<Gathering[]>([]);
   const { data: gathering_data } = useGatherings({
-    cursor: minDate(),
     limit: 50,
     minDate: minDate(),
     maxDate: maxDate(),

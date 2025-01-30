@@ -1,9 +1,12 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 import { GatheringDetailResponse } from "@/models/gathering";
-
+interface DateIdCursor {
+  createdAt: string;
+  id: string;
+}
 type PaginationParams = {
-  cursor: string | null;
+  cursor: DateIdCursor | null;
   limit: number;
   minDate: string;
   maxDate: string;
@@ -19,7 +22,9 @@ export async function getGatherings({
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const response = await fetchWithAuth(
-      `${baseUrl}/gatherings?cursor=${cursor}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      `${baseUrl}/gatherings?cursor=${encodeURIComponent(
+        JSON.stringify(cursor)
+      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
     const data: lighty.GatheringListResponse = await response.json();

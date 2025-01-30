@@ -26,7 +26,7 @@ export default function DateSlider() {
     isFetching,
     isError,
   } = useGatherings({
-    cursor: minDate,
+    cursor: { createdAt: minDate },
     limit: 10,
     minDate,
     maxDate,

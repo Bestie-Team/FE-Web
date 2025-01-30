@@ -64,7 +64,7 @@ MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
 export default function SchedulePage() {
   const queryParams = useMemo(
     () => ({
-      cursor: minDate(),
+      cursor: { createdAt: minDate() },
       minDate: minDate(),
       maxDate: maxDate(),
       limit: 400,

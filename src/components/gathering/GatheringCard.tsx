@@ -49,7 +49,7 @@ export default function GatheringCard({
     <div className="relative">
       <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
         <Image
-          layout="intrinsic"
+          layout="fixed"
           src={
             invitationImageUrl.startsWith("https://example") ||
             !invitationImageUrl

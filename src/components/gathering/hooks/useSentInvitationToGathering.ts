@@ -2,10 +2,13 @@ import { getSentInvitationToGatheringList } from "@/remote/gathering";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import * as lighty from "lighty-type";
+import { v4 as uuidv4 } from "uuid";
 import { maxDate, minDate } from "@/constants/time";
 
+const uuid = uuidv4();
+
 export default function useSentInvitationToGathering() {
-  const cursor = new Date().toISOString();
+  const cursor = { createdAt: new Date().toISOString(), id: uuid };
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["sent", "gathering/invitation"],

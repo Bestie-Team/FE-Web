@@ -67,7 +67,6 @@ export default function MyGatheringPage() {
   const scrollProgress = useRecoilValue(scrollProgressAtom);
 
   const { data, isFetching, isError } = useGatherings({
-    cursor: minDate(),
     limit: 50,
     minDate: minDate(),
     maxDate: maxDate(),
