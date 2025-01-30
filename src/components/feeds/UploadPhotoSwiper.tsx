@@ -6,7 +6,6 @@ import Flex from "../shared/Flex";
 import { PlusCircleButtonSmall } from "../shared/Button/BottomSheetOpenButton";
 import Spacing from "../shared/Spacing";
 import { useEffect, useState } from "react";
-import { SQUARE } from "@/constants/images";
 
 export default function UploadPhotoSwiper({
   feedInfoToEdit,
@@ -61,14 +60,7 @@ export default function UploadPhotoSwiper({
         {feedInfoToEdit ? null : (
           <SwiperSlide className={styles.slide}>
             <>
-              <Image
-                alt="empty"
-                layout="intrinsic"
-                className="slide-img w-[240px] h-[250px]"
-                src={SQUARE}
-                width={240}
-                height={250}
-              />
+              <div className="bg-grayscale-10 w-full h-[250px] rounded-[20px] border-[1px] border-dashed border-grayscale-200" />
               <div className={styles.inputWrapper}>
                 <label className="cursor-pointer">
                   <input
