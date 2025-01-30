@@ -8,6 +8,8 @@ import PencilIcon from "../Icon/PencilIcon";
 import PicturesIcon from "../Icon/PicturesIcon";
 import ActionItem from "./ActionItem";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
+import { useSetRecoilState } from "recoil";
+import { recordStepAtom } from "@/atoms/record";
 
 export default function MemoriesBottomSheet({
   open = true,
@@ -17,6 +19,7 @@ export default function MemoriesBottomSheet({
   onClose: () => void;
 }) {
   const router = useRouter();
+  const setStep = useSetRecoilState(recordStepAtom);
   return (
     <BottomSheetWrapper onClose={onClose} open={open}>
       <Flex direction="column" className="p-6 pt-1">
@@ -29,6 +32,9 @@ export default function MemoriesBottomSheet({
                 onClick={() => {
                   onClose();
                   router.push(action.link);
+                  if (action.link == "/record") {
+                    setStep(1);
+                  }
                 }}
                 icon={action.icon}
                 title={action.title}

@@ -9,6 +9,7 @@ import AddGatheringPhoto from "../gathering/AddGatheringPhoto";
 import { SetterOrUpdater } from "recoil";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringInvitation } from "@/models/gathering";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function UploadableVerticalInvitationCard({
   gathering,
@@ -53,6 +54,7 @@ export function VerticalInvitationCard({
   setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [invitationImageLoaded, setInvitationImageLoaded] = useState(false);
   if (gathering && setGathering && !invitation) {
     const { name, invitationImageUrl, gatheringDate, description, address } =
       gathering;
@@ -131,17 +133,22 @@ export function VerticalInvitationCard({
         {imageLoaded && (
           <>
             <Flex direction="column" className={styles.mainContentWrapper}>
-              <Image
-                priority
-                layout="intrinsic"
-                src={
-                  invitation_image_url || "https://cdn.lighty.today/lighty.jpg"
-                }
-                className={styles.image}
-                width={300}
-                height={210}
-                alt="invitationImage"
-              />
+              <div className="w-full !h-[210px]">
+                {invitationImageLoaded ? null : <DotSpinner />}
+                <Image
+                  priority
+                  layout="intrinsic"
+                  src={
+                    invitation_image_url ||
+                    "https://cdn.lighty.today/lighty.jpg"
+                  }
+                  className={styles.image}
+                  width={300}
+                  height={210}
+                  alt="invitationImage"
+                  onLoadingComplete={() => setInvitationImageLoaded(true)}
+                />
+              </div>
               <Spacing size={10} />
               <span className="text-T1 pl-1">{name}</span>
               <span className="text-B4 pl-1 text-grayscale-600">

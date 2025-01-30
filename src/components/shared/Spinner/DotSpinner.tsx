@@ -7,11 +7,8 @@ export default function DotSpinner() {
         justifyContent: "center",
         alignItems: "center",
         zIndex: 20,
-        position: "fixed",
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
+        width: "100%",
+        height: "100%",
         opacity: 1,
         backgroundColor: "transparent",
       }}
