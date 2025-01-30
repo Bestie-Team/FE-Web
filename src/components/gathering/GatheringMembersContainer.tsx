@@ -20,6 +20,7 @@ export default function GatheringMemberContainer({
         >
           <div className={styles.image}>
             <Image
+              layout="intrinsic"
               src={profileImageUrl || "https://cdn.lighty.today/default.png"}
               alt={`gatheringMember${idx + 1}`}
               width={40}

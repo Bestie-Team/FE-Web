@@ -149,9 +149,7 @@ export default function MyPage() {
               <ins>개인 정보 처리방침</ins>
             </Link>
           </footer>
-
           <Spacing size={120} />
-
           {modalState !== "none" && (
             <TermOfUse
               label={modalState === "open" ? "이용 약관" : "개인 정보 처리방침"}

@@ -30,6 +30,7 @@ export default function SelectableGroupItem({
           )}
         >
           <Image
+            layout="intrinsic"
             alt="groupImage"
             src={
               groupInfo?.groupImageUrl ||

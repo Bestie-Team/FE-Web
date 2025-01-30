@@ -33,6 +33,7 @@ export default function GroupContainer({
         <Flex align="center">
           <div className="w-12 h-12">
             <Image
+              layout="intrinsic"
               alt="leaderImg"
               width={48}
               height={48}
@@ -73,7 +74,7 @@ export default function GroupContainer({
 }
 
 const styles = {
-  leaderImage: "object-cover rounded-full h-12",
+  leaderImage: "rounded-full !h-12 w-12 object-cover",
   groupContainer: "bg-base-white gap-3 p-5 rounded-[16px]",
 
   font: "text-C2 text-grayscale-300",

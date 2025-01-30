@@ -52,6 +52,7 @@ export default function UserListItem({
     >
       <Image
         alt="friendProfile"
+        layout="intrinsic"
         src={userInfo?.profileImageUrl || DEFAULT_IMAGE}
         width={36}
         height={36}

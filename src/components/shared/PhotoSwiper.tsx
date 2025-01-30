@@ -40,6 +40,7 @@ export default function PhotoSwiper({
         >
           <Image
             priority
+            layout="intrinsic"
             placeholder="blur"
             blurDataURL="https://cdn.lighty.today/lighty.jpg"
             src={image || "https://cdn.lighty.today/lighty.jpg"}

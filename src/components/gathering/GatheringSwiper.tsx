@@ -39,6 +39,7 @@ export default function GatheringSwiper({
                 invitationImageUrl ||
                 "https://cdn.lighty.today/lighty_square.png"
               }
+              layout="intrinsic"
               alt={`invitationImage${idx + 1}`}
               className={styles.image}
               width={340}

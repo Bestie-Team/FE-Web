@@ -67,10 +67,11 @@ export default function AddGatheringPhoto({
         {image ? (
           <Image
             src={image}
+            layout="fixed"
             alt="upload_image"
             width={300}
             height={210}
-            className="object-cover"
+            className="!h-[210px] w-[300px]"
           />
         ) : (
           <>

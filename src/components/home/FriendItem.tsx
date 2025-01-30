@@ -15,9 +15,10 @@ export default function FriendItem({
 }) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
-      <div className="p-[6px]">
+      <div className="p-[6px] w-14 h-14 box-content">
         <Image
           alt="friendImage"
+          layout="intrinsic"
           src={
             friendInfo?.profileImageUrl || groupInfo?.imageUrl || DEFAULT_IMAGE
           }

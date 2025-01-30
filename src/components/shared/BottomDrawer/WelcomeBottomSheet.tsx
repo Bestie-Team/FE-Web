@@ -27,6 +27,7 @@ export default function WelcomeBottomSheet({
           width={176}
           height={180}
           alt="welcomeImg"
+          layout="intrinsic"
           src={FIREWORKS}
         />
         <div className={styles.buttonWrapper}>

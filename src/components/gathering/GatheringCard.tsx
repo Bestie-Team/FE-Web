@@ -49,6 +49,7 @@ export default function GatheringCard({
     <div className="relative">
       <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
         <Image
+          layout="intrinsic"
           src={
             invitationImageUrl.startsWith("https://example") ||
             !invitationImageUrl
@@ -95,7 +96,7 @@ export default function GatheringCard({
 
 const styles = {
   gatheringWrapper:
-    "relative rounded-[16px] overflow-hidden aspect-square cursor-pointer",
+    "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
   image: "object-cover object-center w-full h-full",
   gradation:
     // "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%)",

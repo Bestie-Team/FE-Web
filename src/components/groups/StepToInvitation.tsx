@@ -25,6 +25,7 @@ export default function StepToInvitation({
         <Spacing size={48} />
         <Image
           priority
+          layout="intrinsic"
           src={"https://cdn.lighty.today/heart_letter.png"}
           alt="invitation_img"
           width={110}

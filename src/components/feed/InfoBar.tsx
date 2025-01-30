@@ -32,13 +32,16 @@ export default function InfoBar({
 function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
     <Flex>
-      <Image
-        src={writer.profileImageUrl || DEFAULT_IMAGE}
-        width={36}
-        height={36}
-        className="w-[36px] h-[36px] rounded-full overflow-hidden"
-        alt="writer"
-      />
+      <div className="w-9 h-9">
+        <Image
+          layout="intrinsic"
+          src={writer.profileImageUrl || DEFAULT_IMAGE}
+          width={36}
+          height={36}
+          className="w-[36px] h-[36px] rounded-full overflow-hidden"
+          alt="writer"
+        />
+      </div>
       <Spacing direction="horizontal" size={6} />
       <Flex style={{ width: "full" }} direction="column">
         <div className="text-T5 flex-none">{writer.name}</div>

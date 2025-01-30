@@ -75,6 +75,7 @@ export default function ProfileImageDisplay({
           {newImage ? (
             <Image
               src={newImage}
+              layout="intrinsic"
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}

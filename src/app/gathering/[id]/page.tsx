@@ -62,13 +62,16 @@ export default function GatheringDetailPage({
           <Flex className={styles.contentWrapper} align="center">
             <span className="text-T5 flex-grow">{address}</span>
             <Spacing size={8} direction="horizontal" />
-            <Image
-              className="rounded-[10.8px] width-[36px] height-[36px]"
-              alt="mapIcon"
-              width={36}
-              height={36}
-              src={MAP}
-            />
+            <div className="w-9 h-9">
+              <Image
+                layout="intrinsic"
+                className="rounded-[10.8px] width-[36px] height-[36px]"
+                alt="mapIcon"
+                width={36}
+                height={36}
+                src={MAP}
+              />
+            </div>
           </Flex>
         }
       />

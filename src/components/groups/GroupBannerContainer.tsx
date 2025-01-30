@@ -26,6 +26,7 @@ export default function GroupBannerContainer({
     <div className="relative">
       <Image
         priority
+        layout="fixed"
         alt="groupBannerImage"
         src={imageUrl || DEFAULT_IMAGE}
         width={600}

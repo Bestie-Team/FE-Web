@@ -74,7 +74,13 @@ const Item = ({
         clicked && "border-[1px] border-grayscale-900"
       )}
     >
-      <Image src={DEFAULT_IMAGE} width={40} height={40} alt="lighty_square" />
+      <Image
+        layout="intrinsic"
+        src={DEFAULT_IMAGE}
+        width={40}
+        height={40}
+        alt="lighty_square"
+      />
       <Flex direction="column">
         <span>{title}</span>
         <Spacing size={6} />

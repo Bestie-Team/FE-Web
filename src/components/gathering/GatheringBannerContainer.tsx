@@ -17,15 +17,16 @@ export default function GatheringBannerContainer({
   const diff = differenceInCalendarDays(new Date(), date);
   const displayingDate = formatToDisplay(date);
   return (
-    <Flex>
-      <div className="relative">
+    <Flex className="w-full">
+      <div className="relative h-[420px]">
         <Image
           priority
+          layout="fixed"
           alt="gatheringBanner"
           src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
           width={600}
-          height={434}
-          className="h-[434px] object-cover"
+          height={420}
+          className="h-[420px] object-cover"
           onLoadingComplete={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-[#00000080]" />

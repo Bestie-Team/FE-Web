@@ -8,16 +8,19 @@ export default function HomeBannerContainer() {
   const title = "소중한 당신의 추억을 기록하세요";
 
   return (
-    <Flex>
-      <div className="relative">
-        <Image
-          priority
-          alt="homeBanner"
-          src={HOME_BANNER}
-          width={600}
-          height={420}
-          className={styles.homeBannerImage}
-        />
+    <Flex className="w-full">
+      <div className="relative w-full">
+        <div className="h-[420px] w-full">
+          <Image
+            priority
+            alt="homeBanner"
+            layout="fixed"
+            src={HOME_BANNER}
+            width={600}
+            height={420}
+            className={styles.homeBannerImage}
+          />
+        </div>
         <Flex direction="column" className={styles.textWrapper}>
           <span className={styles.subTitle}>{subTitle}</span>
           <Spacing size={8} />
@@ -33,7 +36,7 @@ export default function HomeBannerContainer() {
 }
 
 const styles = {
-  homeBannerImage: "h-[420px] object-cover",
+  homeBannerImage: "h-[420px]",
 
   textWrapper: "absolute bottom-0 left-0 pl-6 pb-8",
   subTitle:

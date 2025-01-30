@@ -33,6 +33,7 @@ export default function NewGroupContainer({
         <Flex align="center">
           <div className="w-12 h-12">
             <Image
+              layout="intrinsic"
               alt="leaderImg"
               width={48}
               height={48}

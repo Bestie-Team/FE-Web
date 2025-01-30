@@ -57,6 +57,7 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
+                      layout="intrinsic"
                       className="cursor-pointer"
                       onClick={() =>
                         handleSticker(`${selectedStickers.path}/${sticker}`)

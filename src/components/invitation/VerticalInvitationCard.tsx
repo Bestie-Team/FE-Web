@@ -60,10 +60,12 @@ export function VerticalInvitationCard({
     return (
       <div className="relative">
         <Image
+          layout="intrinsic"
           src="https://cdn.lighty.today/vertical_invitation.png"
           alt="verticalBar"
           width={330}
           height={460}
+          className="w-[330px] !h-[460px]"
           onLoadingComplete={() => setImageLoaded(true)}
         />
         {imageLoaded && (
@@ -119,6 +121,7 @@ export function VerticalInvitationCard({
       <div className="relative">
         <Image
           priority
+          layout="intrinsic"
           src="https://cdn.lighty.today/vertical_invitation.png"
           alt="verticalBar"
           width={330}
@@ -130,6 +133,7 @@ export function VerticalInvitationCard({
             <Flex direction="column" className={styles.mainContentWrapper}>
               <Image
                 priority
+                layout="intrinsic"
                 src={
                   invitation_image_url || "https://cdn.lighty.today/lighty.jpg"
                 }
@@ -171,7 +175,7 @@ export function VerticalInvitationCard({
   }
 }
 const styles = {
-  image: "h-[210px] object-cover rounded-[12px]",
+  image: "!h-[210px] object-cover rounded-[12px]",
   mainContentWrapper: "absolute p-[15px] left-0 top-0",
   subContentWrapper: "absolute pl-1 left-[15px] top-[332px]",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",

@@ -37,15 +37,23 @@ export default function GroupMemberImages({
   return (
     <Flex>
       {seenImages?.map((imageUrl, i) => (
-        <Image
+        <div
           key={`group${i}`}
-          style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src={imageUrl || DEFAULT_IMAGE}
-          width={width ? width : 28}
-          height={height ? height : 28}
-          className={clsx(styles.groupImage, imageWidthHeight)}
-          alt={`writer${i}`}
-        />
+          style={{
+            width: width ? width : 28,
+            height: height ? height : 28,
+          }}
+        >
+          <Image
+            layout="intrinsic"
+            style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
+            src={imageUrl || DEFAULT_IMAGE}
+            width={width ? width : 28}
+            height={height ? height : 28}
+            className={clsx(styles.groupImage, imageWidthHeight)}
+            alt={`writer${i}`}
+          />
+        </div>
       ))}
       {memberImages && memberImages.length > maxLength ? (
         <div

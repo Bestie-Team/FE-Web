@@ -63,6 +63,7 @@ export default function UploadPhotoSwiper({
             <>
               <Image
                 alt="empty"
+                layout="intrinsic"
                 className="slide-img w-[240px] h-[250px]"
                 src={SQUARE}
                 width={240}
@@ -106,6 +107,7 @@ export default function UploadPhotoSwiper({
           >
             <Image
               src={imageUrl}
+              layout="intrinsic"
               alt={`${idx + 1}번째 이미지`}
               className={styles.uploadedImage}
               width={270}

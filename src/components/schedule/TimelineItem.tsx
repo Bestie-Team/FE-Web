@@ -32,6 +32,7 @@ export default function TimelineItem({
       </Flex>
       <Image
         alt="timelineImage"
+        layout="intrinsic"
         src={upcomingGathering.invitationImageUrl}
         width={56}
         height={56}
@@ -44,5 +45,5 @@ export default function TimelineItem({
 const styles = {
   date: "text-C2 text-grayscale-600 px-3 py-[6px] rounded-[12px] bg-grayscale-50",
 
-  image: "rounded-[12px] w-14 h-14",
+  image: "rounded-[12px] w-14 !h-14",
 };

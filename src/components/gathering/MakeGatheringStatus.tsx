@@ -43,6 +43,7 @@ export default function MakingGatheringStatus({
         <Spacing size={24} />
         <div className="p-[13px]">
           <Image
+            layout="intrinsic"
             src={"https://cdn.lighty.today/heart_letter.png"}
             alt="invitation_img"
             width={110}

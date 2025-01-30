@@ -85,6 +85,7 @@ export default function AddPhoto({
           {imageUrl || image ? (
             <Image
               priority
+              layout="intrinsic"
               src={imageUrl ? imageUrl : image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}

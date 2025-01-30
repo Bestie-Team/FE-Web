@@ -7,13 +7,16 @@ import { AD_BANNER } from "@/constants/images";
 export default function Banner() {
   return (
     <Flex className="relative mb-[52px] px-0">
-      <Image
-        alt="bannerImage"
-        className="object-cover h-[124px]"
-        width={450}
-        height={124}
-        src={AD_BANNER}
-      />
+      <div className="w-[450px] h-[124px]">
+        <Image
+          alt="bannerImage"
+          layout="fixed"
+          className="h-[124px]"
+          width={450}
+          height={124}
+          src={AD_BANNER}
+        />
+      </div>
       <Flex className={styles.textWrapper} align="center">
         <Flex direction="column">
           <span className={styles.text}>이 서비스 같이 쓸래? ❤️‍🔥</span>

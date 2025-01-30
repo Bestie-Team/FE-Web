@@ -17,13 +17,18 @@ export default function GroupLeaderContainer({
       className={styles.leaderInfoContainer}
     >
       <Flex align="center">
-        <Image
-          alt="leader"
-          width={36}
-          height={36}
-          src={profileImageUrl || "https://cdn.lighty.today/lighty_square.png"}
-          className={styles.leaderImage}
-        />
+        <div className="w-9 h-9">
+          <Image
+            layout="intrinsic"
+            alt="leader"
+            width={36}
+            height={36}
+            src={
+              profileImageUrl || "https://cdn.lighty.today/lighty_square.png"
+            }
+            className={styles.leaderImage}
+          />
+        </div>
         <Spacing direction="horizontal" size={8} />
         <span>{accountId}</span>
         <Spacing direction="horizontal" size={8} />
@@ -32,7 +37,7 @@ export default function GroupLeaderContainer({
       <Button className={styles.buttonWrapper}>
         <Flex align="center" justify="space-between" style={{ gap: "6px" }}>
           <div className="pb-[2px]">👑</div>
-          <span>약속장</span>
+          <span>그룹장</span>
         </Flex>
       </Button>
     </Flex>

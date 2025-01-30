@@ -90,7 +90,6 @@ const styles = {
   dimmed: "flex flex-col justify-center items-center",
 
   image: "h-[210px] object-cover rounded-[12px]",
-  mainContentWrapper: "absolute p-[15px] left-0 top-0",
   subContentWrapper: "absolute pl-1 left-[15px] top-[332px]",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",
   fromWrapper: "absolute pr-1 right-[15px] bottom-[22px]",
