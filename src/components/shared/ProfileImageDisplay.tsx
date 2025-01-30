@@ -46,7 +46,9 @@ export default function ProfileImageDisplay({
   };
 
   useEffect(() => {
-    mutate();
+    if (file) {
+      mutate();
+    }
   }, [file]);
 
   return (
@@ -74,6 +76,7 @@ export default function ProfileImageDisplay({
         >
           {newImage ? (
             <Image
+              priority
               src={newImage}
               layout="intrinsic"
               alt="upload_image"

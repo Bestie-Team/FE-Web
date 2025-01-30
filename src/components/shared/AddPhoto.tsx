@@ -26,6 +26,7 @@ export default function AddPhoto({
   const pathname = usePathname();
   const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string | undefined>(undefined);
+
   const { mutate } = useUpdateProfile({
     file,
     onError: (error: Error) => console.log(error),
@@ -53,8 +54,10 @@ export default function AddPhoto({
     };
     reader.readAsDataURL(file);
   };
+
   useEffect(() => {
-    if (pathname === "/my" || pathname === "/my/edit") {
+    if ((pathname === "/my" || pathname === "/my/edit") && !!file) {
+      console.log(file);
       mutate();
     }
   }, [file]);

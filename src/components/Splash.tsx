@@ -15,11 +15,15 @@ export default function Splash() {
   const { login } = useAuth();
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
-      const userInfo = await postLogin({
-        accessToken: credentialResponse.access_token,
-      });
-      if (userInfo) {
-        login(userInfo);
+      try {
+        const userInfo = await postLogin({
+          accessToken: credentialResponse.access_token,
+        });
+        if (userInfo) {
+          login(userInfo);
+        }
+      } catch (error) {
+        toast.error("로그인에 실패했어요");
       }
     },
     onError: (error) => {
