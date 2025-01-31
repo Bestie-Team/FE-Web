@@ -18,7 +18,7 @@ export const NavLink = ({
   <Link
     href={href}
     className="flex justify-center w-16 h-11 items-center hover:animate-shrink-grow"
-    onMouseDown={onClick}
+    onTouchEnd={onClick}
   >
     {icon(isActive, profileImageUrl ?? "")}
   </Link>

@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom, recordStepAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
+import clsx from "clsx";
 
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
@@ -47,7 +48,10 @@ export default function GatheringCard({
   const { invitationImageUrl, name } = gathering;
   return (
     <div className="relative">
-      <div className={styles.gatheringWrapper} onClick={handleClickGathering}>
+      <div
+        className={clsx(styles.gatheringWrapper, "group")}
+        onClick={handleClickGathering}
+      >
         <Image
           layout="fixed"
           src={
@@ -56,7 +60,7 @@ export default function GatheringCard({
               ? DEFAULT_IMAGE
               : invitationImageUrl
           }
-          className={styles.image}
+          className={clsx(styles.image)}
           alt={name}
           width={168}
           height={168}
@@ -97,7 +101,7 @@ export default function GatheringCard({
 const styles = {
   gatheringWrapper:
     "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
-  image: "object-cover object-center w-full h-full",
+  image: "object-cover object-center w-full h-full group-hover:animate-bigger",
   gradation:
     // "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%)",
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",

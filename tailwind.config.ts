@@ -145,6 +145,7 @@ const config: Config = {
         "shrink-grow-less": "shrinkGrowLess 0.3s ease-in-out",
         "slide-from-left": "slideFromLeft 0.3s ease-in-out",
         tinkle: "tinkle 0.5s ease-in-out",
+        bigger: "bigger 0.3s ease-out forwards",
       },
       keyframes: {
         "slide-up": {
@@ -197,6 +198,10 @@ const config: Config = {
           "0%": { transform: "scale(1)" },
           "50%": { transform: "scale(0.98)" },
           "100%": { transform: "scale(1)" },
+        },
+        bigger: {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.1)" },
         },
       },
     },

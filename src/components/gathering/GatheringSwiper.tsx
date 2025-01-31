@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Spacing from "../shared/Spacing";
 import { Gathering } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
+import clsx from "clsx";
 
 export default function GatheringSwiper({
   percent,
@@ -31,7 +32,7 @@ export default function GatheringSwiper({
             onClick={() => {
               router.push(`/gathering/${id}`);
             }}
-            className={styles.slide}
+            className={clsx(styles.slide, "group")}
             key={`slide${idx}`}
           >
             <Image
@@ -39,7 +40,7 @@ export default function GatheringSwiper({
                 invitationImageUrl ||
                 "https://cdn.lighty.today/lighty_square.png"
               }
-              layout="intrinsic"
+              // layout="intrinsic"
               alt={`invitationImage${idx + 1}`}
               className={styles.image}
               width={340}
@@ -61,10 +62,11 @@ export default function GatheringSwiper({
 
 const styles = {
   slide:
-    "relative rounded-[16px] shadow-bottom mt-[8px] mb-[52px] cursor-pointer",
+    "relative rounded-[16px] shadow-bottom mt-[8px] mb-[52px] cursor-pointer overflow-hidden",
   gatheringImageInfo:
     "flex flex-col justify-between w-full absolute bottom-[-0.5px] text-grayscale-900 text-T5 p-[12px] pt-[8px] rounded-b-[16px] bg-base-white",
 
-  image: "slide-img object-cover rounded-[16px] aspect-[17/18]",
+  image:
+    "slide-img object-cover rounded-[16px] aspect-[17/18] group-hover:animate-bigger",
   date: "text-C2 text-grayscale-400",
 };

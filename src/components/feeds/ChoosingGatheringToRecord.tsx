@@ -7,6 +7,7 @@ import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import { Gathering } from "@/models/gathering";
+import getHeader from "@/utils/getHeader";
 
 export default function ChoosingGatheringToRecord({
   gathering,
@@ -15,6 +16,7 @@ export default function ChoosingGatheringToRecord({
   gathering?: Gathering[];
   onNext: (gatheringId: string) => void;
 }) {
+  const header = getHeader("/record");
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
 
@@ -23,7 +25,11 @@ export default function ChoosingGatheringToRecord({
   };
   if (gathering)
     return (
-      <Flex direction="column" className="bg-base-white h-screen">
+      <Flex
+        direction="column"
+        className="bg-base-white h-screen pt-[48px] overflow-hidden"
+      >
+        {header}
         <Flex
           direction="column"
           style={{ paddingLeft: "24px", paddingRight: "24px" }}
@@ -46,6 +52,7 @@ export default function ChoosingGatheringToRecord({
           selectedGatheringId={selectedGatheringId}
         />
         <FixedBottomButton
+          bgColor="#f4f4f4"
           disabled={selectedGatheringId === null}
           label={"기록 시작하기"}
           onClick={() => {

@@ -22,7 +22,7 @@ export default function getHeader(pathname: string) {
       <Header pageName="추억 피드" />
     ),
     "/hidden": <HeaderWithBackBtn pageName="피드 관리" color="white" />,
-    "/record": <HeaderWithBackBtn pageName="기록하기" color="#f4f4f4" />,
+    "/record": <HeaderWithBackBtn pageName="기록하기" color="transparent" />,
     "/schedule": <Header pageName="약속 캘린더" />,
     "/my": pathname.endsWith("edit") ? (
       <HeaderWithBackBtn pageName="프로필 편집" />

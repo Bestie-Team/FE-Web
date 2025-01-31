@@ -35,7 +35,12 @@ const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
   if ($portalRoot == null) return null;
 
   return createPortal(
-    <div className={clsx(buttonWrapperStyle, bgColor)}>
+    <div
+      className={clsx(
+        buttonWrapperStyle,
+        bgColor ? `bg-[${bgColor}]` : "bg-base-white"
+      )}
+    >
       <Button
         color={color}
         onClick={() => {
@@ -60,6 +65,6 @@ const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
 };
 
 const buttonStyle = `w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`;
-const buttonWrapperStyle = `w-full px-5 pb-[10px] pt-3 bg-base-white animate-slide-up`;
+const buttonWrapperStyle = `w-full px-5 pb-[10px] pt-3 animate-slide-up`;
 
 export default FixedBottomButton;
