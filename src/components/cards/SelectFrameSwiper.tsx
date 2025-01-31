@@ -43,7 +43,6 @@ export default function SelectFrameSwiper() {
     <div className={styles.swiperContainer}>
       <div ref={prevRef} className={styles.prevButton}>
         <Image
-          layout="intrinsic"
           src="https://cdn.lighty.today/swiper-left.png"
           alt="prev"
           width={56}
@@ -52,7 +51,6 @@ export default function SelectFrameSwiper() {
       </div>
       <div ref={nextRef} className={styles.nextButton}>
         <Image
-          layout="intrinsic"
           src="https://cdn.lighty.today/swiper-right.png"
           alt="next"
           width={56}
@@ -106,7 +104,6 @@ export default function SelectFrameSwiper() {
                   </Flex>
                 </div>
                 <Image
-                  layout="intrinsic"
                   src={frame}
                   width={282}
                   height={372}

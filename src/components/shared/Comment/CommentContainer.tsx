@@ -98,7 +98,7 @@ export default function CommentContainer({
 const styles = {
   commentWrapper: "w-full gap-4 p-5 pt-4 h-[272px] overflow-hidden",
   bottomSheetContainer:
-    "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-10 pb-[34px]",
+    "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-10",
   inputWrapper: "relative px-5 py-3 w-full border-t-[1px] border-grayscale-50",
   submitButton:
     "bg-base-white p-2 rounded-full absolute right-[39px] top-[20.5px]",

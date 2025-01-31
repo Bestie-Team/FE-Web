@@ -75,7 +75,6 @@ export default function ClickableGatheringSwiperForDeco({
             key={`feed${id}`}
           >
             <Image
-              layout="fixed"
               src={images[0] || ""}
               alt={`feed${idx + 1}`}
               className={styles.image}
