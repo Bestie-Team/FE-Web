@@ -18,7 +18,6 @@ import { scrollProgressAtom } from "@/atoms/scroll";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import Image from "next/image";
 import NoInvitation from "@/components/invitation/NoInvitation";
 
 export default function InvitationPage() {
