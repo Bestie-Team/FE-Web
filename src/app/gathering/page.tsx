@@ -72,7 +72,7 @@ export default function MyGatheringPage() {
     minDate: minDate(),
     maxDate: maxDate(),
   });
-  const { data: ended } = useGatheringEnded();
+  const { data: ended } = useGatheringEnded({ limit: 30 });
   const myGatherings = data?.gatherings;
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function MyGatheringPage() {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
+  if (!isClient || !ended) {
     return <FullPageLoader />;
   }
 

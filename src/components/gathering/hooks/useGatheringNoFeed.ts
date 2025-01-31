@@ -1,20 +1,23 @@
 import { getGatheringNoFeed } from "@/remote/gathering";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import * as lighty from "lighty-type";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const uuid = uuidv4();
 
 /** createdAt = 현재날짜 */
-export default function useGatheringNoFeeds() {
+export default function useGatheringNoFeeds({ limit }: { limit: number }) {
   const cursor = { createdAt: new Date().toISOString(), id: uuid };
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["gatherings/no-feed"],
-    queryFn: () =>
-      getGatheringNoFeed({
+    queryFn: async ({
+      pageParam: cursor,
+    }): Promise<lighty.GatheringListResponse> =>
+      await getGatheringNoFeed({
         cursor,
-        limit: 300,
+        limit: limit ? limit : 300,
       }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,

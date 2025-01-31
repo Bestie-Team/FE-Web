@@ -8,16 +8,16 @@ import { getGatheringsEnded } from "@/remote/gathering";
 const uuid = uuidv4();
 
 /** createdAt = 현재날짜 */
-export default function useGatheringEnded() {
+export default function useGatheringEnded({ limit }: { limit: number }) {
   const cursor = { createdAt: minDate(), id: uuid };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["gatherings/no-feed"],
+    queryKey: ["gatherings/ended"],
     queryFn: async ({
       pageParam: cursor,
     }): Promise<lighty.GatheringListResponse> => {
       return getGatheringsEnded({
         cursor,
-        limit: 8,
+        limit: limit ? limit : 8,
         minDate: minDate(),
         maxDate: maxDate(),
       });

@@ -83,7 +83,7 @@ export default function HomePage() {
     maxDate,
   });
 
-  const { data: ended } = useGatheringNoFeeds();
+  const { data: ended } = useGatheringNoFeeds({ limit: 8 });
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -102,7 +102,7 @@ export default function HomePage() {
     }
   }, []);
 
-  if (!this_week || isFetching || isError) return <FullPageLoader />;
+  if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
   console.log(this_week);
 
   return (

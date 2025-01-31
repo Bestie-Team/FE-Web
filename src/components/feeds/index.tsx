@@ -17,7 +17,9 @@ export default function Record() {
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
-  const { data: gathering_noFeed } = useGatheringNoFeeds();
+  const { data: gathering_noFeed } = useGatheringNoFeeds({
+    limit: 100,
+  });
   const handleSelectGathering = () => {
     setStep((prev) => prev + 1);
   };
@@ -26,7 +28,7 @@ export default function Record() {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
+  if (!isClient || !gathering_noFeed) {
     return <FullPageLoader />;
   }
 

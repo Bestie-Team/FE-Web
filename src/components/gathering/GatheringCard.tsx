@@ -4,7 +4,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import Button from "../shared/Button/Button";
 import PencilIcon from "../shared/Icon/PencilIcon";
-import { Gathering } from "@/models/gathering";
+import { Gathering, GatheringInWhichType } from "@/models/gathering";
 import { differenceInCalendarDays, format } from "date-fns";
 import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -17,10 +17,10 @@ const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
 export default function GatheringCard({
   gathering,
-  which,
+  where,
 }: {
   gathering: Gathering;
-  which?: string;
+  where: GatheringInWhichType;
 }) {
   //기록할 약속의 id 저장
   const setStep = useSetRecoilState(recordStepAtom);
@@ -36,14 +36,14 @@ export default function GatheringCard({
 
   const handleClickGathering = useCallback(() => {
     setInvitationUrl(gathering.invitationImageUrl);
-    if (which === "예정") {
+    if (where === "GATHERING") {
       router.push(`/gathering/${gathering.id}`);
     } else {
       setGatheringId(gathering.id);
       router.push("/record");
       setStep(3);
     }
-  }, [gathering, which, setGatheringId, setInvitationUrl, router]);
+  }, [gathering, where, setGatheringId, setInvitationUrl, router]);
 
   const { invitationImageUrl, name } = gathering;
   return (
@@ -77,12 +77,14 @@ export default function GatheringCard({
           <Flex className={styles.date}>
             <span className="flex-grow">{format(date, "yyyy.MM.dd")}</span>
             <Spacing size={4} direction="horizontal" />
-            <span className="tracking-widest">
-              {diff >= 0 ? `D+${diff}` : `D${diff}`}
-            </span>
+            {where == "HOME" && (
+              <span className="tracking-widest">
+                {diff >= 0 ? `D+${diff}` : `D${diff}`}
+              </span>
+            )}
           </Flex>
         </Flex>
-        {which === "완료" ? (
+        {where === "HOME" ? (
           <Button className={styles.button} onClick={handleClickGathering}>
             <PencilIcon color="#0A0A0A" />
           </Button>
@@ -91,12 +93,6 @@ export default function GatheringCard({
     </div>
   );
 }
-
-// const GatheringCardSkeleton = () => {
-//   return (
-//     <Skeleton className="w-full h-full rounded-[16px] absolute inset-0 z-10" />
-//   );
-// };
 
 const styles = {
   gatheringWrapper:
