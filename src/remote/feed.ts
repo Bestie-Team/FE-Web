@@ -1,4 +1,3 @@
-import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 import { FeedResponse } from "@/models/feed";

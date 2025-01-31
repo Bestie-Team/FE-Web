@@ -17,6 +17,7 @@ import { scrollProgressAtom } from "@/atoms/scroll";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import dynamic from "next/dynamic";
 import { maxDate, minDate } from "@/constants/time";
+import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 
 const Header = React.memo(
   ({
@@ -71,7 +72,7 @@ export default function MyGatheringPage() {
     minDate: minDate(),
     maxDate: maxDate(),
   });
-
+  const { data: ended } = useGatheringEnded();
   const myGatherings = data?.gatherings;
 
   useEffect(() => {
@@ -95,9 +96,10 @@ export default function MyGatheringPage() {
       />
       {isFetching || isError ? (
         <DotSpinner />
-      ) : myGatherings && myGatherings.length > 0 ? (
+      ) : myGatherings && ended ? (
         <GatheringPageSwiper
-          myGatherings={myGatherings}
+          expectingGatherings={myGatherings}
+          endedGatherings={ended}
           selectedTab={selectedTab}
           swiperRef={swiperRef}
           onSlideChange={(index) => handleSlideChange(index)}

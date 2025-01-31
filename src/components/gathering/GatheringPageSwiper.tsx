@@ -12,12 +12,14 @@ type TabName = "1" | "2";
 
 const GatheringPageSwiper = React.memo(
   ({
-    myGatherings,
+    expectingGatherings,
+    endedGatherings,
     selectedTab,
     swiperRef,
     onSlideChange,
   }: {
-    myGatherings: GatheringType[];
+    expectingGatherings: GatheringType[];
+    endedGatherings: GatheringType[];
     selectedTab: TabName;
     swiperRef: React.MutableRefObject<SwiperType | null>;
     onSlideChange: (index: number) => void;
@@ -30,16 +32,22 @@ const GatheringPageSwiper = React.memo(
       spaceBetween={2}
       direction="horizontal"
     >
-      {["예정", "완료"].map((which) => (
-        <SwiperSlide key={which}>
-          <Spacing size={98} />
-          <Gathering
-            where={GatheringInWhich.GATHERING}
-            which={which}
-            myGatherings={myGatherings}
-          />
-        </SwiperSlide>
-      ))}
+      <SwiperSlide>
+        <Spacing size={98} />
+        <Gathering
+          where={GatheringInWhich.GATHERING}
+          which={"예정"}
+          gatherings={expectingGatherings}
+        />
+      </SwiperSlide>
+      <SwiperSlide>
+        <Spacing size={98} />
+        <Gathering
+          where={GatheringInWhich.GATHERING}
+          which={"완료"}
+          gatherings={endedGatherings}
+        />
+      </SwiperSlide>
     </Swiper>
   )
 );

@@ -30,9 +30,29 @@ export async function getGatherings({
     const data: lighty.GatheringListResponse = await response.json();
     return data;
   } catch (error) {
-    if (error instanceof Response) {
-      throw new Error("약속 조회를 실패하였습니다");
-    }
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
+/** 완료된 약속 목록 조회 */
+export async function getGatheringsEnded({
+  cursor,
+  limit,
+  minDate,
+  maxDate,
+}: PaginationParams) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings/ended?cursor=${encodeURIComponent(
+        JSON.stringify(cursor)
+      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      { method: "GET" }
+    );
+    const data: lighty.GatheringListResponse = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -52,10 +72,7 @@ export async function getGatheringNoFeed({
     const data: lighty.GatheringListResponse = await response.json();
     return data;
   } catch (error) {
-    if (error instanceof Response) {
-      throw new Error("피드를 작성하지 않은 약속 조회를 실패하였습니다");
-    }
-    throw new Error("피드를 작성하지 않은 약속 조회를 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -92,12 +109,7 @@ export async function postGathering({
     console.log(response);
     return { message: "초대장을 성공적으로 발송하였습니다" };
   } catch (error) {
-    if (error instanceof Response && error.status === 400) {
-      throw new Error(
-        "입력값 검증 실패, friendIds에 친구가 아닌 회원이 존재합니다"
-      );
-    }
-    throw new Error("약속 생성에 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -126,8 +138,7 @@ export async function postGatheringInvitationImage({ file }: { file: File }) {
     const data = await response.json();
     return { ...data, message: "이미지를 성공적으로 업로드하였습니다" };
   } catch (error) {
-    if (error instanceof Error) throw error;
-    throw new Error("이미지 업로드 중 오류가 발생했습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -148,10 +159,7 @@ export async function postAcceptGatheringInvitation({
 
     return { message: "약속을 수락하였습니다" };
   } catch (error) {
-    if (error instanceof Response && error.status === 400) {
-      throw new Error("입력값 검증 실패");
-    }
-    throw new Error("약속 수락 실패");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -172,10 +180,7 @@ export async function postRejectGatheringInvitation({
 
     return { message: "약속을 성공적으로 거절하였습니다" };
   } catch (error) {
-    if (error instanceof Response && error.status === 400) {
-      throw new Error("입력값 검증 실패");
-    }
-    throw new Error("약속 거절 실패");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -198,8 +203,7 @@ export async function getReceivedInvitationToGatheringList({
     const data: lighty.GatheringInvitationListResponse = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
-    throw new Error("받은 약속 초대 목록 조회 실패");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -221,7 +225,7 @@ export async function getSentInvitationToGatheringList({
     );
     const data: lighty.GatheringInvitationListResponse = await response.json();
     return data;
-  } catch {
-    throw new Error("보낸 약속 초대 목록 조회 실패");
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
