@@ -17,13 +17,14 @@ export default function ChoosingGatheringToRecord({
   onNext: (gatheringId: string) => void;
 }) {
   const header = getHeader("/record");
+
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
 
   const handleImageClick = (gatheringId: string | null) => {
     setSelectedGatheringId(gatheringId);
   };
-  if (gathering)
+  if (gathering && gathering.length > 0)
     return (
       <Flex
         direction="column"
@@ -61,5 +62,13 @@ export default function ChoosingGatheringToRecord({
         />
       </Flex>
     );
-  else return null;
+  else
+    return (
+      <Flex
+        direction="column"
+        className="bg-base-white h-screen pt-[48px] overflow-hidden"
+      >
+        기록할 추억이 없어요
+      </Flex>
+    );
 }

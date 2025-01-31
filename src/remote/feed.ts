@@ -144,9 +144,7 @@ export async function postGatheringFeed({
     });
     return { message: "약속 피드를 성공적으로 작성하였습니다" };
   } catch (error) {
-    if (error instanceof Response) {
-      return handleResponse(error);
-    }
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -238,8 +236,9 @@ async function handleResponse(response: Response) {
     409: ERROR_MESSAGES.CONFLICT,
     422: ERROR_MESSAGES.INVALID_STATE,
   };
+  const re = await response.json();
 
-  const errorMessage = errorMap[response.status] || ERROR_MESSAGES.DEFAULT;
+  const errorMessage = errorMap[response.status] || re.message;
   console.error(`피드 생성 오류: ${errorMessage}`);
   throw new Error(errorMessage);
 }

@@ -36,6 +36,29 @@ export async function getGatherings({
   }
 }
 
+/** 피드를 아직 작성하지 않은 약속 목록 조회 */
+export async function getGatheringNoFeed({
+  cursor,
+  limit,
+}: Partial<PaginationParams>) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings/no-feed?cursor=${encodeURIComponent(
+        JSON.stringify(cursor)
+      )}&limit=${limit}`,
+      { method: "GET" }
+    );
+    const data: lighty.GatheringListResponse = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Response) {
+      throw new Error("피드를 작성하지 않은 약속 조회를 실패하였습니다");
+    }
+    throw new Error("피드를 작성하지 않은 약속 조회를 실패하였습니다");
+  }
+}
+
 /** 약속 상세 조회 */
 export async function getGatheringDetail({
   gatheringId,
