@@ -57,10 +57,12 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
-                      layout="intrinsic"
                       className="cursor-pointer"
+                      layout="fixed"
                       onClick={() =>
-                        handleSticker(`${selectedStickers.path}/${sticker}`)
+                        handleSticker(
+                          `https://cdn.lighty.today/${selectedStickers.path}/${sticker}`
+                        )
                       }
                       src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
                       alt={`sticker${idx}`}

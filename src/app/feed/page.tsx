@@ -138,7 +138,7 @@ export default function FeedPage() {
       order: "DESC" as const,
       minDate: minDate(),
       maxDate: maxDate(),
-      limit: 2,
+      limit: 5,
     }),
     []
   );
@@ -260,6 +260,7 @@ export default function FeedPage() {
   if (!isClient) {
     return <FullPageLoader />;
   }
+  console.log(feedAll);
   return (
     <div className="h-screen">
       <Header
