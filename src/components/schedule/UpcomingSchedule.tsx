@@ -15,12 +15,16 @@ export default function UpcomingSchedule({
       <Spacing size={32} />
       <div className="relative">
         <div className={styles.timelineWrapper} />
-        {gatherings?.map((gathering, i) => (
-          <React.Fragment key={i}>
-            <TimelineItem upcomingGathering={gathering} />
-            <Spacing size={48} />
-          </React.Fragment>
-        ))}
+        {gatherings.length < 1 ? (
+          <NoSchedule />
+        ) : (
+          gatherings?.map((gathering, i) => (
+            <React.Fragment key={i}>
+              <TimelineItem upcomingGathering={gathering} />
+              <Spacing size={48} />
+            </React.Fragment>
+          ))
+        )}
       </div>
     </Flex>
   );
@@ -30,4 +34,16 @@ const styles = {
   scheduleContainer: "w-[350px] px-[5px] pb-20",
   timelineWrapper:
     "absolute top-[10px] left-[7.5px] w-[1px] h-full bg-grayscale-100",
+};
+
+const NoSchedule = () => {
+  return (
+    <Flex
+      className="w-full h-[140px] bg-grayscale-10 border-[1px] border-dashed border-grayscale-300 rounded-[16px]"
+      justify="center"
+      align="center"
+    >
+      <span className="text-C1 text-grayscale-300">예정된 모임이 없어요</span>
+    </Flex>
+  );
 };

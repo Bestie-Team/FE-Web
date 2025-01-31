@@ -63,7 +63,7 @@ export function VerticalInvitationCard({
       <div className="relative">
         <Image
           layout="intrinsic"
-          src="https://cdn.lighty.today/vertical_invitation.png"
+          src="https://cdn.lighty.today/vertical_invitation.svg"
           alt="verticalBar"
           width={330}
           height={460}
@@ -124,7 +124,7 @@ export function VerticalInvitationCard({
         <Image
           priority
           layout="intrinsic"
-          src="https://cdn.lighty.today/vertical_invitation.png"
+          src="https://cdn.lighty.today/vertical_invitation.svg"
           alt="verticalBar"
           width={330}
           height={460}

@@ -10,7 +10,6 @@ import { useTabs } from "@/hooks/useTabs";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
-import NoGathering from "@/components/gathering/NoGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Flex from "@/components/shared/Flex";
 import { scrollProgressAtom } from "@/atoms/scroll";
@@ -94,9 +93,9 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-      {isFetching || isError ? (
+      {isFetching || isError || !myGatherings || !ended ? (
         <DotSpinner />
-      ) : myGatherings && ended ? (
+      ) : (
         <GatheringPageSwiper
           expectingGatherings={myGatherings}
           endedGatherings={ended}
@@ -104,8 +103,6 @@ export default function MyGatheringPage() {
           swiperRef={swiperRef}
           onSlideChange={(index) => handleSlideChange(index)}
         />
-      ) : (
-        <NoGathering />
       )}
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>

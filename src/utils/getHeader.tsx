@@ -32,7 +32,7 @@ export default function getHeader(pathname: string) {
     "/gathering": pathname.endsWith("gathering") ? (
       <Header pageName="나의 약속" />
     ) : pathname.endsWith("new") ? (
-      <HeaderWithBackBtn pageName="약속 생성" color="#FFF " />
+      <HeaderWithBackBtn pageName="약속 만들기" color="#FFF " />
     ) : (
       <HeaderWithBackBtn
         fontColor="#FFF"

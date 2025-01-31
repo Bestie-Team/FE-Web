@@ -1,3 +1,4 @@
+import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
@@ -35,8 +36,8 @@ export default function SentReceivedFriendRequestsList() {
         <Flex direction="column">
           <span className="text-T5">받은 요청</span>
           <Spacing size={12} />
-          {receivedRequests?.map((receivedRqs) => (
-            <>
+          {receivedRequests?.map((receivedRqs, i) => (
+            <React.Fragment key={i}>
               <FriendListItem
                 idx={1}
                 type="receivedRequest"
@@ -44,7 +45,7 @@ export default function SentReceivedFriendRequestsList() {
                 friendInfo={receivedRqs.sender}
               />
               <Spacing size={16} />
-            </>
+            </React.Fragment>
           ))}
         </Flex>
       )}

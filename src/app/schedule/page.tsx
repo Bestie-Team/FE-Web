@@ -118,7 +118,7 @@ export default function SchedulePage() {
 
 const styles = {
   header: "max-w-[430px] fixed pt-12 w-full pl-5 bg-base-white",
-  container: "items-center mt-24 px-5",
+  container: "items-center mt-[108px] px-5",
 };
 
 const options = [

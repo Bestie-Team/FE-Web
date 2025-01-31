@@ -16,9 +16,11 @@ import clsx from "clsx";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
 export default function GatheringCard({
+  pencil = false,
   gathering,
   where,
 }: {
+  pencil?: boolean;
   gathering: Gathering;
   where: GatheringInWhichType;
 }) {
@@ -84,7 +86,7 @@ export default function GatheringCard({
             )}
           </Flex>
         </Flex>
-        {where === "HOME" ? (
+        {pencil ? (
           <Button className={styles.button} onClick={handleClickGathering}>
             <PencilIcon color="#0A0A0A" />
           </Button>

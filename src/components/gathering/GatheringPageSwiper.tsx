@@ -7,6 +7,7 @@ import {
   Gathering as GatheringType,
   GatheringInWhich,
 } from "@/models/gathering";
+import NoGathering from "./NoGathering";
 
 type TabName = "1" | "2";
 
@@ -33,18 +34,31 @@ const GatheringPageSwiper = React.memo(
       direction="horizontal"
     >
       <SwiperSlide>
-        <Spacing size={98} />
-        <Gathering
-          where={GatheringInWhich.GATHERING}
-          gatherings={expectingGatherings}
-        />
+        {expectingGatherings.length < 0 ? (
+          <NoGathering type="EXPECTING" />
+        ) : (
+          <>
+            <Spacing size={98} />
+            <Gathering
+              where={GatheringInWhich.GATHERING}
+              gatherings={expectingGatherings}
+            />
+          </>
+        )}
       </SwiperSlide>
       <SwiperSlide>
-        <Spacing size={98} />
-        <Gathering
-          where={GatheringInWhich.GATHERING}
-          gatherings={endedGatherings}
-        />
+        {endedGatherings.length < 0 ? (
+          <NoGathering type="ENDED" />
+        ) : (
+          <>
+            <Spacing size={98} />
+            <Gathering
+              message
+              where={GatheringInWhich.GATHERING}
+              gatherings={endedGatherings}
+            />
+          </>
+        )}
       </SwiperSlide>
     </Swiper>
   )

@@ -22,7 +22,7 @@ export default function FriendItem({
           src={
             friendInfo?.profileImageUrl || groupInfo?.imageUrl || DEFAULT_IMAGE
           }
-          className="rounded-full object-cover w-14 h-14"
+          className="rounded-full object-cover w-14 h-14 border-[1.2px] border-grayscale-100"
           width={56}
           height={56}
         />
@@ -92,4 +92,4 @@ export function SeeMoreItem({ onClick }: { onClick: () => void }) {
 }
 
 const iconWrapperStyle =
-  "relative rounded-full w-14 h-14 border-[1px] border-[#E9E9E9] cursor-pointer";
+  "relative rounded-full w-14 h-14 border-[1.2px] border-[#E9E9E9] cursor-pointer";
