@@ -24,12 +24,10 @@ export default function ChoosingGatheringToRecord({
   const handleImageClick = (gatheringId: string | null) => {
     setSelectedGatheringId(gatheringId);
   };
+
   if (gathering && gathering.length > 0)
     return (
-      <Flex
-        direction="column"
-        className="bg-base-white h-screen pt-[48px] overflow-hidden"
-      >
+      <Flex direction="column" className="bg-base-white h-screen pt-[48px]">
         {header}
         <Flex
           direction="column"

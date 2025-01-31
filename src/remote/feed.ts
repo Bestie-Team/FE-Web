@@ -37,10 +37,7 @@ export async function getFeedAll({
 
     return data;
   } catch (error) {
-    if (error instanceof Response) {
-      throw new Error("피드 조회를 실패하였습니다");
-    }
-    throw new Error("피드 조회를 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -72,8 +69,7 @@ export async function getFeedMine({
 
     return data;
   } catch (error) {
-    console.log(error);
-    throw new Error("내가 작성한 피드 조회를 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -99,8 +95,7 @@ export async function getFeedHidden({
 
     return data;
   } catch (error) {
-    console.log(error);
-    throw new Error("숨긴 피드 조회를 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -121,10 +116,7 @@ export async function uploadFeedImages({ files }: { files: File[] }) {
     const data: lighty.UploadImageListResponse = await response.json();
     return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
   } catch (error) {
-    if (error instanceof Response) {
-      handleResponse(error);
-    }
-    throw new Error("이미지 업로드 실패");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -165,10 +157,7 @@ export async function postFriendFeed({
 
     return { message: "일반 피드를 작성하였습니다" };
   } catch (error) {
-    if (error instanceof Response) {
-      handleResponse(error);
-    }
-    throw error;
+    new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -191,10 +180,7 @@ export async function patchFeed({
 
     return { message: "피드를 수정 완료" };
   } catch (error) {
-    if (error instanceof Response) {
-      return handleResponse(error);
-    }
-    throw error;
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -209,8 +195,7 @@ export async function deleteFeed({ feedId }: { feedId: string }) {
 
     return { message: "피드를 성공적으로 삭제하였습니다" };
   } catch (error) {
-    console.log(error);
-    throw new Error("피드를 삭제하지 못하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -225,20 +210,6 @@ export async function hideFeed({ feedId }: { feedId: string }) {
 
     return { message: "피드를 성공적으로 숨겼어요" };
   } catch (error) {
-    console.log(error);
-    throw new Error("피드를 숨기지 못하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
-}
-
-async function handleResponse(response: Response) {
-  const errorMap: Record<number, string> = {
-    404: ERROR_MESSAGES.NOT_FOUND,
-    409: ERROR_MESSAGES.CONFLICT,
-    422: ERROR_MESSAGES.INVALID_STATE,
-  };
-  const re = await response.json();
-
-  const errorMessage = errorMap[response.status] || re.message;
-  console.error(`피드 생성 오류: ${errorMessage}`);
-  throw new Error(errorMessage);
 }

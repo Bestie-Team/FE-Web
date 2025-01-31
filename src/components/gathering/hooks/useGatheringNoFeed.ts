@@ -1,5 +1,5 @@
-import { getGatheringNoFeed, getGatherings } from "@/remote/gathering";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getGatheringNoFeed } from "@/remote/gathering";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 
