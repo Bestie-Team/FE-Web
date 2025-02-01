@@ -69,9 +69,7 @@ export default function SelectableSearchedFriendsListContainer({
         })}
       </ul>
       <FixedBottomButton
-        bgColor="bg-grayscale-50"
         label={"공유없이 시작하기"}
-        disabled={clickedItems.length < 1}
         onClick={handleSubmitSelection}
       />
     </Flex>

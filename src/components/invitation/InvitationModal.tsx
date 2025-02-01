@@ -22,8 +22,6 @@ export default function InvitationModal({
   const queryClient = useQueryClient();
   const selectedInvitation = useRecoilValue(selectedInvitationAtom);
 
-  if (!selectedInvitation) return null;
-
   const { mutate: accept } = useAcceptInvitationToGathering({
     invitationId: selectedInvitation?.id || "",
     onSuccess: async (data: SuccessResponse) => {

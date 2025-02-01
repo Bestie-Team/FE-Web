@@ -132,7 +132,7 @@ export default function SelectFriendsContainer({
       <FixedBottomButton
         bgColor="bg-grayscale-50"
         label={getLabel()}
-        disabled={clickedItems.length < 1}
+        disabled={type == "record" ? false : clickedItems.length < 1}
         onClick={onClick}
       />
       {renderModal()}
