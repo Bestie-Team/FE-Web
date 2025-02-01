@@ -8,7 +8,7 @@ import Spacing from "@/components/shared/Spacing";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -29,7 +29,8 @@ export default function GroupDetailPage({
   params: { id: string };
 }) {
   const [isClient, setIsClient] = useState(false);
-  const selectedFriends = useRecoilValue(selectedFriendsAtom);
+  const [selectedFriends, setSelectedFriends] =
+    useRecoilState(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: group_data, isFetching } = useGroup();
@@ -77,6 +78,7 @@ export default function GroupDetailPage({
         queryKey: ["groups"],
       });
       toast.success(data.message);
+      setSelectedFriends([]);
     },
   });
 
@@ -97,7 +99,7 @@ export default function GroupDetailPage({
   if (openList === true) {
     return (
       <SelectFriendsContainer
-        isNew={false}
+        type="group"
         paddingTop="20px"
         action={() => {
           setOpenList(false);

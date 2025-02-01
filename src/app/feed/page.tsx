@@ -251,6 +251,8 @@ export default function FeedPage() {
     handleSlideChange,
     hasNextPage,
     hasNextPage_mine,
+    loadMore,
+    loadMore_mine,
   ]);
 
   useEffect(() => {
@@ -260,7 +262,7 @@ export default function FeedPage() {
   if (!isClient) {
     return <FullPageLoader />;
   }
-  console.log(feedAll);
+  console.log(feedMine);
   return (
     <div className="h-screen">
       <Header

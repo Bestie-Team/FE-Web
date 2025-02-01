@@ -139,24 +139,23 @@ export async function postGatheringFeed({
   }
 }
 
-/** 일반 피드 생성 */
-export async function postFriendFeed({
-  friendFeed,
+/** 친구 피드 생성 */
+export async function postFriendsFeed({
+  friendsFeed,
 }: {
-  friendFeed: lighty.CreateFriendFeedRequest;
-}) {
+  friendsFeed: lighty.CreateFriendFeedRequest;
+}): Promise<{ message: string } | void> {
   const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/feeds/friends`;
   try {
-    const targetUrl = `${baseUrl}/feeds/friends`;
     await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(friendFeed),
+      body: JSON.stringify(friendsFeed),
     });
-
-    return { message: "일반 피드를 작성하였습니다" };
+    return { message: "친구 피드를 성공적으로 작성하였습니다" };
   } catch (error) {
-    new Error(error instanceof Error ? error.message : String(error));
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 

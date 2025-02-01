@@ -13,13 +13,13 @@ export default function UploadPhotoSwiper({
   onImageClick,
   setFilesToUpload,
 }: {
-  feedInfoToEdit?: { content: string; images: string[] };
+  feedInfoToEdit?: { content: string; imageUrls: string[] };
   filesToUpload: File[];
   onImageClick?: (groupId: string) => void;
   setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
 }) {
   const [images, setImages] = useState<string[]>(
-    feedInfoToEdit?.images ? feedInfoToEdit.images : []
+    feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
   );
   const maxImages = 5;
 

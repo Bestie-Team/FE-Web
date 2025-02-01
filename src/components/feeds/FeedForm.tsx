@@ -8,41 +8,37 @@ import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { Feed } from "@/models/feed";
 
-interface EditFeedFormInterface {
+interface FeedFormProps<T> {
   edit?: () => void;
-  originalFeed?: Feed;
-  filesToUpload: File[];
-  setFilesToUpload: Dispatch<SetStateAction<File[]>>;
-  feedInfoToEdit?: { content: string; images: string[] };
-  setFeedInfoToEdit?: Dispatch<
-    SetStateAction<{
-      content: string;
-      images: string[];
-    }>
-  >;
-}
-
-interface CreateFeedFormInterface {
   uploadImages?: () => void;
-  feedInfo?: lighty.CreateGatheringFeedRequest;
-  setFeedInfo?: Dispatch<SetStateAction<lighty.CreateGatheringFeedRequest>>;
+  originalFeed?: Feed;
+  feedInfo?: T;
+  setFeedInfo?: Dispatch<SetStateAction<T>>;
   filesToUpload: File[];
   setFilesToUpload: Dispatch<SetStateAction<File[]>>;
   selectedGathering?: GatheringDetailResponse;
+  feedInfoToEdit?: { content: string; imageUrls: string[] };
 }
-
-export default function FeedForm({
+export default function FeedForm<
+  T extends lighty.CreateGatheringFeedRequest | lighty.CreateFriendFeedRequest
+>({
+  edit,
   uploadImages,
   originalFeed,
-  edit,
   feedInfo,
   setFeedInfo,
   filesToUpload,
   setFilesToUpload,
-  feedInfoToEdit,
-  setFeedInfoToEdit,
   selectedGathering,
-}: EditFeedFormInterface & CreateFeedFormInterface) {
+  feedInfoToEdit,
+}: FeedFormProps<T>) {
+  const content = feedInfo?.content || feedInfoToEdit?.content || "";
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (setFeedInfo) {
+      setFeedInfo((prev) => ({ ...prev, content: e.target.value }));
+    }
+  };
+
   return (
     <>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
@@ -69,19 +65,10 @@ export default function FeedForm({
       <Spacing size={8} />
       <Flex direction="column" className={styles.textareaWrapper}>
         <textarea
-          value={feedInfo?.content || feedInfoToEdit?.content}
+          value={content}
           inputMode="text"
           placeholder="해당 약속에는 어떤 소중한 추억이 있었나요? 그날의 추억에 대해 글로 작성해 보세요."
-          onChange={(e) => {
-            if (setFeedInfo) {
-              setFeedInfo((prev) => ({ ...prev, content: e.target.value }));
-            } else if (setFeedInfoToEdit) {
-              setFeedInfoToEdit((prev) => ({
-                ...prev,
-                content: e.target.value,
-              }));
-            }
-          }}
+          onChange={handleTextChange}
           className={styles.recordTextarea}
         />
         <Spacing size={12} />
@@ -97,7 +84,7 @@ export default function FeedForm({
           label={"수정 완료"}
           disabled={
             originalFeed?.content == feedInfoToEdit?.content &&
-            originalFeed?.images == feedInfoToEdit?.images
+            originalFeed?.images?.join() === feedInfoToEdit?.imageUrls?.join()
           }
           onClick={() => {
             if (edit) {

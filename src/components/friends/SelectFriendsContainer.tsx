@@ -9,25 +9,27 @@ import { gatheringModalStateAtom } from "@/atoms/gathering";
 import * as lighty from "lighty-type";
 import useFriends from "./hooks/useFriends";
 import Modal from "../shared/Modal/Modal";
+import { friendsToShareAtom } from "@/atoms/record";
 
 export default function SelectFriendsContainer({
   type = "default",
   paddingTop,
   action,
   setStep,
-  isNew,
 }: {
-  type?: "default" | "record";
+  type?: "default" | "record" | "group";
   paddingTop?: string;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;
-  isNew: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [countModal, setCountModal] = useState(false);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
   const setFriendsToAdd = useSetRecoilState<lighty.User[] | []>(
     selectedFriendsAtom
+  );
+  const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
+    friendsToShareAtom
   );
   const setFriendsToNewGroup = useSetRecoilState<lighty.User[] | []>(
     newGroupMembersAtom
@@ -73,11 +75,23 @@ export default function SelectFriendsContainer({
     setFriendsToAdd(clickedFriends);
     action?.();
   };
-
+  const handleSubmitSelectionToShare = () => {
+    const clickedFriends = clickedItems.map((idx) => friends[idx]);
+    setFriendsToShare(clickedFriends);
+    action?.();
+  };
   const handleSubmitSelectionToNewGroup = () => {
     const clickedFriends = clickedItems.map((idx) => friends[idx]);
     setFriendsToNewGroup(clickedFriends);
     setStep?.(1);
+  };
+
+  const onClick = () => {
+    if (type === "group") {
+      handleSubmitSelectionToNewGroup();
+    } else if (type === "record") {
+      handleSubmitSelectionToShare();
+    } else handleSubmitSelection();
   };
 
   const getLabel = () => {
@@ -119,9 +133,7 @@ export default function SelectFriendsContainer({
         bgColor="bg-grayscale-50"
         label={getLabel()}
         disabled={clickedItems.length < 1}
-        onClick={
-          isNew ? handleSubmitSelectionToNewGroup : handleSubmitSelection
-        }
+        onClick={onClick}
       />
       {renderModal()}
     </Flex>

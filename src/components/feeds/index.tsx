@@ -37,17 +37,20 @@ export default function Record() {
       {step === 1 ? (
         <ChoosingKindOfMemory add={add} setAdd={setAdd} setStep={setStep} />
       ) : null}
-      {step === 2.5 ? (
-        <ChooseFriendToShare debouncedSearch={debouncedSearch} />
-      ) : null}
-      {step === 3.5 ? <CreatingFeedNoGathering /> : null}
       {step === 2 ? (
         <ChoosingGatheringToRecord
           onNext={handleSelectGathering}
           gathering={gathering_noFeed}
         />
       ) : null}
+      {step === 2.5 ? (
+        <ChooseFriendToShare
+          debouncedSearch={debouncedSearch}
+          setStep={setStep}
+        />
+      ) : null}
       {step === 3 ? <CreatingFeed /> : null}
+      {step === 3.5 ? <CreatingFeedNoGathering /> : null}
     </>
   );
 }

@@ -1,32 +1,79 @@
 import React, { useState } from "react";
-import FriendsListContainer from "./FriendsListContainer";
 import useSearchFriends from "./hooks/useSearchFriends";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
-import SelectFriendsContainer from "./SelectFriendsContainer";
+import Flex from "../shared/Flex";
+import Spacing from "../shared/Spacing";
+import FriendListItem from "./FriendListItem";
+import * as lighty from "lighty-type";
+
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
+import { useSetRecoilState } from "recoil";
+import { friendsToShareAtom } from "@/atoms/record";
 
 export default function SelectableSearchedFriendsListContainer({
   debouncedSearch,
+  action,
 }: {
   debouncedSearch: string;
+  action: () => void;
 }) {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const { data, isFetching, loadMore, hasNextPage } = useSearchFriends({
+  const [clickedItems, setClickedItems] = useState<number[]>([]);
+  const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
+    friendsToShareAtom
+  );
+  const { data: searchedFriends, isFetching } = useSearchFriends({
     search: debouncedSearch,
     enabled: debouncedSearch.length >= 2,
   });
 
-  if (isFetching) return <DotSpinnerSmall />;
+  const toggleItemClick = (idx: number) => {
+    setClickedItems((prev) =>
+      prev.includes(idx) ? prev.filter((item) => item !== idx) : [...prev, idx]
+    );
+  };
 
-  return true ? (
-    <FriendsListContainer
-      hasMore={hasNextPage}
-      loadMore={loadMore}
-      friends={data}
-      isModalOpen={isModalOpen}
-      setIsModalOpen={setIsModalOpen}
-    />
-  ) : (
-    <SelectFriendsContainer isNew={false} />
+  if (isFetching || !searchedFriends) return <DotSpinnerSmall />;
+
+  const handleSubmitSelection = () => {
+    const clickedFriends = clickedItems.map((idx) => searchedFriends[idx]);
+    setFriendsToShare(clickedFriends);
+    action?.();
+  };
+
+  return (
+    <Flex
+      direction="column"
+      className="px-[20px] pb-[72px]"
+      style={{
+        backgroundColor: "#F4F4F4",
+      }}
+    >
+      <span className="text-T5">{`친구 ${searchedFriends.length}`}</span>
+      <Spacing size={12} />
+      <ul>
+        {searchedFriends.map((friendItem, idx) => {
+          return (
+            <React.Fragment key={`${friendItem.accountId}`}>
+              <FriendListItem
+                friendInfo={friendItem}
+                idx={idx}
+                type="select"
+                onClick={() => {
+                  toggleItemClick(idx);
+                }}
+                clicked={clickedItems.includes(idx)}
+              />
+              <Spacing size={16} />
+            </React.Fragment>
+          );
+        })}
+      </ul>
+      <FixedBottomButton
+        bgColor="bg-grayscale-50"
+        label={"공유없이 시작하기"}
+        disabled={clickedItems.length < 1}
+        onClick={handleSubmitSelection}
+      />
+    </Flex>
   );
 }

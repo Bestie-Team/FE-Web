@@ -12,7 +12,7 @@ export default function InfoBar({
   memberImageUrls,
   feed,
 }: {
-  memberImageUrls: (string | null)[];
+  memberImageUrls?: (string | null)[];
   feed: Feed;
 }) {
   const { userInfo } = useAuth();
@@ -22,7 +22,7 @@ export default function InfoBar({
     <Flex align="center" className="px-[20px]">
       <WriterInfo writer={feed.writer} />
       <div style={{ flexGrow: 1 }} />
-      <TogetherInfo memberImageUrls={memberImageUrls} />
+      {memberImageUrls && <TogetherInfo memberImageUrls={memberImageUrls} />}
       <Spacing direction="horizontal" size={12} />
       <Options type={isMine ? "default" : "feed"} feed={feed} isMine={isMine} />
     </Flex>

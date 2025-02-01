@@ -32,6 +32,7 @@ export default function GatheringDetailPage({
     isError,
   } = useGatheringDetail({
     gatheringId,
+    enabled: !!gatheringId,
   });
 
   useEffect(() => {

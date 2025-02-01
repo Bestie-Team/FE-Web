@@ -1,35 +1,32 @@
-import { useEffect, useRef, useState } from "react";
-import useScrollShadow from "@/hooks/useScrollShadow";
-import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 import * as lighty from "lighty-type";
-import { recordGatheringAtom } from "@/atoms/record";
 import { usePathname, useRouter } from "next/navigation";
 import getHeader from "@/utils/getHeader";
-import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
 import FeedForm from "./FeedForm";
 import clsx from "clsx";
 import { toast } from "react-toastify";
-import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { QueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
+import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
+import { useRecoilValue } from "recoil";
+import { friendsToShareAtom } from "@/atoms/record";
 
 export default function CreatingFeedNoGathering() {
   const queryClient = new QueryClient();
   const pathname = usePathname();
   const router = useRouter();
-  const containerRef = useRef<HTMLDivElement>(null);
   const header = getHeader(pathname);
-  const hasShadow = useScrollShadow(containerRef);
-  const selectedGatheringId = useRecoilValue(recordGatheringAtom);
+  const friendsToShare = useRecoilValue(friendsToShareAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-  const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
-    gatheringId: selectedGatheringId ? selectedGatheringId : "",
+  const [feedInfo, setFeedInfo] = useState<lighty.CreateFriendFeedRequest>({
+    friendIds: friendsToShare.map((friend) => friend.id),
     imageUrls: [],
     content: "",
   });
-  const { mutate: makeGatheringFeed, isPending } = useMakeGatheringFeed({
+
+  const { mutate: makeFriendsFeed, isPending } = useMakeFriendsFeed({
     feedRequest: feedInfo,
     onSuccess: async (data) => {
       await queryClient.invalidateQueries({
@@ -54,12 +51,12 @@ export default function CreatingFeedNoGathering() {
 
   const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
     files: filesToUpload,
-    gatheringId: selectedGatheringId || "",
+    gatheringId: "",
     onSuccess: (data: { imageUrls: string[]; message: string }) => {
       console.log("FeedImageUploaded", data);
       if (setFeedInfo) {
         setFeedInfo((prev) => ({
-          ...(prev as lighty.CreateGatheringFeedRequest),
+          ...(prev as lighty.CreateFriendFeedRequest),
           imageUrls: data.imageUrls,
         }));
       }
@@ -68,24 +65,15 @@ export default function CreatingFeedNoGathering() {
     onError: (error) => console.log(error),
   });
 
-  const { data: selectedGathering } = useGatheringDetail({
-    gatheringId: selectedGatheringId ? selectedGatheringId : "",
-  });
-
   useEffect(() => {
     if (feedInfo.imageUrls.length > 0) {
-      makeGatheringFeed();
+      makeFriendsFeed();
     }
   }, [feedInfo.imageUrls]);
 
-  if (!selectedGathering || selectedGatheringId == null) return null;
   return (
-    <div className={styles.container} ref={containerRef}>
-      <div
-        className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
-      >
-        {header}
-      </div>
+    <div className={styles.container}>
+      <div className={clsx(styles.headerWrapper)}>{header}</div>
       {isPending || isUploading ? (
         <FullPageLoader />
       ) : (
@@ -95,7 +83,6 @@ export default function CreatingFeedNoGathering() {
           setFeedInfo={setFeedInfo}
           filesToUpload={filesToUpload}
           setFilesToUpload={setFilesToUpload}
-          selectedGathering={selectedGathering}
         />
       )}
     </div>

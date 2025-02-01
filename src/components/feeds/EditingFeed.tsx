@@ -11,6 +11,7 @@ import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import FullPageLoader from "../shared/FullPageLoader";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
+import * as lighty from "lighty-type";
 
 export default function EditingFeed() {
   const router = useRouter();
@@ -19,12 +20,10 @@ export default function EditingFeed() {
   const hasShadow = useScrollShadow(containerRef);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
-  const [feedInfo, setFeedInfo] = useState<{
-    content: string;
-    images: string[];
-  }>({
+  const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
+    gatheringId: "",
     content: originalFeedValue?.content || "",
-    images: originalFeedValue?.images || [],
+    imageUrls: originalFeedValue?.images || [],
   });
 
   const { mutate: editingFeed, isPending } = useEditFeed({
@@ -58,13 +57,13 @@ export default function EditingFeed() {
 
   useEffect(() => {
     if (
-      feedInfo.images.length > 0 &&
+      feedInfo.imageUrls.length > 0 &&
       (feedInfo.content != originalFeedValue?.content ||
-        feedInfo.images != originalFeedValue?.images)
+        feedInfo.imageUrls != originalFeedValue?.images)
     ) {
       editingFeed();
     }
-  }, [feedInfo.images]);
+  }, [feedInfo.imageUrls]);
 
   if (!originalFeedValue || originalFeedValue == null) return null;
 
@@ -84,7 +83,7 @@ export default function EditingFeed() {
           filesToUpload={filesToUpload}
           setFilesToUpload={setFilesToUpload}
           feedInfoToEdit={feedInfo}
-          setFeedInfoToEdit={setFeedInfo}
+          setFeedInfo={setFeedInfo}
         />
       )}
     </div>
