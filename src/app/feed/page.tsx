@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -143,7 +143,38 @@ export default function FeedPage() {
     []
   );
 
+  const handleDeleteFeedSuccess = useCallback(
+    async (data: { message: string }) => {
+      toast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine", queryParams],
+      });
+    },
+    [queryClient]
+  );
+
+  const handleDeleteCommentSuccess = useCallback(async () => {
+    toast.success("댓글을 삭제했습니다");
+    await queryClient.invalidateQueries({
+      queryKey: ["get/comments", { feedId: selectedFeedId }],
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get/feeds", queryParams],
+    });
+  }, [queryClient]);
+
+  const handleHideFeedSuccess = useCallback(async () => {
+    toast.success("피드를 숨겼어요");
+    await queryClient.invalidateQueries({
+      queryKey: ["get/feeds/all"],
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get/feeds/mine"],
+    });
+  }, [queryClient]);
+
   const { data: feedAll, loadMore, hasNextPage } = useFeedAll(queryParams);
+
   const {
     data: feedMine,
     loadMore: loadMore_mine,
@@ -152,38 +183,17 @@ export default function FeedPage() {
 
   const { mutate: deleteFeed } = useDeleteFeed({
     feedId: selectedFeedId,
-    onSuccess: async (data) => {
-      toast.success(data.message);
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine", queryParams],
-      });
-    },
+    onSuccess: handleDeleteFeedSuccess,
   });
 
   const { mutate: deleteComment } = useDeleteComment({
     commentId: selectedCommentId,
-    onSuccess: async () => {
-      toast.success("댓글을 삭제했습니다");
-      await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId: selectedFeedId }],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds", queryParams],
-      });
-    },
+    onSuccess: handleDeleteCommentSuccess,
   });
 
   const { mutate: hideFeed } = useHideFeed({
     feedId: selectedFeedId,
-    onSuccess: async () => {
-      toast.success("피드를 숨겼어요");
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine"],
-      });
-    },
+    onSuccess: handleHideFeedSuccess,
     onError: () => {
       toast.error("피드를 숨기지 못했어요");
     },

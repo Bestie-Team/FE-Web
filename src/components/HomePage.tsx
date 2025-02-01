@@ -100,7 +100,7 @@ export default function HomePage() {
       }));
       console.log("from signup");
     }
-  }, []);
+  }, [setUserInfo]);
 
   if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
   console.log(this_week);

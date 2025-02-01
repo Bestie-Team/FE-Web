@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import SheetOpenBtnContainer from "./BottomDrawer/shared/SheetOpenBtnContainer";
-import NAV_ITEMS from "@/constants/navBarConstants";
+import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import { useRecoilValue } from "recoil";

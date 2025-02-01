@@ -2,7 +2,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { locationStatusAtom } from "@/atoms/location";
-import NAV_ITEMS from "@/constants/navBarConstants";
+import NAV_ITEMS from "@/constants/navBar";
 
 export const useActiveNavigation = () => {
   const [activeBtn, setActiveBtn] = useRecoilState(locationStatusAtom);

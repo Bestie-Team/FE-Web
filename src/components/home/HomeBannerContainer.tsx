@@ -2,50 +2,31 @@ import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
 import { Pagination } from "swiper/modules";
-import { HOME_BANNER, HOME_BANNER2 } from "@/constants/images";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-const BANNER_DATA = [
-  {
-    id: 1,
-    subTitle: "Welcome To Lighty",
-    title: "소중한 당신의 추억을 기록하세요",
-    image: HOME_BANNER,
-    sliceAt: 7,
-  },
-  {
-    id: 2,
-    subTitle: "친구 초대 이벤트",
-    title: "'찐친' 1명만 추가해도 스티커팩 제공",
-    image: HOME_BANNER2,
-    sliceAt: 13,
-  },
-  {
-    id: 3,
-    subTitle: "모임 약속 만들기",
-    title: "모임 약속을 만들어볼까요?",
-    image: HOME_BANNER2,
-    sliceAt: 6,
-  },
-  {
-    id: 4,
-    subTitle: "포토 카드 꾸미기",
-    title: "다꾸말고 '포꾸'는 어때?",
-    image: HOME_BANNER2,
-    sliceAt: 4,
-  },
-];
+import { BANNER_DATA } from "@/constants/banner";
+
+export interface AD_IMAGE {
+  src: string;
+  className: string;
+  width: number;
+  height: number;
+}
+
 const BannerSlide = ({
   subTitle,
   title,
   image,
   sliceAt,
+  ad_image,
 }: {
   subTitle: string;
   title: string;
   image: string;
   sliceAt: number;
+  ad_image: AD_IMAGE | null;
 }) => (
   <div className="relative w-full">
     <div className="h-[420px] w-full">
@@ -67,6 +48,15 @@ const BannerSlide = ({
         <span className={styles.title}>{title.slice(sliceAt)}</span>
       </Flex>
     </Flex>
+    {ad_image != null && (
+      <Image
+        src={ad_image.src}
+        alt={title}
+        className={ad_image.className}
+        width={ad_image.width}
+        height={ad_image.height}
+      />
+    )}
   </div>
 );
 
