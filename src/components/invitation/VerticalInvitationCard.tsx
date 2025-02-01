@@ -151,6 +151,7 @@ export function VerticalInvitationCard({
               </div>
               <Spacing size={10} />
               <span className="text-T1 pl-1">{name}</span>
+              <Spacing size={2} />
               <span className="text-B4 pl-1 text-grayscale-600">
                 {description}
               </span>
@@ -184,7 +185,7 @@ export function VerticalInvitationCard({
 const styles = {
   image: "!h-[210px] object-cover rounded-[12px]",
   mainContentWrapper: "absolute p-[15px] left-0 top-0",
-  subContentWrapper: "absolute pl-1 left-[15px] top-[332px]",
+  subContentWrapper: "absolute pl-1 left-[15px] top-[332px] gap-1",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",
   fromWrapper: "absolute pr-1 right-[15px] bottom-[22px]",
   rejectBtn:
