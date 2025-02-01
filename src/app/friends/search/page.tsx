@@ -7,7 +7,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import useSearchUsers from "@/components/users/hooks/useSearchUsers";
 import UserListContainer from "@/components/users/UserListContainer";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function SearchPage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
@@ -39,17 +38,14 @@ export default function SearchPage() {
           />
         </div>
       </div>
-      {isFetching ? (
-        <DotSpinner />
-      ) : (
-        <UserListContainer
-          hasMore={hasNextPage}
-          loadMore={loadMore}
-          searchedFriends={userData}
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-        />
-      )}
+      <UserListContainer
+        isFetching={isFetching}
+        hasMore={hasNextPage}
+        loadMore={loadMore}
+        searchedFriends={userData}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 }

@@ -8,10 +8,10 @@ import Button from "../Button/Button";
 import ArrowUpIcon from "../Icon/ArrowUpIcon";
 import useMakeComment from "@/components/feeds/hooks/useMakeComment";
 import useFeedComments from "@/components/feeds/hooks/useGetComments";
-import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
+import { lightyToast } from "@/utils/toast";
 
 export default function CommentContainer({
   selectedFeedId,
@@ -37,7 +37,7 @@ export default function CommentContainer({
           queryKey: ["get/feeds/all"],
         }),
       ]);
-      toast.success(data.message);
+      lightyToast.success(data.message);
     };
     invalidateQueries(data);
   };

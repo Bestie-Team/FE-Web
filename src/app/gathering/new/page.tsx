@@ -8,9 +8,9 @@ import * as lighty from "lighty-type";
 import InviteFriends from "@/components/friends/InviteFriends";
 import GatheringFormContainer from "@/components/gathering/GatheringFormContainer";
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
-import { toast } from "react-toastify";
 import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { lightyToast } from "@/utils/toast";
 
 export default function NewGatheringPage() {
   const [isClient, setIsClient] = useState(false);
@@ -24,7 +24,7 @@ export default function NewGatheringPage() {
     gathering: gatheringInfo,
     onSuccess: (data: { message: string }) => {
       setStep(0);
-      toast.success(data.message);
+      lightyToast.success(data.message);
       reset();
     },
   });

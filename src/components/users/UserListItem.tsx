@@ -10,8 +10,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { userSearchAtom } from "@/atoms/friends";
 import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
-import { toast } from "react-toastify";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import { lightyToast } from "@/utils/toast";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function UserListItem({
@@ -38,7 +38,7 @@ export default function UserListItem({
           { nae: "가", accountId: "a", limit: 10, search: debouncedSearch },
         ],
       });
-      toast.success(data.message);
+      lightyToast.success(data.message);
     },
   });
   return (

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
-import { toast } from "react-toastify";
+import { lightyToast } from "@/utils/toast";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -26,7 +26,7 @@ export default function ProfileImageDisplay({
   const { mutate } = usePostProfileImage({
     file,
     onSuccess: async (imageUrl) => {
-      toast.success("프로필 사진이 변경되었어요");
+      lightyToast.success("프로필 사진이 변경되었어요");
       setUserImage((prev) => ({ ...prev, profileImageUrl: imageUrl }));
     },
     onError: (error: Error) => console.log(error),

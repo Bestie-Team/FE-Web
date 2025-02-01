@@ -18,10 +18,10 @@ import useGroup from "@/components/groups/hooks/useGroups";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
-import { toast } from "react-toastify";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
+import { lightyToast } from "@/utils/toast";
 
 interface GroupDetailPageProps {
   params: {
@@ -49,7 +49,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
       queryClient.invalidateQueries({ queryKey: ["groups"] }),
       queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
     ]);
-    toast.success("그룹 나가기/삭제 성공");
+    lightyToast.success("그룹 나가기/삭제 성공");
     router.replace("/groups");
   };
 
@@ -57,7 +57,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     await queryClient.invalidateQueries({
       queryKey: ["groups"],
     });
-    toast.success(data.message);
+    lightyToast.success(data.message);
     setSelectedFriends([]);
   };
 

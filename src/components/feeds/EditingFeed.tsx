@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { useRecoilValue } from "recoil";
 import getHeader from "@/utils/getHeader";
-import { toast } from "react-toastify";
 import FeedForm from "./FeedForm";
 import clsx from "clsx";
 import useEditFeed from "./hooks/useEditFeed";
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation";
 import FullPageLoader from "../shared/FullPageLoader";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import * as lighty from "lighty-type";
+import { lightyToast } from "@/utils/toast";
 
 export default function EditingFeed() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function EditingFeed() {
     feedId: originalFeedValue?.id || "",
     onSuccess: (data) => {
       router.replace("/feed");
-      toast.success(data.message);
+      lightyToast.success(data.message);
     },
     onError: (error) => {
       console.log(error);

@@ -18,7 +18,7 @@ export default function useSearchUsers({
   } = useInfiniteQuery({
     queryKey: ["users", search],
     queryFn: ({ pageParam }): Promise<lighty.SearchUserResponse> =>
-      getSearchUsers({ ...pageParam, limit: 10, search }),
+      getSearchUsers({ ...pageParam, limit: 9, search }),
     getNextPageParam: (lastPage) => {
       return lastPage.nextCursor;
     },

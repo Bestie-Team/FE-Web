@@ -10,7 +10,7 @@ import validator from "validator";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import TermsBottomSheet from "./shared/BottomDrawer/TermsBottomSheet";
 import useSignup from "./users/hooks/useSignup";
-import { toast } from "react-toastify";
+import { lightyToast } from "@/utils/toast";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
@@ -85,7 +85,7 @@ export default function UploadProfileForm() {
     email: oauthData?.email || "",
     provider: oauthData?.provider as Provider,
     onSuccess: useCallback((data) => {
-      toast.success(data.message);
+      lightyToast.success(data.message);
     }, []),
   });
 

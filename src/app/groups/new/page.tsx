@@ -17,8 +17,8 @@ import { useEffect, useState } from "react";
 import InviteFriends from "@/components/friends/InviteFriends";
 import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { lightyToast } from "@/utils/toast";
 
 export default function NewGroupPage() {
   const [isClient, setIsClient] = useState(false);
@@ -33,7 +33,7 @@ export default function NewGroupPage() {
     await queryClient.invalidateQueries({
       queryKey: ["groups"],
     });
-    toast.success(data.message);
+    lightyToast.success(data.message);
   };
 
   const { mutate: makeGroup, isPending } = useMakeGroup({

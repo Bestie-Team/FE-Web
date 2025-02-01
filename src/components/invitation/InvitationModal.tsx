@@ -9,8 +9,8 @@ import useAcceptInvitationToGathering from "../gathering/hooks/useAcceptInvitati
 import useRejectInvitationToGathering from "../gathering/hooks/useRejectInvitationToGathering";
 import { SuccessResponse } from "@/models/response";
 import { VerticalInvitationCard } from "./VerticalInvitationCard";
-import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import { lightyToast } from "@/utils/toast";
 
 export default function InvitationModal({
   selectedTab,
@@ -28,7 +28,7 @@ export default function InvitationModal({
       await queryClient.invalidateQueries({
         queryKey: ["received", "gathering/invitation"],
       });
-      toast.success(data.message);
+      lightyToast.success(data.message);
       onClickClose(false);
     },
   });
@@ -36,7 +36,7 @@ export default function InvitationModal({
   const { mutate: reject } = useRejectInvitationToGathering({
     invitationId: selectedInvitation?.id || "",
     onSuccess: (data: SuccessResponse) => {
-      toast.success(data.message);
+      lightyToast.success(data.message);
       onClickClose(false);
     },
   });

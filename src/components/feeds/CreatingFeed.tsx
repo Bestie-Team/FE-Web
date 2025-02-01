@@ -8,13 +8,13 @@ import getHeader from "@/utils/getHeader";
 import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
 import FeedForm from "./FeedForm";
 import clsx from "clsx";
-import { toast } from "react-toastify";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
 import MakingFeedStatus from "./MakingFeedStatus";
+import { lightyToast } from "@/utils/toast";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
   gatheringId: "",
@@ -51,7 +51,7 @@ export default function CreatingFeed() {
       ],
     });
 
-    toast.success(data.message);
+    lightyToast.success(data.message);
   };
 
   const handleImageUploadSuccess = (data: {
@@ -69,7 +69,7 @@ export default function CreatingFeed() {
     feedRequest: feedInfo,
     onSuccess: handleFeedSuccess,
     onError: (error) => {
-      toast.error(error.message);
+      lightyToast.error(error.message);
     },
   });
 

@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import FeedForm from "./FeedForm";
 import clsx from "clsx";
-import { toast } from "react-toastify";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
@@ -13,6 +12,7 @@ import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
 import { useRecoilValue } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
 import MakingFeedStatus from "./MakingFeedStatus";
+import { lightyToast } from "@/utils/toast";
 
 export default function CreatingFeedNoGathering() {
   const queryClient = useQueryClient();
@@ -41,14 +41,14 @@ export default function CreatingFeedNoGathering() {
       ],
     });
 
-    toast.success(data.message);
+    lightyToast.success(data.message);
   };
 
   const { mutate: makeFriendsFeed, isPending } = useMakeFriendsFeed({
     feedRequest: feedInfo,
     onSuccess: handleFeedSuccess,
     onError: (error) => {
-      toast.error(error.message);
+      lightyToast.error(error.message);
     },
   });
 

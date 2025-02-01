@@ -8,8 +8,8 @@ import LargeLightyLogo from "./shared/Icon/LargeLightyLogo";
 import oAuthButtons from "@/constants/oAuthButtons";
 import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
-import { toast } from "react-toastify";
 import { useAuth } from "./shared/providers/AuthProvider";
+import { lightyToast } from "@/utils/toast";
 
 export default function Splash() {
   const { login } = useAuth();
@@ -24,12 +24,12 @@ export default function Splash() {
         }
       } catch (error) {
         console.log(error);
-        toast.error("로그인에 실패했어요");
+        lightyToast.error("로그인에 실패했어요");
       }
     },
     onError: (error) => {
       console.log(error);
-      toast.error("로그인에 실패했어요");
+      lightyToast.error("로그인에 실패했어요");
     },
   });
 

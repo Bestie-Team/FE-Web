@@ -17,7 +17,7 @@ export default function Toast({
     });
 
     toast.error(comment, {
-      position: "top-left",
+      position: "top-center",
       icon: <AlarmIcon />,
       closeButton: false,
     });

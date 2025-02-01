@@ -5,10 +5,10 @@ import { friendsModalStateAtom, selectedFriendAtom } from "@/atoms/friends";
 import FriendsListContainer from "./FriendsListContainer";
 import useDeleteFriend from "./hooks/useDeleteFriend";
 import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom } from "@/atoms/modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import { lightyToast } from "@/utils/toast";
 
 const DeleteFriendModal = memo(
   ({
@@ -48,7 +48,7 @@ export default function UserFriendsListContainer() {
   const { data, loadMore, hasNextPage, isFetching } = useFriends();
 
   const deleteSuccessHandler = async (data: { message: string }) => {
-    toast.success(data.message);
+    lightyToast.success(data.message);
     await queryClient.invalidateQueries({
       queryKey: ["friends", { accountId: "aaaa", limit: 20 }],
     });

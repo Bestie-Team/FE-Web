@@ -71,7 +71,7 @@ export default function AddGatheringPhoto({
             alt="upload_image"
             width={300}
             height={210}
-            className="!h-[210px] w-[300px]"
+            className="!h-[210px] w-[300px] object-cover"
           />
         ) : (
           <>

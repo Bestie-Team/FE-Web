@@ -23,7 +23,6 @@ import {
 } from "@/atoms/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import useDeleteFeed from "@/components/feeds/hooks/useDeleteFeed";
-import { toast } from "react-toastify";
 import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
@@ -33,6 +32,7 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import { maxDate, minDate } from "@/constants/time";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import { lightyToast } from "@/utils/toast";
 
 const Header = React.memo(
   ({
@@ -144,14 +144,14 @@ export default function FeedPage() {
   );
 
   const handleDeleteFeedSuccess = async (data: { message: string }) => {
-    toast.success(data.message);
+    lightyToast.success(data.message);
     await queryClient.invalidateQueries({
       queryKey: ["get/feeds/mine", queryParams],
     });
   };
 
   const handleDeleteCommentSuccess = async () => {
-    toast.success("댓글을 삭제했습니다");
+    lightyToast.success("댓글을 삭제했습니다");
     await Promise.all([
       queryClient.invalidateQueries({
         queryKey: ["get/comments", { feedId: selectedFeedId }],
@@ -163,7 +163,7 @@ export default function FeedPage() {
   };
 
   const handleHideFeedSuccess = async () => {
-    toast.success("피드를 숨겼어요");
+    lightyToast.success("피드를 숨겼어요");
     await Promise.all([
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/all"],
@@ -196,7 +196,7 @@ export default function FeedPage() {
     feedId: selectedFeedId,
     onSuccess: handleHideFeedSuccess,
     onError: () => {
-      toast.error("피드를 숨기지 못했어요");
+      lightyToast.error("피드를 숨기지 못했어요");
     },
   });
 

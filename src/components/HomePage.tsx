@@ -24,7 +24,6 @@ import {
 } from "@/models/gathering";
 import { NoGatheringHome } from "./gathering/NoGathering";
 import useGatheringNoFeeds from "./gathering/hooks/useGatheringNoFeed";
-
 const Header = React.memo(() => {
   const header = getHeader("/");
   return <>{header}</>;
@@ -51,7 +50,6 @@ MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
   const { setUserInfo } = useAuth();
-
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
 

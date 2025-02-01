@@ -47,7 +47,7 @@
   .Toastify__toast-container--top-left,
   .Toastify__toast-container--top-right {
     margin-top: 31px !important;
-    transform: translateX(0) !important;
+    /* transform: translateX(0) !important; */
     width: 100% !important;
   }
   .Toastify__toast-container {
@@ -57,7 +57,7 @@
     width: fit-content !important;
     border-radius: 40px;
     left: 50%;
-    transform: translateX(-50%) !important;
+    /* transform: translateX(-50%) !important; */
   }
 }
 

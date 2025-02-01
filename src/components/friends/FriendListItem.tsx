@@ -11,7 +11,7 @@ import DotSpinner from "../shared/Spinner/DotSpinner";
 import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
 import { useSetRecoilState } from "recoil";
 import { selectedFriendAtom } from "@/atoms/friends";
-import { toast } from "react-toastify";
+import { lightyToast } from "@/utils/toast";
 
 export default function FriendListItem({
   requestId,
@@ -32,14 +32,14 @@ export default function FriendListItem({
   const setSelectedFriend = useSetRecoilState(selectedFriendAtom);
 
   const acceptSuccessHandler = async (data: { message: string }) => {
-    toast.success(data.message);
+    lightyToast.success(data.message);
     await queryClient.invalidateQueries({
       queryKey: ["received", "friendsRequests", { accountId: "a", limit: 30 }],
     });
   };
 
   const rejectSuccessHandler = async (data: { message: string }) => {
-    toast.success(data.message);
+    lightyToast.success(data.message);
     await queryClient.invalidateQueries({
       queryKey: ["reject/friend", requestId],
     });

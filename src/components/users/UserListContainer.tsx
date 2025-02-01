@@ -5,15 +5,18 @@ import { SetterOrUpdater } from "recoil";
 import UserListItem from "./UserListItem";
 import Modal from "../shared/Modal/Modal";
 import InfiniteScroll from "react-infinite-scroll-component";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function UserListContainer({
   hasMore,
   loadMore,
+  isFetching,
   searchedFriends,
   isModalOpen,
   setIsModalOpen,
 }: {
   hasMore: boolean;
+  isFetching: boolean;
   loadMore: () => void;
   friends?: lighty.User[];
   searchedFriends?: lighty.User[];
@@ -24,7 +27,7 @@ export default function UserListContainer({
     return (
       <div
         id="scrollableDiv"
-        className="flex flex-col h-screen bg-grayscale-50 pt-[142px] pb-15 px-5 overflow-y-scroll no-scrollbar"
+        className="flex flex-col h-screen bg-grayscale-50 pt-[142px] pb-20 px-5 overflow-y-scroll no-scrollbar"
       >
         <InfiniteScroll
           className="!overflow-visible"
@@ -44,6 +47,7 @@ export default function UserListContainer({
                 </React.Fragment>
               );
             })}
+            {isFetching && <DotSpinnerSmall />}
           </ul>
         </InfiniteScroll>
         {isModalOpen ? (
