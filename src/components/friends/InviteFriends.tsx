@@ -23,11 +23,7 @@ export default function InviteFriends({
         </div>
         <Spacing size={16} />
       </div>
-      <SelectFriendsContainer
-        paddingTop="138px"
-        setStep={setStep}
-        isNew={true}
-      />
+      <SelectFriendsContainer paddingTop="138px" setStep={setStep} />
     </div>
   );
 }
