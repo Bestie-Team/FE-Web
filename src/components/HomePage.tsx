@@ -101,7 +101,7 @@ export default function HomePage() {
   }, [setUserInfo]);
 
   if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
-  console.log(this_week);
+  console.log("minDate", minDate);
 
   return (
     <div>
