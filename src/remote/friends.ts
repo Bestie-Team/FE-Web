@@ -14,7 +14,7 @@ export async function postFriends({ userId }: { userId: string }) {
       body: JSON.stringify({ userId }),
     });
     console.log(response);
-    return { message: "친구요청을 성공적으로 보냈습니다" };
+    return { message: "친구 요청을 성공적으로 보냈습니다" };
   } catch (error) {
     console.log(error);
     throw new Error("Failed to friend request");
@@ -30,7 +30,7 @@ export async function deleteFriend({ friendId }: { friendId: string }) {
       method: "DELETE",
     });
     console.log(response);
-    return { message: "친구 삭제 성공적으로 보냈습니다" };
+    return { message: "친구를 삭제했어요" };
   } catch (error) {
     console.log(error);
     throw new Error("Failed to delete friend");

@@ -9,10 +9,8 @@ import useAcceptInvitationToGathering from "../gathering/hooks/useAcceptInvitati
 import useRejectInvitationToGathering from "../gathering/hooks/useRejectInvitationToGathering";
 import { SuccessResponse } from "@/models/response";
 import { VerticalInvitationCard } from "./VerticalInvitationCard";
-import { QueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-
-const queryClient = new QueryClient();
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function InvitationModal({
   selectedTab,
@@ -21,7 +19,11 @@ export default function InvitationModal({
   selectedTab: "1" | "2";
   onClickClose: (value: boolean) => void;
 }) {
+  const queryClient = useQueryClient();
   const selectedInvitation = useRecoilValue(selectedInvitationAtom);
+
+  if (!selectedInvitation) return null;
+
   const { mutate: accept } = useAcceptInvitationToGathering({
     invitationId: selectedInvitation?.id || "",
     onSuccess: async (data: SuccessResponse) => {
@@ -42,13 +44,6 @@ export default function InvitationModal({
   });
 
   if (!selectedInvitation) return;
-
-  const handleAccept = () => {
-    accept();
-  };
-  const handleReject = () => {
-    reject();
-  };
 
   return (
     <Dimmed className={styles.dimmed}>
@@ -72,11 +67,11 @@ export default function InvitationModal({
           <>
             <Spacing size={16} />
             <Flex justify="center">
-              <Button className={styles.rejectBtn} onClick={handleReject}>
+              <Button className={styles.rejectBtn} onClick={() => accept()}>
                 거절
               </Button>
               <Spacing size={15} direction="horizontal" />
-              <Button className={styles.acceptBtn} onClick={handleAccept}>
+              <Button className={styles.acceptBtn} onClick={() => reject()}>
                 수락
               </Button>
             </Flex>

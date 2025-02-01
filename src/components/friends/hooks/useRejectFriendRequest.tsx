@@ -6,15 +6,15 @@ export default function useRejectFriendRequest({
   onSuccess,
 }: {
   friendId: string;
-  onSuccess: () => void;
+  onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({
     mutationKey: ["reject", "friend/request", friendId],
     mutationFn: () => {
       return postRejectFriend({ friendId });
     },
-    onSuccess: () => {
-      onSuccess();
+    onSuccess: (data: { message: string }) => {
+      onSuccess(data);
     },
   });
 }

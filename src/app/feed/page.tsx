@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Feed from "@/components/feed/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -143,35 +143,36 @@ export default function FeedPage() {
     []
   );
 
-  const handleDeleteFeedSuccess = useCallback(
-    async (data: { message: string }) => {
-      toast.success(data.message);
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine", queryParams],
-      });
-    },
-    [queryClient]
-  );
+  const handleDeleteFeedSuccess = async (data: { message: string }) => {
+    toast.success(data.message);
+    await queryClient.invalidateQueries({
+      queryKey: ["get/feeds/mine", queryParams],
+    });
+  };
 
-  const handleDeleteCommentSuccess = useCallback(async () => {
+  const handleDeleteCommentSuccess = async () => {
     toast.success("댓글을 삭제했습니다");
-    await queryClient.invalidateQueries({
-      queryKey: ["get/comments", { feedId: selectedFeedId }],
-    });
-    await queryClient.invalidateQueries({
-      queryKey: ["get/feeds", queryParams],
-    });
-  }, [queryClient]);
+    await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: ["get/comments", { feedId: selectedFeedId }],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds", queryParams],
+      }),
+    ]);
+  };
 
-  const handleHideFeedSuccess = useCallback(async () => {
+  const handleHideFeedSuccess = async () => {
     toast.success("피드를 숨겼어요");
-    await queryClient.invalidateQueries({
-      queryKey: ["get/feeds/all"],
-    });
-    await queryClient.invalidateQueries({
-      queryKey: ["get/feeds/mine"],
-    });
-  }, [queryClient]);
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all"],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine"],
+      }),
+    ]);
+  };
 
   const { data: feedAll, loadMore, hasNextPage } = useFeedAll(queryParams);
 

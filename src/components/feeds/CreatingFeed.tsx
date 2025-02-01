@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
-import { QueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
 import MakingFeedStatus from "./MakingFeedStatus";
 
@@ -23,7 +23,7 @@ const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
 };
 
 export default function CreatingFeed() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const [isMaking, setIsMaking] = useState(false);
   const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,26 +36,23 @@ export default function CreatingFeed() {
     gatheringId: selectedGatheringId || "",
   });
 
-  const handleFeedSuccess = useCallback(
-    async (data: { message: string }) => {
-      setIsMaking(true);
+  const handleFeedSuccess = async (data: { message: string }) => {
+    setIsMaking(true);
 
-      await queryClient.invalidateQueries({
-        queryKey: [
-          "get/feeds/mine",
-          {
-            order: "DESC",
-            minDate: minDate(),
-            maxDate: maxDate(),
-            limit: 10,
-          },
-        ],
-      });
+    await queryClient.invalidateQueries({
+      queryKey: [
+        "get/feeds/mine",
+        {
+          order: "DESC",
+          minDate: minDate(),
+          maxDate: maxDate(),
+          limit: 10,
+        },
+      ],
+    });
 
-      toast.success(data.message);
-    },
-    [queryClient]
-  );
+    toast.success(data.message);
+  };
 
   const handleImageUploadSuccess = (data: {
     imageUrls: string[];

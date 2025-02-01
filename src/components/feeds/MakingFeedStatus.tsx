@@ -6,8 +6,8 @@ import getHeader from "@/utils/getHeader";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
-import FullPageLoader from "../shared/FullPageLoader";
 import { FEED_SUCCESS } from "@/constants/images";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 const StatusMessage = () => (
   <>
@@ -48,9 +48,10 @@ export default function MakingFeedStatus({
   };
   return (
     <div className="flex flex-col bg-base-white h-full">
-      {header} {isPending === true ? <FullPageLoader /> : <CheckSpinner />}
+      {header}
       <Flex direction="column" className="h-screen pt-[106px]" align="center">
         <Spacing size={140} />
+        {isPending === true ? <DotSpinner /> : <CheckSpinner />}
         <Spacing size={20} />
         {!isPending && <StatusMessage />}
         <Spacing size={24} />

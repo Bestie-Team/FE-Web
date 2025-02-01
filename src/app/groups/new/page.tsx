@@ -28,20 +28,18 @@ export default function NewGroupPage() {
     useRecoilState<lighty.CreateGroupRequest>(newGroupAtom);
   const [step, setStep] = useState(1);
 
+  const makeGroupSuccessHandler = async (data: { message: string }) => {
+    setStep(0);
+    await queryClient.invalidateQueries({
+      queryKey: ["groups"],
+    });
+    toast.success(data.message);
+  };
+
   const { mutate: makeGroup, isPending } = useMakeGroup({
     group: newGroup,
-    onSuccess: async (data) => {
-      setStep(0);
-      await queryClient.invalidateQueries({
-        queryKey: ["groups"],
-      });
-      toast.success(data.message);
-    },
+    onSuccess: makeGroupSuccessHandler,
   });
-
-  const handleMakeGroup = async () => {
-    makeGroup();
-  };
 
   useEffect(() => {
     setIsClient(true);
@@ -54,66 +52,62 @@ export default function NewGroupPage() {
   if (step === 0 || isPending) {
     return <MakingGroupSuccess group={newGroup} isPending={isPending} />;
   }
-
-  if (step === 1) {
-    return (
-      <div className="h-screen bg-base-white">
-        {header}
-        <form className="flex flex-col px-5 pt-12">
-          <Spacing size={24} />
-          <AddGroupPhoto
-            image={newGroup.groupImageUrl}
-            setImage={setNewGroup}
-          />
-          <Spacing size={36} />
-          <Input
-            value={newGroup.name}
-            onChange={(e) => {
-              setNewGroup((prev) => ({ ...prev, name: e.target.value }));
-            }}
-            displayLength={20}
-            placeholder="그룹 이름을 입력해 주세요."
-            label={
-              <>
-                <PencilIcon width="16" height="16" color="#0A0A0A" />
-                <Spacing direction="horizontal" size={4} />
-                <span>그룹 이름</span>
-              </>
-            }
-          />
-          <Spacing size={36} />
-          <Input
-            value={newGroup.description}
-            onChange={(e) => {
-              setNewGroup((prev) => ({ ...prev, description: e.target.value }));
-            }}
-            displayLength={20}
-            placeholder="그룹 이름을 설명해 주세요."
-            label={
-              <>
-                <FeedIcon width="16" height="16" color="#0A0A0A" />
-                <Spacing direction="horizontal" size={4} />
-                <span>그룹 설명</span>
-              </>
-            }
-          />
-          <Spacing size={36} />
-          <Flex align="center" className="text-T5">
-            <UserIcon width="16" height="16" color="#0A0A0A" />
-            <Spacing direction="horizontal" size={4} />
-            <span>그룹 친구</span>
-          </Flex>
-          <Spacing size={8} />
-          <AddFriendsSlider
-            setGroup={setNewGroup}
-            type="group"
-            setStep={setStep}
-          />
-        </form>
-        <FixedBottomButton label={"그룹 생성하기"} onClick={handleMakeGroup} />
-      </div>
-    );
-  } else if (step === 2) {
+  if (step === 2) {
     return <InviteFriends setStep={setStep} />;
   }
+
+  return (
+    <div className="h-screen bg-base-white">
+      {header}
+      <form className="flex flex-col px-5 pt-12">
+        <Spacing size={24} />
+        <AddGroupPhoto image={newGroup.groupImageUrl} setImage={setNewGroup} />
+        <Spacing size={36} />
+        <Input
+          value={newGroup.name}
+          onChange={(e) => {
+            setNewGroup((prev) => ({ ...prev, name: e.target.value }));
+          }}
+          displayLength={20}
+          placeholder="그룹 이름을 입력해 주세요."
+          label={
+            <>
+              <PencilIcon width="16" height="16" color="#0A0A0A" />
+              <Spacing direction="horizontal" size={4} />
+              <span>그룹 이름</span>
+            </>
+          }
+        />
+        <Spacing size={36} />
+        <Input
+          value={newGroup.description}
+          onChange={(e) => {
+            setNewGroup((prev) => ({ ...prev, description: e.target.value }));
+          }}
+          displayLength={20}
+          placeholder="그룹 이름을 설명해 주세요."
+          label={
+            <>
+              <FeedIcon width="16" height="16" color="#0A0A0A" />
+              <Spacing direction="horizontal" size={4} />
+              <span>그룹 설명</span>
+            </>
+          }
+        />
+        <Spacing size={36} />
+        <Flex align="center" className="text-T5">
+          <UserIcon width="16" height="16" color="#0A0A0A" />
+          <Spacing direction="horizontal" size={4} />
+          <span>그룹 친구</span>
+        </Flex>
+        <Spacing size={8} />
+        <AddFriendsSlider
+          setGroup={setNewGroup}
+          type="group"
+          setStep={setStep}
+        />
+      </form>
+      <FixedBottomButton label={"그룹 생성하기"} onClick={makeGroup} />
+    </div>
+  );
 }

@@ -10,7 +10,6 @@ import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import ChooseFriendToShare from "./ChooseFriendToShare";
 import FullPageLoader from "../shared/FullPageLoader";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
-import MakingFeedStatus from "./MakingFeedStatus";
 
 export default function Record() {
   const [isClient, setIsClient] = useState(false);

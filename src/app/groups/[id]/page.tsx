@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
 import useGroup from "@/components/groups/hooks/useGroups";
 import { selectedFriendsAtom } from "@/atoms/friends";
@@ -23,11 +23,13 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 
-export default function GroupDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+interface GroupDetailPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const [isClient, setIsClient] = useState(false);
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
@@ -42,44 +44,37 @@ export default function GroupDetailPage({
   const [openList, setOpenList] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const handleDeleteSuccess = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ["groups"] }),
+      queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
+    ]);
+    toast.success("그룹 나가기/삭제 성공");
+    router.replace("/groups");
+  };
+
+  const addMemberSuccessHandler = async (data: { message: string }) => {
+    await queryClient.invalidateQueries({
+      queryKey: ["groups"],
+    });
+    toast.success(data.message);
+    setSelectedFriends([]);
+  };
+
   const { mutate: deleteGroup } = useDeleteGroup({
     groupId: params.id,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["groups"],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
-      });
-      toast.success("그룹을 성공적으로 삭제하였습니다");
-      router.replace("/groups");
-    },
+    onSuccess: handleDeleteSuccess,
   });
 
   const { mutate: exitGroup } = useExitGroup({
     groupId: params.id,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["groups"],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
-      });
-      toast.success("그룹을 나갔습니다");
-      router.replace("/groups");
-    },
+    onSuccess: handleDeleteSuccess,
   });
 
   const { mutate: addMember } = useAddGroupMember({
     groupId: params.id,
     friendIds: selectedFriends.map((friend) => friend.id),
-    onSuccess: async (data) => {
-      await queryClient.invalidateQueries({
-        queryKey: ["groups"],
-      });
-      toast.success(data.message);
-      setSelectedFriends([]);
-    },
+    onSuccess: addMemberSuccessHandler,
   });
 
   const selectedGroup = group_data?.find((group) => group.id === params.id);
@@ -94,8 +89,6 @@ export default function GroupDetailPage({
     return <div>그룹을 찾을 수 없습니다.</div>;
   }
 
-  const { description, members, owner, groupImageUrl } = selectedGroup;
-
   if (openList === true) {
     return (
       <SelectFriendsContainer
@@ -108,61 +101,60 @@ export default function GroupDetailPage({
       />
     );
   }
-  if (openList === false)
-    return (
-      <Flex direction="column" className="w-full h-screen bg-grayscale-50">
-        <GroupBannerContainer
-          imageUrl={groupImageUrl}
-          owner={owner}
-          setIsLoaded={setIsLoaded}
+  const { description, members, owner, groupImageUrl } = selectedGroup;
+
+  return (
+    <Flex direction="column" className="w-full h-screen bg-grayscale-50">
+      <GroupBannerContainer
+        imageUrl={groupImageUrl}
+        owner={owner}
+        setIsLoaded={setIsLoaded}
+      />
+      {!!isLoaded && <FullPageLoader />}
+      <GroupInfoContainer group={selectedGroup} />
+      <div className={styles.dividerWrapper}>
+        <div className={styles.divider} />
+      </div>
+      <GroupLeaderContainer groupLeader={owner} />
+      <Spacing size={10} />
+      <LightyInfoContainer
+        icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
+        title={<span className={styles.title}>그룹 소개</span>}
+        content={
+          <Flex className={styles.contentWrapper}>
+            <span>{description}</span>
+          </Flex>
+        }
+      />
+      <Spacing size={10} />
+      <LightyInfoContainer
+        icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
+        title={
+          <span className={styles.title}>{`약속 멤버 ${members.length}`}</span>
+        }
+        content={<GatheringMembersSlider members={members} />}
+      />
+      {deleteModalOpen && (
+        <Modal
+          title="그룹을 삭제하시겠어요?"
+          content="그룹 관련 정보가 전부 삭제되며 이는 복구할 수 없어요."
+          left="취소"
+          right="삭제하기"
+          action={() => deleteGroup()}
+          onClose={() => setDeleteModalOpen(false)}
         />
-        {isLoaded === false && <FullPageLoader />}
-        <GroupInfoContainer group={selectedGroup} />
-        <div className={styles.dividerWrapper}>
-          <div className={styles.divider} />
-        </div>
-        <GroupLeaderContainer groupLeader={owner} />
-        <Spacing size={10} />
-        <LightyInfoContainer
-          icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
-          title={<span className={styles.title}>그룹 소개</span>}
-          content={
-            <Flex className={styles.contentWrapper}>
-              <span>{description}</span>
-            </Flex>
-          }
+      )}
+      {exitModalOpen && (
+        <Modal
+          title="그룹을 나가시겠어요?"
+          left="취소"
+          right="나가기"
+          action={() => exitGroup()}
+          onClose={() => setExitModalOpen(false)}
         />
-        <Spacing size={10} />
-        <LightyInfoContainer
-          icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
-          title={
-            <span
-              className={styles.title}
-            >{`약속 멤버 ${members.length}`}</span>
-          }
-          content={<GatheringMembersSlider members={members} />}
-        />
-        {deleteModalOpen && (
-          <Modal
-            title="그룹을 삭제하시겠어요?"
-            content="그룹 관련 정보가 전부 삭제되며 이는 복구할 수 없어요."
-            left="취소"
-            right="삭제하기"
-            action={() => deleteGroup()}
-            onClose={() => setDeleteModalOpen(false)}
-          />
-        )}
-        {exitModalOpen && (
-          <Modal
-            title="그룹을 나가시겠어요?"
-            left="취소"
-            right="나가기"
-            action={() => exitGroup()}
-            onClose={() => setExitModalOpen(false)}
-          />
-        )}
-      </Flex>
-    );
+      )}
+    </Flex>
+  );
 }
 
 const styles = {

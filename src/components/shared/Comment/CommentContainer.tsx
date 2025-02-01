@@ -27,18 +27,25 @@ export default function CommentContainer({
 
   const { data: comments } = useFeedComments({ feedId: selectedFeedId });
 
+  const postSuccessHandler = async (data: { message: string }) => {
+    const invalidateQueries = async (data: { message: string }) => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["get/comments", { feedId: selectedFeedId }],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["get/feeds/all"],
+        }),
+      ]);
+      toast.success(data.message);
+    };
+    invalidateQueries(data);
+  };
+
   const { mutate: postComment } = useMakeComment({
     feedId: selectedFeedId,
     content: newComment,
-    onSuccess: async () => {
-      toast.success("댓글을 등록하였습니다.");
-      await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId: selectedFeedId }],
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
-      });
-    },
+    onSuccess: postSuccessHandler,
     onError: (error) => console.log(error),
   });
 

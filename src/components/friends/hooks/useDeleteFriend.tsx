@@ -6,13 +6,13 @@ export default function useDeleteFriend({
   onSuccess,
 }: {
   friendId: string;
-  onSuccess: () => void;
+  onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({
     mutationKey: ["delete/friend", friendId],
     mutationFn: () => {
       return deleteFriend({ friendId });
     },
-    onSuccess: () => onSuccess(),
+    onSuccess: (data) => onSuccess(data),
   });
 }

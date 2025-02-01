@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import * as lighty from "lighty-type";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import FeedForm from "./FeedForm";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
-import { QueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
 import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
 import { useRecoilValue } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
+import MakingFeedStatus from "./MakingFeedStatus";
 
 export default function CreatingFeedNoGathering() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
+  const [isMaking, setIsMaking] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const header = getHeader(pathname);
   const friendsToShare = useRecoilValue(friendsToShareAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
@@ -25,25 +26,27 @@ export default function CreatingFeedNoGathering() {
     imageUrls: [],
     content: "",
   });
+  const handleFeedSuccess = async (data: { message: string }) => {
+    setIsMaking(true);
+
+    await queryClient.invalidateQueries({
+      queryKey: [
+        "get/feeds/mine",
+        {
+          order: "DESC",
+          minDate: minDate(),
+          maxDate: maxDate(),
+          limit: 10,
+        },
+      ],
+    });
+
+    toast.success(data.message);
+  };
 
   const { mutate: makeFriendsFeed, isPending } = useMakeFriendsFeed({
     feedRequest: feedInfo,
-    onSuccess: async (data) => {
-      await queryClient.invalidateQueries({
-        queryKey: [
-          "get/feeds/mine",
-          {
-            order: "DESC",
-            minDate: minDate(),
-            maxDate: maxDate(),
-            limit: 10,
-          },
-        ],
-      });
-      toast.success(data.message);
-      router.replace("/feed");
-    },
-
+    onSuccess: handleFeedSuccess,
     onError: (error) => {
       toast.error(error.message);
     },
@@ -70,6 +73,8 @@ export default function CreatingFeedNoGathering() {
       makeFriendsFeed();
     }
   }, [feedInfo.imageUrls]);
+
+  if (isMaking) return <MakingFeedStatus isPending={isPending} />;
 
   return (
     <div className={styles.container}>

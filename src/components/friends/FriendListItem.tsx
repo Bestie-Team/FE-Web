@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
@@ -12,6 +11,7 @@ import DotSpinner from "../shared/Spinner/DotSpinner";
 import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
 import { useSetRecoilState } from "recoil";
 import { selectedFriendAtom } from "@/atoms/friends";
+import { toast } from "react-toastify";
 
 export default function FriendListItem({
   requestId,
@@ -30,28 +30,29 @@ export default function FriendListItem({
 }) {
   const queryClient = useQueryClient();
   const setSelectedFriend = useSetRecoilState(selectedFriendAtom);
+
+  const acceptSuccessHandler = async (data: { message: string }) => {
+    toast.success(data.message);
+    await queryClient.invalidateQueries({
+      queryKey: ["received", "friendsRequests", { accountId: "a", limit: 30 }],
+    });
+  };
+
+  const rejectSuccessHandler = async (data: { message: string }) => {
+    toast.success(data.message);
+    await queryClient.invalidateQueries({
+      queryKey: ["reject/friend", requestId],
+    });
+  };
+
   const { mutate: accept, isPending } = useAcceptFriendRequest({
     friendId: requestId ? requestId : "",
-    onSuccess: (data: { message: string }) => {
-      alert(data.message);
-      queryClient.invalidateQueries({
-        queryKey: [
-          "received",
-          "friendsRequests",
-          { accountId: "a", limit: 30 },
-        ],
-      });
-    },
+    onSuccess: acceptSuccessHandler,
   });
 
   const { mutate: reject } = useRejectFriendRequest({
     friendId: requestId ? requestId : "",
-    onSuccess: () => {
-      console.log("reject success");
-      queryClient.invalidateQueries({
-        queryKey: ["reject/friend", requestId],
-      });
-    },
+    onSuccess: rejectSuccessHandler,
   });
 
   return (

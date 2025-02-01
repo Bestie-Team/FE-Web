@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useFriends from "./hooks/useFriends";
 import { friendsModalStateAtom, selectedFriendAtom } from "@/atoms/friends";
@@ -47,19 +47,21 @@ export default function UserFriendsListContainer() {
 
   const { data, loadMore, hasNextPage, isFetching } = useFriends();
 
-  const { mutate: deleteComment } = useDeleteFriend({
+  const deleteSuccessHandler = async (data: { message: string }) => {
+    toast.success(data.message);
+    await queryClient.invalidateQueries({
+      queryKey: ["friends", { accountId: "aaaa", limit: 20 }],
+    });
+  };
+
+  const { mutate: deleteFriend } = useDeleteFriend({
     friendId: selectedFriendId,
-    onSuccess: async () => {
-      toast.success("친구를 삭제했습니다");
-      await queryClient.invalidateQueries({
-        queryKey: ["friends", { accountId: "aaaa", limit: 20 }],
-      });
-    },
+    onSuccess: deleteSuccessHandler,
   });
 
-  const handleCloseModal = useCallback(() => {
+  const handleCloseModal = () => {
     setDeleteFriendModalOpen(false);
-  }, [setDeleteFriendModalOpen]);
+  };
 
   if (!data || isFetching) return <DotSpinnerSmall />;
 
@@ -76,7 +78,7 @@ export default function UserFriendsListContainer() {
         <DeleteFriendModal
           isOpen={deleteFriendModalOpen}
           onClose={handleCloseModal}
-          onDelete={deleteComment}
+          onDelete={deleteFriend}
         />
       }
     </>
