@@ -5,6 +5,7 @@ import getHeader from "@/utils/getHeader";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import { HEART_LETTER } from "@/constants/images";
 
 export default function StepToInvitation({
   setStep,
@@ -26,7 +27,7 @@ export default function StepToInvitation({
         <Image
           priority
           layout="intrinsic"
-          src={"https://cdn.lighty.today/heart_letter.png"}
+          src={HEART_LETTER}
           alt="invitation_img"
           width={110}
           height={108}

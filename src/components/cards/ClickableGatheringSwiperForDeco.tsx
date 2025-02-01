@@ -60,7 +60,7 @@ export default function ClickableGatheringSwiperForDeco({
         grabCursor={true}
         className="custom-swiper w-full h-[340px]"
       >
-        {feed.map(({ gathering, id, content, images }, idx) => (
+        {feed.map(({ gathering, id, content, images, createdAt }, idx) => (
           <SwiperSlide
             onClick={() =>
               handleGatheringClick({
@@ -68,7 +68,7 @@ export default function ClickableGatheringSwiperForDeco({
                 name: gathering?.name || "",
                 content: content || "",
                 imageUrl: images[0] || "",
-                date: gathering?.gatheringDate || "",
+                date: gathering?.gatheringDate || createdAt,
               })
             }
             className={clsx(styles.slide, idx === 0 && "ml-5")}

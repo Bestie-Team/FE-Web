@@ -8,7 +8,7 @@ export interface Feed {
   commentCount: number;
   writer: lighty.User;
   createdAt: string;
-  gathering: FeedGathering | null;
+  gathering?: FeedGathering | null;
 }
 
 export interface FeedResponse {

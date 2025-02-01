@@ -46,7 +46,7 @@ export default function ChoosingGatheringToDecorate({
   };
 
   const feeds = data;
-
+  console.log(feeds);
   return (
     <Flex direction="column" className="bg-base-white h-screen pt-12">
       <Flex direction="column" className="px-6">

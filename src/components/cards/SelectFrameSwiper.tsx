@@ -12,6 +12,8 @@ import { cardFrameAtom, cardSelectedFeedAtom } from "@/atoms/card";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { frames } from "@/constants/photoCard";
 import { format } from "date-fns";
+import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
+import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 
 export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
@@ -42,20 +44,10 @@ export default function SelectFrameSwiper() {
   return (
     <div className={styles.swiperContainer}>
       <div ref={prevRef} className={styles.prevButton}>
-        <Image
-          src="https://cdn.lighty.today/swiper-left.png"
-          alt="prev"
-          width={56}
-          height={56}
-        />
+        <ArrowLeftIcon width="24" height="24" color="white" />
       </div>
       <div ref={nextRef} className={styles.nextButton}>
-        <Image
-          src="https://cdn.lighty.today/swiper-right.png"
-          alt="next"
-          width={56}
-          height={56}
-        />
+        <ArrowRightIcon width="24" height="24" color="white" />
       </div>
       <Swiper
         navigation={{
@@ -122,8 +114,10 @@ export default function SelectFrameSwiper() {
 }
 
 const styles = {
-  prevButton: "absolute top-[167px] left-[32px] z-10 transform cursor-pointer",
-  nextButton: "absolute top-[167px] right-[32px] z-10 transform cursor-pointer",
+  prevButton:
+    "absolute top-[167px] left-[32px] z-10 transform cursor-pointer w-[56px] h-[56px] rounded-full bg-grayscale-900 flex justify-center items-center",
+  nextButton:
+    "absolute top-[167px] right-[32px] z-10 transform cursor-pointer w-[56px] h-[56px] rounded-full bg-grayscale-900 flex justify-center items-center",
   frameWrapper: "relative p-[22px] h-[390px] shadow-custom rounded-[20px]",
   frame: "absolute inset-0 h-full w-full z-[-1] rounded-[20px]",
   swiperContainer: "relative w-full bg-gray-50",

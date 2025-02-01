@@ -193,7 +193,9 @@ export default function DecorateWithStickers() {
                 )}
               </div>
               <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
-                <span className={styles.textWrapper}>{selectedFeed.name}</span>
+                <span className={styles.textWrapper}>
+                  {selectedFeed.name || ""}
+                </span>
                 <Spacing size={8} />
                 <span className="text-C5">{selectedFeed.content}</span>
                 <Spacing size={12} />
