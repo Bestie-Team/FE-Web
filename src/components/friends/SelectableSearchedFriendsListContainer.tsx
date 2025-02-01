@@ -43,7 +43,7 @@ export default function SelectableSearchedFriendsListContainer({
   return (
     <Flex
       direction="column"
-      className="px-[20px] pb-[72px]"
+      className="px-5 pb-[72px]"
       style={{
         backgroundColor: "#F4F4F4",
       }}

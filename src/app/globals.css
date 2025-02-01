@@ -21,6 +21,27 @@
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+.swiper-pagination {
+  bottom: 32px !important;
+  padding-right: 24px !important;
+  text-align: right !important;
+  color: #979797 !important;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.swiper-pagination-current {
+  color: white;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.swiper-pagination-total {
+  color: #979797;
+  font-weight: 500;
+  line-height: 20px;
+}
+
 @media only screen and (max-width: 480px) {
   .Toastify__toast-container--top-center,
   .Toastify__toast-container--top-left,
