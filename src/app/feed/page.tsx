@@ -138,7 +138,7 @@ export default function FeedPage() {
       order: "DESC" as const,
       minDate: minDate(),
       maxDate: maxDate(),
-      limit: 5,
+      limit: 2,
     }),
     []
   );
@@ -153,7 +153,7 @@ export default function FeedPage() {
   const handleDeleteCommentSuccess = async () => {
     lightyToast.success("댓글을 삭제했습니다");
     await Promise.all([
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["get/comments", { feedId: selectedFeedId }],
       }),
       await queryClient.invalidateQueries({
@@ -238,7 +238,7 @@ export default function FeedPage() {
         {feedAll && (
           <SwiperSlide
             id="scrollableDiv2"
-            className="no-scrollbar h-screen overflow-y-auto"
+            className="no-scrollbar h-full overflow-y-auto"
           >
             <InfiniteScroll
               dataLength={feedAll?.length ?? 0}
@@ -246,7 +246,7 @@ export default function FeedPage() {
               loader={<DotSpinnerSmall />}
               next={loadMore}
               scrollThreshold="10px"
-              scrollableTarget="scrollableDiv_2"
+              scrollableTarget="scrollableDiv2"
             >
               <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
             </InfiniteScroll>

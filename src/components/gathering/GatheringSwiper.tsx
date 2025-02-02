@@ -39,7 +39,7 @@ export default function GatheringSwiper({
               className={clsx(styles.slide, "group")}
               key={`slide${idx}`}
             >
-              <div className="relative w-[164px] h-[146px]">
+              <div className="relative w-full h-[146px]">
                 <Image
                   src={
                     invitationImageUrl ||

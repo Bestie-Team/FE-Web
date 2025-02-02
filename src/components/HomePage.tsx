@@ -62,6 +62,7 @@ export default function HomePage() {
     () => new Date(sevenDays[6]).toISOString(),
     [sevenDays]
   );
+  console.log(maxDate);
   const handleCloseMemoriesModal = useCallback(() => {
     setIsModalOpen(false);
   }, [setIsModalOpen]);

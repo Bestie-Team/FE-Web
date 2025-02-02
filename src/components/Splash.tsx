@@ -33,6 +33,8 @@ export default function Splash() {
     },
   });
 
+  // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}`;
+
   return (
     <div className={styles.splashContainer}>
       <div className={styles.centerWrapper}>
