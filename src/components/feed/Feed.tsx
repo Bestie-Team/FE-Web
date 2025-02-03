@@ -1,5 +1,4 @@
 import MemoryCard from "@/components/feed/MemoryCard";
-import NoFeed from "@/components/feed/NoFeed";
 import Flex from "@/components/shared/Flex";
 import { Feed } from "@/models/feed";
 import clsx from "clsx";
