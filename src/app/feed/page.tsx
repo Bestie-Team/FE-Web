@@ -33,6 +33,7 @@ import { maxDate, minDate } from "@/constants/time";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
+import NoFeed from "@/components/feed/NoFeed";
 
 const Header = React.memo(
   ({
@@ -231,7 +232,11 @@ export default function FeedPage() {
               scrollThreshold="10px"
               scrollableTarget="scrollableDiv1"
             >
-              <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
+              {feedMine.length > 0 ? (
+                <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
+              ) : (
+                <NoFeed />
+              )}
             </InfiniteScroll>
           </SwiperSlide>
         )}
@@ -248,7 +253,11 @@ export default function FeedPage() {
               scrollThreshold="10px"
               scrollableTarget="scrollableDiv2"
             >
-              <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+              {feedAll.length > 0 ? (
+                <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+              ) : (
+                <NoFeed />
+              )}
             </InfiniteScroll>
           </SwiperSlide>
         )}

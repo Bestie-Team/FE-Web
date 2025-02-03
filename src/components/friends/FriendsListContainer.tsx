@@ -35,7 +35,7 @@ export default function FriendsListContainer({
           direction="column"
           align="center"
           justify="center"
-          className="flex-grow"
+          className="h-[calc(100dvh-300px)]"
         >
           <span className="text-B2">
             친구가 아직 라이티를 가입하지 않았다면?
