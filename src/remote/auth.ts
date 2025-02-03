@@ -6,6 +6,11 @@ import { RegisterRequestType } from "@/components/shared/AddPhoto";
 import { KakaoAuthResponse } from "@/app/auth/kakao/login/page";
 import { Providers } from "@/constants/oAuthButtons";
 
+const storeAuthData = (accessToken: string, userInfo: object) => {
+  localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
+  sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
+};
+
 export async function postLogin({
   accessToken,
   provider,
@@ -25,20 +30,15 @@ export async function postLogin({
 
   const data = await response.json();
   if (response.ok) {
-    const user_info: lighty.LoginResponse = data;
+    storeAuthData(data.accessToken, {
+      accountId: data.accountId,
+      profileImageUrl: data.profileImageUrl,
+    });
 
-    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, user_info.accessToken);
-    sessionStorage.setItem(
-      STORAGE_KEYS.USER_INFO,
-      JSON.stringify({
-        accountId: user_info.accountId,
-        profileImageUrl: user_info.profileImageUrl,
-      })
-    );
     if (provider === "kakao") {
       window.location.href = "/";
     }
-    return user_info;
+    return data;
   }
 
   switch (response.status) {
@@ -98,21 +98,14 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
         file: RegisterRequest.profileImageUrl as File,
       });
       profileImageUrl = uploadResult?.imageUrl;
+      if (profileImageUrl) await patchProfileImage({ profileImageUrl });
     }
 
-    // Store user information
-    const accessToken = data.accessToken;
-    const userInfo = {
+    storeAuthData(data.accessToken, {
       accountId: data.accountId,
       ...(profileImageUrl && { profileImageUrl }),
-    };
+    });
 
-    sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
-    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-    if (!!profileImageUrl) {
-      const res = await patchProfileImage({ profileImageUrl });
-      console.log(res);
-    }
     window.location.href = "/?ref=signup";
 
     return { message: "회원가입을 축하합니다" };
