@@ -50,7 +50,7 @@ MemoizedGatheringSwiper.displayName = "MemoizedGatheringSwiper";
 MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
-  const { setUserInfo, userInfo } = useAuth();
+  const { setUserInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
 

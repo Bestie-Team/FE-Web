@@ -13,7 +13,7 @@ export interface KakaoAuthResponse {
   refresh_token_expires_in: number;
 }
 
-export default function page() {
+export default function Page() {
   const getAuthCode = () =>
     new URL(document.location.toString()).searchParams.get("code") || "";
 
