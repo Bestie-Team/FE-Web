@@ -110,7 +110,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
         owner={owner}
         setIsLoaded={setIsLoaded}
       />
-      {!!isLoaded && <FullPageLoader />}
+      {!isLoaded && <FullPageLoader />}
       <GroupInfoContainer group={selectedGroup} />
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />

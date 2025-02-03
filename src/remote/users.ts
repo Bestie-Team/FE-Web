@@ -39,7 +39,6 @@ export async function getUserDetail() {
   try {
     const targetUrl = `${baseUrl}/users/my`;
     const response = await fetchWithAuth(targetUrl, {
-      headers: { "Cache-Control": "no-cache" },
       method: "GET",
     });
     const data: lighty.UserDetailResponse = await response.json();
@@ -48,4 +47,14 @@ export async function getUserDetail() {
     console.log(error);
     throw new Error("친구 검색 중 에러가 발생했습니다");
   }
+}
+
+export async function getIdAvailability({ accountId }: { accountId: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+
+  const targetUrl = `${baseUrl}/users/availability?accountId=${accountId}`;
+  const response = await fetch(targetUrl, {
+    method: "GET",
+  });
+  return response;
 }

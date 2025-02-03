@@ -1,5 +1,11 @@
 "use client";
-import React, { ChangeEvent, useCallback, useEffect, useMemo } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import * as lighty from "lighty-type";
 import AddPhoto, { RegisterRequestType } from "./shared/AddPhoto";
 import Input from "./shared/Input/Input";
@@ -11,6 +17,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import TermsBottomSheet from "./shared/BottomDrawer/TermsBottomSheet";
 import useSignup from "./users/hooks/useSignup";
 import { lightyToast } from "@/utils/toast";
+import { getIdAvailability } from "@/remote/users";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
@@ -52,28 +59,35 @@ const INITIAL_FORM_STATE: RegisterRequestType = {
   provider: "GOOGLE",
 };
 
-export default function UploadProfileForm() {
+export default function SignupForm() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [formValues, setFormValues] =
     React.useState<RegisterRequestType>(INITIAL_FORM_STATE);
   const [isClient, setIsClient] = React.useState(false);
   const [oauthData, setOauthData] = React.useState<lighty.LoginFailResponse>();
+  const [idNotAvailable, setIdNotAvailable] = useState(false);
 
-  const handleAccountIdChange = useCallback((value: string) => {
+  const handleAccountIdChange = useCallback(async (value: string) => {
     if (value.length <= 40) {
       setFormValues((prev) => ({ ...prev, accountId: value }));
+      if (value.length > 3) {
+        const response = await getIdAvailability({ accountId: value });
+        if (response.ok) {
+          setIdNotAvailable(false);
+        } else {
+          setIdNotAvailable(true);
+        }
+      }
     }
   }, []);
 
   const handleFormValues = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
-
       if (name === "accountId") {
         handleAccountIdChange(value);
         return;
       }
-
       setFormValues((prev) => ({ ...prev, [name]: value }));
     },
     [handleAccountIdChange]
@@ -128,18 +142,19 @@ export default function UploadProfileForm() {
         <AddPhoto setImageUrl={setFormValues} uploadable />
       </div>
       <Spacing size={16} />
-      {
-        <Input
-          name="name"
-          label="이름"
-          placeholder="이름을 입력해주세요."
-          onChange={handleFormValues}
-          value={oauthData?.name || "로에"}
-          helpMessage={errors.name}
-        />
-      }
+
+      <Input
+        name="name"
+        label="이름"
+        placeholder="이름을 입력해주세요."
+        onChange={handleFormValues}
+        value={oauthData?.name || formValues.name}
+        helpMessage={errors.name}
+      />
+
       <Spacing size={30} />
       <Input
+        idNotAvailable={idNotAvailable}
         name="accountId"
         label="계정 아이디"
         placeholder="영문 소문자, 숫자, 특수기호 (_)만 입력 가능"

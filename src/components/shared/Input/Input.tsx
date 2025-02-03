@@ -16,6 +16,7 @@ interface InputProps {
   helpMessage?: React.ReactNode;
   displayLength?: number;
   minLength?: number;
+  idNotAvailable?: boolean;
 }
 
 export default function Input({
@@ -26,6 +27,7 @@ export default function Input({
   helpMessage,
   displayLength,
   minLength,
+  idNotAvailable,
   ...props
 }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -46,7 +48,8 @@ export default function Input({
       <div
         className={clsx(
           styles.inputWrapper,
-          isFocused ? "border-grayscale-700" : "border-grayscale-10"
+          isFocused ? "border-grayscale-700" : "border-grayscale-10",
+          idNotAvailable ? "border-point-red50" : "border-grayscale-700"
         )}
       >
         <input

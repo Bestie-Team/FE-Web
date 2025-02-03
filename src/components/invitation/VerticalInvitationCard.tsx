@@ -10,6 +10,7 @@ import { SetterOrUpdater } from "recoil";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringInvitation } from "@/models/gathering";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { Lighty } from "@/constants/images";
 
 export default function UploadableVerticalInvitationCard({
   gathering,
@@ -79,8 +80,8 @@ export function VerticalInvitationCard({
               />
 
               <Spacing size={10} />
-              <span className="text-T1 pl-[4px]">{name}</span>
-              <span className="text-B4 pl-[4px] text-grayscale-600">
+              <span className="text-T1 pl-1">{name}</span>
+              <span className="text-B4 pl-1 text-grayscale-600">
                 {description}
               </span>
             </Flex>
@@ -138,10 +139,7 @@ export function VerticalInvitationCard({
                 <Image
                   priority
                   layout="intrinsic"
-                  src={
-                    invitation_image_url ||
-                    "https://cdn.lighty.today/lighty.jpg"
-                  }
+                  src={invitation_image_url || Lighty}
                   className={styles.image}
                   width={300}
                   height={210}

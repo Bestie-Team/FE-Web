@@ -2,7 +2,7 @@
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
-import UploadProfileForm from "@/components/UploadProfileForm";
+import SignupForm from "@/components/SignupForm";
 import getHeader from "@/utils/getHeader";
 import { useEffect, useState } from "react";
 
@@ -31,7 +31,7 @@ export default function SignupPage() {
         <span className="text-B3 text-grayscale-500">
           프로필 사진을 등록하고, 프로필 아이디를 등록해주세요.
         </span>
-        <UploadProfileForm />
+        <SignupForm />
       </div>
     </div>
   );

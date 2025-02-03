@@ -21,7 +21,9 @@ export default function TimelineItem({
       <Flex>
         <TimelineButton />
         <Spacing size={8} direction="horizontal" />
-        <span className="text-T4">{`D${diff == 0 ? `-day` : diff}`}</span>
+        <span className="text-T4 min-w-11">{`D${
+          diff == 0 ? `-day` : diff
+        }`}</span>
         <Spacing size={24} direction="horizontal" />
         <Flex direction="column" justify="space-between">
           <span className="text-T4">{upcomingGathering.name}</span>

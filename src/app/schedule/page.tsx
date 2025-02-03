@@ -79,9 +79,11 @@ export default function SchedulePage() {
     value: "2025",
     label: "2025",
   });
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   const upcomingGatherings = upcoming?.gatherings.filter(
-    (gathering) => new Date(gathering.gatheringDate) >= new Date()
+    (gathering) => new Date(gathering.gatheringDate) >= today
   );
 
   useEffect(() => {

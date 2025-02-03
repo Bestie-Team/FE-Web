@@ -18,3 +18,4 @@ export const frame6 = "https://cdn.lighty.today/frame6.jpeg";
 export const frame7 = "https://cdn.lighty.today/frame7.jpeg";
 export const FEED_SUCCESS = "https://cdn.lighty.today/feed_success.png";
 export const HEART_LETTER = "https://cdn.lighty.today/heart_letter.png";
+export const Lighty = "https://cdn.lighty.today/lighty.jpg";
