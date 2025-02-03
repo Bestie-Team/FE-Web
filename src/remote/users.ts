@@ -39,6 +39,7 @@ export async function getUserDetail() {
   try {
     const targetUrl = `${baseUrl}/users/my`;
     const response = await fetchWithAuth(targetUrl, {
+      headers: { "Cache-Control": "no-cache" },
       method: "GET",
     });
     const data: lighty.UserDetailResponse = await response.json();

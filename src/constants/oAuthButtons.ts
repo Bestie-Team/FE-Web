@@ -1,4 +1,12 @@
-const oAuthButtons = [
+export type Providers = "kakao" | "google" | "apple";
+export interface OAUTH {
+  provider: Providers;
+  color: string;
+  label: string;
+  icon: string;
+}
+
+const oAuthButtons: OAUTH[] = [
   {
     provider: "kakao",
     color: "#FAE300",

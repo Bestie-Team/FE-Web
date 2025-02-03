@@ -99,7 +99,7 @@ const NextLayout = ({ children }: Props) => {
   }, [pathname]);
 
   useEffect(() => {
-    const publicPaths = ["/signup"];
+    const publicPaths = ["/signup", "/auth"];
     const isPublicPath = publicPaths.some((path) => pathname.startsWith(path));
 
     if (!isAuthenticated && !isPublicPath) {

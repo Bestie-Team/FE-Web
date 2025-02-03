@@ -7,7 +7,12 @@ type NoGatheringType = "ENDED" | "EXPECTING";
 
 export default function NoGathering({ type }: { type: NoGatheringType }) {
   return (
-    <Flex direction="column" align="center" className="pt-[200px] h-screen">
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      className="h-screen"
+    >
       <div className="w-[40px] h-[40px] p-[5px]">
         <LightyLogoForNavBar width="40" height="40" color="#D8D8D8" />
       </div>

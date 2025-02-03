@@ -1,13 +1,18 @@
 import * as lighty from "lighty-type";
-import { postProfileImageWithToken } from "./profile";
+import { patchProfileImage, postProfileImageWithToken } from "./profile";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG } from "./shared";
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
+import { KakaoAuthResponse } from "@/app/auth/kakao/login/page";
+import { Providers } from "@/constants/oAuthButtons";
 
-export async function postLogin({ accessToken }: lighty.LoginRequest) {
+export async function postLogin({
+  accessToken,
+  provider,
+}: lighty.LoginRequest & { provider: Providers }) {
   const baseUrl = API_CONFIG.getBaseUrl();
 
-  const targetUrl = `${baseUrl}/auth/google/login`;
+  const targetUrl = `${baseUrl}/auth/${provider}/login`;
   const response = await fetch(targetUrl, {
     method: "POST",
     headers: {
@@ -30,7 +35,9 @@ export async function postLogin({ accessToken }: lighty.LoginRequest) {
         profileImageUrl: user_info.profileImageUrl,
       })
     );
-
+    if (provider === "kakao") {
+      window.location.href = "/";
+    }
     return user_info;
   }
 
@@ -102,12 +109,46 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
 
     sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-
+    if (!!profileImageUrl) {
+      const res = await patchProfileImage({ profileImageUrl });
+      console.log(res);
+    }
     window.location.href = "/?ref=signup";
 
     return { message: "회원가입을 축하합니다" };
   } catch (error) {
-    console.error("Registration error:", error);
-    throw error;
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
+}
+
+export async function getKakaoToken({
+  client_id,
+  redirect_uri,
+  auth_code,
+}: {
+  client_id: string;
+  redirect_uri: string;
+  auth_code: string;
+}) {
+  const body = new URLSearchParams();
+  body.append("grant_type", "authorization_code");
+  body.append("client_id", client_id);
+  body.append("redirect_uri", redirect_uri);
+  body.append("code", auth_code);
+
+  const baseUrl = "https://kauth.kakao.com";
+  const targetUrl = `${baseUrl}/oauth/token`;
+  const response = await fetch(targetUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    },
+    body,
+  });
+
+  if (!response.ok) {
+    throw new Error("getKakaoToken 에러 발생");
+  }
+  const res: KakaoAuthResponse = await response.json();
+  return res;
 }

@@ -24,6 +24,7 @@ import {
 } from "@/models/gathering";
 import { NoGatheringHome } from "./gathering/NoGathering";
 import useGatheringNoFeeds from "./gathering/hooks/useGatheringNoFeed";
+
 const Header = React.memo(() => {
   const header = getHeader("/");
   return <>{header}</>;
@@ -49,7 +50,7 @@ MemoizedGatheringSwiper.displayName = "MemoizedGatheringSwiper";
 MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
-  const { setUserInfo } = useAuth();
+  const { setUserInfo, userInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
 
@@ -62,7 +63,6 @@ export default function HomePage() {
     () => new Date(sevenDays[6]).toISOString(),
     [sevenDays]
   );
-  console.log(maxDate);
   const handleCloseMemoriesModal = useCallback(() => {
     setIsModalOpen(false);
   }, [setIsModalOpen]);
@@ -102,7 +102,6 @@ export default function HomePage() {
   }, [setUserInfo]);
 
   if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
-  console.log("minDate", minDate);
 
   return (
     <div>

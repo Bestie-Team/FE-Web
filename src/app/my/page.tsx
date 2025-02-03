@@ -64,14 +64,12 @@ export default function MyPage() {
 
   useEffect(() => {
     const initializeProfileInfo = () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const refParam = urlParams.get("ref");
       const imageUrlFromSignup = localStorage.getItem(
         STORAGE_KEYS.PROFILE_IMAGE_URL
       );
       const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
 
-      if (refParam === "signup" && imageUrlFromSignup && userInfoSession) {
+      if (imageUrlFromSignup && userInfoSession) {
         const userInfo = JSON.parse(userInfoSession);
         return {
           profileImageUrl: imageUrlFromSignup,

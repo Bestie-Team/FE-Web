@@ -14,7 +14,7 @@ export default function UpcomingSchedule({
       <span className="text-T3">다가오는 일정</span>
       <Spacing size={32} />
       <div className="relative">
-        <div className={styles.timelineWrapper} />
+        {gatherings.length > 1 && <div className={styles.timelineWrapper} />}
         {gatherings.length < 1 ? (
           <NoSchedule />
         ) : (

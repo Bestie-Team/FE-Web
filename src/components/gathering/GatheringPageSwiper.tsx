@@ -34,7 +34,7 @@ const GatheringPageSwiper = React.memo(
       direction="horizontal"
     >
       <SwiperSlide>
-        {expectingGatherings.length < 0 ? (
+        {expectingGatherings.length < 1 ? (
           <NoGathering type="EXPECTING" />
         ) : (
           <>
@@ -47,7 +47,7 @@ const GatheringPageSwiper = React.memo(
         )}
       </SwiperSlide>
       <SwiperSlide>
-        {endedGatherings.length < 0 ? (
+        {endedGatherings.length < 1 ? (
           <NoGathering type="ENDED" />
         ) : (
           <>

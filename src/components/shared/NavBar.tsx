@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
 import useUserDetail from "../users/hooks/useUserDetail";
 import DotSpinnerSmall from "./Spinner/DotSpinnerSmall";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 const NavBar = () => {
   const { data: user, isFetching } = useUserDetail();
@@ -15,9 +16,16 @@ const NavBar = () => {
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
   const isVisible = useRecoilValue(scrollAtom);
   const scrollProgress = useRecoilValue(scrollProgressAtom);
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     setIsClient(true);
+    const imageUrlFromSignup = localStorage.getItem(
+      STORAGE_KEYS.PROFILE_IMAGE_URL
+    );
+    if (imageUrlFromSignup) {
+      setImageUrl(imageUrlFromSignup);
+    }
   }, []);
 
   if (!isClient) return null;
@@ -55,7 +63,7 @@ const NavBar = () => {
             isActive={idx === activeBtn || pathname === item.href}
             onClick={() => setActiveBtn(idx)}
             icon={item.icon}
-            profileImageUrl={user?.profileImageUrl}
+            profileImageUrl={user?.profileImageUrl || imageUrl}
           />
         ))
       )}

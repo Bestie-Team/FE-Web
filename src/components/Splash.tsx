@@ -1,11 +1,10 @@
 "use client";
-import React from "react";
 import LightyIcon from "./shared/Icon/LightyIcon";
 import Tooltip from "./shared/Tooltip/Tooltip";
 import Button from "./shared/Button/Button";
 import clsx from "clsx";
 import LargeLightyLogo from "./shared/Icon/LargeLightyLogo";
-import oAuthButtons from "@/constants/oAuthButtons";
+import oAuthButtons, { Providers } from "@/constants/oAuthButtons";
 import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "./shared/providers/AuthProvider";
@@ -18,6 +17,7 @@ export default function Splash() {
       try {
         const userInfo = await postLogin({
           accessToken: credentialResponse.access_token,
+          provider: "google",
         });
         if (userInfo) {
           login(userInfo);
@@ -33,7 +33,15 @@ export default function Splash() {
     },
   });
 
-  // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}`;
+  const loginHandler = (provider: Providers) => {
+    if (provider === "google") {
+      googleLogin();
+    } else if (provider === "kakao") {
+      const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
+      window.location.href = KAKAO_AUTH_URL;
+    }
+    console.log(provider);
+  };
 
   return (
     <div className={styles.splashContainer}>
@@ -59,10 +67,7 @@ export default function Splash() {
             <Button
               key={idx}
               className={clsx(styles.oAuthButton)}
-              onClick={() => {
-                googleLogin();
-                console.log(provider);
-              }}
+              onClick={() => loginHandler(provider)}
               color={color}
             >
               <object
