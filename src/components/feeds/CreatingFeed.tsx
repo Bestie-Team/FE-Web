@@ -77,7 +77,10 @@ export default function CreatingFeed() {
     files: filesToUpload,
     gatheringId: selectedGatheringId || "",
     onSuccess: handleImageUploadSuccess,
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      lightyToast.error(error.message);
+      setFilesToUpload([]);
+    },
   });
 
   const { data: selectedGathering } = useGatheringDetail({

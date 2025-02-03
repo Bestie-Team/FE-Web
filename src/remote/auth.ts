@@ -29,6 +29,7 @@ export async function postLogin({
   });
 
   const data = await response.json();
+  console.log(data);
   if (response.ok) {
     storeAuthData(data.accessToken, {
       accountId: data.accountId,

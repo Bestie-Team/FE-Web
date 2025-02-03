@@ -1,6 +1,6 @@
 import Flex from "../shared/Flex";
-import LightyLogoForNavBar from "../shared/Icon/LightyLogoForNavBar";
 import PencilIcon from "../shared/Icon/PencilIcon";
+import ThinLightyLogo from "../shared/Icon/ThinLightyLogo";
 import Spacing from "../shared/Spacing";
 
 type NoGatheringType = "ENDED" | "EXPECTING";
@@ -13,8 +13,8 @@ export default function NoGathering({ type }: { type: NoGatheringType }) {
       justify="center"
       className="h-screen"
     >
-      <div className="w-[40px] h-[40px] p-[5px]">
-        <LightyLogoForNavBar width="40" height="40" color="#D8D8D8" />
+      <div className="w-10 h-10 p-[5px]">
+        <ThinLightyLogo />
       </div>
       <Spacing size={13} />
       <span className="text-T4 text-grayscale-300">
