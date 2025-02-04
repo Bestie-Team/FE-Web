@@ -29,7 +29,7 @@ export default function GatheringEditPage() {
   };
   const [gatheringInfo, setGatheringInfo] =
     useState<GatheringDetailResponse>(INITIAL_FORM_STATE);
-
+  console.log(setGatheringInfo);
   const { mutate: editingFeed, isPending } = useEditGathering({
     gathering: gatheringInfo,
     gatheringId: originalGatheringValue?.id || "",
