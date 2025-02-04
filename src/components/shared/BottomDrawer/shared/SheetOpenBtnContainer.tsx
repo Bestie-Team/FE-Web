@@ -39,7 +39,9 @@ export default function SheetOpenBtnContainer({
       <BottomSheetOpenButton
         icon={getIcon()}
         className={styles.plusButton}
-        onClick={() => setModalOpen(true)}
+        onClick={() => {
+          setModalOpen(true);
+        }}
       />
       {tooltip ? (
         <div className={styles.toolTipWrapper}>
@@ -56,6 +58,6 @@ export default function SheetOpenBtnContainer({
 
 const styles = {
   plusButton:
-    "touch-pan-y absolute bottom-[86px] right-[16px] z-10 shadow-lg transition-transform duration-300 cursor-pointer hover:animate-shrink-grow-less",
+    " absolute bottom-[86px] right-[16px] z-10 shadow-lg transition-transform duration-300 cursor-pointer hover:animate-shrink-grow-less",
   toolTipWrapper: "absolute bottom-[92px] right-[84px] z-14",
 };

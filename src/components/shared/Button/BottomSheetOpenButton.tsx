@@ -18,6 +18,7 @@ export default function BottomSheetOpenButton({
       style={style}
       className={clsx(PlusButtonStyle, className)}
       onClick={onClick}
+      onTouchStart={(e) => e.stopPropagation()}
     >
       {icon ? icon : <PlusIcon width="23.3" height="23.3" />}
     </div>
