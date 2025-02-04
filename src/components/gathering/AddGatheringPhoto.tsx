@@ -6,6 +6,7 @@ import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import useUploadInvitationImage from "./hooks/useUploadInvitationImage";
 import * as lighty from "lighty-type";
+import { lightyToast } from "@/utils/toast";
 
 export default function AddGatheringPhoto({
   image,
@@ -21,6 +22,7 @@ export default function AddGatheringPhoto({
       console.log(data.imageUrl);
       setImage((prev) => ({ ...prev, invitationImageUrl: data.imageUrl }));
     },
+    onError: (error: Error) => lightyToast.error(error.message),
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
