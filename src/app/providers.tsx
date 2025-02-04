@@ -86,6 +86,7 @@ const NextLayout = ({ children }: Props) => {
 
   const pathname = usePathname();
   const router = useRouter();
+  const noScroll = ["/feed", "/gathering", "/hidden"];
 
   useChangeHeaderStyle({ scrollReady: isClient });
 
@@ -120,8 +121,9 @@ const NextLayout = ({ children }: Props) => {
         }}
         id="scrollable-container"
         className={clsx(
-          "overflow-y-scroll no-scrollbar h-dvh",
-          pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white "
+          "no-scrollbar h-dvh",
+          pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white ",
+          noScroll.includes(pathname) ? "" : "overflow-y-scroll"
         )}
       >
         <>{children}</>

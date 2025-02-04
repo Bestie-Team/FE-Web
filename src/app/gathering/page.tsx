@@ -87,7 +87,7 @@ export default function MyGatheringPage() {
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full no-scrollbar">
       <Header
         shadow={scrollProgress > 0.01}
         selectedTab={selectedTab}

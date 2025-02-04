@@ -13,11 +13,10 @@ export default function useFeedHidden({ limit }: { limit: number }) {
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["get/feeds/hidden"],
-    queryFn: async ({ pageParam: cursor }): Promise<FeedResponse> =>
-      getFeedHidden({ cursor, limit }),
+    queryFn: async ({ pageParam }): Promise<FeedResponse> =>
+      getFeedHidden({ cursor: pageParam, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
-    refetchOnWindowFocus: "always",
     throwOnError: true,
   });
 

@@ -33,7 +33,10 @@ export default function FeedPage() {
   if (!isClient) return <FullPageLoader />;
 
   return (
-    <div className="h-full pt-[48px]" id="scrollableDiv">
+    <div
+      className="h-vh pt-[48px] overflow-y-scroll no-scrollbar"
+      id="scrollableDiv"
+    >
       {header}
       {!hiddenFeed ? (
         <FullPageLoader />
@@ -64,12 +67,11 @@ export default function FeedPage() {
             </div>
           </div>
           <InfiniteScroll
-            // className="!overflow-visible"
             dataLength={hiddenFeed?.length ?? 0}
             hasMore={hasNextPage}
             loader={<DotSpinnerSmall />}
             next={loadMore}
-            scrollThreshold="10px"
+            scrollThreshold="50px"
             scrollableTarget="scrollableDiv"
           >
             <Feed
