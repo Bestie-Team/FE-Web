@@ -13,14 +13,13 @@ import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import * as lighty from "lighty-type";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function GroupEditPage() {
   const header = getHeader("/groups/*/edit");
   const [isClient, setIsClient] = useState(false);
-  const selectedGroup =
-    useRecoilValue<lighty.CreateGroupRequest>(selectedGroupAtom);
+  const selectedGroup = useRecoilValue<CreateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
 
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
@@ -94,6 +93,6 @@ export default function GroupEditPage() {
       </div>
     );
   } else if (step === 2) {
-    return <InviteFriends setStep={setStep} />;
+    return <InviteFriends setStep={setStep} type="group" />;
   }
 }

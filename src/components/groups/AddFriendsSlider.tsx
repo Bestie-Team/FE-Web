@@ -16,7 +16,7 @@ export default function AddFriendsSlider({
 }: {
   type: "gathering" | "group";
   setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
-  setGroup?: SetterOrUpdater<CreateGroupRequest>;
+  setGroup?: Dispatch<SetStateAction<CreateGroupRequest>>;
   setStep?: Dispatch<SetStateAction<number>>;
 }) {
   const [friends, setFriends] = useRecoilState<lighty.User[] | null>(
@@ -43,7 +43,7 @@ export default function AddFriendsSlider({
     } else if (type === "gathering" && setGathering) {
       setGathering((prev: lighty.CreateGatheringRequest) => ({
         ...prev,
-        friendIds: friendIds ? friendIds : null,
+        friendIds: friendIds ? friendIds : [],
       }));
     }
   }, [friends]);
