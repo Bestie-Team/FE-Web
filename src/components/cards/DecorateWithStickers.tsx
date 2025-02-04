@@ -12,12 +12,12 @@ import {
 import Flex from "../shared/Flex";
 import clsx from "clsx";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import SheetOpenBtnContainer from "../shared/BottomDrawer/shared/SheetOpenBtnContainer";
 import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/BottomDrawer/DecoStickerBottomSheet";
 import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 import { format } from "date-fns";
+import FloatingButton from "../shared/Button/FloatingButton";
 
 export default function DecorateWithStickers() {
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
@@ -247,7 +247,7 @@ export default function DecorateWithStickers() {
       ) : null}
       {deco ? (
         <>
-          <SheetOpenBtnContainer tooltip />
+          <FloatingButton tooltip />
           <FixedBottomButton
             bgColor="bg-grayscale-50"
             label={"이미지 저장"}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import SheetOpenBtnContainer from "./BottomDrawer/shared/SheetOpenBtnContainer";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
@@ -10,6 +9,7 @@ import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
 import useUserDetail from "../users/hooks/useUserDetail";
 import DotSpinnerSmall from "./Spinner/DotSpinnerSmall";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import FloatingButton from "./Button/FloatingButton";
 
 const NavBar = () => {
   const { data: user, isFetching } = useUserDetail();
@@ -70,9 +70,7 @@ const NavBar = () => {
         ))
       )}
 
-      {(showSheetButton || pathname === "/") && (
-        <SheetOpenBtnContainer tooltip />
-      )}
+      {(showSheetButton || pathname === "/") && <FloatingButton tooltip />}
     </nav>,
     portalRoot
   );
