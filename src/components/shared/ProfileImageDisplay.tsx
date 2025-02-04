@@ -1,7 +1,7 @@
 "use client";
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
 import { lightyToast } from "@/utils/toast";

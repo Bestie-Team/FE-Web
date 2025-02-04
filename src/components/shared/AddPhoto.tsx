@@ -2,8 +2,7 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
 import * as lighty from "lighty-type";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 import clsx from "clsx";
 import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
 import PlusIcon from "./Icon/PlusIcon";
