@@ -15,7 +15,7 @@ export default function CommentItem({
   if (!comment) return;
 
   const isMe = userInfo?.accountId === comment.writer.accountId;
-  console.log(userInfo?.accountId, comment.writer.accountId);
+
   const { writer, content, createdAt } = comment;
   const time = formatDate(new Date(createdAt));
   return (

@@ -11,7 +11,6 @@ import useFeedComments from "@/components/feeds/hooks/useGetComments";
 import { useQueryClient } from "@tanstack/react-query";
 import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
-import { lightyToast } from "@/utils/toast";
 
 export default function CommentContainer({
   selectedFeedId,
