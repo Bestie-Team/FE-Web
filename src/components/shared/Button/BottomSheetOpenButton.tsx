@@ -25,7 +25,7 @@ export default function BottomSheetOpenButton({
 }
 
 const PlusButtonStyle =
-  "bg-grayscale-900 rounded-full w-14 h-14 flex items-center justify-center";
+  "z-999 bg-grayscale-900 rounded-full w-14 h-14 flex items-center justify-center";
 
 export function PlusCircleButtonSmall({
   className,
