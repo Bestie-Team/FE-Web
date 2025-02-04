@@ -28,8 +28,7 @@ export async function postLogin({
     }),
   });
 
-  const data = await response.json();
-  console.log(data);
+  const data: lighty.LoginResponse = await response.json();
   if (response.ok) {
     storeAuthData(data.accessToken, {
       accountId: data.accountId,

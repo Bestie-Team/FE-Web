@@ -13,8 +13,6 @@ import WelcomeBottomSheet from "./shared/BottomDrawer/WelcomeBottomSheet";
 import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
 import { homeModalStateAtom } from "@/atoms/home";
-import STORAGE_KEYS from "@/constants/storageKeys";
-import { useAuth } from "./shared/providers/AuthProvider";
 import { getWeekDates } from "@/utils/getThisWeekDates";
 import useGatherings from "./gathering/hooks/useGatherings";
 import FullPageLoader from "./shared/FullPageLoader";
@@ -50,7 +48,6 @@ MemoizedGatheringSwiper.displayName = "MemoizedGatheringSwiper";
 MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
-  const { setUserInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
   const [isNew, setIsNew] = useState(false);
 
@@ -87,19 +84,11 @@ export default function HomePage() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const refParam = urlParams.get("ref");
-    const imageUrlFromSignup = sessionStorage.getItem(
-      STORAGE_KEYS.PROFILE_IMAGE_URL
-    );
     if (refParam === "signup") {
       setIsNew(true);
-      setUserInfo((prev) => ({
-        ...prev,
-        profileImageUrl: imageUrlFromSignup,
-        accountId: prev?.accountId || "",
-      }));
       console.log("from signup");
     }
-  }, [setUserInfo]);
+  }, []);
 
   if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
 

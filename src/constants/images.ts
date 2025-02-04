@@ -1,7 +1,7 @@
 export const MAP = "https://cdn.lighty.today/map.png";
 export const SPLASH = "https://cdn.lighty.today/bg.png";
 export const SQUARE = "https://cdn.lighty.today/rectEdit.png";
-export const HOME_BANNER = "https://cdn.lighty.today/main_banner.png";
+export const HOME_BANNER = "https://cdn.lighty.today/lighty_banner.png";
 export const HOME_BANNER_BACKGROUND = "https://cdn.lighty.today/background.png";
 export const AD_IMAGE2 = "https://cdn.lighty.today/banner2.png";
 export const AD_IMAGE3 = "https://cdn.lighty.today/banner3.png";

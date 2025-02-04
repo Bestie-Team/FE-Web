@@ -73,7 +73,7 @@ export default function HomeBannerContainer() {
 }
 
 const styles = {
-  homeBannerImage: "h-[420px]",
+  homeBannerImage: "h-[420px] object-cover",
 
   textWrapper: "absolute bottom-0 left-0 pl-6 pb-8",
   subTitle:
