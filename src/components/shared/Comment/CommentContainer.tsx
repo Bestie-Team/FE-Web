@@ -37,7 +37,7 @@ export default function CommentContainer({
           queryKey: ["get/feeds/all"],
         }),
       ]);
-      lightyToast.success(data.message);
+      console.log(data);
     };
     invalidateQueries(data);
   };

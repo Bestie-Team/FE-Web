@@ -24,7 +24,7 @@ export default function CommentItem({
       className={clsx(styles.container, isMe ? "!bg-grayscale-50" : "")}
     >
       <div className="flex flex-row flex-wrap items-center gap-2">
-        <span className={styles.commenter}>{writer.accountId}</span>
+        <span className={styles.commenter}>{writer.name}</span>
         <span className={styles.comment}>{content}</span>
         <span className={styles.time}>{time}</span>
         {isMe && (
