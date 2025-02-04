@@ -284,7 +284,7 @@ export default function FeedPage() {
   }
   console.log(feedMine);
   return (
-    <div className="h-dvh">
+    <div className="h-full">
       <Header
         shadow={scrollProgress > 0.1}
         selectedTab={selectedTab}
