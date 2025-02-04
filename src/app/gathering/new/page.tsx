@@ -11,11 +11,13 @@ import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
+import { selectedFriendsAtom } from "@/atoms/friends";
 
 export default function NewGatheringPage() {
   const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
   const reset = useResetRecoilState(newGatheringInfo);
+  const resetFriends = useResetRecoilState(selectedFriendsAtom);
 
   const [gatheringInfo, setGatheringInfo] =
     useRecoilState<lighty.CreateGatheringRequest>(newGatheringInfo);
@@ -28,8 +30,14 @@ export default function NewGatheringPage() {
       reset();
     },
   });
+
   useEffect(() => {
     setIsClient(true);
+
+    return () => {
+      reset();
+      resetFriends();
+    };
   }, []);
 
   if (!isClient) {
@@ -50,7 +58,7 @@ export default function NewGatheringPage() {
   }
 
   if (step === 2) {
-    return <InviteFriends setStep={setStep} type="default" />;
+    return <InviteFriends setStep={setStep} type="gathering" />;
   }
   if (step === 3) {
     return <StepToInvitation setStep={setStep} />;

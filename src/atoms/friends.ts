@@ -6,14 +6,9 @@ export const friendsSelectedTabAtom = atom<"1" | "2">({
   default: "1",
 });
 
-export const selectedFriendsAtom = atom<lighty.User[]>({
-  key: "friends/groups/selectedFriends",
-  default: [],
-});
-
-export const newGroupMembersAtom = atom<lighty.User[]>({
-  key: "friends/newGroup/selectedFriends",
-  default: [],
+export const selectedFriendsAtom = atom<lighty.User[] | null>({
+  key: "friends/selectedFriends",
+  default: null,
 });
 
 export const friendsModalStateAtom = atom<boolean>({

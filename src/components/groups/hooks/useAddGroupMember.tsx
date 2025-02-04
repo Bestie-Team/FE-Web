@@ -7,7 +7,7 @@ export default function useAddGroupMember({
   onSuccess,
 }: {
   groupId: string;
-  friendIds: string[];
+  friendIds: string[] | null;
   onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({

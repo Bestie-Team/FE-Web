@@ -79,7 +79,7 @@ export async function postGroupMember({
   userIds,
 }: {
   groupId: string;
-  userIds: string[];
+  userIds: string[] | null;
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/groups/${groupId}/members`;

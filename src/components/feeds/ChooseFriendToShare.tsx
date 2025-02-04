@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import SearchInput from "../shared/Input/SearchBar";
 import getHeader from "@/utils/getHeader";
 import LightyIcon from "../shared/Icon/LightyIcon";
@@ -12,7 +12,7 @@ export default function ChooseFriendToShare({
   setStep,
 }: {
   debouncedSearch: string;
-  setStep: (step: number) => void;
+  setStep: Dispatch<SetStateAction<number>>;
 }) {
   const header = getHeader("/record");
   return (
@@ -41,7 +41,7 @@ export default function ChooseFriendToShare({
           <SelectFriendsContainer
             paddingTop="0"
             type="record"
-            action={() => setStep(3.5)}
+            setStep={setStep}
           />
         </>
       )}

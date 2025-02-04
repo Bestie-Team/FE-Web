@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import { newGroupMembersAtom, selectedFriendsAtom } from "@/atoms/friends";
+import { selectedFriendsAtom } from "@/atoms/friends";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
 import * as lighty from "lighty-type";
 import useFriends from "./hooks/useFriends";
@@ -25,14 +25,11 @@ export default function SelectFriendsContainer({
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [countModal, setCountModal] = useState(false);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
-  const setFriendsToAdd = useSetRecoilState<lighty.User[] | []>(
+  const setFriendsToAdd = useSetRecoilState<lighty.User[] | null>(
     selectedFriendsAtom
   );
   const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
     friendsToShareAtom
-  );
-  const setFriendsToNewGroup = useSetRecoilState<lighty.User[] | []>(
-    newGroupMembersAtom
   );
 
   const { data: friends } = useFriends();
@@ -78,17 +75,17 @@ export default function SelectFriendsContainer({
   const handleSubmitSelectionToShare = () => {
     const clickedFriends = clickedItems.map((idx) => friends[idx]);
     setFriendsToShare(clickedFriends);
-    action?.();
+    setStep?.(3.5);
   };
-  const handleSubmitSelectionToNewGroup = () => {
+  const handleSubmitSelectionToNew = () => {
     const clickedFriends = clickedItems.map((idx) => friends[idx]);
-    setFriendsToNewGroup(clickedFriends);
+    setFriendsToAdd(clickedFriends);
     setStep?.(1);
   };
 
   const onClick = () => {
-    if (type === "group") {
-      handleSubmitSelectionToNewGroup();
+    if (type === "group" || type === "gathering") {
+      handleSubmitSelectionToNew();
     } else if (type === "record") {
       handleSubmitSelectionToShare();
     } else handleSubmitSelection();

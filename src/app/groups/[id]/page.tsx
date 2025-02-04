@@ -8,7 +8,7 @@ import Spacing from "@/components/shared/Spacing";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -34,6 +34,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const [isClient, setIsClient] = useState(false);
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
+  const reset = useResetRecoilState(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: group_data, isFetching } = useGroup();
@@ -74,7 +75,10 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
 
   const { mutate: addMember } = useAddGroupMember({
     groupId: params.id,
-    friendIds: selectedFriends.map((friend) => friend.id),
+    friendIds:
+      selectedFriends && selectedFriends.length > 0
+        ? selectedFriends?.map((friend) => friend.id)
+        : null,
     onSuccess: addMemberSuccessHandler,
   });
 
@@ -82,6 +86,8 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
 
   useEffect(() => {
     setIsClient(true);
+
+    return reset();
   }, []);
 
   if (isFetching || !isClient) return <FullPageLoader />;

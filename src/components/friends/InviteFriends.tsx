@@ -10,7 +10,7 @@ export default function InviteFriends({
   type,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
-  type: "default" | "record" | "group";
+  type: "default" | "record" | "group" | "gathering";
 }) {
   return (
     <div className="h-screen bg-grayscale-50">

@@ -21,6 +21,7 @@ import {
 } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
+import clsx from "clsx";
 
 const queryClient = new QueryClient();
 
@@ -119,7 +120,10 @@ const NextLayout = ({ children }: Props) => {
           height: "100%",
         }}
         id="scrollable-container"
-        className="bg-base-white overflow-y-scroll no-scrollbar"
+        className={clsx(
+          "overflow-y-scroll no-scrollbar",
+          pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white "
+        )}
       >
         <>{children}</>
         {(pathname === "/" && isAuthenticated) ||
