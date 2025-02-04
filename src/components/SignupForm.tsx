@@ -31,6 +31,9 @@ const validateForm = (formValues: RegisterRequestType) => {
   }> = {};
 
   if (!validator.isEmpty(formValues.accountId)) {
+    if (formValues.accountId.length <= 3) {
+      errors.accountId = "아이디는 4글자 이상 입력해주세요.";
+    }
     if (!validator.isLowercase(formValues.accountId)) {
       errors.accountId = "소문자만 입력 가능합니다.";
     }
@@ -111,13 +114,15 @@ export default function SignupForm() {
       !isValidate ||
       formValues.profileImageUrl == null ||
       formValues.accountId.length < 5 ||
-      formValues.name == null
+      formValues.name == null ||
+      !!idNotAvailable
     );
   }, [
     isValidate,
     formValues.profileImageUrl,
     formValues.accountId,
     formValues.name,
+    idNotAvailable,
   ]);
 
   useEffect(() => {
@@ -128,6 +133,7 @@ export default function SignupForm() {
       try {
         const user_info: lighty.LoginFailResponse = JSON.parse(session);
         setOauthData(user_info);
+        setFormValues((prev) => ({ ...prev, name: user_info.name }));
       } catch (error) {
         console.error("Failed to parse OAuth data:", error);
       }
@@ -148,7 +154,7 @@ export default function SignupForm() {
         label="이름"
         placeholder="이름을 입력해주세요."
         onChange={handleFormValues}
-        value={oauthData?.name || formValues.name}
+        value={formValues.name}
         helpMessage={errors.name}
       />
 
@@ -164,7 +170,13 @@ export default function SignupForm() {
         helpMessage={errors.accountId}
       />
       <Spacing size={6} />
-      <span className="text-C2 text-grayscale-500">
+
+      {idNotAvailable && (
+        <span className="text-[#FA6767] text-C2 px-2">
+          중복되는 계정 아이디에요
+        </span>
+      )}
+      <span className="text-C2 text-grayscale-500 px-2">
         *계정 아이디는 프로필에 노출되며, 친구 추가 시 활용돼요!
       </span>
       <FixedBottomButton

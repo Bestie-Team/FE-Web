@@ -22,7 +22,6 @@ export default function DeletableFriendItem({
       <div className="relative p-[6px]">
         <div className={style.circleWrapper}>
           <Image
-            layout="intrinsic"
             alt="friendProfile"
             src={
               friendInfo?.profileImageUrl ||
@@ -63,7 +62,8 @@ function DeleteButton({ onClick }: { onClick: () => void }) {
 const style = {
   container: "w-fit shrink-0",
 
-  circleWrapper: "relative w-14 h-14 rounded-full border-dashed border-[2px]",
+  circleWrapper:
+    "relative w-14 h-14 rounded-full border-dashed border-[2px] overflow-hidden",
   image: "rounded-full object-cover w-[56px] h-[56px]",
   checkContainer:
     "absolute inset-0 flex items-center justify-center rounded-full bg-[#00000066] p-[2px]",

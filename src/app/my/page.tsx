@@ -64,7 +64,7 @@ export default function MyPage() {
 
   useEffect(() => {
     const initializeProfileInfo = () => {
-      const imageUrlFromSignup = localStorage.getItem(
+      const imageUrlFromSignup = sessionStorage.getItem(
         STORAGE_KEYS.PROFILE_IMAGE_URL
       );
       const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
@@ -76,14 +76,12 @@ export default function MyPage() {
           accountId: userInfo.accountId,
         };
       }
-
       if (user) {
         return {
           profileImageUrl: user.profileImageUrl as string,
           accountId: user.accountId,
         };
       }
-
       if (userInfoSession) {
         return JSON.parse(userInfoSession);
       }

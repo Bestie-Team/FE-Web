@@ -87,7 +87,7 @@ export default function HomePage() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const refParam = urlParams.get("ref");
-    const imageUrlFromSignup = localStorage.getItem(
+    const imageUrlFromSignup = sessionStorage.getItem(
       STORAGE_KEYS.PROFILE_IMAGE_URL
     );
     if (refParam === "signup") {

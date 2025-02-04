@@ -1,5 +1,6 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
+import { CreateGroupRequest } from "@/models/group";
 
 export async function postGroupCoverImage({ file }: { file: File }) {
   const baseUrl = API_CONFIG.getBaseUrl();
@@ -31,11 +32,7 @@ export async function postGroupCoverImage({ file }: { file: File }) {
 }
 
 /** 그룹 생성 */
-export async function postGroup({
-  group,
-}: {
-  group: lighty.CreateGroupRequest;
-}) {
+export async function postGroup({ group }: { group: CreateGroupRequest }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/groups`;
   try {

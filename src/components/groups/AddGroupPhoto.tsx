@@ -4,15 +4,15 @@ import Image from "next/image";
 import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
-import * as lighty from "lighty-type";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function AddGroupPhoto({
   image,
   setImage,
 }: {
   image: string | null;
-  setImage: SetterOrUpdater<lighty.CreateGroupRequest>;
+  setImage: SetterOrUpdater<CreateGroupRequest>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
 

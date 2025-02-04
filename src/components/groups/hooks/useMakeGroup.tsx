@@ -1,12 +1,12 @@
-import * as lighty from "lighty-type";
 import { postGroup } from "@/remote/group";
 import { useMutation } from "@tanstack/react-query";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function useMakeGroup({
   group,
   onSuccess,
 }: {
-  group: lighty.CreateGroupRequest;
+  group: CreateGroupRequest;
   onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({

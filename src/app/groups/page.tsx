@@ -81,14 +81,17 @@ export default function GroupsPage() {
   if (!isClient) {
     return <FullPageLoader />;
   }
-
+  console.log(groups);
   return (
     <div className="bg-grayscale-50 h-screen">
       <Header pathname={pathname} shadow={scrollProgress > 0.1} />
       {isFetching ? (
         <FullPageLoader />
       ) : (
-        <Flex direction="column" className="pt-[68px] p-5 text-T4">
+        <Flex
+          direction="column"
+          className="pt-[68px] p-5 text-T4 h-screen bg-grayscale-50"
+        >
           <Flex align="center">
             <span>전체 그룹</span>
             <Spacing size={4} direction="horizontal" />

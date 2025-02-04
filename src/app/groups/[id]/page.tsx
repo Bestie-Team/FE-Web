@@ -22,6 +22,7 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 interface GroupDetailPageProps {
   params: {
@@ -110,7 +111,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
         owner={owner}
         setIsLoaded={setIsLoaded}
       />
-      {!isLoaded && <FullPageLoader />}
+      {!isLoaded && <DotSpinner />}
       <GroupInfoContainer group={selectedGroup} />
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />

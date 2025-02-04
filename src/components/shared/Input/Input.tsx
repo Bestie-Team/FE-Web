@@ -5,6 +5,8 @@ import EmptySquareIcon from "../Icon/EmptySquareIcon";
 import Text from "../Text";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
+import ToastError from "../Icon/ToastError";
+import ToastSuccess from "../Icon/ToastSuccess";
 
 interface InputProps {
   square?: string;
@@ -35,6 +37,19 @@ export default function Input({
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
 
+  const idCheck = () => {
+    if (idNotAvailable) {
+      return <ToastError />;
+    }
+    if (name == "accountId" && value) {
+      return (helpMessage == "" || helpMessage == undefined) &&
+        value?.length >= 4 ? (
+        <ToastSuccess />
+      ) : (
+        <ToastError />
+      );
+    }
+  };
   return (
     <Flex direction="column">
       {label && (
@@ -49,7 +64,9 @@ export default function Input({
         className={clsx(
           styles.inputWrapper,
           isFocused ? "border-grayscale-700" : "border-grayscale-10",
-          idNotAvailable ? "border-point-red50" : "border-grayscale-700"
+          idNotAvailable
+            ? "border-point-red50 border-[1.4px]"
+            : "border-grayscale-700"
         )}
       >
         <input
@@ -70,6 +87,7 @@ export default function Input({
             <span className="text-grayscale-300 text-B4">{`/${maxLength}`}</span>
           </span>
         )}
+        {idCheck()}
         {square && <EmptySquareIcon width="20" height="20" />}
       </div>
       {helpMessage ? (
@@ -81,7 +99,7 @@ export default function Input({
 
 const height = `h-[50px]`;
 const styles = {
-  inputWrapper: `w-full ${height} px-5 rounded-[40px] flex items-center gap-4 justify-between bg-grayscale-10 border transition-all duration-300`,
+  inputWrapper: `w-full ${height} px-5 rounded-[40px] flex items-center gap-2 justify-between bg-grayscale-10 border transition-all duration-300`,
   input:
     "flex-grow bg-transparent outline-none text-[16px] font-[500] leading-[22.86px] tracking-[-0.48px] bg-grayscale-10 transform origin-left scale-[0.875]",
   helpMessage: "pl-2 text-C2 text-[#FA6767] inline-block mt-[6px]",

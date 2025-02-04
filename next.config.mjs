@@ -13,6 +13,7 @@ const nextConfig = {
       "images.unsplash.com",
       "plus.unsplash.com",
       "example.com",
+      "image.com",
     ],
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

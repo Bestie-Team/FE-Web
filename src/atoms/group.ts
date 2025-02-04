@@ -1,12 +1,13 @@
 import { atom } from "recoil";
 import * as lighty from "lighty-type";
+import { CreateGroupRequest } from "@/models/group";
 
-export const newGroupAtom = atom<lighty.CreateGroupRequest>({
+export const newGroupAtom = atom<CreateGroupRequest>({
   key: "group/new",
   default: {
     name: "",
     description: "",
-    friendIds: [""],
+    friendIds: null,
     groupImageUrl: "",
   },
 });

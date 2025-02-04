@@ -10,7 +10,6 @@ import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import UserIcon from "@/components/shared/Icon/UserIcon";
 import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
-import * as lighty from "lighty-type";
 import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
@@ -19,13 +18,14 @@ import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function NewGroupPage() {
   const [isClient, setIsClient] = useState(false);
   const queryClient = useQueryClient();
   const header = getHeader("/groups/new");
   const [newGroup, setNewGroup] =
-    useRecoilState<lighty.CreateGroupRequest>(newGroupAtom);
+    useRecoilState<CreateGroupRequest>(newGroupAtom);
   const [step, setStep] = useState(1);
 
   const makeGroupSuccessHandler = async (data: { message: string }) => {
@@ -52,8 +52,9 @@ export default function NewGroupPage() {
   if (step === 0 || isPending) {
     return <MakingGroupSuccess group={newGroup} isPending={isPending} />;
   }
+
   if (step === 2) {
-    return <InviteFriends setStep={setStep} />;
+    return <InviteFriends setStep={setStep} type="group" />;
   }
 
   return (
@@ -107,7 +108,11 @@ export default function NewGroupPage() {
           setStep={setStep}
         />
       </form>
-      <FixedBottomButton label={"그룹 생성하기"} onClick={makeGroup} />
+      <FixedBottomButton
+        label={"그룹 생성하기"}
+        onClick={makeGroup}
+        disabled={newGroup.friendIds == null || newGroup.friendIds.length < 1}
+      />
     </div>
   );
 }

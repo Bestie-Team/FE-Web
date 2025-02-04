@@ -26,7 +26,7 @@ export async function postProfileImageWithToken({
       body: formData,
     });
     const data: { imageUrl: string } = await response.json();
-    localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
+    sessionStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
     return { imageUrl: data.imageUrl };
   } catch (error) {
     throw new Error(
@@ -54,7 +54,7 @@ export async function postProfileImage({ file }: { file: File }) {
     });
 
     const data: { imageUrl: string } = await response.json();
-    localStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
+    sessionStorage.setItem(STORAGE_KEYS.PROFILE_IMAGE_URL, data.imageUrl);
     return { imageUrl: data.imageUrl };
   } catch (error) {
     throw new Error(

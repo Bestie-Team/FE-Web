@@ -3,17 +3,17 @@ import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
-import * as lighty from "lighty-type";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import NewGroupContainer from "./NewGroupContainer";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import FullPageLoader from "../shared/FullPageLoader";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function MakingGroupSuccess({
   group,
   isPending,
 }: {
-  group: lighty.CreateGroupRequest;
+  group: CreateGroupRequest;
   isPending: boolean;
 }) {
   const router = useRouter();

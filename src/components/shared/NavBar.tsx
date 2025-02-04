@@ -20,7 +20,7 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsClient(true);
-    const imageUrlFromSignup = localStorage.getItem(
+    const imageUrlFromSignup = sessionStorage.getItem(
       STORAGE_KEYS.PROFILE_IMAGE_URL
     );
     if (imageUrlFromSignup) {

@@ -7,8 +7,10 @@ import { Dispatch, SetStateAction } from "react";
 
 export default function InviteFriends({
   setStep,
+  type,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
+  type: "default" | "record" | "group";
 }) {
   return (
     <div className="h-screen bg-grayscale-50">
@@ -23,7 +25,11 @@ export default function InviteFriends({
         </div>
         <Spacing size={16} />
       </div>
-      <SelectFriendsContainer paddingTop="138px" setStep={setStep} />
+      <SelectFriendsContainer
+        paddingTop="138px"
+        setStep={setStep}
+        type={type}
+      />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
-import * as lighty from "lighty-type";
+import { CreateGroupRequest } from "@/models/group";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function NewGroupContainer({
@@ -11,7 +11,7 @@ export default function NewGroupContainer({
   onClick,
   className,
 }: {
-  group: lighty.CreateGroupRequest;
+  group: CreateGroupRequest;
   onClick?: () => void;
   className?: string;
 }) {
@@ -56,7 +56,7 @@ export default function NewGroupContainer({
           <div className={styles.bar} />
           <span className={styles.font}>그룹 멤버</span>
           <Spacing size={2} direction="horizontal" />
-          <span className="text-B4">{friendIds.length}</span>
+          <span className="text-B4">{friendIds ? friendIds.length : 0}</span>
           <Spacing size={12} direction="horizontal" />
         </Flex>
       </Flex>

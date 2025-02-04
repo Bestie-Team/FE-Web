@@ -50,7 +50,7 @@ export default function NewGatheringPage() {
   }
 
   if (step === 2) {
-    return <InviteFriends setStep={setStep} />;
+    return <InviteFriends setStep={setStep} type="default" />;
   }
   if (step === 3) {
     return <StepToInvitation setStep={setStep} />;

@@ -9,3 +9,10 @@ export interface GroupInfoResponse {
   members: UserInfo[];
   gatheringCount: number;
 }
+
+export declare class CreateGroupRequest {
+  readonly name: string;
+  readonly description: string;
+  readonly friendIds: string[] | null;
+  readonly groupImageUrl: string;
+}

@@ -17,7 +17,7 @@ export default function SelectFriendsContainer({
   action,
   setStep,
 }: {
-  type?: "default" | "record" | "group";
+  type?: "default" | "record" | "group" | "gathering";
   paddingTop?: string;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;
