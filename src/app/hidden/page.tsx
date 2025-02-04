@@ -33,10 +33,7 @@ export default function FeedPage() {
   if (!isClient) return <FullPageLoader />;
 
   return (
-    <div
-      className="h-screen pt-[48px] overflow-y-scroll no-scrollbar"
-      id="scrollableDiv"
-    >
+    <div className="h-full pt-[48px]" id="scrollableDiv">
       {header}
       {!hiddenFeed ? (
         <FullPageLoader />

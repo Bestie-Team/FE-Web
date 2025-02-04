@@ -27,7 +27,7 @@ export default function ChoosingGatheringToRecord({
 
   if (gathering && gathering.length > 0)
     return (
-      <Flex direction="column" className="bg-base-white h-screen pt-[48px]">
+      <Flex direction="column" className="bg-base-white h-full pt-[48px]">
         {header}
         <Flex
           direction="column"

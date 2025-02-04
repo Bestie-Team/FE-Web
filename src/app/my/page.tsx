@@ -91,7 +91,7 @@ export default function MyPage() {
   }
 
   return (
-    <div>
+    <div className="h-full">
       <Header
         shadow={scrollProgress > 0.01}
         open={modalState === "open"}

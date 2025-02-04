@@ -58,7 +58,7 @@ export default function NewGroupPage() {
   }
 
   return (
-    <div className="h-screen bg-base-white">
+    <div className="h-full bg-base-white">
       {header}
       <form className="flex flex-col px-5 pt-12">
         <Spacing size={24} />

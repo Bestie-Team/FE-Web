@@ -62,7 +62,7 @@ export default function FriendsPage() {
   }
 
   return (
-    <div className="bg-grayscale-50">
+    <div className="bg-grayscale-50 h-full">
       <div
         className={clsx(
           "max-w-[430px] fixed w-full z-1 bg-grayscale-50"

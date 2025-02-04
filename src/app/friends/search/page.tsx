@@ -26,7 +26,7 @@ export default function SearchPage() {
   });
 
   return (
-    <div className="flex flex-col bg-grayscale-50 overflow-y-scroll no-scrollbar h-screen">
+    <div className="flex flex-col bg-grayscale-50 h-full">
       <div className="bg-grayscale-50 max-w-[430px] fixed w-full z-10">
         <FriendsPageHeader label="친구 추가" />
         <Spacing size={20} />

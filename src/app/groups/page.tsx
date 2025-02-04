@@ -83,7 +83,7 @@ export default function GroupsPage() {
   }
   console.log(groups);
   return (
-    <div>
+    <div className="h-full">
       <Header pathname={pathname} shadow={scrollProgress > 0.1} />
       {isFetching ? (
         <FullPageLoader />

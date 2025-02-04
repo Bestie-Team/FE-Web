@@ -13,7 +13,7 @@ export default function InviteFriends({
   type: "default" | "record" | "group" | "gathering";
 }) {
   return (
-    <div className="h-screen bg-grayscale-50">
+    <div className="h-full bg-grayscale-50">
       <div className="max-w-[430px] fixed w-full z-10 bg-grayscale-50">
         <FriendsPageHeader label="초대할 친구" addFriendIcon={false} />
         <div className="px-[20px]">

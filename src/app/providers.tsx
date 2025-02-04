@@ -117,11 +117,10 @@ const NextLayout = ({ children }: Props) => {
           margin: "0 auto",
           display: "flex",
           flexDirection: "column",
-          height: "100%",
         }}
         id="scrollable-container"
         className={clsx(
-          "overflow-y-scroll no-scrollbar",
+          "overflow-y-scroll no-scrollbar h-dvh",
           pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white "
         )}
       >

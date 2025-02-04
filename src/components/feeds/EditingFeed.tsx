@@ -90,6 +90,6 @@ export default function EditingFeed() {
   );
 }
 const styles = {
-  container: "bg-base-white h-screen",
+  container: "bg-base-white h-full",
   headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
 };

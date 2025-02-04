@@ -53,7 +53,7 @@ export default function GatheringFormContainer({
   const { data: group_data, isFetching } = useGroup();
 
   return (
-    <div className="h-screen bg-base-white pt-12">
+    <div className="h-full bg-base-white pt-12">
       {header}
       <form className="flex flex-col px-5">
         <Spacing size={16} />

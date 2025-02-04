@@ -19,7 +19,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 bg-base-white h-screen">
+    <div className="flex flex-col gap-6 bg-base-white h-full">
       {header}
       <Spacing size={28} />
       <div className={styles.container}>

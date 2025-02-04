@@ -111,7 +111,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const { description, members, owner, groupImageUrl } = selectedGroup;
 
   return (
-    <Flex direction="column" className="w-full h-screen bg-grayscale-50">
+    <Flex direction="column" className="w-full h-full bg-grayscale-50">
       <GroupBannerContainer
         imageUrl={groupImageUrl}
         owner={owner}

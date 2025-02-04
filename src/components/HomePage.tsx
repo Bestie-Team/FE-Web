@@ -93,7 +93,7 @@ export default function HomePage() {
   if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
 
   return (
-    <div>
+    <div className="h-full">
       <Header />
       <HomeBannerContainer />
       <FriendsSlider />

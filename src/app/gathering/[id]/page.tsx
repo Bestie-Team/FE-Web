@@ -48,7 +48,7 @@ export default function GatheringDetailPage({
   if (!isClient || isPending || isError) return <FullPageLoader />;
 
   return (
-    <Flex direction="column" className="w-full h-screen bg-grayscale-50">
+    <Flex direction="column" className="w-full h-full bg-grayscale-50">
       {header}
       <GatheringBannerContainer
         gathering={selectedGathering}

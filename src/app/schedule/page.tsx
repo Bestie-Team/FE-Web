@@ -95,7 +95,7 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <Header year={year} setYear={setYear} shadow={scrollProgress > 0.1} />
       <Flex direction="column" className={styles.container}>
         <div className="!h-[408px]">
