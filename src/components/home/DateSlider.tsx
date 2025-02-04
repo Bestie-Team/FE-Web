@@ -56,8 +56,10 @@ export default function DateSlider() {
       ) : (
         <Flex className={styles.dateWrapper} justify="space-between">
           {sevenDays.map((date, i) => {
+            const isToday = getDate(new Date()) === getDate(date);
             return (
               <DateItem
+                isToday={isToday}
                 date={getDate(date)}
                 day={DAYS_IN_KOREAN[getDay(date)]}
                 key={i}
