@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
-import Feed from "@/components/feed/Feed";
+import Feed from "@/components/feeds/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
@@ -33,7 +33,7 @@ import { maxDate, minDate } from "@/constants/time";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
-import NoFeed from "@/components/feed/NoFeed";
+import NoFeed from "@/components/feeds/NoFeed";
 
 const Header = React.memo(
   ({

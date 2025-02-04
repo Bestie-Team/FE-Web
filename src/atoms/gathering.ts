@@ -1,3 +1,4 @@
+import { GatheringDetailResponse } from "@/models/gathering";
 import * as lighty from "lighty-type";
 import { atom } from "recoil";
 
@@ -32,4 +33,9 @@ export const newGatheringInfo = atom<lighty.CreateGatheringRequest>({
 export const gatheringImageUrlAtom = atom<string>({
   key: "gathering/invitationImageUrl",
   default: "",
+});
+
+export const selectedGatheringInfoAtom = atom<GatheringDetailResponse | null>({
+  key: "gathering/selectedInfo/edit",
+  default: null,
 });

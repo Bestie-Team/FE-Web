@@ -8,7 +8,7 @@ import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottom
 import getHeader from "@/utils/getHeader";
 import { recordModalAtom } from "@/atoms/modal";
 import { scrollProgressAtom } from "@/atoms/scroll";
-import Feed from "@/components/feed/Feed";
+import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useEffect, useState } from "react";

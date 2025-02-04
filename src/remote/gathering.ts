@@ -142,6 +142,29 @@ export async function postGatheringInvitationImage({ file }: { file: File }) {
   }
 }
 
+/** 피드 수정 */
+export async function patchGathering({
+  gathering,
+  gatheringId,
+}: {
+  gatheringId: string;
+  gathering: GatheringDetailResponse;
+}) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/feeds/${gatheringId}`;
+  try {
+    await fetchWithAuth(targetUrl, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gathering),
+    });
+
+    return { message: "약속 수정 완료" };
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
 /** 약속 초대 수락 */
 export async function postAcceptGatheringInvitation({
   invitationId,
@@ -227,5 +250,27 @@ export async function getSentInvitationToGatheringList({
     return data;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
+/** 그룹 삭제 (그룹장) */
+export async function deleteGathering({
+  gatheringId,
+}: {
+  gatheringId: string;
+}) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/groups/${gatheringId}`;
+    const response = await fetchWithAuth(targetUrl, { method: "DELETE" });
+    console.log(response);
+    return {
+      message: "약속을 성공적으로 삭제하였습니다",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: "약속을 삭제하지 못했어요",
+    };
   }
 }

@@ -34,3 +34,8 @@ export const groupExitModalAtom = atom<boolean>({
   key: "modal/groupExit",
   default: false,
 });
+
+export const gatheringDeleteModalAtom = atom<boolean>({
+  key: "modal/gatheringDelete",
+  default: false,
+});

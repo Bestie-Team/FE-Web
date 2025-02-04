@@ -17,7 +17,7 @@ export default function AddFriendsSlider({
   type: "gathering" | "group";
   setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
   setGroup?: Dispatch<SetStateAction<CreateGroupRequest>>;
-  setStep?: Dispatch<SetStateAction<number>>;
+  setStep?: (step: number) => void;
 }) {
   const [friends, setFriends] = useRecoilState<lighty.User[] | null>(
     selectedFriendsAtom

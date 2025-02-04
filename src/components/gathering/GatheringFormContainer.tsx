@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
@@ -23,13 +23,17 @@ import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
 
 export default function GatheringFormContainer({
+  type,
   setStep,
   gathering,
   setGathering,
+  mutate,
 }: {
-  setStep: Dispatch<SetStateAction<number>>;
+  type: "new" | "edit";
+  setStep: (step: number) => void;
   gathering: lighty.CreateGatheringRequest;
   setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
+  mutate?: () => void;
 }) {
   const isGroupInfoValid = () => {
     if (
@@ -49,7 +53,8 @@ export default function GatheringFormContainer({
   };
 
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const header = getHeader("/gathering/new");
+  const title = type === "new" ? "/gathering/new" : "/gathering/edit";
+  const header = getHeader(title);
   const { data: group_data, isFetching } = useGroup();
 
   return (
@@ -171,7 +176,11 @@ export default function GatheringFormContainer({
             label={"다음"}
             disabled={isGroupInfoValid() === false}
             onClick={() => {
-              setStep(3);
+              if (type === "new") {
+                setStep(3);
+              } else {
+                if (mutate) mutate();
+              }
             }}
           />
         </div>

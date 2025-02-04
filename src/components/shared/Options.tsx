@@ -7,6 +7,8 @@ import FeedDropdownMenu from "./DropDownMenu/FeedDropDownMenu";
 import CommentDropdownMenu from "./DropDownMenu/CommentDropDownMenu";
 import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { Feed } from "@/models/feed";
+import GatheringDropdownMenu from "./DropDownMenu/GatheringDropDownMenu";
+import { GatheringDetailResponse } from "@/models/gathering";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
@@ -14,6 +16,7 @@ export const MENU_TYPES = {
   FRIEND: "friend",
   GROUP: "group",
   FEED: "feed",
+  GATHERING: "gathering",
 } as const;
 
 type MenuType = (typeof MENU_TYPES)[keyof typeof MENU_TYPES];
@@ -40,10 +43,15 @@ const MENU_CONFIGS = {
     items: ["그룹 나가기", "그룹 신고하기"],
     className: "absolute -bottom-[104px] -right-[4px]",
   },
+  [MENU_TYPES.GATHERING]: {
+    items: ["약속 삭제하기", "약속 수정하기"],
+    className: "absolute -bottom-[104px] -right-[4px]",
+  },
 };
 
 interface OptionsProps {
   feed?: Feed;
+  gathering?: GatheringDetailResponse;
   isMine?: boolean;
   selectedCommentId?: string;
   width?: string;
@@ -54,6 +62,7 @@ interface OptionsProps {
 
 export default function Options({
   feed,
+  gathering,
   isMine,
   selectedCommentId,
   width = "24px",
@@ -71,7 +80,8 @@ export default function Options({
     relative
     cursor-pointer  
     flex 
-    justify-center 
+    justify-center  
+    items-center
     ${isDefaultOrComment ? "pt-[5.5px] pb-[4px]" : ""}
   `.trim();
 
@@ -115,6 +125,14 @@ export default function Options({
       {opened && type === MENU_TYPES.FEED && feed && !isMine && (
         <FeedDropdownMenu
           feed={feed}
+          ref={ref}
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
+        />
+      )}
+      {opened && type === MENU_TYPES.GATHERING && (
+        <GatheringDropdownMenu
+          gathering={gathering}
           ref={ref}
           items={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}

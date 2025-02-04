@@ -1,95 +1,104 @@
-// "use client";
-// import { useEffect, useRef, useState } from "react";
-// import useScrollShadow from "@/hooks/useScrollShadow";
-// import { useRecoilValue } from "recoil";
-// import getHeader from "@/utils/getHeader";
-// import FeedForm from "./FeedForm";
-// import clsx from "clsx";
-// import useEditFeed from "./hooks/useEditFeed";
-// import { selectedFeedInfoAtom } from "@/atoms/feed";
-// import { useRouter } from "next/navigation";
-// import FullPageLoader from "../shared/FullPageLoader";
-// import useUploadFeedImages from "./hooks/useUploadFeedImages";
-// import * as lighty from "lighty-type";
-// import { lightyToast } from "@/utils/toast";
+"use client";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import InviteFriends from "@/components/friends/InviteFriends";
+// import GatheringFormContainer from "@/components/gathering/GatheringFormContainer";
+import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
+import FullPageLoader from "@/components/shared/FullPageLoader";
+import useEditGathering from "@/components/gathering/hooks/useEditGathering";
+import { lightyToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
+import { GatheringDetailResponse } from "@/models/gathering";
+import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 
-// export default function GatheringEditPage() {
-//   const router = useRouter();
-//   const containerRef = useRef<HTMLDivElement>(null);
-//   const header = getHeader("/feed/edit");
-//   const hasShadow = useScrollShadow(containerRef);
-//   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-//   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
-//   const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
-//     gatheringId: "",
-//     content: originalFeedValue?.content || "",
-//     imageUrls: originalFeedValue?.images || [],
-//   });
+export default function GatheringEditPage() {
+  const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+  const [step, setStep] = useState(1);
+  //   const [fileToUpload, setFileToUpload] = useState<File | null>(null);
+  const originalGatheringValue = useRecoilValue(selectedGatheringInfoAtom);
+  const INITIAL_FORM_STATE: GatheringDetailResponse = {
+    id: originalGatheringValue?.id || "",
+    name: originalGatheringValue?.name || "",
+    description: originalGatheringValue?.description || "",
+    gatheringDate: originalGatheringValue?.gatheringDate || "",
+    address: originalGatheringValue?.address || "",
+    invitationImageUrl: originalGatheringValue?.invitationImageUrl || "",
+    hostUser: { id: "", accountId: "", name: "", profileImageUrl: null },
+    members: [{ id: "", accountId: "", name: "", profileImageUrl: null }],
+  };
+  const [gatheringInfo, setGatheringInfo] =
+    useState<GatheringDetailResponse>(INITIAL_FORM_STATE);
 
-//   const { mutate: editingFeed, isPending } = useEditFeed({
-//     content: feedInfo.content,
-//     feedId: originalFeedValue?.id || "",
-//     onSuccess: (data) => {
-//       router.replace("/feed");
-//       lightyToast.success(data.message);
-//     },
-//     onError: (error) => {
-//       console.log(error);
-//       console.log(originalFeedValue?.id);
-//     },
-//   });
+  const { mutate: editingFeed, isPending } = useEditGathering({
+    gathering: gatheringInfo,
+    gatheringId: originalGatheringValue?.id || "",
+    onSuccess: (data) => {
+      router.replace("/gathering");
+      lightyToast.success(data.message);
+    },
+    onError: (error) => {
+      console.log(error);
+      console.log(originalGatheringValue?.id);
+    },
+  });
 
-//   const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
-//     files: filesToUpload,
-//     gatheringId: originalFeedValue?.gathering?.id || "",
-//     onSuccess: (data: { imageUrls: string[]; message: string }) => {
-//       console.log("FeedImageUploaded", data);
-//       if (data.imageUrls) {
-//         setFeedInfo((prev) => ({
-//           ...prev,
-//           images: data.imageUrls,
-//         }));
-//       }
-//       setFilesToUpload([]);
-//     },
-//     onError: (error) => console.log(error),
-//   });
+  //   const { mutate: uploadImage, isPending: isUploading } =
+  //     useUploadInvitationImage({
+  //       file: fileToUpload as File,
+  //       onSuccess: (data: { imageUrl: string; message: string }) => {
+  //         console.log("FeedImageUploaded", data);
+  //         if (data.imageUrl) {
+  //           setGatheringInfo((prev) => ({
+  //             ...prev,
+  //             images: data.imageUrl,
+  //           }));
+  //         }
+  //         setFileToUpload(null);
+  //       },
+  //       onError: (error) => {
+  //         lightyToast.error(error.message);
+  //       },
+  //     });
 
-//   useEffect(() => {
-//     if (
-//       feedInfo.imageUrls.length > 0 &&
-//       (feedInfo.content != originalFeedValue?.content ||
-//         feedInfo.imageUrls != originalFeedValue?.images)
-//     ) {
-//       editingFeed();
-//     }
-//   }, [feedInfo.imageUrls]);
+  useEffect(() => {
+    if (
+      gatheringInfo.invitationImageUrl !=
+        originalGatheringValue?.invitationImageUrl ||
+      gatheringInfo.name != originalGatheringValue?.name ||
+      gatheringInfo.description != originalGatheringValue?.description ||
+      gatheringInfo.address !== originalGatheringValue.address
+    ) {
+      editingFeed();
+    }
+  }, [gatheringInfo.invitationImageUrl]);
 
-//   if (!originalFeedValue || originalFeedValue == null) return null;
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-//   return (
-//     <div className={styles.container} ref={containerRef}>
-//       <div
-//         className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
-//       >
-//         {header}
-//       </div>
-//       {isPending || isUploading ? (
-//         <FullPageLoader />
-//       ) : (
-//         <FeedForm
-//           edit={uploadImages}
-//           originalFeed={originalFeedValue}
-//           filesToUpload={filesToUpload}
-//           setFilesToUpload={setFilesToUpload}
-//           feedInfoToEdit={feedInfo}
-//           setFeedInfo={setFeedInfo}
-//         />
-//       )}
-//     </div>
-//   );
-// }
-// const styles = {
-//   container: "bg-base-white h-full",
-//   headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
-// };
+  if (!originalGatheringValue || originalGatheringValue == null) return null;
+
+  if (!isClient) {
+    return <FullPageLoader />;
+  }
+
+  if (isPending || step === 0) {
+    return <MakingGatheringStatus isPending={isPending} />;
+  }
+  //   if (step === 1) {
+  //     return (
+  //       <GatheringFormContainer
+  //         type="edit"
+  //         gathering={gatheringInfo}
+  //         setGathering={setGatheringInfo}
+  //         setStep={setStep}
+  //         mutate={editingFeed}
+  //       />
+  //     );
+  //   }
+
+  if (step === 2) {
+    return <InviteFriends setStep={setStep} type="gathering" />;
+  }
+}

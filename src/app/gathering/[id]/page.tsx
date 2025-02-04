@@ -15,6 +15,14 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useEffect, useState } from "react";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import { MAP } from "@/constants/images";
+import Options, { MENU_TYPES } from "@/components/shared/Options";
+import handleShare from "@/utils/handleShare";
+import ShareIcon from "@/components/shared/Icon/ShareIcon";
+import { useRecoilState } from "recoil";
+import { gatheringDeleteModalAtom } from "@/atoms/modal";
+import Modal from "@/components/shared/Modal/Modal";
+import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering";
+import { lightyToast } from "@/utils/toast";
 
 export default function GatheringDetailPage({
   params,
@@ -22,8 +30,10 @@ export default function GatheringDetailPage({
   params: { id: string };
 }) {
   const header = getHeader("/gathering/1234");
-
   const [isClient, setIsClient] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
+    gatheringDeleteModalAtom
+  );
   const [imageLoaded, setImageLoaded] = useState(false);
   const gatheringId = params.id;
   const {
@@ -33,6 +43,12 @@ export default function GatheringDetailPage({
   } = useGatheringDetail({
     gatheringId,
     enabled: !!gatheringId,
+  });
+
+  const { mutate: deleteGathering } = useDeleteGathering({
+    gatheringId,
+    onSuccess: (data) => lightyToast.success(data.message),
+    onError: (error) => lightyToast.error(error.message),
   });
 
   useEffect(() => {
@@ -48,12 +64,18 @@ export default function GatheringDetailPage({
   if (!isClient || isPending || isError) return <FullPageLoader />;
 
   return (
-    <Flex direction="column" className="w-full h-full bg-grayscale-50">
+    <Flex direction="column" className="relative w-full h-full bg-grayscale-50">
       {header}
       <GatheringBannerContainer
         gathering={selectedGathering}
         setImageLoaded={setImageLoaded}
       />
+      <div className="absolute top-4 right-5 flex gap-[14px] z-50">
+        <div className="cursor-pointer" onClick={handleShare}>
+          <ShareIcon />
+        </div>
+        <Options type={MENU_TYPES.GATHERING} color="white" />
+      </div>
       <GroupLeaderContainer groupLeader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />
       <LightyInfoContainer
@@ -99,6 +121,16 @@ export default function GatheringDetailPage({
         content={<GatheringMembersSlider members={members} />}
       />
       {imageLoaded === false ? <FullPageLoader /> : null}
+      {deleteModalOpen && (
+        <Modal
+          title="약속을 삭제하시겠어요?"
+          content="약속 관련 정보가 전부 삭제되며 이는 복구할 수 없어요."
+          left="취소"
+          right="삭제하기"
+          action={() => deleteGathering()}
+          onClose={() => setDeleteModalOpen(false)}
+        />
+      )}
     </Flex>
   );
 }

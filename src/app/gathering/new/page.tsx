@@ -50,6 +50,7 @@ export default function NewGatheringPage() {
   if (step === 1) {
     return (
       <GatheringFormContainer
+        type="new"
         gathering={gatheringInfo}
         setGathering={setGatheringInfo}
         setStep={setStep}

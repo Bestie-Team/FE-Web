@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import EditPhotoSwiper from "./UploadPhotoSwiper";
-import { TogetherInfo } from "../feed/InfoBar";
+import { TogetherInfo } from "./InfoBar";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";

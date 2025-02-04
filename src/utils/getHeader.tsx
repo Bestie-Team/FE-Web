@@ -3,9 +3,7 @@ import {
   Header,
   HeaderWithBackBtn,
 } from "@/components/shared/Header";
-import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import React from "react";
-import handleShare from "./handleShare";
 
 export default function getHeader(pathname: string) {
   const headerConfig: {
@@ -34,15 +32,7 @@ export default function getHeader(pathname: string) {
     ) : pathname.endsWith("new") ? (
       <HeaderWithBackBtn pageName="약속 만들기" color="#FFF " />
     ) : (
-      <HeaderWithBackBtn
-        fontColor="#FFF"
-        pageName="약속 상세"
-        icon={
-          <div className="cursor-pointer" onClick={handleShare}>
-            <ShareIcon />
-          </div>
-        }
-      />
+      <HeaderWithBackBtn fontColor="#FFF" pageName="약속 상세" />
     ),
     "/groups":
       pathname.endsWith("new") || pathname.endsWith("done") ? (

@@ -176,7 +176,7 @@ export async function patchFeed({
       body: JSON.stringify({ content }),
     });
 
-    return { message: "피드를 수정 완료" };
+    return { message: "피드 수정 완료" };
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }
