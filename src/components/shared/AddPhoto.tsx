@@ -8,6 +8,7 @@ import useUpdateProfile from "../my/hooks/useUpdateProfile";
 import clsx from "clsx";
 import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
 import PlusIcon from "./Icon/PlusIcon";
+import { lightyToast } from "@/utils/toast";
 
 export interface RegisterRequestType {
   email: string;
@@ -38,26 +39,37 @@ export default function AddPhoto({
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target?.files?.[0];
+    const inputFile = e.target?.files?.[0];
+    if (!inputFile) return;
 
-    if (!file) return;
-    setFile(file);
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const selectedImage = event.target?.result;
-
-      if (selectedImage && typeof selectedImage === "string") {
-        setImage(selectedImage);
-      }
+    let maxSize = 5 * 1024 * 1024;
+    if (inputFile.size > maxSize) {
+      lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+      e.target.value = "";
+      setFile(null);
+      setImage(undefined);
       if (setImageUrl) {
         setImageUrl((prev) => ({
           ...prev,
-          profileImageUrl: file,
+          profileImageUrl: null,
         }));
       }
-    };
-    reader.readAsDataURL(file);
+      return;
+    }
+
+    setFile(inputFile);
+
+    const objectUrl = URL.createObjectURL(inputFile);
+    setImage(objectUrl);
+
+    if (setImageUrl) {
+      setImageUrl((prev) => ({
+        ...prev,
+        profileImageUrl: inputFile,
+      }));
+    }
+
+    return () => URL.revokeObjectURL(objectUrl);
   };
 
   useEffect(() => {

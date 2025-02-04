@@ -29,7 +29,7 @@ export default function SignupPage() {
           <div>프로필 계정을 만들어볼까요?</div>
         </div>
         <span className="text-B3 text-grayscale-500">
-          프로필 사진을 등록하고, 프로필 아이디를 등록해주세요.
+          프로필 사진과 계정 아이디를 필수로 등록해주세요.
         </span>
         <SignupForm />
       </div>
