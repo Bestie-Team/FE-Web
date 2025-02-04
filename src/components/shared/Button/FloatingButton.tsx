@@ -6,7 +6,7 @@ import { homeModalStateAtom } from "@/atoms/home";
 import { recordModalAtom } from "@/atoms/modal";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import LightyDeco from "../Icon/LightyDeco";
 import { useSetRecoilState } from "recoil";
 import PlusIcon from "../Icon/PlusIcon";
@@ -14,29 +14,33 @@ import Tooltip from "../Tooltip/Tooltip";
 
 const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
   const [isTouching, setIsTouching] = useState(false);
-  const [startY, setStartY] = useState(0);
+  const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleTouchMove = (e: TouchEvent) => {
-      if (isTouching) {
-        const currentY = e.touches[0].clientY;
-        const deltaY = Math.abs(currentY - startY);
+    const button = divRef.current;
+    if (!button) return;
 
-        if (deltaY > 10) {
-          setIsTouching(false);
-        }
+    const handleTouchMove = () => {
+      if (isTouching) {
+        setIsTouching(false);
       }
     };
 
-    document.addEventListener("touchmove", handleTouchMove);
-    return () => {
-      document.removeEventListener("touchmove", handleTouchMove);
+    const handleScroll = () => {
+      setIsTouching(false);
     };
-  }, [isTouching, startY]);
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+    button.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      button.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isTouching]);
+
+  const handleTouchStart = () => {
     setIsTouching(true);
-    setStartY(e.touches[0].clientY);
   };
 
   const handleTouchEnd = () => {
@@ -60,6 +64,15 @@ const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
 
   const setModalOpen = useSetRecoilState(getModalStateAtom());
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isTouching) {
+      console.log("Button clicked");
+      setModalOpen(true);
+    } else {
+      e.preventDefault();
+    }
+  };
+
   return (
     <>
       {tooltip ? (
@@ -75,9 +88,10 @@ const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
         </div>
       ) : null}
       <div
+        ref={divRef}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        onClick={() => setModalOpen(true)}
+        onClick={handleClick}
         data-testid="plus-circle-button"
         className={styles.plusButton}
       >
