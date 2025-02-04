@@ -152,62 +152,78 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <div className="h-screen flex flex-col pt-[72px] px-5 items-center">
-      <Flex justify="space-between" className="px-5 w-full" align="center">
-        <span className="text-B4 text-grayscale-500">
-          점선 영역이 이미지 영역이에요!
-        </span>
-      </Flex>
-      <Spacing size={32} />
+    <div className="h-screen flex flex-col pt-[76px] px-6">
       {deco === false ? (
-        <div className={clsx(styles.cardContainer)}>
-          <div className={styles.dimmed} />
-          <button className={styles.button} onClick={handleCaptureImage}>
-            꾸미기 시작
-          </button>
-          <div ref={ref} id="card" className="relative rounded-[20px] w-full">
-            <img
-              alt="frame"
-              height={372}
-              width={282}
-              className={styles.frame}
-              src={frames[selectedFrame]}
-            />
-            <div className={styles.cardWrapper}>
-              <div className={styles.imageWrapper}>
-                {croppedImage ? (
-                  <img
-                    src={croppedImage}
-                    alt="Cropped Image"
-                    width={230}
-                    height={218}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      backgroundColor: "#AEAEAE",
-                      height: 218,
-                      width: 230,
-                    }}
-                  />
-                )}
+        <>
+          <Flex direction="column">
+            <span className="text-T2">해당 프레임을 선택할까요?</span>
+            <Spacing size={12} />
+            <span className="text-B3 text-grayscale-500">
+              꾸미기 시작하면 프레임을 바꿀 수 없어요.
+            </span>
+          </Flex>
+          <Spacing size={40} />
+          <div className={clsx(styles.cardContainer)}>
+            <div ref={ref} id="card" className="relative rounded-[20px] w-full">
+              <img
+                alt="frame"
+                height={372}
+                width={282}
+                className={styles.frame}
+                src={frames[selectedFrame]}
+              />
+              <div className={styles.cardWrapper}>
+                <div className={styles.imageWrapper}>
+                  {croppedImage ? (
+                    <img
+                      src={croppedImage}
+                      alt="Cropped Image"
+                      width={230}
+                      height={218}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        backgroundColor: "#AEAEAE",
+                        height: 218,
+                        width: 230,
+                      }}
+                    />
+                  )}
+                </div>
+                <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
+                  <span className={styles.textWrapper}>
+                    {selectedFeed.name || ""}
+                  </span>
+                  <Spacing size={8} />
+                  <span className="text-C5">{selectedFeed.content}</span>
+                  <Spacing size={12} />
+                  <span className={styles.dateWrapper}>
+                    {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
+                  </span>
+                </Flex>
               </div>
-              <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
-                <span className={styles.textWrapper}>
-                  {selectedFeed.name || ""}
-                </span>
-                <Spacing size={8} />
-                <span className="text-C5">{selectedFeed.content}</span>
-                <Spacing size={12} />
-                <span className={styles.dateWrapper}>
-                  {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
-                </span>
-              </Flex>
             </div>
+            <FixedBottomButton
+              bgColor="bg-grayscale-50"
+              disabled={selectedFrame == null}
+              label={"꾸미기 시작"}
+              onClick={handleCaptureImage}
+            />
           </div>
-        </div>
-      ) : null}
-      <Flex direction="column">
+        </>
+      ) : (
+        <>
+          <Flex className="w-full">
+            <span className="text-B4 text-grayscale-500">
+              점선 영역이 이미지 영역이에요!
+            </span>
+          </Flex>
+          <Spacing size={32} />
+        </>
+      )}
+
+      <Flex direction="column" align="center">
         <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
           <canvas
             ref={canvasElementRef}
@@ -229,28 +245,30 @@ export default function DecorateWithStickers() {
           onClose={() => setDecoModalOpen(false)}
         />
       ) : null}
-      {deco ? <SheetOpenBtnContainer tooltip /> : null}
-      <FixedBottomButton
-        bgColor="bg-grayscale-50"
-        label={"이미지 저장"}
-        onClick={() => {
-          handleExport();
-        }}
-      />
+      {deco ? (
+        <>
+          <SheetOpenBtnContainer tooltip />
+          <FixedBottomButton
+            bgColor="bg-grayscale-50"
+            label={"이미지 저장"}
+            onClick={() => {
+              handleExport();
+            }}
+          />
+        </>
+      ) : null}
     </div>
   );
 }
 
 const styles = {
-  dimmed:
-    "absolute flex justify-center items-center z-10 bg-grayscale-10 inset-0 opacity-50",
   frame: "rounded-[20px] w-[282px] h-[372px]",
   button:
     "absolute z-10 py-[10px] px-3 text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
   saveButton:
     "w-[120px] px-3 py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
   cardContainer:
-    "relative flex justify-center items-center rounded-[20px] w-[282px] h-[453px]",
+    "relative flex justify-center items-center rounded-[20px] w-[282px] h-[453px] self-center",
   cardWrapper:
     "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
   imageWrapper:

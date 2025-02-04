@@ -63,5 +63,5 @@ export default function Page() {
 }
 
 const styles = {
-  header: "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px]",
+  header: "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px] h-12 ",
 };
