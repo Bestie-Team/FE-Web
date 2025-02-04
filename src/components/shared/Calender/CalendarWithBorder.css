@@ -1,8 +1,8 @@
 .react-calendar {
+  width: 340px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 348.6px;
   min-width: 350px;
   background: white;
   border: none;
@@ -27,7 +27,12 @@
 }
 .react-calendar__month-view__days {
   gap: 0 14.9px;
+  display: grid;
+  grid-column: 7;
   /* place-content: flex-end; */
+}
+.react-calendar__month-view__days > button:first-child {
+  margin-left: 75% !important;
 }
 
 .react-calendar--doubleView {

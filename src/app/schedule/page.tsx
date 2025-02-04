@@ -98,7 +98,7 @@ export default function SchedulePage() {
     <div className="h-full">
       <Header year={year} setYear={setYear} shadow={scrollProgress > 0.1} />
       <Flex direction="column" className={styles.container}>
-        <div className="!h-[408px]">
+        <div className="!h-[458px]">
           {isFetching || !upcoming ? (
             <DotSpinner />
           ) : (
