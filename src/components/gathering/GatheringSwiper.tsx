@@ -7,6 +7,7 @@ import { Gathering } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
 import clsx from "clsx";
 import { differenceInCalendarDays } from "date-fns";
+import NoGathering, { NoGatheringHome } from "./NoGathering";
 
 export default function GatheringSwiper({
   percent,
@@ -27,47 +28,54 @@ export default function GatheringSwiper({
       }}
       className="custom-swiper w-full"
     >
-      {gatherings.map(
-        ({ invitationImageUrl, id, name, gatheringDate }, idx) => {
-          const date = new Date(gatheringDate);
-          const diff = differenceInCalendarDays(new Date(), date);
-          return (
-            <SwiperSlide
-              onClick={() => {
-                router.push(`/gathering/${id}`);
-              }}
-              className={clsx(styles.slide, "group")}
-              key={`slide${idx}`}
-            >
-              <div className="relative w-full h-[146px]">
-                <Image
-                  src={
-                    invitationImageUrl ||
-                    "https://cdn.lighty.today/lighty_square.png"
-                  }
-                  alt={`invitationImage${idx + 1}`}
-                  className={styles.image}
-                  width={164}
-                  height={146}
-                />
-                <div
-                  style={{ background: styles.shadow }}
-                  className={"z-5 absolute bottom-0 left-0 right-0 h-[47px]"}
-                />
-                <span className={styles.dDay}>
-                  {diff >= 0 ? `D+${diff}` : `D${diff}`}
-                </span>
-                <div className={styles.gatheringImageInfo}>
-                  <span>{name}</span>
-                  <Spacing size={4} />
-                  <span className={styles.date}>
-                    {formatToDisplay(new Date(gatheringDate)).slice(0, 10)}
+      {gatherings.length < 1 ? (
+        <>
+          <NoGatheringHome type="slider" />
+          <Spacing size={52} />
+        </>
+      ) : (
+        gatherings.map(
+          ({ invitationImageUrl, id, name, gatheringDate }, idx) => {
+            const date = new Date(gatheringDate);
+            const diff = differenceInCalendarDays(new Date(), date);
+            return (
+              <SwiperSlide
+                onClick={() => {
+                  router.push(`/gathering/${id}`);
+                }}
+                className={clsx(styles.slide, "group")}
+                key={`slide${idx}`}
+              >
+                <div className="relative w-full h-[146px]">
+                  <Image
+                    src={
+                      invitationImageUrl ||
+                      "https://cdn.lighty.today/lighty_square.png"
+                    }
+                    alt={`invitationImage${idx + 1}`}
+                    className={styles.image}
+                    width={164}
+                    height={146}
+                  />
+                  <div
+                    style={{ background: styles.shadow }}
+                    className={"z-5 absolute bottom-0 left-0 right-0 h-[47px]"}
+                  />
+                  <span className={styles.dDay}>
+                    {diff >= 0 ? `D+${diff}` : `D${diff}`}
                   </span>
+                  <div className={styles.gatheringImageInfo}>
+                    <span>{name}</span>
+                    <Spacing size={4} />
+                    <span className={styles.date}>
+                      {formatToDisplay(new Date(gatheringDate)).slice(0, 10)}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          );
-        }
+              </SwiperSlide>
+            );
+          }
+        )
       )}
     </Swiper>
   );
