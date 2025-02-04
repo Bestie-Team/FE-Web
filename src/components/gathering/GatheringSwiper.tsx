@@ -7,7 +7,7 @@ import { Gathering } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
 import clsx from "clsx";
 import { differenceInCalendarDays } from "date-fns";
-import NoGathering, { NoGatheringHome } from "./NoGathering";
+import { NoGatheringHome } from "./NoGathering";
 
 export default function GatheringSwiper({
   percent,

@@ -26,8 +26,9 @@ export default function AddFriendsSlider({
     const changedFriends = friends?.filter(
       (friendItem) => friendItem.id !== friend.id
     );
-
-    changedFriends && setFriends(changedFriends);
+    if (changedFriends) {
+      setFriends(changedFriends);
+    }
   };
 
   useEffect(() => {
