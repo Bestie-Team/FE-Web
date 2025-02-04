@@ -1,4 +1,5 @@
 "use client";
+import useUpdateProfile from "@/components/my/hooks/useUpdateProfile";
 import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
 import Input from "@/components/shared/Input/Input";
@@ -7,20 +8,31 @@ import Spacing from "@/components/shared/Spacing";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import getHeader from "@/utils/getHeader";
+import { lightyToast } from "@/utils/toast";
 import { useState } from "react";
 
 export default function EditPage() {
   const { data, isFetching, isError } = useUserDetail();
   const [profile, setProfile] = useState<{
-    name: string;
     accountId: string;
     profileImageUrl: string;
   }>({
-    name: data?.name || "",
     accountId: data?.accountId || "",
     profileImageUrl: data?.profileImageUrl || "",
   });
   const header = getHeader("/my/edit");
+
+  const { mutate } = useUpdateProfile({
+    onSuccess: (data: { message: string }) => lightyToast.success(data.message),
+    onError: (error) => lightyToast.error(error.message),
+  });
+
+  const handlePatch = () => {
+    mutate({
+      profileImageUrl: profile.profileImageUrl,
+      accountId: profile.accountId,
+    });
+  };
 
   return (
     <div className="h-screen bg-base-white">
@@ -39,11 +51,9 @@ export default function EditPage() {
           </Flex>
           <Spacing size={40} />
           <Input
-            value={profile.name}
+            value={data?.name || ""}
             label={<span>이름</span>}
-            onChange={(e) => {
-              setProfile((prev) => ({ ...prev, name: e.target.value }));
-            }}
+            onChange={() => {}}
           />
           <Spacing size={30} />
           <Input
@@ -62,6 +72,7 @@ export default function EditPage() {
           profile.profileImageUrl == data?.profileImageUrl &&
           profile.accountId == data?.accountId
         }
+        onClick={handlePatch}
       />
     </div>
   );

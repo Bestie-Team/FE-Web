@@ -5,6 +5,7 @@ import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import { useRecoilValue } from "recoil";
+import * as lighty from "lighty-type";
 import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
 import useUserDetail from "../users/hooks/useUserDetail";
 import DotSpinnerSmall from "./Spinner/DotSpinnerSmall";
@@ -20,11 +21,12 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsClient(true);
-    const imageUrlFromSignup = sessionStorage.getItem(
-      STORAGE_KEYS.PROFILE_IMAGE_URL
-    );
-    if (imageUrlFromSignup) {
-      setImageUrl(imageUrlFromSignup);
+    const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+    if (userInfo) {
+      const parsed: lighty.LoginResponse = JSON.parse(userInfo);
+      if (parsed.profileImageUrl) {
+        setImageUrl(parsed.profileImageUrl);
+      }
     }
   }, []);
 

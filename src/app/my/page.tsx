@@ -4,7 +4,6 @@ import SettingsMenu from "@/components/my/SettingsMenu";
 import MyMainInfo from "@/components/my/MyMainInfo";
 import UserProfile from "@/components/my/UserProfile";
 import Spacing from "@/components/shared/Spacing";
-import * as lighty from "lighty-type";
 import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
 import React, { useCallback, useEffect, useState } from "react";

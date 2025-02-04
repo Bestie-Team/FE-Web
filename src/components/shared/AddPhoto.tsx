@@ -4,7 +4,6 @@ import Image from "next/image";
 import * as lighty from "lighty-type";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import useUpdateProfile from "../my/hooks/useUpdateProfile";
 import clsx from "clsx";
 import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
 import PlusIcon from "./Icon/PlusIcon";
@@ -29,14 +28,7 @@ export default function AddPhoto({
   imageUrl?: string | null;
   setImageUrl?: React.Dispatch<React.SetStateAction<RegisterRequestType>>;
 }) {
-  const pathname = usePathname();
-  const [file, setFile] = useState<File | null>(null);
   const [image, setImage] = useState<string | undefined>(undefined);
-
-  const { mutate } = useUpdateProfile({
-    file,
-    onError: (error: Error) => console.log(error),
-  });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputFile = e.target?.files?.[0];
@@ -46,7 +38,6 @@ export default function AddPhoto({
     if (inputFile.size > maxSize) {
       lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
       e.target.value = "";
-      setFile(null);
       setImage(undefined);
       if (setImageUrl) {
         setImageUrl((prev) => ({
@@ -56,8 +47,6 @@ export default function AddPhoto({
       }
       return;
     }
-
-    setFile(inputFile);
 
     const objectUrl = URL.createObjectURL(inputFile);
     setImage(objectUrl);
@@ -71,13 +60,6 @@ export default function AddPhoto({
 
     return () => URL.revokeObjectURL(objectUrl);
   };
-
-  useEffect(() => {
-    if (pathname === "/my/edit" && !!file) {
-      console.log(file);
-      mutate();
-    }
-  }, [file]);
 
   return (
     <label

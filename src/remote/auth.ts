@@ -28,7 +28,7 @@ export async function postLogin({
     }),
   });
 
-  const data: lighty.LoginResponse = await response.json();
+  const data = await response.json();
   if (response.ok) {
     storeAuthData(data.accessToken, {
       accountId: data.accountId,
@@ -98,7 +98,7 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
         file: RegisterRequest.profileImageUrl as File,
       });
       profileImageUrl = uploadResult?.imageUrl;
-      if (profileImageUrl) await patchProfileImage({ profileImageUrl });
+      if (profileImageUrl) await patchProfileImage(profileImageUrl);
     }
 
     storeAuthData(data.accessToken, {

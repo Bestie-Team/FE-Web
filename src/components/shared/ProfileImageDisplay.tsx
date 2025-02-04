@@ -14,44 +14,38 @@ export default function ProfileImageDisplay({
   userImage?: string | null;
   setUserImage: Dispatch<
     SetStateAction<{
-      name: string;
       accountId: string;
       profileImageUrl: string;
     }>
   >;
   small?: boolean;
 }) {
-  const [file, setFile] = useState<File | null>(null);
   const [newImage, setNewImage] = useState<string>(userImage ? userImage : "");
   const { mutate } = usePostProfileImage({
-    file,
     onSuccess: async (imageUrl) => {
-      lightyToast.success("프로필 사진이 변경되었어요");
+      console.log("프로필 사진 업로드 성공", imageUrl);
       setUserImage((prev) => ({ ...prev, profileImageUrl: imageUrl }));
     },
     onError: (error: Error) => console.log(error),
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target?.files?.[0];
-    if (!file) return;
-    setFile(file);
+    const inputFile = e.target?.files?.[0];
+    if (!inputFile) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const selectedImage = event.target?.result;
-      if (selectedImage && typeof selectedImage === "string") {
-        setNewImage(selectedImage);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
+    const imageUrl = URL.createObjectURL(inputFile);
 
-  useEffect(() => {
-    if (file) {
-      mutate();
+    setNewImage(imageUrl);
+
+    const maxSize = 5 * 1024 * 1024;
+    if (inputFile.size > maxSize) {
+      lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+      e.target.value = "";
+      return;
     }
-  }, [file]);
+
+    mutate({ file: inputFile });
+  };
 
   return (
     <label
