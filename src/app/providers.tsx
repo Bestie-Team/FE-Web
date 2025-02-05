@@ -1,6 +1,6 @@
 "use client";
 import { RecoilRoot } from "recoil";
-import React, { useState } from "react";
+import React from "react";
 interface Props {
   children?: React.ReactNode;
 }
@@ -83,7 +83,7 @@ const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-
+  const backgroundDark = ["/record", "/groups"];
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({
@@ -114,7 +114,9 @@ const NextLayout = ({ children }: Props) => {
         }}
         className={clsx(
           "h-full",
-          pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white "
+          backgroundDark.includes(pathname)
+            ? "bg-grayscale-50"
+            : "bg-base-white "
         )}
       >
         {children}
