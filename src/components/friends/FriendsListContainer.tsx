@@ -1,5 +1,4 @@
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
@@ -8,26 +7,18 @@ import Link from "next/link";
 import FriendListItem from "./FriendListItem";
 import { SetterOrUpdater } from "recoil";
 import Modal from "../shared/Modal/Modal";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function FriendsListContainer({
   friends,
-  hasMore,
-  loadMore,
   isModalOpen,
   setIsModalOpen,
 }: {
   friends?: lighty.User[];
-  hasMore: boolean;
-  loadMore: () => void;
   isModalOpen: boolean;
   setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
   return (
-    <div
-      id="scrollableDiv"
-      className="flex flex-col h-screen bg-grayscale-50 pb-15 px-5 overflow-y-scroll no-scrollbar"
-    >
+    <div className="bg-grayscale-50 pb-15 px-5">
       <span className="text-T5">{`친구 ${friends?.length}`}</span>
       <Spacing size={12} />
       {friends?.length === 0 ? (
@@ -49,30 +40,20 @@ export default function FriendsListContainer({
           </Button>
         </Flex>
       ) : (
-        <InfiniteScroll
-          className="!overflow-visible"
-          dataLength={friends?.length ?? 0}
-          hasMore={hasMore}
-          loader={<DotSpinnerSmall />}
-          next={loadMore}
-          scrollThreshold="10px"
-          scrollableTarget="scrollableDiv"
-        >
-          <ul>
-            {friends?.map((friendItem, idx) => {
-              return (
-                <React.Fragment key={`${friendItem.accountId}`}>
-                  <FriendListItem
-                    friendInfo={friendItem}
-                    idx={idx}
-                    type="friend"
-                  />
-                  <Spacing size={16} />
-                </React.Fragment>
-              );
-            })}
-          </ul>
-        </InfiniteScroll>
+        <ul>
+          {friends?.map((friendItem, idx) => {
+            return (
+              <React.Fragment key={`${friendItem.accountId}`}>
+                <FriendListItem
+                  friendInfo={friendItem}
+                  idx={idx}
+                  type="friend"
+                />
+                <Spacing size={16} />
+              </React.Fragment>
+            );
+          })}
+        </ul>
       )}
       {isModalOpen ? (
         <Modal

@@ -4,20 +4,15 @@ import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import UserListItem from "./UserListItem";
 import Modal from "../shared/Modal/Modal";
-import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function UserListContainer({
-  hasMore,
-  loadMore,
   isFetching,
   searchedFriends,
   isModalOpen,
   setIsModalOpen,
 }: {
-  hasMore: boolean;
   isFetching: boolean;
-  loadMore: () => void;
   friends?: lighty.User[];
   searchedFriends?: lighty.User[];
   isModalOpen: boolean;
@@ -25,31 +20,18 @@ export default function UserListContainer({
 }) {
   if (searchedFriends) {
     return (
-      <div
-        id="scrollableDiv"
-        className="flex flex-col h-screen bg-grayscale-50 pt-[142px] pb-20 px-5 overflow-y-scroll no-scrollbar"
-      >
-        <InfiniteScroll
-          className="!overflow-visible"
-          dataLength={searchedFriends?.length ?? 0}
-          hasMore={hasMore}
-          loader={<></>}
-          next={loadMore}
-          scrollThreshold="10px"
-          scrollableTarget="scrollableDiv"
-        >
-          <ul>
-            {searchedFriends?.map((friendItem, idx) => {
-              return (
-                <React.Fragment key={`${friendItem.accountId}`}>
-                  <UserListItem userInfo={friendItem} idx={idx} />
-                  <Spacing size={16} />
-                </React.Fragment>
-              );
-            })}
-            {isFetching && <DotSpinnerSmall />}
-          </ul>
-        </InfiniteScroll>
+      <div className="pt-[142px] pb-20 px-5">
+        <ul>
+          {searchedFriends?.map((friendItem, idx) => {
+            return (
+              <React.Fragment key={`${friendItem.accountId}`}>
+                <UserListItem userInfo={friendItem} idx={idx} />
+                <Spacing size={16} />
+              </React.Fragment>
+            );
+          })}
+          {isFetching && <DotSpinnerSmall />}
+        </ul>
         {isModalOpen ? (
           <Modal
             action={() => {}}

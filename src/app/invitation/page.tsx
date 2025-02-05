@@ -13,11 +13,10 @@ import useSentInvitationToGathering from "@/components/gathering/hooks/useSentIn
 import InvitationModal from "@/components/invitation/InvitationModal";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import InfiniteScroll from "react-infinite-scroll-component";
-import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import NoInvitation from "@/components/invitation/NoInvitation";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 export default function InvitationPage() {
   const [isClient, setIsClient] = useState(false);
@@ -32,26 +31,28 @@ export default function InvitationPage() {
     data: received,
     isFetching,
     loadMore,
-    hasNextPage,
   } = useReceivedInvitationToGathering();
 
   const {
     data: sent,
     isFetching: isFetching_s,
     loadMore: loadMore_s,
-    hasNextPage: hasNextPage_s,
   } = useSentInvitationToGathering();
 
+  console.log(sent);
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useInfiniteScroll({ isFetching, loadMore });
+  useInfiniteScroll({ isFetching: isFetching_s, loadMore: loadMore_s });
 
   if (!isClient) {
     return <FullPageLoader />;
   }
 
   return (
-    <div id="scrollableDiv">
+    <div className="h-full">
       <div
         id="filter"
         className={clsx(filterStyle, isPast ? "shadow-bottom" : "")}
@@ -80,62 +81,42 @@ export default function InvitationPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper w-full"
+          className="custom-swiper w-full pointer-events-auto"
         >
           <SwiperSlide>
             {received && received.length > 0 ? (
-              <InfiniteScroll
-                className="!overflow-visible"
-                dataLength={received?.length ?? 0}
-                hasMore={hasNextPage}
-                loader={<DotSpinnerSmall />}
-                next={loadMore}
-                scrollThreshold="10px"
-                scrollableTarget="scrollableDiv"
-              >
-                <Flex direction="column" className="pt-[110px]">
-                  {received?.map((invitation) => {
-                    return (
-                      <React.Fragment key={invitation.id}>
-                        <InvitationCard
-                          onClickOpen={setModalOpen}
-                          invitation={invitation}
-                        />
-                        <Spacing size={24} />
-                      </React.Fragment>
-                    );
-                  })}
-                </Flex>
-              </InfiniteScroll>
+              <Flex direction="column" className="pt-[110px]">
+                {received?.map((invitation) => {
+                  return (
+                    <React.Fragment key={invitation.id}>
+                      <InvitationCard
+                        onClickOpen={setModalOpen}
+                        invitation={invitation}
+                      />
+                      <Spacing size={24} />
+                    </React.Fragment>
+                  );
+                })}
+              </Flex>
             ) : (
               <NoInvitation type="RECEIVED" />
             )}
           </SwiperSlide>
           <SwiperSlide>
             {sent && sent.length > 0 ? (
-              <InfiniteScroll
-                className="!overflow-visible"
-                dataLength={sent?.length ?? 0}
-                hasMore={hasNextPage_s}
-                loader={<DotSpinnerSmall />}
-                next={loadMore_s}
-                scrollThreshold="10px"
-                scrollableTarget="scrollableDiv"
-              >
-                <Flex direction="column" className="pt-[110px]">
-                  {sent?.map((invitation) => {
-                    return (
-                      <React.Fragment key={invitation.id}>
-                        <InvitationCard
-                          onClickOpen={setModalOpen}
-                          invitation={invitation}
-                        />
-                        <Spacing size={24} />
-                      </React.Fragment>
-                    );
-                  })}
-                </Flex>
-              </InfiniteScroll>
+              <Flex direction="column" className="pt-[110px]">
+                {sent?.map((invitation) => {
+                  return (
+                    <React.Fragment key={invitation.id}>
+                      <InvitationCard
+                        onClickOpen={setModalOpen}
+                        invitation={invitation}
+                      />
+                      <Spacing size={24} />
+                    </React.Fragment>
+                  );
+                })}
+              </Flex>
             ) : (
               <NoInvitation type="SENT" />
             )}
@@ -153,4 +134,4 @@ export default function InvitationPage() {
 }
 
 const filterStyle =
-  "max-w-[430px] pt-12 fixed flex flex-col w-full bg-base-white h-full";
+  "max-w-[430px] pt-12 fixed flex flex-col w-full bg-base-white";

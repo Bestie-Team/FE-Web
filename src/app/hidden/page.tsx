@@ -11,9 +11,8 @@ import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
@@ -22,21 +21,19 @@ export default function FeedPage() {
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const {
     data: hiddenFeed,
-    hasNextPage,
     loadMore,
+    isFetching,
   } = useFeedHidden({ limit: 2 });
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  useInfiniteScroll({ isFetching, loadMore });
   if (!isClient) return <FullPageLoader />;
 
   return (
-    <div
-      className="h-vh pt-[48px] overflow-y-scroll no-scrollbar"
-      id="scrollableDiv"
-    >
+    <div className="pt-[48px]">
       {header}
       {!hiddenFeed ? (
         <FullPageLoader />
@@ -63,20 +60,11 @@ export default function FeedPage() {
               <FilterBar />
             </div>
           </div>
-          <InfiniteScroll
-            dataLength={hiddenFeed?.length ?? 0}
-            hasMore={hasNextPage}
-            loader={<DotSpinnerSmall />}
-            next={loadMore}
-            scrollThreshold="50px"
-            scrollableTarget="scrollableDiv"
-          >
-            <Feed
-              feeds={hiddenFeed}
-              onClickFeed={() => {}}
-              className="!pt-[48px]"
-            />
-          </InfiniteScroll>
+          <Feed
+            feeds={hiddenFeed}
+            onClickFeed={() => {}}
+            className="!pt-[48px]"
+          />
         </>
       )}
 

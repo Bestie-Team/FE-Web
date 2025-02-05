@@ -83,7 +83,7 @@ const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-  const backgroundDark = ["/record", "/groups"];
+  const backgroundDark = ["/record", "/groups", "/friends", "/friends/search"];
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.scrollTo({
@@ -113,6 +113,7 @@ const NextLayout = ({ children }: Props) => {
           flexDirection: "column",
         }}
         className={clsx(
+          "min-h-dvh",
           backgroundDark.includes(pathname)
             ? "bg-grayscale-50"
             : "bg-base-white "

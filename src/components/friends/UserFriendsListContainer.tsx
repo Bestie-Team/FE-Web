@@ -9,6 +9,7 @@ import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom } from "@/atoms/modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const DeleteFriendModal = memo(
   ({
@@ -45,7 +46,7 @@ export default function UserFriendsListContainer() {
   );
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
 
-  const { data, loadMore, hasNextPage, isFetching } = useFriends();
+  const { data, loadMore, isFetching } = useFriends();
 
   const deleteSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
@@ -63,14 +64,16 @@ export default function UserFriendsListContainer() {
     setDeleteFriendModalOpen(false);
   };
 
+  useInfiniteScroll({ isFetching, loadMore });
+
   if (!data || isFetching) return <DotSpinnerSmall />;
 
   return (
     <>
       <FriendsListContainer
         friends={data}
-        hasMore={hasNextPage}
-        loadMore={loadMore}
+        // hasMore={hasNextPage}
+        // loadMore={loadMore}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />

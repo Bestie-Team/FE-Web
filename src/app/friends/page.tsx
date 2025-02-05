@@ -13,12 +13,14 @@ import SearchedFriendsListContainer from "@/components/friends/SearchedFriendsLi
 import { PanelLength } from "@/components/shared/Panel/Panel";
 import Panel from "@/components/shared/Panel/Panel";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 export default function FriendsPage() {
   const [isClient, setIsClient] = useState(false);
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
   const search = useRecoilValue(friendSearchAtom);
   const debouncedSearch = useDebounce(search);
+  const isPast = useScrollThreshold();
 
   const renderSelectedTabContent = useCallback(() => {
     // 전체
@@ -65,8 +67,8 @@ export default function FriendsPage() {
     <div className="bg-grayscale-50 h-full">
       <div
         className={clsx(
-          "max-w-[430px] fixed w-full z-1 bg-grayscale-50"
-          // hasShadow ? "shadow-bottom" : ""
+          "max-w-[430px] fixed w-full z-1 bg-grayscale-50",
+          isPast ? "shadow-bottom" : ""
         )}
       >
         <FriendsPageHeader label="친구" addFriendIcon />
