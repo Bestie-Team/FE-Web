@@ -113,7 +113,6 @@ const NextLayout = ({ children }: Props) => {
           flexDirection: "column",
         }}
         className={clsx(
-          "h-full",
           backgroundDark.includes(pathname)
             ? "bg-grayscale-50"
             : "bg-base-white "

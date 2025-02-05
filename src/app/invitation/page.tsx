@@ -13,16 +13,15 @@ import useSentInvitationToGathering from "@/components/gathering/hooks/useSentIn
 import InvitationModal from "@/components/invitation/InvitationModal";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { useRecoilValue } from "recoil";
-import { scrollProgressAtom } from "@/atoms/scroll";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import NoInvitation from "@/components/invitation/NoInvitation";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 export default function InvitationPage() {
   const [isClient, setIsClient] = useState(false);
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
+  const isPast = useScrollThreshold();
   const header = getHeader("/invitation");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -55,10 +54,7 @@ export default function InvitationPage() {
     <div id="scrollableDiv">
       <div
         id="filter"
-        className={clsx(
-          filterStyle,
-          scrollProgress > 0.01 ? "shadow-bottom" : ""
-        )}
+        className={clsx(filterStyle, isPast ? "shadow-bottom" : "")}
       >
         {header}
         <div className="w-full px-5">

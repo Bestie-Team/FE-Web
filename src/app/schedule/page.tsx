@@ -14,13 +14,12 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { useRecoilValue } from "recoil";
-import { scrollProgressAtom } from "@/atoms/scroll";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { maxDate, minDate } from "@/constants/time";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const MemoizedUpcomingSchedule = React.memo(
   ({ gathering }: { gathering: Gathering[] }) => (
@@ -73,8 +72,7 @@ export default function SchedulePage() {
   );
   const [isClient, setIsClient] = useState(false);
   const { data: upcoming, isFetching } = useGatherings(queryParams);
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
-  const MemoizedLightyCalendarWithBorder = React.memo(LightyCalendarWithBorder);
+  const isPast = useScrollThreshold();
   const [year, setYear] = useState<SelectOptionType | null>({
     value: "2025",
     label: "2025",
@@ -96,15 +94,13 @@ export default function SchedulePage() {
 
   return (
     <div className="h-full">
-      <Header year={year} setYear={setYear} shadow={scrollProgress > 0.1} />
+      <Header year={year} setYear={setYear} shadow={isPast} />
       <Flex direction="column" className={styles.container}>
         <div className="!h-[458px]">
           {isFetching || !upcoming ? (
             <DotSpinner />
           ) : (
-            <MemoizedLightyCalendarWithBorder
-              gatherings={upcoming?.gatherings}
-            />
+            <LightyCalendarWithBorder gatherings={upcoming?.gatherings} />
           )}
         </div>
         <Spacing size={28} />

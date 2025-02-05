@@ -12,10 +12,12 @@ function useScrollShadowByRef(elementRef?: React.RefObject<HTMLElement>) {
 
     const handleScroll = () => {
       lastKnownScrollY = element.scrollTop;
+      console.log("Scrolled to:", lastKnownScrollY);
 
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setHasShadow(lastKnownScrollY > 0);
+          console.log("Shadow state:", lastKnownScrollY > 0);
           ticking = false;
         });
         ticking = true;

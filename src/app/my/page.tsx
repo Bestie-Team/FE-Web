@@ -14,9 +14,8 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { scrollProgressAtom } from "@/atoms/scroll";
-import { useRecoilValue } from "recoil";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const Header = React.memo(
   ({
@@ -52,10 +51,10 @@ export default function MyPage() {
   const [profileInfo, setProfileInfo] = useState<
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const { data: user, isFetching } = useUserDetail();
   const { logout } = useAuth();
   const router = useRouter();
+  const isPast = useScrollThreshold();
 
   const handleLogout = useCallback(async () => {
     router.push("/");
@@ -93,7 +92,7 @@ export default function MyPage() {
   return (
     <div className="h-full">
       <Header
-        shadow={scrollProgress > 0.01}
+        shadow={isPast}
         open={modalState === "open"}
         privatePolicyOpen={modalState === "privatePolicy"}
       />
@@ -109,6 +108,7 @@ export default function MyPage() {
             userName={user.name}
           />
           <Spacing size={12} />
+
           <MyMainInfo
             groupCount={user.groupCount}
             feedCount={user.feedCount}

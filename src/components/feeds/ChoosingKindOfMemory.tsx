@@ -19,7 +19,7 @@ export default function ChoosingKindOfMemory({
 }) {
   const header = getHeader("/record");
   return (
-    <div className="h-full bg-grayscale-50 pt-12">
+    <div className="bg-grayscale-50 pt-12 h-dvh">
       {header}
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
         <LightyIcon width="24" height="24" color="#0A0A0A" />

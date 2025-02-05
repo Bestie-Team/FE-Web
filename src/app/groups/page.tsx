@@ -9,9 +9,8 @@ import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import { useRecoilValue } from "recoil";
-import { scrollProgressAtom } from "@/atoms/scroll";
 import { Group } from "lighty-type";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
@@ -54,8 +53,7 @@ GroupList.displayName = "GroupList";
 export default function GroupsPage() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
+  const isPast = useScrollThreshold();
   const pathname = usePathname();
   const { data: groups, isFetching } = useGroup();
 
@@ -84,7 +82,7 @@ export default function GroupsPage() {
   console.log(groups);
   return (
     <div className="h-full">
-      <Header pathname={pathname} shadow={scrollProgress > 0.1} />
+      <Header pathname={pathname} shadow={isPast} />
       {isFetching ? (
         <FullPageLoader />
       ) : (

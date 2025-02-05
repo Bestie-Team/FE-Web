@@ -17,7 +17,7 @@ export default function InfoBar({
 }) {
   const { userInfo } = useAuth();
   const isMine = feed.writer.accountId === userInfo?.accountId;
-  console.log(feed.writer.accountId, userInfo?.accountId);
+  // console.log(feed.writer.accountId, userInfo?.accountId);
   return (
     <Flex align="center" className="px-[20px]">
       <WriterInfo writer={feed.writer} />

@@ -1,24 +1,24 @@
 "use client";
 import FilterBar from "@/components/shared/YearFilter";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import clsx from "clsx";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import getHeader from "@/utils/getHeader";
 import { recordModalAtom } from "@/atoms/modal";
-import { scrollProgressAtom } from "@/atoms/scroll";
 import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
   const header = getHeader("/hidden");
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
+  const isPast = useScrollThreshold();
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const {
     data: hiddenFeed,
@@ -43,10 +43,7 @@ export default function FeedPage() {
       ) : (
         <>
           <div
-            className={clsx(
-              filterWrapperStyle,
-              scrollProgress > 0.1 ? "shadow-bottom" : ""
-            )}
+            className={clsx(filterWrapperStyle, isPast ? "shadow-bottom" : "")}
           >
             <div
               style={{

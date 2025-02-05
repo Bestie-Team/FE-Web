@@ -92,6 +92,7 @@
 }
 
 body {
+  height: 100%;
   color: var(--foreground);
   background: var(--background);
   font-family: "Pretendard Variable", Pretendard, -apple-system,

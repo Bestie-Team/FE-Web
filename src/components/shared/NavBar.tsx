@@ -27,9 +27,6 @@ const NavBar = () => {
 
   if (!isClient) return null;
 
-  const portalRoot = document.getElementById("root-portal");
-  if (!portalRoot) return null;
-
   const showSheetButton =
     ["/feed"].some((path) => pathname.startsWith(path)) ||
     pathname.endsWith("/gathering");
@@ -38,7 +35,7 @@ const NavBar = () => {
     <nav
       style={{ zIndex: 99 }}
       className={`
-      fixed pointer-events-auto left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
+      fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
       flex justify-between px-3 pt-1 pb-2
       border-t border-grayscale-10 mx-auto
       transition-all duration-900 ease-in-out
@@ -63,7 +60,6 @@ const NavBar = () => {
 
       {(showSheetButton || pathname === "/") && <FloatingButton tooltip />}
     </nav>
-    // portalRoot
   );
 };
 

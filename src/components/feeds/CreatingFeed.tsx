@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import useScrollShadow from "@/hooks/useScrollShadow";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
 import { recordGatheringAtom } from "@/atoms/record";
@@ -26,9 +25,8 @@ export default function CreatingFeed() {
   const queryClient = useQueryClient();
   const [isMaking, setIsMaking] = useState(false);
   const pathname = usePathname();
-  const containerRef = useRef<HTMLDivElement>(null);
+
   const header = getHeader(pathname);
-  const hasShadow = useScrollShadow(containerRef);
   const selectedGatheringId = useRecoilValue(recordGatheringAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
@@ -98,12 +96,8 @@ export default function CreatingFeed() {
 
   if (isMaking) return <MakingFeedStatus isPending={isPending} />;
   return (
-    <div className={styles.container} ref={containerRef}>
-      <div
-        className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
-      >
-        {header}
-      </div>
+    <div className={styles.container}>
+      <div className={clsx(styles.headerWrapper)}>{header}</div>
       {isPending || isUploading ? (
         <FullPageLoader />
       ) : (
@@ -121,6 +115,6 @@ export default function CreatingFeed() {
 }
 
 const styles = {
-  container: "bg-base-white h-full",
+  container: "bg-base-white h-dvh",
   headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
 };

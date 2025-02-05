@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import "swiper/css";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
@@ -12,11 +12,11 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Flex from "@/components/shared/Flex";
-import { scrollProgressAtom } from "@/atoms/scroll";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import dynamic from "next/dynamic";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const Header = React.memo(
   ({
@@ -59,12 +59,12 @@ const GatheringPageSwiper = dynamic(
 Header.displayName = "Header";
 
 export default function MyGatheringPage() {
+  const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
 
   const { data, isFetching, isError } = useGatherings({
     limit: 50,
@@ -89,7 +89,7 @@ export default function MyGatheringPage() {
   return (
     <div className="h-full no-scrollbar">
       <Header
-        shadow={scrollProgress > 0.01}
+        shadow={isPast}
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />

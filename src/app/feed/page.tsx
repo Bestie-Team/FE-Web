@@ -27,13 +27,12 @@ import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { scrollProgressAtom } from "@/atoms/scroll";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { maxDate, minDate } from "@/constants/time";
-import InfiniteScroll from "react-infinite-scroll-component";
-import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const Header = React.memo(
   ({
@@ -124,8 +123,8 @@ FeedModals.displayName = "FeedModals";
 
 export default function FeedPage() {
   const queryClient = useQueryClient();
+  const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
@@ -175,12 +174,18 @@ export default function FeedPage() {
     ]);
   };
 
-  const { data: feedAll, loadMore, hasNextPage } = useFeedAll(queryParams);
+  const {
+    data: feedAll,
+    loadMore,
+    hasNextPage,
+    isFetching,
+  } = useFeedAll(queryParams);
 
   const {
     data: feedMine,
     loadMore: loadMore_mine,
     hasNextPage: hasNextPage_mine,
+    isFetching: isFetching_mine,
   } = useFeedMine(queryParams);
 
   const { mutate: deleteFeed } = useDeleteFeed({
@@ -201,6 +206,9 @@ export default function FeedPage() {
     },
   });
 
+  useInfiniteScroll({ isFetching: isFetching_mine, loadMore: loadMore_mine });
+  useInfiniteScroll({ isFetching, loadMore });
+
   const renderSwipers = useMemo(() => {
     if (!feedAll || !feedMine) {
       return <DotSpinner />;
@@ -217,12 +225,12 @@ export default function FeedPage() {
         }}
         slidesPerView={1}
         spaceBetween={2}
-        className="custom-swiper w-full !z-5 h-screen"
+        className="custom-swiper w-full !z-5 pointer-events-auto"
       >
-        {feedMine && (
+        {/* {feedMine && (
           <SwiperSlide
             id="scrollableDiv1"
-            className="h-full overflow-y-auto no-scrollbar"
+            className="h-full overflow-y-auto no-scrollbar pointer-events-auto"
           >
             <InfiniteScroll
               dataLength={feedMine?.length ?? 0}
@@ -231,6 +239,7 @@ export default function FeedPage() {
               next={loadMore_mine}
               scrollThreshold="10px"
               scrollableTarget="scrollableDiv1"
+              className="pointer-events-auto"
             >
               {feedMine.length > 0 ? (
                 <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
@@ -239,11 +248,20 @@ export default function FeedPage() {
               )}
             </InfiniteScroll>
           </SwiperSlide>
+        )} */}
+        {feedMine && (
+          <SwiperSlide>
+            {feedMine.length > 0 ? (
+              <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
+            ) : (
+              <NoFeed />
+            )}
+          </SwiperSlide>
         )}
-        {feedAll && (
+        {/* {feedAll && (
           <SwiperSlide
             id="scrollableDiv2"
-            className="no-scrollbar h-full overflow-y-auto"
+            className="h-full overflow-y-auto no-scrollbar pointer-events-auto"
           >
             <InfiniteScroll
               dataLength={feedAll?.length ?? 0}
@@ -252,6 +270,7 @@ export default function FeedPage() {
               next={loadMore}
               scrollThreshold="10px"
               scrollableTarget="scrollableDiv2"
+              className="pointer-events-auto"
             >
               {feedAll.length > 0 ? (
                 <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
@@ -260,6 +279,13 @@ export default function FeedPage() {
               )}
             </InfiniteScroll>
           </SwiperSlide>
+        )} */}
+        {feedAll && feedAll.length > 0 ? (
+          <SwiperSlide>
+            <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+          </SwiperSlide>
+        ) : (
+          <NoFeed />
         )}
       </Swiper>
     );
@@ -282,11 +308,10 @@ export default function FeedPage() {
   if (!isClient) {
     return <FullPageLoader />;
   }
-  console.log(feedMine);
   return (
     <div className="h-full no-scrollbar">
       <Header
-        shadow={scrollProgress > 0.1}
+        shadow={isPast}
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
