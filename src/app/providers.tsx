@@ -81,15 +81,11 @@ export const NextProvider = ({ children }: Props) => {
 
 const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
-  const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  // useChangeHeaderStyle({ scrollReady: isClient });
-
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsClient(true);
       window.scrollTo({
         top: 0,
         behavior: "smooth",

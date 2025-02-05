@@ -29,7 +29,7 @@ const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
 
   const setModalOpen = useSetRecoilState(getModalStateAtom());
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = () => {
     setModalOpen(true);
   };
 
