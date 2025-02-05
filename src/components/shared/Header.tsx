@@ -11,7 +11,7 @@ import { useRecoilValue } from "recoil";
 import { useRouter } from "next/navigation";
 import NoticeIcon from "./Icon/NoticeIcon";
 import Flex from "./Flex";
-import { bgColorAtom, fontColorAtom } from "@/atoms/scroll";
+import { isIntersectingAtom } from "@/atoms/scroll";
 
 export function Header({
   pageName,
@@ -110,25 +110,24 @@ export function HeaderWithBackBtn({
 
 export function BackgroundReversibleHeader() {
   const router = useRouter();
-  const fontColor = useRecoilValue(fontColorAtom);
-  const bgColor = useRecoilValue(bgColorAtom);
+  const isIntersecting = useRecoilValue(isIntersectingAtom);
   return (
     <div
       style={{
         top: 0,
         zIndex: 12,
         position: "fixed",
-        background: bgColor,
+        background: isIntersecting ? "transparent" : "#fff",
         transition: "background-color 0.5s ease",
       }}
       className={clsx(styles.universalHeaderWrapper, "fixed text-T4 px-5")}
     >
       <div className={styles.lightyIconContainer}>
-        <LightyIcon color={fontColor} />
+        <LightyIcon color={isIntersecting ? "#fff" : "#0A0A0A"} />
       </div>
       <Spacing size={4} direction="horizontal" />
       <LightyLetterLogo
-        color={fontColor}
+        color={isIntersecting ? "#fff" : "#0A0A0A"}
         pointer
         onClick={() => {
           router.push("/");
@@ -142,7 +141,11 @@ export function BackgroundReversibleHeader() {
           }}
           className={clsx("relative", styles.iconWrapperStyle)}
         >
-          <MailIcon width="24" height="24" color={fontColor} />
+          <MailIcon
+            width="24"
+            height="24"
+            color={isIntersecting ? "#fff" : "#0A0A0A"}
+          />
           <DotIcon display={true} className="absolute top-0 right-[6px]" />
         </div>
         <Spacing size={4} direction="horizontal" />
@@ -152,7 +155,7 @@ export function BackgroundReversibleHeader() {
           }}
           className={styles.iconWrapperStyle}
         >
-          <NoticeIcon color={fontColor} />
+          <NoticeIcon color={isIntersecting ? "#fff" : "#0A0A0A"} />
         </div>
       </Flex>
     </div>

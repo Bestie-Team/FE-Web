@@ -10,17 +10,7 @@ export const scrollProgressAtom = atom<number>({
   default: 0,
 });
 
-export const isVisibleAtom = atom<boolean>({
-  key: "scroll/isVisible",
-  default: true,
-});
-
-export const fontColorAtom = atom<string>({
-  key: "fontColor",
-  default: "#0A0A0A",
-});
-
-export const bgColorAtom = atom<string>({
-  key: "bgColor",
-  default: "transparent",
+export const isIntersectingAtom = atom<boolean>({
+  key: "intersect",
+  default: false,
 });

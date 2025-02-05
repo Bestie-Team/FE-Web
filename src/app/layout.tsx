@@ -22,14 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendard.variable} antialiased h-dvh`}>
+      <body className={`${pretendard.variable} antialiased h-full`}>
+        <NextProvider>
+          <NextLayout>{children}</NextLayout>
+        </NextProvider>
         <div
           className="fixed left-0 right-0 bottom-0 mx-auto flex justify-center z-10"
           id="root-portal"
         ></div>
-        <NextProvider>
-          <NextLayout>{children}</NextLayout>
-        </NextProvider>
       </body>
     </html>
   );

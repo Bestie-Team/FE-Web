@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
-import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
-import { scrollAtom, scrollProgressAtom } from "@/atoms/scroll";
 import useUserDetail from "../users/hooks/useUserDetail";
 import DotSpinnerSmall from "./Spinner/DotSpinnerSmall";
 import STORAGE_KEYS from "@/constants/storageKeys";
@@ -15,8 +12,6 @@ const NavBar = () => {
   const { data: user, isFetching } = useUserDetail();
   const [isClient, setIsClient] = useState(false);
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
-  const isVisible = useRecoilValue(scrollAtom);
-  const scrollProgress = useRecoilValue(scrollProgressAtom);
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
@@ -39,17 +34,11 @@ const NavBar = () => {
     ["/feed"].some((path) => pathname.startsWith(path)) ||
     pathname.endsWith("/gathering");
 
-  const opacity = 1 - scrollProgress * 2;
-  const clampedOpacity = Math.max(0, Math.min(opacity, 1));
-
-  return createPortal(
+  return (
     <nav
-      style={{
-        opacity: isVisible ? clampedOpacity : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(100%)",
-      }}
+      style={{ zIndex: 99 }}
       className={`
-      fixed bottom-0 bg-base-white w-full max-w-[430px] 
+      fixed pointer-events-auto left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
       flex justify-between px-3 pt-1 pb-2
       border-t border-grayscale-10 mx-auto
       transition-all duration-900 ease-in-out
@@ -63,7 +52,9 @@ const NavBar = () => {
             key={item.href.slice(1)}
             href={item.href}
             isActive={idx === activeBtn || pathname === item.href}
-            onClick={() => setActiveBtn(idx)}
+            onClick={() => {
+              setActiveBtn(idx);
+            }}
             icon={item.icon}
             profileImageUrl={user?.profileImageUrl || imageUrl}
           />
@@ -71,8 +62,8 @@ const NavBar = () => {
       )}
 
       {(showSheetButton || pathname === "/") && <FloatingButton tooltip />}
-    </nav>,
-    portalRoot
+    </nav>
+    // portalRoot
   );
 };
 

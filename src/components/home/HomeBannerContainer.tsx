@@ -1,3 +1,4 @@
+"use client";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
@@ -7,6 +8,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { BANNER_DATA } from "@/constants/banner";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import { useRef } from "react";
 
 export interface AD_IMAGE {
   src: string;
@@ -15,19 +18,21 @@ export interface AD_IMAGE {
   height: number;
 }
 
+interface BannerSlide {
+  subTitle: string;
+  title: string;
+  image: string;
+  sliceAt: number;
+  ad_image: AD_IMAGE | null;
+}
+
 const BannerSlide = ({
   subTitle,
   title,
   image,
   sliceAt,
   ad_image,
-}: {
-  subTitle: string;
-  title: string;
-  image: string;
-  sliceAt: number;
-  ad_image: AD_IMAGE | null;
-}) => (
+}: BannerSlide) => (
   <div className="relative w-full">
     <div className="h-[420px] w-full">
       <Image
@@ -61,14 +66,22 @@ const BannerSlide = ({
 );
 
 export default function HomeBannerContainer() {
+  const targetRef = useRef<HTMLDivElement>(null);
+  useIntersectionObserver({
+    elementRef: targetRef,
+    threshold: 0.7,
+  });
+
   return (
-    <Swiper modules={[Pagination]} pagination={{ type: "fraction" }}>
-      {BANNER_DATA.map((slide) => (
-        <SwiperSlide key={slide.id}>
-          <BannerSlide {...slide} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div ref={targetRef}>
+      <Swiper modules={[Pagination]} pagination={{ type: "fraction" }}>
+        {BANNER_DATA.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <BannerSlide {...slide} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 }
 

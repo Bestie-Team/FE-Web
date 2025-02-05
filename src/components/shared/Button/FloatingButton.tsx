@@ -6,47 +6,12 @@ import { homeModalStateAtom } from "@/atoms/home";
 import { recordModalAtom } from "@/atoms/modal";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { useState, useEffect, useRef } from "react";
 import LightyDeco from "../Icon/LightyDeco";
 import { useSetRecoilState } from "recoil";
 import PlusIcon from "../Icon/PlusIcon";
 import Tooltip from "../Tooltip/Tooltip";
 
 const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
-  const [isTouching, setIsTouching] = useState(false);
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const button = divRef.current;
-    if (!button) return;
-
-    const handleTouchMove = () => {
-      if (isTouching) {
-        setIsTouching(false);
-      }
-    };
-
-    const handleScroll = () => {
-      setIsTouching(false);
-    };
-
-    button.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      button.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isTouching]);
-
-  const handleTouchStart = () => {
-    setIsTouching(true);
-  };
-
-  const handleTouchEnd = () => {
-    setIsTouching(false);
-  };
-
   const pathname = usePathname();
   const getModalStateAtom = () => {
     if (pathname.endsWith("/")) return homeModalStateAtom;
@@ -65,21 +30,13 @@ const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
   const setModalOpen = useSetRecoilState(getModalStateAtom());
 
   const handleClick = (e: React.MouseEvent) => {
-    if (!isTouching) {
-      console.log("Button clicked");
-      setModalOpen(true);
-    } else {
-      e.preventDefault();
-    }
+    setModalOpen(true);
   };
 
   return (
     <>
       {tooltip ? (
-        <div
-          className={styles.toolTipWrapper}
-          onTouchStart={(e) => e.stopPropagation()}
-        >
+        <div className={styles.toolTipWrapper}>
           <Tooltip
             direction="right"
             closeButton={true}
@@ -88,9 +45,6 @@ const FloatingButton = ({ tooltip }: { tooltip?: boolean }) => {
         </div>
       ) : null}
       <div
-        ref={divRef}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
         onClick={handleClick}
         data-testid="plus-circle-button"
         className={styles.plusButton}

@@ -20,7 +20,6 @@ import {
   useAuth,
 } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
-import useChangeHeaderStyle from "@/hooks/useChangeHeaderStyle";
 import clsx from "clsx";
 
 const queryClient = new QueryClient();
@@ -83,12 +82,10 @@ export const NextProvider = ({ children }: Props) => {
 const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
   const [isClient, setIsClient] = useState(false);
-
   const pathname = usePathname();
   const router = useRouter();
-  const noScroll = ["/feed", "/gathering", "/hidden"];
 
-  useChangeHeaderStyle({ scrollReady: isClient });
+  // useChangeHeaderStyle({ scrollReady: isClient });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -119,14 +116,12 @@ const NextLayout = ({ children }: Props) => {
           display: "flex",
           flexDirection: "column",
         }}
-        id="scrollable-container"
         className={clsx(
-          "no-scrollbar h-dvh",
-          pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white ",
-          noScroll.includes(pathname) ? "" : "overflow-y-scroll"
+          "h-full",
+          pathname === "/groups" ? "bg-grayscale-50" : "bg-base-white "
         )}
       >
-        <>{children}</>
+        {children}
         {(pathname === "/" && isAuthenticated) ||
         pathname === "/gathering" ||
         pathname === "/feed" ||
