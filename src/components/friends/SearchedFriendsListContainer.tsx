@@ -16,9 +16,9 @@ export default function SearchedFriendsListContainer({
     enabled: debouncedSearch.length >= 2,
   });
 
-  if (isFetching) return <DotSpinnerSmall />;
-
   useInfiniteScroll({ isFetching, loadMore });
+
+  if (isFetching) return <DotSpinnerSmall />;
 
   return (
     <FriendsListContainer

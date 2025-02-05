@@ -19,7 +19,7 @@ export const NavLink = ({
     <Link href={href} passHref>
       <div
         className="pointer-events-none flex justify-center w-16 h-11 items-center hover:animate-shrink-grow"
-        onClick={onClick}
+        onMouseDown={onClick}
       >
         {icon(isActive, profileImageUrl ?? "")}
       </div>
