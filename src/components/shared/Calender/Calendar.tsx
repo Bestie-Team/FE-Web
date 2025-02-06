@@ -22,10 +22,10 @@ export default function LightyCalendar() {
   console.log(selectedDate);
   return (
     <Calendar
+      showNeighboringMonth
       onChange={setSelectedDate}
       value={selectedDate}
       formatDay={(locale, date) => format(date, "d")}
-      showNeighboringMonth={false}
       prev2Label={null}
       next2Label={null}
       nextLabel={

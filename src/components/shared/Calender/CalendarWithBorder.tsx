@@ -77,6 +77,7 @@ export default function LightyCalendarWithBorder({
 
   return (
     <Calendar
+      showNeighboringMonth
       tileClassName={({ date, view }) => {
         if (view === "month") {
           return returnClassName(date);
@@ -92,7 +93,6 @@ export default function LightyCalendarWithBorder({
       onChange={handleDateChange}
       value={selectedDate}
       formatDay={(locale, date) => format(date, "d")}
-      showNeighboringMonth={false}
       prev2Label={null}
       next2Label={null}
       nextLabel={
