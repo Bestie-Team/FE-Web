@@ -32,6 +32,15 @@ const PhotoSwiper = memo(
         grabCursor={true}
         style={{ paddingLeft: "20px" }}
         className="custom-swiper w-full"
+        onTouchStart={(swiper, e) => {
+          e.stopPropagation();
+        }}
+        onTouchMove={(swiper, e) => {
+          e.stopPropagation();
+        }}
+        onTouchEnd={(swiper, e) => {
+          e.stopPropagation();
+        }}
       >
         {feed.images.map((image, idx) => (
           <SwiperSlide
