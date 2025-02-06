@@ -2,7 +2,7 @@
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import Spacing from "../shared/Spacing";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -72,9 +72,15 @@ export default function HomeBannerContainer() {
     threshold: 0.7,
   });
 
+  const delaySeconds = 5000;
+
   return (
     <div ref={targetRef}>
-      <Swiper modules={[Pagination]} pagination={{ type: "fraction" }}>
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        autoplay={{ delay: delaySeconds }}
+        pagination={{ type: "fraction" }}
+      >
         {BANNER_DATA.map((slide) => (
           <SwiperSlide key={slide.id}>
             <BannerSlide {...slide} />
