@@ -66,7 +66,7 @@ export default function Input({
           isFocused ? "border-grayscale-700" : "border-grayscale-10",
           idNotAvailable
             ? "border-point-red50 border-[1.4px]"
-            : "border-grayscale-700"
+            : "border-grayscale-10"
         )}
       >
         <input

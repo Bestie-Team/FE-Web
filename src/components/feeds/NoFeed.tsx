@@ -44,3 +44,20 @@ function FeedIcon({ width, height }: { width?: string; height?: string }) {
     </svg>
   );
 }
+
+export function NoFeedToMakeCard() {
+  return (
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      className="w-[270px] h-[320px] border-[1px] border-dashed rounded-[20px] border-grayscale-200"
+    >
+      <FeedIcon width="24" height="24" />
+      <Spacing size={8} />
+      <span className="text-B4 text-grayscale-400">
+        포토 카드로 만들 피드가 없어요!
+      </span>
+    </Flex>
+  );
+}

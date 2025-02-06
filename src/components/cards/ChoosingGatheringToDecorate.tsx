@@ -10,6 +10,7 @@ import DotSpinner from "../shared/Spinner/DotSpinner";
 import { cardSelectedFeedAtom } from "@/atoms/card";
 import { maxDate, minDate } from "@/constants/time";
 import { Feed } from "@/models/feed";
+import { NoFeedToMakeCard } from "../feeds/NoFeed";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -47,43 +48,39 @@ export default function ChoosingGatheringToDecorate({
 
   const feeds = data;
   console.log(feeds);
-  if (feeds && feeds.length >= 1) {
-    return (
-      <div className="bg-base-white h-dvh pt-12">
-        <Flex direction="column" className="px-6">
-          <Spacing size={28} />
-          <LightyLogo />
-          <Spacing size={16} />
-          <span className="text-T2">어떤 피드의</span>
-          <Spacing size={7} />
-          <span className="text-T2">포토 카드를 꾸밀까요?</span>
-          <Spacing size={16} />
-          <span className="text-B3 text-grayscale-500">
-            직접 작성한 피드만 카드로 꾸밀 수 있어요.
-          </span>
-        </Flex>
-        <Spacing size={40} />
-        {isFetching || !feeds ? (
-          <DotSpinner />
-        ) : (
-          <ClickableGatheringSwiperForDeco
-            feed={feeds}
-            onImageClick={handleImageClick}
-            selectedFeedId={selectedFeed?.id || null}
-          />
-        )}
-        <FixedBottomButton
-          disabled={selectedFeed?.id === ""}
-          label={"꾸미기 시작!"}
-          onClick={() => {
-            onNext();
-          }}
+
+  return (
+    <div className="bg-base-white h-dvh pt-12">
+      <Flex direction="column" className="px-6">
+        <Spacing size={28} />
+        <LightyLogo />
+        <Spacing size={16} />
+        <span className="text-T2">어떤 피드의</span>
+        <Spacing size={7} />
+        <span className="text-T2">포토 카드를 꾸밀까요?</span>
+        <Spacing size={16} />
+        <span className="text-B3 text-grayscale-500">
+          직접 작성한 피드만 카드로 꾸밀 수 있어요.
+        </span>
+      </Flex>
+      <Spacing size={40} />
+      {isFetching && <DotSpinner />}
+      {!feeds || feeds.length < 1 ? (
+        <NoFeedToMakeCard />
+      ) : (
+        <ClickableGatheringSwiperForDeco
+          feed={feeds}
+          onImageClick={handleImageClick}
+          selectedFeedId={selectedFeed?.id || null}
         />
-      </div>
-    );
-  } else {
-    <div className="bg-base-white h-dvh pt-[48px] overflow-hidden">
-      기록할 추억이 없어요
-    </div>;
-  }
+      )}
+      <FixedBottomButton
+        disabled={selectedFeed?.id === ""}
+        label={"꾸미기 시작!"}
+        onClick={() => {
+          onNext();
+        }}
+      />
+    </div>
+  );
 }

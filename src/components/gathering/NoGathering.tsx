@@ -39,3 +39,20 @@ export function NoGatheringHome({ type }: { type?: "slider" }) {
     </div>
   );
 }
+
+export function NoGatheringToRecord() {
+  return (
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      className="w-[270px] h-[320px] border-[1px] border-dashed rounded-[20px] border-grayscale-200"
+    >
+      <ThinLightyLogo width="24" height="24" />
+      <Spacing size={8} />
+      <span className="text-B4 text-grayscale-400">
+        기록할 라이티 약속이 없어요!
+      </span>
+    </Flex>
+  );
+}
