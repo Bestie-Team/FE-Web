@@ -174,17 +174,11 @@ export default function FeedPage() {
     ]);
   };
 
-  const {
-    data: feedAll,
-    loadMore,
-    hasNextPage,
-    isFetching,
-  } = useFeedAll(queryParams);
+  const { data: feedAll, loadMore, isFetching } = useFeedAll(queryParams);
 
   const {
     data: feedMine,
     loadMore: loadMore_mine,
-    hasNextPage: hasNextPage_mine,
     isFetching: isFetching_mine,
   } = useFeedMine(queryParams);
 
@@ -227,28 +221,6 @@ export default function FeedPage() {
         spaceBetween={2}
         className="custom-swiper w-full !z-5 pointer-events-auto"
       >
-        {/* {feedMine && (
-          <SwiperSlide
-            id="scrollableDiv1"
-            className="h-full overflow-y-auto no-scrollbar pointer-events-auto"
-          >
-            <InfiniteScroll
-              dataLength={feedMine?.length ?? 0}
-              hasMore={hasNextPage_mine}
-              loader={<DotSpinnerSmall />}
-              next={loadMore_mine}
-              scrollThreshold="10px"
-              scrollableTarget="scrollableDiv1"
-              className="pointer-events-auto"
-            >
-              {feedMine.length > 0 ? (
-                <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
-              ) : (
-                <NoFeed />
-              )}
-            </InfiniteScroll>
-          </SwiperSlide>
-        )} */}
         {feedMine && (
           <SwiperSlide>
             {feedMine.length > 0 ? (
@@ -258,28 +230,6 @@ export default function FeedPage() {
             )}
           </SwiperSlide>
         )}
-        {/* {feedAll && (
-          <SwiperSlide
-            id="scrollableDiv2"
-            className="h-full overflow-y-auto no-scrollbar pointer-events-auto"
-          >
-            <InfiniteScroll
-              dataLength={feedAll?.length ?? 0}
-              hasMore={hasNextPage}
-              loader={<DotSpinnerSmall />}
-              next={loadMore}
-              scrollThreshold="10px"
-              scrollableTarget="scrollableDiv2"
-              className="pointer-events-auto"
-            >
-              {feedAll.length > 0 ? (
-                <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
-              ) : (
-                <NoFeed />
-              )}
-            </InfiniteScroll>
-          </SwiperSlide>
-        )} */}
         {feedAll && feedAll.length > 0 ? (
           <SwiperSlide>
             <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
@@ -289,17 +239,7 @@ export default function FeedPage() {
         )}
       </Swiper>
     );
-  }, [
-    feedAll,
-    feedMine,
-    selectedTab,
-    swiperRef,
-    handleSlideChange,
-    hasNextPage,
-    hasNextPage_mine,
-    loadMore,
-    loadMore_mine,
-  ]);
+  }, [feedAll, feedMine, selectedTab, swiperRef, handleSlideChange]);
 
   useEffect(() => {
     setIsClient(true);

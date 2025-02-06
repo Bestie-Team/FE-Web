@@ -24,6 +24,7 @@ export default function Splash() {
         }
       } catch (error) {
         lightyToast.error("로그인에 실패했어요");
+        console.log(error);
       }
     },
     onError: (error) => {
