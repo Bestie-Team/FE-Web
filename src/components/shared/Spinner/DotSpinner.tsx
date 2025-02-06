@@ -1,8 +1,8 @@
 export default function DotSpinner() {
   return (
     <div
-      id="fullPageLoader"
       style={{
+        position: "absolute",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

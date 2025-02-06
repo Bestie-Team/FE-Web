@@ -23,6 +23,7 @@ import {
 } from "@/models/gathering";
 import { NoGatheringHome } from "./gathering/NoGathering";
 import useGatheringNoFeeds from "./gathering/hooks/useGatheringNoFeed";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const Header = React.memo(() => {
   const header = getHeader("/");
@@ -69,18 +70,20 @@ export default function HomePage() {
     setIsNew(false);
   }, []);
 
-  const {
-    data: this_week,
-    isFetching,
-    isError,
-  } = useGatherings({
+  const { data: this_week, isFetching } = useGatherings({
     cursor: { createdAt: minDate },
     limit: 10,
     minDate,
     maxDate,
   });
 
-  const { data: ended } = useGatheringNoFeeds({ limit: 8 });
+  const {
+    data: ended,
+    loadMore,
+    isFetching: isFetching_f,
+  } = useGatheringNoFeeds({ limit: 4 });
+
+  useInfiniteScroll({ loadMore, isFetching: isFetching_f });
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -91,7 +94,7 @@ export default function HomePage() {
     }
   }, []);
 
-  if (isFetching || isError) return <FullPageLoader />;
+  if (isFetching) return <FullPageLoader />;
 
   return (
     <div className="h-full">
@@ -101,9 +104,7 @@ export default function HomePage() {
       <Spacing size={40} />
       <DateSlider />
       <Spacing size={8} />
-      {this_week ? (
-        <MemoizedGatheringSwiper gatherings={this_week?.gatherings} />
-      ) : null}
+      {this_week ? <MemoizedGatheringSwiper gatherings={this_week} /> : null}
       <Banner />
       <Flex direction="column" align="center">
         <Flex className="w-full px-5" align="center">
@@ -120,7 +121,6 @@ export default function HomePage() {
         <MemoriesBottomSheet onClose={handleCloseMemoriesModal} />
       )}
       {isNew && <WelcomeBottomSheet onClose={handleCloseWelcomeModal} />}
-      <Spacing size={87} />
     </div>
   );
 }

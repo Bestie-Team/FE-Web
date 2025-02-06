@@ -1,5 +1,6 @@
 import { getGatherings } from "@/remote/gathering";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 const uuid = uuidv4();
 
@@ -15,9 +16,9 @@ export default function useGatherings({
   minDate: string;
   maxDate: string;
 }) {
-  return useQuery({
+  const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["gatherings", { minDate, maxDate }],
-    queryFn: () =>
+    queryFn: ({ pageParam: cursor }) =>
       getGatherings({
         cursor: cursor
           ? { ...cursor, id: uuid }
@@ -26,5 +27,18 @@ export default function useGatherings({
         minDate,
         maxDate,
       }),
+    getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    initialPageParam: cursor,
   });
+
+  const loadMore = useCallback(() => {
+    if (hasNextPage === false || isFetching) {
+      return;
+    }
+    fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetching]);
+
+  const friends = data?.pages.map(({ gatherings }) => gatherings).flat();
+
+  return { data: friends, loadMore, isFetching, hasNextPage };
 }

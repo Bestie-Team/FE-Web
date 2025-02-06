@@ -33,7 +33,7 @@ export default function Gathering({
     });
 
   return (
-    <div className={clsx("z-0 pt-3 pb-[111px] w-full px-5", className)}>
+    <div className={clsx("z-0 pt-3 pb-[64px] w-full px-5", className)}>
       {message && <Message />}
       <div className="grid grid-cols-2 gap-4">
         {renderGatherings(gatherings)}

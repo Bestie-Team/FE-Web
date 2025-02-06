@@ -23,6 +23,8 @@ import { gatheringDeleteModalAtom } from "@/atoms/modal";
 import Modal from "@/components/shared/Modal/Modal";
 import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering";
 import { lightyToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
 
 export default function GatheringDetailPage({
   params,
@@ -30,6 +32,8 @@ export default function GatheringDetailPage({
   params: { id: string };
 }) {
   const header = getHeader("/gathering/1234");
+  const { userInfo } = useAuth();
+  const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
     gatheringDeleteModalAtom
@@ -47,7 +51,10 @@ export default function GatheringDetailPage({
 
   const { mutate: deleteGathering } = useDeleteGathering({
     gatheringId,
-    onSuccess: (data) => lightyToast.success(data.message),
+    onSuccess: (data) => {
+      lightyToast.success(data.message);
+      router.replace("/gathering");
+    },
     onError: (error) => lightyToast.error(error.message),
   });
 
@@ -74,7 +81,9 @@ export default function GatheringDetailPage({
         <div className="cursor-pointer" onClick={handleShare}>
           <ShareIcon />
         </div>
-        <Options type={MENU_TYPES.GATHERING} color="white" />
+        {userInfo?.accountId === hostUser.accountId && (
+          <Options type={MENU_TYPES.GATHERING} color="white" />
+        )}
       </div>
       <GroupLeaderContainer groupLeader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />

@@ -253,7 +253,7 @@ export async function getSentInvitationToGatheringList({
   }
 }
 
-/** 그룹 삭제 (그룹장) */
+/** 모임 삭제 (약속장) */
 export async function deleteGathering({
   gatheringId,
 }: {
@@ -261,16 +261,12 @@ export async function deleteGathering({
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const targetUrl = `${baseUrl}/groups/${gatheringId}`;
-    const response = await fetchWithAuth(targetUrl, { method: "DELETE" });
-    console.log(response);
+    const targetUrl = `${baseUrl}/gatherings/${gatheringId}`;
+    await fetchWithAuth(targetUrl, { method: "DELETE" });
     return {
       message: "약속을 성공적으로 삭제하였습니다",
     };
   } catch (error) {
-    console.log(error);
-    return {
-      message: "약속을 삭제하지 못했어요",
-    };
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }

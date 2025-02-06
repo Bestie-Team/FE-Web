@@ -33,6 +33,7 @@ import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import { useScrollToTopByTab } from "@/hooks/useScrollToTop";
 
 const Header = React.memo(
   ({
@@ -129,6 +130,7 @@ export default function FeedPage() {
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
+  useScrollToTopByTab({ tab: selectedTab });
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
@@ -200,8 +202,15 @@ export default function FeedPage() {
     },
   });
 
-  useInfiniteScroll({ isFetching: isFetching_mine, loadMore: loadMore_mine });
-  useInfiniteScroll({ isFetching, loadMore });
+  useInfiniteScroll({
+    isFetching: isFetching_mine,
+    loadMore: loadMore_mine,
+  });
+
+  useInfiniteScroll({
+    isFetching,
+    loadMore,
+  });
 
   const renderSwipers = useMemo(() => {
     if (!feedAll || !feedMine) {

@@ -80,7 +80,7 @@ export default function SchedulePage() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const upcomingGatherings = upcoming?.gatherings.filter(
+  const upcomingGatherings = upcoming?.filter(
     (gathering) => new Date(gathering.gatheringDate) >= today
   );
 
@@ -100,7 +100,7 @@ export default function SchedulePage() {
           <DotSpinner />
         ) : (
           <div className="min-h-[400px]">
-            <LightyCalendarWithBorder gatherings={upcoming?.gatherings} />
+            <LightyCalendarWithBorder gatherings={upcoming} />
           </div>
         )}
         <Spacing size={28} />

@@ -17,6 +17,8 @@ import dynamic from "next/dynamic";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useScrollToTopByTab } from "@/hooks/useScrollToTop";
 
 const Header = React.memo(
   ({
@@ -65,14 +67,32 @@ export default function MyGatheringPage() {
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
+  useScrollToTopByTab({ tab: selectedTab });
 
-  const { data, isFetching, isError } = useGatherings({
+  const {
+    data: myGatherings,
+    isFetching,
+    loadMore: loadMore,
+  } = useGatherings({
     limit: 50,
     minDate: minDate(),
     maxDate: maxDate(),
   });
-  const { data: ended } = useGatheringEnded({ limit: 30 });
-  const myGatherings = data?.gatherings;
+  const {
+    data: ended,
+    isFetching: isFetching_e,
+    loadMore: loadMore_e,
+  } = useGatheringEnded({ limit: 8 });
+
+  useInfiniteScroll({
+    isFetching: isFetching_e,
+    loadMore: loadMore_e,
+  });
+
+  useInfiniteScroll({
+    isFetching,
+    loadMore,
+  });
 
   useEffect(() => {
     reset();
@@ -93,7 +113,7 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-      {isFetching || isError || !myGatherings || !ended ? (
+      {isFetching || !myGatherings || !ended ? (
         <DotSpinner />
       ) : (
         <GatheringPageSwiper

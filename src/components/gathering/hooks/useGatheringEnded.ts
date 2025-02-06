@@ -24,7 +24,6 @@ export default function useGatheringEnded({ limit }: { limit: number }) {
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
-    refetchOnWindowFocus: "always",
   });
 
   const loadMore = useCallback(() => {
