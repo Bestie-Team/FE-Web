@@ -99,7 +99,9 @@ export default function SchedulePage() {
         {isFetching || !upcoming ? (
           <DotSpinner />
         ) : (
-          <LightyCalendarWithBorder gatherings={upcoming?.gatherings} />
+          <div className="min-h-[400px]">
+            <LightyCalendarWithBorder gatherings={upcoming?.gatherings} />
+          </div>
         )}
         <Spacing size={28} />
         {isFetching || !upcomingGatherings ? (
