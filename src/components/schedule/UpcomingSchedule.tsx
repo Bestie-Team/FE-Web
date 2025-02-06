@@ -39,7 +39,7 @@ const styles = {
 const NoSchedule = () => {
   return (
     <Flex
-      className="w-full h-[140px] bg-grayscale-10 border-[1px] border-dashed border-grayscale-300 rounded-[16px]"
+      className="w-full h-[140px] bg-grayscale-10 border-[1px] border-dashed border-grayscale-200 rounded-[16px]"
       justify="center"
       align="center"
     >

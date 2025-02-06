@@ -96,13 +96,11 @@ export default function SchedulePage() {
     <div className="h-full">
       <Header year={year} setYear={setYear} shadow={isPast} />
       <Flex direction="column" className={styles.container}>
-        <div className="!h-[458px]">
-          {isFetching || !upcoming ? (
-            <DotSpinner />
-          ) : (
-            <LightyCalendarWithBorder gatherings={upcoming?.gatherings} />
-          )}
-        </div>
+        {isFetching || !upcoming ? (
+          <DotSpinner />
+        ) : (
+          <LightyCalendarWithBorder gatherings={upcoming?.gatherings} />
+        )}
         <Spacing size={28} />
         {isFetching || !upcomingGatherings ? (
           <DotSpinner />

@@ -32,7 +32,7 @@ export const minDate = () => {
 };
 
 export const maxDate = () => {
-  const date = new Date("2025-12-31");
+  const date = new Date("2026-01-01");
   date.setTime(date.getTime() - 9 * 60 * 60 * 1000);
   return date.toISOString();
 };

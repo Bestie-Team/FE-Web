@@ -17,7 +17,7 @@ export default function useSentInvitationToGathering() {
     }): Promise<lighty.GatheringInvitationListResponse> => {
       return getSentInvitationToGatheringList({
         cursor,
-        limit: 20,
+        limit: 5,
         minDate: minDate(),
         maxDate: maxDate(),
       });
@@ -35,6 +35,6 @@ export default function useSentInvitationToGathering() {
   }, [fetchNextPage, hasNextPage, isFetching]);
 
   const friends = data?.pages.map(({ invitations }) => invitations).flat();
-
+  console.log(data);
   return { data: friends, loadMore, isFetching, hasNextPage };
 }

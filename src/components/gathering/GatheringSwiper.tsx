@@ -14,7 +14,7 @@ export default function GatheringSwiper({
   gatherings,
 }: {
   percent?: number;
-  gatherings: Gathering[];
+  gatherings: Gathering[] | undefined;
 }) {
   const router = useRouter();
 
@@ -28,7 +28,7 @@ export default function GatheringSwiper({
       }}
       className="custom-swiper w-full"
     >
-      {gatherings.length < 1 ? (
+      {!gatherings || gatherings.length < 1 ? (
         <>
           <NoGatheringHome type="slider" />
           <Spacing size={52} />

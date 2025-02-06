@@ -27,7 +27,7 @@ export default function ChoosingGatheringToRecord({
 
   if (gathering && gathering.length > 0)
     return (
-      <Flex direction="column" className="bg-base-white h-full pt-[48px]">
+      <div className="bg-base-white pt-[48px] h-dvh">
         {header}
         <Flex
           direction="column"
@@ -58,15 +58,12 @@ export default function ChoosingGatheringToRecord({
             onNext("1");
           }}
         />
-      </Flex>
+      </div>
     );
   else
     return (
-      <Flex
-        direction="column"
-        className="bg-base-white h-screen pt-[48px] overflow-hidden"
-      >
+      <div className="bg-base-white h-dvh pt-[48px] overflow-hidden">
         기록할 추억이 없어요
-      </Flex>
+      </div>
     );
 }

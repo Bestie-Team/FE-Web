@@ -46,6 +46,7 @@ export default function MakingFeedStatus({
   const handleHomeClick = () => {
     router.replace("/");
   };
+
   return (
     <div className="flex flex-col bg-base-white h-full">
       {header}

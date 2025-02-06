@@ -1,3 +1,4 @@
+"use client";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import HomeBannerContainer from "./home/HomeBannerContainer";
 import FriendsSlider from "./home/FriendsSlider";
@@ -90,7 +91,7 @@ export default function HomePage() {
     }
   }, []);
 
-  if (!this_week || isFetching || isError || !ended) return <FullPageLoader />;
+  if (isFetching || isError) return <FullPageLoader />;
 
   return (
     <div className="h-full">

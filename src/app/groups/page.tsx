@@ -11,6 +11,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { Group } from "lighty-type";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
@@ -55,7 +56,7 @@ export default function GroupsPage() {
   const [isClient, setIsClient] = useState(false);
   const isPast = useScrollThreshold();
   const pathname = usePathname();
-  const { data: groups, isFetching } = useGroup();
+  const { data: groups, isFetching, loadMore } = useGroup();
 
   const handleGroupClick = useCallback(
     (groupId: string) => {
@@ -74,19 +75,22 @@ export default function GroupsPage() {
     setIsClient(true);
   }, []);
 
+  useInfiniteScroll({ isFetching, loadMore });
+
+  console.log(groups);
   if (!groups) return null;
 
   if (!isClient) {
     return <FullPageLoader />;
   }
-  console.log(groups);
+
   return (
     <div className="h-full">
       <Header pathname={pathname} shadow={isPast} />
       {isFetching ? (
         <FullPageLoader />
       ) : (
-        <Flex direction="column" className="pt-[68px] p-5 text-T4">
+        <div className="pt-[68px] p-5 text-T4">
           <Flex align="center">
             <span>전체 그룹</span>
             <Spacing size={4} direction="horizontal" />
@@ -98,7 +102,7 @@ export default function GroupsPage() {
           </Flex>
 
           <GroupList groups={groups} onGroupClick={handleGroupClick} />
-        </Flex>
+        </div>
       )}
     </div>
   );

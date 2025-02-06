@@ -308,6 +308,7 @@ export default function FeedPage() {
   if (!isClient) {
     return <FullPageLoader />;
   }
+
   return (
     <div className="h-full no-scrollbar">
       <Header
