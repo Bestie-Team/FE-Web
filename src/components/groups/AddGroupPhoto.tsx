@@ -5,14 +5,14 @@ import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
-import { CreateGroupRequest } from "@/models/group";
+import { UpdateGroupRequest } from "@/models/group";
 
 export default function AddGroupPhoto({
   image,
   setImage,
 }: {
   image: string | null;
-  setImage: SetterOrUpdater<CreateGroupRequest>;
+  setImage: SetterOrUpdater<UpdateGroupRequest>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
 

@@ -1,8 +1,15 @@
 "use client";
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
+import { getUserAuth } from "@/remote/auth";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -34,6 +41,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       return savedUserInfo ? JSON.parse(savedUserInfo) : null;
     }
   });
+
+  const userAuth = async () => {
+    return await getUserAuth();
+  };
+
+  useEffect(() => {
+    if (userInfo == null) {
+      try {
+        const user = userAuth();
+        user.then((value) => {
+          if (value) {
+            sessionStorage.setItem(
+              STORAGE_KEYS.USER_INFO,
+              JSON.stringify({
+                accountId: value.accountId,
+                profileImageUrl: value.profileImageUrl,
+              })
+            );
+          }
+        });
+      } catch (error) {
+        console.log("유저정보 반환 실해");
+      }
+    }
+  }, [userInfo]);
 
   const login = (userInfo: lighty.LoginResponse) => {
     setToken(userInfo.accessToken);

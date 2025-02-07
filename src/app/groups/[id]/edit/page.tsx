@@ -14,26 +14,44 @@ import getHeader from "@/utils/getHeader";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import { CreateGroupRequest } from "@/models/group";
+import { UpdateGroupRequest } from "@/models/group";
+import useUpdateGroup from "@/components/groups/hooks/useUpdateGroup";
+import { lightyToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 export default function GroupEditPage() {
   const header = getHeader("/groups/*/edit");
   const [isClient, setIsClient] = useState(false);
-  const selectedGroup = useRecoilValue<CreateGroupRequest>(selectedGroupAtom);
+  const selectedGroup = useRecoilValue<UpdateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
-
+  const router = useRouter();
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
+
+  const { mutate: updateGroup } = useUpdateGroup({
+    groupId: groupInfo.groupId,
+    group: {
+      name: groupInfo.name,
+      description: groupInfo.description,
+      groupImageUrl: groupInfo.groupImageUrl,
+    },
+    onSuccess: (data) => lightyToast.success(data.message),
+  });
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const handleEdit = () => {
+    updateGroup();
+    router.replace("/groups");
+  };
 
   if (!isClient) {
     return <FullPageLoader />;
   }
   if (step === 1) {
     return (
-      <div className="h-full bg-base-white">
+      <div className="min-h-dvh bg-base-white">
         {header}
         <form className="flex flex-col px-5 pt-12">
           <Spacing size={24} />
@@ -89,7 +107,7 @@ export default function GroupEditPage() {
             setStep={setStep}
           />
         </form>
-        <FixedBottomButton label={"그룹 수정 완료"} onClick={() => {}} />
+        <FixedBottomButton label={"수정 완료"} onClick={handleEdit} />
       </div>
     );
   } else if (step === 2) {

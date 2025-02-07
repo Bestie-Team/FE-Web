@@ -58,6 +58,7 @@ export default function CommentContainer({
     setIsClosing(true); // 닫는 애니메이션 활성화
   };
 
+  const commentCount = comments && comments.length > 0 ? comments.length : "";
   return (
     <Dimmed onClick={handleBackdropClick}>
       <div

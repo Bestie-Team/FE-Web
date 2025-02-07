@@ -1,15 +1,22 @@
 "use client";
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
+import * as lighty from "lighty-type";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GroupDropdownMenu from "../shared/DropDownMenu/GroupDropDownMenu";
 
-export default function GroupOptions({ isOwner }: { isOwner: boolean }) {
+export default function GroupOptions({
+  isOwner,
+  group,
+}: {
+  isOwner: boolean;
+  group: lighty.Group;
+}) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
-  const menuItems = [
-    isOwner ? "그룹 삭제하기" : "그룹 나가기",
-    "그룹 신고하기",
-  ];
+  const menuItems = isOwner
+    ? ["그룹 삭제하기", "그룹 수정하기"]
+    : ["그룹 나가기", "그룹 신고하기"];
+
   return (
     <div
       ref={btnRef}
@@ -21,9 +28,10 @@ export default function GroupOptions({ isOwner }: { isOwner: boolean }) {
       }}
       className={styles.container}
     >
-      <OptionsSelectIcon />
+      <OptionsSelectIcon color="white" />
       {opened && (
         <GroupDropdownMenu
+          group={group}
           ref={ref}
           items={menuItems}
           className={styles.menu}

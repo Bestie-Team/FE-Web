@@ -75,19 +75,15 @@ const Header = React.memo(
 
 const FeedModals = React.memo(
   ({
-    reason,
-    setReason,
     onDeleteFeed,
     onDeleteComment,
     onHideFeed,
     onReportFeed,
   }: {
-    reason: string;
-    setReason: Dispatch<SetStateAction<string>>;
     onDeleteFeed: () => void;
     onDeleteComment: () => void;
     onHideFeed: () => void;
-    onReportFeed: () => void;
+    onReportFeed: (reason: { reason: string }) => void;
   }) => {
     const [deleteModalOpen, setDeleteModalOpen] =
       useRecoilState(feedDeleteModalAtom);
@@ -132,8 +128,6 @@ const FeedModals = React.memo(
         )}
         {feedReportModalOpen && (
           <ReportModal
-            reason={reason}
-            setReason={setReason}
             action={onReportFeed}
             onClose={() => setFeedReportModalOpen(false)}
           />
@@ -150,7 +144,6 @@ export default function FeedPage() {
   const queryClient = useQueryClient();
   const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
-  const [reason, setReason] = useState("");
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
@@ -236,7 +229,7 @@ export default function FeedPage() {
   });
 
   const { mutate: reportFeed } = useReport({
-    report: { reportedId: selectedFeedId, reason, type: "FEED" },
+    report: { reportedId: selectedFeedId, type: "FEED" },
     onSuccess: handleReportFeedSuccess,
     onError: () => {
       lightyToast.error("피드신고 실패");
@@ -320,8 +313,6 @@ export default function FeedPage() {
         />
       )}
       <FeedModals
-        reason={reason}
-        setReason={setReason}
         onReportFeed={reportFeed}
         onDeleteFeed={deleteFeed}
         onDeleteComment={deleteComment}

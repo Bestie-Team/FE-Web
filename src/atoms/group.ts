@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { CreateGroupRequest } from "@/models/group";
+import { CreateGroupRequest, UpdateGroupRequest } from "@/models/group";
 
 export const newGroupAtom = atom<CreateGroupRequest>({
   key: "group/new",
@@ -11,12 +11,12 @@ export const newGroupAtom = atom<CreateGroupRequest>({
   },
 });
 
-export const selectedGroupAtom = atom<CreateGroupRequest>({
+export const selectedGroupAtom = atom<UpdateGroupRequest>({
   key: "group/selected/info",
   default: {
+    groupId: "",
     name: "",
     description: "",
-    friendIds: null,
     groupImageUrl: "",
   },
 });

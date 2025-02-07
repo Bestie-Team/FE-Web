@@ -82,7 +82,8 @@ export default function Options({
     flex 
     justify-center  
     items-center
-    ${isDefaultOrComment ? "pt-[5.5px] pb-[4px]" : ""}
+    ${isDefaultOrComment ? "pt-[5.5px] pb-1" : ""}
+    ${type === MENU_TYPES.COMMENT ? "pr-1" : ""}
   `.trim();
 
   return (

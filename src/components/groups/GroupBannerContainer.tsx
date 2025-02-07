@@ -10,10 +10,12 @@ import { useAuth } from "../shared/providers/AuthProvider";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function GroupBannerContainer({
+  group,
   imageUrl,
   owner,
   setIsLoaded,
 }: {
+  group: lighty.Group;
   imageUrl: string;
   owner: lighty.User;
   setIsLoaded: Dispatch<SetStateAction<boolean>>;
@@ -47,7 +49,7 @@ export default function GroupBannerContainer({
         <Spacing size={6} direction="horizontal" />
         <span className={styles.headerFont}>그룹 상세</span>
         <Spacing size={6} direction="horizontal" />
-        <GroupOptions isOwner={isOwner} />
+        <GroupOptions isOwner={isOwner} group={group} />
       </Flex>
     </div>
   );

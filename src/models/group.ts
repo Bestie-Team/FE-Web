@@ -16,3 +16,10 @@ export declare class CreateGroupRequest {
   readonly friendIds: string[] | null;
   readonly groupImageUrl: string;
 }
+
+export interface UpdateGroupRequest {
+  groupId: string;
+  name: string;
+  description: string;
+  groupImageUrl: string;
+}

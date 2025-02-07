@@ -1,7 +1,7 @@
 import * as lighty from "lighty-type";
 import { patchProfileImage, postProfileImageWithToken } from "./profile";
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { API_CONFIG } from "./shared";
+import { API_CONFIG, fetchWithAuth } from "./shared";
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
 import { KakaoAuthResponse } from "@/app/auth/kakao/login/page";
 import { Providers } from "@/constants/oAuthButtons";
@@ -144,4 +144,19 @@ export async function getKakaoToken({
   }
   const res: KakaoAuthResponse = await response.json();
   return res;
+}
+
+/** 회원 정보 조회 */
+export async function getUserAuth() {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/users/profile`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: lighty.UserProfileResponse = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
 }

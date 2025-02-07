@@ -1,26 +1,39 @@
 import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
+import * as lighty from "lighty-type";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
+import { useRouter } from "next/navigation";
+import { selectedGroupAtom } from "@/atoms/group";
 
 interface GroupDropdownMenuProps {
   items: string[];
   className?: string;
+  group: lighty.Group;
 }
 
 const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
-  ({ items, className }, ref) => {
+  ({ items, className, group }, ref) => {
+    const router = useRouter();
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setDeleteModalOpen = useSetRecoilState(groupDeleteModalAtom);
     const setExitModalOpen = useSetRecoilState(groupExitModalAtom);
+    const setSelectedGroup = useSetRecoilState(selectedGroupAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
         setDeleteModalOpen(true);
-      }
-      if (item.includes("나가기")) {
+      } else if (item.includes("나가기")) {
         setExitModalOpen(true);
+      } else if (item.includes("수정")) {
+        setSelectedGroup({
+          groupId: group.id,
+          name: group.name,
+          description: group.description,
+          groupImageUrl: group.groupImageUrl,
+        });
+        router.push(`/groups/${group.id}/edit`);
       }
     };
 

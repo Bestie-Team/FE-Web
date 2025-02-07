@@ -37,6 +37,8 @@ export default function getHeader(pathname: string) {
     "/groups":
       pathname.endsWith("new") || pathname.endsWith("done") ? (
         <HeaderWithBackBtn pageName="그룹 생성" color="#FFF" />
+      ) : pathname.endsWith("edit") ? (
+        <HeaderWithBackBtn pageName="그룹 수정" color="white" />
       ) : (
         <HeaderWithBackBtn pageName="나의 그룹" color="#f4f4f4" />
       ),

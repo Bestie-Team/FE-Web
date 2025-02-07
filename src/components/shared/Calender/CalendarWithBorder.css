@@ -20,7 +20,7 @@
 }
 
 .react-calendar__month-view__days {
-  gap: 8px 14.86px;
+  gap: 8px 12.4px;
   /* display: grid;
   grid-column: 7; */
 }
@@ -167,7 +167,7 @@
 
 .react-calendar__tile {
   max-width: 100%;
-  width: 30px;
+  width: 32px;
   height: 32px;
   flex: none !important;
   align-items: center;

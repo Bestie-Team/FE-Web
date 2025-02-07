@@ -1,4 +1,4 @@
-import { ReportRequestInterface } from "@/models/remote";
+import * as lighty from "lighty-type";
 import { postReport } from "@/remote/report";
 import { useMutation } from "@tanstack/react-query";
 
@@ -7,13 +7,14 @@ export default function useReport({
   onSuccess,
   onError,
 }: {
-  report: ReportRequestInterface;
+  report: { reportedId: string; type: lighty.ReportTypes };
   onSuccess: (data: { message: string }) => void;
   onError: (error: Error) => void;
 }) {
   return useMutation({
     mutationKey: ["report"],
-    mutationFn: () => postReport({ report }),
+    mutationFn: (reason: { reason: string }) =>
+      postReport({ report: { ...report, ...reason } }),
     onSuccess: (data: { message: string }) => onSuccess(data),
     onError: (error: Error) => onError(error),
   });
