@@ -1,7 +1,6 @@
 import { SearchFriendResponse } from "@/models/user";
 import { getSearchUsers } from "@/remote/users";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
 import { useCallback } from "react";
 
 export default function useSearchUsers({

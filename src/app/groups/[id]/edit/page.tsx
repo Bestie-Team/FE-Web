@@ -1,7 +1,6 @@
 "use client";
 import { selectedGroupAtom } from "@/atoms/group";
 import InviteFriends from "@/components/friends/InviteFriends";
-import AddFriendsSlider from "@/components/groups/AddFriendsSlider";
 import AddGroupPhoto from "@/components/groups/AddGroupPhoto";
 import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";

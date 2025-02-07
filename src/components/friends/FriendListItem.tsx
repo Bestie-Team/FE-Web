@@ -100,6 +100,11 @@ export default function FriendListItem({
           </Button>
         </Flex>
       ) : null}
+      {type === "sentRequest" && (
+        <Button className={styles.rejectBtn} onClick={reject}>
+          {isPending ? <DotSpinner /> : "취소"}
+        </Button>
+      )}
       {type === "select" ? (
         <Flex>
           <Button className={styles.selectBtn}>선택</Button>
