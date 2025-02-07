@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
-import { UpdateGroupRequest } from "@/models/group";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function AddGroupPhoto({
   image,
   setImage,
 }: {
   image: string | null;
-  setImage: SetterOrUpdater<UpdateGroupRequest>;
+  setImage: Dispatch<SetStateAction<string>>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
 
@@ -20,10 +20,7 @@ export default function AddGroupPhoto({
     file: groupImageFile as File,
     onSuccess: (data) => {
       console.log(data.message);
-      setImage((prev) => ({
-        ...prev,
-        groupImageUrl: data.url,
-      }));
+      setImage(data.url);
     },
   });
 

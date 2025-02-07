@@ -6,7 +6,7 @@ import { SetterOrUpdater, useRecoilState } from "recoil";
 import DeletableFriendItem from "../friends/DeletableFriendItem";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import * as lighty from "lighty-type";
-import { UpdateGroupRequest } from "@/models/group";
+import { CreateGroupRequest } from "@/models/group";
 
 export default function AddFriendsSlider({
   type,
@@ -16,7 +16,7 @@ export default function AddFriendsSlider({
 }: {
   type: "gathering" | "group";
   setGathering?: SetterOrUpdater<lighty.CreateGatheringRequest>;
-  setGroup?: Dispatch<SetStateAction<UpdateGroupRequest>>;
+  setGroup?: Dispatch<SetStateAction<CreateGroupRequest>>;
   setStep?: (step: number) => void;
 }) {
   const [friends, setFriends] = useRecoilState<lighty.User[] | null>(
@@ -36,7 +36,7 @@ export default function AddFriendsSlider({
       ? friends.map((friendItem) => friendItem.id)
       : null;
     if (type === "group" && setGroup) {
-      setGroup((prev: UpdateGroupRequest) => ({
+      setGroup((prev: CreateGroupRequest) => ({
         ...prev,
         friendIds: friendIds ? friendIds : null,
       }));

@@ -26,13 +26,14 @@ export default function GroupEditPage() {
   const [step, setStep] = useState(1);
   const router = useRouter();
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
+  const [groupImageUrl, setGroupImageUrl] = useState<string>("");
 
   const { mutate: updateGroup } = useUpdateGroup({
     groupId: groupInfo.groupId,
     group: {
       name: groupInfo.name,
       description: groupInfo.description,
-      groupImageUrl: groupInfo.groupImageUrl,
+      groupImageUrl: groupImageUrl,
     },
     onSuccess: (data) => lightyToast.success(data.message),
   });
@@ -57,7 +58,7 @@ export default function GroupEditPage() {
           <Spacing size={24} />
           <AddGroupPhoto
             image={groupInfo.groupImageUrl}
-            setImage={setGroupInfo}
+            setImage={setGroupImageUrl}
           />
           <Spacing size={36} />
           <Input
@@ -101,11 +102,11 @@ export default function GroupEditPage() {
             <span>그룹 친구</span>
           </Flex>
           <Spacing size={8} />
-          <AddFriendsSlider
+          {/* <AddFriendsSlider
             setGroup={setGroupInfo}
             type="group"
             setStep={setStep}
-          />
+          /> */}
         </form>
         <FixedBottomButton label={"수정 완료"} onClick={handleEdit} />
       </div>

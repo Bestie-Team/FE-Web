@@ -27,6 +27,7 @@ export default function NewGroupPage() {
   const [newGroup, setNewGroup] =
     useRecoilState<CreateGroupRequest>(newGroupAtom);
   const [step, setStep] = useState(1);
+  const [groupImageUrl, setGroupImageUrl] = useState<string>("");
 
   const makeGroupSuccessHandler = async (data: { message: string }) => {
     setStep(0);
@@ -37,7 +38,7 @@ export default function NewGroupPage() {
   };
 
   const { mutate: makeGroup, isPending } = useMakeGroup({
-    group: newGroup,
+    group: { ...newGroup, groupImageUrl: groupImageUrl },
     onSuccess: makeGroupSuccessHandler,
   });
 
@@ -62,7 +63,10 @@ export default function NewGroupPage() {
       {header}
       <form className="flex flex-col px-5 pt-12">
         <Spacing size={24} />
-        <AddGroupPhoto image={newGroup.groupImageUrl} setImage={setNewGroup} />
+        <AddGroupPhoto
+          image={newGroup.groupImageUrl}
+          setImage={setGroupImageUrl}
+        />
         <Spacing size={36} />
         <Input
           value={newGroup.name}
