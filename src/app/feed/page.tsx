@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useMemo, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  SetStateAction,
+  Dispatch,
+} from "react";
 import Feed from "@/components/feeds/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -20,6 +26,7 @@ import {
   feedDeleteModalAtom,
   feedHideModalAtom,
   recordModalAtom,
+  reportModalAtom,
 } from "@/atoms/modal";
 import { useQueryClient } from "@tanstack/react-query";
 import useDeleteFeed from "@/components/feeds/hooks/useDeleteFeed";
@@ -33,7 +40,8 @@ import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
-import { useScrollToTopByTab } from "@/hooks/useScrollToTop";
+import useReport from "@/components/report/hooks/useReport";
+import ReportModal from "@/components/shared/Modal/ReportModal";
 
 const Header = React.memo(
   ({
@@ -67,13 +75,19 @@ const Header = React.memo(
 
 const FeedModals = React.memo(
   ({
+    reason,
+    setReason,
     onDeleteFeed,
     onDeleteComment,
     onHideFeed,
+    onReportFeed,
   }: {
+    reason: string;
+    setReason: Dispatch<SetStateAction<string>>;
     onDeleteFeed: () => void;
     onDeleteComment: () => void;
     onHideFeed: () => void;
+    onReportFeed: () => void;
   }) => {
     const [deleteModalOpen, setDeleteModalOpen] =
       useRecoilState(feedDeleteModalAtom);
@@ -82,6 +96,8 @@ const FeedModals = React.memo(
     );
     const [feedHideModalOpen, setFeedHideModalOpen] =
       useRecoilState(feedHideModalAtom);
+    const [feedReportModalOpen, setFeedReportModalOpen] =
+      useRecoilState(reportModalAtom);
 
     return (
       <>
@@ -114,6 +130,14 @@ const FeedModals = React.memo(
             onClose={() => setFeedHideModalOpen(false)}
           />
         )}
+        {feedReportModalOpen && (
+          <ReportModal
+            reason={reason}
+            setReason={setReason}
+            action={onReportFeed}
+            onClose={() => setFeedReportModalOpen(false)}
+          />
+        )}
       </>
     );
   }
@@ -126,11 +150,11 @@ export default function FeedPage() {
   const queryClient = useQueryClient();
   const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
+  const [reason, setReason] = useState("");
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
-  useScrollToTopByTab({ tab: selectedTab });
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
@@ -176,6 +200,15 @@ export default function FeedPage() {
     ]);
   };
 
+  const handleReportFeedSuccess = async () => {
+    lightyToast.success("피드를 신고했어요");
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all"],
+      }),
+    ]);
+  };
+
   const { data: feedAll, loadMore, isFetching } = useFeedAll(queryParams);
 
   const {
@@ -199,6 +232,14 @@ export default function FeedPage() {
     onSuccess: handleHideFeedSuccess,
     onError: () => {
       lightyToast.error("피드를 숨기지 못했어요");
+    },
+  });
+
+  const { mutate: reportFeed } = useReport({
+    report: { reportedId: selectedFeedId, reason, type: "FEED" },
+    onSuccess: handleReportFeedSuccess,
+    onError: () => {
+      lightyToast.error("피드신고 실패");
     },
   });
 
@@ -279,6 +320,9 @@ export default function FeedPage() {
         />
       )}
       <FeedModals
+        reason={reason}
+        setReason={setReason}
+        onReportFeed={reportFeed}
         onDeleteFeed={deleteFeed}
         onDeleteComment={deleteComment}
         onHideFeed={hideFeed}

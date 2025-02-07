@@ -47,7 +47,7 @@ export default function CommentItem({
 const styles = {
   container:
     "max-w-full w-fit inline-block p-3 border-[1px] rounded-2xl border-grayscale-100",
-  commenter: "text-T6 shrink-0",
+  commenter: "text-T6 shrink-0 w-10",
   comment: "text-B4 break-all whitespace-pre-wrap flex-1 min-w-0",
 
   time: "text-C5 text-grayscale-300 flex-none",

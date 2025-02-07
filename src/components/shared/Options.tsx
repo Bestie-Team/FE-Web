@@ -28,11 +28,11 @@ const MENU_CONFIGS = {
   },
   [MENU_TYPES.DEFAULT]: {
     items: ["숨기기", "수정하기", "삭제하기"],
-    className: "z-100 absolute -bottom-[162px] right-[4px]",
+    className: "z-100 absolute -bottom-[142px] right-[4px]",
   },
   [MENU_TYPES.FEED]: {
-    items: ["숨기기"],
-    className: "z-100 absolute -bottom-[42px] right-[4px]",
+    items: ["숨기기", "신고하기"],
+    className: "z-100 absolute -bottom-[94px] right-[4px]",
   },
 
   [MENU_TYPES.FRIEND]: {

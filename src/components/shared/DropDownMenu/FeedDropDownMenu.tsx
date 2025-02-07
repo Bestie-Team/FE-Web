@@ -2,7 +2,11 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { feedDeleteModalAtom, feedHideModalAtom } from "@/atoms/modal";
+import {
+  feedDeleteModalAtom,
+  feedHideModalAtom,
+  reportModalAtom,
+} from "@/atoms/modal";
 import { selectedFeedIdAtom, selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import { Feed } from "@/models/feed";
@@ -16,6 +20,7 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
   ({ items, className, feed }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setModalOpen = useSetRecoilState(feedDeleteModalAtom);
+    const setReportModalOpen = useSetRecoilState(reportModalAtom);
     const setHideModalOpen = useSetRecoilState(feedHideModalAtom);
     const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
     const setSelectedFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
@@ -31,6 +36,9 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
       } else if (item.includes("숨기기")) {
         setSelectedFeedInfo(feed);
         setHideModalOpen(true);
+      } else if (item.includes("신고")) {
+        setSelectedFeedId(feed.id);
+        setReportModalOpen(true);
       }
     };
 

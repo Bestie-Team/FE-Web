@@ -39,3 +39,8 @@ export const gatheringDeleteModalAtom = atom<boolean>({
   key: "modal/gatheringDelete",
   default: false,
 });
+
+export const reportModalAtom = atom<boolean>({
+  key: "report",
+  default: false,
+});

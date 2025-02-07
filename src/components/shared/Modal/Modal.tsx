@@ -19,20 +19,7 @@ export default function Modal({
   right?: string;
   onClose: () => void;
 }) {
-  // const [isClient, setIsClient] = useState(false);
-
-  // useEffect(() => {
-  //   setIsClient(true);
-  // }, []);
-
-  // if (!isClient) {
-  //   return null;
-  // }
-
-  // const $portalRoot = document.getElementById("root-portal");
-  // if ($portalRoot == null) return null;
   return (
-    // createPortal(
     <Dimmed className={styles.dimmed}>
       <Flex align="center" direction="column" className={styles.modalWrapper}>
         <div className="text-T3 text-center">{title}</div>
@@ -65,7 +52,6 @@ export default function Modal({
         </Flex>
       </Flex>
     </Dimmed>
-    // $portalRoot
   );
 }
 
