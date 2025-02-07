@@ -82,7 +82,11 @@ export default function GatheringDetailPage({
           <ShareIcon />
         </div>
         {userInfo?.accountId === hostUser.accountId && (
-          <Options type={MENU_TYPES.GATHERING} color="white" />
+          <Options
+            type={MENU_TYPES.GATHERING}
+            gathering={selectedGathering}
+            color="white"
+          />
         )}
       </div>
       <GroupLeaderContainer groupLeader={hostUser} />

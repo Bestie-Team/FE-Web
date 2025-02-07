@@ -6,6 +6,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 const DEFAULT_BG_IMAGE = "https://cdn.lighty.today/lighty.jpg";
+
 export default function GatheringBannerContainer({
   gathering,
   setImageLoaded,

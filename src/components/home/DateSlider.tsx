@@ -21,20 +21,14 @@ export default function DateSlider() {
   max.setUTCHours(0, 0, 0, 0);
   const maxDate = max.toISOString();
 
-  const {
-    data: this_week,
-    isFetching,
-    isError,
-  } = useGatherings({
+  const { data: this_week, isFetching } = useGatherings({
     cursor: { createdAt: minDate },
     limit: 10,
     minDate,
     maxDate,
   });
 
-  const gatherings_this_week = this_week?.gatherings;
-
-  const gathering_days = gatherings_this_week?.map((gatherings) =>
+  const gathering_days = this_week?.map((gatherings) =>
     getDate(new Date(gatherings.gatheringDate))
   );
 
@@ -51,7 +45,7 @@ export default function DateSlider() {
         </Link>
       </Flex>
       <Spacing size={12} />
-      {isFetching || isError ? (
+      {isFetching ? (
         <DotSpinnerSmall />
       ) : (
         <Flex className={styles.dateWrapper} justify="space-between">
