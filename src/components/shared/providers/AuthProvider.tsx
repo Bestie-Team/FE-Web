@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           }
         });
       } catch (error) {
-        console.log("유저정보 반환 실해");
+        console.log("유저정보 반환 실해", error);
       }
     }
   }, [userInfo]);

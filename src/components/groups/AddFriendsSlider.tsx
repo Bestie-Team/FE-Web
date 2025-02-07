@@ -6,7 +6,7 @@ import { SetterOrUpdater, useRecoilState } from "recoil";
 import DeletableFriendItem from "../friends/DeletableFriendItem";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import * as lighty from "lighty-type";
-import { CreateGroupRequest, UpdateGroupRequest } from "@/models/group";
+import { UpdateGroupRequest } from "@/models/group";
 
 export default function AddFriendsSlider({
   type,

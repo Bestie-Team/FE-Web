@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  useState,
-  useMemo,
-  useEffect,
-  SetStateAction,
-  Dispatch,
-} from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Feed from "@/components/feeds/Feed";
 import "swiper/css";
 import "swiper/css/navigation";

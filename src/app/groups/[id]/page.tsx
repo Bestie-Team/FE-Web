@@ -108,7 +108,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
       />
     );
   }
-  const { description, members, owner, groupImageUrl, id } = selectedGroup;
+  const { description, members, owner, groupImageUrl } = selectedGroup;
 
   return (
     <Flex direction="column" className="w-full h-full bg-grayscale-50">
