@@ -6,6 +6,8 @@ import UserListItem from "./UserListItem";
 import Modal from "../shared/Modal/Modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
+type SearchedUser = lighty.User & { status: string };
+
 export default function UserListContainer({
   isFetching,
   searchedFriends,
@@ -14,11 +16,12 @@ export default function UserListContainer({
 }: {
   isFetching: boolean;
   friends?: lighty.User[];
-  searchedFriends?: lighty.User[];
+  searchedFriends?: SearchedUser[];
   isModalOpen: boolean;
   setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
   if (searchedFriends) {
+    console.log(searchedFriends);
     return (
       <div className="pt-[142px] pb-20 px-5">
         <ul>

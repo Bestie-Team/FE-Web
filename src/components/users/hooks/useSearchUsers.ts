@@ -1,3 +1,4 @@
+import { SearchFriendResponse } from "@/models/user";
 import { getSearchUsers } from "@/remote/users";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import * as lighty from "lighty-type";
@@ -17,7 +18,7 @@ export default function useSearchUsers({
     isFetching,
   } = useInfiniteQuery({
     queryKey: ["users", search],
-    queryFn: ({ pageParam }): Promise<lighty.SearchUserResponse> =>
+    queryFn: ({ pageParam }): Promise<SearchFriendResponse> =>
       getSearchUsers({ ...pageParam, limit: 9, search }),
     getNextPageParam: (lastPage) => {
       return lastPage.nextCursor;

@@ -3,9 +3,7 @@ import Flex from "../shared/Flex";
 import Image from "next/image";
 import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
-import { SetterOrUpdater } from "recoil";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
-import { CreateGroupRequest } from "@/models/group";
 
 export default function AddGroupPhoto({
   image,

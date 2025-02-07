@@ -54,6 +54,8 @@
     width: 100% !important;
   }
   .Toastify__toast {
+    padding-left: 20px;
+    padding-right: 20px;
     width: fit-content !important;
     border-radius: 40px;
     left: 50%;

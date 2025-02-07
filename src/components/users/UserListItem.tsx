@@ -20,7 +20,7 @@ export default function UserListItem({
   onClick,
   clicked,
 }: {
-  userInfo: lighty.User;
+  userInfo: lighty.User & { status: string };
   idx: number;
   onClick?: () => void;
   clicked?: boolean;
@@ -64,7 +64,16 @@ export default function UserListItem({
         <Spacing size={2} />
         <span className={styles.name}>{userInfo?.name || "이름"}</span>
       </Flex>
-      <Button className={styles.inviteBtn} onClick={mutate}>
+      <Button
+        className={clsx(
+          styles.inviteBtn,
+          userInfo.status === "SENT"
+            ? "!bg-grayscale-50 text-grayscale-400 cursor-none border-none"
+            : ""
+        )}
+        disabled={userInfo.status === "SENT"}
+        onClick={mutate}
+      >
         {isPending ? <DotSpinnerSmall /> : "친구 신청"}
       </Button>
     </li>
