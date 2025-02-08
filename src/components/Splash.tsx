@@ -9,9 +9,14 @@ import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "./shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
+import { useEffect } from "react";
 
 export default function Splash() {
   const { login } = useAuth();
+  const googleLoginMobile = () =>
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "GOOGLE_LOGIN" })
+    );
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
       try {
@@ -35,12 +40,36 @@ export default function Splash() {
 
   const loginHandler = (provider: Providers) => {
     if (provider === "google") {
-      googleLogin();
+      if (window.ReactNativeWebView) {
+        googleLoginMobile();
+      } else {
+        googleLogin();
+      }
     } else if (provider === "kakao") {
       const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
       window.location.href = KAKAO_AUTH_URL;
     }
   };
+
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent<string>) => {
+      const message: { type: string, token: string } = JSON.parse(event.data);
+
+      if (message.type === 'GOOGLE_LOGIN_SUCCESS') {
+        const accessToken = message.token;
+        const userInfo = await postLogin({
+          accessToken,
+          provider: "google",
+        });
+        if (userInfo) {
+          login(userInfo);
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [login]);
 
   return (
     <div className={styles.splashContainer}>
