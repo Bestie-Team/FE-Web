@@ -2,37 +2,69 @@
 
 import { useKakaoAuth } from "@/hooks/useKakaoQuery";
 import { postLogin } from "@/remote/auth";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-export interface KakaoAuthResponse {
-  access_token: string;
-  token_type: "bearer";
-  refresh_token: string;
-  expires_in: number;
-  scope: string;
-  refresh_token_expires_in: number;
-}
+import type { KakaoAuthResponse } from "@/models/user";
 
 export default function KakaoPage() {
-  const getAuthCode = () =>
-    new URL(document.location.toString()).searchParams.get("code") || "";
-
+  const router = useRouter();
   const [authCode, setAuthCode] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const { data: tokenInfo } = useKakaoAuth({
+  const { data: tokenInfo, error: authError } = useKakaoAuth({
     auth_code: authCode,
-    client_id: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY,
-    redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI,
+    client_id: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY!,
+    redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI!,
   });
 
   useEffect(() => {
-    setAuthCode(getAuthCode());
+    const code = new URL(window.location.href).searchParams.get("code");
+    if (code) {
+      setAuthCode(code);
+    } else {
+      setError("No auth code found in URL");
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    if (tokenInfo) {
-      postLogin({ accessToken: tokenInfo.access_token, provider: "kakao" });
+    if (authError) {
+      setError("카카오 auth 에러");
+      setIsLoading(false);
+    } else if (tokenInfo) {
+      handleLogin(tokenInfo);
     }
-  }, [tokenInfo]);
-  return <div className="text-base-white">page</div>;
+  }, [tokenInfo, authError]);
+
+  const handleLogin = async (tokenInfo: KakaoAuthResponse) => {
+    try {
+      await postLogin({
+        accessToken: tokenInfo.access_token,
+        provider: "kakao",
+      });
+      router.replace("/");
+    } catch (error) {
+      setError("로그인 실패");
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <div className="text-base-white text-center pt-5">Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-base-white text-center pt-5">Error: {error}</div>
+    );
+  }
+
+  return (
+    <div className="text-base-white text-center pt-5">
+      Authentication successful. Redirecting...
+    </div>
+  );
 }

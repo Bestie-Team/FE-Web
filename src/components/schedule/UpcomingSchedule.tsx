@@ -19,12 +19,10 @@ export default function UpcomingSchedule({
           <NoSchedule />
         ) : (
           gatherings?.map((gathering, i) => (
-            <React.Fragment key={i}>
-              <TimelineItem upcomingGathering={gathering} />
-              <Spacing size={48} />
-            </React.Fragment>
+            <TimelineItem key={i} upcomingGathering={gathering} />
           ))
         )}
+        <Spacing size={48} />
       </div>
     </Flex>
   );

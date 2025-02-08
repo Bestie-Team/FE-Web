@@ -1,5 +1,5 @@
 import { isIntersectingAtom } from "@/atoms/scroll";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useRecoilValue } from "recoil";
 import LightyIcon from "../Icon/LightyIcon";
 import Spacing from "../Spacing";

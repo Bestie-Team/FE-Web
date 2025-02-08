@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import useScrollShadow from "@/hooks/useScrollShadow";
 import { useRecoilValue } from "recoil";
 import getHeader from "@/utils/getHeader";
 import FeedForm from "./FeedForm";
@@ -17,14 +16,16 @@ export default function EditingFeed() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const header = useMemo(() => getHeader("/feed/edit"), []);
-  const hasShadow = useScrollShadow(containerRef);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
-  const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
-    gatheringId: "",
-    content: originalFeedValue?.content || "",
-    imageUrls: originalFeedValue?.images || [],
-  });
+
+  const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>(
+    () => ({
+      gatheringId: originalFeedValue?.gathering?.id || "",
+      content: originalFeedValue?.content || "",
+      imageUrls: originalFeedValue?.images || [],
+    })
+  );
 
   const { mutate: editingFeed, isPending } = useEditFeed({
     content: feedInfo.content,
@@ -56,22 +57,28 @@ export default function EditingFeed() {
   });
 
   useEffect(() => {
+    if (!originalFeedValue) return;
+
     if (
       feedInfo.imageUrls.length > 0 &&
-      (feedInfo.content != originalFeedValue?.content ||
-        feedInfo.imageUrls != originalFeedValue?.images)
+      (feedInfo.content !== originalFeedValue.content ||
+        !arraysEqual(feedInfo.imageUrls, originalFeedValue.images || []))
     ) {
       editingFeed();
     }
-  }, [feedInfo.imageUrls]);
+  }, [feedInfo.imageUrls, originalFeedValue, editingFeed]);
 
-  if (!originalFeedValue || originalFeedValue == null) return null;
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  if (!originalFeedValue) {
+    return <FullPageLoader />;
+  }
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <div
-        className={clsx(styles.headerWrapper, hasShadow ? "shadow-bottom" : "")}
-      >
+      <div className={clsx(styles.headerWrapper, "shadow-bottom")}>
         {header}
       </div>
       {isPending || isUploading ? (
@@ -93,3 +100,7 @@ const styles = {
   container: "bg-base-white h-full",
   headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
 };
+
+function arraysEqual(a: string[], b: string[]) {
+  return a.length === b.length && a.every((val, index) => val === b[index]);
+}
