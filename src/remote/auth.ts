@@ -3,8 +3,8 @@ import { patchProfileImage, postProfileImageWithToken } from "./profile";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
-import { KakaoAuthResponse } from "@/app/auth/kakao/login/page";
 import { Providers } from "@/constants/oAuthButtons";
+import { KakaoAuthResponse } from "@/models/user";
 
 const storeAuthData = (accessToken: string, userInfo: object) => {
   localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
