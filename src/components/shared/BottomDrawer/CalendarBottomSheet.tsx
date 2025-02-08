@@ -1,6 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Button from "../Button/Button";
 import CalendarWithTime from "../Calender/CalendarWithTime";
+import * as lighty from "lighty-type";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import { gatheringSelectedDateAtom, newGatheringInfo } from "@/atoms/gathering";
@@ -10,9 +11,13 @@ import { useState } from "react";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function CalendarBottomSheet({
+  setGatheringToEdit,
   open = true,
   onClose,
 }: {
+  setGatheringToEdit?: React.Dispatch<
+    React.SetStateAction<Partial<lighty.CreateGatheringRequest>>
+  >;
   open?: boolean;
   onClose: () => void;
 }) {
@@ -42,11 +47,18 @@ export default function CalendarBottomSheet({
                 date: format(selectedDate.toString(), "yyyy-MM-dd"),
                 time: selectedTime,
               });
-              console.log(converted);
-              setGatheringInfo((prev) => ({
-                ...prev,
-                gatheringDate: converted,
-              }));
+              if (setGatheringToEdit) {
+                setGatheringToEdit((prev) => ({
+                  ...prev,
+                  gatheringDate: converted,
+                }));
+              } else {
+                setGatheringInfo((prev) => ({
+                  ...prev,
+                  gatheringDate: converted,
+                }));
+              }
+
               console.log(converted, "ISOtime");
             }
             onClose();

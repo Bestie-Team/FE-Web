@@ -148,10 +148,10 @@ export async function patchGathering({
   gatheringId,
 }: {
   gatheringId: string;
-  gathering: GatheringDetailResponse;
+  gathering: Partial<lighty.CreateGatheringRequest>;
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/${gatheringId}`;
+  const targetUrl = `${baseUrl}/gatherings/${gatheringId}`;
   try {
     await fetchWithAuth(targetUrl, {
       method: "PATCH",

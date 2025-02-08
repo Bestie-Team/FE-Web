@@ -4,12 +4,12 @@ import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { gatheringDeleteModalAtom } from "@/atoms/modal";
 import { selectedGatheringInfoAtom } from "@/atoms/gathering";
-import { GatheringDetailResponse } from "@/models/gathering";
 import { useRouter } from "next/navigation";
+import * as lighty from "lighty-type";
 
 interface GatheringDropdownMenuProps {
   items: string[];
-  gathering?: GatheringDetailResponse;
+  gathering?: lighty.CreateGatheringRequest & { id: string };
   className?: string;
 }
 

@@ -1,4 +1,4 @@
-import { GatheringDetailResponse } from "@/models/gathering";
+import * as lighty from "lighty-type";
 import { patchGathering } from "@/remote/gathering";
 import { useMutation } from "@tanstack/react-query";
 
@@ -8,7 +8,7 @@ export default function useEditGathering({
   onSuccess,
   onError,
 }: {
-  gathering: GatheringDetailResponse;
+  gathering: Partial<lighty.CreateGatheringRequest>;
   gatheringId: string;
   onSuccess: (data: { message: string }) => void;
   onError: (error: Error) => void;

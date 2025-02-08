@@ -1,0 +1,47 @@
+"use client";
+import Flex from "../shared/Flex";
+import Spacing from "../shared/Spacing";
+import getHeader from "@/utils/getHeader";
+import Image from "next/image";
+import CheckSpinner from "../shared/Spinner/CheckSpinner";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import { HEART_LETTER } from "@/constants/images";
+
+export default function EditGatheringStatus({
+  isPending,
+}: {
+  isPending: boolean;
+}) {
+  const header = getHeader("/gathering/*/edit");
+
+  return (
+    <div className="flex flex-col bg-base-white h-full">
+      {header}
+      <Flex direction="column" className="h-screen pt-[106px]" align="center">
+        <Spacing size={140} />
+        {isPending === true ? (
+          <DotSpinnerSmall width={28} height={28} />
+        ) : (
+          <CheckSpinner />
+        )}
+        <Spacing size={20} />
+        {isPending === true ? (
+          <span className="text-T2">모임을 수정하는 중</span>
+        ) : (
+          <span className="text-T2">
+            약속 <span className="text-[#6795FA]">수정 완료!</span>
+          </span>
+        )}
+        <Spacing size={24} />
+        <div className="p-[13px]">
+          <Image
+            src={HEART_LETTER}
+            alt="invitation_img"
+            width={110}
+            height={108}
+          />
+        </div>
+      </Flex>
+    </div>
+  );
+}

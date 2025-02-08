@@ -1,0 +1,163 @@
+import React, { Dispatch, SetStateAction, useState } from "react";
+import * as lighty from "lighty-type";
+import Spacing from "../shared/Spacing";
+import Input from "../shared/Input/Input";
+import FeedIcon from "../shared/Icon/FeedIcon";
+import GatheringInput from "../shared/Input/GatheringInput";
+import { formatToKoreanTime } from "@/utils/makeUTC";
+import MapPinIcon from "../shared/Icon/MapPinIcon";
+import FixedBottomButton from "../shared/Button/FixedBottomButton";
+import CalendarBottomSheet from "../shared/BottomDrawer/CalendarBottomSheet";
+import { isValid } from "date-fns";
+import getHeader from "@/utils/getHeader";
+import PencilIcon from "../shared/Icon/PencilIcon";
+import CalendarIcon from "../shared/Icon/CalendarIcon";
+
+export default function GatheringEditForm({
+  type,
+  setStep,
+  gathering,
+  setGathering,
+  mutate,
+}: {
+  type: "new" | "edit";
+  setStep: (step: number) => void;
+  gathering: Partial<lighty.CreateGatheringRequest>;
+  setGathering: Dispatch<
+    SetStateAction<Partial<lighty.CreateGatheringRequest>>
+  >;
+  mutate?: () => void;
+}) {
+  if (
+    !gathering.address ||
+    !gathering.description ||
+    !gathering.name ||
+    !gathering.gatheringDate
+  )
+    return;
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const header = getHeader("/gathering/*/edit");
+
+  const isGroupInfoValid = () => {
+    if (
+      !gathering.name ||
+      !gathering.description ||
+      !gathering.gatheringDate ||
+      !gathering.address ||
+      gathering?.name.length <= 2 ||
+      gathering?.description.length <= 10 ||
+      gathering?.gatheringDate == null ||
+      gathering?.address.length < 1
+    ) {
+      return false;
+    } else return true;
+  };
+
+  return (
+    <div className="h-full bg-base-white pt-12">
+      {header}
+      <form className="flex flex-col px-5">
+        <Spacing size={16} />
+        <Spacing size={24} />
+        <Input
+          name="gatheringName"
+          minLength={2}
+          displayLength={10}
+          value={gathering.name}
+          onChange={(e) =>
+            setGathering((prev) => ({ ...prev, name: e.target.value }))
+          }
+          placeholder="약속 이름을 입력해 주세요."
+          label={
+            <>
+              <PencilIcon width="16" height="16" color="#0A0A0A" />
+              <Spacing direction="horizontal" size={4} />
+              <span>약속 이름</span>
+            </>
+          }
+        />
+        <Spacing size={36} />
+        <Input
+          name="gatheringDesc"
+          minLength={10}
+          displayLength={40}
+          value={gathering.description}
+          onChange={(e) =>
+            setGathering((prev) => ({
+              ...prev,
+              description: e.target.value,
+            }))
+          }
+          placeholder="약속 이름을 설명해 주세요."
+          label={
+            <>
+              <FeedIcon width="16" height="16" color="#0A0A0A" />
+              <Spacing direction="horizontal" size={4} />
+              <span>약속 설명</span>
+            </>
+          }
+        />
+        <Spacing size={36} />
+
+        <div className="grid grid-cols-2 gap-4">
+          <GatheringInput
+            type="date"
+            value={
+              gathering.gatheringDate &&
+              isValid(new Date(gathering.gatheringDate)) ? (
+                <>
+                  <span>
+                    {formatToKoreanTime(gathering.gatheringDate).slice(0, 10)}
+                  </span>
+                  <Spacing size={8} />
+                  <span>
+                    {formatToKoreanTime(gathering.gatheringDate).slice(10)}
+                  </span>
+                </>
+              ) : (
+                "선택하기"
+              )
+            }
+            onClick={() => setCalendarOpen(true)}
+            label={
+              <>
+                <CalendarIcon width="16" height="16" color="#0A0A0A" />
+                <Spacing direction="horizontal" size={4} />
+                <span>약속 일정</span>
+              </>
+            }
+          />
+          <GatheringInput
+            type="editAddress"
+            value={gathering.address ? gathering.address : "선택하기"}
+            setEditValue={setGathering}
+            label={
+              <>
+                <MapPinIcon width="16" height="16" color="#0A0A0A" />
+                <Spacing direction="horizontal" size={4} />
+                <span>약속 장소</span>
+              </>
+            }
+          />
+          <FixedBottomButton
+            label={"수정 완료"}
+            disabled={isGroupInfoValid() === false}
+            onClick={() => {
+              if (type === "new") {
+                setStep(3);
+              } else {
+                setStep(0);
+                if (mutate) mutate();
+              }
+            }}
+          />
+        </div>
+      </form>
+      <CalendarBottomSheet
+        setGatheringToEdit={setGathering}
+        onClose={() => setCalendarOpen(false)}
+        open={calendarOpen}
+      />
+    </div>
+  );
+}

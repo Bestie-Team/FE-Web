@@ -22,7 +22,7 @@ import { SetterOrUpdater } from "recoil";
 import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
 
-export default function GatheringFormContainer({
+export default function GatheringForm({
   type,
   setStep,
   gathering,

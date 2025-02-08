@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
 import DaumPostcodeEmbed from "react-daum-postcode";
@@ -14,12 +14,15 @@ import BottomSheetWrapper from "../BottomDrawer/shared/BottomSheetWrapper";
 import ActionItem from "../BottomDrawer/ActionItem";
 
 interface GatheringInputProps {
-  type: "date" | "address";
+  type: "date" | "address" | "editAddress";
   label?: React.ReactNode;
   name?: string;
   value: React.ReactNode;
   onClick?: () => void;
   setValue?: SetterOrUpdater<lighty.CreateGatheringRequest>;
+  setEditValue?: Dispatch<
+    SetStateAction<Partial<lighty.CreateGatheringRequest>>
+  >;
 }
 
 export default function GatheringInput({
@@ -28,6 +31,7 @@ export default function GatheringInput({
   label,
   onClick,
   setValue,
+  setEditValue,
   ...props
 }: GatheringInputProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -39,6 +43,7 @@ export default function GatheringInput({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleComplete = (data: any) => {
     if (setValue == null) return;
+    if (type === "editAddress" && setEditValue == null) return;
 
     let fullAddress = data.address;
     let extraAddress = "";
@@ -53,7 +58,11 @@ export default function GatheringInput({
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    setValue((prev) => ({ ...prev, address: fullAddress }));
+    if (type === "editAddress" && setEditValue) {
+      setEditValue((prev) => ({ ...prev, address: fullAddress }));
+    } else if (setValue) {
+      setValue((prev) => ({ ...prev, address: fullAddress }));
+    }
     setAddressSearch(0);
   };
 
@@ -69,7 +78,7 @@ export default function GatheringInput({
       )}
       <div
         onMouseDown={() => {
-          if (type === "address") {
+          if (type === "address" || type === "editAddress") {
             setAddressSearch(1);
           }
           if (onClick) {
@@ -129,6 +138,12 @@ export default function GatheringInput({
                         ...prev,
                         address: writtenAddress,
                       }));
+                    else if (setEditValue) {
+                      setEditValue((prev) => ({
+                        ...prev,
+                        address: writtenAddress,
+                      }));
+                    }
                     setAddressSearch(0);
                   }}
                 >

@@ -35,7 +35,9 @@ export const gatheringImageUrlAtom = atom<string>({
   default: "",
 });
 
-export const selectedGatheringInfoAtom = atom<GatheringDetailResponse | null>({
+export const selectedGatheringInfoAtom = atom<
+  (Partial<lighty.CreateGatheringRequest> & { id: string }) | null
+>({
   key: "gathering/selectedInfo/edit",
   default: null,
 });

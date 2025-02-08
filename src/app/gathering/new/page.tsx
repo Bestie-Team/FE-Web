@@ -6,12 +6,12 @@ import MakingInvitation from "@/components/gathering/MakingInvitation";
 import StepToInvitation from "@/components/groups/StepToInvitation";
 import * as lighty from "lighty-type";
 import InviteFriends from "@/components/friends/InviteFriends";
-import GatheringFormContainer from "@/components/gathering/GatheringFormContainer";
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 import { selectedFriendsAtom } from "@/atoms/friends";
+import GatheringForm from "@/components/gathering/GatheringForm";
 
 export default function NewGatheringPage() {
   const [isClient, setIsClient] = useState(false);
@@ -49,7 +49,7 @@ export default function NewGatheringPage() {
   }
   if (step === 1) {
     return (
-      <GatheringFormContainer
+      <GatheringForm
         type="new"
         gathering={gatheringInfo}
         setGathering={setGatheringInfo}

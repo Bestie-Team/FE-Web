@@ -31,6 +31,8 @@ export default function getHeader(pathname: string) {
       <Header pageName="나의 약속" />
     ) : pathname.endsWith("new") ? (
       <HeaderWithBackBtn pageName="약속 만들기" color="#FFF " />
+    ) : pathname.endsWith("edit") ? (
+      <HeaderWithBackBtn pageName="약속 수정" color="#FFF " />
     ) : (
       <HeaderWithBackBtn fontColor="#FFF" pageName="약속 상세" />
     ),
