@@ -43,7 +43,7 @@ export default function AddFriendsSlider({
     } else if (type === "gathering" && setGathering) {
       setGathering((prev: lighty.CreateGatheringRequest) => ({
         ...prev,
-        friendIds: friendIds ? friendIds : [],
+        friendIds: friendIds ? friendIds : null,
       }));
     }
   }, [friends]);

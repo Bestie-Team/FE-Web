@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import HomeBannerContainer from "./home/HomeBannerContainer";
 import FriendsSlider from "./home/FriendsSlider";
 import Spacing from "./shared/Spacing";
@@ -24,6 +24,7 @@ import {
 import { NoGatheringHome } from "./gathering/NoGathering";
 import useGatheringNoFeeds from "./gathering/hooks/useGatheringNoFeed";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useNewUserCheck } from "@/hooks/useNewUserCheck";
 
 const Header = React.memo(() => {
   const header = getHeader("/");
@@ -51,8 +52,7 @@ MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
-  const [isNew, setIsNew] = useState(false);
-
+  const { isNew, setIsNew } = useNewUserCheck();
   const sevenDays = useMemo(() => getWeekDates(), []);
   const minDate = useMemo(
     () => new Date(sevenDays[0]).toISOString(),
@@ -68,7 +68,7 @@ export default function HomePage() {
 
   const handleCloseWelcomeModal = useCallback(() => {
     setIsNew(false);
-  }, []);
+  }, [setIsNew]);
 
   const { data: this_week, isFetching } = useGatherings({
     cursor: { createdAt: minDate },
