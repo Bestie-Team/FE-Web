@@ -28,13 +28,6 @@ export default function GatheringEditForm({
   >;
   mutate?: () => void;
 }) {
-  if (
-    !gathering.address ||
-    !gathering.description ||
-    !gathering.name ||
-    !gathering.gatheringDate
-  )
-    return;
   const [calendarOpen, setCalendarOpen] = useState(false);
   const header = getHeader("/gathering/*/edit");
 
@@ -52,7 +45,13 @@ export default function GatheringEditForm({
       return false;
     } else return true;
   };
-
+  if (
+    !gathering.address ||
+    !gathering.description ||
+    !gathering.name ||
+    !gathering.gatheringDate
+  )
+    return;
   return (
     <div className="h-full bg-base-white pt-12">
       {header}
