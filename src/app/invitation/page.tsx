@@ -2,7 +2,7 @@
 import InvitationCard from "@/components/invitation/InvitationCard";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import getHeader from "@/utils/getHeader";
@@ -21,7 +21,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 export default function InvitationPage() {
   const [isClient, setIsClient] = useState(false);
   const isPast = useScrollThreshold();
-  const header = getHeader("/invitation");
+  const header = useMemo(() => getHeader("/invitation"), []);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =

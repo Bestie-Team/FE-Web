@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
 import { recordGatheringAtom } from "@/atoms/record";
@@ -25,8 +25,7 @@ export default function CreatingFeed() {
   const queryClient = useQueryClient();
   const [isMaking, setIsMaking] = useState(false);
   const pathname = usePathname();
-
-  const header = getHeader(pathname);
+  const header = useMemo(() => getHeader(pathname), []);
   const selectedGatheringId = useRecoilValue(recordGatheringAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({

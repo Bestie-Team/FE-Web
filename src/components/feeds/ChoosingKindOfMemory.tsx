@@ -4,7 +4,7 @@ import LightyIcon from "../shared/Icon/LightyIcon";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
 import clsx from "clsx";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
@@ -17,7 +17,7 @@ export default function ChoosingKindOfMemory({
   setAdd: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const header = getHeader("/record");
+  const header = useMemo(() => getHeader("/record"), []);
   return (
     <div className="bg-grayscale-50 pt-12 h-dvh">
       {header}

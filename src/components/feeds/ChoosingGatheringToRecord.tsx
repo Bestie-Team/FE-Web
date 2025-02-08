@@ -9,6 +9,7 @@ import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import { Gathering } from "@/models/gathering";
 import getHeader from "@/utils/getHeader";
 import { NoGatheringToRecord } from "../gathering/NoGathering";
+import { useMemo } from "react";
 
 export default function ChoosingGatheringToRecord({
   gathering,
@@ -17,7 +18,7 @@ export default function ChoosingGatheringToRecord({
   gathering?: Gathering[];
   onNext: (gatheringId: string) => void;
 }) {
-  const header = getHeader("/record");
+  const header = useMemo(() => getHeader("/record"), []);
 
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);

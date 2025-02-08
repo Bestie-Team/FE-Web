@@ -15,7 +15,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
-    const header = getHeader(pathname);
+    const header = useMemo(() => getHeader(pathname), []);
     return (
       <div
         style={{ zIndex: 12 }}

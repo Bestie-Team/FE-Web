@@ -6,6 +6,7 @@ import * as lighty from "lighty-type";
 import { SetterOrUpdater } from "recoil";
 import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCard";
 import { useAuth } from "../shared/providers/AuthProvider";
+import { useMemo } from "react";
 
 export default function MakingInvitation({
   gathering,
@@ -17,7 +18,7 @@ export default function MakingInvitation({
   makeGathering: () => void;
 }) {
   const { userInfo } = useAuth();
-  const header = getHeader("/gathering/new");
+  const header = useMemo(() => getHeader("/gathering/new"), []);
 
   return (
     <div className="flex flex-col bg-grayscale-50 h-full">

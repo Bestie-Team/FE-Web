@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import * as lighty from "lighty-type";
 import { usePathname } from "next/navigation";
 import getHeader from "@/utils/getHeader";
@@ -18,7 +18,7 @@ export default function CreatingFeedNoGathering() {
   const queryClient = useQueryClient();
   const [isMaking, setIsMaking] = useState(false);
   const pathname = usePathname();
-  const header = getHeader(pathname);
+  const header = useMemo(() => getHeader(pathname), []);
   const friendsToShare = useRecoilValue(friendsToShareAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateFriendFeedRequest>({

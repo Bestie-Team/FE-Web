@@ -10,13 +10,13 @@ import { recordModalAtom } from "@/atoms/modal";
 import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
-  const header = getHeader("/hidden");
+  const header = useMemo(() => getHeader("/hidden"), []);
   const isPast = useScrollThreshold();
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const {

@@ -10,7 +10,7 @@ import UserIcon from "@/components/shared/Icon/UserIcon";
 import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { UpdateGroupRequest } from "@/models/group";
@@ -19,7 +19,7 @@ import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 
 export default function GroupEditPage() {
-  const header = getHeader("/groups/*/edit");
+  const header = useMemo(() => getHeader("/groups/*/edit"), []);
   const [isClient, setIsClient] = useState(false);
   const selectedGroup = useRecoilValue<UpdateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);

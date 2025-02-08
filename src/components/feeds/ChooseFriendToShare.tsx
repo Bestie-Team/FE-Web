@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
 import SearchInput from "../shared/Input/SearchBar";
 import getHeader from "@/utils/getHeader";
 import LightyIcon from "../shared/Icon/LightyIcon";
@@ -14,7 +14,7 @@ export default function ChooseFriendToShare({
   debouncedSearch: string;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const header = getHeader("/record");
+  const header = useMemo(() => getHeader("/record"), []);
   return (
     <div className="bg-grayscale-50 pt-12 h-full">
       {header}

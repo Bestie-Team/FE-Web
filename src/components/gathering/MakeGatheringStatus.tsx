@@ -7,15 +7,16 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import { useMemo } from "react";
+import { HEART_LETTER } from "@/constants/images";
 
 export default function MakingGatheringStatus({
   isPending,
 }: {
   isPending: boolean;
 }) {
-  const header = getHeader("/gathering/new");
+  const header = useMemo(() => getHeader("/gathering/new"), []);
   const router = useRouter();
-  console.log(isPending);
   return (
     <div className="flex flex-col bg-base-white h-full">
       {header}
@@ -43,8 +44,7 @@ export default function MakingGatheringStatus({
         <Spacing size={24} />
         <div className="p-[13px]">
           <Image
-            layout="intrinsic"
-            src={"https://cdn.lighty.today/heart_letter.png"}
+            src={HEART_LETTER}
             alt="invitation_img"
             width={110}
             height={108}

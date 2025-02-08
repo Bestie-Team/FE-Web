@@ -25,12 +25,12 @@ const NavBar = () => {
     }
   }, []);
 
-  if (!isClient) return null;
-
   const showSheetButton =
     ["/feed"].some((path) => pathname.startsWith(path)) ||
     pathname.endsWith("/gathering");
+  const tooltip = user?.feedCount && user?.feedCount > 0 ? false : true;
 
+  if (!isClient) return null;
   return (
     <nav
       style={{ zIndex: 99 }}
@@ -58,7 +58,9 @@ const NavBar = () => {
         ))
       )}
 
-      {(showSheetButton || pathname === "/") && <FloatingButton tooltip />}
+      {(showSheetButton || pathname === "/") && (
+        <FloatingButton tooltip={tooltip} />
+      )}
     </nav>
   );
 };

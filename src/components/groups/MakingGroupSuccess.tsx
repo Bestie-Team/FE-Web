@@ -8,6 +8,7 @@ import NewGroupContainer from "./NewGroupContainer";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import FullPageLoader from "../shared/FullPageLoader";
 import { CreateGroupRequest } from "@/models/group";
+import { useMemo } from "react";
 
 export default function MakingGroupSuccess({
   group,
@@ -17,7 +18,7 @@ export default function MakingGroupSuccess({
   isPending: boolean;
 }) {
   const router = useRouter();
-  const header = getHeader("/groups/new");
+  const header = useMemo(() => getHeader("/groups/new"), []);
   return (
     <div className="flex flex-col bg-base-white h-full">
       {header}

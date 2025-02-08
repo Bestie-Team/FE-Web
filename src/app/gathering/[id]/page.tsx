@@ -12,7 +12,7 @@ import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import { MAP } from "@/constants/images";
 import Options, { MENU_TYPES } from "@/components/shared/Options";
@@ -31,7 +31,7 @@ export default function GatheringDetailPage({
 }: {
   params: { id: string };
 }) {
-  const header = getHeader("/gathering/1234");
+  const header = useMemo(() => getHeader("/gathering/1234"), []);
   const { userInfo } = useAuth();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);

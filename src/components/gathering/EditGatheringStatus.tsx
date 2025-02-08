@@ -6,13 +6,14 @@ import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import { HEART_LETTER } from "@/constants/images";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { useMemo } from "react";
 
 export default function EditGatheringStatus({
   isPending,
 }: {
   isPending: boolean;
 }) {
-  const header = getHeader("/gathering/*/edit");
+  const header = useMemo(() => getHeader("/gathering/*/edit"), []);
 
   return (
     <div className="flex flex-col bg-base-white h-full">

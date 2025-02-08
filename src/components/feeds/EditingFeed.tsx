@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useScrollShadow from "@/hooks/useScrollShadow";
 import { useRecoilValue } from "recoil";
 import getHeader from "@/utils/getHeader";
@@ -16,7 +16,7 @@ import { lightyToast } from "@/utils/toast";
 export default function EditingFeed() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const header = getHeader("/feed/edit");
+  const header = useMemo(() => getHeader("/feed/edit"), []);
   const hasShadow = useScrollShadow(containerRef);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);

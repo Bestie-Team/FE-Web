@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
@@ -29,29 +29,45 @@ export default function GatheringEditForm({
   mutate?: () => void;
 }) {
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const header = getHeader("/gathering/*/edit");
+  const header = useMemo(() => getHeader("/gathering/*/edit"), []);
 
   const isGroupInfoValid = () => {
-    if (
-      !gathering.name ||
-      !gathering.description ||
-      !gathering.gatheringDate ||
-      !gathering.address ||
-      gathering?.name.length <= 2 ||
-      gathering?.description.length <= 10 ||
-      gathering?.gatheringDate == null ||
-      gathering?.address.length < 1
-    ) {
-      return false;
-    } else return true;
+    return (
+      gathering.name &&
+      gathering.description &&
+      gathering.gatheringDate &&
+      gathering.address &&
+      gathering.name.length > 2 &&
+      gathering.description.length > 10 &&
+      gathering.address.length >= 1
+    );
   };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGathering((prev) => ({ ...prev, name: e.target.value }));
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGathering((prev) => ({ ...prev, description: e.target.value }));
+  };
+
+  const handleSubmit = () => {
+    if (type === "new") {
+      setStep(3);
+    } else {
+      setStep(0);
+      mutate?.();
+    }
+  };
+
   if (
     !gathering.address ||
     !gathering.description ||
     !gathering.name ||
     !gathering.gatheringDate
-  )
-    return;
+  ) {
+    return null;
+  }
   return (
     <div className="h-full bg-base-white pt-12">
       {header}
@@ -63,9 +79,7 @@ export default function GatheringEditForm({
           minLength={2}
           displayLength={10}
           value={gathering.name}
-          onChange={(e) =>
-            setGathering((prev) => ({ ...prev, name: e.target.value }))
-          }
+          onChange={handleNameChange}
           placeholder="약속 이름을 입력해 주세요."
           label={
             <>
@@ -81,12 +95,7 @@ export default function GatheringEditForm({
           minLength={10}
           displayLength={40}
           value={gathering.description}
-          onChange={(e) =>
-            setGathering((prev) => ({
-              ...prev,
-              description: e.target.value,
-            }))
-          }
+          onChange={handleDescriptionChange}
           placeholder="약속 이름을 설명해 주세요."
           label={
             <>
@@ -140,15 +149,8 @@ export default function GatheringEditForm({
           />
           <FixedBottomButton
             label={"수정 완료"}
-            disabled={isGroupInfoValid() === false}
-            onClick={() => {
-              if (type === "new") {
-                setStep(3);
-              } else {
-                setStep(0);
-                if (mutate) mutate();
-              }
-            }}
+            disabled={!isGroupInfoValid()}
+            onClick={handleSubmit}
           />
         </div>
       </form>

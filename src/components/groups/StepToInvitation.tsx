@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import { HEART_LETTER } from "@/constants/images";
 
 export default function StepToInvitation({
@@ -12,7 +12,7 @@ export default function StepToInvitation({
 }: {
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const header = getHeader("/gathering/new");
+  const header = useMemo(() => getHeader("/gathering/new"), []);
   return (
     <div className="flex flex-col bg-base-white h-full">
       {header}

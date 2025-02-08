@@ -8,6 +8,7 @@ import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import { FEED_SUCCESS } from "@/constants/images";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { useMemo } from "react";
 
 const StatusMessage = () => (
   <>
@@ -41,7 +42,7 @@ export default function MakingFeedStatus({
   isPending: boolean;
 }) {
   const router = useRouter();
-  const header = getHeader("/record");
+  const header = useMemo(() => getHeader("/record"), []);
 
   const handleHomeClick = () => {
     router.replace("/");

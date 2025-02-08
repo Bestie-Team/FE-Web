@@ -12,7 +12,7 @@ import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import { useRecoilState } from "recoil";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import InviteFriends from "@/components/friends/InviteFriends";
 import MakingGroupSuccess from "@/components/groups/MakingGroupSuccess";
 import { useQueryClient } from "@tanstack/react-query";
@@ -23,7 +23,7 @@ import { CreateGroupRequest } from "@/models/group";
 export default function NewGroupPage() {
   const [isClient, setIsClient] = useState(false);
   const queryClient = useQueryClient();
-  const header = getHeader("/groups/new");
+  const header = useMemo(() => getHeader("/groups/new"), []);
   const [newGroup, setNewGroup] =
     useRecoilState<CreateGroupRequest>(newGroupAtom);
   const [step, setStep] = useState(1);
