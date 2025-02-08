@@ -101,7 +101,7 @@ export default function GatheringDetailPage({
             <div className="w-9 h-9">
               <Image
                 layout="intrinsic"
-                className="rounded-[10.8px] width-[36px] height-[36px]"
+                className="rounded-[10.8px] w-9 h-9"
                 alt="mapIcon"
                 width={36}
                 height={36}

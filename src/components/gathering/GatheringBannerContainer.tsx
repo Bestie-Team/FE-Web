@@ -22,7 +22,6 @@ export default function GatheringBannerContainer({
       <div className="relative h-[420px]">
         <Image
           priority
-          layout="fixed"
           alt="gatheringBanner"
           src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
           width={600}

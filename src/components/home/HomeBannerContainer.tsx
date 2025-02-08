@@ -69,7 +69,7 @@ export default function HomeBannerContainer() {
   const targetRef = useRef<HTMLDivElement>(null);
   useIntersectionObserver({
     elementRef: targetRef,
-    threshold: 0.7,
+    threshold: 0.68,
   });
 
   const delaySeconds = 5000;

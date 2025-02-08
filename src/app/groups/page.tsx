@@ -36,14 +36,12 @@ const GroupList = React.memo(
     onGroupClick: (id: string) => void;
   }) => {
     return groups.map((group, idx) => (
-      <React.Fragment key={`${group.id}_${idx}`}>
-        <Spacing size={16} />
-        <GroupContainer
-          group={group}
-          className="cursor-pointer"
-          onClick={() => onGroupClick(group.id)}
-        />
-      </React.Fragment>
+      <GroupContainer
+        key={`${group.id}_${idx}`}
+        group={group}
+        className="cursor-pointer"
+        onClick={() => onGroupClick(group.id)}
+      />
     ));
   }
 );
@@ -100,7 +98,7 @@ export default function GroupsPage() {
               그룹 추가
             </Button>
           </Flex>
-
+          <Spacing size={16} />
           <GroupList groups={groups} onGroupClick={handleGroupClick} />
         </div>
       )}

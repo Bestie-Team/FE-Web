@@ -33,7 +33,7 @@ export default function Page() {
   }
 
   return (
-    <div className="bg-grayscale-50 h-full">
+    <div className="bg-grayscale-50 h-full overflow-hidden">
       <header
         className={clsx(
           styles.header,
