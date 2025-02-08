@@ -63,7 +63,7 @@ const PhotoSwiper = memo(
               width={340}
               height={360}
               sizes="(max-width: 340px) 100vw, 340px"
-              quality={75}
+              quality={70}
               key={`swiperImg${idx + 1}`}
             />
             {idx === 0 && type === "feed" && (

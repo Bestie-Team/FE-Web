@@ -25,7 +25,7 @@ export default function DateItem({
         {date}
       </div>
       {icon ? (
-        <div>
+        <div className="mt-1">
           <CalendarLightyIcon />
         </div>
       ) : null}
