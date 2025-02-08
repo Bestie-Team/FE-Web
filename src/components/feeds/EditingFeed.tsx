@@ -66,7 +66,7 @@ export default function EditingFeed() {
     ) {
       editingFeed();
     }
-  }, [feedInfo.imageUrls, originalFeedValue, editingFeed]);
+  }, [feedInfo.imageUrls, editingFeed]);
 
   if (typeof window === "undefined") {
     return null;
