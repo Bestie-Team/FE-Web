@@ -40,7 +40,7 @@ export default function MyMainInfo({
   ];
 
   return (
-    <Flex className="py-0 px-[20px] gap-[14px]" justify="center">
+    <Flex className="py-0 px-5 gap-[14px]" justify="center">
       {boxes.map((box, idx) => {
         return (
           <div

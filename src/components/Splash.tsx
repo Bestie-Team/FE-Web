@@ -53,9 +53,9 @@ export default function Splash() {
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent<string>) => {
-      const message: { type: string, token: string } = JSON.parse(event.data);
+      const message: { type: string; token: string } = JSON.parse(event.data);
 
-      if (message.type === 'GOOGLE_LOGIN_SUCCESS') {
+      if (message.type === "GOOGLE_LOGIN_SUCCESS") {
         const accessToken = message.token;
         const userInfo = await postLogin({
           accessToken,
@@ -67,8 +67,8 @@ export default function Splash() {
       }
     };
 
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
   }, [login]);
 
   return (

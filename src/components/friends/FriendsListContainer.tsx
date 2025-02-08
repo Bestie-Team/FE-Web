@@ -26,12 +26,11 @@ export default function FriendsListContainer({
           direction="column"
           align="center"
           justify="center"
-          className="h-[calc(100dvh-300px)]"
+          className="h-[calc(100dvh-300px)] gap-5"
         >
           <span className="text-B2">
             친구가 아직 라이티를 가입하지 않았다면?
           </span>
-          <Spacing size={20} />
           <Button
             color="#0a0a0a"
             className="rounded-[12px] py-[12px] px-[14px] text-base-white text-B3"

@@ -3,7 +3,6 @@ import Button from "../Button/Button";
 import CalendarWithTime from "../Calender/CalendarWithTime";
 import * as lighty from "lighty-type";
 import Flex from "../Flex";
-import Spacing from "../Spacing";
 import { gatheringSelectedDateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { format } from "date-fns";
 import makeUTC from "@/utils/makeUTC";
@@ -28,14 +27,13 @@ export default function CalendarBottomSheet({
 
   return (
     <BottomSheetWrapper onClose={onClose} open={open} bar={false}>
-      <Flex direction="column" className="px-[20px]" align="center">
+      <Flex direction="column" className="px-5 gap-10" align="center">
         <CalendarWithTime
           ampm={ampm}
           selectedTime={selectedTime}
           setAmpm={setAmpm}
           setSelectedTime={setSelectedTime}
         />
-        <Spacing size={40} />
         <Button
           className={buttonStyle}
           disabled={selectedDate == null}

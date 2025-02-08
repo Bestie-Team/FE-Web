@@ -99,7 +99,9 @@ export default function GroupsPage() {
             </Button>
           </Flex>
           <Spacing size={16} />
-          <GroupList groups={groups} onGroupClick={handleGroupClick} />
+          <Flex direction="column" className="gap-4">
+            <GroupList groups={groups} onGroupClick={handleGroupClick} />
+          </Flex>
         </div>
       )}
     </div>

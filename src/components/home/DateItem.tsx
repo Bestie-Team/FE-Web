@@ -34,7 +34,7 @@ export default function DateItem({
 }
 
 const styles = {
-  container: "w-[32px] pb-[4px]",
+  container: "w-[32px] pb-1",
 
   day: "text-B3 text-grayscale-600 pl-[9px] pr-2 pt-[3px] pb-[7px]",
   date: "text-center text-T5 w-8 h-8 flex justify-center items-center",

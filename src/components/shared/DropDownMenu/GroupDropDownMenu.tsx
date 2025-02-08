@@ -1,16 +1,16 @@
 import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
-import * as lighty from "lighty-type";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import { useRouter } from "next/navigation";
 import { selectedGroupAtom } from "@/atoms/group";
+import { GroupEditProps } from "@/app/groups/[id]/page";
 
 interface GroupDropdownMenuProps {
   items: string[];
   className?: string;
-  group: lighty.Group;
+  group: GroupEditProps;
 }
 
 const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(

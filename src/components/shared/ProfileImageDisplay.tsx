@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
 import { lightyToast } from "@/utils/toast";
+import Flex from "./Flex";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -55,7 +56,7 @@ export default function ProfileImageDisplay({
       }}
       htmlFor="fileInput"
     >
-      <div
+      <Flex
         style={{
           width: small ? `72px` : "84px",
           height: small ? `72px` : "84px",
@@ -63,7 +64,9 @@ export default function ProfileImageDisplay({
         }}
         className={uploadContainerStyle}
       >
-        <div
+        <Flex
+          justify="center"
+          align="center"
           style={{
             width: small ? `64px` : "74.67px",
             height: small ? `64px` : "74.67px",
@@ -87,7 +90,7 @@ export default function ProfileImageDisplay({
           ) : (
             <PhotoIcon />
           )}
-        </div>
+        </Flex>
         <PlusCircleButtonSmall
           style={{
             bottom: small ? `2px` : "4.33px",
@@ -103,12 +106,11 @@ export default function ProfileImageDisplay({
           name="imageUrl"
           onChange={handleFileChange}
         />
-      </div>
+      </Flex>
     </label>
   );
 }
 
-const imageWrapperStyle =
-  "flex justify-center items-center rounded-full bg-grayscale-50 overflow-hidden";
+const imageWrapperStyle = "rounded-full bg-grayscale-50 overflow-hidden";
 
-const uploadContainerStyle = "relative flex cursor-pointer";
+const uploadContainerStyle = "relative cursor-pointer";

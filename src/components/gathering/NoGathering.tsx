@@ -11,12 +11,11 @@ export default function NoGathering({ type }: { type: NoGatheringType }) {
       direction="column"
       align="center"
       justify="center"
-      className="h-screen"
+      className="h-screen gap-[13px]"
     >
       <div className="w-10 h-10 p-[5px]">
         <ThinLightyLogo />
       </div>
-      <Spacing size={13} />
       <span className="text-T4 text-grayscale-300">
         {type === "EXPECTING"
           ? "아직 예정된 약속이 없어요"
@@ -46,10 +45,9 @@ export function NoGatheringToRecord() {
       direction="column"
       align="center"
       justify="center"
-      className="w-[270px] h-[320px] border-[1px] border-dashed rounded-[20px] border-grayscale-200"
+      className="w-[270px] h-[320px] border-[1px] border-dashed rounded-[20px] border-grayscale-200 gap-2"
     >
       <ThinLightyLogo width="24" height="24" />
-      <Spacing size={8} />
       <span className="text-B4 text-grayscale-400">
         기록할 라이티 약속이 없어요!
       </span>

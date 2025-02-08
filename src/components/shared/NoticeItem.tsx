@@ -25,13 +25,12 @@ export default function NoticeItem({
         {icon}
       </Flex>
       <Spacing size={10} direction="horizontal" />
-      <Flex direction="column" className="flex-grow">
+      <Flex direction="column" className="flex-grow gap-1">
         <Flex align="center">
           <span className="text-T5">{title}</span>
           <Spacing size={4} direction="horizontal" />
           <span className="text-C2 text-grayscale-300">{date}</span>
         </Flex>
-        <Spacing size={4} />
         <span className="text-B4 text-grayscale-500">{description}</span>
       </Flex>
       <Spacing size={8} direction="horizontal" />

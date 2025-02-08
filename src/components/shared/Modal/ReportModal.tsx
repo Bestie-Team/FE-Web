@@ -42,14 +42,13 @@ export default function ReportModal({
             <Spacing size={24} />
           </>
         )}
-        <Flex className="w-full" justify="center">
+        <Flex className="w-full gap-3" justify="center">
           <Button
             onClick={onClose}
             className={clsx(styles.button, styles.cancel)}
           >
             취소
           </Button>
-          <Spacing size={12} direction="horizontal" />
           <Button
             onClick={() => {
               if (step === 1) {

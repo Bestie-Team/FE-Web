@@ -1,5 +1,4 @@
 import Flex from "../shared/Flex";
-import Spacing from "../shared/Spacing";
 
 export default function NoFeed() {
   return (
@@ -7,12 +6,11 @@ export default function NoFeed() {
       direction="column"
       align="center"
       justify="center"
-      className="h-screen"
+      className="h-screen gap-[13px]"
     >
       <div className="w-[40px] h-[40px] p-[5px]">
         <FeedIcon width="30" height="30" />
       </div>
-      <Spacing size={13} />
       <span className="text-T4 text-grayscale-300">
         아직 추억 피드가 없어요.
       </span>
@@ -51,10 +49,9 @@ export function NoFeedToMakeCard() {
       direction="column"
       align="center"
       justify="center"
-      className="w-[270px] h-[320px] border-[1px] border-dashed rounded-[20px] border-grayscale-200"
+      className="w-[270px] h-[320px] border-[1px] border-dashed rounded-[20px] border-grayscale-200 gap-2"
     >
       <FeedIcon width="24" height="24" />
-      <Spacing size={8} />
       <span className="text-B4 text-grayscale-400">
         포토 카드로 만들 피드가 없어요!
       </span>

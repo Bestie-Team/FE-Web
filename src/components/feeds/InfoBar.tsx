@@ -41,9 +41,8 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
         alt="writer"
       />
       <Spacing direction="horizontal" size={6} />
-      <Flex style={{ width: "full" }} direction="column">
+      <Flex style={{ width: "full", gap: "2px" }} direction="column">
         <div className="text-T5 flex-none">{writer.name}</div>
-        <Spacing size={2} />
         <div className="text-C2 text-grayscale-400">{writer.accountId}</div>
       </Flex>
     </Flex>
@@ -61,10 +60,9 @@ export function TogetherInfo({
   return (
     <Flex
       align="center"
-      className="rounded-[90px] bg-[#F4F4F4] py-[6px] px-[10px]"
+      className="rounded-[90px] bg-[#F4F4F4] py-[6px] px-[10px] gap-1"
     >
       <span className="text-C2">with</span>
-      <Spacing direction="horizontal" size={4} />
       <GroupMemberImages
         gap={8}
         members={members}

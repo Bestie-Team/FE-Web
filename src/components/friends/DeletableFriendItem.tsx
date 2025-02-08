@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
-import Spacing from "../shared/Spacing";
 import { GroupInfoResponse } from "@/models/group";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import CheckIcon from "../shared/Icon/CheckIcon";
@@ -38,7 +37,6 @@ export default function DeletableFriendItem({
         </div>
         <DeleteButton onClick={onClickDelete} />
       </div>
-      <Spacing size={2} />
       <Flex direction="column" align="center">
         <span className="text-T6">
           {friendInfo?.name || groupInfo?.groupName || "이름"}
@@ -60,7 +58,7 @@ function DeleteButton({ onClick }: { onClick: () => void }) {
 }
 
 const style = {
-  container: "w-fit shrink-0",
+  container: "w-fit shrink-0 gap-[2px]",
 
   circleWrapper:
     "relative w-14 h-14 rounded-full border-dashed border-[2px] overflow-hidden",

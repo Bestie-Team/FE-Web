@@ -171,7 +171,6 @@ export function VerticalInvitationCard({
             <div className={styles.groupMemberImagesWrapper}></div>
             <Flex align="center" className={styles.fromWrapper}>
               <span className="text-T5 text-grayscale-300">from</span>
-              <Spacing direction="horizontal" size={4} />
               <span className="text-B3">{sender}</span>
             </Flex>
           </>
@@ -185,7 +184,7 @@ const styles = {
   mainContentWrapper: "absolute p-[15px] left-0 top-0",
   subContentWrapper: "absolute pl-1 left-[15px] top-[332px] gap-1",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",
-  fromWrapper: "absolute pr-1 right-[15px] bottom-[22px]",
+  fromWrapper: "absolute pr-1 right-[15px] bottom-[22px] gap-1",
   rejectBtn:
     "bg-grayscale-100 px-6 py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200",
   acceptBtn:

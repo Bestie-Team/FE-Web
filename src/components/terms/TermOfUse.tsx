@@ -1,6 +1,5 @@
 "use client";
 import Flex from "../shared/Flex";
-import Spacing from "../shared/Spacing";
 import CloseIcon2 from "../shared/Icon/CloseIcon2";
 
 interface TermOfUseProps {
@@ -18,14 +17,13 @@ export default function TermOfUse({ label, onClick }: TermOfUseProps) {
       }}
       className={containerStyle}
     >
-      <Flex align="center" className="h-12">
+      <Flex align="center" className="h-12 gap-[6px]">
         <div
           onClick={onClick}
           className="pl-[17px] py-[10px] pr-[3px] cursor-pointer"
         >
           <CloseIcon2 color="#0A0A0A" />
         </div>
-        <Spacing direction="horizontal" size={6} />
         <span className="text-T3">{label}</span>
       </Flex>
     </div>

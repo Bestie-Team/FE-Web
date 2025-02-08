@@ -1,7 +1,6 @@
 import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Spacing from "../shared/Spacing";
 import clsx from "clsx";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
@@ -81,11 +80,10 @@ export default function ClickableGatheringSwiperForDeco({
               width={270}
               height={320}
             />
-            <div className={styles.gatheringInfoWrapper}>
+            <Flex direction="column" className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{gathering?.name}</span>
-              <Spacing size={6} />
               <span className="text-C2 text-grayscale-600">{content}</span>
-            </div>
+            </Flex>
             {id === selectedFeedId ? (
               <Flex
                 align="center"
@@ -110,7 +108,7 @@ const styles = {
   image: "slide-img object-cover w-[270px] h-[320px]",
 
   gatheringInfoWrapper:
-    "bg-base-white flex flex-col w-full absolute bottom-[-2px] px-5 pt-3 pb-6 rounded-b-[20px] z-10",
+    "gap-[6px] bg-base-white w-full absolute bottom-[-2px] px-5 pt-3 pb-6 rounded-b-[20px] z-10",
 
   checkWrapper: "absolute rounded-[20px] inset-0 bg-[#00000080] pb-[79px]",
 };

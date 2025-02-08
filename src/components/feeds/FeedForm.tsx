@@ -44,9 +44,8 @@ export default function FeedForm<
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
         {selectedGathering ? (
           <Flex>
-            <Flex direction="column" style={{ flexGrow: 1 }}>
+            <Flex direction="column" style={{ flexGrow: 1, gap: "8px" }}>
               <span className="text-T2">{selectedGathering?.name}</span>
-              <Spacing size={8} />
               <span className="text-C2 text-grayscale-400">
                 {selectedGathering?.description}
               </span>
@@ -71,7 +70,6 @@ export default function FeedForm<
           onChange={handleTextChange}
           className={styles.recordTextarea}
         />
-        <Spacing size={12} />
         <div className="text-right">
           <span className="text-grayscale-900 text-B3">{`${
             feedInfo ? feedInfo.content?.length : feedInfoToEdit?.content.length
@@ -107,9 +105,9 @@ export default function FeedForm<
   );
 }
 const styles = {
-  selectWrapper: "p-[20px] pb-[16px]",
-  gatheringInfoWrapper: "p-[20px] pt-[68px] pb-0",
-  textareaWrapper: "px-[28px] py-[16px] pb-[98px]",
+  selectWrapper: "p-5 pb-4",
+  gatheringInfoWrapper: "p-5 pt-[68px] pb-0",
+  textareaWrapper: "px-[28px] py-4 pb-[98px] gap-3",
 
   recordTextarea:
     "h-[186.29px] leading-[22.86px] w-[114.29%] tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none transform origin-top-left scale-[0.875]",

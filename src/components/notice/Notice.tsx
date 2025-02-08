@@ -1,12 +1,11 @@
 import Flex from "../shared/Flex";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
-import Spacing from "../shared/Spacing";
 import TodayNotice from "./TodayNotice";
 
 export default function Notice() {
   return (
-    <Flex direction="column" className="h-screen bg-grayscale-50">
-      <Flex align="center" className="h-12">
+    <Flex direction="column" className="h-screen bg-grayscale-50 gap-5">
+      <Flex align="center" className="h-12 gap-[6px]">
         <div
           className={arrowIconContainerStyle}
           onClick={() => {
@@ -15,10 +14,8 @@ export default function Notice() {
         >
           <ArrowLeftIcon />
         </div>
-        <Spacing size={6} direction="horizontal" />
         <span className="text-T3">알림</span>
       </Flex>
-      <Spacing size={20} />
       <TodayNotice />
     </Flex>
   );

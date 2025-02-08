@@ -1,14 +1,13 @@
 import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
-import Spacing from "../shared/Spacing";
 
 type InvitationType = "RECEIVED" | "SENT";
 export default function NoInvitation({ type }: { type: InvitationType }) {
   return (
     <Flex
       direction="column"
-      className="h-screen"
+      className="h-screen gap-[13px]"
       justify="center"
       align="center"
     >
@@ -18,7 +17,6 @@ export default function NoInvitation({ type }: { type: InvitationType }) {
         width={40}
         height={40}
       />
-      <Spacing size={13} />
       <span className="text-T4 text-grayscale-300">
         {type === "RECEIVED"
           ? "아직 받은 초대장이 없어요."

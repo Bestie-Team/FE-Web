@@ -35,7 +35,7 @@ export default function EditPage() {
   };
 
   return (
-    <div className="h-full bg-base-white">
+    <div className="min-h-dvh bg-base-white">
       {header}
       {isFetching || isError ? (
         <DotSpinner />

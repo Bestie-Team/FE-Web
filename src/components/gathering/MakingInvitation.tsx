@@ -21,7 +21,7 @@ export default function MakingInvitation({
   const header = useMemo(() => getHeader("/gathering/new"), []);
 
   return (
-    <div className="flex flex-col bg-grayscale-50 h-full">
+    <Flex direction="column" className="bg-grayscale-50 h-full">
       {header}
       <Flex direction="column" className="h-screen pt-[50px]" align="center">
         <Spacing size={40} />
@@ -38,6 +38,6 @@ export default function MakingInvitation({
           onClick={makeGathering}
         />
       </Flex>
-    </div>
+    </Flex>
   );
 }

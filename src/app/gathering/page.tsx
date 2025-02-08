@@ -107,7 +107,7 @@ export default function MyGatheringPage() {
   }
 
   return (
-    <div className="h-full no-scrollbar">
+    <div className="min-h-dvh no-scrollbar">
       <Header
         shadow={isPast}
         selectedTab={selectedTab}

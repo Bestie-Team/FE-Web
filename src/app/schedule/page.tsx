@@ -93,7 +93,7 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className="h-full">
+    <div className="min-h-dvh">
       <Header year={year} setYear={setYear} shadow={isPast} />
       <Flex direction="column" className={styles.container}>
         {isFetching || !upcoming ? (

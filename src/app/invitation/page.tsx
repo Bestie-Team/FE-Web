@@ -52,7 +52,7 @@ export default function InvitationPage() {
   }
 
   return (
-    <div className="h-full">
+    <div className="min-h-dvh">
       <div
         id="filter"
         className={clsx(filterStyle, isPast ? "shadow-bottom" : "")}

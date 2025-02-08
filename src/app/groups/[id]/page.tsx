@@ -30,6 +30,13 @@ interface GroupDetailPageProps {
   };
 }
 
+export type GroupEditProps = {
+  id: string;
+  name: string;
+  description: string;
+  groupImageUrl: string;
+};
+
 export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const [isClient, setIsClient] = useState(false);
   const [selectedFriends, setSelectedFriends] =
@@ -110,10 +117,17 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   }
   const { description, members, owner, groupImageUrl } = selectedGroup;
 
+  const groupEdit: GroupEditProps = {
+    id: selectedGroup.id,
+    name: selectedGroup.name,
+    description: selectedGroup.description,
+    groupImageUrl: selectedGroup.groupImageUrl,
+  };
+
   return (
     <Flex direction="column" className="w-full h-full bg-grayscale-50">
       <GroupBannerContainer
-        group={selectedGroup}
+        groupEdit={groupEdit}
         imageUrl={groupImageUrl}
         owner={owner}
         setIsLoaded={setIsLoaded}

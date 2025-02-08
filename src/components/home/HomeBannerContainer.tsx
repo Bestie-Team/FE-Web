@@ -46,7 +46,6 @@ const BannerSlide = ({
     </div>
     <Flex direction="column" className={styles.textWrapper}>
       <span className={styles.subTitle}>{subTitle}</span>
-      <Spacing size={8} />
       <Flex direction="column">
         <span className={styles.title}>{title.slice(0, sliceAt)}</span>
         <Spacing size={6} />
@@ -94,7 +93,7 @@ export default function HomeBannerContainer() {
 const styles = {
   homeBannerImage: "h-[420px] object-cover",
 
-  textWrapper: "absolute bottom-0 left-0 pl-6 pb-8",
+  textWrapper: "absolute bottom-0 left-0 pl-6 pb-8 gap-2",
   subTitle:
     "text-base-white font-[500] text-[14px] leading-[24px] tracking-[-0.42px]",
   title: "text-base-white text-T1",

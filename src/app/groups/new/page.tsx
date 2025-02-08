@@ -59,7 +59,7 @@ export default function NewGroupPage() {
   }
 
   return (
-    <div className="h-full bg-base-white">
+    <div className="min-h-dvh bg-base-white">
       {header}
       <form className="flex flex-col px-5 pt-12">
         <Spacing size={24} />
@@ -100,9 +100,8 @@ export default function NewGroupPage() {
           }
         />
         <Spacing size={36} />
-        <Flex align="center" className="text-T5">
+        <Flex align="center" className="text-T5 gap-1">
           <UserIcon width="16" height="16" color="#0A0A0A" />
-          <Spacing direction="horizontal" size={4} />
           <span>그룹 친구</span>
         </Flex>
         <Spacing size={8} />

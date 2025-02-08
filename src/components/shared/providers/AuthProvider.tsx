@@ -42,28 +42,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   });
 
-  const userAuth = async () => {
-    return await getUserAuth();
+  const updateUserInfo = async () => {
+    try {
+      const user = await getUserAuth();
+      if (!user) return;
+
+      const newUserInfo = {
+        accountId: user.accountId,
+        profileImageUrl: user.profileImageUrl,
+      };
+
+      sessionStorage.setItem(
+        STORAGE_KEYS.USER_INFO,
+        JSON.stringify(newUserInfo)
+      );
+      setUserInfo(newUserInfo);
+    } catch (error) {
+      console.error("사용자 정보 조회 실패:", error);
+    }
   };
 
   useEffect(() => {
-    if (userInfo == null) {
-      try {
-        const user = userAuth();
-        user.then((value) => {
-          if (value) {
-            sessionStorage.setItem(
-              STORAGE_KEYS.USER_INFO,
-              JSON.stringify({
-                accountId: value.accountId,
-                profileImageUrl: value.profileImageUrl,
-              })
-            );
-          }
-        });
-      } catch (error) {
-        console.log("유저정보 반환 실해", error);
-      }
+    if (!userInfo) {
+      updateUserInfo();
     }
   }, [userInfo]);
 

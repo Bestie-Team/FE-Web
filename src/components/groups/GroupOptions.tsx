@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
-import * as lighty from "lighty-type";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GroupDropdownMenu from "../shared/DropDownMenu/GroupDropDownMenu";
+import { GroupEditProps } from "./GroupBannerContainer";
 
 export default function GroupOptions({
   isOwner,
   group,
 }: {
   isOwner: boolean;
-  group: lighty.Group;
+  group: GroupEditProps;
 }) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
   const menuItems = isOwner

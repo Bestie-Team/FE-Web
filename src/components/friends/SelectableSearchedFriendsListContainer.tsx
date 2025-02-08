@@ -43,13 +43,12 @@ export default function SelectableSearchedFriendsListContainer({
   return (
     <Flex
       direction="column"
-      className="px-5 pb-[72px]"
+      className="px-5 pb-[72px] gap-3"
       style={{
         backgroundColor: "#F4F4F4",
       }}
     >
       <span className="text-T5">{`친구 ${searchedFriends.length}`}</span>
-      <Spacing size={12} />
       <ul>
         {searchedFriends.map((friendItem, idx) => {
           return (

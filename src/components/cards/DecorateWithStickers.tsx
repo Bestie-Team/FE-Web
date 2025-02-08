@@ -152,18 +152,21 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <div className="h-screen flex flex-col pt-[76px] px-6">
+    <Flex direction="column" className="h-screen pt-[76px] px-6">
       {deco === false ? (
         <>
-          <Flex direction="column">
+          <Flex direction="column" className="gap-3">
             <span className="text-T2">해당 프레임을 선택할까요?</span>
-            <Spacing size={12} />
             <span className="text-B3 text-grayscale-500">
               꾸미기 시작하면 프레임을 바꿀 수 없어요.
             </span>
           </Flex>
           <Spacing size={40} />
-          <div className={clsx(styles.cardContainer)}>
+          <Flex
+            justify="center"
+            align="center"
+            className={clsx(styles.cardContainer)}
+          >
             <div ref={ref} id="card" className="relative rounded-[20px] w-full">
               <img
                 alt="frame"
@@ -210,7 +213,7 @@ export default function DecorateWithStickers() {
               label={"꾸미기 시작"}
               onClick={handleCaptureImage}
             />
-          </div>
+          </Flex>
         </>
       ) : (
         <>
@@ -257,7 +260,7 @@ export default function DecorateWithStickers() {
           />
         </>
       ) : null}
-    </div>
+    </Flex>
   );
 }
 
@@ -267,8 +270,7 @@ const styles = {
     "absolute z-10 py-[10px] px-3 text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
   saveButton:
     "w-[120px] px-3 py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
-  cardContainer:
-    "relative flex justify-center items-center rounded-[20px] w-[282px] h-[453px] self-center",
+  cardContainer: "relative rounded-[20px] w-[282px] h-[453px] self-center",
   cardWrapper:
     "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
   imageWrapper:

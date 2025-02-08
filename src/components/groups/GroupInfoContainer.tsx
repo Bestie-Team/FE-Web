@@ -10,13 +10,13 @@ export default function GroupInfoContainer({ group }: Props) {
   const { name, description } = group;
 
   return (
-    <Flex className={styles.container}>
+    <div className={styles.container}>
       <Flex align="center">
         <span className="text-T1">{name}</span>
         <Spacing size={6} direction="horizontal" />
         <span className={styles.descWrapper}>{description}</span>
       </Flex>
-    </Flex>
+    </div>
   );
 }
 

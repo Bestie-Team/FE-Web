@@ -29,26 +29,20 @@ export default function NewGroupContainer({
       className={clsx(styles.groupContainer, className)}
       onClick={handleClick}
     >
-      <Flex direction="column" className="flex-grow">
-        <Flex align="center">
-          <div className="w-12 h-12">
-            <Image
-              layout="intrinsic"
-              alt="leaderImg"
-              width={48}
-              height={48}
-              className={styles.leaderImage}
-              src={groupImageUrl || DEFAULT_IMAGE}
-            />
-          </div>
-          <Spacing size={12} direction="horizontal" />
-          <Flex direction="column">
+      <Flex direction="column" className="flex-grow gap-3">
+        <Flex align="center" className="gap-3">
+          <Image
+            alt="leaderImg"
+            width={48}
+            height={48}
+            className={styles.leaderImage}
+            src={groupImageUrl || DEFAULT_IMAGE}
+          />
+          <Flex direction="column" className="gap-1">
             <span className="text-T5">{name}</span>
-            <Spacing size={4} />
             <span className={styles.font}>{description}</span>
           </Flex>
         </Flex>
-        <Spacing size={12} />
         <Flex align="center">
           <span className={styles.font}>약속횟수</span>
           <Spacing size={2} direction="horizontal" />
@@ -66,7 +60,7 @@ export default function NewGroupContainer({
 }
 
 const styles = {
-  leaderImage: "object-cover rounded-full h-12",
+  leaderImage: "object-cover rounded-full h-12 w-12",
   groupContainer: "bg-base-white gap-3 p-5 rounded-[16px]",
 
   font: "text-C2 text-grayscale-300",
