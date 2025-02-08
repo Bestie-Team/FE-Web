@@ -4,8 +4,8 @@ import Spacing from "../shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { HEART_LETTER } from "@/constants/images";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function EditGatheringStatus({
   isPending,
@@ -19,11 +19,7 @@ export default function EditGatheringStatus({
       {header}
       <Flex direction="column" className="h-screen pt-[106px]" align="center">
         <Spacing size={140} />
-        {isPending === true ? (
-          <DotSpinnerSmall width={28} height={28} />
-        ) : (
-          <CheckSpinner />
-        )}
+        {isPending === true ? <DotSpinner /> : <CheckSpinner />}
         <Spacing size={20} />
         {isPending === true ? (
           <span className="text-T2">모임을 수정하는 중</span>

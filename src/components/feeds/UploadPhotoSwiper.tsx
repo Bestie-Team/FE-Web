@@ -5,49 +5,59 @@ import clsx from "clsx";
 import Flex from "../shared/Flex";
 import { PlusCircleButtonSmall } from "../shared/Button/BottomSheetOpenButton";
 import Spacing from "../shared/Spacing";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { lightyToast } from "@/utils/toast";
+import CloseIcon from "../shared/Icon/CloseIcon";
 
 export default function UploadPhotoSwiper({
   feedInfoToEdit,
   filesToUpload,
-  onImageClick,
   setFilesToUpload,
 }: {
   feedInfoToEdit?: { content: string; imageUrls: string[] };
   filesToUpload: File[];
-  onImageClick?: (groupId: string) => void;
   setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
 }) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<string[]>(
     feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
   );
+
   const maxImages = 5;
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
+    if (!file) return;
 
-    if (file) {
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+      e.target.value = "";
       if (filesToUpload.length + filesToUpload.length > maxImages) {
         alert(`최대 ${maxImages}장까지만 업로드 가능합니다.`);
         return;
       }
-      setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const selectedImage = event.target?.result;
-        console.log(selectedImage);
-        if (selectedImage && typeof selectedImage === "string") {
-          setImages((prev) => [...prev, selectedImage]);
-        }
-      };
-      reader.readAsDataURL(file);
+      setImages([]);
     }
+
+    const objectUrl = URL.createObjectURL(file);
+    setImages((prev) => [...prev, objectUrl]);
+
+    if (setFilesToUpload) {
+      setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
+    }
+
+    return () => URL.revokeObjectURL(objectUrl);
   };
 
-  useEffect(() => {
-    console.log(filesToUpload);
-  }, [filesToUpload]);
+  const handleImageDelete = (num: number) => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+
+    setFilesToUpload((prev) => prev.filter((_, index) => index !== num));
+    setImages((prev) => prev.filter((_, index) => index !== num));
+  };
 
   return (
     <div className="relative w-full">
@@ -55,7 +65,7 @@ export default function UploadPhotoSwiper({
         slidesPerView={1.59}
         spaceBetween={12}
         grabCursor={true}
-        className="custom-swiper w-full h-[250px]"
+        className="custom-swiper w-full h-[250px] !pr-10"
       >
         {feedInfoToEdit ? null : (
           <SwiperSlide className={styles.slide}>
@@ -64,6 +74,7 @@ export default function UploadPhotoSwiper({
               <div className={styles.inputWrapper}>
                 <label className="cursor-pointer">
                   <input
+                    ref={fileInputRef}
                     type="file"
                     accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
                     onChange={handleImageUpload}
@@ -86,25 +97,20 @@ export default function UploadPhotoSwiper({
         )}
         {images.map((imageUrl, idx) => (
           <SwiperSlide
-            onClick={() => {
-              if (onImageClick) {
-                onImageClick(String(idx));
-              } else return;
-            }}
-            className={clsx(
-              styles.uploadedImageWrapper,
-              idx === 0 && "ml-[20px]"
-            )}
+            onClick={() => handleImageDelete(idx)}
+            className={clsx(styles.uploadedImageWrapper, idx === 0 && "ml-5")}
             key={`${imageUrl}${idx}`}
           >
             <Image
               src={imageUrl}
-              layout="intrinsic"
               alt={`${idx + 1}번째 이미지`}
               className={styles.uploadedImage}
               width={270}
               height={320}
             />
+            <div className={styles.iconContainer}>
+              <CloseIcon width="18" height="18" />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -114,8 +120,11 @@ export default function UploadPhotoSwiper({
 
 const styles = {
   slide:
-    "ml-[20px] relative h-[250px] w-[240px] rounded-[16px] overflow-hidden",
+    "ml-[20px] relative h-[250px] !w-[240px] rounded-[16px] overflow-hidden",
   inputWrapper: "absolute inset-0 flex items-center justify-center",
-  uploadedImageWrapper: "h-[250px] w-[240px] rounded-[16px] overflow-hidden",
+  uploadedImageWrapper:
+    "relative h-[250px] w-[240px] rounded-[16px] overflow-hidden object-cover",
   uploadedImage: "slide-img object-cover w-[240px] h-[250px]",
+  iconContainer:
+    "absolute flex justify-center items-center top-4 right-4 z-999 rounded-full w-6 h-6 bg-grayscale-200 hover:bg-grayscale-300 transition-colors duration-200",
 };

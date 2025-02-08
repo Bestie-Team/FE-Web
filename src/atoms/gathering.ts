@@ -1,4 +1,3 @@
-import { GatheringDetailResponse } from "@/models/gathering";
 import * as lighty from "lighty-type";
 import { atom } from "recoil";
 

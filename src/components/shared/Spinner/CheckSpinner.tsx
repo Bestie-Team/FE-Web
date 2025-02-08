@@ -9,15 +9,6 @@ export default function CheckSpinner() {
       }}
     >
       <style jsx>{`
-        @keyframes scale {
-          0% {
-            transform: scale(0.2);
-          }
-          50%,
-          100% {
-            transform: scale(1);
-          }
-        }
         @keyframes check {
           0% {
             stroke-dashoffset: 48;
@@ -29,8 +20,6 @@ export default function CheckSpinner() {
         }
         .circle {
           fill: black;
-          transform-origin: center;
-          animation: scale 2s;
         }
         .checkmark {
           fill: none;
@@ -40,7 +29,7 @@ export default function CheckSpinner() {
           stroke-linejoin: round;
           stroke-dasharray: 48;
           stroke-dashoffset: 48;
-          animation: check 2s forwards;
+          animation: check 3s forwards;
         }
       `}</style>
 

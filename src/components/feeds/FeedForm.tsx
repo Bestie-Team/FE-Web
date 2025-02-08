@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
-import EditPhotoSwiper from "./UploadPhotoSwiper";
+import UploadPhotoSwiper from "./UploadPhotoSwiper";
 import { TogetherInfo } from "./InfoBar";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
@@ -57,7 +57,7 @@ export default function FeedForm<
         ) : null}
         <Spacing size={28} />
       </Flex>
-      <EditPhotoSwiper
+      <UploadPhotoSwiper
         feedInfoToEdit={feedInfoToEdit}
         filesToUpload={filesToUpload}
         setFilesToUpload={setFilesToUpload}

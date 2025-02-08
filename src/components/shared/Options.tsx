@@ -8,7 +8,7 @@ import CommentDropdownMenu from "./DropDownMenu/CommentDropDownMenu";
 import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { Feed } from "@/models/feed";
 import GatheringDropdownMenu from "./DropDownMenu/GatheringDropDownMenu";
-import { GatheringDetailResponse } from "@/models/gathering";
+import * as lighty from "lighty-type";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
@@ -34,7 +34,6 @@ const MENU_CONFIGS = {
     items: ["숨기기", "신고하기"],
     className: "z-100 absolute -bottom-[94px] right-[4px]",
   },
-
   [MENU_TYPES.FRIEND]: {
     items: ["친구 삭제", "유저 신고하기"],
     className: "absolute -bottom-[104px] -right-[4px]",
@@ -51,7 +50,7 @@ const MENU_CONFIGS = {
 
 interface OptionsProps {
   feed?: Feed;
-  gathering?: GatheringDetailResponse;
+  gathering?: Partial<lighty.CreateGatheringRequest> & { id: string };
   isMine?: boolean;
   selectedCommentId?: string;
   width?: string;
@@ -72,18 +71,17 @@ export default function Options({
 }: OptionsProps) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
 
-  const isDefaultOrComment =
-    type === MENU_TYPES.DEFAULT ||
-    type === MENU_TYPES.COMMENT ||
-    type === MENU_TYPES.FEED;
+  const isDefaultOrFeed =
+    type === MENU_TYPES.DEFAULT || type === MENU_TYPES.FEED;
   const containerClassName = `
     relative
     cursor-pointer  
     flex 
     justify-center  
     items-center
-    ${isDefaultOrComment ? "pt-[5.5px] pb-1" : ""}
+    ${isDefaultOrFeed ? "pt-[5.5px] pb-1" : ""}
     ${type === MENU_TYPES.COMMENT ? "pr-1" : ""}
+    ${type === MENU_TYPES.COMMENT ? "pt-1 pb-1" : ""}
   `.trim();
 
   return (
@@ -131,7 +129,7 @@ export default function Options({
           className={MENU_CONFIGS[type].className}
         />
       )}
-      {opened && type === MENU_TYPES.GATHERING && (
+      {opened && type === MENU_TYPES.GATHERING && gathering && (
         <GatheringDropdownMenu
           gathering={gathering}
           ref={ref}

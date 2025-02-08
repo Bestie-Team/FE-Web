@@ -9,7 +9,7 @@ import * as lighty from "lighty-type";
 
 interface GatheringDropdownMenuProps {
   items: string[];
-  gathering?: lighty.CreateGatheringRequest & { id: string };
+  gathering: Partial<lighty.CreateGatheringRequest> & { id: string };
   className?: string;
 }
 
