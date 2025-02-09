@@ -30,11 +30,10 @@ const INITIAL_FORM_STATE: RegisterRequestType = {
 };
 
 export default function SignupForm() {
-  const [modalOpen, setModalOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [formValues, setFormValues] =
     React.useState<RegisterRequestType>(INITIAL_FORM_STATE);
-  const [isClient, setIsClient] = React.useState(false);
-  const [oauthData, setOauthData] = React.useState<lighty.LoginFailResponse>();
+  const [oauthData, setOauthData] = useState<lighty.LoginFailResponse>();
   const [idNotAvailable, setIdNotAvailable] = useState(false);
 
   const handleAccountIdChange = useCallback(async (value: string) => {
@@ -42,11 +41,7 @@ export default function SignupForm() {
       setFormValues((prev) => ({ ...prev, accountId: value }));
       if (value.length > 3) {
         const response = await getIdAvailability({ accountId: value });
-        if (response.ok) {
-          setIdNotAvailable(false);
-        } else {
-          setIdNotAvailable(true);
-        }
+        setIdNotAvailable(!response.ok);
       }
     }
   }, []);
@@ -56,9 +51,9 @@ export default function SignupForm() {
       const { name, value } = e.target;
       if (name === "accountId") {
         handleAccountIdChange(value);
-        return;
+      } else {
+        setFormValues((prev) => ({ ...prev, [name]: value }));
       }
-      setFormValues((prev) => ({ ...prev, [name]: value }));
     },
     [handleAccountIdChange]
   );
@@ -82,7 +77,7 @@ export default function SignupForm() {
       formValues.profileImageUrl == null ||
       formValues.accountId.length < 5 ||
       formValues.name == null ||
-      !!idNotAvailable
+      idNotAvailable
     );
   }, [
     isValidate,
@@ -93,7 +88,6 @@ export default function SignupForm() {
   ]);
 
   useEffect(() => {
-    setIsClient(true);
     const session = sessionStorage.getItem(STORAGE_KEYS.OAUTH_DATA);
 
     if (session) {
@@ -120,8 +114,6 @@ export default function SignupForm() {
       setModalOpen(true);
     }
   };
-
-  if (!isClient) return null;
 
   return (
     <Flex direction="column">
