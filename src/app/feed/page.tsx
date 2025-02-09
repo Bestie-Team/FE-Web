@@ -28,7 +28,6 @@ import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
@@ -252,7 +251,7 @@ export default function FeedPage() {
         }}
         slidesPerView={1}
         spaceBetween={2}
-        className="custom-swiper w-full !z-5 pointer-events-auto"
+        className="custom-swiper h-dvh w-full !z-5 pointer-events-auto"
       >
         {feedMine && (
           <SwiperSlide className="overflow-y-scroll no-scrollbar">
