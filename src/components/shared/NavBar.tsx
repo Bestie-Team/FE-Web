@@ -1,4 +1,4 @@
-import { useMemo, memo } from "react";
+import { useMemo, memo, useEffect, useState } from "react";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
@@ -13,20 +13,9 @@ const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
   const { data: user } = useUserDetail();
+  const [isClient, setIsClient] = useState(false);
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
-
-  const storedImageUrl = useMemo(() => {
-    try {
-      const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-      if (userInfo) {
-        const parsed: lighty.LoginResponse = JSON.parse(userInfo);
-        return parsed.profileImageUrl || "";
-      }
-    } catch (error) {
-      console.error("Failed to parse user info:", error);
-    }
-    return "";
-  }, []);
+  const [profileImageUrl, setProfileImageUrl] = useState<string>("");
 
   const showSheetButton = useMemo(() => {
     return (
@@ -36,8 +25,6 @@ const NavBar = () => {
   }, [pathname]);
 
   const tooltip = !(user?.feedCount && user?.feedCount > 0);
-
-  const profileImageUrl = user?.profileImageUrl || storedImageUrl;
 
   const navItems = NAV_ITEMS.map((item, idx) => (
     <MemoizedNavLink
@@ -54,7 +41,20 @@ const NavBar = () => {
     return showSheetButton || pathname === "/";
   }, [showSheetButton, pathname]);
 
-  if (!user) {
+  useEffect(() => {
+    setIsClient(true);
+    const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+    if (userInfo) {
+      const parsed: lighty.LoginResponse = JSON.parse(userInfo);
+      if (parsed.profileImageUrl !== null) {
+        setProfileImageUrl(parsed.profileImageUrl);
+      } else if (user && user?.profileImageUrl !== null) {
+        setProfileImageUrl(user?.profileImageUrl);
+      }
+    }
+  }, []);
+
+  if (!user || !isClient) {
     return <DotSpinner />;
   }
 

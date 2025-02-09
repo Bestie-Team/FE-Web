@@ -241,10 +241,6 @@ export default function FeedPage() {
   });
 
   const renderSwipers = useMemo(() => {
-    if (!feedAll || !feedMine) {
-      return <DotSpinner />;
-    }
-
     return (
       <Swiper
         initialSlide={Number(selectedTab) - 1}
@@ -259,7 +255,7 @@ export default function FeedPage() {
         className="custom-swiper w-full !z-5 pointer-events-auto"
       >
         {feedMine && (
-          <SwiperSlide>
+          <SwiperSlide className="overflow-y-scroll no-scrollbar">
             {feedMine.length > 0 ? (
               <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
             ) : (
@@ -268,7 +264,7 @@ export default function FeedPage() {
           </SwiperSlide>
         )}
         {feedAll && feedAll.length > 0 ? (
-          <SwiperSlide>
+          <SwiperSlide className="overflow-y-scroll no-scrollbar">
             <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
           </SwiperSlide>
         ) : (
@@ -282,12 +278,12 @@ export default function FeedPage() {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
-    return <FullPageLoader />;
+  if (!isClient || !feedAll || !feedMine) {
+    return <DotSpinner />;
   }
 
   return (
-    <div className="h-full no-scrollbar">
+    <div className="h-dvh no-scrollbar">
       <Header
         shadow={isPast}
         selectedTab={selectedTab}
