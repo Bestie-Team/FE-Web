@@ -15,7 +15,7 @@ const NavBar = () => {
   const { data: user } = useUserDetail();
   const [isClient, setIsClient] = useState(false);
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
-  const [profileImageUrl, setProfileImageUrl] = useState<string>("");
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   const showSheetButton = useMemo(() => {
     return (
@@ -43,18 +43,19 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsClient(true);
-    if (profileImageUrl == null) {
+
+    if (!profileImageUrl) {
       const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
       if (userInfo) {
         const parsed: lighty.LoginResponse = JSON.parse(userInfo);
-        if (parsed.profileImageUrl !== null) {
+        if (parsed.profileImageUrl) {
           setProfileImageUrl(parsed.profileImageUrl);
-        } else if (user && user?.profileImageUrl !== null) {
-          setProfileImageUrl(user?.profileImageUrl);
+        } else if (user?.profileImageUrl) {
+          setProfileImageUrl(user.profileImageUrl);
         }
       }
     }
-  }, [profileImageUrl]);
+  }, [user]);
 
   if (!user || !isClient) {
     return <DotSpinner />;
@@ -67,6 +68,14 @@ const NavBar = () => {
         e.preventDefault();
       }}
       onDragStart={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+      onMouseDown={(e) => {
         e.stopPropagation();
         e.preventDefault();
       }}
