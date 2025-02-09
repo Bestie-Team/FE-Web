@@ -60,6 +60,10 @@ const NavBar = () => {
 
   return (
     <nav
+      onTouchMove={(e) => e.stopPropagation()}
+      onTouchEnd={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+      onMouseMove={(e) => e.stopPropagation()}
       style={{ zIndex: 99 }}
       className={`
         fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
