@@ -20,8 +20,3 @@ export const selectedGroupAtom = atom<UpdateGroupRequest>({
     groupImageUrl: "",
   },
 });
-
-export const selectedGroupIdAtom = atom<string>({
-  key: "group/selected/id",
-  default: "",
-});

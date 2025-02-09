@@ -27,6 +27,15 @@ export default function GroupEditPage() {
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
   const [groupImageUrl, setGroupImageUrl] = useState<string>("");
 
+  useEffect(() => {
+    setIsClient(true);
+
+    if (!selectedGroup) {
+      router.replace("/groups");
+      lightyToast.error("그룹 정보를 찾을 수 없습니다.");
+    }
+  }, [selectedGroup, router]);
+
   const { mutate: updateGroup } = useUpdateGroup({
     groupId: groupInfo.groupId,
     group: {
@@ -36,10 +45,6 @@ export default function GroupEditPage() {
     },
     onSuccess: (data) => lightyToast.success(data.message),
   });
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const handleEdit = () => {
     updateGroup();

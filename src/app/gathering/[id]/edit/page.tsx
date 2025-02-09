@@ -23,6 +23,15 @@ export default function GatheringEditPage() {
     address: originalGatheringValue?.address || "",
   };
 
+  useEffect(() => {
+    setIsClient(true);
+
+    if (!originalGatheringValue) {
+      router.replace("/gathering");
+      lightyToast.error("약속 정보를 찾을 수 없습니다.");
+    }
+  }, [originalGatheringValue, router]);
+
   const [gatheringInfo, setGatheringInfo] =
     useState<Partial<lighty.CreateGatheringRequest>>(INITIAL_FORM_STATE);
 
@@ -37,10 +46,6 @@ export default function GatheringEditPage() {
       lightyToast.error(error.message);
     },
   });
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   if (!originalGatheringValue || originalGatheringValue == null) return null;
 

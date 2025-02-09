@@ -7,8 +7,3 @@ export const userInfoAtom = atom<{
   key: "user/token",
   default: null,
 });
-
-export const userTokenAtom = atom<string | null>({
-  key: "user/token",
-  default: null,
-});

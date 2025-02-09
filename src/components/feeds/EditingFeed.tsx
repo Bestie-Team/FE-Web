@@ -18,6 +18,16 @@ export default function EditingFeed() {
   const header = useMemo(() => getHeader("/feed/edit"), []);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+
+    if (!originalFeedValue) {
+      router.replace("/feed");
+      lightyToast.error("피드 정보를 찾을 수 없습니다.");
+    }
+  }, [originalFeedValue, router]);
 
   const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>(
     () => ({
@@ -68,7 +78,7 @@ export default function EditingFeed() {
     }
   }, [feedInfo.imageUrls, editingFeed]);
 
-  if (typeof window === "undefined") {
+  if (!isClient) {
     return null;
   }
 

@@ -33,7 +33,7 @@ export default function FeedPage() {
   if (!isClient) return <FullPageLoader />;
 
   return (
-    <div className="pt-[48px]">
+    <div className="pt-12">
       {header}
       {!hiddenFeed ? (
         <FullPageLoader />
@@ -60,11 +60,7 @@ export default function FeedPage() {
               <FilterBar />
             </div>
           </div>
-          <Feed
-            feeds={hiddenFeed}
-            onClickFeed={() => {}}
-            className="!pt-[48px]"
-          />
+          <Feed feeds={hiddenFeed} onClickFeed={() => {}} className="!pt-12" />
         </>
       )}
 

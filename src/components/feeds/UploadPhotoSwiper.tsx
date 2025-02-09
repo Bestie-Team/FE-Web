@@ -97,20 +97,27 @@ export default function UploadPhotoSwiper({
         )}
         {images.map((imageUrl, idx) => (
           <SwiperSlide
-            onClick={() => handleImageDelete(idx)}
             className={clsx(styles.uploadedImageWrapper, idx === 0 && "ml-5")}
             key={`${imageUrl}${idx}`}
           >
             <Image
               src={imageUrl}
               alt={`${idx + 1}번째 이미지`}
-              className={styles.uploadedImage}
+              className={clsx(
+                styles.uploadedImage,
+                feedInfoToEdit ? "opacity-65" : ""
+              )}
               width={270}
               height={320}
             />
-            <div className={styles.iconContainer}>
-              <CloseIcon width="18" height="18" />
-            </div>
+            {!feedInfoToEdit && (
+              <div
+                onClick={() => handleImageDelete(idx)}
+                className={styles.iconContainer}
+              >
+                <CloseIcon width="18" height="18" />
+              </div>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>

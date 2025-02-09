@@ -30,4 +30,4 @@ export default function TermOfUse({ label, onClick }: TermOfUseProps) {
   );
 }
 
-const containerStyle = `bg-base-white animate-slide-up w-full max-w-[430px] min-w-[350px] h-screen`;
+const containerStyle = `bg-base-white animate-slide-up w-full max-w-[430px] min-w-[350px] min-h-dvh`;

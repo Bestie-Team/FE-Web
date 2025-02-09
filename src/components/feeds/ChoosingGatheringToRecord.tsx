@@ -28,7 +28,7 @@ export default function ChoosingGatheringToRecord({
   };
 
   return (
-    <div className="bg-base-white pt-[48px] h-dvh">
+    <div className="bg-base-white pt-12 h-dvh">
       {header}
       <Flex
         direction="column"
