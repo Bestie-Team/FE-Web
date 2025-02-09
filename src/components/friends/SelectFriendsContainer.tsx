@@ -33,7 +33,7 @@ export default function SelectFriendsContainer({
   const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
     friendsToShareAtom
   );
-
+  console.log(exceptFriends);
   const { data: friends } = useFriends();
 
   const toggleItemClick = (idx: number) => {
