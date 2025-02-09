@@ -90,7 +90,7 @@ export default function MyPage() {
   }
 
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-dvh w-full">
       <Header
         shadow={isPast}
         open={modalState === "open"}

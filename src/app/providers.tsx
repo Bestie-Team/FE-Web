@@ -55,7 +55,7 @@ const DARK_BACKGROUND_PATHS = [
   "/friends/search",
 ] as const;
 const PUBLIC_PATHS = ["/signup", "/auth"] as const;
-const NAVBAR_PATHS = ["/", "/gathering", "/feed", "/schedule", "/my"] as const;
+const NAVBAR_PATHS = ["/gathering", "/feed", "/schedule", "/my"] as const;
 
 const isPathIncluded = (path: string, pathList: readonly string[]) =>
   pathList.some((item) => path.startsWith(item));
@@ -77,8 +77,8 @@ const NextLayout = ({ children }: Props) => {
   }, [isAuthenticated, pathname, router]);
 
   const showNavBar =
-    isPathEqual(pathname, NAVBAR_PATHS) &&
-    (pathname !== "/" || isAuthenticated);
+    isPathEqual(pathname, NAVBAR_PATHS) ||
+    (pathname === "/" && isAuthenticated);
 
   {
     return (

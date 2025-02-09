@@ -1,66 +1,75 @@
-import { useState, useEffect } from "react";
+import { useMemo, memo } from "react";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import * as lighty from "lighty-type";
 import useUserDetail from "../users/hooks/useUserDetail";
-import DotSpinnerSmall from "./Spinner/DotSpinnerSmall";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import FloatingButton from "./Button/FloatingButton";
+import DotSpinner from "./Spinner/DotSpinner";
+
+const MemoizedNavLink = memo(NavLink);
+const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
-  const { data: user, isFetching } = useUserDetail();
-  const [isClient, setIsClient] = useState(false);
+  const { data: user } = useUserDetail();
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
-  const [imageUrl, setImageUrl] = useState("");
 
-  useEffect(() => {
-    setIsClient(true);
-    const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-    if (userInfo) {
-      const parsed: lighty.LoginResponse = JSON.parse(userInfo);
-      if (parsed.profileImageUrl) {
-        setImageUrl(parsed.profileImageUrl);
+  const storedImageUrl = useMemo(() => {
+    try {
+      const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+      if (userInfo) {
+        const parsed: lighty.LoginResponse = JSON.parse(userInfo);
+        return parsed.profileImageUrl || "";
       }
+    } catch (error) {
+      console.error("Failed to parse user info:", error);
     }
+    return "";
   }, []);
 
-  const showSheetButton =
-    ["/feed"].some((path) => pathname.startsWith(path)) ||
-    pathname.endsWith("/gathering");
-  const tooltip = user?.feedCount && user?.feedCount > 0 ? false : true;
+  const showSheetButton = useMemo(() => {
+    return (
+      SHOW_SHEET_PATHS.some((path) => pathname.startsWith(path)) ||
+      pathname.endsWith("/gathering")
+    );
+  }, [pathname]);
 
-  if (!isClient) return null;
+  const tooltip = !(user?.feedCount && user?.feedCount > 0);
+
+  const profileImageUrl = user?.profileImageUrl || storedImageUrl;
+
+  if (!user) {
+    return <DotSpinner />;
+  }
+
+  const navItems = NAV_ITEMS.map((item, idx) => (
+    <MemoizedNavLink
+      key={item.href}
+      href={item.href}
+      isActive={idx === activeBtn || pathname === item.href}
+      onClick={() => setActiveBtn(idx)}
+      icon={item.icon}
+      profileImageUrl={profileImageUrl}
+    />
+  ));
+
+  const shouldShowFloatingButton = useMemo(() => {
+    return showSheetButton || pathname === "/";
+  }, [showSheetButton, pathname]);
+
   return (
     <nav
       style={{ zIndex: 99 }}
       className={`
-      fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
-      flex justify-between px-3 pt-1 pb-2
-      border-t border-grayscale-10 mx-auto
-      transition-all duration-900 ease-in-out
-    `}
+        fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
+        flex justify-between px-3 pt-1 pb-2
+        border-t border-grayscale-10 mx-auto
+        transition-all duration-900 ease-in-out
+      `}
     >
-      {isFetching ? (
-        <DotSpinnerSmall />
-      ) : (
-        NAV_ITEMS.map((item, idx) => (
-          <NavLink
-            key={item.href.slice(1)}
-            href={item.href}
-            isActive={idx === activeBtn || pathname === item.href}
-            onClick={() => {
-              setActiveBtn(idx);
-            }}
-            icon={item.icon}
-            profileImageUrl={user?.profileImageUrl || imageUrl}
-          />
-        ))
-      )}
-
-      {(showSheetButton || pathname === "/") && (
-        <FloatingButton tooltip={tooltip} />
-      )}
+      {navItems}
+      {shouldShowFloatingButton && <FloatingButton tooltip={tooltip} />}
     </nav>
   );
 };

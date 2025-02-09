@@ -7,14 +7,15 @@ export default function DotSpinner() {
         justifyContent: "center",
         alignItems: "center",
         zIndex: 20,
-        width: "100%",
-        height: "100%",
+        width: "100dvw",
+        height: "calc(100dvh - 57px)",
         opacity: 1,
         backgroundColor: "transparent",
       }}
     >
       <div
         style={{
+          width: "full",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

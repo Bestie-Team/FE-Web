@@ -7,13 +7,12 @@ export default function DotSpinnerSmall({
 }) {
   return (
     <div
-      id="fullPageLoader"
       style={{
-        height: "full",
+        height: "calc(100dvh - 57px)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "full",
+        width: "100dvw",
       }}
     >
       <svg

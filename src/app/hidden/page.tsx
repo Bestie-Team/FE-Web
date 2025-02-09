@@ -30,6 +30,7 @@ export default function FeedPage() {
   }, []);
 
   useInfiniteScroll({ isFetching, loadMore });
+
   if (!isClient) return <FullPageLoader />;
 
   return (

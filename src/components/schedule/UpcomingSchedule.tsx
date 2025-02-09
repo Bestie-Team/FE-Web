@@ -13,7 +13,10 @@ export default function UpcomingSchedule({
     <Flex direction="column" className={styles.scheduleContainer}>
       <span className="text-T3">다가오는 일정</span>
       <Spacing size={32} />
-      <div className="flex flex-col relative min-h-[calc(100dvh-655px)] gap-12">
+      <Flex
+        direction="column"
+        className="relative min-h-[calc(100dvh-655px)] gap-12"
+      >
         {gatherings.length > 0 && <div className={styles.timelineWrapper} />}
         {gatherings.length < 1 ? (
           <NoSchedule />
@@ -23,7 +26,7 @@ export default function UpcomingSchedule({
           ))
         )}
         <Spacing size={48} />
-      </div>
+      </Flex>
     </Flex>
   );
 }

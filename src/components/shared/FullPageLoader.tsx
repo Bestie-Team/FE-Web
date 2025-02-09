@@ -14,10 +14,11 @@ function FullPageLoader({ message }: { message?: string }) {
         position: "fixed",
         top: 0,
         right: 0,
-        bottom: 0,
         left: 0,
         opacity: 1,
         backgroundColor: "#E9E9E9",
+        width: "100dvw",
+        height: "calc(100dvh - 57px)",
       }}
     >
       <div
