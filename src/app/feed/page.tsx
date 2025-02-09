@@ -35,6 +35,7 @@ import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import ReportModal from "@/components/shared/Modal/ReportModal";
+import NavBar from "@/components/shared/NavBar";
 
 const Header = React.memo(
   ({
@@ -264,7 +265,11 @@ export default function FeedPage() {
 
   const renderSwipers = useMemo(() => {
     return (
-      <div ref={containerRef} className="h-[calc(100dvh-57px)]">
+      <div
+        ref={containerRef}
+        draggable="false"
+        className="h-[calc(100dvh-57px)]"
+      >
         <Swiper
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
@@ -293,6 +298,7 @@ export default function FeedPage() {
           ) : (
             <NoFeed />
           )}
+          <NavBar />
         </Swiper>
       </div>
     );

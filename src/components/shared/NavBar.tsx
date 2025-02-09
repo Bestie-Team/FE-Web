@@ -63,22 +63,6 @@ const NavBar = () => {
 
   return (
     <nav
-      onTouchStart={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-      onDragStart={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-      onMouseDown={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
       style={{ zIndex: 99 }}
       className={`
         fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px]
