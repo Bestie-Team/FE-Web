@@ -53,8 +53,8 @@ const PhotoSwiper = memo(
             key={`slide${idx}`}
           >
             <Image
+              style={{ transform: "none" }}
               priority={idx === 0}
-              loading={idx === 0 ? "eager" : "lazy"}
               placeholder="blur"
               blurDataURL={Lighty}
               src={image || Lighty}
