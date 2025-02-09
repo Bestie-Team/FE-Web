@@ -39,10 +39,6 @@ const NavBar = () => {
 
   const profileImageUrl = user?.profileImageUrl || storedImageUrl;
 
-  if (!user) {
-    return <DotSpinner />;
-  }
-
   const navItems = NAV_ITEMS.map((item, idx) => (
     <MemoizedNavLink
       key={item.href}
@@ -57,6 +53,10 @@ const NavBar = () => {
   const shouldShowFloatingButton = useMemo(() => {
     return showSheetButton || pathname === "/";
   }, [showSheetButton, pathname]);
+
+  if (!user) {
+    return <DotSpinner />;
+  }
 
   return (
     <nav
