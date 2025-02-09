@@ -65,16 +65,14 @@ export default function MyPage() {
     const initializeProfileInfo = () => {
       const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
 
-      if (user) {
+      if (userInfoSession) {
+        return JSON.parse(userInfoSession);
+      } else if (user) {
         return {
           profileImageUrl: user.profileImageUrl as string,
           accountId: user.accountId,
         };
-      }
-      if (userInfoSession) {
-        return JSON.parse(userInfoSession);
-      }
-      return undefined;
+      } else return undefined;
     };
     if (isClient) {
       setProfileInfo(initializeProfileInfo());

@@ -17,9 +17,12 @@ export default function MyFeed({
 }) {
   return (
     <div
-      className={clsx("pt-[90px] pb-[111px] animate-fadeIn h-full", className)}
+      className={clsx(
+        "pt-[90px] animate-fadeIn h-[calc(100dvh-57px)]",
+        className
+      )}
     >
-      <Flex direction="column">
+      <Flex direction="column" className="pb-[57px]">
         {feeds.map((feed) => (
           <MemoryCard key={feed.id} feed={feed} onClick={onClickFeed} />
         ))}

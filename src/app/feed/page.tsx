@@ -147,6 +147,25 @@ export default function FeedPage() {
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleDragStart = (event: DragEvent) => {
+      if (event.target === document.getElementById("nav")) {
+        event.preventDefault();
+      }
+    };
+
+    const anchor = document.getElementById("no-drag");
+    if (anchor) {
+      anchor.addEventListener("dragstart", handleDragStart);
+    }
+
+    return () => {
+      if (anchor) {
+        anchor.removeEventListener("dragstart", handleDragStart);
+      }
+    };
+  }, []);
+
   const queryParams = useMemo(
     () => ({
       order: "DESC" as const,
@@ -245,7 +264,7 @@ export default function FeedPage() {
 
   const renderSwipers = useMemo(() => {
     return (
-      <div ref={containerRef} className="h-dvh">
+      <div ref={containerRef} className="h-[calc(100dvh-57px)]">
         <Swiper
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
@@ -256,7 +275,7 @@ export default function FeedPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper h-dvh w-full !z-5 pointer-events-auto"
+          className="custom-swiper !h-[calc(100dvh-57px)] w-full !z-5"
         >
           {feedMine && (
             <SwiperSlide className="overflow-y-scroll no-scrollbar">

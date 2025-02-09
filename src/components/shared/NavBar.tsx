@@ -43,16 +43,18 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsClient(true);
-    const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-    if (userInfo) {
-      const parsed: lighty.LoginResponse = JSON.parse(userInfo);
-      if (parsed.profileImageUrl !== null) {
-        setProfileImageUrl(parsed.profileImageUrl);
-      } else if (user && user?.profileImageUrl !== null) {
-        setProfileImageUrl(user?.profileImageUrl);
+    if (profileImageUrl == null) {
+      const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+      if (userInfo) {
+        const parsed: lighty.LoginResponse = JSON.parse(userInfo);
+        if (parsed.profileImageUrl !== null) {
+          setProfileImageUrl(parsed.profileImageUrl);
+        } else if (user && user?.profileImageUrl !== null) {
+          setProfileImageUrl(user?.profileImageUrl);
+        }
       }
     }
-  }, []);
+  }, [profileImageUrl]);
 
   if (!user || !isClient) {
     return <DotSpinner />;
@@ -60,13 +62,17 @@ const NavBar = () => {
 
   return (
     <nav
-      onTouchMove={(e) => e.stopPropagation()}
-      onTouchEnd={(e) => e.stopPropagation()}
-      onTouchStart={(e) => e.stopPropagation()}
-      onMouseMove={(e) => e.stopPropagation()}
+      onTouchStart={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+      onDragStart={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
       style={{ zIndex: 99 }}
       className={`
-        fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px] 
+        fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px]
         flex justify-between px-3 pt-1 pb-2
         border-t border-grayscale-10 mx-auto
         transition-all duration-900 ease-in-out
