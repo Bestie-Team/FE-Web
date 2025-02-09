@@ -41,6 +41,11 @@ export default function Splash() {
       JSON.stringify({ type: "GOOGLE_LOGIN" })
     );
 
+  const kakaoLoginMobile = () =>
+    window.ReactNativeWebView?.postMessage(
+      JSON.stringify({ type: "KAKAO_LOGIN" })
+    );
+
   const loginHandler = (provider: Providers) => {
     if (provider === "google") {
       if (window.ReactNativeWebView) {
@@ -48,8 +53,13 @@ export default function Splash() {
       } else {
         googleLogin();
       }
-    } else if (provider === "kakao") {
-      window.location.href = KAKAO_AUTH_URL;
+    }
+    if (provider === "kakao") {
+      if (window.ReactNativeWebView) {
+        kakaoLoginMobile();
+      } else {
+        window.location.href = KAKAO_AUTH_URL;
+      }
     }
   };
 
@@ -59,6 +69,9 @@ export default function Splash() {
 
       if (message.type === "GOOGLE_LOGIN_SUCCESS") {
         handleLoginSuccess(message.token, "google");
+      }
+      if (message.type === "KAKAO_LOGIN_SUCCESS") {
+        handleLoginSuccess(message.token, "kakao");
       }
     };
 
