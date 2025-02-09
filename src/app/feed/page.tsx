@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";
-import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
@@ -31,9 +31,7 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
-import useInfiniteScroll, {
-  useInfiniteScrollByRef,
-} from "@/hooks/useInfiniteScroll";
+import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import ReportModal from "@/components/shared/Modal/ReportModal";
