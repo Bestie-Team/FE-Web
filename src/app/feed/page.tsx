@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Feed from "@/components/feeds/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { commentModalStateAtom } from "@/atoms/feed";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
@@ -31,7 +31,9 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useInfiniteScroll, {
+  useInfiniteScrollByRef,
+} from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import ReportModal from "@/components/shared/Modal/ReportModal";
@@ -145,6 +147,8 @@ export default function FeedPage() {
     commentModalStateAtom
   );
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const queryParams = useMemo(
     () => ({
       order: "DESC" as const,
@@ -229,47 +233,51 @@ export default function FeedPage() {
     },
   });
 
-  useInfiniteScroll({
+  useInfiniteScrollByRef({
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
+    targetRef: containerRef,
   });
 
-  useInfiniteScroll({
+  useInfiniteScrollByRef({
     isFetching,
     loadMore,
+    targetRef: containerRef,
   });
 
   const renderSwipers = useMemo(() => {
     return (
-      <Swiper
-        initialSlide={Number(selectedTab) - 1}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        onSlideChange={(swiper) => {
-          handleSlideChange(swiper.activeIndex);
-        }}
-        slidesPerView={1}
-        spaceBetween={2}
-        className="custom-swiper h-dvh w-full !z-5 pointer-events-auto"
-      >
-        {feedMine && (
-          <SwiperSlide className="overflow-y-scroll no-scrollbar">
-            {feedMine.length > 0 ? (
-              <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
-            ) : (
-              <NoFeed />
-            )}
-          </SwiperSlide>
-        )}
-        {feedAll && feedAll.length > 0 ? (
-          <SwiperSlide className="overflow-y-scroll no-scrollbar">
-            <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
-          </SwiperSlide>
-        ) : (
-          <NoFeed />
-        )}
-      </Swiper>
+      <div ref={containerRef} className="h-dvh">
+        <Swiper
+          initialSlide={Number(selectedTab) - 1}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          onSlideChange={(swiper) => {
+            handleSlideChange(swiper.activeIndex);
+          }}
+          slidesPerView={1}
+          spaceBetween={2}
+          className="custom-swiper h-dvh w-full !z-5 pointer-events-auto"
+        >
+          {feedMine && (
+            <SwiperSlide className="overflow-y-scroll no-scrollbar">
+              {feedMine.length > 0 ? (
+                <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
+              ) : (
+                <NoFeed />
+              )}
+            </SwiperSlide>
+          )}
+          {feedAll && feedAll.length > 0 ? (
+            <SwiperSlide className="overflow-y-scroll no-scrollbar">
+              <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+            </SwiperSlide>
+          ) : (
+            <NoFeed />
+          )}
+        </Swiper>
+      </div>
     );
   }, [feedAll, feedMine, selectedTab, swiperRef, handleSlideChange]);
 

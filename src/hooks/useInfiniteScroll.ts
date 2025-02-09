@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { RefObject, useCallback, useEffect, useState } from "react";
 import useDebounce from "./debounceForScroll";
 
 interface InfiniteScrollType {
@@ -35,3 +35,49 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
 };
 
 export default useInfiniteScroll;
+
+interface InfiniteScrollType {
+  isFetching: boolean;
+  loadMore: () => void;
+  targetRef: RefObject<HTMLElement>;
+  threshold?: number;
+}
+
+export const useInfiniteScrollByRef = ({
+  isFetching,
+  loadMore,
+  targetRef,
+  threshold = 400,
+}: InfiniteScrollType) => {
+  const [page, setPage] = useState(1);
+
+  const checkScrollPosition = useCallback(() => {
+    if (!targetRef.current) return;
+
+    const element = targetRef.current;
+    const elementHeight = element.scrollHeight;
+    const scrollTop = element.scrollTop;
+    const clientHeight = element.clientHeight;
+
+    if (elementHeight - (scrollTop + clientHeight) < threshold && !isFetching) {
+      setPage((prev) => prev + 1);
+    }
+  }, [isFetching, targetRef, threshold]);
+
+  const debouncedScroll = useDebounce(checkScrollPosition, 300);
+
+  useEffect(() => {
+    const element = targetRef.current;
+    if (!element) return;
+
+    element.addEventListener("scroll", debouncedScroll);
+
+    return () => {
+      element.removeEventListener("scroll", debouncedScroll);
+    };
+  }, [debouncedScroll, targetRef]);
+
+  useEffect(() => {
+    loadMore();
+  }, [page, loadMore]);
+};
