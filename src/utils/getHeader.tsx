@@ -66,13 +66,13 @@ export default function useHeader(pathname: string) {
       props: { pageName: "기록하기", color: "transparent" },
     },
     "/schedule": { component: Header, props: { pageName: "약속 캘린더" } },
-    "/my": {
-      component: Header,
-      props: { pageName: "My" },
-    },
     "/my/edit": {
       component: HeaderWithBackBtn,
       props: { pageName: "프로필 편집" },
+    },
+    "/my": {
+      component: Header,
+      props: { pageName: "My" },
     },
     "/gathering": {
       component: HeaderWithBackBtn,

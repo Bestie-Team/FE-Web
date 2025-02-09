@@ -1,6 +1,5 @@
 "use client";
 import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
-import GroupLeaderContainer from "@/components/shared/GroupLeaderContainer";
 import GroupBannerContainer from "@/components/groups/GroupBannerContainer";
 import Flex from "@/components/shared/Flex";
 import UserIcon from "@/components/shared/Icon/UserIcon";
@@ -23,6 +22,8 @@ import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import LeaderContainer from "@/components/shared/LeaderContainer";
+import { User } from "lighty-type";
 
 interface GroupDetailPageProps {
   params: {
@@ -35,6 +36,7 @@ export type GroupEditProps = {
   name: string;
   description: string;
   groupImageUrl: string;
+  members?: User[];
 };
 
 export default function GroupDetailPage({ params }: GroupDetailPageProps) {
@@ -122,10 +124,11 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     name: selectedGroup.name,
     description: selectedGroup.description,
     groupImageUrl: selectedGroup.groupImageUrl,
+    members: selectedGroup.members,
   };
 
   return (
-    <Flex direction="column" className="w-full h-full bg-grayscale-50">
+    <Flex direction="column" className="w-full min-h-dvh bg-grayscale-50">
       <GroupBannerContainer
         groupEdit={groupEdit}
         imageUrl={groupImageUrl}
@@ -137,7 +140,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />
       </div>
-      <GroupLeaderContainer groupLeader={owner} />
+      <LeaderContainer leader={owner} />
       <Spacing size={10} />
       <LightyInfoContainer
         icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
@@ -184,7 +187,7 @@ const styles = {
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",
   title: "font-[700] text-[16px] leading-[20.8px] flex-grow",
   contentWrapper:
-    "w-full px-[20px] py-[16px] border-[1px] border-grayscale-100 rounded-[12px] text-B3",
+    "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-[12px] text-B3",
   button:
-    "bg-grayscale-50 hover:bg-grayscale-100 px-[12px] py-[8px] rounded-[8px] text-T6",
+    "bg-grayscale-50 hover:bg-grayscale-100 px-3 py-2 rounded-[8px] text-T6",
 };

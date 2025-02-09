@@ -49,9 +49,9 @@ export default function MakingFeedStatus({
   };
 
   return (
-    <div className="flex flex-col bg-base-white h-full">
+    <div className="flex flex-col bg-base-white">
       {header}
-      <Flex direction="column" className="h-screen pt-[106px]" align="center">
+      <Flex direction="column" className="min-h-dvh pt-[106px]" align="center">
         <Spacing size={140} />
         {isPending === true ? <DotSpinner /> : <CheckSpinner />}
         <Spacing size={20} />

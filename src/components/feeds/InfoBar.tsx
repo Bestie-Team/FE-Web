@@ -19,7 +19,7 @@ export default function InfoBar({
   const isMine = feed.writer.accountId === userInfo?.accountId;
   // console.log(feed.writer.accountId, userInfo?.accountId);
   return (
-    <Flex align="center" className="px-[20px]">
+    <Flex align="center" className="px-5">
       <WriterInfo writer={feed.writer} />
       <div style={{ flexGrow: 1 }} />
       {memberImageUrls && <TogetherInfo memberImageUrls={memberImageUrls} />}
@@ -31,7 +31,7 @@ export default function InfoBar({
 
 function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
-    <Flex>
+    <Flex className="gap-[6px]">
       <Image
         layout="fixed"
         src={writer.profileImageUrl || DEFAULT_IMAGE}
@@ -40,7 +40,6 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
         className="w-9 h-9 object-cover rounded-full overflow-hidden"
         alt="writer"
       />
-      <Spacing direction="horizontal" size={6} />
       <Flex style={{ width: "full", gap: "2px" }} direction="column">
         <div className="text-T5 flex-none">{writer.name}</div>
         <div className="text-C2 text-grayscale-400">{writer.accountId}</div>

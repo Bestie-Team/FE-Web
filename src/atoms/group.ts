@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { CreateGroupRequest, UpdateGroupRequest } from "@/models/group";
+import { User } from "lighty-type";
 
 export const newGroupAtom = atom<CreateGroupRequest>({
   key: "group/new",
@@ -19,4 +20,9 @@ export const selectedGroupAtom = atom<UpdateGroupRequest>({
     description: "",
     groupImageUrl: "",
   },
+});
+
+export const originalGroupMembersAtom = atom<User[] | null>({
+  key: "group/selected/members",
+  default: [],
 });

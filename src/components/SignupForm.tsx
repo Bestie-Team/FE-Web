@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import * as lighty from "lighty-type";
 import AddPhoto, { RegisterRequestType } from "./shared/AddPhoto";
 import Input from "./shared/Input/Input";
@@ -32,7 +26,7 @@ const INITIAL_FORM_STATE: RegisterRequestType = {
 export default function SignupForm() {
   const [modalOpen, setModalOpen] = useState(false);
   const [formValues, setFormValues] =
-    React.useState<RegisterRequestType>(INITIAL_FORM_STATE);
+    useState<RegisterRequestType>(INITIAL_FORM_STATE);
   const [oauthData, setOauthData] = useState<lighty.LoginFailResponse>();
   const [idNotAvailable, setIdNotAvailable] = useState(false);
 

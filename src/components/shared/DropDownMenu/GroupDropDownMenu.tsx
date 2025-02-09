@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import { useRouter } from "next/navigation";
-import { selectedGroupAtom } from "@/atoms/group";
+import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
 import { GroupEditProps } from "@/app/groups/[id]/page";
 
 interface GroupDropdownMenuProps {
@@ -20,6 +20,7 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
     const setDeleteModalOpen = useSetRecoilState(groupDeleteModalAtom);
     const setExitModalOpen = useSetRecoilState(groupExitModalAtom);
     const setSelectedGroup = useSetRecoilState(selectedGroupAtom);
+    const setOriginalGroupMembers = useSetRecoilState(originalGroupMembersAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
@@ -33,6 +34,9 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
           description: group.description,
           groupImageUrl: group.groupImageUrl,
         });
+        if (group.members) {
+          setOriginalGroupMembers([...group.members]);
+        }
         router.push(`/groups/${group.id}/edit`);
       }
     };

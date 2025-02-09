@@ -16,11 +16,13 @@ export default function SelectFriendsContainer({
   paddingTop,
   action,
   setStep,
+  exceptFriends,
 }: {
   type?: "default" | "record" | "group" | "gathering";
   paddingTop?: string;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;
+  exceptFriends?: lighty.User[] | null;
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [countModal, setCountModal] = useState(false);

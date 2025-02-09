@@ -24,7 +24,7 @@ export default function FriendListItem({
   requestId?: string;
   friendInfo: lighty.User;
   type: "friend" | "receivedRequest" | "sentRequest" | "select";
-  idx: number;
+  idx?: number;
   onClick?: () => void;
   clicked?: boolean;
 }) {

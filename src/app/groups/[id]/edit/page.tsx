@@ -1,5 +1,5 @@
 "use client";
-import { selectedGroupAtom } from "@/atoms/group";
+import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
 import InviteFriends from "@/components/friends/InviteFriends";
 import AddGroupPhoto from "@/components/groups/AddGroupPhoto";
 import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
@@ -17,6 +17,8 @@ import { UpdateGroupRequest } from "@/models/group";
 import useUpdateGroup from "@/components/groups/hooks/useUpdateGroup";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
+import * as lighty from "lighty-type";
+import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
 
 export default function GroupEditPage() {
   const header = useMemo(() => getHeader("/groups/*/edit"), []);
@@ -26,6 +28,9 @@ export default function GroupEditPage() {
   const router = useRouter();
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
   const [groupImageUrl, setGroupImageUrl] = useState<string>("");
+  const groupMembers = useRecoilValue<lighty.User[] | null>(
+    originalGroupMembersAtom
+  );
 
   useEffect(() => {
     setIsClient(true);
@@ -106,16 +111,18 @@ export default function GroupEditPage() {
             <span>그룹 친구</span>
           </Flex>
           <Spacing size={8} />
-          {/* <AddFriendsSlider
-            setGroup={setGroupInfo}
-            type="group"
-            setStep={setStep}
-          /> */}
+          <AddOnlyFriendsSlider setStep={setStep} groupMembers={groupMembers} />
         </form>
         <FixedBottomButton label={"수정 완료"} onClick={handleEdit} />
       </div>
     );
   } else if (step === 2) {
-    return <InviteFriends setStep={setStep} type="group" />;
+    return (
+      <InviteFriends
+        setStep={setStep}
+        type="group"
+        exceptFriends={groupMembers}
+      />
+    );
   }
 }

@@ -4,13 +4,16 @@ import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer"
 import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { Dispatch, SetStateAction } from "react";
+import * as lighty from "lighty-type";
 
 export default function InviteFriends({
   setStep,
   type,
+  exceptFriends,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
   type: "default" | "record" | "group" | "gathering";
+  exceptFriends: lighty.User[] | null;
 }) {
   return (
     <div className="h-full bg-grayscale-50">
@@ -26,6 +29,7 @@ export default function InviteFriends({
         <Spacing size={16} />
       </div>
       <SelectFriendsContainer
+        exceptFriends={exceptFriends}
         paddingTop="138px"
         setStep={setStep}
         type={type}

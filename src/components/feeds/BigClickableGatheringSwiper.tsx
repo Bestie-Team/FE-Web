@@ -36,7 +36,7 @@ export default function BigClickableGatheringSwiper({
         {gathering.map(({ invitationImageUrl, id, name, description }, idx) => (
           <SwiperSlide
             onClick={() => handleGatheringClick(id)}
-            className={clsx(styles.slide, idx === 0 && "ml-[20px]")}
+            className={clsx(styles.slide, idx === 0 && "ml-5")}
             key={`gathering${id}`}
           >
             <Image
@@ -75,7 +75,7 @@ const styles = {
   image: "slide-img object-cover w-[270px] h-[320px]",
 
   gatheringInfoWrapper:
-    "gap-[6px] bg-base-white w-full absolute bottom-[-2px] pl-[20px] pt-[12px] pb-[24px] rounded-b-[20px] z-10",
+    "gap-[6px] bg-base-white w-full absolute bottom-[-2px] pl-5 pt-3 pb-6 rounded-b-[20px] z-10",
 
   checkWrapper: "absolute rounded-[20px] inset-0 bg-[#00000080] pb-[79px]",
 };

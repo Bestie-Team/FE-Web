@@ -43,14 +43,13 @@ export default function FeedForm<
     <>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
         {selectedGathering ? (
-          <Flex>
+          <Flex className="gap-4">
             <Flex direction="column" style={{ flexGrow: 1, gap: "8px" }}>
               <span className="text-T2">{selectedGathering?.name}</span>
               <span className="text-C2 text-grayscale-400">
                 {selectedGathering?.description}
               </span>
             </Flex>
-            <Spacing direction="horizontal" size={16} />
             <TogetherInfo members={selectedGathering?.members} />
           </Flex>
         ) : null}

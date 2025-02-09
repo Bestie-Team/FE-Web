@@ -3,12 +3,8 @@ import Flex from "./Flex";
 import Button from "./Button/Button";
 import * as lighty from "lighty-type";
 
-export default function GroupLeaderContainer({
-  groupLeader,
-}: {
-  groupLeader?: lighty.User;
-}) {
-  const { name, accountId, profileImageUrl } = groupLeader!;
+export default function LeaderContainer({ leader }: { leader?: lighty.User }) {
+  const { name, accountId, profileImageUrl } = leader!;
   return (
     <Flex
       align="center"

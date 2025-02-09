@@ -1,7 +1,6 @@
 "use client";
 import GatheringBannerContainer from "@/components/gathering/GatheringBannerContainer";
 import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
-import GroupLeaderContainer from "@/components/shared/GroupLeaderContainer";
 import Flex from "@/components/shared/Flex";
 import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
 import MapPinIcon from "@/components/shared/Icon/MapPinIcon";
@@ -25,6 +24,7 @@ import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering"
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
+import LeaderContainer from "@/components/shared/LeaderContainer";
 
 export default function GatheringDetailPage({
   params,
@@ -89,7 +89,7 @@ export default function GatheringDetailPage({
           />
         )}
       </div>
-      <GroupLeaderContainer groupLeader={hostUser} />
+      <LeaderContainer leader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />
       <LightyInfoContainer
         icon={<CalendarIcon width="20" height="20" />}

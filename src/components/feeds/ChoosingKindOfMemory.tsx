@@ -81,9 +81,8 @@ const Item = ({
         height={40}
         alt="lighty_square"
       />
-      <Flex direction="column">
+      <Flex direction="column" className="gap-[6px]">
         <span>{title}</span>
-        <Spacing size={6} />
         <span className="text-C2 text-grayscale-400">{subTitle}</span>
       </Flex>
     </Flex>
