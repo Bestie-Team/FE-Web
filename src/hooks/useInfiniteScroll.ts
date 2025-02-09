@@ -36,7 +36,7 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
 
 export default useInfiniteScroll;
 
-interface InfiniteScrollType {
+interface InfiniteScrollRefType {
   isFetching: boolean;
   loadMore: () => void;
   targetRef: RefObject<HTMLElement>;
@@ -48,7 +48,7 @@ export const useInfiniteScrollByRef = ({
   loadMore,
   targetRef,
   threshold = 400,
-}: InfiniteScrollType) => {
+}: InfiniteScrollRefType) => {
   const [page, setPage] = useState(1);
 
   const checkScrollPosition = useCallback(() => {
