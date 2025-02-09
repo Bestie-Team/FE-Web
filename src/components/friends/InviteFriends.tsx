@@ -13,7 +13,7 @@ export default function InviteFriends({
 }: {
   setStep: Dispatch<SetStateAction<number>>;
   type: "default" | "record" | "group" | "gathering";
-  exceptFriends: lighty.User[] | null;
+  exceptFriends?: lighty.User[] | null;
 }) {
   return (
     <div className="h-full bg-grayscale-50">

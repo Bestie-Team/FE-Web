@@ -65,11 +65,11 @@ export default function InvitationModal({
           <>
             <Spacing size={16} />
             <Flex justify="center">
-              <Button className={styles.rejectBtn} onClick={() => accept()}>
+              <Button className={styles.rejectBtn} onClick={() => reject()}>
                 거절
               </Button>
               <Spacing size={15} direction="horizontal" />
-              <Button className={styles.acceptBtn} onClick={() => reject()}>
+              <Button className={styles.acceptBtn} onClick={() => accept()}>
                 수락
               </Button>
             </Flex>
