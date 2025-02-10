@@ -8,7 +8,6 @@ import useEditFeed from "./hooks/useEditFeed";
 import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import FullPageLoader from "../shared/FullPageLoader";
-import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 
@@ -50,34 +49,6 @@ export default function EditingFeed() {
     },
   });
 
-  const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
-    files: filesToUpload,
-    gatheringId: originalFeedValue?.gathering?.id || "",
-    onSuccess: (data: { imageUrls: string[]; message: string }) => {
-      console.log("FeedImageUploaded", data);
-      if (data.imageUrls) {
-        setFeedInfo((prev) => ({
-          ...prev,
-          images: data.imageUrls,
-        }));
-      }
-      setFilesToUpload([]);
-    },
-    onError: (error) => console.log(error),
-  });
-
-  useEffect(() => {
-    if (!originalFeedValue) return;
-
-    if (
-      feedInfo.imageUrls.length > 0 &&
-      (feedInfo.content !== originalFeedValue.content ||
-        !arraysEqual(feedInfo.imageUrls, originalFeedValue.images || []))
-    ) {
-      editingFeed();
-    }
-  }, [feedInfo.imageUrls, editingFeed]);
-
   if (!isClient) {
     return null;
   }
@@ -91,11 +62,11 @@ export default function EditingFeed() {
       <div className={clsx(styles.headerWrapper, "shadow-bottom")}>
         {header}
       </div>
-      {isPending || isUploading ? (
+      {isPending ? (
         <FullPageLoader />
       ) : (
         <FeedForm
-          edit={uploadImages}
+          edit={editingFeed}
           originalFeed={originalFeedValue}
           filesToUpload={filesToUpload}
           setFilesToUpload={setFilesToUpload}

@@ -79,10 +79,7 @@ export default function FeedForm<
       {edit ? (
         <FixedBottomButton
           label={"수정 완료"}
-          disabled={
-            originalFeed?.content == feedInfoToEdit?.content &&
-            originalFeed?.images?.join() === feedInfoToEdit?.imageUrls?.join()
-          }
+          disabled={originalFeed?.content == feedInfoToEdit?.content}
           onClick={() => {
             if (edit) {
               edit();

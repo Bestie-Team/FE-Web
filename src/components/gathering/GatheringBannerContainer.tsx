@@ -19,14 +19,14 @@ export default function GatheringBannerContainer({
   const displayingDate = formatToDisplay(date);
   return (
     <Flex className="w-full">
-      <div className="relative h-[420px]">
+      <div className="w-full relative h-[420px]">
         <Image
           priority
           alt="gatheringBanner"
           src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
           width={600}
           height={420}
-          className="h-[420px] object-cover"
+          className="w-full h-[420px] object-cover"
           onLoadingComplete={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-[#00000080]" />
