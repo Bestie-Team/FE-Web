@@ -14,7 +14,7 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
 
-    if (documentHeight - (scrollTop + windowHeight) < 400 && !isFetching) {
+    if (documentHeight - (scrollTop + windowHeight) < 150 && !isFetching) {
       setPage((prev) => prev + 1);
     }
   }, [isFetching]);
