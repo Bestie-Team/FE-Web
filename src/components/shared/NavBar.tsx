@@ -6,7 +6,6 @@ import * as lighty from "lighty-type";
 import useUserDetail from "../users/hooks/useUserDetail";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import FloatingButton from "./Button/FloatingButton";
-import DotSpinner from "./Spinner/DotSpinner";
 
 const MemoizedNavLink = memo(NavLink);
 const SHOW_SHEET_PATHS = ["/feed"];
@@ -58,7 +57,7 @@ const NavBar = () => {
   }, [user]);
 
   if (!user || !isClient) {
-    return <DotSpinner />;
+    return null;
   }
 
   return (

@@ -10,7 +10,6 @@ import Image from "next/image";
 import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useEffect, useMemo, useState } from "react";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import { MAP } from "@/constants/images";
@@ -25,6 +24,7 @@ import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import LeaderContainer from "@/components/shared/LeaderContainer";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function GatheringDetailPage({
   params,
@@ -68,7 +68,8 @@ export default function GatheringDetailPage({
   const { gatheringDate, members, hostUser, address } = selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);
-  if (!isClient || isPending || isError) return <FullPageLoader />;
+
+  if (!isClient || isPending || isError) return <DotSpinner />;
 
   return (
     <Flex direction="column" className="relative w-full h-full bg-grayscale-50">
@@ -133,7 +134,7 @@ export default function GatheringDetailPage({
         }
         content={<GatheringMembersSlider members={members} />}
       />
-      {imageLoaded === false ? <FullPageLoader /> : null}
+      {imageLoaded === false ? <DotSpinner /> : null}
       {deleteModalOpen && (
         <Modal
           title="약속을 삭제하시겠어요?"

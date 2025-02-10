@@ -117,6 +117,7 @@ export async function postGathering({
 export async function postGatheringInvitationImage({ file }: { file: File }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   const formData = new FormData();
+
   formData.append("file", file);
 
   try {
