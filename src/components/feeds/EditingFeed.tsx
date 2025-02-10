@@ -81,7 +81,3 @@ const styles = {
   container: "bg-base-white h-full",
   headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
 };
-
-function arraysEqual(a: string[], b: string[]) {
-  return a.length === b.length && a.every((val, index) => val === b[index]);
-}
