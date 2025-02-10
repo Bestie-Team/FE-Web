@@ -1,7 +1,7 @@
 import ToastSuccess from "@/components/shared/Icon/ToastSuccess";
 import ToastError from "@/components/shared/Icon/ToastError";
 import { ReactNode } from "react";
-import { cssTransition, toast, ToastOptions } from "react-toastify";
+import { Slide, toast, ToastOptions } from "react-toastify";
 
 export const lightyToast = {
   success: (message: ReactNode, options: ToastOptions = {}) => {
@@ -20,19 +20,13 @@ export const lightyToast = {
   },
 };
 
-const fadeOut = cssTransition({
-  enter: "fadeIn",
-  exit: "fadeOut",
-  collapse: true,
-});
-
 const defaultToastOption: ToastOptions = {
   position: "top-center",
   autoClose: 4000,
   hideProgressBar: true,
   pauseOnHover: false,
   closeButton: false,
-  transition: fadeOut,
+  transition: Slide,
 };
 
 export const InvitationToast = {
