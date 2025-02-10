@@ -24,9 +24,9 @@ export default function GatheringBannerContainer({
           priority
           alt="gatheringBanner"
           src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
-          width={600}
+          width={430}
           height={420}
-          className="w-full h-[420px] object-cover"
+          className="w-[430px] h-[420px] object-cover"
           onLoadingComplete={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-[#00000080]" />
