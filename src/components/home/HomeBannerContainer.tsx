@@ -54,6 +54,7 @@ const BannerSlide = ({
     </Flex>
     {ad_image != null && (
       <Image
+        priority
         src={ad_image.src}
         alt={title}
         className={ad_image.className}
