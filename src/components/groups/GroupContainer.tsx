@@ -29,28 +29,20 @@ export default function GroupContainer({
       className={clsx(styles.groupContainer, className)}
       onClick={handleClick}
     >
-      <Flex direction="column" className="flex-grow">
-        <Flex align="center">
-          <div className="w-12 h-12">
-            <Image
-              layout="intrinsic"
-              alt="leaderImg"
-              width={48}
-              height={48}
-              className={styles.leaderImage}
-              src={
-                groupImageUrl || "https://cdn.lighty.today/lighty_square.png"
-              }
-            />
-          </div>
-          <Spacing size={12} direction="horizontal" />
-          <Flex direction="column">
+      <Flex direction="column" className="flex-grow gap-3">
+        <Flex align="center" className="gap-3">
+          <Image
+            alt="leaderImg"
+            width={48}
+            height={48}
+            className={styles.leaderImage}
+            src={groupImageUrl || "https://cdn.lighty.today/lighty_square.png"}
+          />
+          <Flex direction="column" className="gap-1">
             <span className="text-T5">{name}</span>
-            <Spacing size={4} />
             <span className={styles.font}>{description}</span>
           </Flex>
         </Flex>
-        <Spacing size={12} />
         <Flex align="center">
           <span className={styles.font}>약속횟수</span>
           <Spacing size={2} direction="horizontal" />

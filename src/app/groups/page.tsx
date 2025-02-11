@@ -15,7 +15,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
-    const header = useMemo(() => getHeader(pathname), []);
+    const header = useMemo(() => getHeader(pathname), [pathname]);
     return (
       <div
         style={{ zIndex: 12 }}
@@ -35,9 +35,9 @@ const GroupList = React.memo(
     groups: Group[];
     onGroupClick: (id: string) => void;
   }) => {
-    return groups.map((group, idx) => (
+    return groups.map((group) => (
       <GroupContainer
-        key={`${group.id}_${idx}`}
+        key={`${group.id}`}
         group={group}
         className="cursor-pointer"
         onClick={() => onGroupClick(group.id)}
@@ -75,10 +75,7 @@ export default function GroupsPage() {
 
   useInfiniteScroll({ isFetching, loadMore });
 
-  console.log(groups);
-  if (!groups) return null;
-
-  if (!isClient) {
+  if (!isClient || !groups) {
     return <FullPageLoader />;
   }
 
