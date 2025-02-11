@@ -19,8 +19,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 import { CreateGroupRequest } from "@/models/group";
+import { usePathname } from "next/navigation";
 
 export default function NewGroupPage() {
+  const pathname = usePathname();
   const [isClient, setIsClient] = useState(false);
   const queryClient = useQueryClient();
   const header = useMemo(() => getHeader("/groups/new"), []);
@@ -41,6 +43,16 @@ export default function NewGroupPage() {
     group: { ...newGroup, groupImageUrl: groupImageUrl },
     onSuccess: makeGroupSuccessHandler,
   });
+
+  useEffect(() => {
+    if (!isClient) return;
+    return setNewGroup({
+      name: "",
+      description: "",
+      friendIds: null,
+      groupImageUrl: "",
+    });
+  }, [isClient, pathname]);
 
   useEffect(() => {
     setIsClient(true);
