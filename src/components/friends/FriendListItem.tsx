@@ -66,7 +66,6 @@ export default function FriendListItem({
     >
       <Image
         alt="friendProfile"
-        layout="intrinsic"
         src={
           friendInfo?.profileImageUrl ||
           "https://cdn.lighty.today/lighty_square.png"

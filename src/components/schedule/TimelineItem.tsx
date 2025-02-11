@@ -34,7 +34,6 @@ export default function TimelineItem({
       </Flex>
       <Image
         alt="timelineImage"
-        layout="intrinsic"
         src={upcomingGathering.invitationImageUrl}
         width={56}
         height={56}

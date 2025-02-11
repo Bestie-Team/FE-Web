@@ -56,7 +56,6 @@ export default function AddGroupPhoto({
         {image ? (
           <Image
             src={image}
-            layout="intrinsic"
             alt="upload_image"
             width={170}
             height={170}

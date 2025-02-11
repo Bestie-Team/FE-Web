@@ -52,16 +52,14 @@ export default function UserListItem({
     >
       <Image
         alt="friendProfile"
-        layout="intrinsic"
         src={userInfo?.profileImageUrl || DEFAULT_IMAGE}
         width={36}
         height={36}
         className={styles.img}
       />
       <Spacing direction="horizontal" size={8} />
-      <Flex className="flex-grow" direction="column">
+      <Flex className="flex-grow gap-[2px]" direction="column">
         <span className="text-T6">{userInfo?.accountId || "회원아이디"}</span>
-        <Spacing size={2} />
         <span className={styles.name}>{userInfo?.name || "이름"}</span>
       </Flex>
       <Button

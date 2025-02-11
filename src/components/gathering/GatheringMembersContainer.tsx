@@ -19,11 +19,11 @@ export default function GatheringMemberContainer({
         >
           <div className={styles.image}>
             <Image
-              layout="intrinsic"
               src={profileImageUrl || "https://cdn.lighty.today/default.png"}
               alt={`gatheringMember${idx + 1}`}
               width={40}
               height={40}
+              className="w-10 h-10 object-cover"
             />
           </div>
           <Flex direction="column" align="center" className="text-T5 gap-1">
@@ -38,7 +38,7 @@ export default function GatheringMemberContainer({
 
 const styles = {
   image:
-    "object-cover rounded-full w-[40px] h-[40px] border-[1.41px] border-base-white overflow-hidden",
+    "rounded-full w-[40px] h-[40px] border-[1.41px] border-base-white overflow-hidden",
 
   memberWrapper:
     "px-[32px] py-[20px] rounded-[16px] border-[1px] border-grayscale-100 gap-[6px]",

@@ -14,11 +14,13 @@ export default function FriendItem({
   groupInfo?: GroupInfoResponse;
 }) {
   return (
-    <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
+    <Flex
+      direction="column"
+      style={{ width: "fit-content", flexShrink: 0, gap: "2px" }}
+    >
       <div className="p-[6px] w-14 h-14 box-content">
         <Image
           alt="friendImage"
-          layout="intrinsic"
           src={
             friendInfo?.profileImageUrl || groupInfo?.imageUrl || DEFAULT_IMAGE
           }
@@ -27,7 +29,6 @@ export default function FriendItem({
           height={56}
         />
       </div>
-      <Spacing size={2} />
       <Flex direction="column" align="center">
         <span className="text-T6">
           {friendInfo?.name || groupInfo?.groupName || "이름"}

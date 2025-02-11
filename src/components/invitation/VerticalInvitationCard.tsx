@@ -124,11 +124,11 @@ export function VerticalInvitationCard({
       <div className="relative">
         <Image
           priority
-          layout="intrinsic"
           src="https://cdn.lighty.today/vertical_invitation.svg"
           alt="verticalBar"
           width={330}
           height={460}
+          className="h-[460px] w-[330px]"
           onLoadingComplete={() => setImageLoaded(true)}
         />
         {imageLoaded && (
@@ -155,16 +155,14 @@ export function VerticalInvitationCard({
               </span>
             </Flex>
             <Flex direction="column" className={styles.subContentWrapper}>
-              <Flex align="center">
+              <Flex align="center" className="gap-2">
                 <CalendarIcon width="14" height="14" color="#AEAEAE" />
-                <Spacing direction="horizontal" size={8} />
                 <span className="text-B4">
                   {gatheringDate ? formatToKoreanTime(gatheringDate) : ""}
                 </span>
               </Flex>
-              <Flex align="center">
+              <Flex align="center" className="gap-2">
                 <MapPinIcon />
-                <Spacing direction="horizontal" size={8} />
                 <span className="text-B4">{address}</span>
               </Flex>
             </Flex>

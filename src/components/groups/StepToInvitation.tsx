@@ -14,9 +14,9 @@ export default function StepToInvitation({
 }) {
   const header = useMemo(() => getHeader("/gathering/new"), []);
   return (
-    <div className="flex flex-col bg-base-white h-full">
+    <Flex direction="column" className="h-dvh bg-base-white">
       {header}
-      <Flex direction="column" className="h-screen pt-[106px]" align="center">
+      <Flex direction="column" className="h-dvh pt-[106px]" align="center">
         <Spacing size={140} />
         <span className="text-T2">이제 초대장을 만들 차례에요!</span>
         <Spacing size={12} />
@@ -26,14 +26,14 @@ export default function StepToInvitation({
         <Spacing size={48} />
         <Image
           priority
-          layout="intrinsic"
           src={HEART_LETTER}
           alt="invitation_img"
           width={110}
           height={108}
+          className="w-[110px] h-[108px]"
         />
         <FixedBottomButton label={"초대장 만들기"} onClick={() => setStep(4)} />
       </Flex>
-    </div>
+    </Flex>
   );
 }
