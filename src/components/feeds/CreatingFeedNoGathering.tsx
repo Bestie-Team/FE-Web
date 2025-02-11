@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import * as lighty from "lighty-type";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import FeedForm from "./FeedForm";
 import clsx from "clsx";
@@ -11,12 +11,11 @@ import { maxDate, minDate } from "@/constants/time";
 import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
 import { useRecoilValue } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
-import MakingFeedStatus from "./MakingFeedStatus";
 import { lightyToast } from "@/utils/toast";
 
 export default function CreatingFeedNoGathering() {
   const queryClient = useQueryClient();
-  const [isMaking, setIsMaking] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const header = useMemo(() => getHeader(pathname), []);
   const friendsToShare = useRecoilValue(friendsToShareAtom);
@@ -27,8 +26,7 @@ export default function CreatingFeedNoGathering() {
     content: "",
   });
   const handleFeedSuccess = async (data: { message: string }) => {
-    setIsMaking(true);
-
+    router.replace("/feed");
     await queryClient.invalidateQueries({
       queryKey: [
         "get/feeds/mine",
@@ -73,8 +71,6 @@ export default function CreatingFeedNoGathering() {
       makeFriendsFeed();
     }
   }, [feedInfo.imageUrls]);
-
-  if (isMaking) return <MakingFeedStatus isPending={isPending} />;
 
   return (
     <div className={styles.container}>

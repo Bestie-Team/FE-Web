@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
 import { recordGatheringAtom } from "@/atoms/record";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import getHeader from "@/utils/getHeader";
 import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
 import FeedForm from "./FeedForm";
@@ -12,7 +12,6 @@ import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
-import MakingFeedStatus from "./MakingFeedStatus";
 import { lightyToast } from "@/utils/toast";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
@@ -23,7 +22,7 @@ const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
 
 export default function CreatingFeed() {
   const queryClient = useQueryClient();
-  const [isMaking, setIsMaking] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const header = useMemo(() => getHeader(pathname), []);
   const selectedGatheringId = useRecoilValue(recordGatheringAtom);
@@ -34,8 +33,7 @@ export default function CreatingFeed() {
   });
 
   const handleFeedSuccess = async (data: { message: string }) => {
-    setIsMaking(true);
-
+    router.replace("/feed");
     await queryClient.invalidateQueries({
       queryKey: [
         "get/feeds/mine",
@@ -93,7 +91,6 @@ export default function CreatingFeed() {
 
   if (!selectedGathering || selectedGatheringId == null) return null;
 
-  if (isMaking) return <MakingFeedStatus isPending={isPending} />;
   return (
     <div className={styles.container}>
       <div className={clsx(styles.headerWrapper)}>{header}</div>

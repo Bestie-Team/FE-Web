@@ -97,7 +97,7 @@ export default function HomePage() {
   if (isFetching) return <FullPageLoader />;
 
   return (
-    <div className="h-full">
+    <div className="h-[calc(100dvh+57px)]">
       <Header />
       <HomeBannerContainer />
       <FriendsSlider />

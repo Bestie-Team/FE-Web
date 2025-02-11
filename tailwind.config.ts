@@ -146,6 +146,7 @@ const config: Config = {
         "slide-from-left": "slideFromLeft 0.3s ease-in-out",
         tinkle: "tinkle 0.5s ease-in-out",
         bigger: "bigger 0.5s ease-out forwards",
+        smaller: "smaller 0.5s ease-out forwards",
       },
       keyframes: {
         "slide-up": {
@@ -202,6 +203,10 @@ const config: Config = {
         bigger: {
           "0%": { transform: "scale(1)" },
           "100%": { transform: "scale(1.1)" },
+        },
+        smaller: {
+          "0%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1)" },
         },
       },
     },

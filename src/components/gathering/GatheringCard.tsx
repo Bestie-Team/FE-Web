@@ -61,7 +61,7 @@ export default function GatheringCard({
               ? DEFAULT_IMAGE
               : invitationImageUrl
           }
-          className={styles.image}
+          className={clsx(styles.image, "scale-110")}
           alt={name}
           width={168}
           height={168}
@@ -96,7 +96,7 @@ export default function GatheringCard({
 const styles = {
   gatheringWrapper:
     "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
-  image: "object-cover object-center w-full h-full group-hover:animate-bigger",
+  image: "object-cover object-center w-full h-full group-hover:animate-smaller",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:

@@ -65,7 +65,7 @@ export default function UploadPhotoSwiper({
         slidesPerView={1.59}
         spaceBetween={12}
         grabCursor={true}
-        className="custom-swiper w-full h-[250px] !pr-10"
+        className="custom-swiper w-full h-[250px] "
       >
         {feedInfoToEdit ? null : (
           <SwiperSlide className={styles.slide}>
@@ -120,6 +120,9 @@ export default function UploadPhotoSwiper({
             )}
           </SwiperSlide>
         ))}
+        <SwiperSlide>
+          <div className="w-1" />
+        </SwiperSlide>
       </Swiper>
     </div>
   );

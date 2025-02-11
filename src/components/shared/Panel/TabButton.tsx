@@ -6,7 +6,7 @@ type Props = {
   onMouseDown: () => void;
   className?: string;
   current: boolean;
-  fresh: boolean | "never"; // 빨간아이콘
+  fresh?: boolean | "never"; // 빨간아이콘
 };
 export default function TabButton({
   title,

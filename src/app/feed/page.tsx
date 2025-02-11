@@ -54,10 +54,11 @@ const Header = React.memo(
           className={clsx(filterWrapperStyle, shadow ? "shadow-bottom" : "")}
         >
           <Panel
+            alarm
             selectedTab={selectedTab}
             long="short"
-            title1="마이"
-            title2="전체"
+            title1="전체"
+            title2="마이"
             onClick={handleTabClick}
           />
         </div>
@@ -282,6 +283,13 @@ export default function FeedPage() {
           spaceBetween={2}
           className="custom-swiper !h-[calc(100dvh-57px)] w-full !z-5"
         >
+          {feedAll && feedAll.length > 0 ? (
+            <SwiperSlide className="overflow-y-scroll no-scrollbar">
+              <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+            </SwiperSlide>
+          ) : (
+            <NoFeed />
+          )}
           {feedMine && (
             <SwiperSlide className="overflow-y-scroll no-scrollbar">
               {feedMine.length > 0 ? (
@@ -290,13 +298,6 @@ export default function FeedPage() {
                 <NoFeed />
               )}
             </SwiperSlide>
-          )}
-          {feedAll && feedAll.length > 0 ? (
-            <SwiperSlide className="overflow-y-scroll no-scrollbar">
-              <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
-            </SwiperSlide>
-          ) : (
-            <NoFeed />
           )}
           <NavBar />
         </Swiper>
