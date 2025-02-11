@@ -49,9 +49,13 @@ export default function MakingFeedStatus({
   };
 
   return (
-    <div className="flex flex-col bg-base-white">
+    <Flex
+      direction="column"
+      justify="center"
+      className="min-h-dvh bg-base-white"
+    >
       {header}
-      <Flex direction="column" className="min-h-dvh pt-[106px]" align="center">
+      <Flex direction="column" align="center">
         <Spacing size={140} />
         {isPending === true ? <DotSpinner /> : <CheckSpinner />}
         <Spacing size={20} />
@@ -60,6 +64,6 @@ export default function MakingFeedStatus({
         <SuccessImage />
         <FixedBottomButton label={"홈으로 가기"} onClick={handleHomeClick} />
       </Flex>
-    </div>
+    </Flex>
   );
 }

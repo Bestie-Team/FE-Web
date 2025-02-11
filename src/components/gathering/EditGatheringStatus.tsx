@@ -16,9 +16,13 @@ export default function EditGatheringStatus({
   const header = useMemo(() => getHeader("/gathering/*/edit"), []);
 
   return (
-    <Flex direction="column" className="bg-base-white h-dvh">
+    <Flex
+      direction="column"
+      justify="center"
+      className="bg-base-white min-h-dvh"
+    >
       {header}
-      <Flex direction="column" className="h-screen pt-[106px]" align="center">
+      <Flex direction="column" align="center">
         <Spacing size={140} />
         {isPending === true ? <DotSpinner /> : <CheckSpinner />}
         <Spacing size={20} />

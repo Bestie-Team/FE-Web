@@ -85,6 +85,37 @@ export async function patchProfileImage(profileImageUrl: string) {
   }
 }
 
+export async function patchProfileImageWithToken({
+  profileImageUrl,
+  token,
+}: {
+  profileImageUrl: string;
+  token: string;
+}) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/users/profile/image`;
+
+    await fetchWithAuth(targetUrl, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ profileImageUrl }),
+    });
+
+    return { message: "프로필 이미지가 성공적으로 업데이트되었습니다" };
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
+        : "프로필 이미지 업데이트 요청에 실패했습니다"
+    );
+  }
+}
+
 export async function patchProfileAccountId(accountId: { accountId: string }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
