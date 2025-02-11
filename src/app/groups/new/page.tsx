@@ -59,9 +59,9 @@ export default function NewGroupPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-base-white">
+    <div className="min-h-[calc(100dvh+74px)] bg-base-white">
       {header}
-      <form className="flex flex-col px-5 pt-12">
+      <form className="min-h-dvh flex flex-col px-5 pt-12">
         <Spacing size={24} />
         <AddGroupPhoto image={groupImageUrl} setImage={setGroupImageUrl} />
         <Spacing size={36} />
