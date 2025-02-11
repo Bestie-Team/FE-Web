@@ -96,11 +96,10 @@ export async function patchProfileImageWithToken({
   try {
     const targetUrl = `${baseUrl}/users/profile/image`;
 
-    await fetchWithAuth(targetUrl, {
+    await fetch(targetUrl, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ profileImageUrl }),
