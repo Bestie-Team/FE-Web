@@ -19,7 +19,7 @@ export default function FriendsListContainer({
 }) {
   return (
     <div className="bg-grayscale-50 pb-15 px-5">
-      <span className="text-T5">{`친구 ${friends?.length}`}</span>
+      <span className="text-T5">{`친구 ${friends ? friends?.length : 0}`}</span>
       <Spacing size={12} />
       {friends?.length === 0 ? (
         <Flex

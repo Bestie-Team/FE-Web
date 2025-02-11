@@ -48,7 +48,9 @@ export default function SelectableSearchedFriendsListContainer({
         backgroundColor: "#F4F4F4",
       }}
     >
-      <span className="text-T5">{`친구 ${searchedFriends.length}`}</span>
+      <span className="text-T5">{`친구 ${
+        searchedFriends ? searchedFriends.length : 0
+      }`}</span>
       <ul>
         {searchedFriends.map((friendItem, idx) => {
           return (

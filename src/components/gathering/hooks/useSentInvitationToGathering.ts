@@ -17,7 +17,7 @@ export default function useSentInvitationToGathering() {
     }): Promise<lighty.GatheringInvitationListResponse> => {
       return getSentInvitationToGatheringList({
         cursor,
-        limit: 5,
+        limit: 10,
         minDate: minDate(),
         maxDate: maxDate(),
       });

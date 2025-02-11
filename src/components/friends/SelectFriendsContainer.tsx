@@ -108,7 +108,7 @@ export default function SelectFriendsContainer({
         paddingTop: paddingTop ?? "177px",
       }}
     >
-      <span className="text-T5">{`친구 ${friends.length}`}</span>
+      <span className="text-T5">{`친구 ${friends ? friends.length : 0}`}</span>
       <Spacing size={12} />
       <ul>
         {friends.map((friendItem, idx) => {

@@ -18,6 +18,5 @@ export default function useGroup() {
   }, [fetchNextPage, hasNextPage, isFetching]);
 
   const groups = data?.pages.map(({ groups }) => groups).flat();
-  console.log(data);
   return { data: groups, loadMore, isFetching, hasNextPage };
 }
