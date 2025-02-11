@@ -18,7 +18,6 @@ import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useScrollToTopByTab } from "@/hooks/useScrollToTop";
 
 const Header = React.memo(
   ({
@@ -67,7 +66,6 @@ export default function MyGatheringPage() {
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
     useTabs();
-  useScrollToTopByTab({ tab: selectedTab });
 
   const {
     data: myGatherings,
@@ -78,6 +76,7 @@ export default function MyGatheringPage() {
     minDate: minDate(),
     maxDate: maxDate(),
   });
+
   const {
     data: ended,
     isFetching: isFetching_e,

@@ -16,7 +16,7 @@ export default function EditGatheringStatus({
   const header = useMemo(() => getHeader("/gathering/*/edit"), []);
 
   return (
-    <div className="flex flex-col bg-base-white h-full">
+    <Flex direction="column" className="bg-base-white h-dvh">
       {header}
       <Flex direction="column" className="h-screen pt-[106px]" align="center">
         <Spacing size={140} />
@@ -39,6 +39,6 @@ export default function EditGatheringStatus({
           />
         </div>
       </Flex>
-    </div>
+    </Flex>
   );
 }

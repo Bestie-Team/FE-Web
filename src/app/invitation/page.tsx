@@ -81,11 +81,11 @@ export default function InvitationPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper w-full pointer-events-auto"
+          className="custom-swiper w-full"
         >
           <SwiperSlide>
             {received && received.length > 0 ? (
-              <Flex direction="column" className="pt-[110px]">
+              <Flex direction="column" className="pt-[110px] min-h-dvh">
                 {received?.map((invitation) => {
                   return (
                     <React.Fragment key={invitation.id}>
@@ -104,7 +104,7 @@ export default function InvitationPage() {
           </SwiperSlide>
           <SwiperSlide>
             {sent && sent.length > 0 ? (
-              <Flex direction="column" className="pt-[110px]">
+              <Flex direction="column" className="pt-[110px] min-h-dvh">
                 {sent?.map((invitation) => {
                   return (
                     <React.Fragment key={invitation.id}>
