@@ -78,5 +78,5 @@ export default function FeedPage() {
 const filterWrapperStyle =
   "max-w-[430px] fixed z-10 flex w-full bg-base-white transition-shadow duration-300";
 
-const tabContainerStyle = "flex w-full px-5 justify-between";
+const tabContainerStyle = "flex w-full px-5 justify-between items-center";
 const tabWrapperStyle = "w-fit";

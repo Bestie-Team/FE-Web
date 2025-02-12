@@ -45,6 +45,7 @@ const Header = React.memo(
           className={clsx(styles.header, shadow ? "shadow-bottom" : "")}
         >
           <LightySelect
+            criterion="left"
             borderColor="#E9E9E9"
             placeholder="년도"
             options={options}

@@ -10,6 +10,7 @@ interface SelectProps {
   placeholder: string;
   borderColor?: string;
   width?: string;
+  criterion: "left" | "right";
 }
 export default function LightySelect({
   options,
@@ -17,12 +18,14 @@ export default function LightySelect({
   setSelected,
   borderColor,
   width,
+  criterion,
 }: SelectProps) {
   const styles: StylesConfig = {
     menu: (baseStyles) => ({
       ...baseStyles,
       animation: "selectMenuBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
-      right: 0,
+      right: criterion === "right" ? 0 : "",
+      left: criterion === "left" ? 0 : "",
       zIndex: 30,
       padding: "4px 16px",
       borderRadius: "12px",
@@ -121,7 +124,7 @@ export default function LightySelect({
   useNoKeyboardUp();
   return (
     <Select
-      className="react-select-container"
+      className="react-select-container w-fit"
       classNamePrefix="react-select"
       placeholder="년도"
       defaultValue={selected}

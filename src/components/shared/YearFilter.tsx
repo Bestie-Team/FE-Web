@@ -20,6 +20,7 @@ export default function YearFilter() {
 
   return (
     <LightySelect
+      criterion="right"
       options={yearOptions}
       selected={selectedYear}
       setSelected={setSelectedYear}
