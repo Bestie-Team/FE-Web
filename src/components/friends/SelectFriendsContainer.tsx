@@ -102,7 +102,7 @@ export default function SelectFriendsContainer({
   return (
     <Flex
       direction="column"
-      className="px-5 pb-[72px] h-full"
+      className="px-5 pb-[72px] h-dvh"
       style={{
         backgroundColor: "#F4F4F4",
         paddingTop: paddingTop ?? "177px",

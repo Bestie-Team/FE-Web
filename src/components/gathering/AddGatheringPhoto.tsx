@@ -7,6 +7,7 @@ import { SetterOrUpdater } from "recoil";
 import useUploadInvitationImage from "./hooks/useUploadInvitationImage";
 import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function AddGatheringPhoto({
   image,
@@ -15,6 +16,7 @@ export default function AddGatheringPhoto({
   image: string | null;
   setImage: SetterOrUpdater<lighty.CreateGatheringRequest>;
 }) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [gatheringImageFile, setGatheringImageFile] = useState<File>();
   const { mutate: uploadInvitationImage } = useUploadInvitationImage({
     file: gatheringImageFile as File,
@@ -64,17 +66,21 @@ export default function AddGatheringPhoto({
         justify="center"
         align="center"
         direction="column"
-        className="overflow-hidden w-[300px] h-[210px] bg-grayscale-50 rounded-[14.62px] text-C1 text-grayscale-300"
+        className="relative overflow-hidden w-[300px] h-[210px] bg-grayscale-50 rounded-[14.62px] text-C1 text-grayscale-300"
       >
         {image ? (
-          <Image
-            src={image}
-            layout="fixed"
-            alt="upload_image"
-            width={300}
-            height={210}
-            className="!h-[210px] w-[300px] object-cover"
-          />
+          <>
+            {isLoaded === false ? <DotSpinner /> : null}
+            <Image
+              src={image}
+              layout="fixed"
+              alt="upload_image"
+              width={300}
+              height={210}
+              className="!h-[210px] w-[300px] object-cover"
+              onLoadingComplete={() => setIsLoaded(true)}
+            />
+          </>
         ) : (
           <>
             <PhotoIcon />
