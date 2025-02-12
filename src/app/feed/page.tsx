@@ -169,16 +169,8 @@ export default function FeedPage() {
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
-  const searchParams = useSearchParams();
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const tabParam = searchParams.get("tab");
-    if (tabParam === "1" || tabParam === "2") {
-      setSelectedTab(tabParam);
-    }
-  }, [searchParams, setSelectedTab]);
 
   const queryParams = useMemo(
     () => ({
