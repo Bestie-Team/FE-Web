@@ -12,6 +12,8 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import { Group } from "lighty-type";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import useUserDetail from "@/components/users/hooks/useUserDetail";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
@@ -27,33 +29,31 @@ const Header = React.memo(
   }
 );
 
-const GroupList = React.memo(
-  ({
-    groups,
-    onGroupClick,
-  }: {
-    groups: Group[];
-    onGroupClick: (id: string) => void;
-  }) => {
-    return groups.map((group) => (
-      <GroupContainer
-        key={`${group.id}`}
-        group={group}
-        className="cursor-pointer"
-        onClick={() => onGroupClick(group.id)}
-      />
-    ));
-  }
-);
+const GroupList = ({
+  groups,
+  onGroupClick,
+}: {
+  groups: Group[];
+  onGroupClick: (id: string) => void;
+}) => {
+  return groups.map((group) => (
+    <GroupContainer
+      key={`${group.id}`}
+      group={group}
+      className="cursor-pointer"
+      onClick={() => onGroupClick(group.id)}
+    />
+  ));
+};
 
 Header.displayName = "Header";
-GroupList.displayName = "GroupList";
 
 export default function GroupsPage() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const isPast = useScrollThreshold();
   const pathname = usePathname();
+  const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup();
 
   const handleGroupClick = useCallback(
@@ -67,40 +67,35 @@ export default function GroupsPage() {
     router.push("/groups/new");
   }, [router]);
 
-  const groupCount = useMemo(() => groups?.length || 0, [groups]);
-
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useInfiniteScroll({ isFetching, loadMore });
 
-  if (!isClient || !groups) {
+  if (!isClient || !groups || !detail) {
     return <FullPageLoader />;
   }
 
   return (
-    <div className="h-full">
+    <div className="min-h-dvh">
       <Header pathname={pathname} shadow={isPast} />
-      {isFetching ? (
-        <FullPageLoader />
-      ) : (
-        <div className="pt-[68px] p-5 text-T4">
-          <Flex align="center">
-            <span>전체 그룹</span>
-            <Spacing size={4} direction="horizontal" />
-            <span className="flex-grow">{groupCount}</span>
-            <Spacing size={4} direction="horizontal" />
-            <Button className={styles.button} onClick={handleAddGroup}>
-              그룹 추가
-            </Button>
-          </Flex>
-          <Spacing size={16} />
-          <Flex direction="column" className="gap-4">
-            <GroupList groups={groups} onGroupClick={handleGroupClick} />
-          </Flex>
-        </div>
-      )}
+      <div className="pt-[68px] min-h-[calc(100dvh-68px)] p-5 text-T4">
+        <Flex align="center">
+          <span>전체 그룹</span>
+          <Spacing size={4} direction="horizontal" />
+          <span className="flex-grow">{detail?.groupCount}</span>
+          <Spacing size={4} direction="horizontal" />
+          <Button className={styles.button} onClick={handleAddGroup}>
+            그룹 추가
+          </Button>
+        </Flex>
+        <Spacing size={16} />
+        <Flex direction="column" className="gap-4">
+          <GroupList groups={groups} onGroupClick={handleGroupClick} />
+        </Flex>
+        {(isFetching || isFetchingDetail) && <DotSpinnerSmall />}
+      </div>
     </div>
   );
 }

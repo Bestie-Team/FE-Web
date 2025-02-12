@@ -8,7 +8,6 @@ export default function DotSpinnerSmall({
   return (
     <div
       style={{
-        height: "calc(100dvh - 57px)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

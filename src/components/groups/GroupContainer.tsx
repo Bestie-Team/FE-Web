@@ -12,14 +12,15 @@ export default function GroupContainer({
   className,
 }: {
   group: lighty.Group;
-  onClick?: () => void;
+  onClick?: (id: string) => void;
   className?: string;
 }) {
-  const { name, description, groupImageUrl, gatheringCount, members } = group;
+  const { name, description, groupImageUrl, gatheringCount, members, id } =
+    group;
   const memberProfileImages = members.map((member) => member.profileImageUrl);
   const handleClick = () => {
     if (onClick) {
-      onClick();
+      onClick(id);
     }
   };
 
