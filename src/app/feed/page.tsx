@@ -38,6 +38,23 @@ import NavBar from "@/components/shared/NavBar";
 import { useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 
+const TabParamHandler = ({
+  setSelectedTab,
+}: {
+  setSelectedTab: (num: "1" | "2") => void;
+}) => {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam === "1" || tabParam === "2") {
+      setSelectedTab(tabParam);
+    }
+  }, [searchParams, setSelectedTab]);
+
+  return null;
+};
+
 const Header = React.memo(
   ({
     shadow,
@@ -309,34 +326,35 @@ export default function FeedPage() {
   }
 
   return (
-    <Suspense fallback={<DotSpinner />}>
-      <div className="h-dvh no-scrollbar">
-        <Header
-          shadow={isPast}
-          selectedTab={selectedTab}
-          handleTabClick={handleTabClick}
+    <div className="h-dvh no-scrollbar">
+      <Header
+        shadow={isPast}
+        selectedTab={selectedTab}
+        handleTabClick={handleTabClick}
+      />
+      {renderSwipers}
+      {recordModalOpen && (
+        <MemoriesBottomSheet
+          onClose={() => setRecordModalOpen(false)}
+          open={recordModalOpen}
         />
-        {renderSwipers}
-        {recordModalOpen && (
-          <MemoriesBottomSheet
-            onClose={() => setRecordModalOpen(false)}
-            open={recordModalOpen}
-          />
-        )}
-        {commentModalOpen && (
-          <CommentContainer
-            selectedFeedId={selectedFeedId}
-            onClose={() => setCommentModalOpen(false)}
-          />
-        )}
-        <FeedModals
-          onReportFeed={reportFeed}
-          onDeleteFeed={deleteFeed}
-          onDeleteComment={deleteComment}
-          onHideFeed={hideFeed}
+      )}
+      {commentModalOpen && (
+        <CommentContainer
+          selectedFeedId={selectedFeedId}
+          onClose={() => setCommentModalOpen(false)}
         />
-      </div>
-    </Suspense>
+      )}
+      <FeedModals
+        onReportFeed={reportFeed}
+        onDeleteFeed={deleteFeed}
+        onDeleteComment={deleteComment}
+        onHideFeed={hideFeed}
+      />
+      <Suspense fallback={null}>
+        <TabParamHandler setSelectedTab={setSelectedTab} />
+      </Suspense>
+    </div>
   );
 }
 
