@@ -268,6 +268,12 @@ export default function FeedPage() {
     targetRef: containerRef,
   });
 
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(Number(selectedTab) - 1);
+    }
+  }, [selectedTab, swiperRef]);
+
   const renderSwipers = useMemo(() => {
     return (
       <div
