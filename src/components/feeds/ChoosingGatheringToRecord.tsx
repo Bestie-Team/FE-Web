@@ -47,7 +47,9 @@ export default function ChoosingGatheringToRecord({
       </Flex>
       <Spacing size={40} />
       {!gathering || gathering.length < 1 ? (
-        <NoGatheringToRecord />
+        <Flex style={{ paddingLeft: "24px", paddingRight: "24px" }}>
+          <NoGatheringToRecord />
+        </Flex>
       ) : (
         <>
           <BigClickableGatheringSwiper

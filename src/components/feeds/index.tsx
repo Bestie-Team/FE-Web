@@ -29,7 +29,7 @@ export default function Record() {
     setIsClient(true);
   }, []);
 
-  if (!isClient || !gathering_noFeed) {
+  if (!isClient || !gathering_noFeed || step === 0) {
     return <FullPageLoader />;
   }
 
@@ -50,8 +50,8 @@ export default function Record() {
           setStep={setStep}
         />
       ) : null}
-      {step === 3 ? <CreatingFeed /> : null}
-      {step === 3.5 ? <CreatingFeedNoGathering /> : null}
+      {step === 3 ? <CreatingFeed setStep={setStep} /> : null}
+      {step === 3.5 ? <CreatingFeedNoGathering setStep={setStep} /> : null}
     </>
   );
 }

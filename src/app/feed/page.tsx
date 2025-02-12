@@ -11,7 +11,6 @@ import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
-import { useTabs } from "@/hooks/useTabs";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import Panel from "@/components/shared/Panel/Panel";
 import Modal from "@/components/shared/Modal/Modal";
@@ -36,6 +35,8 @@ import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import ReportModal from "@/components/shared/Modal/ReportModal";
 import NavBar from "@/components/shared/NavBar";
+import { useSearchParams } from "next/navigation";
+import { useTabs } from "@/hooks/useTabs";
 
 const Header = React.memo(
   ({
@@ -141,32 +142,26 @@ export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
-  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
-    useTabs();
+  const {
+    selectedTab,
+    handleTabClick,
+    handleSlideChange,
+    swiperRef,
+    setSelectedTab,
+  } = useTabs();
   const [commentModalOpen, setCommentModalOpen] = useRecoilState(
     commentModalStateAtom
   );
+  const searchParams = useSearchParams();
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleDragStart = (event: DragEvent) => {
-      if (event.target === document.getElementById("nav")) {
-        event.preventDefault();
-      }
-    };
-
-    const anchor = document.getElementById("no-drag");
-    if (anchor) {
-      anchor.addEventListener("dragstart", handleDragStart);
+    const tabParam = searchParams.get("tab");
+    if (tabParam === "1" || tabParam === "2") {
+      setSelectedTab(tabParam);
     }
-
-    return () => {
-      if (anchor) {
-        anchor.removeEventListener("dragstart", handleDragStart);
-      }
-    };
-  }, []);
+  }, [searchParams, setSelectedTab]);
 
   const queryParams = useMemo(
     () => ({

@@ -13,7 +13,11 @@ import { useRecoilValue } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
 import { lightyToast } from "@/utils/toast";
 
-export default function CreatingFeedNoGathering() {
+export default function CreatingFeedNoGathering({
+  setStep,
+}: {
+  setStep: (num: number) => void;
+}) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
@@ -26,7 +30,8 @@ export default function CreatingFeedNoGathering() {
     content: "",
   });
   const handleFeedSuccess = async (data: { message: string }) => {
-    router.replace("/feed");
+    setStep(0);
+    router.replace("/feed?tab=2");
     await queryClient.invalidateQueries({
       queryKey: [
         "get/feeds/mine",
