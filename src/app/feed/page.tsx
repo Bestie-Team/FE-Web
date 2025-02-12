@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import Feed from "@/components/feeds/Feed";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -309,32 +309,34 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="h-dvh no-scrollbar">
-      <Header
-        shadow={isPast}
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-      />
-      {renderSwipers}
-      {recordModalOpen && (
-        <MemoriesBottomSheet
-          onClose={() => setRecordModalOpen(false)}
-          open={recordModalOpen}
+    <Suspense fallback={<DotSpinner />}>
+      <div className="h-dvh no-scrollbar">
+        <Header
+          shadow={isPast}
+          selectedTab={selectedTab}
+          handleTabClick={handleTabClick}
         />
-      )}
-      {commentModalOpen && (
-        <CommentContainer
-          selectedFeedId={selectedFeedId}
-          onClose={() => setCommentModalOpen(false)}
+        {renderSwipers}
+        {recordModalOpen && (
+          <MemoriesBottomSheet
+            onClose={() => setRecordModalOpen(false)}
+            open={recordModalOpen}
+          />
+        )}
+        {commentModalOpen && (
+          <CommentContainer
+            selectedFeedId={selectedFeedId}
+            onClose={() => setCommentModalOpen(false)}
+          />
+        )}
+        <FeedModals
+          onReportFeed={reportFeed}
+          onDeleteFeed={deleteFeed}
+          onDeleteComment={deleteComment}
+          onHideFeed={hideFeed}
         />
-      )}
-      <FeedModals
-        onReportFeed={reportFeed}
-        onDeleteFeed={deleteFeed}
-        onDeleteComment={deleteComment}
-        onHideFeed={hideFeed}
-      />
-    </div>
+      </div>
+    </Suspense>
   );
 }
 
