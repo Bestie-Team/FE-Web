@@ -8,7 +8,7 @@ import { maxDate, minDate } from "@/constants/time";
 const uuid = uuidv4();
 
 export default function useSentInvitationToGathering() {
-  const cursor = { createdAt: new Date().toISOString(), id: uuid };
+  // const cursor = { createdAt: new Date().toISOString(), id: uuid };
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["sent", "gathering/invitation"],
@@ -16,14 +16,17 @@ export default function useSentInvitationToGathering() {
       pageParam: cursor,
     }): Promise<lighty.GatheringInvitationListResponse> => {
       return getSentInvitationToGatheringList({
-        cursor,
+        cursor:
+          cursor === null
+            ? { createdAt: new Date().toISOString(), id: uuid }
+            : cursor,
         limit: 10,
         minDate: minDate(),
         maxDate: maxDate(),
       });
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
-    initialPageParam: cursor,
+    initialPageParam: null as { createdAt: string; id: string } | null,
     refetchOnWindowFocus: "always",
   });
 
