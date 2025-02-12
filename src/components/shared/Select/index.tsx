@@ -22,6 +22,7 @@ export default function LightySelect({
     menu: (baseStyles) => ({
       ...baseStyles,
       animation: "selectMenuBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+      right: 0,
       zIndex: 30,
       padding: "4px 16px",
       borderRadius: "12px",
@@ -71,13 +72,16 @@ export default function LightySelect({
     }),
     control: (baseStyles, state) => ({
       ...baseStyles,
+      display: "flex",
+      alignItems: "center",
       width: "fit-content",
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      paddingLeft: "12px",
-      paddingRight: "12px",
+      minHeight: "30px !important",
+      paddingTop: "6.5px",
+      paddingBottom: "6.5px",
+      paddingLeft: "10.5px",
+      paddingRight: "8.5px",
       borderRadius: "12px",
-      borderWidth: "1.4px",
+      borderWidth: "1.5px !important",
       borderColor: state.isFocused ? borderColor : borderColor || "#E9E9E9",
       boxShadow: state.isFocused ? "none" : "none", // react-select는 boxShadow로 outline을 표현
       "&:hover": {
@@ -86,20 +90,23 @@ export default function LightySelect({
       },
       "& > div:first-child": {
         padding: 0,
-        fontWeight: 600,
-        fontSize: "14px",
-        lineHeight: "18.2px",
+        fontWeight: 500,
+        fontSize: "12px",
+        lineHeight: "14px",
         letterSpacing: "-3%",
-        marginRight: "8px",
+        marginRight: "4px",
         "& > div:last-child": {
+          height: "14px",
           padding: 0,
           margin: 0,
           "& > input": {
+            lineHeight: "14px",
             caretColor: "transparent",
           },
         },
       },
       "& > div:last-child": {
+        height: "16px",
         "& > div": {
           padding: 0,
           "&>svg": {

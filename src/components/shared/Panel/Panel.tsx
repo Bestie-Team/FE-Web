@@ -55,7 +55,7 @@ export default function Panel({
   );
 }
 
-const tabContainerStyle = "max-w-[430px] w-full";
+const tabContainerStyle = "max-w-[430px] w-full flex items-center ";
 const tabWrapperStyle = "relative flex gap-4";
 
 function BottomLine({ activeTab }: { activeTab: string }) {
