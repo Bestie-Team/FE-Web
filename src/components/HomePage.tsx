@@ -97,7 +97,7 @@ export default function HomePage() {
   if (isFetching) return <FullPageLoader />;
 
   return (
-    <div className="h-[calc(100dvh+57px)]">
+    <div className="min-h-[calc(100dvh+57px)]">
       <Header />
       <HomeBannerContainer />
       <FriendsSlider />
@@ -114,7 +114,10 @@ export default function HomePage() {
         {ended && ended.length > 0 ? (
           <MemoizedGathering gatherings={ended} />
         ) : (
-          <NoGatheringHome />
+          <Flex className="w-full px-5" direction="column" align="center">
+            <NoGatheringHome />
+            <Spacing size={187} />
+          </Flex>
         )}
       </Flex>
       {isModalOpen && (
