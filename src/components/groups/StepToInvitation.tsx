@@ -16,7 +16,7 @@ export default function StepToInvitation({
   return (
     <Flex direction="column" className="h-dvh bg-base-white">
       {header}
-      <Flex direction="column" className="h-dvh pt-[106px]" align="center">
+      <Flex direction="column" className="h-dvh pt-[62px]" align="center">
         <Spacing size={140} />
         <span className="text-T2">이제 초대장을 만들 차례에요!</span>
         <Spacing size={12} />

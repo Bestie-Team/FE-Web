@@ -23,7 +23,11 @@ export default function MakingInvitation({
   return (
     <Flex direction="column" className="bg-grayscale-50 h-full">
       {header}
-      <Flex direction="column" className="h-screen pt-[50px]" align="center">
+      <Flex
+        direction="column"
+        className="min-h-[calc(100dvh+20px)]"
+        align="center"
+      >
         <Spacing size={40} />
         <span className="text-T2">초대장에 이미지를 채워주세요!</span>
         <Spacing size={30} />

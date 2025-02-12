@@ -17,6 +17,7 @@ type HeaderWithBtnProps = {
   backToHome?: boolean;
   fontColor?: string;
   icon?: React.ReactNode;
+  fixedNot?: boolean;
 };
 
 type HeaderProps = {
@@ -79,17 +80,7 @@ export default function useHeader(pathname: string) {
       props: pathname.endsWith("gathering")
         ? { pageName: "나의 약속" }
         : pathname.endsWith("new")
-        ? { pageName: "약속 만들기", color: "#FFF" }
-        : pathname.endsWith("edit")
-        ? { pageName: "약속 수정", color: "#FFF" }
-        : { fontColor: "#FFF", pageName: "약속 상세" },
-    },
-    "/gathering/new": {
-      component: HeaderWithBackBtn,
-      props: pathname.endsWith("gathering")
-        ? { pageName: "나의 약속" }
-        : pathname.endsWith("new")
-        ? { pageName: "약속 만들기", color: "#FFF" }
+        ? { pageName: "약속 만들기", color: "transparent", fixedNot: true }
         : pathname.endsWith("edit")
         ? { pageName: "약속 수정", color: "#FFF" }
         : { fontColor: "#FFF", pageName: "약속 상세" },

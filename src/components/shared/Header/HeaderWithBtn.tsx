@@ -2,12 +2,14 @@ import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
 import Spacing from "../Spacing";
 
 export default function HeaderWithBackBtn({
+  fixedNot,
   pageName,
   backToHome = false,
   fontColor,
   color,
   icon,
 }: {
+  fixedNot?: boolean;
   pageName: string;
   backToHome?: boolean;
   fontColor?: string;
@@ -21,7 +23,7 @@ export default function HeaderWithBackBtn({
       }
       style={{
         zIndex: 12,
-        position: "fixed",
+        position: fixedNot ? "relative" : "fixed",
         top: 0,
         backgroundColor: color ? color : "transparent",
       }}
