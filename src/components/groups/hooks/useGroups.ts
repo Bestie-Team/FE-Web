@@ -5,9 +5,13 @@ import { useCallback } from "react";
 export default function useGroup() {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["groups"],
-    queryFn: ({ pageParam: cursor }) => getGroups({ cursor, limit: 5 }),
+    queryFn: ({ pageParam: cursor }) =>
+      getGroups({
+        cursor: cursor === null ? new Date().toISOString() : cursor,
+        limit: 6,
+      }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
-    initialPageParam: new Date().toISOString(),
+    initialPageParam: null as string | null,
   });
 
   const loadMore = useCallback(() => {
