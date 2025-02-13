@@ -90,7 +90,7 @@ const styles = {
     "absolute -bottom-[56px] left-0 right-0 flex flex-col justify-between w-full  text-grayscale-900 text-T5 p-[12px] pt-[8px] rounded-b-[16px] bg-base-white",
 
   image:
-    "absolute top-0 left-0 right-0 slide-img object-cover max-w-[190px] h-[146px] group-hover:animate-smaller",
+    "absolute top-0 left-0 right-0 slide-img object-cover max-w-[190px] h-[146px] group-hover:animate-smaller will-change-transform",
   date: "text-C2 text-grayscale-400",
   dDay: "tracking-wider absolute left-0 text-T4 text-base-white bottom-0 py-2 px-3",
 };

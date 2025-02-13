@@ -26,7 +26,6 @@ export default function useFeedMine({
       getFeedMine({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
-    refetchOnWindowFocus: "always",
     throwOnError: true,
   });
   const loadMore = useCallback(() => {

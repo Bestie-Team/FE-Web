@@ -19,8 +19,8 @@ export default function InvitationCard({
   const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const { name, description, sender, gatheringDate } = invitation;
-  const date = new Date(gatheringDate);
+  const { name, description, sender, createdAt } = invitation;
+  const date = new Date(createdAt);
   const diff = differenceInCalendarDays(new Date(), new Date(date));
 
   if (!invitation) return null;

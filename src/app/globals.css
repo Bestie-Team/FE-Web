@@ -21,6 +21,11 @@
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+.swiper-slide img.slide-img {
+  width: 100%;
+  height: 100%;
+}
+
 .swiper-pagination {
   bottom: 32px !important;
   padding-right: 24px !important;
@@ -77,9 +82,8 @@
   color: "#0A0A0At" !important;
 }
 
-.swiper-slide img.slide-img {
-  width: 100%;
-  height: 100%;
+.react-select__indicator-separator {
+  display: none;
 }
 
 .react-select__input {
@@ -106,9 +110,6 @@ input:-internal-autofill-selected {
 #__daum__layer_1 {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-.react-select__indicator-separator {
-  display: none;
 }
 
 .invitation-toast {

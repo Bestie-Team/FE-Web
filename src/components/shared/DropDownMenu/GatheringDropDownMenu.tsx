@@ -36,6 +36,7 @@ const GatheringDropdownMenu = forwardRef<
       ref={ref as React.Ref<HTMLDivElement>}
       style={{
         animation: styles.animation,
+        willChange: "opacity transform",
       }}
       className={clsx("z-10", className)}
     >

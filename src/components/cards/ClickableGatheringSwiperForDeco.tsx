@@ -5,6 +5,8 @@ import clsx from "clsx";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Feed } from "@/models/feed";
+import { useState } from "react";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function ClickableGatheringSwiperForDeco({
   feed,
@@ -23,6 +25,7 @@ export default function ClickableGatheringSwiperForDeco({
   ) => void;
   selectedFeedId: string | null;
 }) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const handleGatheringClick = ({
     id,
     name,
@@ -79,7 +82,9 @@ export default function ClickableGatheringSwiperForDeco({
               className={styles.image}
               width={270}
               height={320}
+              onLoadingComplete={() => setIsLoaded(true)}
             />
+            {isLoaded === false && <DotSpinner />}
             <Flex direction="column" className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{gathering?.name}</span>
               <span className="text-C2 text-grayscale-600">{content}</span>

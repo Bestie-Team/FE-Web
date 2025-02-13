@@ -23,7 +23,7 @@ export default function FeedPage() {
     data: hiddenFeed,
     loadMore,
     isFetching,
-  } = useFeedHidden({ limit: 2 });
+  } = useFeedHidden({ limit: 10 });
 
   useEffect(() => {
     setIsClient(true);

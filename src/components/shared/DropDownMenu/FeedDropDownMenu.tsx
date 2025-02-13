@@ -47,6 +47,7 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
         ref={ref as React.Ref<HTMLDivElement>}
         style={{
           animation: styles.animation,
+          willChange: "opacity transform",
         }}
         className={clsx("z-10", className)}
       >

@@ -96,7 +96,8 @@ export default function GatheringCard({
 const styles = {
   gatheringWrapper:
     "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
-  image: "object-cover object-center w-full h-full group-hover:animate-smaller",
+  image:
+    "object-cover object-center w-full h-full group-hover:animate-smaller will-change-transform",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:

@@ -28,7 +28,7 @@ export default function ActionItem({
 }
 
 const styles = {
-  container: "gap-3 py-3 w-full hover:animate-tinkle",
+  container: "gap-3 py-3 w-full hover:animate-tinkle will-change-transform",
 
   descWrapper: "gap-3 flex-grow cursor-pointer items-center",
   button:

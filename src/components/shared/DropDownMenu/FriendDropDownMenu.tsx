@@ -37,6 +37,7 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
           style={{
             boxShadow: styles.shadow,
             zIndex: 5,
+            willChange: "opacity transform",
           }}
         >
           {items.map((item, index) => {

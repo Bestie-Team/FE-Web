@@ -23,7 +23,7 @@ export default function UserListContainer({
   if (searchedFriends) {
     console.log(searchedFriends);
     return (
-      <div className="min-h-[calc(100dvh-142px)] pt-[142px] pb-20 px-5">
+      <div className="min-h-[calc(100dvh-142px)] pt-[142px] px-5">
         <ul>
           {searchedFriends?.map((friendItem, idx) => {
             return (

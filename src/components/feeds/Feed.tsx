@@ -18,7 +18,7 @@ export default function MyFeed({
   return (
     <div
       className={clsx(
-        "pt-[90px] animate-fadeIn min-h-[calc(100dvh-90px)]",
+        "pt-[90px] animate-fadeIn min-h-[calc(100dvh-90px)] will-change-[opacity]",
         className
       )}
     >
