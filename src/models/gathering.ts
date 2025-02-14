@@ -39,7 +39,6 @@ export interface GatheringInvitation {
   invitation_image_url: string;
   address: string;
   groupName: string | null;
-  members: lighty.User[];
 }
 
 export type GatheringInWhichType = "GATHERING" | "HOME";
