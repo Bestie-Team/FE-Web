@@ -15,6 +15,7 @@ export interface FeedGathering {
   name: string;
   members: lighty.User[];
   gatheringDate: string;
+  invitationImageUrl: string;
 }
 
 export interface GatheringDetailResponse {

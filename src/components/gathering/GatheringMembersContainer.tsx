@@ -27,7 +27,9 @@ export default function GatheringMemberContainer({
             />
           </div>
           <Flex direction="column" align="center" className="text-T5 gap-1">
-            <span>{accountId}</span>
+            <span className="break-words text-center w-full px-2">
+              {accountId}
+            </span>
             <span className={styles.name}>{name}</span>
           </Flex>
         </Flex>
@@ -38,11 +40,11 @@ export default function GatheringMemberContainer({
 
 const styles = {
   image:
-    "rounded-full w-[40px] h-[40px] border-[1.41px] border-base-white overflow-hidden",
+    "rounded-full w-10 h-10 border-[1.41px] border-base-white overflow-hidden",
 
   memberWrapper:
-    "px-[32px] py-[20px] rounded-[16px] border-[1px] border-grayscale-100 gap-[6px]",
-  memberContainerStyle: "overflow-scroll no-scrollbar gap-[12px] pb-[46px]",
+    "w-24 px-2 py-5 rounded-[16px] border-[1px] border-grayscale-100 gap-[6px]",
+  memberContainerStyle: "overflow-scroll no-scrollbar gap-3 pb-[46px]",
 
-  name: "flex-none text-B4 text-grayscale-500",
+  name: "text-B4 text-grayscale-500",
 };

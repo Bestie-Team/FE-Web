@@ -15,7 +15,7 @@ export default function MemoryCard({
 }) {
   const writer = feed?.writer;
   const othersImageUrl = useMemo(
-    () => feed.gathering?.members.map((other) => other.profileImageUrl),
+    () => feed.withMembers.map((other) => other.profileImageUrl),
     [feed]
   );
 

@@ -22,7 +22,9 @@ export default function InfoBar({
     <Flex align="center" className="px-5">
       <WriterInfo writer={feed.writer} />
       <div style={{ flexGrow: 1 }} />
-      {memberImageUrls && <TogetherInfo memberImageUrls={memberImageUrls} />}
+      {memberImageUrls && memberImageUrls.length > 0 && (
+        <TogetherInfo memberImageUrls={memberImageUrls} />
+      )}
       <Spacing direction="horizontal" size={12} />
       <Options type={isMine ? "default" : "feed"} feed={feed} isMine={isMine} />
     </Flex>

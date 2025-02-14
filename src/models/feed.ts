@@ -9,6 +9,7 @@ export interface Feed {
   writer: lighty.User;
   createdAt: string;
   gathering?: FeedGathering | null;
+  withMembers: lighty.User[];
 }
 
 export interface FeedResponse {
