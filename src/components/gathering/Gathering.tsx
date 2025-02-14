@@ -27,7 +27,7 @@ export default function Gathering({
           key={i}
           gathering={gathering}
           where={where}
-          pencil={message || where === "HOME"}
+          pencil={where === "HOME"}
         />
       );
     });

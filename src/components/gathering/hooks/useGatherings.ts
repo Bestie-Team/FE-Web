@@ -22,7 +22,7 @@ export default function useGatherings({
       getGatherings({
         cursor: cursor
           ? { ...cursor, id: uuid }
-          : { createdAt: minDate, id: uuid },
+          : { createdAt: maxDate, id: uuid },
         limit,
         minDate,
         maxDate,

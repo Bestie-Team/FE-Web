@@ -37,21 +37,18 @@ export default function GatheringCard({
 
   const handleClickGathering = useCallback(() => {
     setInvitationUrl(gathering.invitationImageUrl);
-    if (where === "GATHERING") {
-      router.push(`/gathering/${gathering.id}`);
-    } else {
-      setGatheringId(gathering.id);
-      router.push("/record");
-      setStep(3);
-    }
-  }, [gathering, where, setGatheringId, setInvitationUrl, router]);
+
+    setGatheringId(gathering.id);
+    router.push("/record");
+    setStep(3);
+  }, [gathering, setGatheringId, setInvitationUrl, router]);
 
   const { invitationImageUrl, name } = gathering;
   return (
     <div className="relative">
       <div
         className={clsx(styles.gatheringWrapper, "group")}
-        onClick={handleClickGathering}
+        onClick={() => router.push(`/gathering/${gathering.id}`)}
       >
         <Image
           layout="fixed"
@@ -83,7 +80,7 @@ export default function GatheringCard({
             )}
           </Flex>
         </Flex>
-        {pencil ? (
+        {pencil || !gathering.isFeedPosted ? (
           <Button className={styles.button} onClick={handleClickGathering}>
             <PencilIcon color="#0A0A0A" />
           </Button>

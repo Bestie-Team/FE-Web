@@ -8,6 +8,7 @@ export interface Gathering {
   description: string;
   gatheringDate: string;
   invitationImageUrl: string;
+  isFeedPosted?: boolean;
 }
 
 export interface FeedGathering {

@@ -9,7 +9,7 @@ const uuid = uuidv4();
 
 /** createdAt = 현재날짜 */
 export default function useGatheringEnded({ limit }: { limit: number }) {
-  const cursor = { createdAt: minDate(), id: uuid };
+  const cursor = { createdAt: maxDate(), id: uuid };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["gatherings/ended"],
     queryFn: async ({
