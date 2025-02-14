@@ -1,7 +1,7 @@
 import ToastSuccess from "@/components/shared/Icon/ToastSuccess";
 import ToastError from "@/components/shared/Icon/ToastError";
 import { ReactNode } from "react";
-import { toast, ToastOptions } from "react-toastify";
+import { Slide, toast, ToastOptions } from "react-toastify";
 
 export const lightyToast = {
   success: (message: ReactNode, options: ToastOptions = {}) => {
@@ -26,7 +26,7 @@ const defaultToastOption: ToastOptions = {
   hideProgressBar: true,
   pauseOnHover: false,
   closeButton: false,
-  transition: (props) => props.children,
+  transition: Slide,
 };
 
 export const InvitationToast = {

@@ -67,21 +67,23 @@ export default function MyPage() {
 
       if (userInfoSession) {
         return JSON.parse(userInfoSession);
-      } else if (user) {
+      } else if (user && user.profileImageUrl) {
         return {
-          profileImageUrl: user.profileImageUrl as string,
+          profileImageUrl: user.profileImageUrl,
           accountId: user.accountId,
         };
       } else return undefined;
     };
     if (isClient) {
-      setProfileInfo(initializeProfileInfo());
+      setProfileInfo((prev) => prev || initializeProfileInfo());
     }
   }, [user, isClient]);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient) {
     return <FullPageLoader />;
