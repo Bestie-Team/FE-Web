@@ -19,7 +19,9 @@ export default function FriendsListContainer({
 }) {
   return (
     <div className="bg-grayscale-50 pb-15 px-5">
-      <span className="text-T5">{`친구 ${friends ? friends?.length : 0}`}</span>
+      <span className="text-T5" id="friendList">{`친구 ${
+        friends ? friends?.length : 0
+      }`}</span>
       <Spacing size={12} />
       {friends?.length === 0 ? (
         <Flex
@@ -39,7 +41,7 @@ export default function FriendsListContainer({
           </Button>
         </Flex>
       ) : (
-        <ul>
+        <ul aria-labelledby="friendList">
           {friends?.map((friendItem, idx) => {
             return (
               <React.Fragment key={`${friendItem.accountId}`}>
