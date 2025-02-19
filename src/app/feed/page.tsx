@@ -185,7 +185,7 @@ export default function FeedPage() {
   const handleDeleteFeedSuccess = async (data: { message: string }) => {
     lightyToast.success(data.message);
     await queryClient.invalidateQueries({
-      queryKey: ["get/feeds/mine", queryParams],
+      queryKey: ["get/feeds/mine"],
     });
   };
 
