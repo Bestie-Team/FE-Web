@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 export const scrollAtom = atom<boolean>({
-  key: "scroll/nav",
+  key: "scroll",
   default: true,
 });
 

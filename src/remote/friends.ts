@@ -66,9 +66,9 @@ export async function getFriends({
 }
 
 /** 친구 요청 수락 */
-export async function postAcceptFriend({ friendId }: { friendId: string }) {
+export async function postAcceptFriend({ senderId }: { senderId: string }) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/friends/${friendId}/accept`;
+  const targetUrl = `${baseUrl}/friends/accept`;
 
   try {
     const response = await fetchWithAuth(targetUrl, {
@@ -76,6 +76,7 @@ export async function postAcceptFriend({ friendId }: { friendId: string }) {
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({ senderId }),
     });
     console.log(response);
     return { message: "친구 수락이 완료되었어요!" };
@@ -86,16 +87,17 @@ export async function postAcceptFriend({ friendId }: { friendId: string }) {
 }
 
 /** 친구 요청 거절 */
-export async function postRejectFriend({ friendId }: { friendId: string }) {
+export async function postRejectFriend({ senderId }: { senderId: string }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const targetUrl = `${baseUrl}/friends/${friendId}/reject`;
+    const targetUrl = `${baseUrl}/friends/reject`;
 
     await fetchWithAuth(targetUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({ senderId }),
     });
 
     return { message: "친구 요청을 거절했어요!" };

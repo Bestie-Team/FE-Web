@@ -1,7 +1,7 @@
 import { atom } from "recoil";
-import { GatheringInvitation } from "@/models/gathering";
+import { ReceivedGatheringInvitation } from "@/models/gathering";
 
-export const selectedInvitationAtom = atom<GatheringInvitation | null>({
+export const selectedInvitationAtom = atom<ReceivedGatheringInvitation | null>({
   key: "invitation/selectedInvitation",
   default: null,
 });

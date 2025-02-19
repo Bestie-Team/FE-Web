@@ -23,6 +23,7 @@ export default function InvitationModal({
   const selectedInvitation = useRecoilValue(selectedInvitationAtom);
 
   const { mutate: accept } = useAcceptInvitationToGathering({
+    gatheringId: selectedInvitation?.gatheringId || "",
     invitationId: selectedInvitation?.id || "",
     onSuccess: async (data: SuccessResponse) => {
       await queryClient.invalidateQueries({

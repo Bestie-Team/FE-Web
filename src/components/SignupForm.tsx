@@ -21,6 +21,8 @@ const INITIAL_FORM_STATE: RegisterRequestType = {
   accountId: "",
   profileImageUrl: null,
   provider: "GOOGLE",
+  termsOfServiceConsent: false,
+  privacyPolicyConsent: false,
 };
 
 export default function SignupForm() {
@@ -57,6 +59,8 @@ export default function SignupForm() {
     name: oauthData?.name || "",
     email: oauthData?.email || "",
     provider: oauthData?.provider as Provider,
+    termsOfServiceConsent: true,
+    privacyPolicyConsent: true,
     onSuccess: useCallback((data) => {
       lightyToast.success(data.message);
     }, []),

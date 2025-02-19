@@ -14,6 +14,8 @@ export interface RegisterRequestType {
   accountId: string;
   profileImageUrl: File | string | null;
   provider: lighty.Provider;
+  termsOfServiceConsent: boolean;
+  privacyPolicyConsent: boolean;
 }
 
 export default function AddPhoto({

@@ -5,7 +5,7 @@ import Spacing from "../shared/Spacing";
 import { useSetRecoilState } from "recoil";
 import { selectedInvitationAtom } from "@/atoms/invitation";
 import { differenceInCalendarDays } from "date-fns";
-import { GatheringInvitation } from "@/models/gathering";
+import { ReceivedGatheringInvitation } from "@/models/gathering";
 import { useState } from "react";
 import { INVITATION } from "@/constants/images";
 
@@ -13,7 +13,7 @@ export default function InvitationCard({
   invitation,
   onClickOpen,
 }: {
-  invitation: GatheringInvitation;
+  invitation: Omit<ReceivedGatheringInvitation, "id">;
   onClickOpen: (value: boolean) => void;
 }) {
   const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);

@@ -2,16 +2,16 @@ import { postAcceptFriend } from "@/remote/friends";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useAcceptFriendRequest({
-  friendId,
+  senderId,
   onSuccess,
 }: {
-  friendId: string;
+  senderId: string;
   onSuccess: (data: { message: string }) => void;
 }) {
   return useMutation({
-    mutationKey: ["accept", "friend/request", friendId],
+    mutationKey: ["accept", "friend/request", senderId],
     mutationFn: () => {
-      return postAcceptFriend({ friendId });
+      return postAcceptFriend({ senderId });
     },
     onSuccess: (data: { message: string }) => {
       onSuccess(data);

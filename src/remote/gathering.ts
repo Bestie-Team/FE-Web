@@ -169,16 +169,18 @@ export async function patchGathering({
 /** 약속 초대 수락 */
 export async function postAcceptGatheringInvitation({
   invitationId,
+  gatheringId,
 }: {
   invitationId: string;
+  gatheringId: string;
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
 
   try {
-    await fetchWithAuth(`${baseUrl}/gatherings/${invitationId}/accept`, {
+    await fetchWithAuth(`${baseUrl}/gatherings/accept`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
-      body: JSON.stringify({ invitationId }),
+      body: JSON.stringify({ invitationId, gatheringId }),
     });
 
     return { message: "약속을 수락하였습니다" };
@@ -196,7 +198,7 @@ export async function postRejectGatheringInvitation({
   const baseUrl = API_CONFIG.getBaseUrl();
 
   try {
-    await fetchWithAuth(`${baseUrl}/gatherings/${invitationId}/reject`, {
+    await fetchWithAuth(`${baseUrl}/gatherings/reject`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify({ invitationId }),
@@ -224,7 +226,8 @@ export async function getReceivedInvitationToGatheringList({
       )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
-    const data: lighty.GatheringInvitationListResponse = await response.json();
+    const data: lighty.ReceivedGatheringInvitationListResponse =
+      await response.json();
     return data;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
@@ -247,7 +250,8 @@ export async function getSentInvitationToGatheringList({
       )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
-    const data: lighty.GatheringInvitationListResponse = await response.json();
+    const data: lighty.SentGatheringInvitationListResponse =
+      await response.json();
     return data;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));

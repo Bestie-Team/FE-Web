@@ -41,6 +41,19 @@ export interface GatheringInvitation {
   groupName: string | null;
 }
 
+export interface ReceivedGatheringInvitation {
+  id: string;
+  gatheringId: string;
+  name: string;
+  description: string;
+  sender: string;
+  createdAt: string;
+  gatheringDate: string;
+  invitation_image_url: string;
+  address: string;
+  groupName: string | null;
+}
+
 export type GatheringInWhichType = "GATHERING" | "HOME";
 
 export const GatheringType = {

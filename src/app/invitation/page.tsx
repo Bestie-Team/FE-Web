@@ -107,7 +107,7 @@ export default function InvitationPage() {
               <Flex direction="column" className="pt-[110px] min-h-dvh">
                 {sent?.map((invitation) => {
                   return (
-                    <React.Fragment key={invitation.id}>
+                    <React.Fragment key={invitation.gatheringId}>
                       <InvitationCard
                         onClickOpen={setModalOpen}
                         invitation={invitation}

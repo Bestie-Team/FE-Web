@@ -46,12 +46,12 @@ export default function FriendListItem({
   };
 
   const { mutate: accept, isPending } = useAcceptFriendRequest({
-    friendId: requestId ? requestId : "",
+    senderId: requestId ? requestId : "",
     onSuccess: acceptSuccessHandler,
   });
 
   const { mutate: reject } = useRejectFriendRequest({
-    friendId: requestId ? requestId : "",
+    senderId: requestId ? requestId : "",
     onSuccess: rejectSuccessHandler,
   });
 

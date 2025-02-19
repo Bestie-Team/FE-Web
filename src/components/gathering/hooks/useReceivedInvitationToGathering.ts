@@ -13,7 +13,7 @@ export default function useReceivedInvitationToGathering() {
     queryKey: ["received", "gathering/invitation"],
     queryFn: async ({
       pageParam: cursor,
-    }): Promise<lighty.GatheringInvitationListResponse> => {
+    }): Promise<lighty.ReceivedGatheringInvitationListResponse> => {
       return getReceivedInvitationToGatheringList({
         cursor,
         limit: 20,

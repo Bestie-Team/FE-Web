@@ -14,7 +14,7 @@ export default function useSentInvitationToGathering() {
     queryKey: ["sent", "gathering/invitation"],
     queryFn: async ({
       pageParam: cursor,
-    }): Promise<lighty.GatheringInvitationListResponse> => {
+    }): Promise<lighty.SentGatheringInvitationListResponse> => {
       return getSentInvitationToGatheringList({
         cursor:
           cursor === null
