@@ -64,7 +64,9 @@ export default function InvitationCard({
             </Flex>
             <Button
               onClick={() => {
-                setSelectedInvitation(invitation);
+                setSelectedInvitation(
+                  invitation as ReceivedGatheringInvitation
+                );
                 onClickOpen(true);
               }}
               color="#0A0A0A"
