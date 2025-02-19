@@ -194,32 +194,6 @@ class GatheringAPI {
       }`,
     };
   }
-
-  async getInvitationList(
-    type: "received" | "sent",
-    params: PaginationParams
-  ): Promise<lighty.GatheringInvitationListResponse> {
-    const queryString = new URLSearchParams({
-      cursor: params.cursor,
-      limit: params.limit.toString(),
-      minDate: params.minDate,
-      maxDate: params.maxDate,
-    }).toString();
-
-    const { data, status } =
-      await this.fetchAPI<lighty.GatheringInvitationListResponse>(
-        `/gatherings/invitations/${type}?${queryString}`,
-        { method: "GET" }
-      );
-
-    if (status !== 200 || !data) {
-      throw new Error(
-        `${type === "received" ? "받은" : "보낸"} 약속 초대 목록 조회 실패`
-      );
-    }
-
-    return data;
-  }
 }
 
 // 외부에서 사용할 API 인스턴스
@@ -243,10 +217,3 @@ export const postAcceptGatheringInvitation = (invitationId: string) =>
 
 export const postRejectGatheringInvitation = (invitationId: string) =>
   gatheringAPI.handleInvitation(invitationId, "reject");
-
-export const getReceivedInvitationToGatheringList = (
-  params: PaginationParams
-) => gatheringAPI.getInvitationList("received", params);
-
-export const getSentInvitationToGatheringList = (params: PaginationParams) =>
-  gatheringAPI.getInvitationList("sent", params);
