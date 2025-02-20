@@ -77,20 +77,19 @@ export default function CreatingFeedNoGathering({
     }
   }, [feedInfo.imageUrls]);
 
+  if (isPending || isUploading) return <FullPageLoader height="100dvh" />;
+
   return (
     <div className={styles.container}>
       <div className={clsx(styles.headerWrapper)}>{header}</div>
-      {isPending || isUploading ? (
-        <FullPageLoader />
-      ) : (
-        <FeedForm
-          uploadImages={uploadImages}
-          feedInfo={feedInfo}
-          setFeedInfo={setFeedInfo}
-          filesToUpload={filesToUpload}
-          setFilesToUpload={setFilesToUpload}
-        />
-      )}
+
+      <FeedForm
+        uploadImages={uploadImages}
+        feedInfo={feedInfo}
+        setFeedInfo={setFeedInfo}
+        filesToUpload={filesToUpload}
+        setFilesToUpload={setFilesToUpload}
+      />
     </div>
   );
 }

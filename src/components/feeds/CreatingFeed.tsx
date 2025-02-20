@@ -96,21 +96,19 @@ export default function CreatingFeed({
 
   if (!selectedGathering || selectedGatheringId == null) return null;
 
+  if (isPending || isUploading) return <FullPageLoader height="100dvh" />;
+
   return (
     <div className={styles.container}>
       <div className={clsx(styles.headerWrapper)}>{header}</div>
-      {isPending || isUploading ? (
-        <FullPageLoader />
-      ) : (
-        <FeedForm
-          uploadImages={uploadImages}
-          feedInfo={feedInfo}
-          setFeedInfo={setFeedInfo}
-          filesToUpload={filesToUpload}
-          setFilesToUpload={setFilesToUpload}
-          selectedGathering={selectedGathering}
-        />
-      )}
+      <FeedForm
+        uploadImages={uploadImages}
+        feedInfo={feedInfo}
+        setFeedInfo={setFeedInfo}
+        filesToUpload={filesToUpload}
+        setFilesToUpload={setFilesToUpload}
+        selectedGathering={selectedGathering}
+      />
     </div>
   );
 }

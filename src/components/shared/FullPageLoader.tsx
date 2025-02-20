@@ -2,7 +2,13 @@ import Text from "./Text";
 import Spacing from "./Spacing";
 import { Spinner } from "./Spinner/DotSpinner";
 
-function FullPageLoader({ message }: { message?: string }) {
+function FullPageLoader({
+  message,
+  height,
+}: {
+  message?: string;
+  height?: string;
+}) {
   return (
     <div
       id="fullPageLoader"
@@ -18,7 +24,7 @@ function FullPageLoader({ message }: { message?: string }) {
         opacity: 1,
         backgroundColor: "#E9E9E9",
         width: "100dvw",
-        height: "calc(100dvh - 57px)",
+        height: height ?? "calc(100dvh - 57px)",
       }}
     >
       <div

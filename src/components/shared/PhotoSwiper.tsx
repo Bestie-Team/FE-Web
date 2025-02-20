@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,7 +7,8 @@ import clsx from "clsx";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
-import { memo } from "react";
+import { memo, useState } from "react";
+import DotSpinner from "./Spinner/DotSpinner";
 
 const PhotoSwiper = memo(
   ({
@@ -18,6 +20,7 @@ const PhotoSwiper = memo(
     percent?: number;
     type?: "home" | "feed";
   }) => {
+    const [loaded, setLoaded] = useState(false);
     const formattedDate = () => {
       const date = feed.gathering?.gatheringDate
         ? new Date(feed.gathering.gatheringDate)
@@ -52,18 +55,19 @@ const PhotoSwiper = memo(
             )}
             key={`slide${idx}`}
           >
+            {loaded === false && <DotSpinner />}
             <Image
               priority={idx === 0}
-              placeholder="blur"
-              blurDataURL={Lighty}
               src={image || Lighty}
               alt={`Gallery image ${idx + 1}`}
               className={styles.image}
               width={340}
               height={360}
-              quality={70}
+              quality={76}
               key={`swiperImg${idx + 1}`}
+              onLoadingComplete={() => setLoaded(true)}
             />
+
             {idx === 0 && type === "feed" && (
               <div className={styles.feedImageInfo}>
                 <span>{feed.gathering?.name}</span>

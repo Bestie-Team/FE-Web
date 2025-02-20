@@ -30,7 +30,7 @@ export default function Record() {
   }, []);
 
   if (!isClient || !gathering_noFeed || step === 0) {
-    return <FullPageLoader />;
+    return <FullPageLoader height="100dvh" />;
   }
 
   return (
