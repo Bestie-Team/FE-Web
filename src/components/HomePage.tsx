@@ -40,6 +40,7 @@ const MemoizedGatheringSwiper = React.memo(
 const MemoizedGathering = React.memo(
   ({ gatherings }: { gatherings: GatheringType[] }) => (
     <Gathering
+      ended={true}
       where={GatheringInWhich.HOME}
       className="pt-4"
       gatherings={gatherings}

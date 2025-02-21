@@ -14,7 +14,7 @@ export default function useGatheringEnded({ limit }: { limit: number }) {
     queryKey: ["gatherings/ended"],
     queryFn: async ({
       pageParam: cursor,
-    }): Promise<lighty.GatheringListResponse> => {
+    }): Promise<lighty.EndedGatheringsListResponse> => {
       return getGatheringsEnded({
         cursor,
         limit: limit ? limit : 8,

@@ -27,7 +27,7 @@ export async function getGatherings({
       )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
-    const data: lighty.EndedGatheringsListResponse = await response.json();
+    const data: lighty.GatheringListResponse = await response.json();
     return data;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
@@ -49,7 +49,7 @@ export async function getGatheringsEnded({
       )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
       { method: "GET" }
     );
-    const data: lighty.GatheringListResponse = await response.json();
+    const data: lighty.EndedGatheringsListResponse = await response.json();
     return data;
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));

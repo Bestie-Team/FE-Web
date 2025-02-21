@@ -10,6 +10,7 @@ import Message from "../shared/Message";
 type GatheringProps = {
   gatherings: GatheringType[];
   className?: string;
+  ended: boolean;
   where: GatheringInWhichType;
   message?: boolean;
 };
@@ -18,12 +19,14 @@ export default function Gathering({
   gatherings,
   className,
   where,
+  ended,
   message,
 }: GatheringProps) {
   const renderGatherings = (gatheringsList: GatheringType[]) =>
     gatheringsList.map((gathering, i) => {
       return (
         <GatheringCard
+          ended={ended}
           key={i}
           gathering={gathering}
           where={where}

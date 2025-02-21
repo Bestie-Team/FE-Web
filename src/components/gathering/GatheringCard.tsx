@@ -18,10 +18,12 @@ export default function GatheringCard({
   pencil = false,
   gathering,
   where,
+  ended,
 }: {
   pencil?: boolean;
   gathering: Gathering;
   where: GatheringInWhichType;
+  ended: boolean;
 }) {
   //기록할 약속의 id 저장
   const setStep = useSetRecoilState(recordStepAtom);
@@ -80,7 +82,7 @@ export default function GatheringCard({
             )}
           </Flex>
         </Flex>
-        {pencil || !gathering.isFeedPosted ? (
+        {pencil || (!gathering.isFeedPosted && ended) ? (
           <Button className={styles.button} onClick={handleClickGathering}>
             <PencilIcon color="#0A0A0A" />
           </Button>

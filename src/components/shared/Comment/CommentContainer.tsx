@@ -39,6 +39,7 @@ export default function CommentContainer({
       console.log(data);
     };
     invalidateQueries(data);
+    setNewComment("");
   };
 
   const { mutate: postComment } = useMakeComment({

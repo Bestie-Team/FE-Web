@@ -40,6 +40,7 @@ const GatheringPageSwiper = React.memo(
           <>
             <Spacing size={98} />
             <Gathering
+              ended={false}
               where={GatheringInWhich.GATHERING}
               gatherings={expectingGatherings}
             />
@@ -53,6 +54,7 @@ const GatheringPageSwiper = React.memo(
           <>
             <Spacing size={98} />
             <Gathering
+              ended
               message
               where={GatheringInWhich.GATHERING}
               gatherings={endedGatherings}
