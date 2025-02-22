@@ -103,7 +103,9 @@ export default function HomePage() {
       <HomeBannerContainer />
       <FriendsSlider />
       <Spacing size={40} />
-      <DateSlider />
+      {this_week ? (
+        <DateSlider this_week={this_week} sevenDays={sevenDays} />
+      ) : null}
       <Spacing size={8} />
       {this_week ? <MemoizedGatheringSwiper gatherings={this_week} /> : null}
       <Banner />

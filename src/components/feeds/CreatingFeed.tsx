@@ -50,6 +50,9 @@ export default function CreatingFeed({
         },
       ],
     });
+    await queryClient.invalidateQueries({
+      queryKey: ["user/detail"],
+    });
 
     lightyToast.success(data.message);
   };

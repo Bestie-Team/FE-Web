@@ -4,30 +4,17 @@ import Spacing from "../shared/Spacing";
 import CalendarColoredIcon from "../shared/Icon/CalendarColoredIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import DateItem from "./DateItem";
-import { getWeekDates } from "@/utils/getThisWeekDates";
 import { getDate, getDay } from "date-fns";
 import Link from "next/link";
-import useGatherings from "../gathering/hooks/useGatherings";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import { Gathering } from "lighty-type";
 
-export default function DateSlider() {
-  const sevenDays = getWeekDates();
-
-  const min = new Date(sevenDays[0]);
-  min.setUTCHours(0, 0, 0, 0);
-  const minDate = min.toISOString();
-
-  const max = new Date(sevenDays[6]);
-  max.setUTCHours(0, 0, 0, 0);
-  const maxDate = max.toISOString();
-
-  const { data: this_week, isFetching } = useGatherings({
-    cursor: { createdAt: minDate },
-    limit: 10,
-    minDate,
-    maxDate,
-  });
-
+export default function DateSlider({
+  this_week,
+  sevenDays,
+}: {
+  this_week: Gathering[];
+  sevenDays: Date[];
+}) {
   const gathering_days = this_week?.map((gatherings) =>
     getDate(new Date(gatherings.gatheringDate))
   );
@@ -45,24 +32,20 @@ export default function DateSlider() {
         </Link>
       </Flex>
       <Spacing size={12} />
-      {isFetching ? (
-        <DotSpinnerSmall />
-      ) : (
-        <Flex className={styles.dateWrapper} justify="space-between">
-          {sevenDays.map((date, i) => {
-            const isToday = getDate(new Date()) === getDate(date);
-            return (
-              <DateItem
-                isToday={isToday}
-                date={getDate(date)}
-                day={DAYS_IN_KOREAN[getDay(date)]}
-                key={i}
-                icon={gathering_days?.includes(getDate(date))}
-              />
-            );
-          })}
-        </Flex>
-      )}
+      <Flex className={styles.dateWrapper} justify="space-between">
+        {sevenDays.map((date, i) => {
+          const isToday = getDate(new Date()) === getDate(date);
+          return (
+            <DateItem
+              isToday={isToday}
+              date={getDate(date)}
+              day={DAYS_IN_KOREAN[getDay(date)]}
+              key={i}
+              icon={gathering_days?.includes(getDate(date))}
+            />
+          );
+        })}
+      </Flex>
     </Flex>
   );
 }

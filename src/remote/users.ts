@@ -46,7 +46,23 @@ export async function getUserDetail() {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("친구 검색 중 에러가 발생했습니다");
+    throw new Error("유저 정보 검색 중 에러가 발생했습니다");
+  }
+}
+
+/** 회원 프로필 조회 */
+export async function getUserProfile() {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/users/profile`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: lighty.UserProfileResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("유저 프로필 검색 중 에러가 발생했습니다");
   }
 }
 
