@@ -51,6 +51,9 @@ export default function CreatingFeed({
       ],
     });
     await queryClient.invalidateQueries({
+      queryKey: ["gatherings/no-feed"],
+    });
+    await queryClient.invalidateQueries({
       queryKey: ["user/detail"],
     });
 

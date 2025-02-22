@@ -22,6 +22,7 @@ export default function useSearchFriends({
     },
     refetchOnWindowFocus: "always",
     enabled: enabled,
+    staleTime: 3600 * 1000,
   });
 
   const loadMore = useCallback(() => {

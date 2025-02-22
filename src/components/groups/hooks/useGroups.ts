@@ -12,6 +12,8 @@ export default function useGroup() {
       }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: null as string | null,
+    staleTime: 3600 * 24000,
+    refetchOnWindowFocus: "always",
   });
 
   const loadMore = useCallback(() => {

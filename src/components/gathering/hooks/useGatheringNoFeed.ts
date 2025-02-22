@@ -22,6 +22,7 @@ export default function useGatheringNoFeeds({ limit }: { limit: number }) {
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
     refetchOnWindowFocus: "always",
+    staleTime: 3600 * 24000,
   });
 
   const loadMore = useCallback(() => {

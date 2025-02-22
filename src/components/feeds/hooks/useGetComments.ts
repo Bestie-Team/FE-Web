@@ -7,5 +7,6 @@ export default function useFeedComments({ feedId }: { feedId: string }) {
     queryFn: () => getFeedComments({ feedId }),
     throwOnError: true,
     refetchOnWindowFocus: "always",
+    staleTime: 3600 * 1000,
   });
 }

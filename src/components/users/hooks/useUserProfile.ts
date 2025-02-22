@@ -6,5 +6,6 @@ export default function useUserProfile() {
     queryKey: ["user/profile"],
     queryFn: () => getUserDetail(),
     retry: false,
+    staleTime: Infinity,
   });
 }

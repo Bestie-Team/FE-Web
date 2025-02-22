@@ -15,6 +15,7 @@ export default function useSentFriendsRequests({
     queryFn: () => {
       return getSentFriendRequestsList({ name, accountId, limit });
     },
-    staleTime: 0,
+    refetchOnWindowFocus: "always",
+    staleTime: 3600 * 1000,
   });
 }

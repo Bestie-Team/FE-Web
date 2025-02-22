@@ -16,5 +16,6 @@ export default function useReceivedFriendsRequests({
       return getReceivedFriendRequestsList({ name, accountId, limit });
     },
     refetchOnWindowFocus: "always",
+    staleTime: 3600 * 1000,
   });
 }

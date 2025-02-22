@@ -15,6 +15,7 @@ function useFriends() {
       accountId: "aaaaa",
     },
     refetchOnWindowFocus: "always",
+    staleTime: 3600 * 1000,
   });
 
   const loadMore = useCallback(() => {
@@ -42,6 +43,8 @@ export function useFriendsAll() {
       name: "가가",
       accountId: "aaaaa",
     },
+    staleTime: 3600 * 24000,
+    refetchOnWindowFocus: "always",
   });
 
   const loadMore = useCallback(() => {

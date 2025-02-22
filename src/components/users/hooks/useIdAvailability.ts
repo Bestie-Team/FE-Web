@@ -11,5 +11,6 @@ export default function useIdAvailability({
     queryFn: () => getIdAvailability({ accountId }),
     refetchOnWindowFocus: "always",
     enabled: accountId.length > 3,
+    staleTime: 3600 * 1000,
   });
 }
