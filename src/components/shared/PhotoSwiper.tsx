@@ -56,7 +56,6 @@ const PhotoSwiper = memo(
             {loaded === false && <DotSpinner />}
             <Image
               layout="fixed"
-              loading="eager"
               src={image || Lighty}
               alt={`Feed image ${idx + 1}`}
               className={styles.image}
