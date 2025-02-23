@@ -5,6 +5,6 @@ export default function useUserProfile() {
   return useQuery({
     queryKey: ["user/profile/alarm"],
     queryFn: () => getUserProfile(),
-    staleTime: Infinity,
+    staleTime: 3600 * 2,
   });
 }
