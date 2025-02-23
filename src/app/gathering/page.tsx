@@ -116,6 +116,8 @@ export default function MyGatheringPage() {
         <DotSpinner />
       ) : (
         <GatheringPageSwiper
+          isFetching={isFetching}
+          isFetching_e={isFetching_e}
           expectingGatherings={myGatherings}
           endedGatherings={ended}
           selectedTab={selectedTab}

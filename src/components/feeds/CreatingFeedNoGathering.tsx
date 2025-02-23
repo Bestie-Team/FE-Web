@@ -7,7 +7,6 @@ import clsx from "clsx";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
-import { maxDate, minDate } from "@/constants/time";
 import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
 import { useRecoilValue } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";

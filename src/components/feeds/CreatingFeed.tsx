@@ -11,7 +11,6 @@ import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
-import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {

@@ -13,6 +13,7 @@ type GatheringProps = {
   ended: boolean;
   where: GatheringInWhichType;
   message?: boolean;
+  isFetching?: boolean;
 };
 
 export default function Gathering({
@@ -21,6 +22,7 @@ export default function Gathering({
   where,
   ended,
   message,
+  isFetching,
 }: GatheringProps) {
   const renderGatherings = (gatheringsList: GatheringType[]) =>
     gatheringsList.map((gathering, i) => {
@@ -43,8 +45,17 @@ export default function Gathering({
       )}
     >
       {message && <Message />}
+
       <div className="grid grid-cols-2 gap-4">
         {renderGatherings(gatherings)}
+        {isFetching && (
+          <>
+            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
+          </>
+        )}
       </div>
     </div>
   );

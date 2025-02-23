@@ -16,7 +16,6 @@ import { useRecoilState } from "recoil";
 import { homeModalStateAtom } from "@/atoms/home";
 import { getWeekDates } from "@/utils/getThisWeekDates";
 import useGatherings from "./gathering/hooks/useGatherings";
-import FullPageLoader from "./shared/FullPageLoader";
 import {
   Gathering as GatheringType,
   GatheringInWhich,
@@ -38,8 +37,15 @@ const MemoizedGatheringSwiper = React.memo(
 );
 
 const MemoizedGathering = React.memo(
-  ({ gatherings }: { gatherings: GatheringType[] }) => (
+  ({
+    gatherings,
+    isFetching,
+  }: {
+    gatherings: GatheringType[];
+    isFetching: boolean;
+  }) => (
     <Gathering
+      isFetching={isFetching}
       ended={true}
       where={GatheringInWhich.HOME}
       className="pt-4"
@@ -95,8 +101,6 @@ export default function HomePage() {
     }
   }, []);
 
-  if (isFetching) return <FullPageLoader />;
-
   return (
     <div className="min-h-[calc(100dvh+57px)]">
       <Header />
@@ -115,7 +119,7 @@ export default function HomePage() {
           <ArrowRightIcon width="16" height="16" color="#808080" />
         </Flex>
         {ended && ended.length > 0 ? (
-          <MemoizedGathering gatherings={ended} />
+          <MemoizedGathering gatherings={ended} isFetching={isFetching_f} />
         ) : (
           <Flex className="w-full px-5" direction="column" align="center">
             <NoGatheringHome />

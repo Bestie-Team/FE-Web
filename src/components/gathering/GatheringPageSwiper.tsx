@@ -18,12 +18,16 @@ const GatheringPageSwiper = React.memo(
     selectedTab,
     swiperRef,
     onSlideChange,
+    isFetching,
+    isFetching_e,
   }: {
     expectingGatherings: GatheringType[];
     endedGatherings: GatheringType[];
     selectedTab: TabName;
     swiperRef: React.MutableRefObject<SwiperType | null>;
     onSlideChange: (index: number) => void;
+    isFetching: boolean;
+    isFetching_e: boolean;
   }) => (
     <Swiper
       initialSlide={Number(selectedTab) - 1}
@@ -40,6 +44,7 @@ const GatheringPageSwiper = React.memo(
           <>
             <Spacing size={98} />
             <Gathering
+              isFetching={isFetching}
               ended={false}
               where={GatheringInWhich.GATHERING}
               gatherings={expectingGatherings}
@@ -56,6 +61,7 @@ const GatheringPageSwiper = React.memo(
             <Gathering
               ended
               message
+              isFetching={isFetching_e}
               where={GatheringInWhich.GATHERING}
               gatherings={endedGatherings}
             />

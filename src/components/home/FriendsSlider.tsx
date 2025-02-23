@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
 import { useRouter } from "next/navigation";
 import { useFriendsAll } from "../friends/hooks/useFriends";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import FriendSkeleton from "../skeletons/FriendSkeleton";
 
 export default function FriendsSlider() {
   const router = useRouter();
@@ -29,7 +29,13 @@ export default function FriendsSlider() {
     <div className="w-max-[430px] pl-5 overflow-scroll no-scrollbar">
       <Spacing size={16} />
       {isFetching ? (
-        <DotSpinnerSmall />
+        <Flex className="gap-1">
+          {[0, 0, 0, 0, 0, 0, 0].map((_, i) => (
+            <React.Fragment key={`skeleton${i}`}>
+              <FriendSkeleton />
+            </React.Fragment>
+          ))}
+        </Flex>
       ) : (
         <Flex>
           <AddFriendItem

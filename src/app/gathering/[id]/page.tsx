@@ -62,14 +62,14 @@ export default function GatheringDetailPage({
     setIsClient(true);
   }, []);
 
-  if (!selectedGathering) {
+  if (!isClient || isPending) return <DotSpinner />;
+
+  if (isError || !selectedGathering) {
     return <div>약속을 찾을 수 없습니다.</div>;
   }
   const { gatheringDate, members, hostUser, address } = selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);
-
-  if (!isClient || isPending || isError) return <DotSpinner />;
 
   return (
     <Flex direction="column" className="relative w-full h-full bg-grayscale-50">
