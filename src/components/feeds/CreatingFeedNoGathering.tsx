@@ -33,15 +33,7 @@ export default function CreatingFeedNoGathering({
     setStep(0);
     router.replace("/feed?tab=2");
     await queryClient.invalidateQueries({
-      queryKey: [
-        "get/feeds/mine",
-        {
-          order: "DESC",
-          minDate: minDate(),
-          maxDate: maxDate(),
-          limit: 10,
-        },
-      ],
+      queryKey: ["get/feeds/mine"],
     });
 
     lightyToast.success(data.message);

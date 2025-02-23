@@ -195,9 +195,6 @@ export default function FeedPage() {
       await queryClient.invalidateQueries({
         queryKey: ["get/comments", { feedId: selectedFeedId }],
       }),
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds", queryParams],
-      }),
     ]);
   };
 
