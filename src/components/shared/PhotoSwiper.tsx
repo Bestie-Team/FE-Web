@@ -48,10 +48,8 @@ const PhotoSwiper = memo(
         {feed.images.map((image, idx) => (
           <SwiperSlide
             className={clsx(
-              "relative",
-              type === "home"
-                ? "rounded-[16px] shadow-bottom mt-2 mb-[52px]"
-                : ""
+              "relative bg-[#F4F4F4] rounded-[16px] ",
+              type === "home" ? "shadow-bottom mt-2 mb-[52px]" : ""
             )}
             key={`slide${idx}`}
           >
