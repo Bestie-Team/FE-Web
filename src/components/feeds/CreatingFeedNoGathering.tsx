@@ -31,9 +31,14 @@ export default function CreatingFeedNoGathering({
   const handleFeedSuccess = async (data: { message: string }) => {
     setStep(0);
     router.replace("/feed?tab=2");
-    await queryClient.invalidateQueries({
-      queryKey: ["get/feeds/mine"],
-    });
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine"],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
+      }),
+    ]);
 
     lightyToast.success(data.message);
   };

@@ -3,15 +3,15 @@ import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import * as lighty from "lighty-type";
-import useUserDetail from "../users/hooks/useUserDetail";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import FloatingButton from "./Button/FloatingButton";
+import useUserProfile from "../users/hooks/useUserProfile";
 
 const MemoizedNavLink = memo(NavLink);
 const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
-  const { data: user } = useUserDetail();
+  const { data: user } = useUserProfile();
   const [isClient, setIsClient] = useState(false);
   const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
@@ -23,7 +23,7 @@ const NavBar = () => {
     );
   }, [pathname]);
 
-  const tooltip = !(user?.feedCount && user?.feedCount > 0);
+  const tooltip = !user?.hasFeed;
 
   const navItems = NAV_ITEMS.map((item, idx) => (
     <MemoizedNavLink

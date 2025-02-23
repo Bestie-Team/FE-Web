@@ -1,11 +1,10 @@
-import { getUserDetail } from "@/remote/users";
+import { getUserProfile } from "@/remote/users";
 import { useQuery } from "@tanstack/react-query";
 
 export default function useUserProfile() {
   return useQuery({
-    queryKey: ["user/profile"],
-    queryFn: () => getUserDetail(),
-    retry: false,
+    queryKey: ["user/profile/alarm"],
+    queryFn: () => getUserProfile(),
     staleTime: Infinity,
   });
 }

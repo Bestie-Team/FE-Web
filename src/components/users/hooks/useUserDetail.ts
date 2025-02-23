@@ -5,7 +5,6 @@ export default function useUserDetail() {
   return useQuery({
     queryKey: ["user/detail"],
     queryFn: () => getUserDetail(),
-    retry: false,
     staleTime: Infinity,
   });
 }
