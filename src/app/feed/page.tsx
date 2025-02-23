@@ -273,11 +273,7 @@ export default function FeedPage() {
 
   const renderSwipers = useMemo(() => {
     return (
-      <div
-        ref={containerRef}
-        draggable="false"
-        className="h-[calc(100dvh-57px)]"
-      >
+      <div ref={containerRef} draggable="false" className="h-dvh">
         <Swiper
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
@@ -288,7 +284,7 @@ export default function FeedPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper h-dvh w-full !z-5"
+          className="custom-swiper w-full !z-5"
         >
           {feedAll && feedAll.length > 0 ? (
             <SwiperSlide className="overflow-y-scroll no-scrollbar">

@@ -3,6 +3,7 @@ import Flex from "@/components/shared/Flex";
 import { Feed } from "@/models/feed";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
+import Spacing from "../shared/Spacing";
 
 export type FeedType = "나의피드" | "전체";
 
@@ -18,10 +19,11 @@ export default function MyFeed({
   return (
     <div
       className={clsx(
-        "pt-[90px] animate-fadeIn min-h-[calc(100dvh-90px)] will-change-[opacity]",
+        "animate-fadeIn min-h-[calc(100dvh-90px)] will-change-[opacity]",
         className
       )}
     >
+      <Spacing size={90} />
       <Flex direction="column">
         {feeds.map((feed) => (
           <MemoryCard key={feed.id} feed={feed} onClick={onClickFeed} />
