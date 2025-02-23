@@ -8,6 +8,7 @@ interface ButtonProps {
   disabled?: boolean;
   children: React.ReactNode;
   onClick?: () => void;
+  onMouseDown?: () => void;
   color?: string;
 }
 
@@ -17,6 +18,7 @@ const BaseButton = ({
   disabled,
   children,
   onClick,
+  onMouseDown,
 }: ButtonProps) => {
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
@@ -29,11 +31,11 @@ const BaseButton = ({
       type="button"
       style={{
         backgroundColor: disabled ? "#D8D8D8" : color,
-        cursor: "pointer",
       }}
       className={clsx("cursor-pointer", className)}
       disabled={disabled}
       onClick={handleClick}
+      onMouseDown={onMouseDown}
     >
       {children}
     </button>

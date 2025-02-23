@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,11 @@ export default function MemoriesBottomSheet({
 }) {
   const router = useRouter();
   const setStep = useSetRecoilState(recordStepAtom);
+
+  useEffect(() => {
+    return () => onClose();
+  }, []);
+
   return (
     <BottomSheetWrapper onClose={onClose} open={open}>
       <Flex direction="column" className="p-6 pt-1">
@@ -30,7 +35,6 @@ export default function MemoriesBottomSheet({
               <Spacing size={20} />
               <ActionItem
                 onClick={() => {
-                  onClose();
                   router.push(action.link);
                   if (action.link == "/record") {
                     setStep(1);

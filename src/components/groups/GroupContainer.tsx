@@ -28,7 +28,7 @@ export default function GroupContainer({
     <Flex
       align="center"
       className={clsx(styles.groupContainer, className)}
-      onClick={handleClick}
+      onMouseDown={handleClick}
     >
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">

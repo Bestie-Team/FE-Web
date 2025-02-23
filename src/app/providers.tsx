@@ -64,10 +64,10 @@ const isPathEqual = (path: string, pathList: readonly string[]) =>
   pathList.some((item) => path === item);
 
 const NextLayout = ({ children }: Props) => {
+  const router = useRouter();
   useScrollToTop();
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     const isPublicPath = isPathIncluded(pathname, PUBLIC_PATHS);

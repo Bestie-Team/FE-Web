@@ -86,7 +86,7 @@ export default function GroupsPage() {
           <Spacing size={4} direction="horizontal" />
           <span className="flex-grow">{detail?.groupCount}</span>
           <Spacing size={4} direction="horizontal" />
-          <Button className={styles.button} onClick={handleAddGroup}>
+          <Button className={styles.button} onMouseDown={handleAddGroup}>
             그룹 추가
           </Button>
         </Flex>
@@ -104,5 +104,5 @@ const styles = {
   headerWrapper:
     "h-12 fixed max-w-[430px] w-full transition-shadow duration-300",
   button:
-    "py-2 px-3 bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform",
+    "py-2 px-3 bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform cursor-pointer",
 };

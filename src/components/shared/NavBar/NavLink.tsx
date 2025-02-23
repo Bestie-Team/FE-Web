@@ -16,11 +16,8 @@ export const NavLink = ({
   profileImageUrl,
 }: NavLinkProps) => {
   return (
-    <Link href={href} passHref>
-      <div
-        className="pointer-events-none flex justify-center w-16 h-11 items-center hover:animate-shrink-grow"
-        onMouseDown={onClick}
-      >
+    <Link href={href} onClick={onClick}>
+      <div className="pointer-events-none flex justify-center w-16 h-11 items-center hover:animate-shrink-grow">
         {icon(isActive, profileImageUrl ?? "")}
       </div>
     </Link>

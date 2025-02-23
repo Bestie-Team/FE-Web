@@ -14,9 +14,9 @@ export default function ActionItem({
   icon: React.ReactNode;
 }) {
   return (
-    <Flex className={styles.container}>
+    <Flex className={styles.container} onMouseDown={onClick}>
       <Button className={styles.button}>{icon}</Button>
-      <Flex className={styles.descWrapper} onMouseDown={onClick}>
+      <Flex className={styles.descWrapper}>
         <Flex direction="column" className="gap-1 flex-grow">
           <span className="text-T5">{title}</span>
           <span className={styles.subTitle}>{subTitle}</span>
