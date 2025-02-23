@@ -5,6 +5,7 @@ import clsx from "clsx";
 
 interface ButtonProps {
   className?: string;
+  name?: string;
   disabled?: boolean;
   children: React.ReactNode;
   onClick?: () => void;
@@ -15,6 +16,7 @@ interface ButtonProps {
 const BaseButton = ({
   color,
   className,
+  name,
   disabled,
   children,
   onClick,
@@ -29,6 +31,7 @@ const BaseButton = ({
   return (
     <button
       type="button"
+      name={name}
       style={{
         backgroundColor: disabled ? "#D8D8D8" : color,
       }}

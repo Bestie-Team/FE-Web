@@ -27,6 +27,7 @@ const NavBar = () => {
 
   const navItems = NAV_ITEMS.map((item, idx) => (
     <MemoizedNavLink
+      name={item.name}
       key={item.href}
       href={item.href}
       isActive={idx === activeBtn || pathname === item.href}

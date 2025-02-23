@@ -83,7 +83,11 @@ export default function GatheringCard({
           </Flex>
         </Flex>
         {pencil || (!gathering.isFeedPosted && ended) ? (
-          <Button className={styles.button} onClick={handleClickGathering}>
+          <Button
+            name="moveToFeed_button"
+            className={styles.button}
+            onClick={handleClickGathering}
+          >
             <PencilIcon color="#0A0A0A" />
           </Button>
         ) : null}

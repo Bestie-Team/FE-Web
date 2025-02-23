@@ -7,36 +7,42 @@ const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 interface NavItem {
   href: string;
+  name: string;
   icon: (isActive: boolean, src?: string) => React.ReactNode;
 }
 
 const NAV_ITEMS: NavItem[] = [
   {
     href: "/",
+    name: "home",
     icon: (isActive: boolean) => (
       <HomeIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {
     href: "/gathering",
+    name: "gathering",
     icon: (isActive: boolean) => (
       <LightyLogoForNavBar color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {
     href: "/feed",
+    name: "feed",
     icon: (isActive: boolean) => (
       <FeedIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {
     href: "/schedule",
+    name: "schedule",
     icon: (isActive: boolean) => (
       <CalendarIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {
     href: "/my",
+    name: "my",
     icon: (isActive: boolean, src?: string) => (
       <Image
         layout="fixed"
