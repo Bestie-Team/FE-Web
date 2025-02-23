@@ -1,7 +1,7 @@
 "use client";
 import HomePage from "@/components/HomePage";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import Splash from "@/components/Splash";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ export default function Page() {
   }, [isAuthenticated]);
 
   if (isLoading) {
-    return <FullPageLoader />;
+    return <DotSpinnerSmall />;
   }
 
   return isAuthenticated ? <HomePage /> : <Splash />;

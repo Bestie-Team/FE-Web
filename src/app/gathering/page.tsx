@@ -10,7 +10,6 @@ import { useTabs } from "@/hooks/useTabs";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Flex from "@/components/shared/Flex";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import dynamic from "next/dynamic";
@@ -101,7 +100,7 @@ export default function MyGatheringPage() {
     setIsClient(true);
   }, []);
 
-  if (!isClient || !ended) {
+  if (!isClient) {
     return <FullPageLoader />;
   }
 
@@ -112,19 +111,15 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-      {isFetching || !myGatherings || !ended ? (
-        <DotSpinner />
-      ) : (
-        <GatheringPageSwiper
-          isFetching={isFetching}
-          isFetching_e={isFetching_e}
-          expectingGatherings={myGatherings}
-          endedGatherings={ended}
-          selectedTab={selectedTab}
-          swiperRef={swiperRef}
-          onSlideChange={(index) => handleSlideChange(index)}
-        />
-      )}
+      <GatheringPageSwiper
+        isFetching={isFetching}
+        isFetching_e={isFetching_e}
+        expectingGatherings={myGatherings}
+        endedGatherings={ended}
+        selectedTab={selectedTab}
+        swiperRef={swiperRef}
+        onSlideChange={(index) => handleSlideChange(index)}
+      />
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>
   );

@@ -8,10 +8,14 @@ export default function DotSpinnerSmall({
   return (
     <div
       style={{
+        position: "absolute",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "100dvw",
+        zIndex: 20,
+        inset: 0,
+        opacity: 1,
+        backgroundColor: "transparent",
       }}
     >
       <svg

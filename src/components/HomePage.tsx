@@ -31,8 +31,18 @@ const Header = React.memo(() => {
 });
 
 const MemoizedGatheringSwiper = React.memo(
-  ({ gatherings }: { gatherings: GatheringType[] }) => (
-    <GatheringSwiper percent={2.2} gatherings={gatherings} />
+  ({
+    gatherings,
+    isFetching,
+  }: {
+    gatherings?: GatheringType[];
+    isFetching: boolean;
+  }) => (
+    <GatheringSwiper
+      percent={2.2}
+      gatherings={gatherings}
+      isFetching={isFetching}
+    />
   )
 );
 
@@ -41,17 +51,27 @@ const MemoizedGathering = React.memo(
     gatherings,
     isFetching,
   }: {
-    gatherings: GatheringType[];
+    gatherings?: GatheringType[];
     isFetching: boolean;
-  }) => (
-    <Gathering
-      isFetching={isFetching}
-      ended={true}
-      where={GatheringInWhich.HOME}
-      className="pt-4"
-      gatherings={gatherings}
-    />
-  )
+  }) => {
+    if (!gatherings)
+      return (
+        <Flex className="w-full px-5" direction="column" align="center">
+          <NoGatheringHome />
+          <Spacing size={187} />
+        </Flex>
+      );
+    else
+      return (
+        <Gathering
+          isFetching={isFetching}
+          ended={true}
+          where={GatheringInWhich.HOME}
+          className="pt-4"
+          gatherings={gatherings}
+        />
+      );
+  }
 );
 Header.displayName = "Header";
 MemoizedGatheringSwiper.displayName = "MemoizedGatheringSwiper";
@@ -111,21 +131,14 @@ export default function HomePage() {
         <DateSlider this_week={this_week} sevenDays={sevenDays} />
       ) : null}
       <Spacing size={8} />
-      {this_week ? <MemoizedGatheringSwiper gatherings={this_week} /> : null}
+      <MemoizedGatheringSwiper gatherings={this_week} isFetching={isFetching} />
       <Banner />
       <Flex direction="column" align="center">
         <Flex className="w-full px-5" align="center">
           <span className="text-T3 flex-grow">📝 추억을 기록해볼까요?</span>
           <ArrowRightIcon width="16" height="16" color="#808080" />
         </Flex>
-        {ended && ended.length > 0 ? (
-          <MemoizedGathering gatherings={ended} isFetching={isFetching_f} />
-        ) : (
-          <Flex className="w-full px-5" direction="column" align="center">
-            <NoGatheringHome />
-            <Spacing size={187} />
-          </Flex>
-        )}
+        <MemoizedGathering gatherings={ended} isFetching={isFetching_f} />
       </Flex>
       {isModalOpen && (
         <MemoriesBottomSheet onClose={handleCloseMemoriesModal} />

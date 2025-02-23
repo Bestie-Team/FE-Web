@@ -12,9 +12,11 @@ import { NoGatheringHome } from "./NoGathering";
 export default function GatheringSwiper({
   percent,
   gatherings,
+  isFetching,
 }: {
   percent?: number;
   gatherings: Gathering[] | undefined;
+  isFetching: boolean;
 }) {
   const router = useRouter();
 
@@ -28,6 +30,19 @@ export default function GatheringSwiper({
       }}
       className="custom-swiper w-full"
     >
+      {isFetching && (
+        <>
+          <SwiperSlide className={styles.skeleton}>
+            <div className={styles.skeleton} />
+          </SwiperSlide>
+          <SwiperSlide className={styles.skeleton}>
+            <div className={styles.skeleton} />
+          </SwiperSlide>
+          <SwiperSlide className={styles.skeleton}>
+            <div className={styles.skeleton} />
+          </SwiperSlide>
+        </>
+      )}
       {!gatherings || gatherings.length < 1 ? (
         <>
           <NoGatheringHome type="slider" />
@@ -93,4 +108,6 @@ const styles = {
     "absolute top-0 left-0 right-0 slide-img object-cover max-w-[190px] h-[146px] group-hover:animate-smaller will-change-transform",
   date: "text-C2 text-grayscale-400",
   dDay: "tracking-wider absolute left-0 text-T4 text-base-white bottom-0 py-2 px-3",
+  skeleton:
+    "bg-[#F4F4F4] !w-[168px] !h-[202px] flex flex-col rounded-[16px] mt-[8px] mb-[52px]",
 };

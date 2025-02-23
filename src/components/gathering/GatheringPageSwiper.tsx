@@ -21,8 +21,8 @@ const GatheringPageSwiper = React.memo(
     isFetching,
     isFetching_e,
   }: {
-    expectingGatherings: GatheringType[];
-    endedGatherings: GatheringType[];
+    expectingGatherings?: GatheringType[];
+    endedGatherings?: GatheringType[];
     selectedTab: TabName;
     swiperRef: React.MutableRefObject<SwiperType | null>;
     onSlideChange: (index: number) => void;
@@ -38,7 +38,8 @@ const GatheringPageSwiper = React.memo(
       direction="horizontal"
     >
       <SwiperSlide>
-        {expectingGatherings.length < 1 ? (
+        {(expectingGatherings && expectingGatherings.length < 1) ||
+        !expectingGatherings ? (
           <NoGathering type="EXPECTING" />
         ) : (
           <>
@@ -53,7 +54,7 @@ const GatheringPageSwiper = React.memo(
         )}
       </SwiperSlide>
       <SwiperSlide>
-        {endedGatherings.length < 1 ? (
+        {(endedGatherings && endedGatherings.length < 1) || !endedGatherings ? (
           <NoGathering type="ENDED" />
         ) : (
           <>
