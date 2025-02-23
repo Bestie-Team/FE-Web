@@ -63,6 +63,7 @@ export default function GatheringSwiper({
               >
                 <div className="relative w-full h-[146px]">
                   <Image
+                    layout="fixed"
                     src={
                       invitationImageUrl ||
                       "https://cdn.lighty.today/lighty_square.png"
