@@ -21,7 +21,7 @@ export default function useGatheringNoFeeds({ limit }: { limit: number }) {
       }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
-    refetchOnWindowFocus: "always",
+    refetchInterval: 3600 * 1000,
     staleTime: 3600 * 24000,
   });
 

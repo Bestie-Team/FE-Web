@@ -19,7 +19,7 @@ export default function useFeedHidden({ limit }: { limit: number }) {
     initialPageParam: cursor,
     throwOnError: true,
     staleTime: Infinity,
-    refetchOnWindowFocus: "always",
+    refetchInterval: 3600 * 1000,
   });
 
   const loadMore = useCallback(() => {

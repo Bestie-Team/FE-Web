@@ -28,7 +28,6 @@ export default function useFeedMine({
     initialPageParam: cursor,
     throwOnError: true,
     staleTime: 3600 * 24000,
-    refetchOnWindowFocus: "always",
   });
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {

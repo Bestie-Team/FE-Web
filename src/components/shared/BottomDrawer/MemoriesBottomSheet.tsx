@@ -21,10 +21,6 @@ export default function MemoriesBottomSheet({
   const router = useRouter();
   const setStep = useSetRecoilState(recordStepAtom);
 
-  useEffect(() => {
-    return () => onClose();
-  }, []);
-
   return (
     <BottomSheetWrapper onClose={onClose} open={open}>
       <Flex direction="column" className="p-6 pt-1">

@@ -23,7 +23,8 @@ export default function useReceivedInvitationToGathering() {
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
-    refetchOnWindowFocus: "always",
+    refetchInterval: 60 * 1000,
+    staleTime: 36000 * 24000,
   });
 
   const loadMore = useCallback(() => {

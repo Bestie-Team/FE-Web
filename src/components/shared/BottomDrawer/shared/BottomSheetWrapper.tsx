@@ -19,6 +19,8 @@ export default function BottomSheetWrapper({
 }) {
   const [isClosing, setIsClosing] = useState(false);
 
+  if (open === false) return null;
+
   const handleAnimationEnd = () => {
     if (isClosing) {
       onClose();
@@ -29,8 +31,6 @@ export default function BottomSheetWrapper({
   const handleBackdropClick = () => {
     setIsClosing(true);
   };
-
-  if (open === false) return null;
 
   return (
     <Dimmed onClick={handleBackdropClick} isClosing={isClosing} bright={bright}>

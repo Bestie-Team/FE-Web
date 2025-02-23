@@ -27,7 +27,8 @@ export default function useSentInvitationToGathering() {
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: null as { createdAt: string; id: string } | null,
-    refetchOnWindowFocus: "always",
+    refetchInterval: 60 * 1000,
+    staleTime: 3600 * 24000,
   });
 
   const loadMore = useCallback(() => {

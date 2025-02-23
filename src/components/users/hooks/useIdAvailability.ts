@@ -9,7 +9,6 @@ export default function useIdAvailability({
   return useQuery({
     queryKey: ["signup/accountId"],
     queryFn: () => getIdAvailability({ accountId }),
-    refetchOnWindowFocus: "always",
     enabled: accountId.length > 3,
     staleTime: 3600 * 1000,
   });
