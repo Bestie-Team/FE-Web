@@ -122,7 +122,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-[calc(100dvh+57px)]">
+    <div className="min-h-dvh">
       <Header />
       <HomeBannerContainer />
       <FriendsSlider />
