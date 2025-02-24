@@ -30,7 +30,7 @@ export default function SentReceivedFriendRequestsList() {
   return (
     <Flex
       direction="column"
-      className="bg-grayscale-50 pt-[177px] px-[20px] gap-[32px] h-screen"
+      className="bg-grayscale-50 pt-[177px] px-5 gap-8 h-screen"
     >
       {receivedRequests && receivedRequests.length > 0 && (
         <Flex direction="column">
@@ -41,7 +41,7 @@ export default function SentReceivedFriendRequestsList() {
               <FriendListItem
                 idx={1}
                 type="receivedRequest"
-                requestId={receivedRqs.requestId}
+                senderId={receivedRqs.sender.id}
                 friendInfo={receivedRqs.sender}
               />
               <Spacing size={16} />
@@ -59,7 +59,7 @@ export default function SentReceivedFriendRequestsList() {
               <FriendListItem
                 idx={1}
                 type="sentRequest"
-                requestId={sentRqs.requestId}
+                senderId={sentRqs.sender.id}
                 friendInfo={sentRqs.sender}
               />
               <Spacing size={16} />

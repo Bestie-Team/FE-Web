@@ -10,6 +10,6 @@ export default function useIdAvailability({
     queryKey: ["signup/accountId"],
     queryFn: () => getIdAvailability({ accountId }),
     enabled: accountId.length > 3,
-    staleTime: 3600 * 1000,
+    staleTime: 600 * 1000,
   });
 }

@@ -14,14 +14,14 @@ import { selectedFriendAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
 
 export default function FriendListItem({
-  requestId,
+  senderId,
   friendInfo,
   type,
   idx,
   onClick,
   clicked,
 }: {
-  requestId?: string;
+  senderId?: string;
   friendInfo: lighty.User;
   type: "friend" | "receivedRequest" | "sentRequest" | "select";
   idx?: number;
@@ -40,18 +40,27 @@ export default function FriendListItem({
 
   const rejectSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
-    await queryClient.invalidateQueries({
-      queryKey: ["reject/friend", requestId],
-    });
+    Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["reject/friend", senderId],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: [
+          "sent",
+          "friendsRequests",
+          { name: "가", accountId: "a", limit: 30 },
+        ],
+      }),
+    ]);
   };
 
   const { mutate: accept, isPending } = useAcceptFriendRequest({
-    senderId: requestId ? requestId : "",
+    senderId: senderId ? senderId : "",
     onSuccess: acceptSuccessHandler,
   });
 
   const { mutate: reject } = useRejectFriendRequest({
-    senderId: requestId ? requestId : "",
+    senderId: senderId ? senderId : "",
     onSuccess: rejectSuccessHandler,
   });
 
@@ -128,5 +137,5 @@ const styles = {
     "flex items-center px-[12px] py-[8px] rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit",
 
   rejectBtn:
-    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px]",
+    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] hover:bg-grayscale-10",
 };

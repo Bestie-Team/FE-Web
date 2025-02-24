@@ -9,7 +9,7 @@ export async function postReport({
   report: ReportRequestInterface;
 }) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/reports/${report.type}`;
+  const targetUrl = `${baseUrl}/reports`;
 
   try {
     await fetchWithAuth(targetUrl, {
