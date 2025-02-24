@@ -13,7 +13,7 @@ const SHOW_SHEET_PATHS = ["/feed"];
 const NavBar = () => {
   const { data: user } = useUserProfile();
   const [isClient, setIsClient] = useState(false);
-  const { activeBtn, setActiveBtn, pathname } = useActiveNavigation();
+  const { setActiveBtn, pathname } = useActiveNavigation();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   const showSheetButton = useMemo(() => {
@@ -30,8 +30,8 @@ const NavBar = () => {
       name={item.name}
       key={item.href}
       href={item.href}
-      isActive={idx === activeBtn || pathname === item.href}
-      onClick={() => setActiveBtn(idx)}
+      isActive={pathname === item.href}
+      onMouseDown={() => setActiveBtn(idx)}
       icon={item.icon}
       profileImageUrl={profileImageUrl}
     />

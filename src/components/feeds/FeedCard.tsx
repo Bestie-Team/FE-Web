@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useCallback, useMemo } from "react";
 import InfoBar from "./InfoBar";
 import { Feed } from "@/models/feed";
 
-export default function MemoryCard({
+export default function FeedCard({
   feed,
   onClick,
 }: {

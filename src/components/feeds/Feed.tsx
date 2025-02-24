@@ -1,4 +1,4 @@
-import MemoryCard from "@/components/feeds/MemoryCard";
+import FeedCard from "@/components/feeds/FeedCard";
 import Flex from "@/components/shared/Flex";
 import { Feed } from "@/models/feed";
 import clsx from "clsx";
@@ -26,7 +26,7 @@ export default function MyFeed({
       <Spacing size={90} />
       <Flex direction="column">
         {feeds.map((feed) => (
-          <MemoryCard key={feed.id} feed={feed} onClick={onClickFeed} />
+          <FeedCard key={feed.id} feed={feed} onClick={onClickFeed} />
         ))}
       </Flex>
     </div>
