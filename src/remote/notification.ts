@@ -7,7 +7,9 @@ export async function getNotification({
   limit,
 }: lighty.NotificationListRequest) {
   const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/notifications?cursor=${cursor}&limit=${limit}`;
+  const targetUrl = `${baseUrl}/notifications?cursor=${encodeURIComponent(
+    JSON.stringify(cursor)
+  )}&limit=${limit}`;
   try {
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",

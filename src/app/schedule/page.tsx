@@ -64,7 +64,7 @@ MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
 export default function SchedulePage() {
   const queryParams = useMemo(
     () => ({
-      cursor: { createdAt: minDate() },
+      cursor: { createdAt: maxDate() },
       minDate: minDate(),
       maxDate: maxDate(),
       limit: 400,
@@ -80,6 +80,7 @@ export default function SchedulePage() {
   });
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  console.log(today);
 
   const upcomingGatherings = upcoming?.filter(
     (gathering) => new Date(gathering.gatheringDate) >= today

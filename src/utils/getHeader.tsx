@@ -75,15 +75,18 @@ export default function useHeader(pathname: string) {
       component: Header,
       props: { pageName: "My" },
     },
-    "/gathering": {
+
+    "/gathering/": {
       component: HeaderWithBackBtn,
-      props: pathname.endsWith("gathering")
-        ? { pageName: "나의 약속" }
-        : pathname.endsWith("new")
+      props: pathname.endsWith("new")
         ? { pageName: "약속 만들기", color: "transparent", fixedNot: true }
         : pathname.endsWith("edit")
         ? { pageName: "약속 수정", color: "#FFF" }
         : { fontColor: "#FFF", pageName: "약속 상세" },
+    },
+    "/gathering": {
+      component: Header,
+      props: { pageName: "나의 약속" },
     },
     "/groups": {
       component: HeaderWithBackBtn,

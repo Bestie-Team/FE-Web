@@ -6,14 +6,16 @@ import * as lighty from "lighty-type";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import FloatingButton from "./Button/FloatingButton";
 import useUserProfile from "../users/hooks/useUserProfile";
+import { useRouter } from "next/navigation";
 
 const MemoizedNavLink = memo(NavLink);
 const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
+  const router = useRouter();
   const { data: user } = useUserProfile();
   const [isClient, setIsClient] = useState(false);
-  const { setActiveBtn, pathname } = useActiveNavigation();
+  const { setActiveBtn, pathname, activeBtn } = useActiveNavigation();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
   const showSheetButton = useMemo(() => {
@@ -25,13 +27,19 @@ const NavBar = () => {
 
   const tooltip = !user?.hasFeed;
 
+  const onMouseDownHandler = (idx: number) => {
+    if (activeBtn === idx) {
+      window.location.reload();
+    } else setActiveBtn(idx);
+  };
+
   const navItems = NAV_ITEMS.map((item, idx) => (
     <MemoizedNavLink
       name={item.name}
       key={item.href}
       href={item.href}
       isActive={pathname === item.href}
-      onMouseDown={() => setActiveBtn(idx)}
+      onMouseDown={() => onMouseDownHandler(idx)}
       icon={item.icon}
       profileImageUrl={profileImageUrl}
     />

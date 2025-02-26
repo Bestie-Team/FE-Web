@@ -6,6 +6,7 @@ import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { Feed } from "@/models/feed";
+import { usePathname } from "next/navigation";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function InfoBar({
@@ -17,7 +18,7 @@ export default function InfoBar({
 }) {
   const { userInfo } = useAuth();
   const isMine = feed.writer.accountId === userInfo?.accountId;
-  // console.log(feed.writer.accountId, userInfo?.accountId);
+  const pathname = usePathname();
   return (
     <Flex align="center" className="px-5">
       <WriterInfo writer={feed.writer} />
@@ -26,7 +27,13 @@ export default function InfoBar({
         <TogetherInfo memberImageUrls={memberImageUrls} />
       )}
       <Spacing direction="horizontal" size={12} />
-      <Options type={isMine ? "default" : "feed"} feed={feed} isMine={isMine} />
+      <Options
+        type={
+          pathname.endsWith("/hidden") ? "hidden" : isMine ? "default" : "feed"
+        }
+        feed={feed}
+        isMine={isMine}
+      />
     </Flex>
   );
 }

@@ -211,3 +211,18 @@ export async function hideFeed({ feedId }: { feedId: string }) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
+
+/** 피드 숨김 해제 */
+export async function displayFeed({ feedId }: { feedId: string }) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/feeds/${feedId}/block`;
+  try {
+    await fetchWithAuth(targetUrl, {
+      method: "DELETE",
+    });
+
+    return { message: "피드 숨김을 해제했어요" };
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}

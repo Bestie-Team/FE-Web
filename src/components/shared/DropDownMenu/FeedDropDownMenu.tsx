@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import {
   feedDeleteModalAtom,
+  feedDisplayModalAtom,
   feedHideModalAtom,
   reportModalAtom,
 } from "@/atoms/modal";
@@ -22,6 +23,7 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
     const setModalOpen = useSetRecoilState(feedDeleteModalAtom);
     const setReportModalOpen = useSetRecoilState(reportModalAtom);
     const setHideModalOpen = useSetRecoilState(feedHideModalAtom);
+    const setDisplayModalOpen = useSetRecoilState(feedDisplayModalAtom);
     const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
     const setSelectedFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
     const router = useRouter();
@@ -39,6 +41,9 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
       } else if (item.includes("신고")) {
         setSelectedFeedId(feed.id);
         setReportModalOpen(true);
+      } else if (item.includes("숨김 해제")) {
+        setSelectedFeedId(feed.id);
+        setDisplayModalOpen(true);
       }
     };
 

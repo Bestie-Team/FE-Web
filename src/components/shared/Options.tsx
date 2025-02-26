@@ -9,6 +9,7 @@ import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { Feed } from "@/models/feed";
 import GatheringDropdownMenu from "./DropDownMenu/GatheringDropDownMenu";
 import * as lighty from "lighty-type";
+import { usePathname } from "next/navigation";
 
 export const MENU_TYPES = {
   COMMENT: "comment",
@@ -16,6 +17,7 @@ export const MENU_TYPES = {
   FRIEND: "friend",
   GROUP: "group",
   FEED: "feed",
+  HIDDEN: "hidden",
   GATHERING: "gathering",
 } as const;
 
@@ -33,6 +35,10 @@ const MENU_CONFIGS = {
   [MENU_TYPES.FEED]: {
     items: ["숨기기", "신고하기"],
     className: "z-100 absolute -bottom-[94px] right-[4px]",
+  },
+  [MENU_TYPES.HIDDEN]: {
+    items: ["숨김 해제"],
+    className: "z-100 absolute -bottom-[42px] right-[4px]",
   },
   [MENU_TYPES.FRIEND]: {
     items: ["친구 삭제", "유저 신고하기"],
@@ -70,7 +76,6 @@ export default function Options({
   type = MENU_TYPES.DEFAULT,
 }: OptionsProps) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
-
   const isDefaultOrFeed =
     type === MENU_TYPES.DEFAULT || type === MENU_TYPES.FEED;
   const containerClassName = `
@@ -122,6 +127,14 @@ export default function Options({
         />
       )}
       {opened && type === MENU_TYPES.FEED && feed && !isMine && (
+        <FeedDropdownMenu
+          feed={feed}
+          ref={ref}
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
+        />
+      )}
+      {opened && type === MENU_TYPES.HIDDEN && feed && (
         <FeedDropdownMenu
           feed={feed}
           ref={ref}

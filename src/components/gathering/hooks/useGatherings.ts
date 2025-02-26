@@ -16,6 +16,7 @@ export default function useGatherings({
   minDate: string;
   maxDate: string;
 }) {
+  const defaultCursor = cursor;
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["gatherings", { minDate, maxDate }],
     queryFn: ({ pageParam: cursor }) =>
@@ -28,7 +29,7 @@ export default function useGatherings({
         maxDate,
       }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
-    initialPageParam: cursor,
+    initialPageParam: defaultCursor,
   });
 
   const loadMore = useCallback(() => {

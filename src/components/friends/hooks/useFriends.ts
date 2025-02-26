@@ -31,9 +31,9 @@ function useFriends() {
 
 export default useFriends;
 
-export function useFriendsAll() {
+export function useFriendsAll({ userId }: { userId: string }) {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["friends/all", { accountId: "aaaa", limit: 100 }],
+    queryKey: ["friends/all", { accountId: "aaaa", limit: 100 }, userId],
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getFriends({ ...pageParam, limit: 100 });
     },

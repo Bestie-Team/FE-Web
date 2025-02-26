@@ -9,9 +9,12 @@ import { useRouter } from "next/navigation";
 import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 import GatheringEditForm from "@/components/gathering/GatheringEditForm";
 import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
+import { useQueryClient } from "@tanstack/react-query";
+import { maxDate, minDate } from "@/constants/time";
 
 export default function GatheringEditPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
   const originalGatheringValue = useRecoilValue(selectedGatheringInfoAtom);
@@ -38,9 +41,12 @@ export default function GatheringEditPage() {
   const { mutate: editingFeed, isPending } = useEditGathering({
     gathering: gatheringInfo,
     gatheringId: selectedGatheringId || "",
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       router.replace("/gathering");
       lightyToast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["gatherings", { minDate: minDate(), maxDate: maxDate() }],
+      });
     },
     onError: (error) => {
       lightyToast.error(error.message);

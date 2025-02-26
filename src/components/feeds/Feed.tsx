@@ -20,7 +20,6 @@ export default function MyFeed({
 }) {
   return (
     <div className={clsx("animate-fadeIn will-change-[opacity]", className)}>
-      <Spacing size={90} />
       {feeds.map((feed) => (
         <FeedCard key={feed.id} feed={feed} onClick={onClickFeed} />
       ))}

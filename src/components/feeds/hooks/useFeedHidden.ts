@@ -7,7 +7,7 @@ import { FeedResponse } from "@/models/feed";
 const uuid = uuidv4();
 
 export default function useFeedHidden({ limit }: { limit: number }) {
-  const cursor = {
+  const defaultCursor = {
     createdAt: new Date().toISOString(),
     id: uuid,
   };
@@ -16,7 +16,7 @@ export default function useFeedHidden({ limit }: { limit: number }) {
     queryFn: async ({ pageParam }): Promise<FeedResponse> =>
       getFeedHidden({ cursor: pageParam, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
-    initialPageParam: cursor,
+    initialPageParam: defaultCursor,
     throwOnError: true,
     staleTime: 3600 * 1000,
   });

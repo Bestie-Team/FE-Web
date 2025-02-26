@@ -35,6 +35,9 @@ export default function CommentContainer({
         queryClient.invalidateQueries({
           queryKey: ["get/feeds/all"],
         }),
+        queryClient.invalidateQueries({
+          queryKey: ["get/feeds/mine"],
+        }),
       ]);
       console.log(data);
     };

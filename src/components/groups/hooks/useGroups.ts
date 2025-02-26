@@ -2,13 +2,13 @@ import { getGroups } from "@/remote/group";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
-export default function useGroup() {
+export default function useGroup({ limit = 6 }: { limit?: number }) {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["groups"],
     queryFn: ({ pageParam: cursor }) =>
       getGroups({
         cursor: cursor === null ? new Date().toISOString() : cursor,
-        limit: 6,
+        limit: limit ?? 7,
       }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: null as string | null,

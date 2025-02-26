@@ -33,9 +33,14 @@ export default function NewGroupPage() {
 
   const makeGroupSuccessHandler = async (data: { message: string }) => {
     setStep(0);
-    await queryClient.invalidateQueries({
-      queryKey: ["groups"],
-    });
+    Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["groups"],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
+      }),
+    ]);
     lightyToast.success(data.message);
   };
 

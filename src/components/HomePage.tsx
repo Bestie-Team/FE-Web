@@ -24,6 +24,7 @@ import { NoGatheringHome } from "./gathering/NoGathering";
 import useGatheringNoFeeds from "./gathering/hooks/useGatheringNoFeed";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useNewUserCheck } from "@/hooks/useNewUserCheck";
+import useNotification from "./notice/hooks/useNotification";
 
 const Header = React.memo(() => {
   const header = getHeader("/");
@@ -109,6 +110,9 @@ export default function HomePage() {
     loadMore,
     isFetching: isFetching_f,
   } = useGatheringNoFeeds({ limit: 4 });
+
+  const { data: noti } = useNotification();
+  console.log(noti, "noti");
 
   useInfiniteScroll({ loadMore, isFetching: isFetching_f });
 

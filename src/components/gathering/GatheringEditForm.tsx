@@ -60,12 +60,7 @@ export default function GatheringEditForm({
     }
   };
 
-  if (
-    !gathering.address ||
-    !gathering.description ||
-    !gathering.name ||
-    !gathering.gatheringDate
-  ) {
+  if (!gathering) {
     return null;
   }
   return (
@@ -78,7 +73,7 @@ export default function GatheringEditForm({
           name="gatheringName"
           minLength={2}
           displayLength={10}
-          value={gathering.name}
+          value={gathering.name || ""}
           onChange={handleNameChange}
           placeholder="약속 이름을 입력해 주세요."
           label={
@@ -94,7 +89,7 @@ export default function GatheringEditForm({
           name="gatheringDesc"
           minLength={10}
           displayLength={40}
-          value={gathering.description}
+          value={gathering.description || ""}
           onChange={handleDescriptionChange}
           placeholder="약속 이름을 설명해 주세요."
           label={

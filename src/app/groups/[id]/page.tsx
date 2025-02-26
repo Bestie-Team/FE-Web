@@ -46,7 +46,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const reset = useResetRecoilState(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: group_data, isFetching } = useGroup();
+  const { data: group_data, isFetching } = useGroup({ limit: 50 });
 
   const [deleteModalOpen, setDeleteModalOpen] =
     useRecoilState(groupDeleteModalAtom);

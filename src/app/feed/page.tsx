@@ -105,6 +105,7 @@ const FeedModals = React.memo(
     );
     const [feedHideModalOpen, setFeedHideModalOpen] =
       useRecoilState(feedHideModalAtom);
+
     const [feedReportModalOpen, setFeedReportModalOpen] =
       useRecoilState(reportModalAtom);
 
@@ -291,7 +292,7 @@ export default function FeedPage() {
             <SwiperSlide>
               <div
                 ref={containerRef}
-                className="h-full overflow-y-auto no-scrollbar"
+                className="h-full overflow-y-auto no-scrollbar pt-[90px]"
               >
                 <Feed
                   feeds={feedAll}
@@ -301,14 +302,16 @@ export default function FeedPage() {
               </div>
             </SwiperSlide>
           ) : (
-            <NoFeed />
+            <SwiperSlide>
+              <NoFeed />
+            </SwiperSlide>
           )}
           {feedMine && (
             <SwiperSlide>
               {feedMine.length > 0 ? (
                 <div
                   ref={containerRef_m}
-                  className="h-full overflow-y-auto no-scrollbar"
+                  className="h-full overflow-y-auto no-scrollbar pt-[90px]"
                 >
                   <Feed
                     feeds={feedMine}
@@ -317,7 +320,9 @@ export default function FeedPage() {
                   />
                 </div>
               ) : (
-                <NoFeed />
+                <SwiperSlide>
+                  <NoFeed />
+                </SwiperSlide>
               )}
             </SwiperSlide>
           )}
@@ -331,10 +336,6 @@ export default function FeedPage() {
     setIsClient(true);
   }, []);
 
-  if (!isClient || !feedAll || !feedMine) {
-    return <DotSpinner />;
-  }
-
   return (
     <div className="h-dvh no-scrollbar">
       <Header
@@ -342,6 +343,7 @@ export default function FeedPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
+      {(!isClient || !feedMine || !feedAll) && <DotSpinner />}
       {renderSwipers}
       {recordModalOpen && (
         <MemoriesBottomSheet

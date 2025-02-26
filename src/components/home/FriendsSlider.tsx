@@ -4,13 +4,17 @@ import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
 import { useRouter } from "next/navigation";
 import { useFriendsAll } from "../friends/hooks/useFriends";
-import FriendSkeleton from "../skeletons/FriendSkeleton";
+import FriendSkeleton from "../shared/skeletons/FriendSkeleton";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function FriendsSlider() {
   const router = useRouter();
+  const { userInfo } = useAuth();
   const [hide, setHide] = useState(true);
 
-  const { data = [], isFetching } = useFriendsAll();
+  const { data = [], isFetching } = useFriendsAll({
+    userId: userInfo?.accountId ?? "",
+  });
 
   const displayedFriends = useMemo(
     () => (hide ? data.slice(0, 12) : data),

@@ -33,10 +33,7 @@ export default function UserListItem({
     userId: userInfo?.id,
     onSuccess: async (data: { message: string }) => {
       await queryClient.invalidateQueries({
-        queryKey: [
-          "users",
-          { nae: "가", accountId: "a", limit: 10, search: debouncedSearch },
-        ],
+        queryKey: ["users", debouncedSearch],
       });
       lightyToast.success(data.message);
     },

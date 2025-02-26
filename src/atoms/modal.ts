@@ -20,6 +20,11 @@ export const feedHideModalAtom = atom<boolean>({
   default: false,
 });
 
+export const feedDisplayModalAtom = atom<boolean>({
+  key: "modal/feedDisplay",
+  default: false,
+});
+
 export const recordModalAtom = atom<boolean>({
   key: "modal/record",
   default: false,

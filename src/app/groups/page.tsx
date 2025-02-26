@@ -54,7 +54,7 @@ export default function GroupsPage() {
   const isPast = useScrollThreshold();
   const pathname = usePathname();
   const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
-  const { data: groups, isFetching, loadMore } = useGroup();
+  const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
 
   const handleGroupClick = useCallback(
     (groupId: string) => {

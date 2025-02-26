@@ -18,7 +18,7 @@ export default function UpcomingSchedule({
         className="relative min-h-[calc(100dvh-655px)] gap-12"
       >
         {gatherings.length > 0 && <div className={styles.timelineWrapper} />}
-        {gatherings.length < 1 ? (
+        {gatherings.length === 0 ? (
           <NoSchedule />
         ) : (
           gatherings?.map((gathering, i) => (

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
@@ -35,6 +35,7 @@ export default function GatheringForm({
   setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
   mutate?: () => void;
 }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const isGroupInfoValid = () => {
     if (
       gathering.name.length <= 2 ||
@@ -55,7 +56,7 @@ export default function GatheringForm({
   const [calendarOpen, setCalendarOpen] = useState(false);
   const title = type === "new" ? "/gathering/new" : "/gathering/edit";
   const header = useMemo(() => getHeader(title), []);
-  const { data: group_data, isFetching } = useGroup();
+  const { data: group_data, isFetching } = useGroup({ limit: 50 });
 
   return (
     <div className="min-h-[calc(100dvh+75px)] bg-base-white">
@@ -125,11 +126,13 @@ export default function GatheringForm({
         ) : isFetching ? (
           <FullPageLoader />
         ) : group_data ? (
-          <AddGroupSlider
-            group_data={group_data}
-            setGatheringInfo={setGathering}
-            gatheringInfo={gathering}
-          />
+          <div className="w-dwv overflow-x-scroll no-scrollbar">
+            <AddGroupSlider
+              group_data={group_data}
+              setGatheringInfo={setGathering}
+              gatheringInfo={gathering}
+            />
+          </div>
         ) : null}
         <Spacing size={36} />
         <div className="grid grid-cols-2 gap-4">

@@ -1,29 +1,35 @@
 "use client";
 import FilterBar from "@/components/shared/YearFilter";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import clsx from "clsx";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
-import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import getHeader from "@/utils/getHeader";
-import { recordModalAtom } from "@/atoms/modal";
+import { feedDisplayModalAtom } from "@/atoms/modal";
 import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useEffect, useMemo, useState } from "react";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import Modal from "@/components/shared/Modal/Modal";
+import useDisplayFeed from "@/components/feeds/hooks/useDisplayFeed";
+import { selectedFeedIdAtom } from "@/atoms/feed";
 
 export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
   const header = useMemo(() => getHeader("/hidden"), []);
   const isPast = useScrollThreshold();
-  const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
+  const [feedHideModalOpen, setFeedDisplayModalOpen] =
+    useRecoilState(feedDisplayModalAtom);
+  const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
   const {
     data: hiddenFeed,
     loadMore,
     isFetching,
   } = useFeedHidden({ limit: 10 });
+
+  const { mutate: displayFeed } = useDisplayFeed({ feedId: selectedFeedId });
 
   useEffect(() => {
     setIsClient(true);
@@ -67,15 +73,17 @@ export default function FeedPage() {
             className="!pt-12"
             isFetching={isFetching}
           />
+          {feedHideModalOpen && (
+            <Modal
+              title="피드 숨김을 해제할까요?"
+              left="취소"
+              right="해제"
+              action={displayFeed}
+              onClose={() => setFeedDisplayModalOpen(false)}
+            />
+          )}
         </>
       )}
-
-      {recordModalOpen ? (
-        <MemoriesBottomSheet
-          onClose={() => setRecordModalOpen(false)}
-          open={recordModalOpen}
-        />
-      ) : null}
     </div>
   );
 }

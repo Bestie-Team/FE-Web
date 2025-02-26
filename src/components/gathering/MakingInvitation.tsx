@@ -7,6 +7,7 @@ import { SetterOrUpdater } from "recoil";
 import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCard";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { useMemo } from "react";
+import { lightyToast } from "@/utils/toast";
 
 export default function MakingInvitation({
   gathering,
@@ -19,7 +20,14 @@ export default function MakingInvitation({
 }) {
   const { userInfo } = useAuth();
   const header = useMemo(() => getHeader("/gathering/new"), []);
-
+  const handleMakeGathering = () => {
+    if (gathering.invitationImageUrl !== "") {
+      makeGathering();
+    }
+    if (gathering.invitationImageUrl == "") {
+      lightyToast.error("이미지가 업로드되지 않았어요.");
+    }
+  };
   return (
     <Flex direction="column" className="bg-grayscale-50 h-full">
       {header}
@@ -39,7 +47,7 @@ export default function MakingInvitation({
         <FixedBottomButton
           bgColor="bg-grayscale-50"
           label={"초대장 보내기"}
-          onClick={makeGathering}
+          onClick={handleMakeGathering}
         />
       </Flex>
     </Flex>

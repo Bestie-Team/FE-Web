@@ -16,6 +16,7 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import NoInvitation from "@/components/invitation/NoInvitation";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
+import useReadNotification from "@/components/notice/hooks/useReadNotification";
 
 export default function InvitationPage() {
   const [isClient, setIsClient] = useState(false);
@@ -51,6 +52,8 @@ export default function InvitationPage() {
     loadMore,
     targetRef: containerRef_r,
   });
+
+  const { mutate: read } = useReadNotification();
 
   const renderSwiper = useMemo(() => {
     return (
@@ -123,6 +126,7 @@ export default function InvitationPage() {
 
   useEffect(() => {
     setIsClient(true);
+    read();
   }, []);
 
   if (!isClient) {
