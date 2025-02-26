@@ -22,9 +22,8 @@ export default function InvitationPage() {
   const isPast = useScrollThreshold();
   const header = useMemo(() => getHeader("/invitation"), []);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const containerRef = useRef<any>(null);
-  const containerRef_r = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef_r = useRef<HTMLDivElement>(null);
 
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
     useTabs();

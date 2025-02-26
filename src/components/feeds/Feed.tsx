@@ -1,5 +1,4 @@
 import FeedCard from "@/components/feeds/FeedCard";
-import Flex from "@/components/shared/Flex";
 import { Feed } from "@/models/feed";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
