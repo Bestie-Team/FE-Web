@@ -49,7 +49,7 @@ export const useInfiniteScrollByRef = ({
   isFetching,
   loadMore,
   targetRef,
-  threshold = 300,
+  threshold = 500,
 }: InfiniteScrollRefType) => {
   const [page, setPage] = useState(0);
 
