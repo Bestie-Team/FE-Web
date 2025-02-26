@@ -28,6 +28,7 @@ export default function useFeedAll({
     initialPageParam: defaultCursor,
     throwOnError: true,
     staleTime: 60 * 1000,
+    refetchOnWindowFocus: true,
   });
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {

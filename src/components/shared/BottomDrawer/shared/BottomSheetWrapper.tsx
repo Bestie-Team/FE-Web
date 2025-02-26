@@ -23,8 +23,8 @@ export default function BottomSheetWrapper({
 
   const handleAnimationEnd = () => {
     if (isClosing) {
-      onClose();
       setIsClosing(false);
+      onClose();
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,6 @@ export default function MemoriesBottomSheet({
 }) {
   const router = useRouter();
   const setStep = useSetRecoilState(recordStepAtom);
-  const [down, setDown] = useState(false);
   const [link, setLink] = useState("/");
 
   const handleClose = () => {
@@ -32,7 +31,7 @@ export default function MemoriesBottomSheet({
   };
 
   return (
-    <BottomSheetWrapper onClose={handleClose} open={open} down={down}>
+    <BottomSheetWrapper onClose={handleClose} open={open} down={link !== "/"}>
       <Flex direction="column" className="p-6 pt-1">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
         {actions.map((action) => {
@@ -41,8 +40,7 @@ export default function MemoriesBottomSheet({
               <Spacing size={20} />
               <ActionItem
                 onClick={() => {
-                  setDown(true);
-                  setTimeout(() => setLink(action.link), 50);
+                  setLink(action.link);
                 }}
                 icon={action.icon}
                 title={action.title}
