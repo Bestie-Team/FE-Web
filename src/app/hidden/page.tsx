@@ -61,7 +61,12 @@ export default function FeedPage() {
               <FilterBar />
             </div>
           </div>
-          <Feed feeds={hiddenFeed} onClickFeed={() => {}} className="!pt-12" />
+          <Feed
+            feeds={hiddenFeed}
+            onClickFeed={() => {}}
+            className="!pt-12"
+            isFetching={isFetching}
+          />
         </>
       )}
 
