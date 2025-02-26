@@ -12,6 +12,7 @@ import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+// import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
   gatheringId: "",
@@ -108,6 +109,7 @@ export default function CreatingFeed({
         setFilesToUpload={setFilesToUpload}
         selectedGathering={selectedGathering}
       />
+      {/* <PhotoSelectBottomSheet onClose={() => {}} /> */}
     </div>
   );
 }

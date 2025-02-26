@@ -18,8 +18,7 @@ export default function useFeedHidden({ limit }: { limit: number }) {
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
     throwOnError: true,
-    staleTime: Infinity,
-    refetchInterval: 3600 * 1000,
+    staleTime: 3600 * 1000,
   });
 
   const loadMore = useCallback(() => {

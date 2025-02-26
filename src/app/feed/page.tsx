@@ -171,6 +171,7 @@ export default function FeedPage() {
   );
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef_m = useRef<HTMLDivElement>(null);
 
   const queryParams = useMemo(
     () => ({
@@ -256,7 +257,7 @@ export default function FeedPage() {
   useInfiniteScrollByRef({
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
-    targetRef: containerRef,
+    targetRef: containerRef_m,
   });
 
   useInfiniteScrollByRef({
@@ -273,7 +274,7 @@ export default function FeedPage() {
 
   const renderSwipers = useMemo(() => {
     return (
-      <div ref={containerRef} draggable="false" className="h-dvh">
+      <div className="h-dvh">
         <Swiper
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
@@ -284,19 +285,37 @@ export default function FeedPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper h-dvh w-full !z-5"
+          className="custom-swiper !h-dvh w-full !z-5 overflow-y-scroll no-scrollbar"
         >
           {feedAll && feedAll.length > 0 ? (
-            <SwiperSlide className="overflow-y-scroll no-scrollbar">
-              <Feed feeds={feedAll} onClickFeed={setSelectedFeedId} />
+            <SwiperSlide>
+              <div
+                ref={containerRef}
+                className="h-full overflow-y-auto no-scrollbar"
+              >
+                <Feed
+                  feeds={feedAll}
+                  onClickFeed={setSelectedFeedId}
+                  isFetching={isFetching}
+                />
+              </div>
             </SwiperSlide>
           ) : (
             <NoFeed />
           )}
           {feedMine && (
-            <SwiperSlide className="overflow-y-scroll no-scrollbar">
+            <SwiperSlide>
               {feedMine.length > 0 ? (
-                <Feed feeds={feedMine} onClickFeed={setSelectedFeedId} />
+                <div
+                  ref={containerRef_m}
+                  className="h-full overflow-y-auto no-scrollbar"
+                >
+                  <Feed
+                    feeds={feedMine}
+                    onClickFeed={setSelectedFeedId}
+                    isFetching={isFetching_mine}
+                  />
+                </div>
               ) : (
                 <NoFeed />
               )}

@@ -1,7 +1,7 @@
 import { getFeedMine } from "@/remote/feed";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FeedResponse } from "@/models/feed";
 
 const uuid = uuidv4();
@@ -16,7 +16,7 @@ export default function useFeedMine({
   maxDate: string;
   limit: number;
 }) {
-  const cursor = {
+  const defaultCursor = {
     createdAt: order === "DESC" ? maxDate : minDate,
     id: uuid,
   };
@@ -25,9 +25,9 @@ export default function useFeedMine({
     queryFn: async ({ pageParam: cursor }): Promise<FeedResponse> =>
       getFeedMine({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
-    initialPageParam: cursor,
+    initialPageParam: defaultCursor,
     throwOnError: true,
-    staleTime: 3600 * 24000,
+    staleTime: 60 * 1000,
   });
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {
@@ -36,7 +36,10 @@ export default function useFeedMine({
     fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetching]);
 
-  const friends = data?.pages.map(({ feeds }) => feeds).flat();
+  const friends = useMemo(
+    () => data?.pages.flatMap(({ feeds }) => feeds) ?? [],
+    [data]
+  );
 
   return { data: friends, loadMore, isFetching, hasNextPage };
 }

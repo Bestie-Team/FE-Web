@@ -20,9 +20,8 @@ export default function useSearchFriends({
       name: "가",
       accountId: "a",
     },
-    refetchInterval: 3600 * 1000,
     enabled: enabled,
-    staleTime: 3600 * 24000,
+    staleTime: 5 * 60 * 1000,
   });
 
   const loadMore = useCallback(() => {

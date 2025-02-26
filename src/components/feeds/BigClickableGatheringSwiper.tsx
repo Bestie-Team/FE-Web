@@ -40,12 +40,12 @@ export default function BigClickableGatheringSwiper({
             key={`gathering${id}`}
           >
             <Image
-              layout="fixed"
               src={invitationImageUrl}
               alt={`gathering${idx + 1}`}
               className={styles.image}
               width={270}
               height={320}
+              loading="lazy"
             />
             <Flex direction="column" className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{name}</span>

@@ -12,8 +12,7 @@ export default function useGroup() {
       }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: null as string | null,
-    staleTime: 3600 * 24000,
-    refetchInterval: 300 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 
   const loadMore = useCallback(() => {

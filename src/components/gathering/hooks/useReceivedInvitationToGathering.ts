@@ -16,7 +16,7 @@ export default function useReceivedInvitationToGathering() {
     }): Promise<lighty.ReceivedGatheringInvitationListResponse> => {
       return getReceivedInvitationToGatheringList({
         cursor,
-        limit: 20,
+        limit: 4,
         minDate: minDate(),
         maxDate: maxDate(),
       });
@@ -24,7 +24,6 @@ export default function useReceivedInvitationToGathering() {
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: cursor,
     refetchInterval: 60 * 1000,
-    staleTime: 36000 * 24000,
   });
 
   const loadMore = useCallback(() => {

@@ -14,8 +14,7 @@ function useFriends() {
       name: "가가",
       accountId: "aaaaa",
     },
-    refetchInterval: 60 * 1000,
-    staleTime: 3600 * 24000,
+    staleTime: 5 * 60 * 1000,
   });
 
   const loadMore = useCallback(() => {
@@ -43,8 +42,7 @@ export function useFriendsAll() {
       name: "가가",
       accountId: "aaaaa",
     },
-    staleTime: 60 * 24000,
-    refetchInterval: 3600 * 1000,
+    staleTime: 5 * 60 * 1000,
   });
 
   const loadMore = useCallback(() => {

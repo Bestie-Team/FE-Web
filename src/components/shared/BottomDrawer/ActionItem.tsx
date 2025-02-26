@@ -1,20 +1,23 @@
+import clsx from "clsx";
 import Button from "../Button/Button";
 import Flex from "../Flex";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 
 export default function ActionItem({
+  padding,
   title,
   onClick,
   subTitle,
   icon,
 }: {
+  padding?: string;
   title: string;
   onClick?: () => void;
   subTitle?: string;
   icon: React.ReactNode;
 }) {
   return (
-    <Flex className={styles.container} onMouseDown={onClick}>
+    <Flex className={clsx(styles.container, padding)} onMouseDown={onClick}>
       <Button className={styles.button}>{icon}</Button>
       <Flex className={styles.descWrapper}>
         <Flex direction="column" className="gap-1 flex-grow">

@@ -20,7 +20,7 @@ export function DotIcon({
           cx="2"
           cy="10"
           r="2"
-          fill={display ? "#FA6767" : "white"}
+          fill={display ? "#FA6767" : "transparent"}
         />
       </g>
     </svg>

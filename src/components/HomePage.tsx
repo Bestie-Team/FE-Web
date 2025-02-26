@@ -98,8 +98,8 @@ export default function HomePage() {
   }, [setIsNew]);
 
   const { data: this_week, isFetching } = useGatherings({
-    cursor: { createdAt: minDate },
-    limit: 10,
+    cursor: { createdAt: maxDate },
+    limit: 50,
     minDate,
     maxDate,
   });

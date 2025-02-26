@@ -3,15 +3,14 @@ import Flex from "../Flex";
 import Spacing from "../Spacing";
 import { useRouter } from "next/navigation";
 import Text from "../Text";
-import UserIcon from "../Icon/UserIcon";
-import PencilIcon from "../Icon/PencilIcon";
-import PicturesIcon from "../Icon/PicturesIcon";
 import ActionItem from "./ActionItem";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { useSetRecoilState } from "recoil";
 import { recordStepAtom } from "@/atoms/record";
+import PhotoIcon from "../Icon/PhotoIcon";
+import CameraIcon from "../Icon/CameraIcon";
 
-export default function MemoriesBottomSheet({
+export default function PhotoSelectBottomSheet({
   open = true,
   onClose,
 }: {
@@ -33,20 +32,20 @@ export default function MemoriesBottomSheet({
 
   return (
     <BottomSheetWrapper onClose={handleClose} open={open} down={down}>
-      <Flex direction="column" className="p-6 pt-1">
-        <Text className="text-T3">추억을 만들어볼까요?</Text>
+      <Flex direction="column" className="px-6 pb-6">
+        <Text className="text-T3">이미지 추가</Text>
+        <Spacing size={12} />
         {actions.map((action) => {
           return (
             <React.Fragment key={`${action.title}`}>
-              <Spacing size={20} />
               <ActionItem
+                padding="py-4"
                 onClick={() => {
                   setDown(true);
                   setTimeout(() => setLink(action.link), 50);
                 }}
                 icon={action.icon}
                 title={action.title}
-                subTitle={action.subTitle}
               />
             </React.Fragment>
           );
@@ -58,21 +57,13 @@ export default function MemoriesBottomSheet({
 
 const actions = [
   {
-    icon: <UserIcon width="18" height="18" color="#fff" />,
-    title: "모임 약속 만들기",
-    subTitle: "모임 약속을 만들고 친구들에게 약속 초대장을 보내요",
-    link: "/gathering/new",
-  },
-  {
-    icon: <PencilIcon />,
-    title: "추억 기록하기",
-    subTitle: "소중한 약속 추억을 기록하고 공유할 수 있어요",
+    icon: <PhotoIcon />,
+    title: "앨범에서 선택하기",
     link: "/record",
   },
   {
-    icon: <PicturesIcon />,
-    title: "포트 카드 만들기",
-    subTitle: "추억이 담긴 포토 카드를 꾸밀 수 있어요",
+    icon: <CameraIcon />,
+    title: "카메라로 촬영하기",
     link: "/card",
   },
 ];

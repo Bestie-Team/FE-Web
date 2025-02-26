@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dimmed from "../../Dimmed";
 import Flex from "../../Flex";
 import clsx from "clsx";
@@ -10,16 +10,16 @@ export default function BottomSheetWrapper({
   children,
   bar = true,
   bright = false,
+  down,
 }: {
   open?: boolean;
   onClose: () => void;
   children: React.ReactNode;
   bar?: boolean;
   bright?: boolean;
+  down?: boolean;
 }) {
   const [isClosing, setIsClosing] = useState(false);
-
-  if (open === false) return null;
 
   const handleAnimationEnd = () => {
     if (isClosing) {
@@ -31,6 +31,14 @@ export default function BottomSheetWrapper({
   const handleBackdropClick = () => {
     setIsClosing(true);
   };
+
+  useEffect(() => {
+    if (down) {
+      setIsClosing(true);
+    }
+  }, [down]);
+
+  if (open === false) return null;
 
   return (
     <Dimmed onClick={handleBackdropClick} isClosing={isClosing} bright={bright}>

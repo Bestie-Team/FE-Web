@@ -82,7 +82,7 @@ export default function InvitationCard({
 }
 
 const styles = {
-  container: "w-full h-full px-5",
+  container: "w-full h-fit px-5",
   mainContentWrapper:
     "h-[173px] w-full max-w-[196px] gap-[54px] absolute py-6 pl-5 left-0 top-0",
   subContentWrapper: "w-full max-w-[188px] absolute pl-5 py-6 left-0 bottom-0",

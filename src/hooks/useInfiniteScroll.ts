@@ -7,7 +7,7 @@ interface InfiniteScrollType {
 }
 
 const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   const checkScrollPosition = useCallback(() => {
     const documentHeight = document.documentElement.scrollHeight;
@@ -30,7 +30,9 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
   }, [debouncedScroll]);
 
   useEffect(() => {
-    loadMore();
+    if (page > 0) {
+      loadMore();
+    }
   }, [page]);
 };
 
@@ -47,9 +49,9 @@ export const useInfiniteScrollByRef = ({
   isFetching,
   loadMore,
   targetRef,
-  threshold = 400,
+  threshold = 300,
 }: InfiniteScrollRefType) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   const checkScrollPosition = useCallback(() => {
     if (!targetRef.current) return;
@@ -62,6 +64,7 @@ export const useInfiniteScrollByRef = ({
     if (elementHeight - (scrollTop + clientHeight) < threshold && !isFetching) {
       setPage((prev) => prev + 1);
     }
+    console.log(elementHeight - (scrollTop + clientHeight));
   }, [isFetching, targetRef, threshold]);
 
   const debouncedScroll = useDebounce(checkScrollPosition, 300);
@@ -78,6 +81,8 @@ export const useInfiniteScrollByRef = ({
   }, [debouncedScroll, targetRef]);
 
   useEffect(() => {
-    loadMore();
+    if (page > 0) {
+      loadMore();
+    }
   }, [page, loadMore]);
 };

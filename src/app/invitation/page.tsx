@@ -1,8 +1,7 @@
 "use client";
 import InvitationCard from "@/components/invitation/InvitationCard";
-import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import getHeader from "@/utils/getHeader";
@@ -16,13 +15,16 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import NoInvitation from "@/components/invitation/NoInvitation";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 
 export default function InvitationPage() {
   const [isClient, setIsClient] = useState(false);
   const isPast = useScrollThreshold();
   const header = useMemo(() => getHeader("/invitation"), []);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const containerRef = useRef<any>(null);
+  const containerRef_r = useRef<any>(null);
 
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
     useTabs();
@@ -39,20 +41,96 @@ export default function InvitationPage() {
     loadMore: loadMore_s,
   } = useSentInvitationToGathering();
 
-  console.log(sent);
+  useInfiniteScrollByRef({
+    isFetching: isFetching_s,
+    loadMore: loadMore_s,
+    targetRef: containerRef,
+  });
+
+  useInfiniteScrollByRef({
+    isFetching,
+    loadMore,
+    targetRef: containerRef_r,
+  });
+
+  const renderSwiper = useMemo(() => {
+    return (
+      <Swiper
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => {
+          handleSlideChange(swiper.activeIndex);
+        }}
+        slidesPerView={1}
+        spaceBetween={2}
+        className="custom-swiper w-full !h-dvh"
+      >
+        <SwiperSlide>
+          <div
+            ref={containerRef_r}
+            className="h-dvh overflow-y-auto no-scrollbar"
+          >
+            {received && received.length > 0 ? (
+              <>
+                <Spacing size={110} />
+                {received?.map((invitation) => {
+                  return (
+                    <React.Fragment key={invitation.id}>
+                      <InvitationCard
+                        onClickOpen={setModalOpen}
+                        invitation={invitation}
+                      />
+                      <Spacing size={24} />
+                    </React.Fragment>
+                  );
+                })}
+                {isFetching && <DotSpinner />}
+              </>
+            ) : (
+              <NoInvitation type="RECEIVED" />
+            )}
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div
+            ref={containerRef}
+            className="h-dvh overflow-y-auto no-scrollbar"
+          >
+            {sent && sent.length > 0 ? (
+              <>
+                <Spacing size={110} />
+                {sent?.map((invitation) => {
+                  return (
+                    <React.Fragment key={invitation.gatheringId}>
+                      <InvitationCard
+                        onClickOpen={setModalOpen}
+                        invitation={invitation}
+                      />
+                      <Spacing size={24} />
+                    </React.Fragment>
+                  );
+                })}
+                {isFetching_s && <DotSpinner />}
+              </>
+            ) : (
+              <NoInvitation type="SENT" />
+            )}
+          </div>
+        </SwiperSlide>
+      </Swiper>
+    );
+  }, [received, sent, selectedTab, swiperRef, handleSlideChange]);
+
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  useInfiniteScroll({ isFetching, loadMore });
-  useInfiniteScroll({ isFetching: isFetching_s, loadMore: loadMore_s });
-
   if (!isClient) {
     return <FullPageLoader />;
   }
-
   return (
-    <div className="min-h-dvh">
+    <div className="h-dvh">
       <div
         id="filter"
         className={clsx(filterStyle, isPast ? "shadow-bottom" : "")}
@@ -69,60 +147,7 @@ export default function InvitationPage() {
           />
         </div>
       </div>
-      {isFetching || isFetching_s ? (
-        <DotSpinner />
-      ) : (
-        <Swiper
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          onSlideChange={(swiper) => {
-            handleSlideChange(swiper.activeIndex);
-          }}
-          slidesPerView={1}
-          spaceBetween={2}
-          className="custom-swiper w-full"
-        >
-          <SwiperSlide>
-            {received && received.length > 0 ? (
-              <Flex direction="column" className="pt-[110px] min-h-dvh">
-                {received?.map((invitation) => {
-                  return (
-                    <React.Fragment key={invitation.id}>
-                      <InvitationCard
-                        onClickOpen={setModalOpen}
-                        invitation={invitation}
-                      />
-                      <Spacing size={24} />
-                    </React.Fragment>
-                  );
-                })}
-              </Flex>
-            ) : (
-              <NoInvitation type="RECEIVED" />
-            )}
-          </SwiperSlide>
-          <SwiperSlide>
-            {sent && sent.length > 0 ? (
-              <Flex direction="column" className="pt-[110px] min-h-dvh">
-                {sent?.map((invitation) => {
-                  return (
-                    <React.Fragment key={invitation.gatheringId}>
-                      <InvitationCard
-                        onClickOpen={setModalOpen}
-                        invitation={invitation}
-                      />
-                      <Spacing size={24} />
-                    </React.Fragment>
-                  );
-                })}
-              </Flex>
-            ) : (
-              <NoInvitation type="SENT" />
-            )}
-          </SwiperSlide>
-        </Swiper>
-      )}
+      {renderSwiper}
       {isModalOpen ? (
         <InvitationModal
           onClickClose={setModalOpen}

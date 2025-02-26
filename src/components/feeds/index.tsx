@@ -18,7 +18,7 @@ export default function Record() {
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
   const { data: gathering_noFeed } = useGatheringNoFeeds({
-    limit: 100,
+    limit: 30,
   });
 
   const handleSelectGathering = () => {
