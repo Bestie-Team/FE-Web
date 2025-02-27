@@ -10,6 +10,7 @@ import * as lighty from "lighty-type";
 import useFriends from "./hooks/useFriends";
 import Modal from "../shared/Modal/Modal";
 import { friendsToShareAtom } from "@/atoms/record";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function SelectFriendsContainer({
   type = "default",
@@ -24,6 +25,7 @@ export default function SelectFriendsContainer({
   setStep?: Dispatch<SetStateAction<number>>;
   exceptFriends?: lighty.User[] | null;
 }) {
+  const { userInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [countModal, setCountModal] = useState(false);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
@@ -34,7 +36,7 @@ export default function SelectFriendsContainer({
     friendsToShareAtom
   );
   console.log(exceptFriends);
-  const { data: friends } = useFriends();
+  const { data: friends } = useFriends({ userId: userInfo?.accountId || "" });
 
   const toggleItemClick = (idx: number) => {
     if (clickedItems.length >= 10 && !clickedItems.includes(idx)) {
