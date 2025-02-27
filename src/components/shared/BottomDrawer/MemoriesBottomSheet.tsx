@@ -20,18 +20,20 @@ export default function MemoriesBottomSheet({
 }) {
   const router = useRouter();
   const setStep = useSetRecoilState(recordStepAtom);
-  const [link, setLink] = useState("/");
+  const [link, setLink] = useState("");
 
   const handleClose = () => {
     if (link == "/record") {
       setStep(1);
     }
     onClose();
-    router.push(link);
+    if (link !== "") {
+      router.push(link);
+    }
   };
 
   return (
-    <BottomSheetWrapper onClose={handleClose} open={open} down={link !== "/"}>
+    <BottomSheetWrapper onClose={handleClose} open={open} down={link !== ""}>
       <Flex direction="column" className="p-6 pt-1">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
         {actions.map((action) => {

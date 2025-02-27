@@ -137,6 +137,7 @@ export default function MyGatheringPage() {
       />
       <PullToRefresh
         onRefresh={handleRefresh}
+        pullingContent={<></>}
         refreshingContent={
           <div className="flex justify-center pt-[96px]">
             <DotSpinnerSmall />

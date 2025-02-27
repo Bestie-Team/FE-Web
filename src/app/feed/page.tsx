@@ -367,6 +367,7 @@ export default function FeedPage() {
       {(!isClient || !feedMine || !feedAll) && <DotSpinner />}
       <PullToRefresh
         onRefresh={handleRefresh}
+        pullingContent={<></>}
         refreshingContent={
           <div className="flex justify-center pt-[96px]">
             <DotSpinnerSmall />
