@@ -3,9 +3,9 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import * as lighty from "lighty-type";
 import { useCallback } from "react";
 
-function useFriends() {
+function useFriends({ userId }: { userId?: string }) {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["friends", { accountId: "aaaa", limit: 10 }],
+    queryKey: ["friends", userId],
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getFriends({ ...pageParam, limit: 10 });
     },

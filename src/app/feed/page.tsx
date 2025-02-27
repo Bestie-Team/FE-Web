@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import Feed from "@/components/feeds/Feed";
+import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
@@ -37,6 +38,7 @@ import ReportModal from "@/components/shared/Modal/ReportModal";
 import NavBar from "@/components/shared/NavBar";
 import { useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -336,6 +338,25 @@ export default function FeedPage() {
     setIsClient(true);
   }, []);
 
+  const handleRefresh = async () => {
+    try {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["get/feeds/all"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["get/feeds/mine"],
+        }),
+      ]);
+
+      return true;
+    } catch (error) {
+      console.error("Refresh failed:", error);
+      lightyToast.error("새로고침에 실패했어요");
+      return false;
+    }
+  };
+
   return (
     <div className="h-dvh no-scrollbar">
       <Header
@@ -344,7 +365,16 @@ export default function FeedPage() {
         handleTabClick={handleTabClick}
       />
       {(!isClient || !feedMine || !feedAll) && <DotSpinner />}
-      {renderSwipers}
+      <PullToRefresh
+        onRefresh={handleRefresh}
+        refreshingContent={
+          <div className="flex justify-center pt-[96px]">
+            <DotSpinnerSmall />
+          </div>
+        }
+      >
+        {renderSwipers}
+      </PullToRefresh>
       {recordModalOpen && (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}

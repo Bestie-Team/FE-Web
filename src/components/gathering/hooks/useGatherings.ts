@@ -18,7 +18,7 @@ export default function useGatherings({
 }) {
   const defaultCursor = cursor;
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["gatherings", { minDate, maxDate }],
+    queryKey: ["gatherings"],
     queryFn: ({ pageParam: cursor }) =>
       getGatherings({
         cursor: cursor

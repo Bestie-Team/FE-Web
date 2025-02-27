@@ -18,6 +18,7 @@ export const MENU_TYPES = {
   FEED: "feed",
   HIDDEN: "hidden",
   GATHERING: "gathering",
+  ENDEDGATHERING: "endedGathering",
 } as const;
 
 type MenuType = (typeof MENU_TYPES)[keyof typeof MENU_TYPES];
@@ -50,6 +51,10 @@ const MENU_CONFIGS = {
   [MENU_TYPES.GATHERING]: {
     items: ["약속 삭제하기", "약속 수정하기"],
     className: "absolute -bottom-[104px] -right-[4px]",
+  },
+  [MENU_TYPES.ENDEDGATHERING]: {
+    items: ["약속 삭제하기"],
+    className: "absolute -bottom-[44px] -right-[4px]",
   },
 };
 
@@ -142,6 +147,14 @@ export default function Options({
         />
       )}
       {opened && type === MENU_TYPES.GATHERING && gathering && (
+        <GatheringDropdownMenu
+          gathering={gathering}
+          ref={ref}
+          items={MENU_CONFIGS[type].items}
+          className={MENU_CONFIGS[type].className}
+        />
+      )}
+      {opened && type === MENU_TYPES.ENDEDGATHERING && gathering && (
         <GatheringDropdownMenu
           gathering={gathering}
           ref={ref}

@@ -12,6 +12,7 @@ import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
 import { useSetRecoilState } from "recoil";
 import { selectedFriendAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function FriendListItem({
   senderId,
@@ -29,29 +30,30 @@ export default function FriendListItem({
   clicked?: boolean;
 }) {
   const queryClient = useQueryClient();
+  const { userInfo } = useAuth();
   const setSelectedFriend = useSetRecoilState(selectedFriendAtom);
 
   const acceptSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
-    await queryClient.invalidateQueries({
-      queryKey: ["received", "friendsRequests", { accountId: "a", limit: 30 }],
-    });
+    Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: [
+          "received",
+          "friendsRequests",
+          { accountId: "a", limit: 30 },
+        ],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["friends", userInfo?.accountId],
+      }),
+    ]);
   };
 
   const rejectSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
-    Promise.all([
-      await queryClient.invalidateQueries({
-        queryKey: ["reject/friend", senderId],
-      }),
-      await queryClient.invalidateQueries({
-        queryKey: [
-          "sent",
-          "friendsRequests",
-          { name: "가", accountId: "a", limit: 30 },
-        ],
-      }),
-    ]);
+    await queryClient.invalidateQueries({
+      queryKey: ["received", "friendsRequests", { accountId: "a", limit: 30 }],
+    });
   };
 
   const { mutate: accept, isPending } = useAcceptFriendRequest({

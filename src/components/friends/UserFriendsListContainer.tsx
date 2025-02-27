@@ -10,6 +10,7 @@ import { friendDeleteModalAtom } from "@/atoms/modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 const DeleteFriendModal = memo(
   ({
@@ -40,18 +41,21 @@ DeleteFriendModal.displayName = "DeleteFriendModal";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
+  const { userInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(friendsModalStateAtom);
   const [deleteFriendModalOpen, setDeleteFriendModalOpen] = useRecoilState(
     friendDeleteModalAtom
   );
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
 
-  const { data, loadMore, isFetching } = useFriends();
+  const { data, loadMore, isFetching } = useFriends({
+    userId: userInfo?.accountId,
+  });
 
   const deleteSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
     await queryClient.invalidateQueries({
-      queryKey: ["friends", { accountId: "aaaa", limit: 20 }],
+      queryKey: ["friends", userInfo?.accountId],
     });
   };
 

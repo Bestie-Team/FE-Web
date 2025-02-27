@@ -70,6 +70,7 @@ export default function GatheringDetailPage({
   const { gatheringDate, members, hostUser, address } = selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);
+  const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
 
   return (
     <Flex direction="column" className="relative w-full h-full bg-grayscale-50">
@@ -84,7 +85,7 @@ export default function GatheringDetailPage({
         </div>
         {userInfo?.accountId === hostUser.accountId && (
           <Options
-            type={MENU_TYPES.GATHERING}
+            type={isEnded ? MENU_TYPES.ENDEDGATHERING : MENU_TYPES.GATHERING}
             gathering={selectedGathering}
             color="white"
           />

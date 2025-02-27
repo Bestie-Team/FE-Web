@@ -17,6 +17,10 @@ import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import PullToRefresh from "react-simple-pull-to-refresh";
+import { useQueryClient } from "@tanstack/react-query";
+import { lightyToast } from "@/utils/toast";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const Header = React.memo(
   ({
@@ -60,6 +64,7 @@ Header.displayName = "Header";
 
 export default function MyGatheringPage() {
   const isPast = useScrollThreshold();
+  const queryClient = useQueryClient();
   const [isClient, setIsClient] = useState(false);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
@@ -104,6 +109,25 @@ export default function MyGatheringPage() {
     return <FullPageLoader />;
   }
 
+  const handleRefresh = async () => {
+    try {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["gatherings"],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["gatherings/ended"],
+        }),
+      ]);
+
+      return true;
+    } catch (error) {
+      console.error("Refresh failed:", error);
+      lightyToast.error("새로고침에 실패했어요");
+      return false;
+    }
+  };
+
   return (
     <div className="min-h-dvh no-scrollbar">
       <Header
@@ -111,15 +135,24 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-      <GatheringPageSwiper
-        isFetching={isFetching}
-        isFetching_e={isFetching_e}
-        expectingGatherings={myGatherings}
-        endedGatherings={ended}
-        selectedTab={selectedTab}
-        swiperRef={swiperRef}
-        onSlideChange={(index) => handleSlideChange(index)}
-      />
+      <PullToRefresh
+        onRefresh={handleRefresh}
+        refreshingContent={
+          <div className="flex justify-center pt-[96px]">
+            <DotSpinnerSmall />
+          </div>
+        }
+      >
+        <GatheringPageSwiper
+          isFetching={isFetching}
+          isFetching_e={isFetching_e}
+          expectingGatherings={myGatherings}
+          endedGatherings={ended}
+          selectedTab={selectedTab}
+          swiperRef={swiperRef}
+          onSlideChange={(index) => handleSlideChange(index)}
+        />
+      </PullToRefresh>
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>
   );
