@@ -6,13 +6,11 @@ import * as lighty from "lighty-type";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import FloatingButton from "./Button/FloatingButton";
 import useUserProfile from "../users/hooks/useUserProfile";
-import { useRouter } from "next/navigation";
 
 const MemoizedNavLink = memo(NavLink);
 const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
-  const router = useRouter();
   const { data: user } = useUserProfile();
   const [isClient, setIsClient] = useState(false);
   const { setActiveBtn, pathname, activeBtn } = useActiveNavigation();

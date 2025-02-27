@@ -1,11 +1,12 @@
-import { getGroups } from "@/remote/group";
 import { getNotification } from "@/remote/notification";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 const uuid = uuidv4();
+
 export default function useNotification() {
   const defaultCursor = { createdAt: new Date().toISOString(), id: uuid };
+
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["notification"],
     queryFn: ({ pageParam: cursor }) => getNotification({ cursor, limit: 5 }),

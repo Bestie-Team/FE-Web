@@ -9,7 +9,6 @@ import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { Feed } from "@/models/feed";
 import GatheringDropdownMenu from "./DropDownMenu/GatheringDropDownMenu";
 import * as lighty from "lighty-type";
-import { usePathname } from "next/navigation";
 
 export const MENU_TYPES = {
   COMMENT: "comment",

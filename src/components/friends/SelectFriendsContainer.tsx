@@ -127,6 +127,7 @@ export default function SelectFriendsContainer({
             </React.Fragment>
           );
         })}
+        <Spacing size={50} />
       </ul>
       <FixedBottomButton
         bgColor="bg-grayscale-50"

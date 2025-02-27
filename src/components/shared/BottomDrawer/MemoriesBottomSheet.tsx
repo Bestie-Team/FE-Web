@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import { useRouter } from "next/navigation";

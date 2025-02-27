@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
@@ -35,7 +35,6 @@ export default function GatheringForm({
   setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
   mutate?: () => void;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const isGroupInfoValid = () => {
     if (
       gathering.name.length <= 2 ||
