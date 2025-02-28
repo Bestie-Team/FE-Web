@@ -20,7 +20,6 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
-import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const Header = React.memo(
   ({
@@ -137,11 +136,8 @@ export default function MyGatheringPage() {
       />
       <PullToRefresh
         onRefresh={handleRefresh}
-        pullingContent={<></>}
-        refreshingContent={
-          <div className="flex justify-center pt-[96px]">
-            <DotSpinnerSmall />
-          </div>
+        pullingContent={
+          <div className="flex justify-center pt-[96px]">refreshing</div>
         }
       >
         <GatheringPageSwiper

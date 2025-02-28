@@ -15,6 +15,8 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Modal from "@/components/shared/Modal/Modal";
 import useDisplayFeed from "@/components/feeds/hooks/useDisplayFeed";
 import { selectedFeedIdAtom } from "@/atoms/feed";
+import { lightyToast } from "@/utils/toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
@@ -23,13 +25,23 @@ export default function FeedPage() {
   const [feedHideModalOpen, setFeedDisplayModalOpen] =
     useRecoilState(feedDisplayModalAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
+  const queryClient = useQueryClient();
+
   const {
     data: hiddenFeed,
     loadMore,
     isFetching,
   } = useFeedHidden({ limit: 10 });
 
-  const { mutate: displayFeed } = useDisplayFeed({ feedId: selectedFeedId });
+  const displaySuccessHandler = async (message: string) => {
+    lightyToast.success(message);
+    await queryClient.invalidateQueries({ queryKey: ["get/feeds/hidden"] });
+  };
+
+  const { mutate: displayFeed } = useDisplayFeed({
+    feedId: selectedFeedId,
+    onSuccess: displaySuccessHandler,
+  });
 
   useEffect(() => {
     setIsClient(true);

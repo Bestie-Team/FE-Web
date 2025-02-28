@@ -11,7 +11,7 @@ export default function useSentFriendsRequests({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["sent", "friendsRequests", { name, accountId, limit }],
+    queryKey: ["sent", "friendsRequests"],
     queryFn: () => {
       return getSentFriendRequestsList({ name, accountId, limit });
     },

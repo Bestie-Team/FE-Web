@@ -51,9 +51,18 @@ export default function FriendListItem({
 
   const rejectSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
-    await queryClient.invalidateQueries({
-      queryKey: ["received", "friendsRequests", { accountId: "a", limit: 30 }],
-    });
+    Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: [
+          "received",
+          "friendsRequests",
+          { accountId: "a", limit: 30 },
+        ],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["sent", "friendsRequests"],
+      }),
+    ]);
   };
 
   const { mutate: accept, isPending } = useAcceptFriendRequest({

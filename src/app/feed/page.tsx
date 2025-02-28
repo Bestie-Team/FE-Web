@@ -38,7 +38,6 @@ import ReportModal from "@/components/shared/Modal/ReportModal";
 import NavBar from "@/components/shared/NavBar";
 import { useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
-import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -367,11 +366,8 @@ export default function FeedPage() {
       {(!isClient || !feedMine || !feedAll) && <DotSpinner />}
       <PullToRefresh
         onRefresh={handleRefresh}
-        pullingContent={<></>}
-        refreshingContent={
-          <div className="flex justify-center pt-[96px]">
-            <DotSpinnerSmall />
-          </div>
+        pullingContent={
+          <div className="flex justify-center pt-[96px]">refreshing</div>
         }
       >
         {renderSwipers}
