@@ -18,10 +18,14 @@ export default function MakingGatheringStatus({
   const header = useMemo(() => getHeader("/gathering/new"), []);
   const router = useRouter();
   return (
-    <div className="flex flex-col bg-base-white h-full">
+    <Flex
+      direction="column"
+      className="h-[calc(100dvh-48px)] bg-base-white"
+      justify="center"
+      align="center"
+    >
       {header}
-      <Flex direction="column" className="h-screen pt-[106px]" align="center">
-        <Spacing size={140} />
+      <Flex direction="column" justify="center" align="center">
         {isPending === true ? (
           <DotSpinnerSmall width={28} height={28} />
         ) : (
@@ -50,13 +54,13 @@ export default function MakingGatheringStatus({
             height={108}
           />
         </div>
-        <FixedBottomButton
-          label={"홈으로 가기"}
-          onClick={() => {
-            router.replace("/");
-          }}
-        />
       </Flex>
-    </div>
+      <FixedBottomButton
+        label={"홈으로 가기"}
+        onClick={() => {
+          router.replace("/");
+        }}
+      />
+    </Flex>
   );
 }

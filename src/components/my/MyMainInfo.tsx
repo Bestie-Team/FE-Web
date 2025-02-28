@@ -29,7 +29,7 @@ export default function MyMainInfo({
       label: "작성 피드",
       icon: <EmptyLogoIcon />,
       value: feedCount,
-      link: "/feed",
+      link: "/feed?tab=2",
     },
     {
       label: "친구",

@@ -37,8 +37,8 @@ export default function GatheringForm({
 }) {
   const isGroupInfoValid = () => {
     if (
-      gathering.name.length <= 2 ||
-      gathering.description.length <= 10 ||
+      gathering.name.length < 1 ||
+      gathering.description.length < 1 ||
       gathering.type == null ||
       gathering.gatheringDate == null ||
       gathering.address.length < 1 ||
@@ -71,7 +71,7 @@ export default function GatheringForm({
         <Spacing size={24} />
         <Input
           name="gatheringName"
-          minLength={2}
+          minLength={1}
           displayLength={10}
           value={gathering.name}
           onChange={(e) =>
@@ -89,7 +89,7 @@ export default function GatheringForm({
         <Spacing size={36} />
         <Input
           name="gatheringDesc"
-          minLength={10}
+          minLength={1}
           displayLength={40}
           value={gathering.description}
           onChange={(e) =>
