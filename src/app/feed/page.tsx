@@ -73,7 +73,6 @@ const Header = React.memo(
           className={clsx(filterWrapperStyle, shadow ? "shadow-bottom" : "")}
         >
           <Panel
-            alarm
             selectedTab={selectedTab}
             long="short"
             title1="전체"

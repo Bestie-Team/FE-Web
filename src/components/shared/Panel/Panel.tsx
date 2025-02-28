@@ -7,7 +7,6 @@ import YearFilter from "../YearFilter";
 export type PanelLength = "short" | "medium" | "long" | "longer";
 
 export default function Panel({
-  alarm = false,
   title1,
   title2,
   long,
@@ -16,7 +15,6 @@ export default function Panel({
   selectedTab,
   year = true,
 }: {
-  alarm?: boolean;
   title1?: string;
   title2?: string;
   long: PanelLength;
@@ -38,7 +36,6 @@ export default function Panel({
           title={title1 ?? "left"}
           onMouseDown={() => onClick("1")}
           current={selectedTab === "1"}
-          fresh={alarm}
         />
         <TabButton
           title={title2 ?? "mine"}

@@ -22,7 +22,7 @@ export const lightyToast = {
 
 const defaultToastOption: ToastOptions = {
   position: "top-center",
-  autoClose: 4000,
+  autoClose: 2500,
   hideProgressBar: true,
   pauseOnHover: false,
   closeButton: false,
