@@ -9,7 +9,7 @@ export default function GatheringMemberContainer({
   members: lighty.User[];
 }) {
   return (
-    <Flex className={styles.memberContainerStyle}>
+    <div className={styles.memberContainerStyle}>
       {members.map(({ profileImageUrl, accountId, name }, idx) => (
         <Flex
           key={`gatheringMember${idx}`}
@@ -34,7 +34,7 @@ export default function GatheringMemberContainer({
           </Flex>
         </Flex>
       ))}
-    </Flex>
+    </div>
   );
 }
 
@@ -43,8 +43,8 @@ const styles = {
     "rounded-full w-10 h-10 border-[1.41px] border-base-white overflow-hidden",
 
   memberWrapper:
-    "w-24 px-2 py-5 rounded-[16px] border-[1px] border-grayscale-100 gap-[6px]",
-  memberContainerStyle: "overflow-scroll no-scrollbar gap-3 pb-[46px]",
+    "min-w-[120px] px-2 py-5 rounded-[16px] border-[1px] border-grayscale-100 gap-[6px]",
+  memberContainerStyle: "flex overflow-scroll no-scrollbar gap-3 pb-[46px]",
 
   name: "text-B4 text-grayscale-500",
 };

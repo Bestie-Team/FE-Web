@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import LeaderContainer from "@/components/shared/LeaderContainer";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import FeedIcon from "@/components/shared/Icon/FeedIcon";
 
 export default function GatheringDetailPage({
   params,
@@ -67,7 +68,8 @@ export default function GatheringDetailPage({
   if (isError || !selectedGathering) {
     return <div>약속을 찾을 수 없습니다.</div>;
   }
-  const { gatheringDate, members, hostUser, address } = selectedGathering;
+  const { gatheringDate, members, hostUser, address, description } =
+    selectedGathering;
 
   const convertedDate = formatToKoreanTime(gatheringDate);
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
@@ -92,6 +94,16 @@ export default function GatheringDetailPage({
         )}
       </div>
       <LeaderContainer leader={hostUser} />
+      <Spacing size={10} color="#f4f4f4" />
+      <LightyInfoContainer
+        icon={<FeedIcon width="20" height="20" color="#0A0A0A" />}
+        title={<span className={styles.title}>약속 설명</span>}
+        content={
+          <Flex className={styles.contentWrapper} align="center">
+            <span className="text-T5 flex-grow">{description}</span>
+          </Flex>
+        }
+      />
       <Spacing size={10} color="#f4f4f4" />
       <LightyInfoContainer
         icon={<CalendarIcon width="20" height="20" />}
