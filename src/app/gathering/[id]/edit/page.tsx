@@ -10,6 +10,7 @@ import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 import GatheringEditForm from "@/components/gathering/GatheringEditForm";
 import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
+import { maxDate, minDate } from "@/constants/time";
 
 export default function GatheringEditPage() {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function GatheringEditPage() {
       router.replace("/gathering");
       lightyToast.success(data.message);
       await queryClient.invalidateQueries({
-        queryKey: ["gatherings"],
+        queryKey: ["gatherings", minDate(), maxDate()],
       });
     },
     onError: (error) => {

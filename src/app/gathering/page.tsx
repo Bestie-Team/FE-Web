@@ -112,7 +112,7 @@ export default function MyGatheringPage() {
     try {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["gatherings"],
+          queryKey: ["gatherings", minDate(), maxDate()],
         }),
         queryClient.invalidateQueries({
           queryKey: ["gatherings/ended"],
