@@ -28,6 +28,51 @@ export const sparkle_stickers = [
   "pink_clover.png",
 ];
 
+export const emoji_stickers = [
+  "coral_heart.png",
+  "pink_heart.png",
+  "skyblue_heart.png",
+  "blue_heart.png",
+  "orange_heart.png",
+  "eyes.png",
+  "tinkerbell.png",
+  "ribbon.png",
+  "teddy_bear.png",
+  "donut.png",
+  "strawberry.png",
+  "ghost.png",
+];
+
+export const sweets_stickers = [
+  "ribbon_donut.png",
+  "star_cake.png",
+  "muffin.png",
+  "peach_cake.png",
+  "cat_bread.png",
+  "cherry_muffin.png",
+  "cookie.png",
+  "croissant.png",
+  "choco_cookie.png",
+  "cheese_cake.png",
+  "parfait.png",
+  "heart_candy.png",
+];
+
+export const vintage_stickers = [
+  "mobile_phone.png",
+  "old_camera.png",
+  "star_pandent.png",
+  "silver_heart.png",
+  "headphone.png",
+  "orora_heart.png",
+  "dices.png",
+  "metal_star.png",
+  "old_camera.png",
+  "cubic_heart.png",
+  "ribbon_key.png",
+  "keyring.png",
+];
+
 export const frames = [
   "https://cdn.lighty.today/frame1.jpeg",
   "https://cdn.lighty.today/frame2.jpeg",

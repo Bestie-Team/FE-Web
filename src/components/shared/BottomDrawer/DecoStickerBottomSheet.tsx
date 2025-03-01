@@ -3,8 +3,15 @@ import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Image from "next/image";
 import clsx from "clsx";
-import { pastel_stickers, sparkle_stickers } from "@/constants/photoCard";
+import {
+  emoji_stickers,
+  pastel_stickers,
+  sparkle_stickers,
+  sweets_stickers,
+  vintage_stickers,
+} from "@/constants/photoCard";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
+import LockIcon from "../Icon/LockIcon";
 
 export default function DecoStickerBottomSheet({
   open = true,
@@ -15,13 +22,19 @@ export default function DecoStickerBottomSheet({
   handleSticker: (path: string) => void;
   onClose: () => void;
 }) {
-  const [selectedKind, setSelectedKind] = useState("파스텔");
-  const decoKinds = ["파스텔", "큐빅", "빈티지", "이벤트"];
+  const [selectedKind, setSelectedKind] = useState("이모지");
+  const decoKinds = ["이모지", "파스텔", "스파클", "스위츠", "빈티지"];
   const stickers = () => {
     if (selectedKind === "파스텔") {
       return { stickers: pastel_stickers, path: `deco_stickers/pastel` };
-    } else if (selectedKind === "큐빅")
+    } else if (selectedKind === "이모지") {
+      return { stickers: emoji_stickers, path: `deco_stickers/emoji` };
+    } else if (selectedKind === "스파클")
       return { stickers: sparkle_stickers, path: `deco_stickers/sparkle` };
+    else if (selectedKind === "스위츠")
+      return { stickers: sweets_stickers, path: `deco_stickers/sweets` };
+    else if (selectedKind === "빈티지")
+      return { stickers: vintage_stickers, path: `deco_stickers/vintage` };
     else return null;
   };
 
@@ -66,9 +79,28 @@ export default function DecoStickerBottomSheet({
                       }
                       src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
                       alt={`sticker${idx}`}
-                      width={64}
-                      height={64}
+                      width={selectedKind === "이모지" ? 32 : 64}
+                      height={selectedKind === "이모지" ? 32 : 64}
                     />
+                    {(selectedKind === "스위츠" ||
+                      selectedKind === "빈티지") && (
+                      <Flex
+                        justify="center"
+                        align="center"
+                        className="absolute inset-0"
+                      >
+                        <Flex
+                          direction="column"
+                          align="center"
+                          className="bg-[#00000080] p-6 rounded-2xl gap-3"
+                        >
+                          <LockIcon />
+                          <span className="text-T5 text-base-white">
+                            프리미엄 회원만 이용 가능해요.
+                          </span>
+                        </Flex>
+                      </Flex>
+                    )}
                   </Flex>
                 ))
               : null}
@@ -81,6 +113,6 @@ export default function DecoStickerBottomSheet({
 
 const styles = {
   stickerKind: "py-2 px-3 text-B2 cursor-pointer",
-  wrapper: "grid grid-cols-4 grid-rows-3 gap-5 w-fit",
+  wrapper: "relative grid grid-cols-4 grid-rows-3 gap-5 w-fit",
   box: "bg-grayscale-50 rounded-[12px] w-16 h-16",
 };
