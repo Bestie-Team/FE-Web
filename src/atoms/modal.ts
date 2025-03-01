@@ -15,6 +15,11 @@ export const friendDeleteModalAtom = atom<boolean>({
   default: false,
 });
 
+export const friendReportModalAtom = atom<boolean>({
+  key: "modal/friendReport",
+  default: false,
+});
+
 export const feedHideModalAtom = atom<boolean>({
   key: "modal/feedHide",
   default: false,

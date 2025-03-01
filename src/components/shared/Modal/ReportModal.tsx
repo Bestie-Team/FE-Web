@@ -6,9 +6,11 @@ import Button from "../Button/Button";
 import { useState } from "react";
 
 export default function ReportModal({
+  title = "해당 피드를 신고하시겠어요?",
   action,
   onClose,
 }: {
+  title?: string;
   action: (reason: { reason: string }) => void;
   onClose: () => void;
 }) {
@@ -23,9 +25,7 @@ export default function ReportModal({
       <Flex align="center" direction="column" className={styles.modalWrapper}>
         {step === 1 ? (
           <>
-            <div className="text-T3 text-center">
-              해당 피드를 신고하시겠어요?
-            </div>
+            <div className="text-T3 text-center">{title}</div>
             <Spacing size={12} />
             {/* <div className={styles.content}>{content}</div> */}
             <Spacing size={24} />

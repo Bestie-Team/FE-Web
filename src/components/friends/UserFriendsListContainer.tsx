@@ -6,11 +6,13 @@ import FriendsListContainer from "./FriendsListContainer";
 import useDeleteFriend from "./hooks/useDeleteFriend";
 import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../shared/Modal/Modal";
-import { friendDeleteModalAtom } from "@/atoms/modal";
+import { friendDeleteModalAtom, friendReportModalAtom } from "@/atoms/modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useAuth } from "../shared/providers/AuthProvider";
+import useReport from "../report/hooks/useReport";
+import ReportModal from "../shared/Modal/ReportModal";
 
 const DeleteFriendModal = memo(
   ({
@@ -37,7 +39,30 @@ const DeleteFriendModal = memo(
   }
 );
 
+const ReportFriendModal = memo(
+  ({
+    isOpen,
+    onClose,
+    onReport,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+    onReport: (reason: { reason: string }) => void;
+  }) => {
+    if (!isOpen) return null;
+
+    return (
+      <ReportModal
+        title="친구를 신고하시겠어요?"
+        action={onReport}
+        onClose={onClose}
+      />
+    );
+  }
+);
+
 DeleteFriendModal.displayName = "DeleteFriendModal";
+ReportFriendModal.displayName = "ReportFriendModal";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
@@ -45,6 +70,9 @@ export default function UserFriendsListContainer() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(friendsModalStateAtom);
   const [deleteFriendModalOpen, setDeleteFriendModalOpen] = useRecoilState(
     friendDeleteModalAtom
+  );
+  const [reportFriendModalOpen, setReportFriendModalOpen] = useRecoilState(
+    friendReportModalAtom
   );
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
 
@@ -64,8 +92,18 @@ export default function UserFriendsListContainer() {
     onSuccess: deleteSuccessHandler,
   });
 
-  const handleCloseModal = () => {
+  const { mutate: reportFriend } = useReport({
+    report: { reportedId: selectedFriendId, type: "FRIEND" },
+    onSuccess: deleteSuccessHandler,
+    onError: (error) => lightyToast.error(error.message),
+  });
+
+  const handleCloseDeleteModal = () => {
     setDeleteFriendModalOpen(false);
+  };
+
+  const handleCloseReportModal = () => {
+    setReportFriendModalOpen(false);
   };
 
   useInfiniteScroll({ isFetching, loadMore });
@@ -81,13 +119,17 @@ export default function UserFriendsListContainer() {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
-      {
-        <DeleteFriendModal
-          isOpen={deleteFriendModalOpen}
-          onClose={handleCloseModal}
-          onDelete={deleteFriend}
-        />
-      }
+
+      <DeleteFriendModal
+        isOpen={deleteFriendModalOpen}
+        onClose={handleCloseDeleteModal}
+        onDelete={deleteFriend}
+      />
+      <ReportFriendModal
+        isOpen={reportFriendModalOpen}
+        onClose={handleCloseReportModal}
+        onReport={reportFriend}
+      />
     </>
   );
 }

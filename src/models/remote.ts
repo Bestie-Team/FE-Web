@@ -5,3 +5,5 @@ export interface ReportRequestInterface {
   reason: string;
   type: lighty.ReportTypes;
 }
+
+export type ReportTypes = "FRIEND" | "FEED" | "GROUP" | "FEED_COMMENT";

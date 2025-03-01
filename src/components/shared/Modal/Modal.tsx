@@ -5,7 +5,7 @@ import Spacing from "../Spacing";
 import Button from "../Button/Button";
 
 export default function Modal({
-  title = "해당 유저를 신고할까요?",
+  title,
   content,
   action,
   left = "취소",
