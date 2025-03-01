@@ -163,6 +163,7 @@
   position: relative !important;
   font-weight: 600 !important;
   color: #0a0a0a;
+  overflow: visible !important;
 }
 
 .react-calendar__tile {

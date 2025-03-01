@@ -26,6 +26,7 @@ export default function LightyCalendarWithBorder({
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
+  // const [datesWithIcons, setDatesWithIcons] = useState<Date[]>([]);
 
   const handleDateChange = useCallback(
     (newDate: Value) => {
@@ -40,26 +41,21 @@ export default function LightyCalendarWithBorder({
     return gatherings.map((gathering) => new Date(gathering.gatheringDate));
   }, [gatherings]);
 
-  const renderIcon = useCallback(
-    (date: Date) => {
-      const isSpecialDate = datesWithIcons.some(
-        (specialDate) =>
-          specialDate.getFullYear() === date.getFullYear() &&
-          specialDate.getMonth() === date.getMonth() &&
-          specialDate.getDate() === date.getDate()
-      );
+  // const datesByMonth = useMemo(() => {
+  //   if (!gatherings) return {};
 
-      return isSpecialDate ? (
-        <Flex
-          justify="center"
-          className="!z-999 w-full absolute bottom-[-10px]"
-        >
-          <CalendarLightyIcon />
-        </Flex>
-      ) : null;
-    },
-    [datesWithIcons]
-  );
+  //   return gatherings.reduce<Record<number, Date[]>>((acc, gathering) => {
+  //     const date = new Date(gathering.gatheringDate);
+  //     const month = date.getMonth() + 1;
+
+  //     if (!acc[month]) {
+  //       acc[month] = [];
+  //     }
+
+  //     acc[month].push(date);
+  //     return acc;
+  //   }, {});
+  // }, [gatherings]);
 
   const returnClassName = useCallback(
     (date: Date) => {
@@ -75,20 +71,37 @@ export default function LightyCalendarWithBorder({
     [datesWithIcons]
   );
 
+  const renderIcon = useCallback(
+    (date: Date) => {
+      // if (!datesByMonth[month]) return null;
+      const isSpecialDate = datesWithIcons.some(
+        (specialDate) =>
+          specialDate.getFullYear() === date.getFullYear() &&
+          specialDate.getMonth() === date.getMonth() &&
+          specialDate.getDate() === date.getDate()
+      );
+
+      return isSpecialDate ? (
+        <Flex
+          justify="center"
+          className="w-full absolute bottom-[-10px]"
+          style={{ zIndex: 99 }}
+        >
+          <CalendarLightyIcon />
+        </Flex>
+      ) : null;
+    },
+    [datesWithIcons]
+  );
+
   return (
     <Calendar
-      showNeighboringMonth
-      tileClassName={({ date, view }) => {
-        if (view === "month") {
-          return returnClassName(date);
-        }
-        return null;
+      showNeighboringMonth={true}
+      tileClassName={({ date }) => {
+        return returnClassName(date);
       }}
-      tileContent={({ date, view }) => {
-        if (view === "month") {
-          return renderIcon(date);
-        }
-        return null;
+      tileContent={({ date }) => {
+        return renderIcon(date);
       }}
       onChange={handleDateChange}
       value={selectedDate}

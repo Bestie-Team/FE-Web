@@ -4,7 +4,7 @@ export default function CalendarLightyIcon() {
       width="8"
       height="8"
       viewBox="0 0 8 8"
-      fill="none"
+      fill="#0A0A0A"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clipPath="url(#clip0_3106_12842)">

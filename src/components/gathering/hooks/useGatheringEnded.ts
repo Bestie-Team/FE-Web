@@ -33,7 +33,7 @@ export default function useGatheringEnded({ limit }: { limit: number }) {
     fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetching]);
 
-  const friends = data?.pages.map(({ gatherings }) => gatherings).flat();
+  const gatherings = data?.pages.map(({ gatherings }) => gatherings).flat();
 
-  return { data: friends, loadMore, isFetching, hasNextPage };
+  return { data: gatherings, loadMore, isFetching, hasNextPage };
 }

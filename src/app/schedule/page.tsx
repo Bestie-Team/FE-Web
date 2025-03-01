@@ -20,6 +20,7 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 
 const MemoizedUpcomingSchedule = React.memo(
   ({ gathering }: { gathering: Gathering[] }) => (
@@ -72,6 +73,8 @@ export default function SchedulePage() {
     []
   );
   const [isClient, setIsClient] = useState(false);
+  const { data: past, isFetching: isFetchingPast } =
+    useGatheringEnded(queryParams);
   const { data: upcoming, isFetching } = useGatherings(queryParams);
   const isPast = useScrollThreshold();
   const [year, setYear] = useState<SelectOptionType | null>({
@@ -80,11 +83,12 @@ export default function SchedulePage() {
   });
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  console.log(today);
 
-  const upcomingGatherings = upcoming?.filter(
-    (gathering) => new Date(gathering.gatheringDate) >= today
-  );
+  const upcomingGatherings = upcoming
+    ?.filter((gathering) => new Date(gathering.gatheringDate) >= today)
+    .reverse();
+
+  const allGatherings = upcomingGatherings?.concat(past || []);
 
   useEffect(() => {
     setIsClient(true);
@@ -98,11 +102,11 @@ export default function SchedulePage() {
     <div className="min-h-dvh">
       <Header year={year} setYear={setYear} shadow={isPast} />
       <Flex direction="column" className={styles.container}>
-        {isFetching || !upcoming ? (
+        {isFetchingPast || !allGatherings ? (
           <DotSpinner />
         ) : (
           <div className="min-h-[400px]">
-            <LightyCalendarWithBorder gatherings={upcoming} />
+            <LightyCalendarWithBorder gatherings={allGatherings} />
           </div>
         )}
         <Spacing size={28} />
