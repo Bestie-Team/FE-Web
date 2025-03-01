@@ -23,7 +23,7 @@ export default function DecoStickerBottomSheet({
   onClose: () => void;
 }) {
   const [selectedKind, setSelectedKind] = useState("이모지");
-  const decoKinds = ["이모지", "파스텔", "스파클", "스위츠", "빈티지"];
+  const decoKinds = ["이모지", "스파클", "파스텔", "스위츠", "빈티지"];
   const stickers = () => {
     if (selectedKind === "파스텔") {
       return { stickers: pastel_stickers, path: `deco_stickers/pastel` };
@@ -83,6 +83,7 @@ export default function DecoStickerBottomSheet({
                       height={selectedKind === "이모지" ? 32 : 64}
                     />
                     {(selectedKind === "스위츠" ||
+                      selectedKind === "파스텔" ||
                       selectedKind === "빈티지") && (
                       <Flex
                         justify="center"

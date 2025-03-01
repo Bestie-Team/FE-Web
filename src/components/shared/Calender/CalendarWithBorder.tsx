@@ -41,22 +41,6 @@ export default function LightyCalendarWithBorder({
     return gatherings.map((gathering) => new Date(gathering.gatheringDate));
   }, [gatherings]);
 
-  // const datesByMonth = useMemo(() => {
-  //   if (!gatherings) return {};
-
-  //   return gatherings.reduce<Record<number, Date[]>>((acc, gathering) => {
-  //     const date = new Date(gathering.gatheringDate);
-  //     const month = date.getMonth() + 1;
-
-  //     if (!acc[month]) {
-  //       acc[month] = [];
-  //     }
-
-  //     acc[month].push(date);
-  //     return acc;
-  //   }, {});
-  // }, [gatherings]);
-
   const returnClassName = useCallback(
     (date: Date) => {
       const isSpecialDate = datesWithIcons.some(
@@ -73,7 +57,6 @@ export default function LightyCalendarWithBorder({
 
   const renderIcon = useCallback(
     (date: Date) => {
-      // if (!datesByMonth[month]) return null;
       const isSpecialDate = datesWithIcons.some(
         (specialDate) =>
           specialDate.getFullYear() === date.getFullYear() &&
