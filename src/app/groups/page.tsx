@@ -6,11 +6,10 @@ import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { Group } from "lighty-type";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
@@ -51,8 +50,6 @@ Header.displayName = "Header";
 export default function GroupsPage() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const isPast = useScrollThreshold();
-  const pathname = usePathname();
   const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
 
