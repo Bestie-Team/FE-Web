@@ -98,7 +98,7 @@ export default function HomePage() {
 
   const handleCloseWelcomeModal = useCallback(() => {
     setIsNew(false);
-    router.push("/");
+    router.push("/feed");
   }, [setIsNew]);
 
   const { data: this_week, isFetching } = useGatherings({

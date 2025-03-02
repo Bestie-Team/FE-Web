@@ -128,7 +128,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   };
 
   return (
-    <Flex direction="column" className="w-full min-h-dvh bg-grayscale-50">
+    <Flex direction="column" className="w-full min-h-dvh bg-base-white">
       <GroupBannerContainer
         groupEdit={groupEdit}
         imageUrl={groupImageUrl}
@@ -141,7 +141,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
         <div className={styles.divider} />
       </div>
       <LeaderContainer leader={owner} />
-      <Spacing size={10} />
+      <Spacing size={10} color="#F4F4F4" />
       <LightyInfoContainer
         icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
         title={<span className={styles.title}>그룹 소개</span>}
@@ -151,7 +151,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
           </Flex>
         }
       />
-      <Spacing size={10} />
+      <Spacing size={10} color="#F4F4F4" />
       <LightyInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
         title={

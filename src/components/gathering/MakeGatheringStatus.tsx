@@ -18,14 +18,14 @@ export default function MakingGatheringStatus({
   const header = useMemo(() => getHeader("/gathering/new"), []);
   const router = useRouter();
   return (
-    <Flex
-      direction="column"
-      className="h-[calc(100dvh-48px)] bg-base-white"
-      justify="center"
-      align="center"
-    >
+    <Flex direction="column" className="h-dvh bg-base-white" align="center">
       {header}
-      <Flex direction="column" justify="center" align="center">
+      <Flex
+        className="h-[calc(100dvh-120px)]"
+        direction="column"
+        justify="center"
+        align="center"
+      >
         {isPending === true ? (
           <DotSpinnerSmall width={28} height={28} />
         ) : (

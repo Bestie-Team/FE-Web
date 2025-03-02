@@ -46,7 +46,8 @@ export default function GroupEditPage() {
     group: {
       name: groupInfo.name,
       description: groupInfo.description,
-      groupImageUrl: groupImageUrl,
+      groupImageUrl:
+        groupImageUrl !== "" ? groupImageUrl : groupInfo.groupImageUrl,
     },
     onSuccess: (data) => lightyToast.success(data.message),
   });

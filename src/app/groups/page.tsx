@@ -79,7 +79,6 @@ export default function GroupsPage() {
 
   return (
     <div className="min-h-dvh">
-      <Header pathname={pathname} shadow={isPast} />
       <div className="pt-[68px] min-h-[calc(100dvh-68px)] p-5 text-T4">
         <Flex align="center">
           <span>전체 그룹</span>

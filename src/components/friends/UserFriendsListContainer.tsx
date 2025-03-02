@@ -1,18 +1,16 @@
 import React, { memo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import useFriends from "./hooks/useFriends";
+import * as lighty from "lighty-type";
 import { friendsModalStateAtom, selectedFriendAtom } from "@/atoms/friends";
 import FriendsListContainer from "./FriendsListContainer";
 import useDeleteFriend from "./hooks/useDeleteFriend";
 import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom, friendReportModalAtom } from "@/atoms/modal";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { useAuth } from "../shared/providers/AuthProvider";
 import useReport from "../report/hooks/useReport";
 import ReportModal from "../shared/Modal/ReportModal";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 const DeleteFriendModal = memo(
   ({
@@ -64,7 +62,11 @@ const ReportFriendModal = memo(
 DeleteFriendModal.displayName = "DeleteFriendModal";
 ReportFriendModal.displayName = "ReportFriendModal";
 
-export default function UserFriendsListContainer() {
+export default function UserFriendsListContainer({
+  friends,
+}: {
+  friends: lighty.User[];
+}) {
   const queryClient = useQueryClient();
   const { userInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(friendsModalStateAtom);
@@ -75,10 +77,6 @@ export default function UserFriendsListContainer() {
     friendReportModalAtom
   );
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
-
-  const { data, loadMore, isFetching } = useFriends({
-    userId: userInfo?.accountId,
-  });
 
   const deleteSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
@@ -106,16 +104,10 @@ export default function UserFriendsListContainer() {
     setReportFriendModalOpen(false);
   };
 
-  useInfiniteScroll({ isFetching, loadMore });
-
-  if (!data || isFetching) return <DotSpinnerSmall />;
-
   return (
     <>
       <FriendsListContainer
-        friends={data}
-        // hasMore={hasNextPage}
-        // loadMore={loadMore}
+        friends={friends}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />

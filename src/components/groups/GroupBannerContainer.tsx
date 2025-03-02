@@ -40,7 +40,7 @@ export default function GroupBannerContainer({
       <div className={styles.shade} />
       <Flex align="center" className={styles.headerWrapper}>
         <div
-          className="cursor-pointer"
+          className="cursor-pointer pl-[17px] pr-[3px] mr-[6px]"
           onClick={() => {
             router.back();
           }}
@@ -57,7 +57,7 @@ export default function GroupBannerContainer({
 const styles = {
   shade: "absolute inset-0 bg-transparent-black-50",
   headerWrapper:
-    "w-full before:h-[48px] absolute left-0 top-0 pl-[17px] pr-5 items-center gap-[6px]",
+    "w-full before:h-[48px] absolute left-0 top-0 pr-5 items-center",
 
   headerFont: "flex-grow text-T3 text-base-white",
 };

@@ -50,7 +50,6 @@ export default function FriendListItem({
   };
 
   const rejectSuccessHandler = async (data: { message: string }) => {
-    lightyToast.success(data.message);
     Promise.all([
       await queryClient.invalidateQueries({
         queryKey: [
@@ -80,7 +79,7 @@ export default function FriendListItem({
       key={`friend${idx}`}
       className={clsx(
         styles.li,
-        clicked ? "border-grayscale-900" : "border-base-white"
+        clicked ? "border-grayscale-900" : "border-grayscale-100"
       )}
       onMouseDown={onClick}
     >

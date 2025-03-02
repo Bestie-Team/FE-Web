@@ -14,7 +14,7 @@ function useFriends({ userId }: { userId?: string }) {
       name: "가가",
       accountId: "aaaaa",
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 5 * 1000,
   });
 
   const loadMore = useCallback(() => {

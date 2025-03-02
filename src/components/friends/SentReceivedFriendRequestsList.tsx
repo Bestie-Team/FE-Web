@@ -1,10 +1,10 @@
 import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import FriendListItem from "./FriendListItem";
 import useReceivedFriendsRequests from "./hooks/useReceivedFriendsRequests";
 import useSentFriendsRequests from "./hooks/useSentFriendsRequests";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function SentReceivedFriendRequestsList() {
   const { data: received, isFetching } = useReceivedFriendsRequests({
@@ -18,15 +18,18 @@ export default function SentReceivedFriendRequestsList() {
     accountId: "a",
     limit: 30,
   });
+
   const receivedRequests = received?.requests.map((request) => ({
     sender: request.sender,
     requestId: request.id,
   }));
+
   const sentRequests = sent?.requests.map((request) => ({
     sender: request.sender,
     requestId: request.id,
   }));
-  if (isFetching) return <DotSpinnerSmall />;
+
+  if (isFetching) return <DotSpinner />;
   return (
     <Flex
       direction="column"
@@ -49,7 +52,6 @@ export default function SentReceivedFriendRequestsList() {
           ))}
         </Flex>
       )}
-
       {sentRequests && sentRequests.length > 0 && (
         <Flex direction="column">
           <span className="text-T5">보낸 요청</span>

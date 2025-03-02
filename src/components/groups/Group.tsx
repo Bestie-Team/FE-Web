@@ -4,30 +4,13 @@ import useGroup from "@/components/groups/hooks/useGroups";
 import Button from "@/components/shared/Button/Button";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import getHeader from "@/utils/getHeader";
-import clsx from "clsx";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useState } from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { Group } from "lighty-type";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
-
-const Header = React.memo(
-  ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
-    const header = useMemo(() => getHeader(pathname), [pathname]);
-    return (
-      <div
-        style={{ zIndex: 12 }}
-        className={clsx(styles.headerWrapper, shadow ? "shadow-bottom" : "")}
-      >
-        {header}
-      </div>
-    );
-  }
-);
 
 const GroupList = ({
   groups,
@@ -46,13 +29,9 @@ const GroupList = ({
   ));
 };
 
-Header.displayName = "Header";
-
 export default function Groups() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const isPast = useScrollThreshold();
-  const pathname = usePathname();
   const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
 
@@ -79,8 +58,7 @@ export default function Groups() {
 
   return (
     <div className="min-h-dvh bg-base-white">
-      <Header pathname={pathname} shadow={isPast} />
-      <div className="pt-[107px] min-h-[calc(100dvh-68px)] p-5 text-T4">
+      <div className="min-h-[calc(100dvh-68px)] px-5 text-T4">
         <Flex align="center">
           <span>전체 그룹</span>
           <Spacing size={4} direction="horizontal" />
