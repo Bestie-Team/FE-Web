@@ -3,10 +3,9 @@ import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
 import LightyCalendarWithBorder from "@/components/shared/Calender/CalendarWithBorder";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import React, { useEffect, useMemo, useState } from "react";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
-import FullPageLoader from "@/components/shared/FullPageLoader";
+import React from "react";
 
 const MemoizedUpcomingSchedule = React.memo(
   ({ gathering }: { gathering: Gathering[] }) => (

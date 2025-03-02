@@ -1,4 +1,3 @@
-import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
 import FeedIcon from "@/components/shared/Icon/FeedIcon";
 import HomeIcon from "@/components/shared/Icon/HomeIcon";
 import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
