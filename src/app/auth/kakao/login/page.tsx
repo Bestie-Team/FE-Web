@@ -43,7 +43,7 @@ export default function KakaoPage() {
         accessToken: tokenInfo.access_token,
         provider: "kakao",
       });
-      router.replace("/");
+      router.replace("/feed");
     } catch (error) {
       setError("로그인 실패");
       console.log(error);

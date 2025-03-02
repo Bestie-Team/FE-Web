@@ -39,7 +39,7 @@ export async function postLogin({
     });
 
     if (provider === "kakao") {
-      window.location.href = "/";
+      window.location.href = "/feed";
     }
     return data;
   }
