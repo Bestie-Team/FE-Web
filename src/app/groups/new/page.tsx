@@ -68,7 +68,12 @@ export default function NewGroupPage() {
   }
 
   if (step === 0 || isPending) {
-    return <MakingGroupSuccess group={newGroup} isPending={isPending} />;
+    return (
+      <MakingGroupSuccess
+        group={{ ...newGroup, groupImageUrl: groupImageUrl }}
+        isPending={isPending}
+      />
+    );
   }
 
   if (step === 2) {

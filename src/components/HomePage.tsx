@@ -25,6 +25,7 @@ import useGatheringNoFeeds from "./gathering/hooks/useGatheringNoFeed";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useNewUserCheck } from "@/hooks/useNewUserCheck";
 import useNotification from "./notice/hooks/useNotification";
+import { useRouter } from "next/navigation";
 
 const Header = React.memo(() => {
   const header = getHeader("/");
@@ -80,6 +81,7 @@ MemoizedGathering.displayName = "MemoizedGathering";
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(homeModalStateAtom);
+  const router = useRouter();
   const { isNew, setIsNew } = useNewUserCheck();
   const sevenDays = useMemo(() => getWeekDates(), []);
   const minDate = useMemo(
@@ -96,6 +98,7 @@ export default function HomePage() {
 
   const handleCloseWelcomeModal = useCallback(() => {
     setIsNew(false);
+    router.push("/");
   }, [setIsNew]);
 
   const { data: this_week, isFetching } = useGatherings({

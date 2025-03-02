@@ -10,6 +10,9 @@ import UserListContainer from "@/components/users/UserListContainer";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import clsx from "clsx";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import Flex from "@/components/shared/Flex";
+import Button from "@/components/shared/Button/Button";
+import Link from "next/link";
 
 export default function SearchPage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
@@ -48,6 +51,24 @@ export default function SearchPage() {
           />
         </div>
       </div>
+      {debouncedSearch.length < 1 && (
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          className="h-[calc(100dvh-48px)] gap-5"
+        >
+          <span className="text-B2">
+            친구가 아직 라이티를 가입하지 않았다면?
+          </span>
+          <Button
+            color="#0a0a0a"
+            className="rounded-[12px] py-[12px] px-[14px] text-base-white text-B3"
+          >
+            <Link href="/friends/search">💌 친구 초대하기</Link>
+          </Button>
+        </Flex>
+      )}
       <UserListContainer
         isFetching={isFetching}
         searchedFriends={userData}

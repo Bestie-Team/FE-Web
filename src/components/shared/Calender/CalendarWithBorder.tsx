@@ -26,7 +26,6 @@ export default function LightyCalendarWithBorder({
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
-  // const [datesWithIcons, setDatesWithIcons] = useState<Date[]>([]);
 
   const handleDateChange = useCallback(
     (newDate: Value) => {
@@ -79,6 +78,7 @@ export default function LightyCalendarWithBorder({
 
   return (
     <Calendar
+      activeStartDate={new Date()}
       showNeighboringMonth={true}
       tileClassName={({ date }) => {
         return returnClassName(date);

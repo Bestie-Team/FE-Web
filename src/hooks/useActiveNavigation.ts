@@ -10,7 +10,7 @@ export const useActiveNavigation = () => {
 
   const defaultBtn = NAV_ITEMS.findIndex((item) => pathname == item.href);
   useEffect(() => {
-    setActiveBtn(defaultBtn === -1 ? 0 : defaultBtn);
+    setActiveBtn(defaultBtn === -1 ? 2 : defaultBtn);
   }, [pathname]);
 
   return {

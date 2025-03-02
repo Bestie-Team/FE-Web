@@ -27,7 +27,7 @@ export default function DateSlider({
         <CalendarColoredIcon />
         <Spacing size={4} direction="horizontal" />
         <div className={styles.title}> 이번 주 약속</div>
-        <Link className="cursor-pointer" href={"/schedule"}>
+        <Link className="cursor-pointer" href={"/gathering"}>
           <ArrowRightIcon />
         </Link>
       </Flex>

@@ -58,6 +58,12 @@ export default function useHeader(pathname: string) {
         pageName: "추억 피드",
       },
     },
+    "/social": {
+      component: Header,
+      props: {
+        pageName: "소셜",
+      },
+    },
     "/hidden": {
       component: HeaderWithBackBtn,
       props: { pageName: "피드 관리", color: "white" },
@@ -66,7 +72,6 @@ export default function useHeader(pathname: string) {
       component: HeaderWithBackBtn,
       props: { pageName: "기록하기", color: "transparent" },
     },
-    "/schedule": { component: Header, props: { pageName: "약속 캘린더" } },
     "/my/edit": {
       component: HeaderWithBackBtn,
       props: { pageName: "프로필 편집" },

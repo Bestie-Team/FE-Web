@@ -2,6 +2,7 @@ import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
 import FeedIcon from "@/components/shared/Icon/FeedIcon";
 import HomeIcon from "@/components/shared/Icon/HomeIcon";
 import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
+import UserIcon from "@/components/shared/Icon/UserIcon";
 import Image from "next/image";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
@@ -34,10 +35,10 @@ const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
-    href: "/schedule",
-    name: "schedule",
+    href: "/social",
+    name: "social",
     icon: (isActive: boolean) => (
-      <CalendarIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+      <UserIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {

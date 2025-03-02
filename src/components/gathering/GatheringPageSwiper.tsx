@@ -8,6 +8,7 @@ import {
   GatheringInWhich,
 } from "@/models/gathering";
 import NoGathering from "./NoGathering";
+import Schedule from "../schedule/Schedule";
 
 type TabName = "1" | "2";
 
@@ -43,12 +44,10 @@ const GatheringPageSwiper = React.memo(
           <NoGathering type="EXPECTING" />
         ) : (
           <>
-            <Spacing size={98} />
-            <Gathering
+            <Spacing size={107} />
+            <Schedule
+              expectingGatherings={expectingGatherings}
               isFetching={isFetching}
-              ended={false}
-              where={GatheringInWhich.GATHERING}
-              gatherings={expectingGatherings}
             />
           </>
         )}

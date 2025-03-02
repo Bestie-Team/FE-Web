@@ -21,6 +21,7 @@ import CalendarIcon from "../shared/Icon/CalendarIcon";
 import { SetterOrUpdater } from "recoil";
 import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
+import { lightyToast } from "@/utils/toast";
 
 export default function GatheringForm({
   type,
@@ -176,10 +177,14 @@ export default function GatheringForm({
           />
           <FixedBottomButton
             label={"다음"}
-            disabled={isGroupInfoValid() === false}
+            // disabled={}
             onClick={() => {
               if (type === "new") {
-                setStep(3);
+                if (isGroupInfoValid() === false) {
+                  lightyToast.error("모든 정보를 입력해주세요.");
+                } else {
+                  setStep(3);
+                }
               } else {
                 if (mutate) mutate();
               }

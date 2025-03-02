@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import * as lighty from "lighty-type";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
@@ -7,6 +7,8 @@ import Link from "next/link";
 import FriendListItem from "./FriendListItem";
 import { SetterOrUpdater } from "recoil";
 import Modal from "../shared/Modal/Modal";
+import { useRouter } from "next/navigation";
+import SearchInput from "../shared/Input/SearchBar";
 
 export default function FriendsListContainer({
   friends,
@@ -17,12 +19,28 @@ export default function FriendsListContainer({
   isModalOpen: boolean;
   setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
+  const router = useRouter();
+  const handleAddFriend = useCallback(() => {
+    router.push("/friends/search");
+  }, [router]);
+
   return (
-    <div className="bg-grayscale-50 pb-15 px-5">
-      <span className="text-T5" id="friendList">{`친구 ${
-        friends ? friends?.length : 0
-      }`}</span>
-      <Spacing size={12} />
+    <div className="pb-15 px-5">
+      <Flex justify="space-between" align="center">
+        <span className="text-T5" id="friendList">{`친구 ${
+          friends ? friends?.length : 0
+        }`}</span>
+        <Button className={styles.button} onMouseDown={handleAddFriend}>
+          친구 추가
+        </Button>
+      </Flex>
+      <Spacing size={16} />
+      <SearchInput
+        type="friends"
+        className="!bg-grayscale-50"
+        placeholder="이름/아이디로 검색하기"
+      />
+      <Spacing size={16} />
       {friends?.length === 0 ? (
         <Flex
           direction="column"
@@ -67,3 +85,8 @@ export default function FriendsListContainer({
     </div>
   );
 }
+
+const styles = {
+  button:
+    "py-2 px-3 bg-grayscale-50 text-T6 rounded-[8px] hover:scale-105 transition-transform cursor-pointer",
+};
