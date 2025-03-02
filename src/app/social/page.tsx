@@ -1,22 +1,12 @@
-import React, { memo } from "react";
+import React from "react";
 import FriendsAndGroups from "@/components/social/FriendsAndGroups";
 import SocialHeader from "@/components/social/SocialHeader";
 
-const SocialContainer = memo(({ children }: { children: React.ReactNode }) => {
+export default function SocialPage() {
   return (
     <div className="h-dvh">
       <SocialHeader />
-      {children}
-    </div>
-  );
-});
-
-SocialContainer.displayName = "SocialContainer";
-
-export default function SocialPage() {
-  return (
-    <SocialContainer>
       <FriendsAndGroups />
-    </SocialContainer>
+    </div>
   );
 }

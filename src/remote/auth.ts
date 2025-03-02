@@ -23,6 +23,7 @@ export async function postLogin({
   const targetUrl = `${baseUrl}/auth/${provider}/login`;
   const response = await fetch(targetUrl, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -81,6 +82,7 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
     const baseUrl = API_CONFIG.getBaseUrl();
     const response = await fetch(`${baseUrl}/auth/register`, {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...RegisterRequest,

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import ArrowRightIcon from "@/components/shared/Icon/ArrowRightIcon";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
@@ -17,7 +17,7 @@ import { useAuth } from "../shared/providers/AuthProvider";
 import useFriends from "../friends/hooks/useFriends";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import FullPageLoader from "../shared/FullPageLoader";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const TabSection = ({
   selectedTab,
@@ -51,17 +51,20 @@ const TabContent = ({
   debouncedSearch: string;
   friends: lighty.User[];
 }) => {
-  if (selectedTab === "1") {
-    return debouncedSearch.length > 0 ? (
-      <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
-    ) : (
-      friends.length > 0 && <UserFriendsListContainer friends={friends} />
-    );
-  }
-  if (selectedTab === "2") {
-    return <Groups />;
-  }
-  return null;
+  return (
+    <>
+      <div style={{ display: selectedTab === "1" ? "block" : "none" }}>
+        {debouncedSearch.length > 0 ? (
+          <SearchedFriendsListContainer debouncedSearch={debouncedSearch} />
+        ) : (
+          friends && <UserFriendsListContainer friends={friends} />
+        )}
+      </div>
+      <div style={{ display: selectedTab === "2" ? "block" : "none" }}>
+        <Groups />
+      </div>
+    </>
+  );
 };
 
 const FriendListSection = ({
@@ -118,6 +121,7 @@ const styles = {
 export default function FriendsAndGroups() {
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
   const search = useRecoilValue(friendSearchAtom);
+  const searchParams = useSearchParams();
   const debouncedSearch = useDebounce(search);
   const router = useRouter();
   const { userInfo } = useAuth();
@@ -128,6 +132,13 @@ export default function FriendsAndGroups() {
   } = useFriends({
     userId: userInfo?.accountId,
   });
+
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam === "group") {
+      setSelectedTab("2");
+    }
+  }, [searchParams]);
 
   useInfiniteScroll({ isFetching, loadMore });
 

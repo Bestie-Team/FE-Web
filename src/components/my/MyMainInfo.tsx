@@ -23,7 +23,7 @@ export default function MyMainInfo({
       label: "친구 그룹",
       icon: <FolderIcon width="16" height="16" color="#979797" />,
       value: groupCount,
-      link: "/groups",
+      link: "/social?tab=group",
     },
     {
       label: "작성 피드",

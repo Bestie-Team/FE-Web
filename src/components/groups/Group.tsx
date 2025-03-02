@@ -6,11 +6,11 @@ import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { Group } from "lighty-type";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 const GroupList = ({
   groups,
@@ -53,7 +53,7 @@ export default function Groups() {
   useInfiniteScroll({ isFetching, loadMore });
 
   if (!isClient) {
-    return <FullPageLoader />;
+    return <DotSpinner />;
   }
 
   return (

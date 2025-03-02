@@ -58,7 +58,7 @@ const tabWrapperStyle = "relative flex gap-4";
 function BottomLine({ activeTab }: { activeTab: string }) {
   return (
     <div
-      className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+      className={`will-change-transform absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
         activeTab === "1" ? "translate-x-0" : "w-[53px] translate-x-[48px]"
       }`}
     />
@@ -68,7 +68,7 @@ function BottomLine({ activeTab }: { activeTab: string }) {
 function LongBottomLine({ activeTab }: { activeTab: string }) {
   return (
     <div
-      className={`absolute bottom-0 w-[58px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+      className={`will-change-transform absolute bottom-0 w-[58px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
         activeTab === "1" ? "translate-x-0" : "translate-x-[76px]"
       }`}
     />
@@ -78,7 +78,7 @@ function LongBottomLine({ activeTab }: { activeTab: string }) {
 function ShortBottomLine({ activeTab }: { activeTab: string }) {
   return (
     <div
-      className={`absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+      className={`will-change-transform absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
         activeTab === "1" ? "translate-x-0" : "translate-x-[46px]"
       }`}
     />
@@ -88,7 +88,7 @@ function ShortBottomLine({ activeTab }: { activeTab: string }) {
 function LongerBottomLine({ activeTab }: { activeTab: string }) {
   return (
     <div
-      className={`absolute bottom-0 w-[38px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+      className={`will-change-transform absolute bottom-0 w-[38px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
         activeTab === "1" ? "translate-x-0" : "!w-[68px] translate-x-[59px]"
       }`}
     />

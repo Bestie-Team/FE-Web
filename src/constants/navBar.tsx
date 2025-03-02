@@ -1,5 +1,5 @@
+import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
 import FeedIcon from "@/components/shared/Icon/FeedIcon";
-import HomeIcon from "@/components/shared/Icon/HomeIcon";
 import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
 import UserIcon from "@/components/shared/Icon/UserIcon";
 import Image from "next/image";
@@ -13,24 +13,25 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   {
-    href: "/",
-    name: "home",
-    icon: (isActive: boolean) => (
-      <HomeIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
-    ),
-  },
-  {
-    href: "/gathering",
-    name: "gathering",
-    icon: (isActive: boolean) => (
-      <LightyLogoForNavBar color={isActive ? "#0A0A0A" : "#AEAEAE"} />
-    ),
-  },
-  {
     href: "/feed",
     name: "feed",
     icon: (isActive: boolean) => (
       <FeedIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+    ),
+  },
+
+  {
+    href: "/gathering",
+    name: "gathering",
+    icon: (isActive: boolean) => (
+      <CalendarIcon color={isActive ? "#0A0A0A" : "#AEAEAE"} />
+    ),
+  },
+  {
+    href: "/card",
+    name: "card",
+    icon: (isActive: boolean) => (
+      <LightyLogoForNavBar color={isActive ? "#0A0A0A" : "#AEAEAE"} />
     ),
   },
   {
