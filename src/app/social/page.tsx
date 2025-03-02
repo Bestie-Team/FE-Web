@@ -11,6 +11,8 @@ const SocialContainer = memo(({ children }: { children: React.ReactNode }) => {
   );
 });
 
+SocialContainer.displayName = "SocialContainer";
+
 export default function SocialPage() {
   return (
     <SocialContainer>
