@@ -18,7 +18,7 @@ export default function Schedule({
   expectingGatherings,
   isFetching,
 }: {
-  expectingGatherings: Gathering[];
+  expectingGatherings?: Gathering[];
   isFetching: boolean;
 }) {
   const today = new Date();
@@ -31,11 +31,13 @@ export default function Schedule({
   return (
     <div className="min-h-dvh">
       <Flex direction="column" className={styles.container}>
-        {isFetching || !upcomingGatherings ? (
+        {isFetching ? (
           <DotSpinner />
         ) : (
           <div className="min-h-[400px]">
-            <LightyCalendarWithBorder gatherings={upcomingGatherings} />
+            {upcomingGatherings ? (
+              <LightyCalendarWithBorder gatherings={upcomingGatherings} />
+            ) : null}
           </div>
         )}
         <Spacing size={28} />

@@ -17,5 +17,5 @@ export default function Page() {
     return <DotSpinner />;
   }
 
-  return isAuthenticated ? <HomePage /> : <Splash />;
+  return <Splash />;
 }

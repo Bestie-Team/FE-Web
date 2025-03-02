@@ -59,6 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setUserInfo(newUserInfo);
     } catch (error) {
       console.error("사용자 정보 조회 실패:", error);
+      setUserInfo(null);
     }
   };
 
@@ -89,7 +90,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUserInfo,
     login,
     logout,
-    isAuthenticated: !!token,
+    isAuthenticated: !!userInfo,
   };
 
   return (

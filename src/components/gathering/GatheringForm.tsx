@@ -44,10 +44,8 @@ export default function GatheringForm({
       gathering.gatheringDate == null ||
       gathering.address.length < 1 ||
       gathering.invitationImageUrl == null ||
-      (gathering.groupId == null && gathering.friendIds == null) ||
-      (gathering.groupId == null &&
-        gathering.friendIds &&
-        gathering.friendIds.length < 1)
+      (gathering.groupId == null && gathering.type === "GROUP") ||
+      (gathering.friendIds == null && gathering.type === "FRIEND")
     ) {
       return false;
     } else return true;

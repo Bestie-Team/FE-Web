@@ -39,18 +39,13 @@ const GatheringPageSwiper = React.memo(
       direction="horizontal"
     >
       <SwiperSlide>
-        {(expectingGatherings && expectingGatherings.length < 1) ||
-        !expectingGatherings ? (
-          <NoGathering type="EXPECTING" />
-        ) : (
-          <>
-            <Spacing size={107} />
-            <Schedule
-              expectingGatherings={expectingGatherings}
-              isFetching={isFetching}
-            />
-          </>
-        )}
+        <>
+          <Spacing size={107} />
+          <Schedule
+            expectingGatherings={expectingGatherings}
+            isFetching={isFetching}
+          />
+        </>
       </SwiperSlide>
       <SwiperSlide>
         {(endedGatherings && endedGatherings.length < 1) || !endedGatherings ? (
