@@ -38,6 +38,7 @@ import ReportModal from "@/components/shared/Modal/ReportModal";
 import NavBar from "@/components/shared/NavBar";
 import { useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
+import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -294,6 +295,7 @@ export default function FeedPage() {
                 ref={containerRef}
                 className="h-full overflow-y-auto no-scrollbar pt-[90px]"
               >
+                <FeedForDisplay />
                 <Feed
                   feeds={feedAll}
                   onClickFeed={setSelectedFeedId}
@@ -303,7 +305,7 @@ export default function FeedPage() {
             </SwiperSlide>
           ) : (
             <SwiperSlide>
-              <NoFeed />
+              <FeedForDisplay />
             </SwiperSlide>
           )}
           {feedMine && (

@@ -49,7 +49,7 @@ export default function FriendListItem({
     ]);
   };
 
-  const rejectSuccessHandler = async (data: { message: string }) => {
+  const rejectSuccessHandler = async () => {
     Promise.all([
       await queryClient.invalidateQueries({
         queryKey: [
