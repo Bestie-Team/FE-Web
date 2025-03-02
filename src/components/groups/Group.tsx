@@ -57,25 +57,23 @@ export default function Groups() {
   }
 
   return (
-    <div className="min-h-dvh bg-base-white">
-      <div className="min-h-[calc(100dvh-68px)] px-5 text-T4">
-        <Flex align="center">
-          <span>전체 그룹</span>
-          <Spacing size={4} direction="horizontal" />
-          <span className="flex-grow">{detail?.groupCount}</span>
-          <Spacing size={4} direction="horizontal" />
-          <Button className={styles.button} onMouseDown={handleAddGroup}>
-            그룹 추가
-          </Button>
-        </Flex>
-        <Spacing size={16} />
-        <Flex direction="column" className="gap-4">
-          {groups && (
-            <GroupList groups={groups} onGroupClick={handleGroupClick} />
-          )}
-        </Flex>
-        {(isFetching || isFetchingDetail) && <DotSpinnerSmall />}
-      </div>
+    <div className="min-h-[calc(100dvh-107px)] px-5 text-T4">
+      <Flex align="center">
+        <span>전체 그룹</span>
+        <Spacing size={4} direction="horizontal" />
+        <span className="flex-grow">{detail?.groupCount}</span>
+        <Spacing size={4} direction="horizontal" />
+        <Button className={styles.button} onMouseDown={handleAddGroup}>
+          그룹 추가
+        </Button>
+      </Flex>
+      <Spacing size={16} />
+      <Flex direction="column" className="gap-4">
+        {groups && (
+          <GroupList groups={groups} onGroupClick={handleGroupClick} />
+        )}
+      </Flex>
+      {(isFetching || isFetchingDetail) && <DotSpinnerSmall />}
     </div>
   );
 }
@@ -84,5 +82,5 @@ const styles = {
   headerWrapper:
     "h-12 fixed max-w-[430px] w-full transition-shadow duration-300",
   button:
-    "bg-grayscale-50 py-2 px-3 bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform cursor-pointer",
+    "bg-grayscale-50 py-2 px-3 bg-base-white text-T6 rounded-[8px] hover:scale-105 transition-transform cursor-pointer hover:bg-grayscale-100",
 };

@@ -34,6 +34,7 @@ export default function GroupContainer({
         <Flex align="center" className="gap-3">
           <Image
             alt="leaderImg"
+            loading="eager"
             width={48}
             height={48}
             className={styles.leaderImage}
