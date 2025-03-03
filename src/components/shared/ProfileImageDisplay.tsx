@@ -6,6 +6,7 @@ import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
 import { lightyToast } from "@/utils/toast";
 import Flex from "./Flex";
+import clsx from "clsx";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -77,7 +78,6 @@ export default function ProfileImageDisplay({
             <Image
               priority
               src={newImage}
-              layout="fixed"
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}
@@ -85,7 +85,10 @@ export default function ProfileImageDisplay({
                 width: small ? 64 : 74.67,
                 height: small ? 64 : 74.67,
               }}
-              className="object-cover w-8 h-8"
+              className={clsx(
+                "object-cover",
+                small ? "w-8 h-8" : "w-[74.7px] h-[74.7px]"
+              )}
             />
           ) : (
             <PhotoIcon />

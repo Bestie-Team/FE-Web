@@ -8,7 +8,6 @@ export default function Banner() {
     <Flex className="relative mb-[52px] px-0">
       <Image
         alt="bannerImage"
-        layout="fixed"
         className="h-[124px] w-[450px]"
         width={450}
         height={124}

@@ -30,12 +30,11 @@ export default function GroupBannerContainer({
     <div className="relative">
       <Image
         priority
-        layout="fixed"
         alt="groupBannerImage"
         src={imageUrl || DEFAULT_IMAGE}
         width={600}
         height={316}
-        className="h-[316px] object-cover"
+        className="h-[316px] w-[600px] object-cover"
         onLoadingComplete={() => setIsLoaded(true)}
       />
       <div className={styles.shade} />

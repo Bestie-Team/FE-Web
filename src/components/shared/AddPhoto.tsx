@@ -91,7 +91,6 @@ export default function AddPhoto({
           {imageUrl || image ? (
             <Image
               priority
-              layout="fixed"
               src={imageUrl ? imageUrl : image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}
@@ -100,7 +99,10 @@ export default function AddPhoto({
                 width: small ? 64 : 74.67,
                 height: small ? 64 : 74.67,
               }}
-              className="object-cover"
+              className={clsx(
+                "object-cover",
+                small ? "w-14 h-14" : "w-[74.67px] h-[74.67px]"
+              )}
             />
           ) : (
             <PhotoIcon />

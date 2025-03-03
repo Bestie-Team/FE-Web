@@ -14,7 +14,6 @@ const BackgroundReversibleHeader = dynamic(
 type HeaderWithBtnProps = {
   pageName: string;
   color?: string;
-  backToHome?: boolean;
   fontColor?: string;
   icon?: React.ReactNode;
   fixedNot?: boolean;
@@ -40,7 +39,7 @@ export default function useHeader(pathname: string) {
   const headerConfig: HeaderConfig = {
     "/invitation": {
       component: HeaderWithBackBtn,
-      props: { pageName: "초대장", color: "white", backToHome: true },
+      props: { pageName: "초대장", color: "white" },
     },
     "/signup": {
       component: HeaderWithBackBtn,

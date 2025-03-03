@@ -39,7 +39,6 @@ export default function GroupMemberImages({
       {seenImages?.map((imageUrl, i) => (
         <Image
           key={`group${i}`}
-          layout="fixed"
           style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
           src={imageUrl || DEFAULT_IMAGE}
           width={width ? width : 28}

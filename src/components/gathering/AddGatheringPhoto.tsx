@@ -73,7 +73,6 @@ export default function AddGatheringPhoto({
             {isLoaded === false ? <DotSpinner /> : null}
             <Image
               src={image}
-              layout="fixed"
               alt="upload_image"
               width={300}
               height={210}

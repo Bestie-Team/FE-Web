@@ -30,7 +30,6 @@ export default function SelectableGroupItem({
           )}
         >
           <Image
-            layout="fixed"
             alt="groupImage"
             src={
               groupInfo?.groupImageUrl ||

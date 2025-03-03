@@ -4,14 +4,12 @@ import Spacing from "../Spacing";
 export default function HeaderWithBackBtn({
   fixedNot,
   pageName,
-  backToHome = false,
   fontColor,
   color,
   icon,
 }: {
   fixedNot?: boolean;
   pageName: string;
-  backToHome?: boolean;
   fontColor?: string;
   color?: string;
   icon?: React.ReactNode;
@@ -33,11 +31,7 @@ export default function HeaderWithBackBtn({
           "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow"
         }
         onClick={() => {
-          if (backToHome) {
-            window.location.href = "/";
-          } else {
-            window.history.back();
-          }
+          window.history.back();
         }}
       >
         <ArrowLeftIcon color={fontColor} />

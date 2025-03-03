@@ -30,8 +30,7 @@ export default function InvitationCard({
         <Image
           priority
           src={INVITATION}
-          className="w-full !h-[169px] flex-grow"
-          layout="intrinsic"
+          className="!h-[169px] w-[350px] flex-grow"
           width={350}
           height={169}
           alt="invitationImage"

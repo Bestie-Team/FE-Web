@@ -113,7 +113,6 @@ export default function GatheringDetailPage({
             <span className="text-T5 flex-grow">{address}</span>
             <Spacing size={8} direction="horizontal" />
             <Image
-              layout="fixed"
               className="rounded-[10.8px] w-9 h-9 object-cover"
               alt="mapIcon"
               width={36}

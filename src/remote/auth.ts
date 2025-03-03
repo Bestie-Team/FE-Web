@@ -24,7 +24,7 @@ export async function postLogin({
 }: lighty.LoginRequest & { provider: Providers }) {
   const baseUrl = API_CONFIG.getBaseUrl();
   const uuid = uuidv4();
-  localStorage.setItem("deviceId", uuid);
+  localStorage.setItem(STORAGE_KEYS.DEVICE_ID, uuid);
 
   const targetUrl = `${baseUrl}/auth/${provider}/login`;
 
@@ -33,7 +33,7 @@ export async function postLogin({
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
-      deviceId: uuid,
+      "Device-Id": uuid,
     },
     body: JSON.stringify({
       accessToken,
@@ -90,12 +90,12 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
     const baseUrl = API_CONFIG.getBaseUrl();
 
     const uuid = uuidv4();
-    localStorage.setItem("deviceId", uuid);
+    localStorage.setItem(STORAGE_KEYS.DEVICE_ID, uuid);
 
     const response = await fetch(`${baseUrl}/auth/register`, {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json", deviceId: uuid },
+      headers: { "Content-Type": "application/json", "Device-Id": uuid },
       body: JSON.stringify({
         ...RegisterRequest,
         profileImageUrl: null,
