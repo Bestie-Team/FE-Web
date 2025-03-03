@@ -8,10 +8,14 @@ import { API_CONFIG, fetchWithAuth } from "./shared";
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
 import { Providers } from "@/constants/oAuthButtons";
 import { KakaoAuthResponse } from "@/models/user";
+import { v4 as uuidv4 } from "uuid";
 
 const storeAuthData = (accessToken: string, userInfo: object) => {
+  let expiresIn = 900;
+  let tokenExpiryTime = Date.now() + expiresIn * 1000;
   localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
   sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
+  localStorage.setItem(STORAGE_KEYS.EXPIRY_TIME, String(tokenExpiryTime));
 };
 
 export async function postLogin({
@@ -19,13 +23,17 @@ export async function postLogin({
   provider,
 }: lighty.LoginRequest & { provider: Providers }) {
   const baseUrl = API_CONFIG.getBaseUrl();
+  const uuid = uuidv4();
+  localStorage.setItem("deviceId", uuid);
 
   const targetUrl = `${baseUrl}/auth/${provider}/login`;
+
   const response = await fetch(targetUrl, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      deviceId: uuid,
     },
     body: JSON.stringify({
       accessToken,
@@ -80,10 +88,14 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
 
   try {
     const baseUrl = API_CONFIG.getBaseUrl();
+
+    const uuid = uuidv4();
+    localStorage.setItem("deviceId", uuid);
+
     const response = await fetch(`${baseUrl}/auth/register`, {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", deviceId: uuid },
       body: JSON.stringify({
         ...RegisterRequest,
         profileImageUrl: null,

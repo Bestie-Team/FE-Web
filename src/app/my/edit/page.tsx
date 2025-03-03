@@ -38,9 +38,14 @@ export default function EditPage() {
   const { mutate: updateId } = useUpdateAccountId({
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
-      await queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
-      });
+      Promise.all([
+        await queryClient.invalidateQueries({
+          queryKey: ["user/detail"],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: ["groups"],
+        }),
+      ]);
     },
     onError: (error) => lightyToast.error(error.message),
   });

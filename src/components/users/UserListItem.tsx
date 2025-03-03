@@ -32,9 +32,15 @@ export default function UserListItem({
   const { mutate, isPending } = useRequestFriend({
     userId: userInfo?.id,
     onSuccess: async (data: { message: string }) => {
-      await queryClient.invalidateQueries({
-        queryKey: ["users", debouncedSearch],
-      });
+      Promise.all([
+        await queryClient.invalidateQueries({
+          queryKey: ["users", debouncedSearch],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: ["sent", "friendsRequests"],
+        }),
+      ]);
+
       lightyToast.success(data.message);
     },
   });

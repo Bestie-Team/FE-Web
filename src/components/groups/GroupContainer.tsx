@@ -70,7 +70,7 @@ export default function GroupContainer({
 const styles = {
   leaderImage: "rounded-full !h-12 w-12 object-cover",
   groupContainer:
-    "bg-base-white gap-3 p-5 rounded-[16px] border-[1px] border-grayscale-100",
+    "bg-base-white hover:bg-grayscale-10 gap-3 p-5 rounded-[16px] border-[1px] border-grayscale-100",
 
   font: "text-C2 text-grayscale-300",
   bar: "mx-3 bg-grayscale-100 h-[13px] w-[1px]",

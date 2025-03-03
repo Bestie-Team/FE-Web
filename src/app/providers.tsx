@@ -24,6 +24,7 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
+import TokenManager from "@/utils/tokenManager";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,10 @@ export const NextProvider = ({ children }: Props) => {
     <GoogleOAuthProvider clientId="819938529870-7ng56emjnvtfds459lrb7h1a9g04r4q5.apps.googleusercontent.com">
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <TokenManager />
+            {children}
+          </AuthProvider>
           <ToastContainer
             position="top-center"
             hideProgressBar

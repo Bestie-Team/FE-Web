@@ -24,6 +24,7 @@ export default function GroupBannerContainer({
   const { accountId } = owner;
   const { userInfo } = useAuth();
   const isOwner = accountId === userInfo?.accountId;
+  console.log(accountId, userInfo?.accountId);
 
   return (
     <div className="relative">

@@ -33,7 +33,7 @@ export default function SentReceivedFriendRequestsList() {
   return (
     <Flex
       direction="column"
-      className="bg-grayscale-50 pt-[177px] px-5 gap-8 h-screen"
+      className="bg-grayscale-50 pt-[68px] px-5 gap-8 h-dvh"
     >
       {receivedRequests && receivedRequests.length > 0 && (
         <Flex direction="column">
