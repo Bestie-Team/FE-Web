@@ -64,7 +64,7 @@ export const useInfiniteScrollByRef = ({
     if (elementHeight - (scrollTop + clientHeight) < threshold && !isFetching) {
       setPage((prev) => prev + 1);
     }
-    console.log(elementHeight - (scrollTop + clientHeight));
+    // console.log(elementHeight - (scrollTop + clientHeight));
   }, [isFetching, targetRef, threshold]);
 
   const debouncedScroll = useDebounce(checkScrollPosition, 300);

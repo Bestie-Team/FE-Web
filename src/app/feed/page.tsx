@@ -39,6 +39,7 @@ import NavBar from "@/components/shared/NavBar";
 import { useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
+import OnBoardCardSlider from "@/components/onBoard/onBoardCard";
 
 const TabParamHandler = ({
   setSelectedTab,

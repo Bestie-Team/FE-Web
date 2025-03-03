@@ -115,7 +115,7 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
       ...(profileImageUrl && { profileImageUrl }),
     });
 
-    window.location.href = "/feed?ref=signup";
+    window.location.href = "/onboard";
 
     return { message: "회원가입을 축하합니다" };
   } catch (error) {
