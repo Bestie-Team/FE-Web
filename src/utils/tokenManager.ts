@@ -28,6 +28,7 @@ const TokenManager = () => {
       const targetUrl = `${baseUrl}/auth/token`;
       const response = await fetch(targetUrl, {
         method: "GET",
+        credentials: "include",
         headers: {
           deviceId: deviceId,
         },
@@ -47,7 +48,7 @@ const TokenManager = () => {
   }
   useEffect(() => {
     console.log("토큰 체크");
-    const intervalId = setInterval(checkAndRefreshToken, 60 * 10000);
+    const intervalId = setInterval(checkAndRefreshToken, 60 * 1000);
 
     return () => clearInterval(intervalId);
   }, []);

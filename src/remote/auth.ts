@@ -11,8 +11,8 @@ import { KakaoAuthResponse } from "@/models/user";
 import { v4 as uuidv4 } from "uuid";
 
 const storeAuthData = (accessToken: string, userInfo: object) => {
-  let expiresIn = 900;
-  let tokenExpiryTime = Date.now() + expiresIn * 1000;
+  const expiresIn = 900;
+  const tokenExpiryTime = Date.now() + expiresIn * 1000;
   localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
   sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
   localStorage.setItem(STORAGE_KEYS.EXPIRY_TIME, String(tokenExpiryTime));
