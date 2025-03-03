@@ -12,15 +12,17 @@ export default function CalendarWithTime({
   selectedTime,
   setAmpm,
   setSelectedTime,
+  originalDate,
 }: {
   ampm: "오전" | "오후";
   selectedTime: string;
   setAmpm: SetterOrUpdater<"오전" | "오후">;
   setSelectedTime: SetterOrUpdater<string>;
+  originalDate?: string;
 }) {
   return (
     <Flex direction="column" className="w-[340px]">
-      <LightyCalendar />
+      <LightyCalendar originalDate={originalDate} />
       <Spacing size={16} />
       <Flex className="px-3 gap-2">
         <Button

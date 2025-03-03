@@ -84,6 +84,10 @@
   margin-right: 24px;
 }
 
+.react-calendar__navigation button:disabled {
+  border-radius: 8px;
+}
+
 .react-calendar__navigation__arrow .react-calendar__navigation__next-button {
   margin-left: 24px;
 }

@@ -19,7 +19,7 @@ export default function ChoosingKindOfMemory({
 }) {
   const header = useMemo(() => getHeader("/record"), []);
   return (
-    <div className="bg-grayscale-50 pt-12 h-dvh">
+    <div className="pt-12 h-dvh">
       {header}
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
         <LightyIcon width="24" height="24" color="#0A0A0A" />
@@ -70,7 +70,7 @@ const Item = ({
     <Flex
       onClick={onClick}
       className={clsx(
-        "bg-base-white rounded-2xl px-4 py-5 gap-3 cursor-pointer border-[1px] border-base-white",
+        "bg-base-white rounded-2xl px-4 py-5 gap-3 cursor-pointer border-[1px] border-grayscale-100",
         clicked && "border-[1px] border-grayscale-900"
       )}
     >

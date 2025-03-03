@@ -1,11 +1,10 @@
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { fetchWithAuth } from "@/remote/shared";
+import { API_CONFIG } from "@/remote/shared";
 import { useEffect } from "react";
 
 const TokenManager = () => {
   console.log("마운트됨");
   async function checkAndRefreshToken() {
-    console.log("함수실행");
     const now = Date.now();
     const tokenExpiryTime = localStorage.getItem(STORAGE_KEYS.EXPIRY_TIME);
 
@@ -20,12 +19,14 @@ const TokenManager = () => {
 
   async function refreshAccessToken() {
     const deviceId = localStorage.getItem("deviceId");
+    const baseUrl = API_CONFIG.getBaseUrl();
     if (deviceId === null) {
       throw new Error("디바이스 아이디가 없습니다.");
     }
 
     try {
-      const response = await fetchWithAuth("/auth/token", {
+      const targetUrl = `${baseUrl}/auth/token`;
+      const response = await fetch(targetUrl, {
         method: "GET",
         headers: {
           deviceId: deviceId,
@@ -39,11 +40,14 @@ const TokenManager = () => {
       localStorage.setItem("tokenExpiryTime", String(Date.now() + 900 * 1000));
     } catch (error) {
       console.error("토큰 갱신 실패:", error);
+      throw new Error(
+        error instanceof Error ? error.message : `${String(error)}42줄`
+      );
     }
   }
   useEffect(() => {
     console.log("토큰 체크");
-    const intervalId = setInterval(checkAndRefreshToken, 60 * 1000);
+    const intervalId = setInterval(checkAndRefreshToken, 60 * 10000);
 
     return () => clearInterval(intervalId);
   }, []);

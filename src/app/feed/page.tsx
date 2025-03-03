@@ -36,9 +36,11 @@ import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import ReportModal from "@/components/shared/Modal/ReportModal";
 import NavBar from "@/components/shared/NavBar";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
+import MailIcon from "@/components/shared/Icon/MailIcon";
+import NoticeIcon from "@/components/shared/Icon/NoticeIcon";
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -71,7 +73,10 @@ const Header = React.memo(
       <>
         <div
           id="filter"
-          className={clsx(filterWrapperStyle, shadow ? "shadow-bottom" : "")}
+          className={clsx(
+            styles.filterWrapperStyle,
+            shadow ? "shadow-bottom" : ""
+          )}
         >
           <Panel
             selectedTab={selectedTab}
@@ -79,6 +84,7 @@ const Header = React.memo(
             title1="전체"
             title2="마이"
             onClick={handleTabClick}
+            year={false}
           />
         </div>
         {getHeader("/feed")}
@@ -160,6 +166,7 @@ export default function FeedPage() {
   const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
   const [selectedFeedId, setSelectedFeedId] = useState("");
+  const router = useRouter();
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const {
     selectedTab,
@@ -293,7 +300,7 @@ export default function FeedPage() {
             <SwiperSlide>
               <div
                 ref={containerRef}
-                className="h-full overflow-y-auto no-scrollbar pt-[90px]"
+                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
               >
                 <FeedForDisplay />
                 <Feed
@@ -313,7 +320,7 @@ export default function FeedPage() {
               {feedMine.length > 0 ? (
                 <div
                   ref={containerRef_m}
-                  className="h-full overflow-y-auto no-scrollbar pt-[90px]"
+                  className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
                 >
                   <Feed
                     feeds={feedMine}
@@ -358,7 +365,28 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="h-dvh no-scrollbar">
+    <div className="relative h-dvh no-scrollbar">
+      <div
+        style={{ zIndex: 99 }}
+        className="flex fixed right-0 top-0 h-12 items-center gap-1 pr-5"
+      >
+        <div
+          onMouseDown={() => {
+            router.push("/invitation");
+          }}
+          className={styles.iconWrapperStyle}
+        >
+          <MailIcon width="24" height="24" color="#0A0A0A" />
+        </div>
+        <div
+          onMouseDown={() => {
+            router.push("/notice");
+          }}
+          className={styles.iconWrapperStyle}
+        >
+          <NoticeIcon color="#0A0A0A" />
+        </div>
+      </div>
       <Header
         shadow={isPast}
         selectedTab={selectedTab}
@@ -398,5 +426,9 @@ export default function FeedPage() {
   );
 }
 
-const filterWrapperStyle =
-  "max-w-[430px] pt-12 px-5 fixed flex flex-col w-full bg-base-white transition-shadow duration-300";
+const styles = {
+  filterWrapperStyle:
+    "max-w-[430px] pt-12 px-5 fixed flex flex-col w-full bg-base-white transition-shadow duration-300",
+  iconWrapperStyle:
+    "flex justify-center items-center w-10 h-10 p-2 cursor-pointer  hover:animate-shrink-grow-less",
+};

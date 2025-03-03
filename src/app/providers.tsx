@@ -53,13 +53,18 @@ export const NextProvider = ({ children }: Props) => {
 };
 
 const DARK_BACKGROUND_PATHS = [
-  "/record",
   "/groups",
   "/friends",
   "/friends/search",
 ] as const;
 const PUBLIC_PATHS = ["/signup", "/auth"] as const;
-const NAVBAR_PATHS = ["/gathering", "/feed", "/social", "/my"] as const;
+const NAVBAR_PATHS = [
+  "/gathering",
+  "/feed",
+  "/card",
+  "/social",
+  "/my",
+] as const;
 
 const isPathIncluded = (path: string, pathList: readonly string[]) =>
   pathList.some((item) => path.startsWith(item));

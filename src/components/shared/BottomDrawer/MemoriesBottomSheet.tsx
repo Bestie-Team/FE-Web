@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Text from "../Text";
 import UserIcon from "../Icon/UserIcon";
 import PencilIcon from "../Icon/PencilIcon";
-import PicturesIcon from "../Icon/PicturesIcon";
 import ActionItem from "./ActionItem";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { useSetRecoilState } from "recoil";
@@ -68,11 +67,5 @@ const actions = [
     title: "모임 약속 만들기",
     subTitle: "모임 약속을 만들고 친구들에게 약속 초대장을 보내요",
     link: "/gathering/new",
-  },
-  {
-    icon: <PicturesIcon />,
-    title: "포트 카드 만들기",
-    subTitle: "추억이 담긴 포토 카드를 꾸밀 수 있어요",
-    link: "/card",
   },
 ];

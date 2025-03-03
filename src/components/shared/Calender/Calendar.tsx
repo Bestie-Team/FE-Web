@@ -15,7 +15,11 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function LightyCalendar() {
+export default function LightyCalendar({
+  originalDate,
+}: {
+  originalDate?: string;
+}) {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
@@ -23,8 +27,10 @@ export default function LightyCalendar() {
   return (
     <Calendar
       showNeighboringMonth
+      minDate={new Date()}
       onChange={setSelectedDate}
       value={selectedDate}
+      activeStartDate={originalDate ? new Date(originalDate) : undefined}
       formatDay={(locale, date) => format(date, "d")}
       prev2Label={null}
       next2Label={null}

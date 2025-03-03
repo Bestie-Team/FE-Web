@@ -48,7 +48,7 @@ export default function SelectableSearchedFriendsListContainer({
         backgroundColor: "#F4F4F4",
       }}
     >
-      <span className="text-T5" id="selectableFriendList">{`친구 ${
+      <span className="text-T4" id="selectableFriendList">{`친구 ${
         searchedFriends ? searchedFriends.length : 0
       }`}</span>
       <ul aria-labelledby="selectableFriendList">

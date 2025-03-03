@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Gathering } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { differenceInCalendarDays } from "date-fns";
+import { useRouter } from "next/navigation";
 
 export default function TimelineItem({
   upcomingGathering,
@@ -16,6 +17,7 @@ export default function TimelineItem({
     new Date(),
     new Date(upcomingGathering.gatheringDate)
   );
+  const router = useRouter();
   return (
     <Flex className="w-full" justify="space-between">
       <Flex>
@@ -25,7 +27,12 @@ export default function TimelineItem({
           diff == 0 ? `-day` : diff
         }`}</span>
         <Spacing size={24} direction="horizontal" />
-        <Flex direction="column" justify="space-between">
+        <Flex
+          direction="column"
+          justify="space-between"
+          className="cursor-pointer"
+          onClick={() => router.push(`/gathering/${upcomingGathering.id}`)}
+        >
           <span className="text-T4">{upcomingGathering.name}</span>
           <div className={styles.date}>
             {formatToDisplay(new Date(upcomingGathering.gatheringDate))}

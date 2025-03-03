@@ -11,13 +11,13 @@ import {
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/BottomDrawer/DecoStickerBottomSheet";
 import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
+import BottomButton from "../shared/Button/BottomButton";
 
 export default function DecorateWithStickers() {
   const [decoModalOpen, setDecoModalOpen] = useRecoilState(
@@ -152,72 +152,83 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <Flex direction="column" className="h-screen pt-[76px] px-6">
+    <Flex direction="column" className="!min-h-dvh h-full pb-[60px]">
       {deco === false ? (
-        <>
-          <Flex direction="column" className="gap-3">
-            <span className="text-T2">해당 프레임을 선택할까요?</span>
-            <span className="text-B3 text-grayscale-500">
-              꾸미기 시작하면 프레임을 바꿀 수 없어요.
-            </span>
-          </Flex>
-          <Spacing size={40} />
-          <Flex
-            justify="center"
-            align="center"
-            className={clsx(styles.cardContainer)}
-          >
-            <div ref={ref} id="card" className="relative rounded-[20px] w-full">
-              <img
-                alt="frame"
-                height={372}
-                width={282}
-                className={styles.frame}
-                src={frames[selectedFrame]}
-              />
-              <div className={styles.cardWrapper}>
-                <div className={styles.imageWrapper}>
-                  {croppedImage ? (
-                    <img
-                      src={croppedImage}
-                      alt="Cropped Image"
-                      width={230}
-                      height={218}
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        backgroundColor: "#AEAEAE",
-                        height: 218,
-                        width: 230,
-                      }}
-                    />
-                  )}
+        <Flex
+          className="h-dvh pt-[76px] pb-[60px]"
+          direction="column"
+          justify="space-between"
+        >
+          <div>
+            <Flex direction="column" className="gap-3 px-6">
+              <span className="text-T2">해당 프레임을 선택할까요?</span>
+              <span className="text-B3 text-grayscale-500">
+                꾸미기 시작하면 프레임을 바꿀 수 없어요.
+              </span>
+              <Spacing size={20} />
+            </Flex>
+            <Flex
+              direction="column"
+              justify="center"
+              align="center"
+              className={clsx(styles.cardContainer)}
+            >
+              <div
+                ref={ref}
+                id="card"
+                className="relative rounded-[20px] w-full"
+              >
+                <img
+                  alt="frame"
+                  height={372}
+                  width={282}
+                  className={styles.frame}
+                  src={frames[selectedFrame]}
+                />
+                <div className={styles.cardWrapper}>
+                  <div className={styles.imageWrapper}>
+                    {croppedImage ? (
+                      <img
+                        src={croppedImage}
+                        alt="Cropped Image"
+                        width={230}
+                        height={218}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          backgroundColor: "#AEAEAE",
+                          height: 218,
+                          width: 230,
+                        }}
+                      />
+                    )}
+                  </div>
+                  <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
+                    <span className={styles.textWrapper}>
+                      {selectedFeed.name || ""}
+                    </span>
+                    <Spacing size={8} />
+                    <span className="text-C5">{selectedFeed.content}</span>
+                    <Spacing size={12} />
+                    <span className={styles.dateWrapper}>
+                      {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
+                    </span>
+                  </Flex>
                 </div>
-                <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
-                  <span className={styles.textWrapper}>
-                    {selectedFeed.name || ""}
-                  </span>
-                  <Spacing size={8} />
-                  <span className="text-C5">{selectedFeed.content}</span>
-                  <Spacing size={12} />
-                  <span className={styles.dateWrapper}>
-                    {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
-                  </span>
-                </Flex>
               </div>
-            </div>
-            <FixedBottomButton
-              bgColor="bg-grayscale-50"
-              disabled={selectedFrame == null}
-              label={"꾸미기 시작"}
-              onClick={handleCaptureImage}
-            />
-          </Flex>
-        </>
+            </Flex>
+          </div>
+          <BottomButton
+            disabled={selectedFrame == null}
+            onClick={handleCaptureImage}
+            label="꾸미기 시작"
+          />
+        </Flex>
       ) : (
         <>
-          <Flex className="w-full">
+          <Spacing size={76} />
+          <Flex className="w-full px-6">
             <span className="text-B4 text-grayscale-500">
               점선 영역이 이미지 영역이에요!
             </span>
@@ -225,8 +236,12 @@ export default function DecorateWithStickers() {
           <Spacing size={32} />
         </>
       )}
-
-      <Flex direction="column" align="center">
+      <Flex
+        direction="column"
+        align="center"
+        className="!h-full"
+        justify="space-between"
+      >
         <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
           <canvas
             ref={canvasElementRef}
@@ -240,25 +255,25 @@ export default function DecorateWithStickers() {
             }}
           />
         </div>
+        {deco && (
+          <div className="absolute bottom-[60px] left-0 right-0">
+            <FloatingButton tooltip />
+            <BottomButton
+              label={"이미지 저장"}
+              onClick={() => {
+                handleExport();
+              }}
+            />
+          </div>
+        )}
       </Flex>
+
       {decoModalOpen ? (
         <DecoStickerBottomSheet
           handleSticker={handleAddSticker}
           open={decoModalOpen}
           onClose={() => setDecoModalOpen(false)}
         />
-      ) : null}
-      {deco ? (
-        <>
-          <FloatingButton tooltip />
-          <FixedBottomButton
-            bgColor="bg-grayscale-50"
-            label={"이미지 저장"}
-            onClick={() => {
-              handleExport();
-            }}
-          />
-        </>
       ) : null}
     </Flex>
   );
@@ -270,7 +285,8 @@ const styles = {
     "absolute z-10 py-[10px] px-3 text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
   saveButton:
     "w-[120px] px-3 py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
-  cardContainer: "relative rounded-[20px] w-[282px] h-[453px] self-center",
+  cardContainer:
+    "relative rounded-[20px] w-[282px] h-[453px] self-center mx-auto",
   cardWrapper:
     "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
   imageWrapper:

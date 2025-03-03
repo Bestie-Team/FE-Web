@@ -10,10 +10,12 @@ import { useState } from "react";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 
 export default function CalendarBottomSheet({
+  originalDate,
   setGatheringToEdit,
   open = true,
   onClose,
 }: {
+  originalDate?: string;
   setGatheringToEdit?: React.Dispatch<
     React.SetStateAction<Partial<lighty.CreateGatheringRequest>>
   >;
@@ -24,7 +26,6 @@ export default function CalendarBottomSheet({
   const setGatheringInfo = useSetRecoilState(newGatheringInfo);
   const [ampm, setAmpm] = useState<"오전" | "오후">("오전");
   const [selectedTime, setSelectedTime] = useState<string>("12:00");
-
   return (
     <BottomSheetWrapper onClose={onClose} open={open} bar={false}>
       <Flex direction="column" className="px-5 gap-10" align="center">
@@ -33,6 +34,7 @@ export default function CalendarBottomSheet({
           selectedTime={selectedTime}
           setAmpm={setAmpm}
           setSelectedTime={setSelectedTime}
+          originalDate={originalDate}
         />
         <Button
           className={buttonStyle}

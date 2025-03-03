@@ -86,7 +86,7 @@ const FriendListSection = ({
       >
         <Flex justify="space-between" align="center" className="w-full">
           <span
-            className="text-T5"
+            className="text-T4"
             id="friendList"
           >{`친구 ${friends.length}`}</span>
           <Button className={styles.button} onMouseDown={onAddFriend}>
