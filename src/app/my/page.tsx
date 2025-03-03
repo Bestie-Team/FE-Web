@@ -9,7 +9,6 @@ import TermOfUse from "@/components/terms/TermOfUse";
 import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import getHeader from "@/utils/getHeader";
-import STORAGE_KEYS from "@/constants/storageKeys";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
@@ -63,11 +62,7 @@ export default function MyPage() {
 
   useEffect(() => {
     const initializeProfileInfo = () => {
-      const userInfoSession = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-
-      if (userInfoSession) {
-        return JSON.parse(userInfoSession);
-      } else if (user && user.profileImageUrl) {
+      if (user && user.profileImageUrl) {
         return {
           profileImageUrl: user.profileImageUrl,
           accountId: user.accountId,

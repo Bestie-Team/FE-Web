@@ -1,7 +1,7 @@
-import { patchProfileImage } from "@/remote/profile";
+import { patchProfileAccountId } from "@/remote/profile";
 import { useMutation } from "@tanstack/react-query";
 
-export default function useUpdateProfile({
+export default function useUpdateAccountId({
   onSuccess,
   onError,
 }: {
@@ -9,9 +9,9 @@ export default function useUpdateProfile({
   onError: (error: Error) => void;
 }) {
   return useMutation({
-    mutationKey: ["update/profile"],
-    mutationFn: async ({ profileImageUrl }: { profileImageUrl: string }) =>
-      await patchProfileImage(profileImageUrl),
+    mutationKey: ["update/profile/accountId"],
+    mutationFn: async ({ accountId }: { accountId: string }) =>
+      await patchProfileAccountId({ accountId }),
 
     onSuccess: (data: { message: string }) => onSuccess(data),
     onError: (error: Error) => onError(error),

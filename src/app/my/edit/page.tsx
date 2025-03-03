@@ -1,4 +1,5 @@
 "use client";
+import useUpdateAccountId from "@/components/my/hooks/usePatchAccountId";
 import useUpdateProfile from "@/components/my/hooks/useUpdateProfile";
 import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
@@ -9,10 +10,12 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import getHeader from "@/utils/getHeader";
 import { lightyToast } from "@/utils/toast";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function EditPage() {
   const { data, isFetching, isError } = useUserDetail();
+  const queryClient = useQueryClient();
   const [profile, setProfile] = useState<{
     accountId: string;
     profileImageUrl: string;
@@ -22,16 +25,37 @@ export default function EditPage() {
   });
   const header = getHeader("/my/edit");
 
-  const { mutate } = useUpdateProfile({
-    onSuccess: (data: { message: string }) => lightyToast.success(data.message),
+  const { mutate: updateImage } = useUpdateProfile({
+    onSuccess: async (data: { message: string }) => {
+      lightyToast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
+      });
+    },
+    onError: (error) => lightyToast.error(error.message),
+  });
+
+  const { mutate: updateId } = useUpdateAccountId({
+    onSuccess: async (data: { message: string }) => {
+      lightyToast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
+      });
+    },
     onError: (error) => lightyToast.error(error.message),
   });
 
   const handlePatch = () => {
-    mutate({
-      profileImageUrl: profile.profileImageUrl,
-      accountId: profile.accountId,
-    });
+    if (profile.profileImageUrl !== data?.profileImageUrl) {
+      updateImage({
+        profileImageUrl: profile.profileImageUrl,
+      });
+    }
+    if (data?.accountId !== profile.accountId) {
+      updateId({
+        accountId: profile.accountId,
+      });
+    }
   };
 
   return (

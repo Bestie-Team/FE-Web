@@ -2,8 +2,6 @@ import { useMemo, memo, useEffect, useState } from "react";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
-import * as lighty from "lighty-type";
-import STORAGE_KEYS from "@/constants/storageKeys";
 import FloatingButton from "./Button/FloatingButton";
 import useUserProfile from "../users/hooks/useUserProfile";
 
@@ -51,14 +49,8 @@ const NavBar = () => {
     setIsClient(true);
 
     if (!profileImageUrl) {
-      const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-      if (userInfo) {
-        const parsed: lighty.LoginResponse = JSON.parse(userInfo);
-        if (parsed.profileImageUrl) {
-          setProfileImageUrl(parsed.profileImageUrl);
-        } else if (user?.profileImageUrl) {
-          setProfileImageUrl(user.profileImageUrl);
-        }
+      if (user?.profileImageUrl) {
+        setProfileImageUrl(user.profileImageUrl);
       }
     }
   }, [user]);
