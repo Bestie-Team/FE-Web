@@ -17,9 +17,11 @@ import NoInvitation from "@/components/invitation/NoInvitation";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function InvitationPage() {
   const [isClient, setIsClient] = useState(false);
+  const queryClient = useQueryClient();
   const isPast = useScrollThreshold();
   const header = useMemo(() => getHeader("/invitation"), []);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -53,7 +55,11 @@ export default function InvitationPage() {
     targetRef: containerRef_r,
   });
 
-  const { mutate: read } = useReadNotification();
+  const { mutate: read } = useReadNotification({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["notification"] });
+    },
+  });
 
   const renderSwiper = useMemo(() => {
     return (

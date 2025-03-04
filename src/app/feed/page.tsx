@@ -41,6 +41,8 @@ import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import MailIcon from "@/components/shared/Icon/MailIcon";
 import NoticeIcon from "@/components/shared/Icon/NoticeIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
+import useNotification from "@/components/notice/hooks/useNotification";
+import { DotWithNumberIcon } from "@/components/shared/Icon/DotIcon";
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -242,6 +244,10 @@ export default function FeedPage() {
     isFetching: isFetching_mine,
   } = useFeedMine({ ...queryParams, enabled: !!token });
 
+  const { data: noti = [] } = useNotification();
+
+  const isNewNotification = noti.filter((n) => n.readAt == null);
+
   const { mutate: deleteFeed } = useDeleteFeed({
     feedId: selectedFeedId,
     onSuccess: handleDeleteFeedSuccess,
@@ -390,7 +396,15 @@ export default function FeedPage() {
           }}
           className={styles.iconWrapperStyle}
         >
-          <MailIcon width="24" height="24" color="#0A0A0A" />
+          <MailIcon
+            className="relative"
+            width="24"
+            height="24"
+            color="#0A0A0A"
+          />
+          {isNewNotification.length >= 1 && (
+            <DotWithNumberIcon count={isNewNotification.length} />
+          )}
         </div>
         <div
           onMouseDown={() => {
@@ -399,6 +413,9 @@ export default function FeedPage() {
           className={styles.iconWrapperStyle}
         >
           <NoticeIcon color="#0A0A0A" />
+          {isNewNotification.length >= 1 && (
+            <DotWithNumberIcon count={isNewNotification.length} />
+          )}
         </div>
       </div>
       <Header
@@ -444,5 +461,5 @@ const styles = {
   filterWrapperStyle:
     "max-w-[430px] pt-12 px-5 fixed flex flex-col w-full bg-base-white transition-shadow duration-300",
   iconWrapperStyle:
-    "flex justify-center items-center w-10 h-10 p-2 cursor-pointer  hover:animate-shrink-grow-less",
+    "relative flex justify-center items-center w-10 h-10 p-2 cursor-pointer  hover:animate-shrink-grow-less",
 };

@@ -10,13 +10,13 @@ export default function useFeedMine({
   minDate,
   maxDate,
   limit,
-  enabled,
+  enabled = true,
 }: {
   order: "DESC" | "ASC";
   minDate: string;
   maxDate: string;
   limit: number;
-  enabled: boolean;
+  enabled?: boolean;
 }) {
   const defaultCursor = {
     createdAt: order === "DESC" ? maxDate : minDate,

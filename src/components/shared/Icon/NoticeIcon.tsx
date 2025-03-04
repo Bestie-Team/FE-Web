@@ -19,17 +19,6 @@ export default function NoticeIcon({ color }: { color?: string }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle
-          id="Ellipse 1847"
-          cx="22"
-          cy="2"
-          r="2"
-          fill="#FA6767"
-          style={{
-            fill: "#FA6767",
-            fillOpacity: 1,
-          }}
-        />
       </g>
     </svg>
   );

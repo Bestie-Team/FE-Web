@@ -2,7 +2,11 @@ import { patchNotification } from "@/remote/notification";
 import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 
-export default function useReadNotification() {
+export default function useReadNotification({
+  onSuccess,
+}: {
+  onSuccess: () => void;
+}) {
   return useMutation({
     mutationKey: ["read/notification"],
     mutationFn: async () => {
@@ -12,7 +16,10 @@ export default function useReadNotification() {
       }
       return result;
     },
-    onSuccess: (data: { message: string }) => lightyToast.success(data.message),
+    onSuccess: (data: { message: string }) => {
+      onSuccess();
+      lightyToast.success(data.message);
+    },
     onError: (error) => console.log(error),
   });
 }
