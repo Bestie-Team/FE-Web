@@ -11,20 +11,22 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { useSetRecoilState } from "recoil";
+import { selectedGroupDetailAtom } from "@/atoms/group";
 
 const GroupList = ({
   groups,
   onGroupClick,
 }: {
   groups: Group[];
-  onGroupClick: (id: string) => void;
+  onGroupClick: ({ groupId, group }: { groupId: string; group: Group }) => void;
 }) => {
   return groups.map((group) => (
     <GroupContainer
       key={`${group.id}`}
       group={group}
       className="cursor-pointer"
-      onClick={() => onGroupClick(group.id)}
+      onClick={() => onGroupClick({ groupId: group.id, group })}
     />
   ));
 };
@@ -34,9 +36,10 @@ export default function Groups() {
   const [isClient, setIsClient] = useState(false);
   const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
-
+  const setSelectedGroup = useSetRecoilState(selectedGroupDetailAtom);
   const handleGroupClick = useCallback(
-    (groupId: string) => {
+    ({ groupId, group }: { groupId: string; group: Group }) => {
+      setSelectedGroup(group);
       router.push(`/groups/${groupId}`);
     },
     [router]

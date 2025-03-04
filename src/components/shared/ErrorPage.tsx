@@ -18,7 +18,7 @@ export default function ErrorPage() {
           justify="center"
           align="center"
           className="p-2 gap-4 cursor-pointer"
-          onClick={() => router.refresh()}
+          onClick={() => router.back()}
         >
           <span className="text-T3">오류가 발생했어요.</span>
           <span className="text-grayscale-600 text-B2">

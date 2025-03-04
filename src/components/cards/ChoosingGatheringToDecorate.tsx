@@ -11,6 +11,7 @@ import { maxDate, minDate } from "@/constants/time";
 import { Feed } from "@/models/feed";
 import { NoFeedToMakeCard } from "../feeds/NoFeed";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -94,13 +95,16 @@ export default function ChoosingGatheringToDecorate({
           </button>
         ) : (
           <button
-            className={styles.button}
-            disabled={selectedFeed?.id === ""}
+            className={clsx(
+              styles.button,
+              selectedFeed.id === "" && "!bg-grayscale-200"
+            )}
+            disabled={selectedFeed.id === ""}
             onClick={() => {
               onNext();
             }}
           >
-            {"꾸미기 시작"}
+            {"꾸미기 시작!"}
           </button>
         )}
       </div>

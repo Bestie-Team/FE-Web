@@ -7,23 +7,23 @@ import Spacing from "@/components/shared/Spacing";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
-import useGroup from "@/components/groups/hooks/useGroups";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import LeaderContainer from "@/components/shared/LeaderContainer";
 import { User } from "lighty-type";
+import { selectedGroupDetailAtom } from "@/atoms/group";
+import ErrorPage from "@/components/shared/ErrorPage";
 
 interface GroupDetailPageProps {
   params: {
@@ -46,7 +46,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const reset = useResetRecoilState(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: group_data, isFetching } = useGroup({ limit: 50 });
+  const selectedGroup = useRecoilValue(selectedGroupDetailAtom);
 
   const [deleteModalOpen, setDeleteModalOpen] =
     useRecoilState(groupDeleteModalAtom);
@@ -91,15 +91,13 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     onSuccess: addMemberSuccessHandler,
   });
 
-  const selectedGroup = group_data?.find((group) => group.id === params.id);
-
   useEffect(() => {
     setIsClient(true);
 
     return reset();
   }, []);
 
-  if (isFetching || !isClient) return <FullPageLoader />;
+  if (!isClient) return <ErrorPage />;
 
   if (!selectedGroup) {
     return <div>그룹을 찾을 수 없습니다.</div>;

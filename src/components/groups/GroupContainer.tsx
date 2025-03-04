@@ -12,23 +12,18 @@ export default function GroupContainer({
   className,
 }: {
   group: lighty.Group;
-  onClick?: (id: string) => void;
+  onClick: () => void;
   className?: string;
 }) {
   const { name, description, groupImageUrl, gatheringCount, members, id } =
     group;
   const memberProfileImages = members.map((member) => member.profileImageUrl);
-  const handleClick = () => {
-    if (onClick) {
-      onClick(id);
-    }
-  };
 
   return (
     <Flex
       align="center"
       className={clsx(styles.groupContainer, className)}
-      onMouseDown={handleClick}
+      onMouseDown={onClick}
     >
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">

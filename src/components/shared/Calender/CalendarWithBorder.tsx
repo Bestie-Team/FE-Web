@@ -78,7 +78,6 @@ export default function LightyCalendarWithBorder({
 
   return (
     <Calendar
-      activeStartDate={new Date()}
       showNeighboringMonth={true}
       tileClassName={({ date }) => {
         return returnClassName(date);
