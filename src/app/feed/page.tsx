@@ -35,7 +35,6 @@ import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import ReportModal from "@/components/shared/Modal/ReportModal";
-import NavBar from "@/components/shared/NavBar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
