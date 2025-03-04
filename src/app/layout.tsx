@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextLayout, { NextProvider } from "./providers";
+import GoogleAnalytics from "./lib/GoogleAnalytics";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -22,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      ) : null}
       <body className={`${pretendard.variable} antialiased h-full`}>
         <NextProvider>
           <NextLayout>{children}</NextLayout>
