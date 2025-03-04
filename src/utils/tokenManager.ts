@@ -23,10 +23,6 @@ export async function refreshAccessToken() {
 
     if (accessToken) {
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-      localStorage.setItem(
-        STORAGE_KEYS.EXPIRY_TIME,
-        String(Date.now() + 900 * 1000)
-      );
 
       return accessToken;
     } else {

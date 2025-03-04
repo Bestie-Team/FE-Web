@@ -1,3 +1,4 @@
+"use client";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
