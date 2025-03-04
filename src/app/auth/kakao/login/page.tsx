@@ -19,7 +19,7 @@ export default function KakaoPage() {
   });
 
   useEffect(() => {
-    const code = new URL(window.location.href).searchParams.get("code");
+    const code = new URL(window.location.href).searchParams?.get("code");
     if (code) {
       setAuthCode(code);
     } else {

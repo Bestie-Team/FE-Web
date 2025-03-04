@@ -133,18 +133,20 @@ export default function FriendsAndGroups() {
     loadMore,
     isFetching,
   } = useFriends({
-    userId: userInfo?.accountId,
+    userId: userInfo?.accountId || "",
   });
   const { data: requestCount = { count: 0 } } = useFriendsRequestTotalCount();
 
   useEffect(() => {
-    const tabParam = searchParams.get("tab");
+    const tabParam = searchParams?.get("tab");
     if (tabParam === "group") {
       setSelectedTab("2");
+    } else {
+      setSelectedTab("1");
     }
   }, [searchParams]);
 
-  useInfiniteScroll({ isFetching, loadMore });
+  useInfiniteScroll({ isFetching: isFetching, loadMore });
 
   const handleAddFriend = useCallback(() => {
     router.push("/friends/search");

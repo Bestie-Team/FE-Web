@@ -22,7 +22,7 @@ export default function ChoosingGatheringToDecorate({
   >(cardSelectedFeedAtom);
   const router = useRouter();
 
-  const { data, isFetching } = useFeedMine({
+  const { data = [], isFetching } = useFeedMine({
     order: "DESC",
     minDate: minDate(),
     maxDate: maxDate(),

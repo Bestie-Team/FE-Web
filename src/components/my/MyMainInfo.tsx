@@ -34,7 +34,7 @@ export default function MyMainInfo({
     {
       label: "친구",
       icon: <UserIcon width="16" height="16" color="#979797" />,
-      link: "/social",
+      link: "/social?tab=friends",
       value: friendsCount,
     },
   ];

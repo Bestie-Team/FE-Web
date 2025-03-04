@@ -49,7 +49,7 @@ const TabParamHandler = ({
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const tabParam = searchParams.get("tab");
+    const tabParam = searchParams?.get("tab");
     if (tabParam === "1" || tabParam === "2") {
       setSelectedTab(tabParam);
     }
