@@ -3,14 +3,14 @@ import { API_CONFIG } from "@/remote/shared";
 import { useEffect } from "react";
 
 const TokenManager = () => {
-  console.log("마운트됨");
   async function checkAndRefreshToken() {
     const now = Date.now();
     const tokenExpiryTime = localStorage.getItem(STORAGE_KEYS.EXPIRY_TIME);
 
     if (tokenExpiryTime == null) return;
-    await refreshAccessToken();
+
     if (now >= parseInt(tokenExpiryTime, 10) - 5 * 60 * 1000) {
+      await refreshAccessToken();
     } else {
       console.log("토큰이 아직 만료되지 않았습니다.");
     }
@@ -33,10 +33,10 @@ const TokenManager = () => {
         },
       });
 
-      const data = await response.json();
-      const { access_token } = data;
+      const data: { accessToken: string } = await response.json();
+      const { accessToken } = data;
 
-      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, access_token);
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
       localStorage.setItem(
         STORAGE_KEYS.EXPIRY_TIME,
         String(Date.now() + 900 * 1000)
@@ -49,7 +49,6 @@ const TokenManager = () => {
     }
   }
   useEffect(() => {
-    console.log("토큰 체크");
     const intervalId = setInterval(checkAndRefreshToken, 60 * 1000);
 
     return () => clearInterval(intervalId);
