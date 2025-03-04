@@ -1,24 +1,54 @@
 "use client";
-import { newGatheringInfo } from "@/atoms/gathering";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import React, { useEffect, useState, useMemo } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import MakingInvitation from "@/components/gathering/MakingInvitation";
-import StepToInvitation from "@/components/groups/StepToInvitation";
 import * as lighty from "lighty-type";
-import InviteFriends from "@/components/friends/InviteFriends";
-import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
-import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
-import FullPageLoader from "@/components/shared/FullPageLoader";
-import { lightyToast } from "@/utils/toast";
+import { newGatheringInfo } from "@/atoms/gathering";
 import { selectedFriendsAtom } from "@/atoms/friends";
-import GatheringForm from "@/components/gathering/GatheringForm";
+import { lightyToast } from "@/utils/toast";
+
+import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
+import FullPageLoader from "@/components/shared/FullPageLoader";
+import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
+
+const GatheringForm = dynamic(
+  () => import("@/components/gathering/GatheringForm"),
+  {
+    loading: () => <FullPageLoader />,
+    ssr: false,
+  }
+);
+
+const InviteFriends = dynamic(
+  () => import("@/components/friends/InviteFriends"),
+  {
+    loading: () => <FullPageLoader />,
+    ssr: false,
+  }
+);
+
+const StepToInvitation = dynamic(
+  () => import("@/components/groups/StepToInvitation"),
+  {
+    loading: () => <FullPageLoader />,
+    ssr: false,
+  }
+);
+
+const MakingInvitation = dynamic(
+  () => import("@/components/gathering/MakingInvitation"),
+  {
+    loading: () => <FullPageLoader />,
+    ssr: false,
+  }
+);
 
 export default function NewGatheringPage() {
   const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
+
   const reset = useResetRecoilState(newGatheringInfo);
   const resetFriends = useResetRecoilState(selectedFriendsAtom);
-
   const [gatheringInfo, setGatheringInfo] =
     useRecoilState<lighty.CreateGatheringRequest>(newGatheringInfo);
 
@@ -40,39 +70,34 @@ export default function NewGatheringPage() {
     };
   }, []);
 
+  const StepComponents = useMemo(
+    () => ({
+      0: () => <MakingGatheringStatus isPending={isPending} />,
+      1: () => (
+        <GatheringForm
+          type="new"
+          gathering={gatheringInfo}
+          setGathering={setGatheringInfo}
+          setStep={setStep}
+        />
+      ),
+      2: () => <InviteFriends setStep={setStep} type="gathering" />,
+      3: () => <StepToInvitation setStep={setStep} />,
+      4: () => (
+        <MakingInvitation
+          gathering={gatheringInfo}
+          setGathering={setGatheringInfo}
+          makeGathering={makeGathering}
+        />
+      ),
+    }),
+    [gatheringInfo, isPending, makeGathering]
+  );
+
   if (!isClient) {
     return <FullPageLoader />;
   }
 
-  if (isPending || step === 0) {
-    return <MakingGatheringStatus isPending={isPending} />;
-  }
-  if (step === 1) {
-    return (
-      <GatheringForm
-        type="new"
-        gathering={gatheringInfo}
-        setGathering={setGatheringInfo}
-        setStep={setStep}
-      />
-    );
-  }
-
-  if (step === 2) {
-    return <InviteFriends setStep={setStep} type="gathering" />;
-  }
-  if (step === 3) {
-    return <StepToInvitation setStep={setStep} />;
-  }
-  if (step === 4) {
-    return (
-      <MakingInvitation
-        gathering={gatheringInfo}
-        setGathering={setGatheringInfo}
-        makeGathering={makeGathering}
-      />
-    );
-  }
-
-  return null;
+  const CurrentStepComponent = StepComponents[step] || StepComponents[0];
+  return <CurrentStepComponent />;
 }
