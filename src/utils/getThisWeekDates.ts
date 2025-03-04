@@ -6,7 +6,7 @@ export const getWeekDates = () => {
   startOfWeek.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); // 일요일 보정
   startOfWeek.setHours(0, 0, 0, 0); // 시작 시간을 00:00:00으로 설정
 
-  const weekDays = [];
+  const weekDays: Date[] = [];
   for (let i = 0; i < 7; i++) {
     const date = new Date(startOfWeek); // 매번 새로운 날짜 객체 생성
     date.setDate(startOfWeek.getDate() + i);

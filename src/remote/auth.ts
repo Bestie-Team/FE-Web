@@ -105,7 +105,7 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
 
     const data: lighty.RegisterResponse = await response.json();
 
-    let profileImageUrl = null;
+    let profileImageUrl: string | null = null;
     if (RegisterRequest.profileImageUrl) {
       const uploadResult = await postProfileImageWithToken({
         token: data.accessToken,

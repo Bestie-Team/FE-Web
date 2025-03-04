@@ -3,7 +3,7 @@ import { ko } from "date-fns/locale";
 
 export default function getNext7Days() {
   const today = new Date();
-  const next7Days = [];
+  const next7Days: { D: number; E: string }[] = [];
 
   for (let i = 0; i < 7; i++) {
     const date = addDays(today, i);
