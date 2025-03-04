@@ -15,8 +15,7 @@ export default function GroupContainer({
   onClick: () => void;
   className?: string;
 }) {
-  const { name, description, groupImageUrl, gatheringCount, members, id } =
-    group;
+  const { name, description, groupImageUrl, gatheringCount, members } = group;
   const memberProfileImages = members.map((member) => member.profileImageUrl);
 
   return (
