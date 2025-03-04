@@ -1,9 +1,7 @@
-import { useAuth } from "@/components/shared/providers/AuthProvider";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG } from "@/remote/shared";
 
 export async function refreshAccessToken() {
-  const { setToken } = useAuth();
   const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
   const baseUrl = API_CONFIG.getBaseUrl();
   if (deviceId === null) {
@@ -29,7 +27,6 @@ export async function refreshAccessToken() {
         STORAGE_KEYS.EXPIRY_TIME,
         String(Date.now() + 900 * 1000)
       );
-      setToken(accessToken);
 
       return accessToken;
     } else {
