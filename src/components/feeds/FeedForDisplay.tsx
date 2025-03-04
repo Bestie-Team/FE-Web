@@ -43,7 +43,7 @@ const feed = {
       },
     ],
     gatheringDate: new Date().toISOString(),
-    invitationImageUrl: "https://cdn.lighty.today/paper.jpeg",
+    invitationImageUrl: "https://cdn.lighty.today/paper.png",
   },
   withMembers: [
     {
@@ -91,9 +91,7 @@ export default function FeedForDisplay() {
           e.stopPropagation();
         }}
       >
-        <SwiperSlide
-          className={"relative bg-[#F4F4F4] rounded-[16px] shadow-bottom mt-2"}
-        >
+        <SwiperSlide className={"relative bg-[#F4F4F4] rounded-[16px] mt-2"}>
           <Image
             alt="feedImage"
             loading="eager"

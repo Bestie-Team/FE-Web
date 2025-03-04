@@ -84,6 +84,7 @@ export default function ChoosingGatheringToDecorate({
       <div className={styles.buttonWrapper}>
         {feeds.length < 1 ? (
           <button
+            disabled={selectedFeed == null}
             className={styles.button}
             onClick={() => {
               router.push("/record");

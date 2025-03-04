@@ -38,12 +38,14 @@ const TokenManager = () => {
       const data: { accessToken: string } = await response.json();
       const { accessToken } = data;
 
-      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-      localStorage.setItem(
-        STORAGE_KEYS.EXPIRY_TIME,
-        String(Date.now() + 900 * 1000)
-      );
-      setToken(accessToken);
+      if (accessToken) {
+        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
+        localStorage.setItem(
+          STORAGE_KEYS.EXPIRY_TIME,
+          String(Date.now() + 900 * 1000)
+        );
+        setToken(accessToken);
+      }
     } catch (error) {
       console.error("토큰 갱신 실패:", error);
       throw new Error(
