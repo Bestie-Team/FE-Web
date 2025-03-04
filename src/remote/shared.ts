@@ -1,5 +1,6 @@
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import { refreshAccessToken } from "@/utils/tokenManager";
 
 export function validateBackendUrl(): string {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -36,13 +37,27 @@ export const API_CONFIG = {
 
 // 기본 fetch 함수
 export const fetchWithAuth = async (url: string, options: RequestInit) => {
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      ...API_CONFIG.getHeaders(),
-    },
-  });
+  const fetchFn = async () => {
+    try {
+      return await fetch(url, {
+        ...options,
+        headers: {
+          ...options.headers,
+          ...API_CONFIG.getHeaders(),
+        },
+      });
+    } catch (e) {
+      throw Error("Network Error");
+    }
+  };
+
+  let response = await fetchFn();
+
+  if (response.status === 401) {
+    await refreshAccessToken();
+
+    response = await fetchFn();
+  }
 
   if (!response.ok) {
     const res = await response.json();
