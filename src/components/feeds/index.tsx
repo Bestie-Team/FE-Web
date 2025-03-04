@@ -48,7 +48,7 @@ export default function Record() {
   }
 
   // 동적 컴포넌트 렌더링
-  const CurrentStepComponent = DynamicComponents[step];
+  const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
     <CurrentStepComponent

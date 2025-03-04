@@ -24,13 +24,13 @@ import FullPageLoader from "../shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 
 export default function GatheringForm({
-  type = "new",
+  formType = "new",
   setStep,
   gathering,
   setGathering,
   mutate,
 }: {
-  type: "new" | "edit";
+  formType: "new" | "edit";
   setStep: (step: number) => void;
   gathering: lighty.CreateGatheringRequest;
   setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
@@ -43,7 +43,6 @@ export default function GatheringForm({
       gathering.type == null ||
       gathering.gatheringDate == null ||
       gathering.address.length < 1 ||
-      gathering.invitationImageUrl == null ||
       (gathering.groupId == null && gathering.type === "GROUP") ||
       (gathering.friendIds == null && gathering.type === "FRIEND")
     ) {
@@ -52,14 +51,14 @@ export default function GatheringForm({
   };
 
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const title = type === "new" ? "/gathering/new" : "/gathering/edit";
+  const title = formType === "new" ? "/gathering/new" : "/gathering/edit";
   const header = useMemo(() => getHeader(title), []);
   const { data: group_data, isFetching } = useGroup({ limit: 50 });
 
   return (
-    <div className="min-h-[calc(100dvh+75px)] bg-base-white pt-12">
-      {header}
-      <form className="flex flex-col px-5">
+    <div className="min-h-[calc(100dvh+75px)] bg-base-white">
+      <div className="z-20 fixed bg-base-white w-full">{header}</div>
+      <form className="flex flex-col px-5 pt-12">
         <Spacing size={16} />
         <Flex align="center" className="h-[50px]">
           <EmptyLogoIcon color="#0A0A0A" />
@@ -177,7 +176,9 @@ export default function GatheringForm({
             label={"다음"}
             // disabled={}
             onClick={() => {
-              if (type === "new") {
+              console.log("clicking");
+              console.log(formType);
+              if (formType === "new") {
                 if (isGroupInfoValid() === false) {
                   lightyToast.error("모든 정보를 입력해주세요.");
                 } else {

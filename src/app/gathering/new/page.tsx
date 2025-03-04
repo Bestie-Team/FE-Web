@@ -12,6 +12,10 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
+  0: dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
+    loading: () => <FullPageLoader height="100dvh" />,
+    ssr: false,
+  }),
   1: dynamic(() => import("@/components/gathering/GatheringForm"), {
     loading: () => <FullPageLoader height="100dvh" />,
     ssr: false,
@@ -64,9 +68,11 @@ export default function NewGatheringPage() {
     return <DotSpinner />;
   }
 
-  const CurrentStepComponent = DynamicComponents[step];
+  const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[0];
   return (
     <CurrentStepComponent
+      isPending={isPending}
+      formType="new"
       gathering={gatheringInfo}
       setGathering={setGatheringInfo}
       setStep={setStep}
