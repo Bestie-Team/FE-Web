@@ -25,7 +25,6 @@ import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import TokenManager from "@/utils/tokenManager";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 const queryClient = new QueryClient();
 
