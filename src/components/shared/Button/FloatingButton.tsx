@@ -7,7 +7,6 @@ import type { FC } from "react";
 
 import { cardDecorateModalStateAtom } from "@/atoms/card";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
-import { homeModalStateAtom } from "@/atoms/home";
 import { recordModalAtom } from "@/atoms/modal";
 import LightyDeco from "../Icon/LightyDeco";
 import PlusIcon from "../Icon/PlusIcon";
@@ -24,11 +23,6 @@ type PathConfig = {
 };
 
 const PATH_CONFIGS: PathConfig[] = [
-  {
-    path: "/",
-    modalAtom: homeModalStateAtom,
-    tooltipText: "추억 피드를 등록해보세요!",
-  },
   {
     path: "/feed",
     modalAtom: recordModalAtom,

@@ -59,8 +59,8 @@ const DARK_BACKGROUND_PATHS = [
 ] as const;
 const PUBLIC_PATHS = ["/signup", "/auth"] as const;
 const NAVBAR_PATHS = [
-  "/gathering",
   "/feed",
+  "/gathering",
   "/card",
   "/social",
   "/my",
@@ -87,7 +87,7 @@ const NextLayout = ({ children }: Props) => {
 
   const showNavBar =
     isPathEqual(pathname, NAVBAR_PATHS) ||
-    (pathname === "/" && isAuthenticated);
+    (pathname === "/feed" && isAuthenticated);
 
   {
     return (

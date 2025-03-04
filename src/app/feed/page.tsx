@@ -312,7 +312,12 @@ export default function FeedPage() {
             </SwiperSlide>
           ) : (
             <SwiperSlide>
-              <FeedForDisplay />
+              <div
+                ref={containerRef}
+                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
+              >
+                <FeedForDisplay />
+              </div>
             </SwiperSlide>
           )}
           {feedMine && (
@@ -330,12 +335,16 @@ export default function FeedPage() {
                 </div>
               ) : (
                 <SwiperSlide>
-                  <NoFeed />
+                  <div
+                    ref={containerRef_m}
+                    className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
+                  >
+                    <NoFeed />
+                  </div>
                 </SwiperSlide>
               )}
             </SwiperSlide>
           )}
-          <NavBar />
         </Swiper>
       </div>
     );
