@@ -11,7 +11,11 @@ export default function BottomButton({
 }) {
   return (
     <div className={styles.buttonWrapper}>
-      <button className={styles.button} disabled={disabled} onClick={onClick}>
+      <button
+        className={styles.button}
+        disabled={disabled}
+        onMouseDown={onClick}
+      >
         {label}
       </button>
     </div>

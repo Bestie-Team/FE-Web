@@ -82,7 +82,7 @@ export default function GatheringDetailPage({
         setImageLoaded={setImageLoaded}
       />
       <div className="absolute top-4 right-5 flex gap-[14px] z-50">
-        <div className="cursor-pointer" onClick={handleShare}>
+        <div className="cursor-pointer" onMouseDown={handleShare}>
           <ShareIcon />
         </div>
         {userInfo?.accountId === hostUser.accountId && (
