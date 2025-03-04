@@ -155,7 +155,7 @@ export default function DecorateWithStickers() {
     <Flex direction="column" className="!min-h-dvh h-full pb-[60px]">
       {deco === false ? (
         <Flex
-          className="h-dvh pt-[76px] pb-[60px]"
+          className="!h-dvh pt-[76px] pb-[60px]"
           direction="column"
           justify="space-between"
         >
@@ -239,7 +239,7 @@ export default function DecorateWithStickers() {
       <Flex
         direction="column"
         align="center"
-        className="!h-full"
+        className="h-full"
         justify="space-between"
       >
         <div style={{ width: "282px", height: "372px" }} ref={stageRef}>

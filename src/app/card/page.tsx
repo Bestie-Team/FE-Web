@@ -33,7 +33,7 @@ export default function Page() {
   }
 
   return (
-    <div className="bg-grayscale-50 h-full overflow-hidden">
+    <div className="bg-grayscale-50 h-dvh overflow-y-scroll no-scrollbar">
       <header
         className={clsx(
           styles.header,
