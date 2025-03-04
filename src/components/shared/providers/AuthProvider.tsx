@@ -20,6 +20,7 @@ interface AuthContextType {
   login: (userInfo: lighty.LoginResponse) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -87,12 +88,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const contextValue = {
+    setToken,
     token,
     userInfo,
     setUserInfo,
     login,
     logout,
-    isAuthenticated: !!userInfo,
+    isAuthenticated: !!token,
   };
 
   return (

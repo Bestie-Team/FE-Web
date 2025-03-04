@@ -1,8 +1,10 @@
+import { useAuth } from "@/components/shared/providers/AuthProvider";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG } from "@/remote/shared";
 import { useEffect } from "react";
 
 const TokenManager = () => {
+  const { setToken } = useAuth();
   async function checkAndRefreshToken() {
     const now = Date.now();
     const tokenExpiryTime = localStorage.getItem(STORAGE_KEYS.EXPIRY_TIME);
@@ -41,6 +43,7 @@ const TokenManager = () => {
         STORAGE_KEYS.EXPIRY_TIME,
         String(Date.now() + 900 * 1000)
       );
+      setToken(accessToken);
     } catch (error) {
       console.error("토큰 갱신 실패:", error);
       throw new Error(
