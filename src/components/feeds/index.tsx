@@ -7,7 +7,6 @@ import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
 import FullPageLoader from "../shared/FullPageLoader";
 
-// @ts-ignore
 const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
   1: dynamic(() => import("./ChoosingKindOfMemory"), {
     loading: () => <FullPageLoader height="100dvh" />,
