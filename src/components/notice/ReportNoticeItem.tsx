@@ -14,7 +14,7 @@ export default function ReportNoticeItem({
 }: {
   notification: Notification;
 }) {
-  const reportType = "";
+  const reportType = notification.type;
   const description = "김혜지님의 신고가 완료되었어요.";
   return (
     <NoticeItem

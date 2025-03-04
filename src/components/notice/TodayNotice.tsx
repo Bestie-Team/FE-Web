@@ -8,7 +8,7 @@ export default function TodayNotice() {
     <Flex direction="column" className="px-5 gap-3">
       <span className="text-T4">오늘의 알림</span>
       {notifications.map((notification) => (
-        <ReportNoticeItem notification={notification} />
+        <ReportNoticeItem key={notification.id} notification={notification} />
       ))}
     </Flex>
   );

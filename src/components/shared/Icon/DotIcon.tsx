@@ -27,13 +27,7 @@ export function DotIcon({
   );
 }
 
-export function DotWithNumberIcon({
-  count,
-  className,
-}: {
-  count: number;
-  className?: string;
-}) {
+export function DotWithNumberIcon({ count }: { count: number }) {
   return (
     <div className="absolute top-1 right-[5px] rounded-xl bg-[#FA6767] px-1 text-C2 text-base-white">
       {count}
