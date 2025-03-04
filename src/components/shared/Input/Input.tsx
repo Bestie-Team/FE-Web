@@ -70,6 +70,7 @@ export default function Input({
         )}
       >
         <input
+          autoComplete="off"
           name={name}
           type="text"
           inputMode="text"

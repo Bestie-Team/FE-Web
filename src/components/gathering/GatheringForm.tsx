@@ -24,7 +24,7 @@ import FullPageLoader from "../shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 
 export default function GatheringForm({
-  type,
+  type = "new",
   setStep,
   gathering,
   setGathering,
@@ -57,7 +57,7 @@ export default function GatheringForm({
   const { data: group_data, isFetching } = useGroup({ limit: 50 });
 
   return (
-    <div className="min-h-[calc(100dvh+75px)] bg-base-white">
+    <div className="min-h-[calc(100dvh+75px)] bg-base-white pt-12">
       {header}
       <form className="flex flex-col px-5">
         <Spacing size={16} />

@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import * as lighty from "lighty-type";
 import { newGatheringInfo } from "@/atoms/gathering";
@@ -9,39 +9,26 @@ import { lightyToast } from "@/utils/toast";
 
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import MakingGatheringStatus from "@/components/gathering/MakeGatheringStatus";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
-const GatheringForm = dynamic(
-  () => import("@/components/gathering/GatheringForm"),
-  {
-    loading: () => <FullPageLoader />,
+const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
+  1: dynamic(() => import("@/components/gathering/GatheringForm"), {
+    loading: () => <FullPageLoader height="100dvh" />,
     ssr: false,
-  }
-);
-
-const InviteFriends = dynamic(
-  () => import("@/components/friends/InviteFriends"),
-  {
-    loading: () => <FullPageLoader />,
+  }),
+  2: dynamic(() => import("@/components/friends/InviteFriends"), {
+    loading: () => <FullPageLoader height="100dvh" />,
     ssr: false,
-  }
-);
-
-const StepToInvitation = dynamic(
-  () => import("@/components/groups/StepToInvitation"),
-  {
-    loading: () => <FullPageLoader />,
+  }),
+  3: dynamic(() => import("@/components/groups/StepToInvitation"), {
+    loading: () => <FullPageLoader height="100dvh" />,
     ssr: false,
-  }
-);
-
-const MakingInvitation = dynamic(
-  () => import("@/components/gathering/MakingInvitation"),
-  {
-    loading: () => <FullPageLoader />,
+  }),
+  4: dynamic(() => import("@/components/gathering/MakingInvitation"), {
+    loading: () => <FullPageLoader height="100dvh" />,
     ssr: false,
-  }
-);
+  }),
+};
 
 export default function NewGatheringPage() {
   const [isClient, setIsClient] = useState(false);
@@ -70,34 +57,21 @@ export default function NewGatheringPage() {
     };
   }, []);
 
-  const StepComponents = useMemo(
-    () => ({
-      0: () => <MakingGatheringStatus isPending={isPending} />,
-      1: () => (
-        <GatheringForm
-          type="new"
-          gathering={gatheringInfo}
-          setGathering={setGatheringInfo}
-          setStep={setStep}
-        />
-      ),
-      2: () => <InviteFriends setStep={setStep} type="gathering" />,
-      3: () => <StepToInvitation setStep={setStep} />,
-      4: () => (
-        <MakingInvitation
-          gathering={gatheringInfo}
-          setGathering={setGatheringInfo}
-          makeGathering={makeGathering}
-        />
-      ),
-    }),
-    [gatheringInfo, isPending, makeGathering]
-  );
-
   if (!isClient) {
     return <FullPageLoader />;
   }
+  if (isPending) {
+    return <DotSpinner />;
+  }
 
-  const CurrentStepComponent = StepComponents[step] || StepComponents[0];
-  return <CurrentStepComponent />;
+  const CurrentStepComponent = DynamicComponents[step];
+  return (
+    <CurrentStepComponent
+      gathering={gatheringInfo}
+      setGathering={setGatheringInfo}
+      setStep={setStep}
+      makeGathering={makeGathering}
+      type="gathering"
+    />
+  );
 }

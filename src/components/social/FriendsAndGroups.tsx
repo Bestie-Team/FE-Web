@@ -104,7 +104,7 @@ export default function FriendsAndGroups() {
           direction="column"
           justify="space-between"
           align="center"
-          className="px-5 gap-4"
+          className="px-5 gap-4 pb-4"
         >
           <Flex justify="space-between" align="center" className="w-full">
             <span className="text-T4" id="friendList">
