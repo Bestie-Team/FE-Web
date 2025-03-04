@@ -2,9 +2,8 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { API_CONFIG } from "@/remote/shared";
 
-const { setToken } = useAuth();
-
 export async function refreshAccessToken() {
+  const { setToken } = useAuth();
   const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
   const baseUrl = API_CONFIG.getBaseUrl();
   if (deviceId === null) {

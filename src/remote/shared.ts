@@ -47,7 +47,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
         },
       });
     } catch (e) {
-      throw Error("Network Error");
+      throw Error(`Network Error, ${e}`);
     }
   };
 
