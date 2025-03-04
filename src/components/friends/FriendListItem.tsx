@@ -83,21 +83,23 @@ export default function FriendListItem({
       )}
       onMouseDown={onClick}
     >
-      <Image
-        alt="friendProfile"
-        src={
-          friendInfo?.profileImageUrl ||
-          "https://cdn.lighty.today/lighty_square.png"
-        }
-        width={36}
-        height={36}
-        className={styles.img}
-      />
-      <Spacing direction="horizontal" size={8} />
-      <Flex className="w-full" direction="column">
-        <span className="text-T6">{friendInfo?.accountId || "lighty"}</span>
-        <Spacing size={2} />
-        <span className={styles.name}>{friendInfo?.name || "김땡땡"}</span>
+      <Flex>
+        <Image
+          alt="friendProfile"
+          src={
+            friendInfo?.profileImageUrl ||
+            "https://cdn.lighty.today/lighty_square.png"
+          }
+          width={36}
+          height={36}
+          className={styles.img}
+        />
+        <Spacing direction="horizontal" size={8} />
+        <Flex className="w-full" direction="column">
+          <span className="text-T6">{friendInfo?.accountId || "lighty"}</span>
+          <Spacing size={2} />
+          <span className={styles.name}>{friendInfo?.name || "김땡땡"}</span>
+        </Flex>
       </Flex>
       {type === "friend" ? (
         <div
@@ -133,19 +135,19 @@ export default function FriendListItem({
 }
 
 const styles = {
-  iconContainer: "flex justify-center items-center w-[20px] h-[20px]",
+  iconContainer: "flex justify-center items-center w-5 h-5",
 
-  li: "w-full bg-base-white flex py-[14px] px-[16px] rounded-[20px] items-center cursor-pointer border",
+  li: "w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border",
 
-  img: "rounded-full object-cover h-[36px] w-[36px] aspect-square",
+  img: "rounded-full object-cover h-9 w-9 aspect-square",
   name: "text-C2 text-grayscale-400",
   inviteBtn:
-    "text-C2 py-[8px] px-[12px] rounded-[8px] border border-grayscale-100 hover:!bg-grayscale-10",
+    "text-C2 py-2 px-3 rounded-[8px] border border-grayscale-100 hover:!bg-grayscale-10",
   selectBtn:
-    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit flex-none",
+    "flex-none w-full items-center px-3 py-2 rounded-[8px] bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit",
   acceptBtn:
-    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit flex-none",
+    "flex items-center px-3 py-2 rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit flex-none",
 
   rejectBtn:
-    "flex items-center px-[12px] py-[8px] rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] hover:bg-grayscale-10 flex-none",
+    "flex items-center px-3 py-2 rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] hover:bg-grayscale-10 flex-none",
 };

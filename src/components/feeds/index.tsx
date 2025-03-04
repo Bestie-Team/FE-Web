@@ -1,15 +1,34 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ChoosingGatheringToRecord from "./ChoosingGatheringToRecord";
-import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
-import CreatingFeed from "./CreatingFeed";
-import CreatingFeedNoGathering from "./CreatingFeedNoGathering";
+import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
-import ChooseFriendToShare from "./ChooseFriendToShare";
-import FullPageLoader from "../shared/FullPageLoader";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
+import FullPageLoader from "../shared/FullPageLoader";
+
+const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
+  1: dynamic(() => import("./ChoosingKindOfMemory"), {
+    loading: () => <FullPageLoader height="100dvh" />,
+    ssr: false,
+  }),
+  2: dynamic(() => import("./ChoosingGatheringToRecord"), {
+    loading: () => <FullPageLoader height="100dvh" />,
+    ssr: false,
+  }),
+  2.5: dynamic(() => import("./ChooseFriendToShare"), {
+    loading: () => <FullPageLoader height="100dvh" />,
+    ssr: false,
+  }),
+  3: dynamic(() => import("./CreatingFeed"), {
+    loading: () => <FullPageLoader height="100dvh" />,
+    ssr: false,
+  }),
+  3.5: dynamic(() => import("./CreatingFeedNoGathering"), {
+    loading: () => <FullPageLoader height="100dvh" />,
+    ssr: false,
+  }),
+};
 
 export default function Record() {
   const [isClient, setIsClient] = useState(false);
@@ -17,13 +36,8 @@ export default function Record() {
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
-  const { data: gathering_noFeed } = useGatheringNoFeeds({
-    limit: 30,
-  });
 
-  const handleSelectGathering = () => {
-    setStep((prev) => prev + 1);
-  };
+  const { data: gathering_noFeed } = useGatheringNoFeeds({ limit: 30 });
 
   useEffect(() => {
     setIsClient(true);
@@ -33,25 +47,17 @@ export default function Record() {
     return <FullPageLoader height="100dvh" />;
   }
 
+  // 동적 컴포넌트 렌더링
+  const CurrentStepComponent = DynamicComponents[step];
+
   return (
-    <>
-      {step === 1 ? (
-        <ChoosingKindOfMemory add={add} setAdd={setAdd} setStep={setStep} />
-      ) : null}
-      {step === 2 ? (
-        <ChoosingGatheringToRecord
-          onNext={handleSelectGathering}
-          gathering={gathering_noFeed}
-        />
-      ) : null}
-      {step === 2.5 ? (
-        <ChooseFriendToShare
-          debouncedSearch={debouncedSearch}
-          setStep={setStep}
-        />
-      ) : null}
-      {step === 3 ? <CreatingFeed setStep={setStep} /> : null}
-      {step === 3.5 ? <CreatingFeedNoGathering setStep={setStep} /> : null}
-    </>
+    <CurrentStepComponent
+      add={add}
+      setAdd={setAdd}
+      setStep={setStep}
+      onNext={() => setStep((prev) => prev + 1)}
+      debouncedSearch={debouncedSearch}
+      gathering={gathering_noFeed}
+    />
   );
 }
