@@ -10,7 +10,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
   return (
     <Flex
-      className="bg-grayscale-50 h-dvh pb-14 overflow-y-scroll no-scrollbar"
+      className="bg-base-white h-dvh pb-14 overflow-y-scroll no-scrollbar"
       justify="space-between"
       direction="column"
     >

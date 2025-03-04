@@ -18,6 +18,7 @@ import useFriends from "../friends/hooks/useFriends";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useRouter, useSearchParams } from "next/navigation";
+import useFriendsRequestTotalCount from "../friends/hooks/useFriendsRequestCount";
 
 const TabSection = ({
   selectedTab,
@@ -71,10 +72,12 @@ const FriendListSection = ({
   friends,
   onAddFriend,
   onNavigateToFriends,
+  requestCount,
 }: {
   friends: lighty.User[];
   onAddFriend: () => void;
   onNavigateToFriends: () => void;
+  requestCount: { count: number };
 }) => {
   return (
     <>
@@ -101,7 +104,7 @@ const FriendListSection = ({
         <li className={styles.request} onMouseDown={onNavigateToFriends}>
           <span>
             {`요청`}
-            <span className="text-[#FA6767] ml-1">{`${4}`}</span>
+            <span className="text-[#FA6767] ml-1">{`${requestCount.count}`}</span>
           </span>
           <ArrowRightIcon />
         </li>
@@ -132,6 +135,7 @@ export default function FriendsAndGroups() {
   } = useFriends({
     userId: userInfo?.accountId,
   });
+  const { data: requestCount = { count: 0 } } = useFriendsRequestTotalCount();
 
   useEffect(() => {
     const tabParam = searchParams.get("tab");
@@ -161,6 +165,7 @@ export default function FriendsAndGroups() {
         <FriendListSection
           friends={friends}
           onAddFriend={handleAddFriend}
+          requestCount={requestCount}
           onNavigateToFriends={handleNavigateToFriends}
         />
       )}

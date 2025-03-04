@@ -204,3 +204,20 @@ export async function getSearchFriends({
     throw new Error("친구 검색 중 에러가 발생하였습니다");
   }
 }
+
+/** 친구 요청 수 조회 */
+export async function getFriendsRequestTotalCount() {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/friends/requests/count`;
+
+  try {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: { count: number } = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("친구 요청 수 조회에 실패하였습니다");
+  }
+}

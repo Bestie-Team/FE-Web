@@ -5,7 +5,6 @@ import ChooseFrame from "@/components/cards/ChooseFrame";
 import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
-import clsx from "clsx";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 
 export default function Page() {
@@ -33,13 +32,8 @@ export default function Page() {
   }
 
   return (
-    <div className="bg-grayscale-50 h-dvh overflow-y-scroll no-scrollbar">
-      <header
-        className={clsx(
-          styles.header,
-          step === 1 ? "bg-base-white" : "bg-grayscale-50"
-        )}
-      >
+    <div className="bg-base-white h-dvh overflow-y-scroll no-scrollbar">
+      <header className={styles.header}>
         <div
           className="py-[10px] pl-[17px] pr-[3px] cursor-pointer"
           onClick={() => {
@@ -63,5 +57,6 @@ export default function Page() {
 }
 
 const styles = {
-  header: "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px] h-12 ",
+  header:
+    "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px] h-12 bg-base-white",
 };
