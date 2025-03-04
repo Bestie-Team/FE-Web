@@ -70,6 +70,7 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
+                      loading={idx < 2 ? "eager" : "lazy"}
                       className={clsx(
                         "cursor-pointer",
                         selectedKind === "이모지" ? "w-8 h-8" : "w-16 h-16"

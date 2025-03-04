@@ -10,11 +10,13 @@ export default function useFeedMine({
   minDate,
   maxDate,
   limit,
+  enabled,
 }: {
   order: "DESC" | "ASC";
   minDate: string;
   maxDate: string;
   limit: number;
+  enabled: boolean;
 }) {
   const defaultCursor = {
     createdAt: order === "DESC" ? maxDate : minDate,
@@ -26,8 +28,8 @@ export default function useFeedMine({
       getFeedMine({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: defaultCursor,
-    throwOnError: true,
     staleTime: 60 * 1000,
+    enabled,
   });
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {

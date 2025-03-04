@@ -40,6 +40,7 @@ import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import MailIcon from "@/components/shared/Icon/MailIcon";
 import NoticeIcon from "@/components/shared/Icon/NoticeIcon";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -162,6 +163,7 @@ FeedModals.displayName = "FeedModals";
 
 export default function FeedPage() {
   const queryClient = useQueryClient();
+  const { token } = useAuth();
   const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
   const [selectedFeedId, setSelectedFeedId] = useState("");
@@ -228,13 +230,17 @@ export default function FeedPage() {
     ]);
   };
 
-  const { data: feedAll, loadMore, isFetching } = useFeedAll(queryParams);
+  const {
+    data: feedAll,
+    loadMore,
+    isFetching,
+  } = useFeedAll({ ...queryParams, enabled: !!token });
 
   const {
     data: feedMine,
     loadMore: loadMore_mine,
     isFetching: isFetching_mine,
-  } = useFeedMine(queryParams);
+  } = useFeedMine({ ...queryParams, enabled: !!token });
 
   const { mutate: deleteFeed } = useDeleteFeed({
     feedId: selectedFeedId,

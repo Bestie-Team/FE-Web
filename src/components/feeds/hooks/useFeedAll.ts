@@ -10,11 +10,13 @@ export default function useFeedAll({
   minDate,
   maxDate,
   limit,
+  enabled,
 }: {
   order: "DESC" | "ASC";
   minDate: string;
   maxDate: string;
   limit: number;
+  enabled: boolean;
 }) {
   const defaultCursor = {
     createdAt: order === "DESC" ? maxDate : minDate,
@@ -26,9 +28,9 @@ export default function useFeedAll({
       getFeedAll({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     initialPageParam: defaultCursor,
-    throwOnError: true,
     staleTime: 60 * 1000,
     refetchOnWindowFocus: true,
+    enabled: enabled,
   });
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {
