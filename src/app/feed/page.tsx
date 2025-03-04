@@ -195,6 +195,10 @@ export default function FeedPage() {
     []
   );
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const handleDeleteFeedSuccess = async (data: { message: string }) => {
     lightyToast.success(data.message);
     await queryClient.invalidateQueries({
@@ -360,10 +364,6 @@ export default function FeedPage() {
       </div>
     );
   }, [feedAll, feedMine, selectedTab, swiperRef, handleSlideChange]);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const handleRefresh = async () => {
     try {

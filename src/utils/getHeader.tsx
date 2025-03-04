@@ -1,14 +1,8 @@
-"use client";
-
-import type React from "react";
 import dynamic from "next/dynamic";
 
 const Header = dynamic(() => import("@/components/shared/Header/Header"));
 const HeaderWithBackBtn = dynamic(
   () => import("@/components/shared/Header/HeaderWithBtn")
-);
-const BackgroundReversibleHeader = dynamic(
-  () => import("@/components/shared/Header/BackgroundReversibleHeader")
 );
 
 type HeaderWithBtnProps = {
@@ -101,9 +95,6 @@ export default function useHeader(pathname: string) {
           ? { pageName: "그룹 수정", color: "white" }
           : { pageName: "나의 그룹", color: "#f4f4f4" },
     },
-    "/": {
-      component: BackgroundReversibleHeader,
-    },
   };
   const getMatchedHeader = () => {
     const matchedPath = Object.keys(headerConfig).find(
@@ -113,17 +104,15 @@ export default function useHeader(pathname: string) {
     if (matchedPath) {
       const config = headerConfig[matchedPath];
       const HeaderComponent = config.component;
-      if (HeaderComponent === BackgroundReversibleHeader) {
-        return <BackgroundReversibleHeader />;
-      } else if (HeaderComponent === Header)
+      if (HeaderComponent === Header)
         return <HeaderComponent {...(config.props as HeaderProps)} />;
       else return <HeaderComponent {...(config.props as HeaderWithBtnProps)} />;
     }
 
-    // Special case for "/?ref=signup"
-    if (pathname === "/?ref=signup") {
-      return <BackgroundReversibleHeader />;
-    }
+    // // Special case for "/?ref=signup"
+    // if (pathname === "/?ref=signup") {
+    //   return <BackgroundReversibleHeader />;
+    // }
 
     return null;
   };

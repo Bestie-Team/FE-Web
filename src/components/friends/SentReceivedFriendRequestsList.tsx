@@ -13,7 +13,7 @@ export default function SentReceivedFriendRequestsList() {
     limit: 30,
   });
 
-  const { data: sent } = useSentFriendsRequests({
+  const { data: sent, isFetching: isFetching_s } = useSentFriendsRequests({
     name: "가",
     accountId: "a",
     limit: 30,
@@ -29,7 +29,7 @@ export default function SentReceivedFriendRequestsList() {
     requestId: request.id,
   }));
 
-  if (isFetching) return <DotSpinner />;
+  if (isFetching || isFetching_s) return <DotSpinner />;
   return (
     <Flex
       direction="column"

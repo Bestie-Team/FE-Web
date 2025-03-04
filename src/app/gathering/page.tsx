@@ -21,45 +21,12 @@ import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 
-const Header = React.memo(
-  ({
-    shadow,
-    selectedTab,
-    handleTabClick,
-  }: {
-    shadow: boolean;
-    selectedTab: "1" | "2";
-    handleTabClick: (tab: "1" | "2") => void;
-  }) => {
-    return (
-      <>
-        {getHeader("/gathering")}
-        <Flex
-          id="filter"
-          justify="space-between"
-          className={clsx(styles.panelWrapper, shadow && "shadow-bottom")}
-        >
-          <Panel
-            selectedTab={selectedTab}
-            long="short"
-            title1="예정"
-            title2="완료"
-            onClick={handleTabClick}
-          />
-        </Flex>
-      </>
-    );
-  }
-);
-
 const GatheringPageSwiper = dynamic(
   () => import("../../components/gathering/GatheringPageSwiper"),
   {
     ssr: false,
   }
 );
-
-Header.displayName = "Header";
 
 export default function MyGatheringPage() {
   const isPast = useScrollThreshold();
@@ -128,7 +95,7 @@ export default function MyGatheringPage() {
   };
 
   return (
-    <div className="min-h-dvh no-scrollbar">
+    <>
       <Header
         shadow={isPast}
         selectedTab={selectedTab}
@@ -151,9 +118,41 @@ export default function MyGatheringPage() {
         />
       </PullToRefresh>
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
-    </div>
+    </>
   );
 }
+
+const Header = React.memo(
+  ({
+    shadow,
+    selectedTab,
+    handleTabClick,
+  }: {
+    shadow: boolean;
+    selectedTab: "1" | "2";
+    handleTabClick: (tab: "1" | "2") => void;
+  }) => {
+    return (
+      <>
+        {getHeader("/gathering")}
+        <Flex
+          id="filter"
+          justify="space-between"
+          className={clsx(styles.panelWrapper, shadow && "shadow-bottom")}
+        >
+          <Panel
+            selectedTab={selectedTab}
+            long="short"
+            title1="예정"
+            title2="완료"
+            onClick={handleTabClick}
+          />
+        </Flex>
+      </>
+    );
+  }
+);
+Header.displayName = "Header";
 
 const styles = {
   panelWrapper:

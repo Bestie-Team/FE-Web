@@ -7,10 +7,9 @@ import MapPinIcon from "@/components/shared/Icon/MapPinIcon";
 import UserIcon from "@/components/shared/Icon/UserIcon";
 import Spacing from "@/components/shared/Spacing";
 import Image from "next/image";
-import getHeader from "@/utils/getHeader";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
 import { MAP } from "@/constants/images";
 import Options, { MENU_TYPES } from "@/components/shared/Options";
@@ -26,13 +25,14 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import LeaderContainer from "@/components/shared/LeaderContainer";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import FeedIcon from "@/components/shared/Icon/FeedIcon";
+import getHeader from "@/utils/getHeader";
 
 export default function GatheringDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const header = useMemo(() => getHeader("/gathering/1234"), []);
+  const header = getHeader("/gathering/1234");
   const { userInfo } = useAuth();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
@@ -75,7 +75,7 @@ export default function GatheringDetailPage({
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
 
   return (
-    <Flex direction="column" className="relative w-full h-full bg-grayscale-50">
+    <Suspense fallback={<DotSpinner />}>
       {header}
       <GatheringBannerContainer
         gathering={selectedGathering}
@@ -155,7 +155,7 @@ export default function GatheringDetailPage({
           onClose={() => setDeleteModalOpen(false)}
         />
       )}
-    </Flex>
+    </Suspense>
   );
 }
 

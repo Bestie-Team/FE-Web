@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
 import ChooseFrame from "@/components/cards/ChooseFrame";
 import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
@@ -47,11 +48,13 @@ export default function Page() {
         </div>
         <span className="text-T3">{getHeaderName()}</span>
       </header>
-      {step === 1 && (
-        <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
-      )}
-      {step === 2 && <ChooseFrame onNext={handleGatheringChange} />}
-      {step === 3 && <DecorateWithStickers />}
+      <Suspense fallback={<DotSpinner />}>
+        {step === 1 && (
+          <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
+        )}
+        {step === 2 && <ChooseFrame onNext={handleGatheringChange} />}
+        {step === 3 && <DecorateWithStickers />}
+      </Suspense>
     </div>
   );
 }

@@ -6,7 +6,7 @@ export default function SocialPage() {
   return (
     <div className="h-dvh">
       <SocialHeader />
-      <Suspense fallback={null}>
+      <Suspense fallback={<div>로딩중</div>}>
         <FriendsAndGroups />
       </Suspense>
     </div>

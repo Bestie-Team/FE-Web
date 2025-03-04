@@ -11,7 +11,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
@@ -40,17 +40,16 @@ export type GroupEditProps = {
 };
 
 export default function GroupDetailPage({ params }: GroupDetailPageProps) {
-  const [isClient, setIsClient] = useState(false);
-  const [selectedFriends, setSelectedFriends] =
-    useRecoilState(selectedFriendsAtom);
-  const reset = useResetRecoilState(selectedFriendsAtom);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const selectedGroup = useRecoilValue(selectedGroupDetailAtom);
-
+  const [isClient, setIsClient] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] =
     useRecoilState(groupDeleteModalAtom);
   const [exitModalOpen, setExitModalOpen] = useRecoilState(groupExitModalAtom);
+  const [selectedFriends, setSelectedFriends] =
+    useRecoilState(selectedFriendsAtom);
+  const reset = useResetRecoilState(selectedFriendsAtom);
+  const selectedGroup = useRecoilValue(selectedGroupDetailAtom);
 
   const [openList, setOpenList] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -95,7 +94,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     setIsClient(true);
 
     return reset();
-  }, []);
+  }, [isClient]);
 
   if (!isClient) return <ErrorPage />;
 
@@ -105,14 +104,16 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
 
   if (openList === true) {
     return (
-      <SelectFriendsContainer
-        type="group"
-        paddingTop="20px"
-        action={() => {
-          setOpenList(false);
-          addMember();
-        }}
-      />
+      <Suspense fallback={<DotSpinner />}>
+        <SelectFriendsContainer
+          type="group"
+          paddingTop="20px"
+          action={() => {
+            setOpenList(false);
+            addMember();
+          }}
+        />
+      </Suspense>
     );
   }
   const { description, members, owner, groupImageUrl } = selectedGroup;
