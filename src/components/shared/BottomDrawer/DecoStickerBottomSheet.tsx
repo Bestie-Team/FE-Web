@@ -71,10 +71,7 @@ export default function DecoStickerBottomSheet({
                   >
                     <Image
                       loading={idx < 2 ? "eager" : "lazy"}
-                      className={clsx(
-                        "cursor-pointer",
-                        selectedKind === "이모지" ? "w-8 h-8" : "w-16 h-16"
-                      )}
+                      className={"cursor-pointer w-16 h-16"}
                       onClick={() =>
                         handleSticker(
                           `https://cdn.lighty.today/${selectedStickers.path}/${sticker}`
@@ -82,8 +79,8 @@ export default function DecoStickerBottomSheet({
                       }
                       src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
                       alt={`sticker${idx}`}
-                      width={selectedKind === "이모지" ? 32 : 64}
-                      height={selectedKind === "이모지" ? 32 : 64}
+                      width={64}
+                      height={64}
                     />
                     {(selectedKind === "스위츠" ||
                       selectedKind === "파스텔" ||
