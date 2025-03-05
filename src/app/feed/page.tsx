@@ -223,7 +223,7 @@ export default function FeedPage() {
     lightyToast.success("피드를 숨겼어요");
     await Promise.all([
       await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
+        queryKey: ["get/feeds/hidden"],
       }),
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/mine"],

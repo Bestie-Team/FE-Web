@@ -6,7 +6,7 @@ export default function NoFeed() {
       direction="column"
       align="center"
       justify="center"
-      className="min-h-dvh gap-[13px]"
+      className="min-h-[calc(100dvh-148px)] gap-[13px]"
     >
       <div className="w-10 h-10 p-[5px]">
         <FeedIcon width="30" height="30" />

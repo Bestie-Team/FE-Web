@@ -35,7 +35,7 @@ export default function FeedPage() {
 
   const displaySuccessHandler = async (message: string) => {
     lightyToast.success(message);
-    await queryClient.invalidateQueries({ queryKey: ["get/feeds/hidden"] });
+    await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] });
   };
 
   const { mutate: displayFeed } = useDisplayFeed({

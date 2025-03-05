@@ -12,13 +12,7 @@ export default function useHideFeed({
 }) {
   return useMutation({
     mutationKey: ["hide/feed", feedId],
-    mutationFn: async () => {
-      const result = await hideFeed({ feedId });
-      if (!result) {
-        throw new Error("Failed hiding feed");
-      }
-      return result;
-    },
+    mutationFn: async () => await hideFeed({ feedId }),
     onSuccess: (data: { message: string }) => onSuccess(data),
     onError: (error) => onError(error),
   });

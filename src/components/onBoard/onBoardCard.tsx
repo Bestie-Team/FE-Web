@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 export default function OnBoardCardSlider() {
   const nextRef = useRef<HTMLDivElement | null>(null);
-  const [swiperIndex, setSwiperIndex] = useState(0);
+  // const [swiperIndex, setSwiperIndex] = useState(0);
   const router = useRouter();
   return (
     <div
@@ -25,7 +25,7 @@ export default function OnBoardCardSlider() {
     >
       <Spacing size={24} />
       <Swiper
-        onRealIndexChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
+        // onRealIndexChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
         modules={[Pagination, Navigation]}
         navigation={{
           nextEl: nextRef.current,
@@ -80,9 +80,7 @@ export default function OnBoardCardSlider() {
           role="button"
           ref={nextRef}
           onMouseDown={() => {
-            if (swiperIndex === onBoardCardContents.length - 1) {
-              router.replace("/feed?ref=signup");
-            }
+            router.replace("/feed?ref=signup");
           }}
           className={styles.button}
         >
