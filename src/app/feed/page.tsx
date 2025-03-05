@@ -315,7 +315,7 @@ export default function FeedPage() {
             <SwiperSlide>
               <div
                 ref={containerRef}
-                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
+                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-32"
               >
                 <FeedForDisplay />
                 <Feed
@@ -329,7 +329,7 @@ export default function FeedPage() {
             <SwiperSlide>
               <div
                 ref={containerRef}
-                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
+                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-32"
               >
                 <FeedForDisplay />
               </div>
@@ -340,7 +340,7 @@ export default function FeedPage() {
               {feedMine.length > 0 ? (
                 <div
                   ref={containerRef_m}
-                  className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
+                  className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-32"
                 >
                   <Feed
                     feeds={feedMine}
@@ -352,7 +352,7 @@ export default function FeedPage() {
                 <SwiperSlide>
                   <div
                     ref={containerRef_m}
-                    className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-36"
+                    className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-32"
                   >
                     <NoFeed />
                   </div>

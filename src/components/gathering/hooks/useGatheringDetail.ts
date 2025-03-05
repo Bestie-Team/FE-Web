@@ -12,6 +12,6 @@ export default function useGatheringDetail({
     queryKey: ["gathering/detail", gatheringId],
     queryFn: () => getGatheringDetail({ gatheringId }),
     enabled,
-    staleTime: 3600 * 1000,
+    // staleTime: 3600 * 1000,
   });
 }

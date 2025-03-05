@@ -7,9 +7,7 @@ import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import { Gathering } from "@/models/gathering";
-import getHeader from "@/utils/getHeader";
 import { NoGatheringToRecord } from "../gathering/NoGathering";
-import { useMemo } from "react";
 
 export default function ChoosingGatheringToRecord({
   gathering,
@@ -18,18 +16,15 @@ export default function ChoosingGatheringToRecord({
   gathering?: Gathering[];
   onNext: (gatheringId: string) => void;
 }) {
-  const header = useMemo(() => getHeader("/record"), []);
-
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
 
-  const handleImageClick = (gatheringId: string | null) => {
+  const handleImageClick = (gatheringId: string) => {
     setSelectedGatheringId(gatheringId);
   };
 
   return (
-    <div className="bg-base-white pt-12 h-dvh">
-      {header}
+    <>
       <Flex
         direction="column"
         style={{ paddingLeft: "24px", paddingRight: "24px" }}
@@ -67,6 +62,6 @@ export default function ChoosingGatheringToRecord({
           />
         </>
       )}
-    </div>
+    </>
   );
 }

@@ -11,6 +11,7 @@ import useFriends from "./hooks/useFriends";
 import Modal from "../shared/Modal/Modal";
 import { friendsToShareAtom } from "@/atoms/record";
 import { useAuth } from "../shared/providers/AuthProvider";
+import clsx from "clsx";
 
 export default function SelectFriendsContainer({
   type = "default",
@@ -18,12 +19,14 @@ export default function SelectFriendsContainer({
   action,
   setStep,
   exceptFriends,
+  className,
 }: {
   type?: "default" | "record" | "group" | "gathering";
   paddingTop?: string;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;
   exceptFriends?: lighty.User[] | null;
+  className?: string;
 }) {
   const { userInfo } = useAuth();
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
@@ -104,7 +107,7 @@ export default function SelectFriendsContainer({
   return (
     <Flex
       direction="column"
-      className="px-5 pb-[72px] h-dvh"
+      className={clsx("px-5 pb-[72px] h-dvh", className)}
       style={{
         backgroundColor: "#F4F4F4",
         paddingTop: paddingTop ?? "177px",

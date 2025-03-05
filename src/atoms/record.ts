@@ -1,9 +1,9 @@
 import * as lighty from "lighty-type";
 import { atom } from "recoil";
 
-export const recordGatheringAtom = atom<string | null>({
+export const recordGatheringAtom = atom<string>({
   key: "record/gathering",
-  default: null,
+  default: "",
 });
 
 export const friendToRecordAtom = atom<string>({

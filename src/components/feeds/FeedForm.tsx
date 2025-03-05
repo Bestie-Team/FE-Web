@@ -38,7 +38,7 @@ export default function FeedForm<
       setFeedInfo((prev) => ({ ...prev, content: e.target.value }));
     }
   };
-
+  console.log(selectedGathering, "selectedGatherings");
   return (
     <>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
@@ -102,7 +102,7 @@ export default function FeedForm<
 }
 const styles = {
   selectWrapper: "p-5 pb-4",
-  gatheringInfoWrapper: "p-5 pt-[68px] pb-0",
+  gatheringInfoWrapper: "p-5 pt-5 pb-0",
   textareaWrapper: "px-[28px] py-4 pb-[98px] gap-3",
 
   recordTextarea:

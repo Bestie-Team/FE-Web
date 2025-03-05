@@ -1,9 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import * as lighty from "lighty-type";
-import { usePathname, useRouter } from "next/navigation";
-import getHeader from "@/utils/getHeader";
+import { useRouter } from "next/navigation";
 import FeedForm from "./FeedForm";
-import clsx from "clsx";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
@@ -19,8 +17,6 @@ export default function CreatingFeedNoGathering({
 }) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const pathname = usePathname();
-  const header = useMemo(() => getHeader(pathname), []);
   const friendsToShare = useRecoilValue(friendsToShareAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateFriendFeedRequest>({
@@ -77,8 +73,6 @@ export default function CreatingFeedNoGathering({
 
   return (
     <div className={styles.container}>
-      <div className={clsx(styles.headerWrapper)}>{header}</div>
-
       <FeedForm
         uploadImages={uploadImages}
         feedInfo={feedInfo}
@@ -92,5 +86,4 @@ export default function CreatingFeedNoGathering({
 
 const styles = {
   container: "bg-base-white h-dvh",
-  headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
 };

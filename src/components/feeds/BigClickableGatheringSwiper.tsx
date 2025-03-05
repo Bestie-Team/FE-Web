@@ -12,13 +12,13 @@ export default function BigClickableGatheringSwiper({
   selectedGatheringId,
 }: {
   gathering: Gathering[];
-  onImageClick?: (groupId: null | string) => void;
-  selectedGatheringId: string | null;
+  onImageClick?: (gatheringId: string) => void;
+  selectedGatheringId: string;
 }) {
   const handleGatheringClick = (id: string) => {
     if (onImageClick) {
       if (selectedGatheringId === id) {
-        onImageClick(null);
+        onImageClick("");
         return;
       }
       onImageClick(id);

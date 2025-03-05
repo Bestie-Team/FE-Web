@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export default function ErrorPage() {
   const router = useRouter();
   return (
-    <Flex className="h-dvh" justify="center" align="center">
+    <Flex className="absolute inset-0 h-dvh" justify="center" align="center">
       <Flex direction="column" justify="center" align="center">
         <div className="p-2">
           <AlarmIcon color="#AEAEAE" />

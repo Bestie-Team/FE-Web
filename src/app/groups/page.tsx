@@ -13,6 +13,7 @@ import { Group } from "lighty-type";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import ErrorPage from "@/components/shared/ErrorPage";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
@@ -70,9 +71,9 @@ export default function GroupsPage() {
 
   useInfiniteScroll({ isFetching, loadMore });
 
-  if (!isClient || !groups || !detail) {
+  if (!isClient) {
     return <FullPageLoader />;
-  }
+  } else if (!groups || !detail) return <ErrorPage />;
 
   return (
     <div className="min-h-dvh">

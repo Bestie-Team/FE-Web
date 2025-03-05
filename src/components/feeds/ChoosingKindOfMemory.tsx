@@ -1,10 +1,9 @@
-import getHeader from "@/utils/getHeader";
 import Flex from "../shared/Flex";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import Spacing from "../shared/Spacing";
 import Image from "next/image";
 import clsx from "clsx";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
@@ -17,10 +16,8 @@ export default function ChoosingKindOfMemory({
   setAdd: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const header = useMemo(() => getHeader("/record"), []);
   return (
-    <div className="pt-12 h-dvh">
-      {header}
+    <>
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
         <LightyIcon width="24" height="24" color="#0A0A0A" />
         <span>어떤 추억을 기록할까요?</span>
@@ -51,7 +48,7 @@ export default function ChoosingKindOfMemory({
           setStep((prev) => prev + add);
         }}
       />
-    </div>
+    </>
   );
 }
 

@@ -9,11 +9,14 @@ import * as lighty from "lighty-type";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { useSetRecoilState } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
+import clsx from "clsx";
 
 export default function SelectableSearchedFriendsListContainer({
+  className,
   debouncedSearch,
   action,
 }: {
+  className?: string;
   debouncedSearch: string;
   action: () => void;
 }) {
@@ -43,7 +46,7 @@ export default function SelectableSearchedFriendsListContainer({
   return (
     <Flex
       direction="column"
-      className="px-5 pb-[72px] gap-3"
+      className={(clsx("px-5 pb-[72px] gap-3"), className)}
       style={{
         backgroundColor: "#F4F4F4",
       }}
