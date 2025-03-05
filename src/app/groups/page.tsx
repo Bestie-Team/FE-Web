@@ -7,13 +7,20 @@ import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import { Group } from "lighty-type";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import ErrorPage from "@/components/shared/ErrorPage";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const Header = React.memo(
   ({ pathname, shadow }: { pathname: string; shadow: boolean }) => {
@@ -66,8 +73,10 @@ export default function GroupsPage() {
   }, [router]);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   useInfiniteScroll({ isFetching, loadMore });
 
