@@ -36,12 +36,6 @@ export default function AddGatheringPhoto({
       reader.onload = (event) => {
         const selectedImage = event.target?.result;
         console.log(selectedImage);
-        // if (selectedImage && typeof selectedImage === "string") {
-        //   setImage((prev) => ({
-        //     ...prev,
-        //     groupImageUrl: selectedImage,
-        //   }));
-        // }
       };
       reader.readAsDataURL(file);
     }

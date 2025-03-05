@@ -26,6 +26,5 @@ export default function useSentAndReceivedFriendsRequests({
         received: receivedResponse,
       };
     },
-    staleTime: 5 * 60 * 1000,
   });
 }

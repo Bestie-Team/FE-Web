@@ -39,12 +39,12 @@ export default function ProfileImageDisplay({
 
     setNewImage(imageUrl);
 
-    const maxSize = 5 * 1024 * 1024;
-    if (inputFile.size > maxSize) {
-      lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
-      e.target.value = "";
-      return;
-    }
+    // const maxSize = 5 * 1024 * 1024;
+    // if (inputFile.size > maxSize) {
+    //   lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+    //   e.target.value = "";
+    //   return;
+    // }
 
     mutate({ file: inputFile });
   };

@@ -12,6 +12,7 @@ import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
+import { FriendRequestStatus } from "./UserListContainer";
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function UserListItem({
@@ -20,7 +21,7 @@ export default function UserListItem({
   onClick,
   clicked,
 }: {
-  userInfo: lighty.User & { status: string };
+  userInfo: lighty.User & { status: FriendRequestStatus };
   idx: number;
   onClick?: () => void;
   clicked?: boolean;
@@ -68,7 +69,7 @@ export default function UserListItem({
       <Button
         className={clsx(
           styles.inviteBtn,
-          userInfo.status === "SENT"
+          userInfo.status === "SENT" || userInfo.status === "RECEIVED"
             ? "!bg-grayscale-50 text-grayscale-400 cursor-none border-none"
             : ""
         )}

@@ -6,7 +6,8 @@ import UserListItem from "./UserListItem";
 import Modal from "../shared/Modal/Modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
-type SearchedUser = lighty.User & { status: string };
+export type FriendRequestStatus = "SENT" | "RECEIVED" | "NONE";
+type SearchedUser = lighty.User & { status: FriendRequestStatus };
 
 export default function UserListContainer({
   isFetching,

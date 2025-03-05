@@ -106,7 +106,8 @@ export default function CommentContainer({
 }
 
 const styles = {
-  commentWrapper: "w-full gap-4 p-5 pt-4 h-[272px] overflow-hidden",
+  commentWrapper:
+    "w-full gap-4 p-5 pt-4 h-[272px] overflow-y-scroll no-scrollbar",
   bottomSheetContainer:
     "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-10 will-change-transform",
   inputWrapper: "relative px-5 py-3 w-full border-t-[1px] border-grayscale-50",

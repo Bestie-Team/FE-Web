@@ -55,7 +55,7 @@ export default function GroupDetailContainer({
       <LightyInfoContainer
         icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
         title={
-          <span className={styles.title}>{`약속 멤버 ${members.length}`}</span>
+          <span className={styles.title}>{`그룹 멤버 ${members.length}`}</span>
         }
         content={<GatheringMemberContainer members={members} />}
       />
