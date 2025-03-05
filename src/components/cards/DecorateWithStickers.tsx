@@ -165,7 +165,6 @@ export default function DecorateWithStickers() {
               <span className="text-B3 text-grayscale-500">
                 꾸미기 시작하면 프레임을 바꿀 수 없어요.
               </span>
-              <Spacing size={20} />
             </Flex>
             <Flex
               direction="column"
