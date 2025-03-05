@@ -53,5 +53,5 @@ export default function Schedule({
 
 const styles = {
   header: "max-w-[430px] fixed pt-12 w-full pl-5 bg-base-white",
-  container: "items-center px-5",
+  container: "items-center",
 };

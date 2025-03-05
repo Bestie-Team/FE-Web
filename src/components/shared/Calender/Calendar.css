@@ -1,5 +1,6 @@
 .react-calendar {
   display: flex;
+  gap: 16px;
   flex-direction: column;
   align-items: center;
   width: 340px;
@@ -12,7 +13,7 @@
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.42px;
-  padding: 0 20px;
+  padding: 0 auto;
   padding-bottom: 8px;
 }
 
@@ -29,6 +30,9 @@
 
 .react-calendar--doubleView {
   width: 700px;
+}
+.react-calendar__viewContainer {
+  max-width: 302px;
 }
 
 .react-calendar--doubleView .react-calendar__viewContainer {
@@ -65,9 +69,8 @@
   display: flex;
   gap: 14px;
   width: 184px;
-  height: 44px;
-  padding: 8px 0;
-  margin-bottom: 4px;
+  min-height: 30px;
+  padding: 0;
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.48px;

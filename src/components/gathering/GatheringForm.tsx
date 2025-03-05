@@ -174,10 +174,7 @@ export default function GatheringForm({
           />
           <FixedBottomButton
             label={"다음"}
-            // disabled={}
             onClick={() => {
-              console.log("clicking");
-              console.log(formType);
               if (formType === "new") {
                 if (isGroupInfoValid() === false) {
                   lightyToast.error("모든 정보를 입력해주세요.");

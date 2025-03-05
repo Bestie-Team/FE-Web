@@ -77,30 +77,32 @@ export default function LightyCalendarWithBorder({
   );
 
   return (
-    <Calendar
-      showNeighboringMonth={true}
-      tileClassName={({ date }) => {
-        return returnClassName(date);
-      }}
-      tileContent={({ date }) => {
-        return renderIcon(date);
-      }}
-      onChange={handleDateChange}
-      value={selectedDate}
-      formatDay={(locale, date) => format(date, "d")}
-      prev2Label={null}
-      next2Label={null}
-      nextLabel={
-        <div className={iconWrapper}>
-          <ArrowRightIcon width="14" height="14" color="#AEAEAE" />
-        </div>
-      }
-      prevLabel={
-        <div className={iconWrapper}>
-          <ArrowLeftIcon width="14" height="14" color="#AEAEAE" />
-        </div>
-      }
-    />
+    <div className="px-6 pt-5 pb-8 rounded-[20px] border-[1.4px] border-grayscale-100">
+      <Calendar
+        showNeighboringMonth={true}
+        tileClassName={({ date }) => {
+          return returnClassName(date);
+        }}
+        tileContent={({ date }) => {
+          return renderIcon(date);
+        }}
+        onChange={handleDateChange}
+        value={selectedDate}
+        formatDay={(locale, date) => format(date, "d")}
+        prev2Label={null}
+        next2Label={null}
+        nextLabel={
+          <div className={iconWrapper}>
+            <ArrowRightIcon width="14" height="14" color="#AEAEAE" />
+          </div>
+        }
+        prevLabel={
+          <div className={iconWrapper}>
+            <ArrowLeftIcon width="14" height="14" color="#AEAEAE" />
+          </div>
+        }
+      />
+    </div>
   );
 }
 

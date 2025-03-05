@@ -17,13 +17,8 @@ export default function useMakeGatheringFeed({
       feedRequest.gatheringId,
       feedRequest.content,
     ],
-    mutationFn: async () => {
-      const result = await postGatheringFeed({ gatheringFeed: feedRequest });
-      if (!result) {
-        throw new Error("Failed making gathering feed");
-      }
-      return result;
-    },
+    mutationFn: async () =>
+      await postGatheringFeed({ gatheringFeed: feedRequest }),
     onSuccess: (data: { message: string }) => onSuccess(data),
     onError: (error) => onError(error),
   });

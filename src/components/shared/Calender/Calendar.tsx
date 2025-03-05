@@ -23,14 +23,14 @@ export default function LightyCalendar({
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
   );
-  console.log(selectedDate);
+
   return (
     <Calendar
       showNeighboringMonth
       minDate={new Date()}
       onChange={setSelectedDate}
       value={selectedDate}
-      activeStartDate={originalDate ? new Date(originalDate) : undefined}
+      activeStartDate={!!originalDate ? new Date(originalDate) : undefined}
       formatDay={(locale, date) => format(date, "d")}
       prev2Label={null}
       next2Label={null}

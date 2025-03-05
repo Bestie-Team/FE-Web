@@ -13,13 +13,7 @@ export default function useMakeFriendsFeed({
 }) {
   return useMutation({
     mutationKey: ["make/feed/friends", feedRequest.content],
-    mutationFn: async () => {
-      const result = await postFriendsFeed({ friendsFeed: feedRequest });
-      if (!result) {
-        throw new Error("Failed making friends feed");
-      }
-      return result;
-    },
+    mutationFn: async () => await postFriendsFeed({ friendsFeed: feedRequest }),
     onSuccess: (data: { message: string }) => onSuccess(data),
     onError: (error) => onError(error),
   });

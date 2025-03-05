@@ -124,7 +124,7 @@ export async function postGatheringFeed({
   gatheringFeed,
 }: {
   gatheringFeed: lighty.CreateGatheringFeedRequest;
-}): Promise<{ message: string } | void> {
+}): Promise<{ message: string }> {
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/gatherings`;
   try {
@@ -135,7 +135,12 @@ export async function postGatheringFeed({
     });
     return { message: "약속 피드 작성 완료" };
   } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
+    console.log(error);
+    throw new Error(
+      error instanceof Error
+        ? "시간을 올바르게 설정해주세요"
+        : "시간을 올바르게 설정해주세요"
+    );
   }
 }
 
@@ -144,7 +149,7 @@ export async function postFriendsFeed({
   friendsFeed,
 }: {
   friendsFeed: lighty.CreateFriendFeedRequest;
-}): Promise<{ message: string } | void> {
+}): Promise<{ message: string }> {
   const baseUrl = API_CONFIG.getBaseUrl();
   const targetUrl = `${baseUrl}/feeds/friends`;
   try {
