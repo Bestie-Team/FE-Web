@@ -158,7 +158,7 @@ export async function postFriendsFeed({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(friendsFeed),
     });
-    return { message: "친구 피드를 성공적으로 작성하였습니다" };
+    return { message: "친구 피드 작성 완료" };
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }

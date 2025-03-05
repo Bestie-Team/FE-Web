@@ -55,7 +55,7 @@ export default function Record() {
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
-    <div className="pt-12 h-dvh">
+    <div className="relative pt-12 h-dvh">
       <div className={styles.headerWrapper}>{header}</div>
       <CurrentStepComponent
         add={add}

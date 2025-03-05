@@ -23,7 +23,7 @@ export default function GlobalError({
             direction="column"
             justify="center"
             align="center"
-            className="bg-grayscale-300"
+            className="bg-grayscale-200 cursor-pointer"
             onClick={() => reset()}
           >
             <div className="p-2">
@@ -34,7 +34,7 @@ export default function GlobalError({
               direction="column"
               justify="center"
               align="center"
-              className="p-2 gap-4 cursor-pointer"
+              className="p-2 gap-4"
             >
               <span className="text-T3">오류가 발생했어요.</span>
               <span className="text-grayscale-600 text-B2">
