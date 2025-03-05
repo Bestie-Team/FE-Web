@@ -79,14 +79,14 @@
   }
   .Toastify__toast-container {
     width: 100% !important;
+    display: flex;
+    justify-content: center;
   }
   .Toastify__toast {
     padding-left: 20px;
     padding-right: 20px;
     width: fit-content !important;
     border-radius: 40px;
-    left: 50%;
-    transform: translateX(-50%) !important;
   }
 }
 

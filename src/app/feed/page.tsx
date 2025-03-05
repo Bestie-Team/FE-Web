@@ -325,7 +325,6 @@ export default function FeedPage() {
                 ref={containerRef}
                 className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-32"
               >
-                <FeedForDisplay />
                 <Feed
                   feeds={feedAll}
                   onClickFeed={setSelectedFeedId}

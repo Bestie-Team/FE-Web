@@ -16,7 +16,7 @@ const NotificationImage: Record<NotificationTypes, string> = {
   GROUP_INVITATION: "👀",
   FRIEND_REQUEST: "👀",
   FRIEND_REQUEST_ACCEPTED: "🙌🏻",
-  FEED_COMMENT: "📝",
+  FEED_COMMENT: "💬",
 };
 
 export default function ReportNoticeItem({
