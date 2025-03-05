@@ -15,10 +15,6 @@ export type UserInfo = Pick<
   "accountId" | "name" | "profileImageUrl"
 >;
 
-// export declare class SearchUserResponse {
-//   users: SearchedUser[];
-//   nextCursor: UserCursor | null;
-// }
 export interface KakaoAuthResponse {
   access_token: string;
   token_type: "bearer";

@@ -1,9 +1,5 @@
-import dynamic from "next/dynamic";
-
-const Header = dynamic(() => import("@/components/shared/Header/Header"));
-const HeaderWithBackBtn = dynamic(
-  () => import("@/components/shared/Header/HeaderWithBtn")
-);
+import Header from "@/components/shared/Header/Header";
+import HeaderWithBackBtn from "@/components/shared/Header/HeaderWithBtn";
 
 type HeaderWithBtnProps = {
   pageName: string;
