@@ -21,7 +21,7 @@ export default function SelectFriendsContainer({
   exceptFriends,
   className,
 }: {
-  type?: "default" | "record" | "group" | "gathering";
+  type?: "default" | "record" | "group" | "gathering" | "groupEdit";
   paddingTop?: string;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;

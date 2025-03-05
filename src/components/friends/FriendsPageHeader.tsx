@@ -7,9 +7,11 @@ import { useRouter } from "next/navigation";
 export default function FriendsPageHeader({
   label,
   setStep,
+  type,
 }: {
   label: string;
   setStep?: Dispatch<SetStateAction<number>>;
+  type: "default" | "record" | "group" | "gathering" | "groupEdit";
 }) {
   const router = useRouter();
 
@@ -19,6 +21,13 @@ export default function FriendsPageHeader({
         className={styles.arrowIconContainer}
         onClick={() => {
           if (setStep) {
+            if (
+              type === "groupEdit" ||
+              type === "group" ||
+              type === "gathering"
+            ) {
+              setStep(1);
+            }
             setStep(0);
           } else {
             router.back();

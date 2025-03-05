@@ -121,7 +121,7 @@ export default function GroupEditPage() {
     return (
       <InviteFriends
         setStep={setStep}
-        type="group"
+        type="groupEdit"
         exceptFriends={groupMembers}
       />
     );

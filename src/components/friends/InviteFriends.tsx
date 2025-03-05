@@ -12,13 +12,13 @@ export default function InviteFriends({
   exceptFriends,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
-  type: "default" | "record" | "group" | "gathering";
+  type: "default" | "record" | "group" | "gathering" | "groupEdit";
   exceptFriends?: lighty.User[] | null;
 }) {
   return (
     <div className="h-full bg-grayscale-50">
       <div className="max-w-[430px] fixed w-full z-10 bg-grayscale-50">
-        <FriendsPageHeader label="초대할 친구" setStep={setStep} />
+        <FriendsPageHeader label="초대할 친구" setStep={setStep} type={type} />
         <div className="px-5">
           <Spacing size={20} />
           <SearchInput
