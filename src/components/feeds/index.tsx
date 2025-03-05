@@ -7,26 +7,27 @@ import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
 import FullPageLoader from "../shared/FullPageLoader";
 import getHeader from "@/utils/getHeader";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
   1: dynamic(() => import("./ChoosingKindOfMemory"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   2: dynamic(() => import("./ChoosingGatheringToRecord"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   2.5: dynamic(() => import("./ChooseFriendToShare"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   3: dynamic(() => import("./CreatingFeed"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   3.5: dynamic(() => import("./CreatingFeedNoGathering"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
 };

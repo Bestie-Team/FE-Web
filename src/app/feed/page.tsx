@@ -50,11 +50,13 @@ const TabParamHandler = ({
   setSelectedTab: (num: "1" | "2") => void;
 }) => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     const tabParam = searchParams?.get("tab");
     if (tabParam === "1" || tabParam === "2") {
       setSelectedTab(tabParam);
+      router.replace("/feed");
     }
   }, [searchParams, setSelectedTab]);
 

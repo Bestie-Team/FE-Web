@@ -12,11 +12,6 @@
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.42px;
-  /* padding: 0 auto; */
-  /* padding-top: 20px;
-  padding-bottom: 32px; */
-  /* border: 1.4px solid #e9e9e9;
-  border-radius: 20px; */
 }
 
 .react-calendar__month-view__days {
@@ -85,16 +80,8 @@
 
 .react-calendar__navigation button {
   flex: none;
-  min-width: 14px;
   background: none;
-}
-
-.react-calendar__navigation__arrow .react-calendar__navigation__prev-button {
-  margin-right: 24px;
-}
-
-.react-calendar__navigation__arrow .react-calendar__navigation__next-button {
-  margin-left: 24px;
+  border-radius: 8px;
 }
 
 .react-calendar__navigation button:disabled {
@@ -222,11 +209,6 @@
 .react-calendar__tile--now {
   background: #e6e6e6;
 }
-
-/* .react-calendar__tile--now:enabled:hover,
-  .react-calendar__tile--now:enabled:focus {
-    background: #ffffa9;
-  } */
 
 .react-calendar__tile--hasActive {
   overflow: visible;

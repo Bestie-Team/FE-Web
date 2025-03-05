@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -10,7 +10,6 @@ import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import Panel from "@/components/shared/Panel/Panel";
 import SearchInput from "@/components/shared/Input/SearchBar";
-import FullPageLoader from "../shared/FullPageLoader";
 
 import useDebounce from "@/hooks/debounce";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -18,25 +17,27 @@ import { useAuth } from "../shared/providers/AuthProvider";
 import useFriends from "../friends/hooks/useFriends";
 import useFriendsRequestTotalCount from "../friends/hooks/useFriendsRequestCount";
 import { friendSearchAtom, friendsSelectedTabAtom } from "@/atoms/friends";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 const UserFriendsListContainer = dynamic(
   () => import("@/components/friends/UserFriendsListContainer"),
-  { ssr: false, loading: () => <FullPageLoader /> }
+  { ssr: false, loading: () => <DotSpinner /> }
 );
 
 const SearchedFriendsListContainer = dynamic(
   () => import("@/components/friends/SearchedFriendsListContainer"),
-  { ssr: false, loading: () => <FullPageLoader /> }
+  { ssr: false, loading: () => <DotSpinner /> }
 );
 
 const Groups = dynamic(() => import("@/components/groups/Group"), {
   ssr: false,
-  loading: () => <FullPageLoader />,
+  loading: () => <DotSpinner />,
 });
 
 export default function FriendsAndGroups() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isClient, setIsClient] = useState<boolean>(false);
   const { userInfo } = useAuth();
 
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
@@ -51,14 +52,21 @@ export default function FriendsAndGroups() {
     userId: userInfo?.accountId || "",
   });
 
-  const { data: requestCount = { count: 0 } } = useFriendsRequestTotalCount();
+  const { data: requestCount = { count: 0 }, isFetching: isFetching_c } =
+    useFriendsRequestTotalCount();
 
   useInfiniteScroll({ isFetching, loadMore });
 
   useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
     const tabParam = searchParams?.get("tab");
-    setSelectedTab(tabParam === "group" ? "2" : "1");
-  }, [searchParams, setSelectedTab]);
+    if (tabParam) {
+      setSelectedTab(tabParam === "group" ? "2" : "1");
+      router.replace("/social");
+    }
+  }, [searchParams, setSelectedTab, isClient]);
 
   const handleAddFriend = useCallback(
     () => router.push("/friends/search"),
@@ -81,8 +89,8 @@ export default function FriendsAndGroups() {
     return <Groups />;
   }, [selectedTab, debouncedSearch, friends]);
 
-  if (isFetching) {
-    return <FullPageLoader />;
+  if (isFetching || isFetching_c) {
+    return <DotSpinner />;
   }
 
   return (

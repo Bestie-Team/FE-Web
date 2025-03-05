@@ -10,9 +10,11 @@ import Flex from "../Flex";
 import React, { useCallback, useMemo } from "react";
 import CalendarLightyIcon from "../Icon/CalendarLightyIcon";
 import { Gathering } from "@/models/gathering";
+import CalendarSkeleton from "./CalendarSkeleton";
 
 const Calendar = dynamic(() => import("react-calendar"), {
   ssr: false,
+  loading: () => <CalendarSkeleton />,
 });
 
 type ValuePiece = Date | null;

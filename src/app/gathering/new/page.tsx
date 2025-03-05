@@ -13,23 +13,23 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
   0: dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   1: dynamic(() => import("@/components/gathering/GatheringForm"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   2: dynamic(() => import("@/components/friends/InviteFriends"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   3: dynamic(() => import("@/components/groups/StepToInvitation"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
   4: dynamic(() => import("@/components/gathering/MakingInvitation"), {
-    loading: () => <FullPageLoader height="100dvh" />,
+    loading: () => <DotSpinner />,
     ssr: false,
   }),
 };

@@ -31,7 +31,6 @@ export default function CreatingFeed({
     ...initialFeedInfo,
     gatheringId: selectedGatheringId || "",
   });
-  console.log(selectedGatheringId);
 
   const handleFeedSuccess = async (data: { message: string }) => {
     setStep(0);
