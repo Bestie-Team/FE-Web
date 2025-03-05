@@ -68,7 +68,10 @@ export default function Splash() {
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent<string>) => {
-      const data = JSON.stringify(event.data);
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
       const message: { type: string; token: string } = JSON.parse(data);
 
       if (message.type === "GOOGLE_LOGIN_SUCCESS") {
