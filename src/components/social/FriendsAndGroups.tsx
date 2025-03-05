@@ -128,7 +128,7 @@ export default function FriendsAndGroups() {
 
           <SearchInput
             type="friends"
-            className="!bg-grayscale-50"
+            className="!bg-grayscale-50 border-grayscale-50"
             placeholder="이름/아이디로 검색하기"
           />
 
