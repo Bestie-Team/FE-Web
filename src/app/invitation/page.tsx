@@ -131,9 +131,11 @@ export default function InvitationPage() {
   }, [received, sent, selectedTab, swiperRef, handleSlideChange]);
 
   useEffect(() => {
-    setIsClient(true);
+    if (!isClient) {
+      setIsClient(true);
+    }
     read();
-  }, []);
+  }, [isClient]);
 
   if (!isClient) {
     return <FullPageLoader />;

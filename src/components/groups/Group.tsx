@@ -50,8 +50,10 @@ export default function Groups() {
   }, [router]);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   useInfiniteScroll({ isFetching, loadMore });
 

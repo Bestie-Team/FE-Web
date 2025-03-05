@@ -1,11 +1,4 @@
-"use client";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import dynamic from "next/dynamic";
-
-const Record = dynamic(() => import("@/components/feeds"), {
-  loading: () => <DotSpinner />,
-  ssr: false,
-});
+import Record from "@/components/feeds";
 
 export default function RecordPage() {
   return <Record />;

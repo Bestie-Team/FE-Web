@@ -53,13 +53,15 @@ export default function NewGatheringPage() {
   });
 
   useEffect(() => {
-    setIsClient(true);
+    if (!isClient) {
+      setIsClient(true);
+    }
 
     return () => {
       reset();
       resetFriends();
     };
-  }, []);
+  }, [isClient]);
 
   if (!isClient) {
     return <FullPageLoader />;

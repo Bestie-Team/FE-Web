@@ -18,11 +18,7 @@ import useFriends from "../friends/hooks/useFriends";
 import useFriendsRequestTotalCount from "../friends/hooks/useFriendsRequestCount";
 import { friendSearchAtom, friendsSelectedTabAtom } from "@/atoms/friends";
 import DotSpinner from "../shared/Spinner/DotSpinner";
-
-const UserFriendsListContainer = dynamic(
-  () => import("@/components/friends/UserFriendsListContainer"),
-  { ssr: false, loading: () => <DotSpinner /> }
-);
+import UserFriendsListContainer from "../friends/UserFriendsListContainer";
 
 const SearchedFriendsListContainer = dynamic(
   () => import("@/components/friends/SearchedFriendsListContainer"),

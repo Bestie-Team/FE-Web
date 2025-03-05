@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import ErrorPage from "@/components/shared/ErrorPage";
+import NewGroupForm from "@/components/groups/NewGroupForm";
 
 const MakingGroupSuccess = dynamic(
   () => import("@/components/groups/MakingGroupSuccess"),
@@ -22,10 +23,6 @@ const InviteFriends = dynamic(
   () => import("@/components/friends/InviteFriends"),
   { ssr: false, loading: () => <DotSpinner /> }
 );
-const NewGroupForm = dynamic(() => import("@/components/groups/NewGroupForm"), {
-  ssr: false,
-  loading: () => <DotSpinner />,
-});
 
 export default function NewGroupPage() {
   const pathname = usePathname();
@@ -66,8 +63,8 @@ export default function NewGroupPage() {
   }, [isClient, pathname]);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) setIsClient(true);
+  }, [isClient]);
 
   if (!isClient) {
     return <ErrorPage />;

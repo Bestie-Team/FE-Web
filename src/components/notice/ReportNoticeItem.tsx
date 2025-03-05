@@ -1,6 +1,7 @@
 import React from "react";
 import NoticeItem from "../shared/NoticeItem";
 import { Notification } from "lighty-type";
+import { format } from "date-fns";
 export type NotificationTypes =
   | "GATHERING_INVITATION_RECEIVED"
   | "GATHERING_INVITATION_ACCEPTED"
@@ -9,75 +10,25 @@ export type NotificationTypes =
   | "FRIEND_REQUEST_ACCEPTED"
   | "FEED_COMMENT";
 
+// const NotificationLabel: Record<NotificationTypes, string> = {
+//   GATHERING_INVITATION_RECEIVED: "약속 초대장",
+//   GATHERING_INVITATION_ACCEPTED: "약속 수락",
+//   GROUP_INVITATION: "그룹 초대",
+//   FRIEND_REQUEST: "친구 요청",
+//   FRIEND_REQUEST_ACCEPTED: "친구 요청 수락",
+//   FEED_COMMENT: "댓글 수락",
+// };
+
 export default function ReportNoticeItem({
   notification,
 }: {
   notification: Notification;
 }) {
-  const reportType = notification.type;
-  const description = "김혜지님의 신고가 완료되었어요.";
-  return (
-    <NoticeItem
-      icon="⚠"
-      title={`${reportType}`}
-      date="24.12.25"
-      description={description}
-    />
-  );
-}
+  const { title, message, createdAt } = notification;
+  const date = format(new Date(createdAt), "yy.MM.dd.");
 
-export function InvitationNoticeItem() {
-  const reportType = "GATHERING_INVITATION_RECEIVED";
-  const description = "김혜지님이 모임 초대장을 보냈어요!";
-  const date = "24.12.25";
+  console.log(new Date(createdAt));
   return (
-    <NoticeItem
-      icon="💌"
-      title={`${reportType}`}
-      date={date}
-      description={description}
-    />
-  );
-}
-
-export function RequestFriendNoticeItem() {
-  const reportType = "FRIEND_REQUEST";
-  const description = "김혜지님이 친구 요청을 보냈어요!";
-  const date = "24.12.25";
-  return (
-    <NoticeItem
-      icon="👀"
-      title={`${reportType}`}
-      date={date}
-      description={description}
-    />
-  );
-}
-
-export function AcceptFriendNoticeItem() {
-  const reportType = "FRIEND_REQUEST_ACCEPTED";
-  const description = "김혜지님이 친구 요청을 수락했어요!";
-  const date = "24.12.25";
-  return (
-    <NoticeItem
-      icon="🙌🏻"
-      title={`${reportType}`}
-      date={date}
-      description={description}
-    />
-  );
-}
-
-export function GroupNoticeItem() {
-  const reportType = "GROUP_INVITATION";
-  const description = "김혜지님이 oooo그룹에 초대했어요!";
-  const date = "24.12.25";
-  return (
-    <NoticeItem
-      icon="👀"
-      title={`${reportType}`}
-      date={date}
-      description={description}
-    />
+    <NoticeItem icon="⚠" title={`${title}`} date={date} description={message} />
   );
 }

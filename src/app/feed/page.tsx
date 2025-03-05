@@ -198,8 +198,10 @@ export default function FeedPage() {
   );
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   const handleDeleteFeedSuccess = async (data: { message: string }) => {
     lightyToast.success(data.message);

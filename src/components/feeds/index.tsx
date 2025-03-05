@@ -40,8 +40,10 @@ export default function Record() {
   const header = useMemo(() => getHeader("/record"), []);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient) {
     return <ErrorPage />;

@@ -25,8 +25,10 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient) {
     return <FullPageLoader />;

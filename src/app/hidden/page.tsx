@@ -44,8 +44,10 @@ export default function FeedPage() {
   });
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   useInfiniteScroll({ isFetching, loadMore });
 

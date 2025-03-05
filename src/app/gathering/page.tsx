@@ -12,7 +12,6 @@ import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import Flex from "@/components/shared/Flex";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import dynamic from "next/dynamic";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
@@ -20,15 +19,8 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+import GatheringPageSwiper from "@/components/gathering/GatheringPageSwiper";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-
-const GatheringPageSwiper = dynamic(
-  () => import("../../components/gathering/GatheringPageSwiper"),
-  {
-    ssr: false,
-    loading: () => <DotSpinner />,
-  }
-);
 
 export default function MyGatheringPage() {
   const isPast = useScrollThreshold();
@@ -71,7 +63,7 @@ export default function MyGatheringPage() {
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+  }, [isClient]);
 
   if (!isClient) {
     return <FullPageLoader />;
@@ -106,7 +98,9 @@ export default function MyGatheringPage() {
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="flex justify-center pt-[96px]">refreshing</div>
+          <div className="flex justify-center pt-[96px]">
+            <DotSpinner />
+          </div>
         }
       >
         <GatheringPageSwiper

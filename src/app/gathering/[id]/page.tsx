@@ -60,8 +60,10 @@ export default function GatheringDetailPage({
   });
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    {
+      if (!isClient) setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient || isPending) return <DotSpinner />;
 

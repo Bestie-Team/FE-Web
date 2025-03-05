@@ -11,8 +11,10 @@ export default function SignupPage() {
   const header = getHeader("/signup");
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient) {
     return <FullPageLoader />;

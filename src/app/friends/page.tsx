@@ -1,12 +1,7 @@
 "use client";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
-import dynamic from "next/dynamic";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import SentReceivedFriendRequestsList from "@/components/friends/SentReceivedFriendRequestsList";
 
-const SentReceivedFriendRequestsList = dynamic(
-  () => import("@/components/friends/SentReceivedFriendRequestsList"),
-  { ssr: false, loading: () => <DotSpinner /> }
-);
 export default function FriendsPage() {
   return (
     <div className="bg-grayscale-50 h-dvh">

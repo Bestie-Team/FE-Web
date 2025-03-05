@@ -1,22 +1,25 @@
+"use client";
+import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
-import TodayNotice from "./TodayNotice";
+import NoticeContainer from "./NoticeContainer";
 
 export default function Notice() {
+  const router = useRouter();
   return (
-    <Flex direction="column" className="h-screen bg-grayscale-50 gap-5">
-      <Flex align="center" className="h-12 gap-[6px]">
+    <Flex direction="column" className="h-screen bg-grayscale-50">
+      <Flex align="center" className="fixed h-12 gap-[6px]">
         <div
           className={arrowIconContainerStyle}
           onClick={() => {
-            window.history.back();
+            router.back();
           }}
         >
           <ArrowLeftIcon />
         </div>
         <span className="text-T3">알림</span>
       </Flex>
-      <TodayNotice />
+      <NoticeContainer />
     </Flex>
   );
 }

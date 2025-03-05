@@ -24,8 +24,10 @@ const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient) {
     return null;
