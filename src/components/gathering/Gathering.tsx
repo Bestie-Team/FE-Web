@@ -40,7 +40,7 @@ export default function Gathering({
   return (
     <div
       className={clsx(
-        "z-0 pt-3 pb-[80px] w-full px-5 min-h-[calc(100dvh-80px)]",
+        "z-0 pt-3 pb-[80px] w-full px-5 min-h-[calc(100dvh-144px)]",
         className
       )}
     >

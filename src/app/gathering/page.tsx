@@ -24,7 +24,6 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Schedule from "@/components/schedule/Schedule";
 import NoGathering from "@/components/gathering/NoGathering";
 import Gathering from "@/components/gathering/Gathering";
-import Spacing from "@/components/shared/Spacing";
 
 export default function MyGatheringPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -119,9 +118,8 @@ export default function MyGatheringPage() {
           ) : (
             <div
               ref={containerRef}
-              className="h-full overflow-y-auto no-scrollbar pt-[107px] pb-32"
+              className="h-full overflow-y-auto no-scrollbar pt-[87px] pb-14"
             >
-              <Spacing size={98} />
               <Gathering
                 ended
                 message
