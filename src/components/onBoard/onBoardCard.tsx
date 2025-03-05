@@ -7,8 +7,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { NavigationOptions } from "swiper/types";
 import Flex from "../shared/Flex";
 import Image from "next/image";
-import Spacing from "../shared/Spacing";
-import clsx from "clsx";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
 
@@ -18,12 +16,11 @@ export default function OnBoardCardSlider() {
   const router = useRouter();
   return (
     <div
-      className="absolute inset-0 h-dvh min-h-[400px]"
+      className="absolute inset-0 h-dvh min-h-[400px] bg-grayscale-50 pt-6"
       style={{
         zIndex: 999,
       }}
     >
-      <Spacing size={24} />
       <Swiper
         // onRealIndexChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
         modules={[Pagination, Navigation]}
@@ -40,40 +37,35 @@ export default function OnBoardCardSlider() {
         }}
         pagination={{ type: "bullets" }}
       >
-        {onBoardCardContents.map(
-          ({ title, description, imageUrl, width }, idx) => (
-            <SwiperSlide className="h-full" key={idx}>
+        {onBoardCardContents.map(({ title, description, imageUrl }, idx) => (
+          <SwiperSlide className="h-full" key={idx}>
+            <Flex
+              className="h-full pt-20 pb-4 gap-10"
+              direction="column"
+              justify="space-between"
+              align="center"
+            >
               <Flex
-                className="h-full pt-24 pb-10"
                 direction="column"
-                justify="space-between"
+                justify="center"
                 align="center"
+                className="gap-4"
               >
-                <Flex
-                  direction="column"
-                  justify="center"
-                  align="center"
-                  className="gap-4"
-                >
-                  <span className="text-[24px] font-[600] leading-[31.2px]">
-                    {title}
-                  </span>
-                  {description}
-                </Flex>
-                <Image
-                  alt="title"
-                  src={imageUrl}
-                  width={width}
-                  height={435}
-                  className={clsx(
-                    "object-contain",
-                    idx === 0 ? " h-[500px]" : "h-[435px]"
-                  )}
-                />
+                <span className="text-[24px] font-[600] leading-[31.2px]">
+                  {title}
+                </span>
+                {description}
               </Flex>
-            </SwiperSlide>
-          )
-        )}
+              <Image
+                alt="title"
+                src={imageUrl}
+                width={390}
+                height={460}
+                className={"object-contain h-5/6"}
+              />
+            </Flex>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <div className={styles.buttonWrapper}>
         <div
@@ -105,8 +97,7 @@ const onBoardCardContents = [
         <span>선택해서 피드를 작성해요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/00.webp",
-    width: 350,
+    imageUrl: "https://cdn.lighty.today/onBoard/1.png",
   },
   {
     title: "피드 작성",
@@ -121,8 +112,7 @@ const onBoardCardContents = [
         <span>피드가 보여져요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/01.webp",
-    width: 430,
+    imageUrl: "https://cdn.lighty.today/onBoard/2.png",
   },
 
   {
@@ -138,7 +128,7 @@ const onBoardCardContents = [
         <span>피드를 포토카드로 만들 수 있어요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/02.webp",
+    imageUrl: "https://cdn.lighty.today/onBoard/3.png",
     width: 430,
   },
   {
@@ -154,8 +144,7 @@ const onBoardCardContents = [
         <span>특별한 약속을 만들 수 있어요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/03.webp",
-    width: 430,
+    imageUrl: "https://cdn.lighty.today/onBoard/4.png",
   },
   {
     title: "초대장 보내기",
@@ -170,8 +159,7 @@ const onBoardCardContents = [
         <span>귀여운 초대장을 보낼 수 있어요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/04.webp",
-    width: 275,
+    imageUrl: "https://cdn.lighty.today/onBoard/5.png",
   },
 ];
 
