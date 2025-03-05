@@ -102,7 +102,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     return reset();
   }, [isClient]);
 
-  if (!isClient || !selectedGroup) return <ErrorPage />;
+  if (!isClient || selectedGroup.id == "") return <ErrorPage />;
 
   if (openList === true) {
     return (
@@ -176,7 +176,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
 
 const styles = {
   headerWrapper:
-    "z-10 fixed w-full before:h-[48px] left-0 top-0 pr-5 items-center",
+    "z-20 fixed w-full before:h-[48px] left-0 top-0 pr-5 items-center",
   headerFont: "flex-grow text-T3 text-base-white",
   divider: "flex-shrink-0 h-[1px] w-full bg-grayscale-50",
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",

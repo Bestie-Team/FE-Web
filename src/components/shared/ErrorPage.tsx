@@ -17,7 +17,7 @@ export default function ErrorPage() {
           direction="column"
           justify="center"
           align="center"
-          className="p-2 gap-4 cursor-pointer"
+          className="p-2 gap-4 cursor-pointer hover:bg-grayscale-10"
           onClick={() => router.back()}
         >
           <span className="text-T3">오류가 발생했어요.</span>
