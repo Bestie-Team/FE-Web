@@ -1,6 +1,5 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
-import { SearchFriendResponse } from "@/models/user";
 
 /** 유저 검색 */
 export async function getSearchUsers({
@@ -24,7 +23,7 @@ export async function getSearchUsers({
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
-    const data: SearchFriendResponse = await response.json();
+    const data: lighty.SearchUserResponse = await response.json();
     return data;
   } catch (error) {
     if (error instanceof Response && error.status === 400) {

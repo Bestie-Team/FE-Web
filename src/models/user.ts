@@ -18,11 +18,11 @@ export type UserInfo = Pick<
 >;
 
 type NewUser = User & { status: string };
-export declare class SearchFriendResponse {
-  readonly users: NewUser[];
-  readonly nextCursor: UserCursor | null;
-}
 
+// export declare class SearchUserResponse {
+//   users: SearchedUser[];
+//   nextCursor: UserCursor | null;
+// }
 export interface KakaoAuthResponse {
   access_token: string;
   token_type: "bearer";
