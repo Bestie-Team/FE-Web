@@ -1,5 +1,4 @@
 import { patchNotification } from "@/remote/notification";
-import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useReadNotification({
@@ -18,7 +17,7 @@ export default function useReadNotification({
     },
     onSuccess: (data: { message: string }) => {
       onSuccess();
-      lightyToast.success(data.message);
+      console.log(data);
     },
     onError: (error) => console.log(error),
   });

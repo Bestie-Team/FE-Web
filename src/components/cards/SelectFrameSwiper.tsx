@@ -31,6 +31,9 @@ export default function SelectFrameSwiper() {
     "check_pink",
     "check_purple",
     "check_blue",
+    "check_green",
+    "pink_diagonal",
+    "yellow_vertical",
   ];
 
   useEffect(() => {
@@ -124,7 +127,8 @@ const styles = {
   frameName:
     "w-fit bg-base-white text-C1 py-[12px] px-[16px] border rounded-[12px] mx-auto",
 
-  slide: "relative w-[324px] !h-[450px] my-auto overflow-hidden cursor-pointer",
+  slide:
+    "relative w-[324px] !h-[450px] my-auto overflow-hidden cursor-pointer rounded-[20px]",
   cardContainer:
     "relative px-[33px] py-[40px] flex bg-base-white rounded-[20px] justify-center items-center border border-[#AEAEAE] border-dotted w-[350px] h-[453px]",
   cardWrapper: "bg-base-white rounded-[12px] w-full h-full",

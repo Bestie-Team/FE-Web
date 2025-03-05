@@ -81,4 +81,7 @@ export const frames = [
   "https://cdn.lighty.today/frame5.jpeg",
   "https://cdn.lighty.today/frame6.jpeg",
   "https://cdn.lighty.today/frame7.jpeg",
+  "https://cdn.lighty.today/frame8.png",
+  "https://cdn.lighty.today/frame9.png",
+  "https://cdn.lighty.today/frame10.png",
 ];
