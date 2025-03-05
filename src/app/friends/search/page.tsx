@@ -6,11 +6,17 @@ import { friendSearchModalStateAtom, userSearchAtom } from "@/atoms/friends";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import useSearchUsers from "@/components/users/hooks/useSearchUsers";
-import UserListContainer from "@/components/users/UserListContainer";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+
+const UserListContainer = dynamic(
+  () => import("@/components/users/UserListContainer"),
+  { ssr: false, loading: () => <DotSpinner /> }
+);
 
 export default function SearchPage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
