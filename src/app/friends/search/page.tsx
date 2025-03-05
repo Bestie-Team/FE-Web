@@ -8,8 +8,6 @@ import useDebounce from "@/hooks/debounce";
 import useSearchUsers from "@/components/users/hooks/useSearchUsers";
 import UserListContainer from "@/components/users/UserListContainer";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import clsx from "clsx";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import Link from "next/link";
@@ -20,7 +18,6 @@ export default function SearchPage() {
   );
   const search = useRecoilValue(userSearchAtom);
   const debouncedSearch = useDebounce(search);
-  const isPast = useScrollThreshold();
 
   const {
     data: userData,
@@ -34,16 +31,11 @@ export default function SearchPage() {
   useInfiniteScroll({ isFetching, loadMore });
 
   return (
-    <div className="h-full">
-      <div
-        className={clsx(
-          "bg-grayscale-50 max-w-[430px] fixed w-full z-10",
-          isPast ? "shadow-bottom" : ""
-        )}
-      >
+    <div className="h-dvh">
+      <div className={"fixed bg-grayscale-50 max-w-[430px] w-full z-10"}>
         <FriendsPageHeader label="친구 추가" />
         <Spacing size={20} />
-        <div className="px-[20px] pb-5 bg-grayscale-50">
+        <div className="px-5 pb-5 bg-grayscale-50">
           <SearchInput
             type="users"
             className="!bg-base-white"
@@ -63,7 +55,7 @@ export default function SearchPage() {
           </span>
           <Button
             color="#0a0a0a"
-            className="rounded-[12px] py-[12px] px-[14px] text-base-white text-B3"
+            className="rounded-[12px] py-3 px-[14px] text-base-white text-B3"
           >
             <Link href="/friends/search">💌 친구 초대하기</Link>
           </Button>

@@ -21,9 +21,8 @@ export default function UserListContainer({
   setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
   if (searchedFriends) {
-    console.log(searchedFriends);
     return (
-      <div className="min-h-[calc(100dvh-142px)] pt-[142px] px-5">
+      <div className="min-h-[calc(100dvh-142px)] pt-[142px] px-5 overflow-y-scroll no-scrollbar">
         <ul>
           {searchedFriends?.map((friendItem, idx) => {
             return (

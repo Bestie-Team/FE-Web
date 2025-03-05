@@ -1,9 +1,16 @@
 "use client";
+import { Dispatch, SetStateAction } from "react";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
 
-export default function FriendsPageHeader({ label }: { label: string }) {
+export default function FriendsPageHeader({
+  label,
+  setStep,
+}: {
+  label: string;
+  setStep?: Dispatch<SetStateAction<number>>;
+}) {
   const router = useRouter();
 
   return (
@@ -11,7 +18,11 @@ export default function FriendsPageHeader({ label }: { label: string }) {
       <div
         className={styles.arrowIconContainer}
         onClick={() => {
-          router.back();
+          if (setStep) {
+            setStep(0);
+          } else {
+            router.back();
+          }
         }}
       >
         <ArrowLeftIcon />
