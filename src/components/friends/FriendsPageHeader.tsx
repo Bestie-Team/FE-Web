@@ -11,7 +11,7 @@ export default function FriendsPageHeader({
 }: {
   label: string;
   setStep?: Dispatch<SetStateAction<number>>;
-  type: "default" | "record" | "group" | "gathering" | "groupEdit";
+  type: "default" | "group" | "gathering" | "groupEdit";
 }) {
   const router = useRouter();
 
@@ -20,15 +20,14 @@ export default function FriendsPageHeader({
       <div
         className={styles.arrowIconContainer}
         onClick={() => {
-          if (setStep) {
-            if (
-              type === "groupEdit" ||
-              type === "group" ||
-              type === "gathering"
-            ) {
+          if (
+            type === "groupEdit" ||
+            type === "group" ||
+            type === "gathering"
+          ) {
+            if (setStep) {
               setStep(1);
             }
-            setStep(0);
           } else {
             router.back();
           }

@@ -39,7 +39,7 @@ export default function SearchPage() {
   return (
     <div className="h-dvh">
       <div className={"fixed bg-grayscale-50 max-w-[430px] w-full z-10"}>
-        <FriendsPageHeader label="친구 추가" />
+        <FriendsPageHeader label="친구 추가" type="default" />
         <Spacing size={20} />
         <div className="px-5 pb-5 bg-grayscale-50">
           <SearchInput

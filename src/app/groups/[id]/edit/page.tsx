@@ -33,13 +33,14 @@ export default function GroupEditPage() {
   );
 
   useEffect(() => {
-    setIsClient(true);
-
+    if (!isClient) {
+      setIsClient(true);
+    }
     if (!selectedGroup) {
-      router.replace("/groups");
+      router.replace("/social?tab=group");
       lightyToast.error("그룹 정보를 찾을 수 없습니다.");
     }
-  }, [selectedGroup, router]);
+  }, [selectedGroup, router, isClient]);
 
   const { mutate: updateGroup } = useUpdateGroup({
     groupId: groupInfo.groupId,
@@ -54,7 +55,7 @@ export default function GroupEditPage() {
 
   const handleEdit = () => {
     updateGroup();
-    router.replace("/groups");
+    router.replace("/social?tab=group");
   };
 
   if (!isClient) {

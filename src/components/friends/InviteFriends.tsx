@@ -12,7 +12,7 @@ export default function InviteFriends({
   exceptFriends,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
-  type: "default" | "record" | "group" | "gathering" | "groupEdit";
+  type: "default" | "group" | "gathering" | "groupEdit";
   exceptFriends?: lighty.User[] | null;
 }) {
   return (
