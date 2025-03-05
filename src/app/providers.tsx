@@ -41,6 +41,7 @@ export const NextProvider = ({ children }: Props) => {
             autoClose={2500}
             pauseOnFocusLoss={false}
             pauseOnHover={false}
+            transition={undefined}
           />
         </RecoilRoot>
       </QueryClientProvider>
