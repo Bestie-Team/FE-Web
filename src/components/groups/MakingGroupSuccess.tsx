@@ -37,7 +37,7 @@ export default function MakingGroupSuccess({
           <NewGroupContainer className="shadow-sm" group={group} />
           <FixedBottomButton
             label={"홈으로 이동하기"}
-            onClick={() => router.replace("/")}
+            onClick={() => router.replace("/feed")}
           />
         </Flex>
       )}

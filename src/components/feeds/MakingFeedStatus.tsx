@@ -45,7 +45,7 @@ export default function MakingFeedStatus({
   const header = useMemo(() => getHeader("/record"), []);
 
   const handleHomeClick = () => {
-    router.replace("/");
+    router.replace("/feed");
   };
 
   return (
