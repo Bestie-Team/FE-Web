@@ -8,6 +8,7 @@ import { formatToDisplay } from "@/utils/makeUTC";
 import clsx from "clsx";
 import { differenceInCalendarDays } from "date-fns";
 import { NoGatheringHome } from "./NoGathering";
+import { Lighty } from "@/constants/images";
 
 export default function GatheringSwiper({
   percent,
@@ -63,10 +64,7 @@ export default function GatheringSwiper({
               >
                 <div className="relative w-full h-[146px]">
                   <Image
-                    src={
-                      invitationImageUrl ||
-                      "https://cdn.lighty.today/lighty_square.png"
-                    }
+                    src={invitationImageUrl || Lighty}
                     alt={`invitationImage${idx + 1}`}
                     className={clsx(styles.image, "scale-110")}
                     width={164}

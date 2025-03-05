@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/Icon/PlusIcon";
 import { GroupInfoResponse } from "@/models/group";
 import * as lighty from "lighty-type";
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
+import LightyIcon from "../shared/Icon/LightyIcon";
 
 export default function FriendItem({
   friendInfo,
@@ -19,15 +19,19 @@ export default function FriendItem({
       style={{ width: "fit-content", flexShrink: 0, gap: "2px" }}
     >
       <div className="p-[6px] w-14 h-14 box-content">
-        <Image
-          alt="friendImage"
-          src={
-            friendInfo?.profileImageUrl || groupInfo?.imageUrl || DEFAULT_IMAGE
-          }
-          className="rounded-full object-cover w-14 h-14 border-[1.2px] border-grayscale-100"
-          width={56}
-          height={56}
-        />
+        {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
+          <Image
+            alt="friendImage"
+            src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
+            className="rounded-full object-cover w-14 h-14 border-[1.2px] border-grayscale-100"
+            width={56}
+            height={56}
+          />
+        ) : (
+          <div className="rounded-full w-14 h-14 border-[1.2px] flex justify-center items-center bg-grayscale-100">
+            <LightyIcon width="11" height="11" />
+          </div>
+        )}
       </div>
       <Flex direction="column" align="center">
         <span className="text-T6">

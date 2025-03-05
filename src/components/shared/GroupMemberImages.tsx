@@ -2,8 +2,7 @@ import Image from "next/image";
 import Flex from "./Flex";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
-
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
+import LightyIcon from "./Icon/LightyIcon";
 
 export default function GroupMemberImages({
   members,
@@ -36,17 +35,32 @@ export default function GroupMemberImages({
 
   return (
     <Flex>
-      {seenImages?.map((imageUrl, i) => (
-        <Image
-          key={`group${i}`}
-          style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-          src={imageUrl || DEFAULT_IMAGE}
-          width={width ? width : 28}
-          height={height ? height : 28}
-          className={clsx(styles.groupImage, imageWidthHeight)}
-          alt={`writer${i}`}
-        />
-      ))}
+      {seenImages?.map((imageUrl, i) => {
+        return (
+          <>
+            {!!imageUrl ? (
+              <Image
+                key={`group${i}`}
+                style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
+                src={imageUrl}
+                width={width ? width : 28}
+                height={height ? height : 28}
+                className={clsx(styles.groupImage, imageWidthHeight)}
+                alt={`writer${i}`}
+              />
+            ) : (
+              <div
+                className={clsx(
+                  "rounded-full border-[1px] border-base-white flex justify-center items-center bg-grayscale-100",
+                  imageWidthHeight
+                )}
+              >
+                <LightyIcon width="4" height="4" />
+              </div>
+            )}
+          </>
+        );
+      })}
       {memberImages && memberImages.length > maxLength ? (
         <div
           style={{

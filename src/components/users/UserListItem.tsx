@@ -13,7 +13,7 @@ import useDebounce from "@/hooks/debounce";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
 import { FriendRequestStatus } from "./UserListContainer";
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
+import LightyIcon from "../shared/Icon/LightyIcon";
 
 export default function UserListItem({
   userInfo,
@@ -54,13 +54,19 @@ export default function UserListItem({
       )}
       onMouseDown={onClick}
     >
-      <Image
-        alt="friendProfile"
-        src={userInfo?.profileImageUrl || DEFAULT_IMAGE}
-        width={36}
-        height={36}
-        className={styles.img}
-      />
+      {!!userInfo?.profileImageUrl ? (
+        <Image
+          alt="friendProfile"
+          src={userInfo?.profileImageUrl || ""}
+          width={36}
+          height={36}
+          className={styles.img}
+        />
+      ) : (
+        <div className="rounded-full h-9 w-9 flex justify-center items-center bg-grayscale-100">
+          <LightyIcon width="11" height="11" />
+        </div>
+      )}
       <Spacing direction="horizontal" size={8} />
       <Flex className="flex-grow gap-[2px]" direction="column">
         <span className="text-T6">{userInfo?.accountId || "회원아이디"}</span>
@@ -87,7 +93,7 @@ const styles = {
 
   li: "bg-base-white flex py-[14px] px-4 rounded-[20px] items-center cursor-pointer border",
 
-  img: "rounded-full object-cover h-[36px] w-[36px]",
+  img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
   inviteBtn:
     "text-C2 py-2 px-3 rounded-[8px] border border-grayscale-100 hover:!bg-grayscale-10",

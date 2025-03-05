@@ -4,12 +4,12 @@ import { GroupInfoResponse } from "@/models/group";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import * as lighty from "lighty-type";
+import LightyIcon from "../shared/Icon/LightyIcon";
 interface Props {
   friendInfo?: lighty.User;
   groupInfo?: GroupInfoResponse;
   onClickDelete: () => void;
 }
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function DeletableFriendItem({
   friendInfo,
@@ -20,17 +20,19 @@ export default function DeletableFriendItem({
     <Flex direction="column" className={style.container}>
       <div className="relative p-[6px]">
         <div className={style.circleWrapper}>
-          <Image
-            alt="friendProfile"
-            src={
-              friendInfo?.profileImageUrl ||
-              groupInfo?.imageUrl ||
-              DEFAULT_IMAGE
-            }
-            className={style.image}
-            width={56}
-            height={56}
-          />
+          {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
+            <Image
+              alt="friendProfile"
+              src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
+              className={style.image}
+              width={56}
+              height={56}
+            />
+          ) : (
+            <div className="rounded-full w-14 h-14 flex justify-center items-center bg-grayscale-100">
+              <LightyIcon width="11" height="11" />
+            </div>
+          )}
           <div className={style.checkContainer}>
             <CheckIcon width="28" height="28" />
           </div>
@@ -62,7 +64,7 @@ const style = {
 
   circleWrapper:
     "relative w-14 h-14 rounded-full border-dashed border-[2px] overflow-hidden",
-  image: "rounded-full object-cover w-[56px] h-[56px]",
+  image: "rounded-full object-cover w-14 h-14",
   checkContainer:
     "absolute inset-0 flex items-center justify-center rounded-full bg-[#00000066] p-[2px]",
   btnContainer:

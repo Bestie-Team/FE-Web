@@ -1,11 +1,9 @@
 import Flex from "../shared/Flex";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import Spacing from "../shared/Spacing";
-import Image from "next/image";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
 export default function ChoosingKindOfMemory({
   add,
@@ -71,13 +69,9 @@ const Item = ({
         clicked && "border-[1px] border-grayscale-900"
       )}
     >
-      <Image
-        src={DEFAULT_IMAGE}
-        width={40}
-        height={40}
-        className="w-10 h-10 object-cover"
-        alt="lighty_square"
-      />
+      <div className="rounded-lg flex justify-center items-center w-10 h-10 bg-grayscale-100">
+        <LightyIcon width="11" height="11" />
+      </div>
       <Flex direction="column" className="gap-[6px]">
         <span>{title}</span>
         <span className="text-C2 text-grayscale-400">{subTitle}</span>

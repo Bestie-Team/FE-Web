@@ -5,6 +5,7 @@ import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
+import LightyIcon from "../shared/Icon/LightyIcon";
 
 export default function GroupContainer({
   group,
@@ -26,14 +27,20 @@ export default function GroupContainer({
     >
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">
-          <Image
-            alt="leaderImg"
-            loading="eager"
-            width={48}
-            height={48}
-            className={styles.leaderImage}
-            src={groupImageUrl || "https://cdn.lighty.today/lighty_square.png"}
-          />
+          {!!groupImageUrl ? (
+            <Image
+              alt="leaderImg"
+              loading="eager"
+              width={48}
+              height={48}
+              className={styles.leaderImage}
+              src={groupImageUrl || ""}
+            />
+          ) : (
+            <div className="rounded-full w-12 h-12 flex justify-center items-center bg-grayscale-100">
+              <LightyIcon width="11" height="11" />
+            </div>
+          )}
           <Flex direction="column" className="gap-1">
             <span className="text-T5">{name}</span>
             <span className={styles.font}>{description}</span>

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
+import { Lighty } from "@/constants/images";
 
 export default function GroupBannerContainer({
   imageUrl,
@@ -14,7 +14,7 @@ export default function GroupBannerContainer({
       <Image
         priority
         alt="groupBannerImage"
-        src={imageUrl || DEFAULT_IMAGE}
+        src={imageUrl || Lighty}
         width={600}
         height={316}
         className="h-[316px] w-[600px] object-cover"

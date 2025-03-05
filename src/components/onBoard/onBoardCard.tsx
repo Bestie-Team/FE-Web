@@ -18,7 +18,7 @@ export default function OnBoardCardSlider() {
   const router = useRouter();
   return (
     <div
-      className="absolute inset-0 h-dvh min-h-[400px] bg-grayscale-50"
+      className="absolute inset-0 h-dvh min-h-[400px]"
       style={{
         zIndex: 999,
       }}

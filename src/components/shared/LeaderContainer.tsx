@@ -2,6 +2,7 @@ import Image from "next/image";
 import Flex from "./Flex";
 import Button from "./Button/Button";
 import * as lighty from "lighty-type";
+import LightyIcon from "./Icon/LightyIcon";
 
 export default function LeaderContainer({ leader }: { leader?: lighty.User }) {
   const { name, accountId, profileImageUrl } = leader!;
@@ -12,13 +13,19 @@ export default function LeaderContainer({ leader }: { leader?: lighty.User }) {
       className={styles.leaderInfoContainer}
     >
       <Flex align="center" className="gap-2">
-        <Image
-          alt="leader"
-          width={36}
-          height={36}
-          src={profileImageUrl || "https://cdn.lighty.today/lighty_square.png"}
-          className={styles.leaderImage}
-        />
+        {!!profileImageUrl ? (
+          <Image
+            alt="leader"
+            width={36}
+            height={36}
+            src={profileImageUrl}
+            className={styles.leaderImage}
+          />
+        ) : (
+          <div className="rounded-full border-[1.27px] border-base-white h-9 w-9 flex justify-center items-center bg-grayscale-100">
+            <LightyIcon width="11" height="11" />
+          </div>
+        )}
         <span>{accountId}</span>
         <span className="text-grayscale-500">{name}</span>
       </Flex>

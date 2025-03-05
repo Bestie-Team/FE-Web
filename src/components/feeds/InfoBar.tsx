@@ -7,7 +7,7 @@ import GroupMemberImages from "../shared/GroupMemberImages";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { Feed } from "@/models/feed";
 import { usePathname } from "next/navigation";
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
+import LightyIcon from "../shared/Icon/LightyIcon";
 
 export default function InfoBar({
   memberImageUrls,
@@ -41,13 +41,19 @@ export default function InfoBar({
 function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
     <Flex className="gap-[6px]">
-      <Image
-        src={writer.profileImageUrl || DEFAULT_IMAGE}
-        width={36}
-        height={36}
-        className="w-9 h-9 object-cover rounded-full overflow-hidden"
-        alt="writer"
-      />
+      {!!writer.profileImageUrl ? (
+        <Image
+          src={writer.profileImageUrl}
+          width={36}
+          height={36}
+          className="w-9 h-9 object-cover rounded-full overflow-hidden"
+          alt="writer"
+        />
+      ) : (
+        <div className="flex justify-center items-center w-9 h-9 rounded-full bg-grayscale-100">
+          <LightyIcon width="4" height="4" />
+        </div>
+      )}
       <Flex style={{ width: "full", gap: "2px" }} direction="column">
         <div className="text-T5 flex-none">{writer.name}</div>
         <div className="text-C2 text-grayscale-400">{writer.accountId}</div>

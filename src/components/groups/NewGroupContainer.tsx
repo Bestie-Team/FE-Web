@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
 import { CreateGroupRequest } from "@/models/group";
-const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
+import LightyIcon from "../shared/Icon/LightyIcon";
 
 export default function NewGroupContainer({
   group,
@@ -31,13 +31,19 @@ export default function NewGroupContainer({
     >
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">
-          <Image
-            alt="leaderImg"
-            width={48}
-            height={48}
-            className={styles.leaderImage}
-            src={groupImageUrl || DEFAULT_IMAGE}
-          />
+          {!!groupImageUrl ? (
+            <Image
+              alt="leaderImg"
+              width={48}
+              height={48}
+              className={styles.leaderImage}
+              src={groupImageUrl || ""}
+            />
+          ) : (
+            <div className="rounded-full w-12 h-12 flex justify-center items-center bg-grayscale-100">
+              <LightyIcon width="11" height="11" />
+            </div>
+          )}
           <Flex direction="column" className="gap-1">
             <span className="text-T5">{name}</span>
             <span className={styles.font}>{description}</span>

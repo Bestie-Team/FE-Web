@@ -13,6 +13,7 @@ import { useSetRecoilState } from "recoil";
 import { selectedFriendAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
 import { useAuth } from "../shared/providers/AuthProvider";
+import LightyIcon from "../shared/Icon/LightyIcon";
 
 export default function FriendListItem({
   senderId,
@@ -84,16 +85,19 @@ export default function FriendListItem({
       onMouseDown={onClick}
     >
       <Flex>
-        <Image
-          alt="friendProfile"
-          src={
-            friendInfo?.profileImageUrl ||
-            "https://cdn.lighty.today/lighty_square.png"
-          }
-          width={36}
-          height={36}
-          className={styles.img}
-        />
+        {!!friendInfo?.profileImageUrl ? (
+          <Image
+            alt="friendProfile"
+            src={friendInfo?.profileImageUrl || ""}
+            width={36}
+            height={36}
+            className={styles.img}
+          />
+        ) : (
+          <div className="rounded-full w-9 h-9 flex justify-center items-center bg-grayscale-100">
+            <LightyIcon width="11" height="11" />
+          </div>
+        )}
         <Spacing direction="horizontal" size={8} />
         <Flex className="w-full" direction="column">
           <span className="text-T6">{friendInfo?.accountId || "lighty"}</span>
