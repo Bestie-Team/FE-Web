@@ -1,29 +1,34 @@
 "use client";
-import GatheringMembersSlider from "@/components/gathering/GatheringMembersContainer";
-import GroupBannerContainer from "@/components/groups/GroupBannerContainer";
-import Flex from "@/components/shared/Flex";
-import UserIcon from "@/components/shared/Icon/UserIcon";
-import Spacing from "@/components/shared/Spacing";
-import LightyInfoContainer from "@/components/shared/LightyInfoContainer";
-import PencilIcon from "@/components/shared/Icon/PencilIcon";
-import GroupInfoContainer from "@/components/groups/GroupInfoContainer";
+
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { Suspense, useEffect, useState } from "react";
-import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
-import { selectedFriendsAtom } from "@/atoms/friends";
+import { useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
 import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import LeaderContainer from "@/components/shared/LeaderContainer";
 import { User } from "lighty-type";
 import { selectedGroupDetailAtom } from "@/atoms/group";
 import ErrorPage from "@/components/shared/ErrorPage";
+import Flex from "@/components/shared/Flex";
+import GroupOptions from "@/components/groups/GroupOptions";
+import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import GroupDetailContainer from "@/components/groups/GroupDetailContainer";
+import dynamic from "next/dynamic";
+import { selectedFriendsAtom } from "@/atoms/friends";
+
+const SelectFriendsContainer = dynamic(
+  () => import("@/components/friends/SelectFriendsContainer"),
+  {
+    ssr: false,
+    loading: () => <DotSpinner />,
+  }
+);
 
 interface GroupDetailPageProps {
   params: {
@@ -42,6 +47,7 @@ export type GroupEditProps = {
 export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { userInfo } = useAuth();
   const [isClient, setIsClient] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] =
     useRecoilState(groupDeleteModalAtom);
@@ -96,24 +102,18 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     return reset();
   }, [isClient]);
 
-  if (!isClient) return <ErrorPage />;
-
-  if (!selectedGroup) {
-    return <div>그룹을 찾을 수 없습니다.</div>;
-  }
+  if (!isClient || !selectedGroup) return <ErrorPage />;
 
   if (openList === true) {
     return (
-      <Suspense fallback={<DotSpinner />}>
-        <SelectFriendsContainer
-          type="group"
-          paddingTop="20px"
-          action={() => {
-            setOpenList(false);
-            addMember();
-          }}
-        />
-      </Suspense>
+      <SelectFriendsContainer
+        type="group"
+        paddingTop="20px"
+        action={() => {
+          setOpenList(false);
+          addMember();
+        }}
+      />
     );
   }
   const { description, members, owner, groupImageUrl } = selectedGroup;
@@ -125,38 +125,31 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     groupImageUrl: selectedGroup.groupImageUrl,
     members: selectedGroup.members,
   };
+  const { accountId } = owner;
+  const isOwner = accountId === userInfo?.accountId;
 
   return (
     <Flex direction="column" className="w-full min-h-dvh bg-base-white">
-      <GroupBannerContainer
-        groupEdit={groupEdit}
-        imageUrl={groupImageUrl}
-        owner={owner}
+      <Flex align="center" className={styles.headerWrapper}>
+        <div
+          className="cursor-pointer pl-[17px] pr-[3px] mr-[6px]"
+          onClick={() => {
+            router.back();
+          }}
+        >
+          <ArrowLeftIcon color="white" />
+        </div>
+        <span className={styles.headerFont}>그룹 상세</span>
+        <GroupOptions isOwner={isOwner} group={groupEdit} />
+      </Flex>
+      <GroupDetailContainer
+        groupImageUrl={groupImageUrl}
         setIsLoaded={setIsLoaded}
-      />
-      {!isLoaded && <DotSpinner />}
-      <GroupInfoContainer group={selectedGroup} />
-      <div className={styles.dividerWrapper}>
-        <div className={styles.divider} />
-      </div>
-      <LeaderContainer leader={owner} />
-      <Spacing size={10} color="#F4F4F4" />
-      <LightyInfoContainer
-        icon={<PencilIcon width="20" height="20" color="#0A0A0A" />}
-        title={<span className={styles.title}>그룹 소개</span>}
-        content={
-          <Flex className={styles.contentWrapper}>
-            <span>{description}</span>
-          </Flex>
-        }
-      />
-      <Spacing size={10} color="#F4F4F4" />
-      <LightyInfoContainer
-        icon={<UserIcon width="20" height="20" color="#0A0A0A" />}
-        title={
-          <span className={styles.title}>{`약속 멤버 ${members.length}`}</span>
-        }
-        content={<GatheringMembersSlider members={members} />}
+        isLoaded={isLoaded}
+        selectedGroup={selectedGroup}
+        owner={owner}
+        description={description}
+        members={members}
       />
       {deleteModalOpen && (
         <Modal
@@ -182,6 +175,9 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
 }
 
 const styles = {
+  headerWrapper:
+    "z-10 fixed w-full before:h-[48px] left-0 top-0 pr-5 items-center",
+  headerFont: "flex-grow text-T3 text-base-white",
   divider: "flex-shrink-0 h-[1px] w-full bg-grayscale-50",
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",
   title: "font-[700] text-[16px] leading-[20.8px] flex-grow",

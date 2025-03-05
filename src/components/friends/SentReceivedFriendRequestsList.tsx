@@ -30,12 +30,12 @@ export default function SentReceivedFriendRequestsList() {
     requestId: request.id,
   }));
 
-  if (isFetching || isFetching_s) return <DotSpinner />;
   return (
     <Flex
       direction="column"
       className="bg-grayscale-50 pt-[68px] px-5 gap-8 h-dvh"
     >
+      {(isFetching || isFetching_s) && <DotSpinner />}
       {receivedRequests && receivedRequests.length > 0 && (
         <Flex direction="column">
           <span className="text-T5">받은 요청</span>

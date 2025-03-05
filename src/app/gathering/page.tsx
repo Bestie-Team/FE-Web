@@ -20,11 +20,13 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const GatheringPageSwiper = dynamic(
   () => import("../../components/gathering/GatheringPageSwiper"),
   {
     ssr: false,
+    loading: () => <DotSpinner />,
   }
 );
 
