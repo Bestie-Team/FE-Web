@@ -66,7 +66,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
       queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
     ]);
     lightyToast.success("그룹 나가기/삭제 성공");
-    router.replace("/groups");
+    router.replace("/social");
   };
 
   const addMemberSuccessHandler = async (data: { message: string }) => {
