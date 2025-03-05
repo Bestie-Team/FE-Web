@@ -1,13 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
-import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
-import FullPageLoader from "../shared/FullPageLoader";
 import getHeader from "@/utils/getHeader";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import ErrorPage from "../shared/ErrorPage";
 
 const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
   1: dynamic(() => import("./ChoosingKindOfMemory"), {
@@ -38,15 +37,16 @@ export default function Record() {
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
-  const header = getHeader("/record");
-  const { data: gathering_noFeed } = useGatheringNoFeeds({ limit: 30 });
+  const header = useMemo(() => getHeader("/record"), []);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  if (!isClient || !gathering_noFeed || step === 0) {
-    return <FullPageLoader height="100dvh" />;
+  if (!isClient) {
+    return <ErrorPage />;
+  } else if (step === 0) {
+    return <DotSpinner />;
   }
 
   // 동적 컴포넌트 렌더링
@@ -61,7 +61,6 @@ export default function Record() {
         setStep={setStep}
         onNext={() => setStep((prev) => prev + 1)}
         debouncedSearch={debouncedSearch}
-        gathering={gathering_noFeed}
       />
     </div>
   );

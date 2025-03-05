@@ -6,23 +6,28 @@ import Spacing from "../shared/Spacing";
 import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
-import { Gathering } from "@/models/gathering";
 import { NoGatheringToRecord } from "../gathering/NoGathering";
+import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function ChoosingGatheringToRecord({
-  gathering,
   onNext,
 }: {
-  gathering?: Gathering[];
   onNext: (gatheringId: string) => void;
 }) {
+  const { data: gathering_noFeed, isFetching } = useGatheringNoFeeds({
+    limit: 30,
+  });
+
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
 
   const handleImageClick = (gatheringId: string) => {
     setSelectedGatheringId(gatheringId);
   };
-
+  if (isFetching) {
+    return <DotSpinner />;
+  }
   return (
     <>
       <Flex
@@ -41,14 +46,14 @@ export default function ChoosingGatheringToRecord({
         </span>
       </Flex>
       <Spacing size={40} />
-      {!gathering || gathering.length < 1 ? (
+      {!gathering_noFeed || gathering_noFeed.length < 1 ? (
         <Flex style={{ paddingLeft: "24px", paddingRight: "24px" }}>
           <NoGatheringToRecord />
         </Flex>
       ) : (
         <>
           <BigClickableGatheringSwiper
-            gathering={gathering}
+            gathering={gathering_noFeed}
             onImageClick={handleImageClick}
             selectedGatheringId={selectedGatheringId}
           />
