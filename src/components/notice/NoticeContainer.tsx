@@ -29,25 +29,21 @@ export default function NoticeContainer() {
       ) : (
         <>
           <Flex direction="column" className="px-5 gap-3">
+            <span className="text-T4 mb-1">오늘의 알림</span>
             {today.map((notification) => (
-              <>
-                <span className="text-T4">오늘의 알림</span>
-                <ReportNoticeItem
-                  key={notification.id}
-                  notification={notification}
-                />
-              </>
+              <ReportNoticeItem
+                key={notification.id}
+                notification={notification}
+              />
             ))}
           </Flex>
           <Flex direction="column" className="px-5 gap-3">
+            <span className="text-T4 mb-1">이전 알림</span>
             {passed.map((notification) => (
-              <>
-                <span className="text-T4">이전 알림</span>
-                <ReportNoticeItem
-                  key={notification.id}
-                  notification={notification}
-                />
-              </>
+              <ReportNoticeItem
+                key={notification.id}
+                notification={notification}
+              />
             ))}
           </Flex>
         </>

@@ -300,6 +300,10 @@ export default function FeedPage() {
     }
   }, [selectedTab, swiperRef]);
 
+  const mailCount = isNewNotification.filter(
+    (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
+  );
+
   const renderSwipers = useMemo(() => {
     return (
       <div className="h-dvh">
@@ -406,7 +410,7 @@ export default function FeedPage() {
             height="24"
             color="#0A0A0A"
           />
-          {isNewNotification.length >= 1 && (
+          {mailCount.length >= 1 && (
             <DotWithNumberIcon count={isNewNotification.length} />
           )}
         </div>

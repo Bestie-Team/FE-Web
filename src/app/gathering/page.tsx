@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { GatheringInWhich } from "@/models/gathering";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
@@ -11,18 +13,22 @@ import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottom
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import Flex from "@/components/shared/Flex";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
-import GatheringPageSwiper from "@/components/gathering/GatheringPageSwiper";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import Schedule from "@/components/schedule/Schedule";
+import NoGathering from "@/components/gathering/NoGathering";
+import Gathering from "@/components/gathering/Gathering";
+import Spacing from "@/components/shared/Spacing";
 
 export default function MyGatheringPage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef_m = useRef<HTMLDivElement>(null);
   const isPast = useScrollThreshold();
   const queryClient = useQueryClient();
   const [isClient, setIsClient] = useState(false);
@@ -47,14 +53,16 @@ export default function MyGatheringPage() {
     loadMore: loadMore_e,
   } = useGatheringEnded({ limit: 8 });
 
-  useInfiniteScroll({
-    isFetching: isFetching_e,
-    loadMore: loadMore_e,
-  });
-
-  useInfiniteScroll({
+  useInfiniteScrollByRef({
     isFetching,
     loadMore,
+    targetRef: containerRef_m,
+  });
+
+  useInfiniteScrollByRef({
+    isFetching: isFetching_e,
+    loadMore: loadMore_e,
+    targetRef: containerRef,
   });
 
   useEffect(() => {
@@ -64,10 +72,6 @@ export default function MyGatheringPage() {
   useEffect(() => {
     setIsClient(true);
   }, [isClient]);
-
-  if (!isClient) {
-    return <FullPageLoader />;
-  }
 
   const handleRefresh = async () => {
     try {
@@ -87,6 +91,58 @@ export default function MyGatheringPage() {
       return false;
     }
   };
+  const GatheringPageSwiper = useMemo(() => {
+    return (
+      <Swiper
+        initialSlide={Number(selectedTab) - 1}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
+        slidesPerView={1}
+        spaceBetween={2}
+        direction="horizontal"
+        className="!h-dvh w-full overflow-y-scroll no-scrollbar"
+      >
+        <SwiperSlide>
+          <div
+            ref={containerRef_m}
+            className="h-full overflow-y-auto no-scrollbar pt-[107px] pb-32"
+          >
+            <Schedule
+              expectingGatherings={myGatherings}
+              isFetching={isFetching}
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          {(ended && ended.length < 1) || !ended ? (
+            <NoGathering type="ENDED" />
+          ) : (
+            <div
+              ref={containerRef}
+              className="h-full overflow-y-auto no-scrollbar pt-[107px] pb-32"
+            >
+              <Spacing size={98} />
+              <Gathering
+                ended
+                message
+                isFetching={isFetching_e}
+                where={GatheringInWhich.GATHERING}
+                gatherings={ended}
+              />
+            </div>
+          )}
+        </SwiperSlide>
+      </Swiper>
+    );
+  }, [
+    myGatherings,
+    ended,
+    selectedTab,
+    swiperRef,
+    handleSlideChange,
+    isFetching,
+    isFetching_e,
+  ]);
 
   return (
     <>
@@ -95,6 +151,7 @@ export default function MyGatheringPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
+      {(!isClient || !myGatherings || !ended) && <DotSpinner />}
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
@@ -103,15 +160,7 @@ export default function MyGatheringPage() {
           </div>
         }
       >
-        <GatheringPageSwiper
-          isFetching={isFetching}
-          isFetching_e={isFetching_e}
-          expectingGatherings={myGatherings}
-          endedGatherings={ended}
-          selectedTab={selectedTab}
-          swiperRef={swiperRef}
-          onSlideChange={(index) => handleSlideChange(index)}
-        />
+        {GatheringPageSwiper}
       </PullToRefresh>
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </>

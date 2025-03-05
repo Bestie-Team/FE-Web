@@ -10,25 +10,29 @@ export type NotificationTypes =
   | "FRIEND_REQUEST_ACCEPTED"
   | "FEED_COMMENT";
 
-// const NotificationLabel: Record<NotificationTypes, string> = {
-//   GATHERING_INVITATION_RECEIVED: "약속 초대장",
-//   GATHERING_INVITATION_ACCEPTED: "약속 수락",
-//   GROUP_INVITATION: "그룹 초대",
-//   FRIEND_REQUEST: "친구 요청",
-//   FRIEND_REQUEST_ACCEPTED: "친구 요청 수락",
-//   FEED_COMMENT: "댓글 수락",
-// };
+const NotificationImage: Record<NotificationTypes, string> = {
+  GATHERING_INVITATION_RECEIVED: "💌",
+  GATHERING_INVITATION_ACCEPTED: "💌",
+  GROUP_INVITATION: "👀",
+  FRIEND_REQUEST: "👀",
+  FRIEND_REQUEST_ACCEPTED: "🙌🏻",
+  FEED_COMMENT: "📝",
+};
 
 export default function ReportNoticeItem({
   notification,
 }: {
   notification: Notification;
 }) {
-  const { title, message, createdAt } = notification;
+  const { title, message, createdAt, type } = notification;
   const date = format(new Date(createdAt), "yy.MM.dd.");
 
-  console.log(new Date(createdAt));
   return (
-    <NoticeItem icon="⚠" title={`${title}`} date={date} description={message} />
+    <NoticeItem
+      icon={NotificationImage[type]}
+      title={`${title}`}
+      date={date}
+      description={message}
+    />
   );
 }
