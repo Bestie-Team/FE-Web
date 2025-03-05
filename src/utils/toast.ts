@@ -26,7 +26,6 @@ const defaultToastOption: ToastOptions = {
   hideProgressBar: true,
   pauseOnHover: false,
   closeButton: false,
-  transition: undefined,
 };
 
 export const InvitationToast = {

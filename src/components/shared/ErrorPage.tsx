@@ -12,7 +12,7 @@ export default function ErrorPage() {
         direction="column"
         justify="center"
         align="center"
-        className="hover:bg-grayscale-200"
+        className="hover:bg-grayscale-300"
         onClick={() => router.back()}
       >
         <div className="p-2">

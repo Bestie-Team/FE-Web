@@ -19,7 +19,13 @@ export default function GlobalError({
     <html>
       <body>
         <Flex className="h-dvh" justify="center" align="center">
-          <Flex direction="column" justify="center" align="center">
+          <Flex
+            direction="column"
+            justify="center"
+            align="center"
+            className="bg-grayscale-300"
+            onClick={() => reset()}
+          >
             <div className="p-2">
               <AlarmIcon color="#AEAEAE" />
             </div>
@@ -29,7 +35,6 @@ export default function GlobalError({
               justify="center"
               align="center"
               className="p-2 gap-4 cursor-pointer"
-              onClick={() => reset()}
             >
               <span className="text-T3">오류가 발생했어요.</span>
               <span className="text-grayscale-600 text-B2">

@@ -19,7 +19,7 @@ import {
   AuthProvider,
   useAuth,
 } from "@/components/shared/providers/AuthProvider";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
@@ -41,7 +41,7 @@ export const NextProvider = ({ children }: Props) => {
             autoClose={2500}
             pauseOnFocusLoss={false}
             pauseOnHover={false}
-            transition={undefined}
+            transition={Zoom}
           />
         </RecoilRoot>
       </QueryClientProvider>
