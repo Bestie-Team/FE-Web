@@ -61,6 +61,7 @@ export default function OnBoardCardSlider() {
                 src={imageUrl}
                 width={390}
                 height={460}
+                loading="eager"
                 className={"object-contain h-5/6"}
               />
             </Flex>

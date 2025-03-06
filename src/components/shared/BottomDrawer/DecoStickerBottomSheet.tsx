@@ -71,7 +71,7 @@ export default function DecoStickerBottomSheet({
                   >
                     <Image
                       loading={idx < 2 ? "eager" : "lazy"}
-                      className={"cursor-pointer w-16 h-16"}
+                      className={"cursor-pointer w-16 h-16 object-cover"}
                       onClick={() =>
                         handleSticker(
                           `https://cdn.lighty.today/${selectedStickers.path}/${sticker}`
@@ -111,5 +111,5 @@ export default function DecoStickerBottomSheet({
 const styles = {
   stickerKind: "py-2 px-3 text-B2 cursor-pointer",
   wrapper: "relative grid grid-cols-4 grid-rows-3 gap-5 w-fit",
-  box: "bg-grayscale-50 rounded-[12px] w-16 h-16",
+  box: "bg-grayscale-50 rounded-[12px] w-16 h-16 p-3",
 };
