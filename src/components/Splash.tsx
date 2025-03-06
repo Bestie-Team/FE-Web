@@ -113,7 +113,7 @@ export default function Splash() {
             title="SNS로 간편하게 시작하기"
             color="#686868"
             closeButton={false}
-            className="py-2 !px-3 rounded-[8px]"
+            className="py-2 !px-3 rounded-lg"
           />
           {oAuthButtons.map(({ color, provider, label, icon }, idx) => (
             <Button

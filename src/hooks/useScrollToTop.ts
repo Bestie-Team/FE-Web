@@ -10,11 +10,3 @@ export default function useScrollToTop() {
     }
   }, [pathname]);
 }
-
-export function useScrollToTopByTab({ tab = "1" }: { tab: "1" | "2" }) {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [tab]);
-}
