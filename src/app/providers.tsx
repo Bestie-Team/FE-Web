@@ -78,7 +78,6 @@ const NextLayout = ({ children }: Props) => {
   useEffect(() => {
     const isPublicPath = isPathIncluded(pathname, PUBLIC_PATHS);
     if (!isAuthenticated && !isPublicPath) {
-      console.log(pathname, "here");
       router.replace("/");
     }
   }, [isAuthenticated, pathname, router]);

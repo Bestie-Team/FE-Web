@@ -44,7 +44,7 @@ export async function postLogin({
       accountId: data.accountId,
       profileImageUrl: data.profileImageUrl,
     });
-
+    window.location.href = "/feed";
     return data;
   }
 
