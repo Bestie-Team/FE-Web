@@ -14,15 +14,13 @@ export default function ClickableGatheringSwiperForDeco({
   selectedFeedId,
 }: {
   feed: Feed[];
-  onImageClick?: (
-    feedInfo: {
-      id: string;
-      name: string;
-      content: string;
-      imageUrl: string;
-      date: string;
-    } | null
-  ) => void;
+  onImageClick?: (feedInfo: {
+    id: string;
+    name: string;
+    content: string;
+    imageUrl: string;
+    date: string;
+  }) => void;
   selectedFeedId: string | null;
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,7 +39,13 @@ export default function ClickableGatheringSwiperForDeco({
   }) => {
     if (onImageClick) {
       if (selectedFeedId === id) {
-        onImageClick(null);
+        onImageClick({
+          id: "",
+          name: "",
+          content: "",
+          imageUrl: "",
+          date: "",
+        });
         return;
       }
       onImageClick({

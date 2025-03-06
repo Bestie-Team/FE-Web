@@ -111,5 +111,5 @@ export default function DecoStickerBottomSheet({
 const styles = {
   stickerKind: "py-2 px-3 text-B2 cursor-pointer",
   wrapper: "relative grid grid-cols-4 grid-rows-3 gap-5 w-fit",
-  box: "bg-grayscale-50 rounded-[12px] w-16 h-16 p-3",
+  box: "bg-grayscale-50 rounded-[12px] w-16 h-16",
 };

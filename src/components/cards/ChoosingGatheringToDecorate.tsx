@@ -30,15 +30,13 @@ export default function ChoosingGatheringToDecorate({
     limit: 20,
   });
 
-  const handleImageClick = (
-    feedInfo: {
-      id: string;
-      name: string;
-      content: string;
-      imageUrl: string;
-      date: string;
-    } | null
-  ) => {
+  const handleImageClick = (feedInfo: {
+    id: string;
+    name: string;
+    content: string;
+    imageUrl: string;
+    date: string;
+  }) => {
     setSelectedFeed(
       feedInfo as Partial<Feed> & {
         imageUrl: string;
