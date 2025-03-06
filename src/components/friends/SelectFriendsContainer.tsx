@@ -38,7 +38,7 @@ export default function SelectFriendsContainer({
   const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
     friendsToShareAtom
   );
-  console.log(exceptFriends);
+
   const { data: friends } = useFriends({ userId: userInfo?.accountId || "" });
 
   const toggleItemClick = (idx: number) => {
@@ -96,6 +96,8 @@ export default function SelectFriendsContainer({
     } else if (type === "record") {
       handleSubmitSelectionToShare();
     } else handleSubmitSelection();
+
+    console.log(exceptFriends);
   };
 
   const getLabel = () => {

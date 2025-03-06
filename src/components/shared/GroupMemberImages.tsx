@@ -3,6 +3,7 @@ import Flex from "./Flex";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
+import React from "react";
 
 export default function GroupMemberImages({
   members,
@@ -37,7 +38,7 @@ export default function GroupMemberImages({
     <Flex>
       {seenImages?.map((imageUrl, i) => {
         return (
-          <>
+          <React.Fragment key={i}>
             {!!imageUrl ? (
               <Image
                 key={`group${i}`}
@@ -58,7 +59,7 @@ export default function GroupMemberImages({
                 <LightyIcon width="4" height="4" />
               </div>
             )}
-          </>
+          </React.Fragment>
         );
       })}
       {memberImages && memberImages.length > maxLength ? (

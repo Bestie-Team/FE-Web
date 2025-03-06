@@ -22,6 +22,5 @@ export default function useNotification() {
   }, [fetchNextPage, hasNextPage, isFetching]);
 
   const groups = data?.pages.map(({ notifications }) => notifications).flat();
-  console.log(data);
   return { data: groups, loadMore, isFetching, hasNextPage };
 }
