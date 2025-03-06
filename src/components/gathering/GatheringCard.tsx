@@ -49,7 +49,7 @@ export default function GatheringCard({
     <div className="relative">
       <div
         className={clsx(styles.gatheringWrapper, "group")}
-        onClick={(e) => {
+        onMouseDown={(e) => {
           e.stopPropagation();
           router.push(`/gathering/${gathering.id}`);
         }}

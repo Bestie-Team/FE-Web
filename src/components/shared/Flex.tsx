@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, TouchEvent } from "react";
 
 interface FlexProps {
   id?: string;
@@ -14,6 +14,7 @@ interface FlexProps {
   style?: React.CSSProperties;
   onClick?: () => void;
   onMouseDown?: (e: MouseEvent<HTMLDivElement>) => void;
+  onTouchStart?: (e: TouchEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
   className?: string;
   ref?: React.LegacyRef<HTMLDivElement>;
@@ -29,6 +30,7 @@ const Flex: React.FC<FlexProps> = ({
   children,
   onClick,
   onMouseDown,
+  onTouchStart,
   ref,
 }) => {
   const flexStyle: React.CSSProperties = {
@@ -45,6 +47,7 @@ const Flex: React.FC<FlexProps> = ({
       ref={ref}
       onClick={onClick}
       onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
       style={flexStyle}
       className={className}
     >

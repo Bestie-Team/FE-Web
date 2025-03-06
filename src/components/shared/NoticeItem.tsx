@@ -1,12 +1,15 @@
+import { NotificationTypes } from "lighty-type";
 import Flex from "./Flex";
 import ArrowRightIcon from "./Icon/ArrowRightIcon";
 import Spacing from "./Spacing";
+import clsx from "clsx";
 
 interface NoticeProps {
   icon: string;
   title: string;
   date: string;
   description: string;
+  type: NotificationTypes;
   onClick: () => void;
 }
 
@@ -16,9 +19,22 @@ export default function NoticeItem({
   title,
   date,
   description,
+  type,
 }: NoticeProps) {
+  const clickable = [
+    "FRIEND_REQUEST",
+    "GATHERING_INVITATION_RECEIVED",
+    "GROUP_INVITATION",
+  ].includes(type);
+
   return (
-    <Flex className="p-4 rounded-2xl bg-base-white" onMouseDown={onClick}>
+    <Flex
+      className={clsx(
+        "p-4 rounded-2xl bg-base-white",
+        clickable && "cursor-pointer"
+      )}
+      onMouseDown={onClick}
+    >
       <Flex
         align="center"
         justify="center"
@@ -36,9 +52,11 @@ export default function NoticeItem({
         <span className="text-B4 text-grayscale-500">{description}</span>
       </Flex>
       <Spacing size={8} direction="horizontal" />
-      <div className="self-center">
-        <ArrowRightIcon width="24" height="24" />
-      </div>
+      {clickable && (
+        <div className="self-center">
+          <ArrowRightIcon width="24" height="24" />
+        </div>
+      )}
     </Flex>
   );
 }
