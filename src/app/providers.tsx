@@ -78,9 +78,8 @@ const NextLayout = ({ children }: Props) => {
   useEffect(() => {
     const isPublicPath = isPathIncluded(pathname, PUBLIC_PATHS);
     if (!isAuthenticated && !isPublicPath) {
-      if (!pathname.includes("/auth/kakao/login")) {
-        router.replace("/");
-      }
+      console.log(pathname, "here");
+      router.replace("/");
     }
   }, [isAuthenticated, pathname, router]);
 
