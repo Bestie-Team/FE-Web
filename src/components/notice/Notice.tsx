@@ -21,8 +21,8 @@ export default function Notice() {
   useEffect(() => {
     if (!isClient) {
       setIsClient(true);
+      read();
     }
-    read();
   }, [isClient]);
 
   if (!isClient) {

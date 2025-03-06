@@ -3,9 +3,12 @@ import Flex from "../shared/Flex";
 import useNotification from "./hooks/useNotification";
 import ReportNoticeItem from "./ReportNoticeItem";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
+import { useRef } from "react";
 
 export default function NoticeContainer() {
-  const { data: notifications = [], isFetching } = useNotification();
+  const { data: notifications = [], isFetching, loadMore } = useNotification();
+  const containerRef = useRef<HTMLDivElement>(null);
   const today: Notification[] = [];
   const passed: Notification[] = [];
 
@@ -19,10 +22,12 @@ export default function NoticeContainer() {
     }
   });
 
+  useInfiniteScrollByRef({ isFetching, loadMore, targetRef: containerRef });
+
   return (
-    <Flex
-      direction="column"
-      className="h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px]"
+    <div
+      ref={containerRef}
+      className="flex flex-col h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px]"
     >
       {isFetching ? (
         <DotSpinner />
@@ -48,6 +53,6 @@ export default function NoticeContainer() {
           </Flex>
         </>
       )}
-    </Flex>
+    </div>
   );
 }
