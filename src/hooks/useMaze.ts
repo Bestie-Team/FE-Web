@@ -25,6 +25,7 @@ export default function useMaze() {
         const s = a.createElement("script");
         s.src = z + "?apiKey=" + e;
         s.async = true;
+        s.defer = true;
         const head = a.getElementsByTagName("head")[0];
 
         if (head.firstChild) {
