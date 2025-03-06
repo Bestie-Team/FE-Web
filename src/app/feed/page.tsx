@@ -408,7 +408,8 @@ export default function FeedPage() {
         className="flex fixed right-0 top-0 h-12 items-center gap-1 pr-5"
       >
         <div
-          onMouseDown={() => {
+          onMouseDown={(e) => {
+            e.stopPropagation();
             router.push("/invitation");
           }}
           className={styles.iconWrapperStyle}
@@ -424,7 +425,8 @@ export default function FeedPage() {
           )}
         </div>
         <div
-          onMouseDown={() => {
+          onMouseDown={(e) => {
+            e.stopPropagation();
             router.push("/notice");
           }}
           className={styles.iconWrapperStyle}

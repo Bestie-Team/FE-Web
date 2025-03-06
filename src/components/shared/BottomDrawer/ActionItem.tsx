@@ -12,12 +12,18 @@ export default function ActionItem({
 }: {
   padding?: string;
   title: string;
-  onClick?: () => void;
+  onClick: () => void;
   subTitle?: string;
   icon: React.ReactNode;
 }) {
   return (
-    <Flex className={clsx(styles.container, padding)} onMouseDown={onClick}>
+    <Flex
+      className={clsx(styles.container, padding)}
+      onMouseDown={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+    >
       <Button className={styles.button}>{icon}</Button>
       <Flex className={styles.descWrapper}>
         <Flex direction="column" className="gap-1 flex-grow">

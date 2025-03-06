@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 
 interface FlexProps {
   id?: string;
@@ -13,7 +13,7 @@ interface FlexProps {
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   style?: React.CSSProperties;
   onClick?: () => void;
-  onMouseDown?: () => void;
+  onMouseDown?: (e: MouseEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
   className?: string;
   ref?: React.LegacyRef<HTMLDivElement>;

@@ -11,32 +11,32 @@ import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
-const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
-  0: dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
+const components = [
+  dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-  1: dynamic(() => import("@/components/gathering/GatheringForm"), {
+  dynamic(() => import("@/components/gathering/GatheringForm"), {
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-  2: dynamic(() => import("@/components/friends/InviteFriends"), {
+  dynamic(() => import("@/components/friends/InviteFriends"), {
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-  3: dynamic(() => import("@/components/groups/StepToInvitation"), {
+  dynamic(() => import("@/components/groups/StepToInvitation"), {
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-  4: dynamic(() => import("@/components/gathering/MakingInvitation"), {
+  dynamic(() => import("@/components/gathering/MakingInvitation"), {
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-};
+];
 
 export default function NewGatheringPage() {
-  const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
+  const [isClient, setIsClient] = useState(false);
 
   const reset = useResetRecoilState(newGatheringInfo);
   const resetFriends = useResetRecoilState(selectedFriendsAtom);
@@ -70,7 +70,8 @@ export default function NewGatheringPage() {
     return <DotSpinner />;
   }
 
-  const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[0];
+  const CurrentStepComponent = components[step] || components[0];
+
   return (
     <CurrentStepComponent
       isPending={isPending}
