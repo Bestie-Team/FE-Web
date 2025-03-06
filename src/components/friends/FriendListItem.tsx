@@ -143,15 +143,15 @@ const styles = {
 
   li: "w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border",
 
-  img: "rounded-full object-cover h-9 w-9 aspect-square",
+  img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
   inviteBtn:
-    "text-C2 py-2 px-3 rounded-[8px] border border-grayscale-100 hover:!bg-grayscale-10",
+    "text-C2 py-2 px-3 rounded-lg border border-grayscale-100 hover:!bg-grayscale-10",
   selectBtn:
-    "flex-none w-full items-center px-3 py-2 rounded-[8px] bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit",
+    "flex-none w-full items-center px-3 py-2 rounded-lg bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit",
   acceptBtn:
-    "flex items-center px-3 py-2 rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit flex-none",
+    "flex items-center px-3 py-2 rounded-lg bg-grayscale-900 text-base-white text-C2 h-fit flex-none",
 
   rejectBtn:
-    "flex items-center px-3 py-2 rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] hover:bg-grayscale-10 flex-none",
+    "flex items-center px-3 py-2 rounded-lg bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] hover:bg-grayscale-10 flex-none",
 };

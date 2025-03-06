@@ -68,7 +68,7 @@ export function VerticalInvitationCard({
           width={330}
           height={460}
           className="w-[330px] !h-[460px]"
-          onLoadingComplete={() => setImageLoaded(true)}
+          onLoad={() => setImageLoaded(true)}
         />
         {imageLoaded && (
           <>
@@ -128,7 +128,7 @@ export function VerticalInvitationCard({
           width={330}
           height={460}
           className="h-[460px] w-[330px]"
-          onLoadingComplete={() => setImageLoaded(true)}
+          onLoad={() => setImageLoaded(true)}
         />
         {imageLoaded && (
           <>
@@ -142,7 +142,7 @@ export function VerticalInvitationCard({
                   width={300}
                   height={210}
                   alt="invitationImage"
-                  onLoadingComplete={() => setInvitationImageLoaded(true)}
+                  onLoad={() => setInvitationImageLoaded(true)}
                 />
               </div>
               <Spacing size={10} />

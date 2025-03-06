@@ -1,11 +1,11 @@
-import clsx from "clsx";
-import Dimmed from "../Dimmed";
-import Flex from "../Flex";
-import Spacing from "../Spacing";
-import Button from "../Button/Button";
 import { useState } from "react";
+import Dimmed from "../../Dimmed";
+import Flex from "../../Flex";
+import Spacing from "../../Spacing";
+import Button from "../../Button/Button";
+import clsx from "clsx";
 
-export default function ReportModal({
+export default function Report({
   title = "해당 피드를 신고하시겠어요?",
   action,
   onClose,
@@ -27,8 +27,6 @@ export default function ReportModal({
           <>
             <div className="text-T3 text-center">{title}</div>
             <Spacing size={12} />
-            {/* <div className={styles.content}>{content}</div> */}
-            <Spacing size={24} />
           </>
         ) : (
           <>

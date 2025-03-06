@@ -14,7 +14,6 @@ import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import Panel from "@/components/shared/Panel/Panel";
-import Modal from "@/components/shared/Modal/Modal";
 import {
   commentDeleteModalAtom,
   feedDeleteModalAtom,
@@ -34,7 +33,6 @@ import NoFeed from "@/components/feeds/NoFeed";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
-import ReportModal from "@/components/shared/Modal/ReportModal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
@@ -43,6 +41,18 @@ import NoticeIcon from "@/components/shared/Icon/NoticeIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import useNotification from "@/components/notice/hooks/useNotification";
 import { DotWithNumberIcon } from "@/components/shared/Icon/DotIcon";
+import dynamic from "next/dynamic";
+
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
+  ssr: false,
+});
+
+const Report = dynamic(
+  () => import("@/components/shared/Modal/Report/Report"),
+  {
+    ssr: false,
+  }
+);
 
 const TabParamHandler = ({
   setSelectedTab,
@@ -152,7 +162,7 @@ const FeedModals = React.memo(
           />
         )}
         {feedReportModalOpen && (
-          <ReportModal
+          <Report
             action={onReportFeed}
             onClose={() => setFeedReportModalOpen(false)}
           />

@@ -27,7 +27,7 @@ export default function GatheringBannerContainer({
           width={430}
           height={420}
           className="w-[430px] h-[420px] object-cover"
-          onLoadingComplete={() => setImageLoaded(true)}
+          onLoad={() => setImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-[#00000080]" />
         <Flex justify="space-between" className={styles.wrapper}>

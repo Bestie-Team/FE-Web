@@ -18,7 +18,7 @@ export default function GroupBannerContainer({
         width={600}
         height={316}
         className="h-[316px] w-[600px] object-cover"
-        onLoadingComplete={() => setIsLoaded(true)}
+        onLoad={() => setIsLoaded(true)}
       />
       <div className={styles.shade} />
     </div>

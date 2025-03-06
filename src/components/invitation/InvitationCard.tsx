@@ -34,7 +34,7 @@ export default function InvitationCard({
           width={350}
           height={169}
           alt="invitationImage"
-          onLoadingComplete={() => setImageLoaded(true)}
+          onLoad={() => setImageLoaded(true)}
         />
 
         {imageLoaded && (

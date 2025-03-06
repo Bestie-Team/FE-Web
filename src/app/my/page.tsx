@@ -1,5 +1,4 @@
 "use client";
-
 import SettingsMenu from "@/components/my/SettingsMenu";
 import MyMainInfo from "@/components/my/MyMainInfo";
 import UserProfile from "@/components/my/UserProfile";
@@ -13,7 +12,6 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const Header = React.memo(
@@ -81,7 +79,7 @@ export default function MyPage() {
   }, [isClient]);
 
   if (!isClient) {
-    return <FullPageLoader />;
+    return <DotSpinner />;
   }
 
   return (
@@ -91,10 +89,8 @@ export default function MyPage() {
         open={modalState === "open"}
         privatePolicyOpen={modalState === "privatePolicy"}
       />
-      {isFetching ? (
+      {isFetching || !user ? (
         <DotSpinner />
-      ) : !user ? (
-        <FullPageLoader />
       ) : (
         <main className="pt-[68px]">
           <UserProfile

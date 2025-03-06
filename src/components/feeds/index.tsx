@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import getHeader from "@/utils/getHeader";
+
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import ErrorPage from "../shared/ErrorPage";
 
@@ -32,12 +33,12 @@ const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
 };
 
 export default function Record() {
+  const header = getHeader("/record");
   const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useRecoilState(recordStepAtom);
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
-  const header = useMemo(() => getHeader("/record"), []);
 
   useEffect(() => {
     if (!isClient) {
@@ -55,7 +56,7 @@ export default function Record() {
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
-    <div className="relative pt-12 h-dvh">
+    <>
       <div className={styles.headerWrapper}>{header}</div>
       <CurrentStepComponent
         add={add}
@@ -64,7 +65,7 @@ export default function Record() {
         onNext={() => setStep((prev) => prev + 1)}
         debouncedSearch={debouncedSearch}
       />
-    </div>
+    </>
   );
 }
 const styles = {

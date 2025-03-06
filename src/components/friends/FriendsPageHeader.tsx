@@ -19,7 +19,8 @@ export default function FriendsPageHeader({
     <div className={styles.headerWrapper}>
       <div
         className={styles.arrowIconContainer}
-        onClick={() => {
+        onClick={(e: React.MouseEvent<HTMLElement>) => {
+          e.stopPropagation();
           if (
             type === "groupEdit" ||
             type === "group" ||

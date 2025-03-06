@@ -9,8 +9,8 @@ import Modal from "../shared/Modal/Modal";
 import { friendDeleteModalAtom, friendReportModalAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useReport from "../report/hooks/useReport";
-import ReportModal from "../shared/Modal/ReportModal";
 import { useAuth } from "../shared/providers/AuthProvider";
+import Report from "../shared/Modal/Report/Report";
 
 const DeleteFriendModal = memo(
   ({
@@ -50,7 +50,7 @@ const ReportFriendModal = memo(
     if (!isOpen) return null;
 
     return (
-      <ReportModal
+      <Report
         title="친구를 신고하시겠어요?"
         action={onReport}
         onClose={onClose}

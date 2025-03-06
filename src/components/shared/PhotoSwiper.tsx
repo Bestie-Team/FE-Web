@@ -63,7 +63,7 @@ const PhotoSwiper = memo(
               height={360}
               quality={76}
               key={`swiperImg${idx + 1}`}
-              onLoadingComplete={() => setLoaded(true)}
+              onLoad={() => setLoaded(true)}
             />
 
             {idx === 0 && type === "feed" && (

@@ -86,7 +86,7 @@ export default function ClickableGatheringSwiperForDeco({
               className={styles.image}
               width={270}
               height={320}
-              onLoadingComplete={() => setIsLoaded(true)}
+              onLoad={() => setIsLoaded(true)}
             />
             {isLoaded === false && <DotSpinner />}
             <Flex direction="column" className={styles.gatheringInfoWrapper}>

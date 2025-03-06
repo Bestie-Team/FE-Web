@@ -13,7 +13,6 @@ declare global {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
-import NavBar from "@/components/shared/NavBar";
 import { usePathname } from "next/navigation";
 import {
   AuthProvider,
@@ -24,6 +23,11 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
+import dynamic from "next/dynamic";
+
+const NavBar = dynamic(() => import("@/components/shared/NavBar"), {
+  ssr: false,
+});
 
 const queryClient = new QueryClient();
 
@@ -49,11 +53,7 @@ export const NextProvider = ({ children }: Props) => {
   );
 };
 
-const DARK_BACKGROUND_PATHS = [
-  "/groups",
-  "/friends",
-  "/friends/search",
-] as const;
+const DARK_BACKGROUND_PATHS = ["/friends", "/friends/search"] as const;
 const PUBLIC_PATHS = ["/signup", "/auth"] as const;
 const NAVBAR_PATHS = [
   "/feed",
@@ -82,15 +82,13 @@ const NextLayout = ({ children }: Props) => {
     }
   }, [isAuthenticated, pathname, router]);
 
-  const showNavBar =
-    isPathEqual(pathname, NAVBAR_PATHS) ||
-    (pathname === "/feed" && isAuthenticated);
+  const showNavBar = isPathEqual(pathname, NAVBAR_PATHS);
 
   {
     return (
       <div
         className={clsx(
-          "flex flex-col relative max-w-[430px] mx-auto my-0 min-h-dvh",
+          "relative max-w-[430px] mx-auto my-0 min-h-dvh",
           isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
             ? "bg-grayscale-50"
             : "bg-base-white "
