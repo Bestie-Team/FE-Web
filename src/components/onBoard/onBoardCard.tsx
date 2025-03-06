@@ -98,7 +98,7 @@ const onBoardCardContents = [
         <span>선택해서 피드를 작성해요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/1.png",
+    imageUrl: "https://cdn.lighty.today/onBoard/1.webp",
   },
   {
     title: "피드 작성",
@@ -113,7 +113,7 @@ const onBoardCardContents = [
         <span>피드가 보여져요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/2.png",
+    imageUrl: "https://cdn.lighty.today/onBoard/2.webp",
   },
 
   {
@@ -129,7 +129,7 @@ const onBoardCardContents = [
         <span>피드를 포토카드로 만들 수 있어요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/3.png",
+    imageUrl: "https://cdn.lighty.today/onBoard/3.webp",
     width: 430,
   },
   {
@@ -145,7 +145,7 @@ const onBoardCardContents = [
         <span>특별한 약속을 만들 수 있어요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/4.png",
+    imageUrl: "https://cdn.lighty.today/onBoard/4.webp",
   },
   {
     title: "초대장 보내기",
@@ -160,7 +160,7 @@ const onBoardCardContents = [
         <span>귀여운 초대장을 보낼 수 있어요</span>
       </Flex>
     ),
-    imageUrl: "https://cdn.lighty.today/onBoard/5.png",
+    imageUrl: "https://cdn.lighty.today/onBoard/5.webp",
   },
 ];
 
