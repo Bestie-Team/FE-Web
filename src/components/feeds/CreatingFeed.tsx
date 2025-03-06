@@ -25,11 +25,11 @@ export default function CreatingFeed({
 }) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const selectedGatheringId = useRecoilValue(recordGatheringAtom);
+  const id = useRecoilValue(recordGatheringAtom);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
     ...initialFeedInfo,
-    gatheringId: selectedGatheringId || "",
+    gatheringId: id || "",
   });
 
   const handleFeedSuccess = async (data: { message: string }) => {
@@ -71,7 +71,7 @@ export default function CreatingFeed({
 
   const { mutate: uploadImages, isPending: isUploading } = useUploadFeedImages({
     files: filesToUpload,
-    gatheringId: selectedGatheringId || "",
+    gatheringId: id || "",
     onSuccess: handleImageUploadSuccess,
     onError: (error) => {
       lightyToast.error(error.message);
@@ -80,17 +80,17 @@ export default function CreatingFeed({
   });
 
   const { data: selectedGathering } = useGatheringDetail({
-    gatheringId: selectedGatheringId,
-    enabled: selectedGatheringId !== "",
+    id,
+    enabled: id !== "",
   });
 
   useEffect(() => {
     if (feedInfo.imageUrls.length > 0) {
       makeGatheringFeed();
     }
-  }, [feedInfo.imageUrls, selectedGatheringId]);
+  }, [feedInfo.imageUrls, id]);
 
-  if (!selectedGathering || selectedGatheringId == "") return <ErrorPage />;
+  if (!selectedGathering || id == "") return <ErrorPage />;
 
   if (isPending || isUploading) return <FullPageLoader height="100dvh" />;
 
