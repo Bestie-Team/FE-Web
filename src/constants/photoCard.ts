@@ -37,7 +37,7 @@ export const emoji_stickers = [
   "eyes.png",
   "tinkerbell.png",
   "ribbon.png",
-  "teddy_bear.png",
+  "teddy_bear.svg",
   "donut.png",
   "strawberry.png",
   "ghost.png",
