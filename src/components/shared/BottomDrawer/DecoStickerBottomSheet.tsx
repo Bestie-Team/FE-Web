@@ -71,7 +71,10 @@ export default function DecoStickerBottomSheet({
                   >
                     <Image
                       loading={idx < 2 ? "eager" : "lazy"}
-                      className={"cursor-pointer w-16 h-16 object-cover"}
+                      className={clsx(
+                        "cursor-pointer w-16 h-16 object-cover",
+                        selectedKind === "이모지" ? "p-3" : ""
+                      )}
                       onClick={() =>
                         handleSticker(
                           `https://cdn.lighty.today/${selectedStickers.path}/${sticker}`

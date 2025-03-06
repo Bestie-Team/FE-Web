@@ -29,18 +29,18 @@ export const sparkle_stickers = [
 ];
 
 export const emoji_stickers = [
-  "coral_heart.png",
-  "pink_heart.png",
-  "skyblue_heart.png",
-  "blue_heart.png",
-  "orange_heart.png",
-  "eyes.png",
-  "tinkerbell.png",
-  "ribbon.png",
-  "teddy_bear.png",
-  "donut.png",
-  "strawberry.png",
-  "ghost.png",
+  "coral_heart2.png",
+  "pink_heart2.png",
+  "skyblue_heart2.png",
+  "blue_heart2.png",
+  "orange_heart2.png",
+  "eyes2.png",
+  "tinkerbell2.png",
+  "ribbon2.png",
+  "teddy_bear2.png",
+  "donut2.png",
+  "strawberry2.png",
+  "ghost2.png",
 ];
 
 export const sweets_stickers = [
