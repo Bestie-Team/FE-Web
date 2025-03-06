@@ -25,7 +25,6 @@ export default function GatheringCard({
   where: GatheringInWhichType;
   ended: boolean;
 }) {
-  //기록할 약속의 id 저장
   const setStep = useSetRecoilState(recordStepAtom);
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
@@ -43,22 +42,20 @@ export default function GatheringCard({
     setGatheringId(gathering.id);
     router.push("/record");
     setStep(3);
-  }, [gathering, setGatheringId, setInvitationUrl, router]);
+  }, [gathering, setGatheringId, setInvitationUrl, router, setStep]);
 
   const { invitationImageUrl, name } = gathering;
   return (
     <div className="relative">
       <div
         className={clsx(styles.gatheringWrapper, "group")}
-        onClick={() => router.push(`/gathering/${gathering.id}`)}
+        onClick={(e) => {
+          e.stopPropagation();
+          router.push(`/gathering/${gathering.id}`);
+        }}
       >
         <Image
-          src={
-            invitationImageUrl.startsWith("https://example") ||
-            !invitationImageUrl
-              ? DEFAULT_IMAGE
-              : invitationImageUrl
-          }
+          src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
           className={clsx(styles.image, "scale-110")}
           alt={name}
           width={168}

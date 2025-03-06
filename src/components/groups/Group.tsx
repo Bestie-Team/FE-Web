@@ -1,7 +1,6 @@
 "use client";
 import GroupContainer from "@/components/groups/GroupContainer";
 import useGroup from "@/components/groups/hooks/useGroups";
-import Button from "@/components/shared/Button/Button";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { useRouter } from "next/navigation";
@@ -13,6 +12,7 @@ import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import { useSetRecoilState } from "recoil";
 import { selectedGroupDetailAtom } from "@/atoms/group";
+import Link from "next/link";
 
 const GroupList = ({
   groups,
@@ -21,33 +21,29 @@ const GroupList = ({
   groups: Group[];
   onGroupClick: ({ groupId, group }: { groupId: string; group: Group }) => void;
 }) => {
+  const router = useRouter();
   return groups.map((group) => (
     <GroupContainer
       key={`${group.id}`}
       group={group}
       className="cursor-pointer"
-      onClick={() => onGroupClick({ groupId: group.id, group })}
+      onClick={(e: React.MouseEvent<HTMLLIElement>) => {
+        e.stopPropagation();
+        router.push(`/groups/${group.id}`);
+        onGroupClick({ groupId: group.id, group });
+      }}
     />
   ));
 };
 
 export default function Groups() {
-  const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
   const setSelectedGroup = useSetRecoilState(selectedGroupDetailAtom);
-  const handleGroupClick = useCallback(
-    ({ groupId, group }: { groupId: string; group: Group }) => {
-      setSelectedGroup(group);
-      router.push(`/groups/${groupId}`);
-    },
-    [router]
-  );
-
-  const handleAddGroup = useCallback(() => {
-    router.push("/groups/new");
-  }, [router]);
+  const handleGroupClick = useCallback(({ group }: { group: Group }) => {
+    setSelectedGroup(group);
+  }, []);
 
   useEffect(() => {
     if (!isClient) {
@@ -68,16 +64,16 @@ export default function Groups() {
         <Spacing size={4} direction="horizontal" />
         <span className="flex-grow">{detail?.groupCount}</span>
         <Spacing size={4} direction="horizontal" />
-        <Button className={styles.button} onMouseDown={handleAddGroup}>
+        <Link href={`/groups/new`} className={styles.button}>
           그룹 추가
-        </Button>
+        </Link>
       </Flex>
       <Spacing size={16} />
-      <Flex direction="column" className="gap-4">
+      <ul className="flex flex-col gap-4">
         {groups && (
           <GroupList groups={groups} onGroupClick={handleGroupClick} />
         )}
-      </Flex>
+      </ul>
       {(isFetching || isFetchingDetail) && <DotSpinnerSmall />}
     </div>
   );

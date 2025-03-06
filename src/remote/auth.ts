@@ -55,7 +55,6 @@ export async function postLogin({
         STORAGE_KEYS.OAUTH_DATA,
         JSON.stringify(user_oauth_info)
       );
-      console.log("404");
       window.location.href = "/signup";
       break;
 

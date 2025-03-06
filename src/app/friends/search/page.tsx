@@ -2,8 +2,8 @@
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
-import { friendSearchModalStateAtom, userSearchAtom } from "@/atoms/friends";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { userSearchAtom } from "@/atoms/friends";
+import { useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import useSearchUsers from "@/components/users/hooks/useSearchUsers";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -19,9 +19,6 @@ const UserListContainer = dynamic(
 );
 
 export default function SearchPage() {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(
-    friendSearchModalStateAtom
-  );
   const search = useRecoilValue(userSearchAtom);
   const debouncedSearch = useDebounce(search);
 
@@ -61,18 +58,13 @@ export default function SearchPage() {
           </span>
           <Button
             color="#0a0a0a"
-            className="rounded-[12px] py-3 px-[14px] text-base-white text-B3"
+            className="rounded-xl py-3 px-[14px] text-base-white text-B3"
           >
             <Link href="/friends/search">💌 친구 초대하기</Link>
           </Button>
         </Flex>
       )}
-      <UserListContainer
-        isFetching={isFetching}
-        searchedFriends={userData}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
+      <UserListContainer isFetching={isFetching} searchedFriends={userData} />
     </div>
   );
 }

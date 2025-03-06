@@ -40,18 +40,18 @@ export default function GatheringDetailPage({
     gatheringDeleteModalAtom
   );
   const [imageLoaded, setImageLoaded] = useState(false);
-  const gatheringId = params.id;
+  const id = params.id;
   const {
     data: selectedGathering,
     isPending,
     isError,
   } = useGatheringDetail({
-    gatheringId,
-    enabled: !!gatheringId,
+    id,
+    enabled: !!id,
   });
 
   const { mutate: deleteGathering } = useDeleteGathering({
-    gatheringId,
+    id,
     onSuccess: (data) => {
       lightyToast.success(data.message);
       router.replace("/gathering");
@@ -60,9 +60,7 @@ export default function GatheringDetailPage({
   });
 
   useEffect(() => {
-    {
-      if (!isClient) setIsClient(true);
-    }
+    if (!isClient) setIsClient(true);
   }, [isClient]);
 
   if (!isClient || isPending) return <DotSpinner />;

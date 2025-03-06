@@ -1,12 +1,20 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
-import ChooseFrame from "@/components/cards/ChooseFrame";
-import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import dynamic from "next/dynamic";
+
+const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {
+  ssr: false,
+  loading: () => <DotSpinner />,
+});
+
+const DecorateWithStickers = dynamic(
+  () => import("@/components/cards/DecorateWithStickers"),
+  { ssr: false, loading: () => <DotSpinner /> }
+);
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
@@ -31,7 +39,7 @@ export default function Page() {
   }, [isClient]);
 
   if (!isClient) {
-    return <FullPageLoader />;
+    return <DotSpinner />;
   }
 
   return (

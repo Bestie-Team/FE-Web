@@ -58,7 +58,6 @@ export default function AddFriendsSlider({
             }
           }}
         />
-
         {friends
           ? friends.map((friend, i) => {
               return (

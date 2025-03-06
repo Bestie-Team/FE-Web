@@ -7,7 +7,7 @@ function useFriends({ userId }: { userId?: string }) {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["friends", userId],
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
-      return getFriends({ ...pageParam, limit: 10 });
+      return getFriends({ ...pageParam, limit: 8 });
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: {

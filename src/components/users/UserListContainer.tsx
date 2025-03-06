@@ -1,9 +1,7 @@
 import React from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
-import { SetterOrUpdater } from "recoil";
 import UserListItem from "./UserListItem";
-import Modal from "../shared/Modal/Modal";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export type FriendRequestStatus = "SENT" | "RECEIVED" | "NONE";
@@ -12,14 +10,10 @@ type SearchedUser = lighty.User & { status: FriendRequestStatus };
 export default function UserListContainer({
   isFetching,
   searchedFriends,
-  isModalOpen,
-  setIsModalOpen,
 }: {
   isFetching: boolean;
   friends?: lighty.User[];
   searchedFriends?: SearchedUser[];
-  isModalOpen: boolean;
-  setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
   if (searchedFriends) {
     return (
@@ -35,14 +29,6 @@ export default function UserListContainer({
           })}
           {isFetching && <DotSpinnerSmall />}
         </ul>
-        {isModalOpen ? (
-          <Modal
-            action={() => {}}
-            onClose={() => {
-              setIsModalOpen(false);
-            }}
-          />
-        ) : null}
       </div>
     );
   } else return null;

@@ -13,17 +13,16 @@ export default function GroupContainer({
   className,
 }: {
   group: lighty.Group;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLLIElement>) => void;
   className?: string;
 }) {
   const { name, description, groupImageUrl, gatheringCount, members } = group;
   const memberProfileImages = members.map((member) => member.profileImageUrl);
 
   return (
-    <Flex
-      align="center"
+    <li
       className={clsx(styles.groupContainer, className)}
-      onMouseDown={onClick}
+      onMouseDown={(e) => onClick(e)}
     >
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">
@@ -64,14 +63,14 @@ export default function GroupContainer({
         </Flex>
       </Flex>
       <ArrowRightIcon color="#979797" />
-    </Flex>
+    </li>
   );
 }
 
 const styles = {
   leaderImage: "rounded-full !h-12 w-12 object-cover",
   groupContainer:
-    "bg-base-white hover:bg-grayscale-10 gap-3 p-5 rounded-[16px] border-[1px] border-grayscale-100",
+    "flex items-center bg-base-white hover:bg-grayscale-10 gap-3 p-5 rounded-[16px] border-[1px] border-grayscale-100",
 
   font: "text-C2 text-grayscale-300",
   bar: "mx-3 bg-grayscale-100 h-[13px] w-[1px]",
