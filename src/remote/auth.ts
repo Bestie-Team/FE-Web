@@ -38,26 +38,24 @@ export async function postLogin({
   });
 
   const data = await response.json();
+  console.log(data, "data");
   if (response.ok) {
     storeAuthData(data.accessToken, {
       accountId: data.accountId,
       profileImageUrl: data.profileImageUrl,
     });
 
-    if (provider === "kakao") {
-      window.location.href = "/feed";
-    }
     return data;
   }
 
   switch (response.status) {
     case 404:
       const user_oauth_info: lighty.LoginFailResponse = data;
-
       sessionStorage.setItem(
         STORAGE_KEYS.OAUTH_DATA,
         JSON.stringify(user_oauth_info)
       );
+      console.log("404");
       window.location.href = "/signup";
       break;
 
@@ -73,7 +71,7 @@ export async function postLogin({
       throw new Error("서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
 
     default:
-      console.log(response);
+      console.log(response, "로그인 처리 중 문제가 발생했습니다.");
       throw new Error("로그인 처리 중 문제가 발생했습니다.");
   }
 }
