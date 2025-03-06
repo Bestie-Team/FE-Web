@@ -7,16 +7,18 @@ interface NoticeProps {
   title: string;
   date: string;
   description: string;
+  onClick: () => void;
 }
 
 export default function NoticeItem({
+  onClick,
   icon,
   title,
   date,
   description,
 }: NoticeProps) {
   return (
-    <Flex className="p-4 rounded-2xl bg-base-white">
+    <Flex className="p-4 rounded-2xl bg-base-white" onMouseDown={onClick}>
       <Flex
         align="center"
         justify="center"

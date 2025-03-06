@@ -27,8 +27,10 @@ export default function ReportNoticeItem({
   const { title, message, createdAt, type } = notification;
   const date = format(new Date(createdAt), "yy.MM.dd.");
 
+  const handleClick = () => {};
   return (
     <NoticeItem
+      onClick={handleClick}
       icon={NotificationImage[type]}
       title={`${title}`}
       date={date}
