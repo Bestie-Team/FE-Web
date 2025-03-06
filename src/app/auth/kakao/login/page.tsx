@@ -2,12 +2,10 @@
 
 import { useKakaoAuth } from "@/hooks/useKakaoQuery";
 import { postLogin } from "@/remote/auth";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { KakaoAuthResponse } from "@/models/user";
 
 export default function KakaoPage() {
-  const router = useRouter();
   const [authCode, setAuthCode] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +41,6 @@ export default function KakaoPage() {
         accessToken: tokenInfo.access_token,
         provider: "kakao",
       });
-      router.replace("/feed");
     } catch (error) {
       setError("로그인 실패");
       console.log(error);
