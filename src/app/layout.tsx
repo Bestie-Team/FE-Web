@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextLayout, { NextProvider } from "./providers";
-import { GTM_ID } from "./lib/gtm";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GA_ID } from "./lib/gtm";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -33,7 +33,8 @@ export default function RootLayout({
           id="root-portal"
         ></div>
       </body>
-      <GoogleAnalytics gaId={GTM_ID || ""} />
+      <GoogleAnalytics gaId={GA_ID || ""} />
+      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || ""} />
     </html>
   );
 }
