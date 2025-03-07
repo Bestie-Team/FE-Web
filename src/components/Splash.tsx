@@ -12,6 +12,8 @@ import { lightyToast } from "@/utils/toast";
 import { useCallback, useEffect } from "react";
 import Flex from "./shared/Flex";
 import { useRouter } from "next/navigation";
+import { WEBVIEW_EVENT } from "@/webview/types";
+import { googleLoginMobile, kakaoLoginMobile } from "@/webview/actions";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
 
@@ -39,16 +41,6 @@ export default function Splash() {
     onError: () => lightyToast.error("로그인에 실패했어요"),
   });
 
-  const googleLoginMobile = () =>
-    window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "GOOGLE_LOGIN" })
-    );
-
-  const kakaoLoginMobile = () =>
-    window.ReactNativeWebView?.postMessage(
-      JSON.stringify({ type: "KAKAO_LOGIN" })
-    );
-
   const loginHandler = (provider: Providers) => {
     if (provider === "google") {
       if (window.ReactNativeWebView) {
@@ -74,10 +66,10 @@ export default function Splash() {
       }
       const message: { type: string; token: string } = JSON.parse(data);
 
-      if (message.type === "GOOGLE_LOGIN_SUCCESS") {
+      if (message.type === WEBVIEW_EVENT.GOOGLE_LOGIN_SUCCESS) {
         handleLoginSuccess(message.token, "google");
       }
-      if (message.type === "KAKAO_LOGIN_SUCCESS") {
+      if (message.type === WEBVIEW_EVENT.KAKAO_LOGIN_SUCCESS) {
         handleLoginSuccess(message.token, "kakao");
       }
     };
