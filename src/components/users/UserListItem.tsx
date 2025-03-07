@@ -38,7 +38,7 @@ export default function UserListItem({
           queryKey: ["users", debouncedSearch],
         }),
         await queryClient.invalidateQueries({
-          queryKey: ["sent", "friendsRequests"],
+          queryKey: ["sentAndReceived", "friendsRequests", { accountId: "a" }],
         }),
       ]);
 

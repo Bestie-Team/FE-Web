@@ -14,7 +14,7 @@ export default function useSentAndReceivedFriendsRequests({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["sentAndReceived", "friendsRequests", { accountId, limit }],
+    queryKey: ["sentAndReceived", "friendsRequests", { accountId }],
     queryFn: async () => {
       const [sentResponse, receivedResponse] = await Promise.all([
         getSentFriendRequestsList({ name, accountId, limit }),

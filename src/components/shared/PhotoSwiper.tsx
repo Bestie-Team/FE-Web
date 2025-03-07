@@ -61,7 +61,6 @@ const PhotoSwiper = memo(
               className={styles.image}
               width={340}
               height={360}
-              quality={76}
               key={`swiperImg${idx + 1}`}
               onLoad={() => setLoaded(true)}
             />
