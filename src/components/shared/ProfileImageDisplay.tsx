@@ -6,6 +6,7 @@ import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
 import Flex from "./Flex";
 import clsx from "clsx";
+import { lightyToast } from "@/utils/toast";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -27,7 +28,10 @@ export default function ProfileImageDisplay({
       console.log("프로필 사진 업로드 성공", imageUrl);
       setUserImage((prev) => ({ ...prev, profileImageUrl: imageUrl }));
     },
-    onError: (error: Error) => console.log(error),
+    onError: (error: Error) => {
+      lightyToast.error("파일첨부 사이즈가 너무 커요.");
+      console.log(error);
+    },
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

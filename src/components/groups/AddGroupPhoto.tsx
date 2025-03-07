@@ -67,7 +67,7 @@ export default function AddGroupPhoto({
               resolve(webpFile);
             },
             "image/webp",
-            0.8
+            0.5
           );
         };
         img.onerror = (error) => {

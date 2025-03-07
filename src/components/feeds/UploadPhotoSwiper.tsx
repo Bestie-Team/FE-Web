@@ -94,6 +94,13 @@ export default function UploadPhotoSwiper({
     }
 
     if (file) {
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+        e.target.value = "";
+        return;
+      }
+
       const ext = getFileExt(file.name);
       if (!ext) {
         lightyToast.error(

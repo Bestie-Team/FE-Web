@@ -60,7 +60,7 @@ export default function CreatingFeedNoGathering({
       }
       setFilesToUpload([]);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => lightyToast.error(error.message),
   });
 
   useEffect(() => {
