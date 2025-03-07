@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import "./CalendarWithBorder.css";
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
 import { useRecoilState } from "recoil";
@@ -31,7 +31,7 @@ export default function LightyCalendar({
     <Flex className="py-3" justify="center">
       <Calendar
         showNeighboringMonth
-        minDate={new Date()}
+        minDate={addDays(new Date(), 1)}
         onChange={setSelectedDate}
         value={selectedDate}
         activeStartDate={!!originalDate ? new Date(originalDate) : undefined}

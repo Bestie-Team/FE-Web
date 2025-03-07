@@ -38,7 +38,7 @@ export default function GatheringEditForm({
       gathering.gatheringDate &&
       gathering.address &&
       gathering.name.length > 2 &&
-      gathering.description.length > 10 &&
+      gathering.description.length > 1 &&
       gathering.address.length >= 1
     );
   };

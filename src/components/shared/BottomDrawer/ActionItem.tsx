@@ -41,7 +41,7 @@ export default function ActionItem({
 
 const styles = {
   container:
-    "flex gap-3 py-3 w-full active:bg-grayscale-100 will-change-transform",
+    "flex gap-3 py-3 w-full active:bg-grayscale-100 transition duration-75",
 
   descWrapper: "gap-3 flex-grow cursor-pointer items-center",
   button:

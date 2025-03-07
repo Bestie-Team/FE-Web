@@ -96,7 +96,7 @@ const styles = {
   gatheringWrapper:
     "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
   image:
-    "object-cover object-center w-full h-full group-hover:animate-smaller transition duration-75 will-change-transform w-[168px] h-[168px]",
+    "object-cover object-center w-full h-full group-hover:animate-smaller transition duration-75 w-[168px] h-[168px]",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:
