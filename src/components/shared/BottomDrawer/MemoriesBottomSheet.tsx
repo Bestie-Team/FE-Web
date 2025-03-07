@@ -19,20 +19,21 @@ export default function MemoriesBottomSheet({
 }) {
   const router = useRouter();
   const setStep = useSetRecoilState(recordStepAtom);
-  const [link, setLink] = useState("");
+  const [isClosing, setIsClosing] = useState(false);
 
-  const handleClose = () => {
-    if (link == "/record") {
+  const handleActionClick = (link) => {
+    if (link === "/record") {
       setStep(1);
     }
+    router.push(link);
+
+    setIsClosing(true);
+
     onClose();
-    if (link !== "") {
-      router.push(link);
-    }
   };
 
   return (
-    <BottomSheetWrapper onClose={handleClose} open={open} down={link !== ""}>
+    <BottomSheetWrapper onClose={onClose} open={open} isClosing={isClosing}>
       <Flex direction="column" className="p-6 pt-1">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
         {actions.map((action) => {
@@ -40,9 +41,7 @@ export default function MemoriesBottomSheet({
             <React.Fragment key={`${action.title}`}>
               <Spacing size={20} />
               <ActionItem
-                onClick={() => {
-                  setLink(action.link);
-                }}
+                onClick={() => handleActionClick(action.link)}
                 icon={action.icon}
                 title={action.title}
                 subTitle={action.subTitle}
