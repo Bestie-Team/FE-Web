@@ -24,10 +24,11 @@ export default function MemoriesBottomSheet({
   const handleClose = () => {
     if (link == "/record") {
       setStep(1);
-    } else if (link !== "" && link !== "/record") {
-      router.push(link);
     }
     onClose();
+    if (link !== "" && link !== "/record") {
+      router.push(link);
+    }
   };
 
   return (
