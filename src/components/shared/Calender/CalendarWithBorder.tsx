@@ -108,4 +108,4 @@ export default function LightyCalendarWithBorder({
   );
 }
 
-const iconWrapper = "border border-[#E9E9E9] p-[7px] rounded-[8px]";
+const iconWrapper = "border border-[#E9E9E9] p-[7px] rounded-lg";

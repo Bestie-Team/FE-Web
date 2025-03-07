@@ -182,7 +182,7 @@ const styles = {
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",
   title: "font-[700] text-[16px] leading-[20.8px] flex-grow",
   contentWrapper:
-    "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-[12px] text-B3",
+    "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-xl text-B3",
   button:
-    "bg-grayscale-50 active:bg-grayscale-100 transition duration-200 px-3 py-2 rounded-[8px] text-T6",
+    "bg-grayscale-50 active:bg-grayscale-100 transition duration-200 px-3 py-2 rounded-lg text-T6",
 };

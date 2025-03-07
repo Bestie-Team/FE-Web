@@ -286,11 +286,11 @@ const styles = {
   button:
     "absolute z-10 py-[10px] px-3 text-C2 bg-grayscale-900 rounded-[10px] cursor-pointer text-base-white",
   saveButton:
-    "w-[120px] px-3 py-[6px] rounded-[12px] border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
+    "w-[120px] px-3 py-[6px] rounded-xl border border-[#D8D8D8] text-[#D8D8D8] bg-base-white text-B4 cursor-pointer",
   cardContainer:
     "relative rounded-[20px] w-[282px] h-[453px] self-center mx-auto",
   cardWrapper:
-    "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-[12px] w-[230px] h-[318px]",
+    "absolute top-[27px] left-[26.5px] flex flex-col bg-base-white rounded-xl w-[230px] h-[318px]",
   imageWrapper:
     "w-[230px] h-full rounded-t-[12px] bg-grayscale-50 overflow-hidden",
   image: "w-[230px] h-[220px]",

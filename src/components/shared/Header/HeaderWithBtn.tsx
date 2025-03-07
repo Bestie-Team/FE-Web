@@ -26,16 +26,16 @@ export default function HeaderWithBackBtn({
         backgroundColor: color ? color : "transparent",
       }}
     >
-      <div
+      <button
         className={
-          "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow"
+          "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer active:animate-shrink-grow"
         }
         onClick={() => {
           window.history.back();
         }}
       >
         <ArrowLeftIcon color={fontColor} />
-      </div>
+      </button>
       <div
         style={{
           color: fontColor ? fontColor : "",

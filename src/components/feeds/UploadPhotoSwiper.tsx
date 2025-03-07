@@ -110,12 +110,12 @@ export default function UploadPhotoSwiper({
               height={320}
             />
             {!feedInfoToEdit && (
-              <div
+              <button
                 onClick={() => handleImageDelete(idx)}
                 className={styles.iconContainer}
               >
                 <CloseIcon width="18" height="18" />
-              </div>
+              </button>
             )}
           </SwiperSlide>
         ))}

@@ -30,6 +30,7 @@ export default function Gathering({
         <GatheringCard
           ended={ended}
           key={i}
+          tabIndex={i}
           gathering={gathering}
           where={where}
           pencil={where === "HOME"}

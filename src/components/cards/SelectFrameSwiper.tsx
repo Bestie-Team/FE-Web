@@ -125,13 +125,13 @@ const styles = {
   swiperContainer: "relative w-full bg-gray-50",
 
   frameName:
-    "w-fit bg-base-white text-C1 py-[12px] px-[16px] border rounded-[12px] mx-auto",
+    "w-fit bg-base-white text-C1 py-[12px] px-[16px] border rounded-xl mx-auto",
 
   slide:
     "relative w-[324px] !h-[450px] my-auto overflow-hidden cursor-pointer rounded-[20px]",
   cardContainer:
     "relative px-[33px] py-[40px] flex bg-base-white rounded-[20px] justify-center items-center border border-[#AEAEAE] border-dotted w-[350px] h-[453px]",
-  cardWrapper: "bg-base-white rounded-[12px] w-full h-full",
+  cardWrapper: "bg-base-white rounded-xl w-full h-full",
 
   imageWrapper:
     "w-full h-full rounded-t-[12px] bg-grayscale-50 overflow-hidden",

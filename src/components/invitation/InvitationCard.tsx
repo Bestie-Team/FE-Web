@@ -87,5 +87,5 @@ const styles = {
   subContentWrapper: "w-full max-w-[188px] absolute pl-5 py-6 left-0 bottom-0",
 
   button:
-    "absolute right-[20px] bottom-[24px] h-fit text-C1 flex-none px-6 py-3 rounded-[36px] text-base-white hover:animate-shrink-grow-less",
+    "absolute right-[20px] bottom-[24px] h-fit text-C1 flex-none px-6 py-3 rounded-[36px] text-base-white active:animate-shrink-grow-less",
 };

@@ -42,7 +42,7 @@ const AnimatedTabButton = () => {
               styles.button,
               selectedGathering.type === tab.id
                 ? "text-grayscale-900"
-                : "text-grayscale-500 hover:text-grayscale-700"
+                : "text-grayscale-500 active:text-grayscale-700"
             )}
           >
             {tab.label}

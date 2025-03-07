@@ -45,7 +45,7 @@ export default function Tooltip({
   );
 }
 
-const tooltipWrapperStyle = `z-10 relative flex items-center justify-between gap-3 text-base-white text-C1 px-4 py-3 rounded-[12px] bg-grayscale-900`;
+const tooltipWrapperStyle = `z-10 relative flex items-center justify-between gap-3 text-base-white text-C1 px-4 py-3 rounded-xl bg-grayscale-900`;
 
 function BottomDirIcon({
   width,

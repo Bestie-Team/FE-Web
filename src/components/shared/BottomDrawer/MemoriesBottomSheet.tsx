@@ -35,11 +35,12 @@ export default function MemoriesBottomSheet({
     <BottomSheetWrapper onClose={handleClose} open={open} down={link !== ""}>
       <Flex direction="column" className="p-6 pt-1">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
-        {actions.map((action) => {
+        {actions.map((action, idx) => {
           return (
             <React.Fragment key={`${action.title}`}>
               <Spacing size={20} />
               <ActionItem
+                tabIndex={idx}
                 onClick={() => {
                   setLink(action.link);
                 }}

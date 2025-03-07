@@ -145,8 +145,6 @@ const styles = {
 
   img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
-  inviteBtn:
-    "text-C2 py-2 px-3 rounded-lg border border-grayscale-100 hover:!bg-grayscale-10",
   selectBtn:
     "flex-none w-full items-center px-3 py-2 rounded-lg bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit",
   acceptBtn:

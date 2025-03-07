@@ -176,7 +176,7 @@ export function VerticalInvitationCard({
   }
 }
 const styles = {
-  image: "!h-[210px] w-[300px] object-cover rounded-[12px]",
+  image: "!h-[210px] w-[300px] object-cover rounded-xl",
   mainContentWrapper: "absolute p-[15px] left-0 top-0",
   subContentWrapper: "absolute pl-1 left-[15px] top-[332px] gap-1",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",

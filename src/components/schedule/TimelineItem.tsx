@@ -51,7 +51,7 @@ export default function TimelineItem({
 }
 
 const styles = {
-  date: "text-C2 text-grayscale-600 px-3 py-[6px] rounded-[12px] bg-grayscale-50",
+  date: "text-C2 text-grayscale-600 px-3 py-[6px] rounded-xl bg-grayscale-50",
 
-  image: "rounded-[12px] w-14 !h-14",
+  image: "rounded-xl w-14 !h-14",
 };

@@ -46,5 +46,5 @@ const styles = {
     "object-cover rounded-full border-[1.27px] border-base-white h-9 w-9",
 
   buttonWrapper:
-    "text-C1 text-base-white bg-grayscale-900 px-3 py-2 rounded-[8px] h-fit",
+    "text-C1 text-base-white bg-grayscale-900 px-3 py-2 rounded-lg h-fit",
 };

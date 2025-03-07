@@ -57,7 +57,7 @@ const GatheringDropdownMenu = forwardRef<
                 }}
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(false)}
-                className={`text-B4 w-[131px] rounded-[8px] px-4 py-[10px] text-left ${
+                className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
                   item.includes("삭제") && "text-point-red50"
                 }`}
                 onMouseDown={() => handleItemClick(item)}
@@ -80,7 +80,7 @@ GatheringDropdownMenu.displayName = "GatheringDropdownMenu";
 export default GatheringDropdownMenu;
 
 const styles = {
-  wrapper: "w-full bg-base-white rounded-[12px] px-1 py-[5px]",
+  wrapper: "w-full bg-base-white rounded-xl px-1 py-[5px]",
   animation: "selectMenuBounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
   shadow: "0px 0px 16px 0px #0000001F",
 };

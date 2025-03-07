@@ -9,15 +9,17 @@ export default function ActionItem({
   onClick,
   subTitle,
   icon,
+  tabIndex,
 }: {
   padding?: string;
   title: string;
   onClick: () => void;
   subTitle?: string;
   icon: React.ReactNode;
+  tabIndex: number;
 }) {
   return (
-    <Flex
+    <div
       className={clsx(styles.container, padding)}
       onMouseDown={(e) => {
         e.stopPropagation();
@@ -27,6 +29,7 @@ export default function ActionItem({
         e.stopPropagation();
         onClick();
       }}
+      tabIndex={tabIndex}
     >
       <Button className={styles.button}>{icon}</Button>
       <Flex className={styles.descWrapper}>
@@ -36,12 +39,13 @@ export default function ActionItem({
         </Flex>
         <ArrowRightIcon />
       </Flex>
-    </Flex>
+    </div>
   );
 }
 
 const styles = {
-  container: "gap-3 py-3 w-full hover:animate-tinkle will-change-transform",
+  container:
+    "flex gap-3 py-3 w-full active:animate-tinkle will-change-transform",
 
   descWrapper: "gap-3 flex-grow cursor-pointer items-center",
   button:

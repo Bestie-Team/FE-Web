@@ -31,7 +31,7 @@ export default function FriendsListContainer({
           </span>
           <Button
             color="#0a0a0a"
-            className="rounded-[12px] py-[12px] px-[14px] text-base-white text-B3"
+            className="rounded-xl py-[12px] px-[14px] text-base-white text-B3"
           >
             <Link href="/friends/search">💌 친구 초대하기</Link>
           </Button>

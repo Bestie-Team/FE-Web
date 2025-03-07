@@ -17,7 +17,7 @@ export default function FriendsPageHeader({
 
   return (
     <div className={styles.headerWrapper}>
-      <div
+      <button
         className={styles.arrowIconContainer}
         onClick={(e: React.MouseEvent<HTMLElement>) => {
           e.stopPropagation();
@@ -35,7 +35,7 @@ export default function FriendsPageHeader({
         }}
       >
         <ArrowLeftIcon />
-      </div>
+      </button>
       <Spacing size={6} direction="horizontal" />
       <span className="flex-grow text-T3">{label}</span>
       <Spacing size={6} direction="horizontal" />
@@ -45,7 +45,7 @@ export default function FriendsPageHeader({
 
 const styles = {
   arrowIconContainer:
-    "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer hover:animate-shrink-grow",
+    "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer active:animate-shrink-grow",
 
   headerWrapper: "bg-grayscale-50 pr-5 flex w-full items-center h-12",
 };

@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { differenceInCalendarDays } from "date-fns";
 import { NoGatheringHome } from "./NoGathering";
 import { Lighty } from "@/constants/images";
+import Button from "../shared/Button/Button";
 
 export default function GatheringSwiper({
   percent,
@@ -62,7 +63,7 @@ export default function GatheringSwiper({
                 className={clsx(styles.slide, "group")}
                 key={`slide${idx}`}
               >
-                <div className="relative w-full h-[146px]">
+                <Button className="relative w-full h-[146px]">
                   <Image
                     src={invitationImageUrl || Lighty}
                     alt={`invitationImage${idx + 1}`}
@@ -84,7 +85,7 @@ export default function GatheringSwiper({
                       {formatToDisplay(new Date(gatheringDate)).slice(0, 10)}
                     </span>
                   </div>
-                </div>
+                </Button>
               </SwiperSlide>
             );
           }

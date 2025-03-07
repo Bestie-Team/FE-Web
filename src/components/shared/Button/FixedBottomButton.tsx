@@ -55,7 +55,7 @@ const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
           buttonStyle,
           disabled
             ? `bg-grayscale-300 cursor-default`
-            : `bg-grayscale-900 hover:bg-blue-700`,
+            : `bg-grayscale-900 active:bg-blue-700`,
           className
         )}
       >

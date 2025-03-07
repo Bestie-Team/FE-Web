@@ -19,11 +19,13 @@ export default function GatheringCard({
   gathering,
   where,
   ended,
+  tabIndex,
 }: {
   pencil?: boolean;
   gathering: Gathering;
   where: GatheringInWhichType;
   ended: boolean;
+  tabIndex: number;
 }) {
   const setStep = useSetRecoilState(recordStepAtom);
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
@@ -46,47 +48,46 @@ export default function GatheringCard({
 
   const { invitationImageUrl, name } = gathering;
   return (
-    <div className="relative">
+    <div
+      className={clsx(styles.gatheringWrapper, "group")}
+      tabIndex={tabIndex}
+      onClick={() => {
+        router.push(`/gathering/${gathering.id}`);
+      }}
+    >
+      <Image
+        src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
+        className={clsx(styles.image, "scale-110")}
+        alt={name}
+        width={168}
+        height={168}
+      />
       <div
-        className={clsx(styles.gatheringWrapper, "group")}
-        onClick={() => {
-          router.push(`/gathering/${gathering.id}`);
+        style={{
+          background: styles.gradation,
         }}
-      >
-        <Image
-          src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
-          className={clsx(styles.image, "scale-110")}
-          alt={name}
-          width={168}
-          height={168}
-        />
-        <div
-          style={{
-            background: styles.gradation,
-          }}
-          className="absolute bottom-0 left-0 right-0 h-[73.8%]"
-        />
-        <Flex direction="column" className={styles.textWrapper}>
-          <span className="text-T4 truncate">{name}</span>
-          <Flex className={styles.date}>
-            <span className="flex-grow">{format(date, "yyyy.MM.dd")}</span>
-            {where == "HOME" && (
-              <span className="tracking-widest">
-                {diff >= 0 ? `D+${diff}` : `D${diff}`}
-              </span>
-            )}
-          </Flex>
+        className="absolute bottom-0 left-0 right-0 h-[73.8%]"
+      />
+      <Flex direction="column" className={styles.textWrapper}>
+        <span className="text-T4 truncate">{name}</span>
+        <Flex className={styles.date}>
+          <span className="flex-grow">{format(date, "yyyy.MM.dd")}</span>
+          {where == "HOME" && (
+            <span className="tracking-widest">
+              {diff >= 0 ? `D+${diff}` : `D${diff}`}
+            </span>
+          )}
         </Flex>
-        {pencil || (!gathering.isFeedPosted && ended) ? (
-          <Button
-            name="moveToFeed_button"
-            className={styles.button}
-            onClick={handleClickGathering}
-          >
-            <PencilIcon color="#0A0A0A" />
-          </Button>
-        ) : null}
-      </div>
+      </Flex>
+      {pencil || (!gathering.isFeedPosted && ended) ? (
+        <Button
+          name="moveToFeed_button"
+          className={styles.button}
+          onClick={handleClickGathering}
+        >
+          <PencilIcon color="#0A0A0A" />
+        </Button>
+      ) : null}
     </div>
   );
 }
@@ -95,7 +96,7 @@ const styles = {
   gatheringWrapper:
     "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
   image:
-    "object-cover object-center w-full h-full group-active:animate-smaller will-change-transform w-[168px] h-[168px]",
+    "object-cover object-center w-full h-full group-hover:animate-smaller will-change-transform w-[168px] h-[168px]",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:

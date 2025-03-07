@@ -96,11 +96,11 @@ const styles = {
   img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
   inviteBtn:
-    "text-C2 py-2 px-3 rounded-[8px] border border-grayscale-100 hover:!bg-grayscale-10",
+    "text-C2 py-2 px-3 rounded-lg border border-grayscale-100 active:!bg-grayscale-10",
 
   acceptBtn:
-    "flex items-center px-3 py-2 rounded-[8px] bg-grayscale-900 text-base-white text-C2 h-fit",
+    "flex items-center px-3 py-2 rounded-lg bg-grayscale-900 text-base-white text-C2 h-fit",
 
   rejectBtn:
-    "flex items-center px-3 py-2 rounded-[8px] bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px]",
+    "flex items-center px-3 py-2 rounded-lg bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px]",
 };
