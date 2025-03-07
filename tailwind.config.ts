@@ -141,7 +141,7 @@ const config: Config = {
         fadeIn: "fadeIn 0.2s ease-in",
         fadeOut: "fadeOut 0.2s ease-out",
         selectOpen: "selectOpen 0.2s ease-in-out",
-        "shrink-grow": "shrinkGrow 0.5s ease-in-out",
+        "shrink-grow": "shrinkGrow 0.2s ease-in-out",
         "shrink-grow-less": "shrinkGrowLess 0.3s ease-in-out",
         "slide-from-left": "slideFromLeft 0.3s ease-in-out",
         tinkle: "tinkle 0.2s ease-in-out",
