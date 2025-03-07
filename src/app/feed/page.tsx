@@ -42,6 +42,9 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import useNotification from "@/components/notice/hooks/useNotification";
 import { DotWithNumberIcon } from "@/components/shared/Icon/DotIcon";
 import dynamic from "next/dynamic";
+import { patchNotificationToken } from "@/remote/users";
+import { requestNotificationPermission } from "@/webview/actions";
+import { WEBVIEW_EVENT } from "@/webview/types";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -206,6 +209,25 @@ export default function FeedPage() {
     }),
     []
   );
+
+  useEffect(() => {
+    requestNotificationPermission();
+    const handleMessage = async (event: MessageEvent<string>) => {
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
+      const message: { type: string; notificationToken: string } =
+        JSON.parse(data);
+
+      if (message.type === WEBVIEW_EVENT.AGREE_NOTIFICATION_PERMISSION) {
+        patchNotificationToken({ token: message.notificationToken });
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   useEffect(() => {
     if (!isClient) {
