@@ -39,7 +39,6 @@ export default function PhotoSelectBottomSheet({
           return (
             <React.Fragment key={`${action.title}`}>
               <ActionItem
-                tabIndex={idx}
                 padding="py-4"
                 onClick={() => {
                   setDown(true);

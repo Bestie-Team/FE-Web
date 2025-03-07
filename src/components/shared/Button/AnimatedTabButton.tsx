@@ -59,7 +59,7 @@ const styles = {
   tabWrapper: "relative p-1 bg-grayscale-10 rounded-full w-[158px]",
 
   slider:
-    "absolute h-8 w-[75px] py-[10px] bg-base-white rounded-full shadow-md transition-transform duration-300 ease-in-out",
+    "absolute h-8 w-[75px] py-[10px] bg-base-white rounded-full shadow-md transition-transform ease-in-out",
 
   button:
     "cursor-pointer flex items-center h-8 px-4 py-[10px] rounded-full text-C1 transition-colors duration-300 z-10",

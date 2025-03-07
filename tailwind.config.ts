@@ -144,9 +144,9 @@ const config: Config = {
         "shrink-grow": "shrinkGrow 0.5s ease-in-out",
         "shrink-grow-less": "shrinkGrowLess 0.3s ease-in-out",
         "slide-from-left": "slideFromLeft 0.3s ease-in-out",
-        tinkle: "tinkle 0.5s ease-in-out",
-        bigger: "bigger 0.5s ease-out forwards",
-        smaller: "smaller 0.5s ease-out forwards",
+        tinkle: "tinkle 0.2s ease-in-out",
+        bigger: "bigger 0.2s ease-out forwards",
+        smaller: "smaller 0.2s ease-out forwards",
       },
       keyframes: {
         "slide-up": {

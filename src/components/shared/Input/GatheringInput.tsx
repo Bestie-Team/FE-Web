@@ -108,7 +108,6 @@ export default function GatheringInput({
             <Flex direction="column" className={styles.bottomSheetContainer}>
               <span className="text-T3">약속 장소</span>
               <ActionItem
-                tabIndex={0}
                 onClick={() => {
                   setAddressSearch(2);
                 }}
@@ -117,7 +116,6 @@ export default function GatheringInput({
                 icon={<SearchIcon width="20" height="20" color={"white"} />}
               />
               <ActionItem
-                tabIndex={1}
                 onClick={() => {
                   setAddressSearch(3);
                 }}

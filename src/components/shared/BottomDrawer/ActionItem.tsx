@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Button from "../Button/Button";
 import Flex from "../Flex";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 
@@ -9,17 +8,15 @@ export default function ActionItem({
   onClick,
   subTitle,
   icon,
-  tabIndex,
 }: {
   padding?: string;
   title: string;
   onClick: () => void;
   subTitle?: string;
   icon: React.ReactNode;
-  tabIndex: number;
 }) {
   return (
-    <div
+    <button
       className={clsx(styles.container, padding)}
       onMouseDown={(e) => {
         e.stopPropagation();
@@ -29,9 +26,8 @@ export default function ActionItem({
         e.stopPropagation();
         onClick();
       }}
-      tabIndex={tabIndex}
     >
-      <Button className={styles.button}>{icon}</Button>
+      <div className={styles.button}>{icon}</div>
       <Flex className={styles.descWrapper}>
         <Flex direction="column" className="gap-1 flex-grow">
           <span className="text-T5">{title}</span>
@@ -39,13 +35,13 @@ export default function ActionItem({
         </Flex>
         <ArrowRightIcon />
       </Flex>
-    </div>
+    </button>
   );
 }
 
 const styles = {
   container:
-    "flex gap-3 py-3 w-full active:animate-tinkle will-change-transform",
+    "flex gap-3 py-3 w-full active:bg-grayscale-100 will-change-transform",
 
   descWrapper: "gap-3 flex-grow cursor-pointer items-center",
   button:
