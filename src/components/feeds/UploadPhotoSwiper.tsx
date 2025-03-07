@@ -128,11 +128,10 @@ export default function UploadPhotoSwiper({
 }
 
 const styles = {
-  slide:
-    "ml-[20px] relative h-[250px] !w-[240px] rounded-[16px] overflow-hidden",
+  slide: "ml-[20px] relative h-[250px] !w-[240px] rounded-2xl overflow-hidden",
   inputWrapper: "absolute inset-0 flex items-center justify-center",
   uploadedImageWrapper:
-    "relative h-[250px] !w-[240px] rounded-[16px] overflow-hidden object-cover",
+    "relative h-[250px] !w-[240px] rounded-2xl overflow-hidden object-cover",
   uploadedImage: "slide-img object-cover !w-[240px] h-[250px]",
   iconContainer:
     "absolute flex justify-center items-center top-4 right-4 z-999 rounded-full w-6 h-6 bg-grayscale-200 active:bg-grayscale-300 transition-colors duration-75",

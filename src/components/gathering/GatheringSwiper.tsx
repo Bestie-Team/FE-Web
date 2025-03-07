@@ -99,14 +99,14 @@ const styles = {
   shadow:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   slide:
-    "relative !h-[202px] flex flex-col rounded-[16px] shadow-bottom mt-[8px] mb-[52px] cursor-pointer overflow-hidden",
+    "relative !h-[202px] flex flex-col rounded-2xl shadow-bottom mt-2 mb-[52px] cursor-pointer overflow-hidden",
   gatheringImageInfo:
-    "absolute -bottom-[56px] left-0 right-0 flex flex-col justify-between w-full  text-grayscale-900 text-T5 p-[12px] pt-[8px] rounded-b-[16px] bg-base-white",
+    "absolute -bottom-[56px] left-0 right-0 flex flex-col justify-between w-full  text-grayscale-900 text-T5 p-3 pt-2 rounded-b-[16px] bg-base-white",
 
   image:
     "absolute top-0 left-0 right-0 slide-img object-cover max-w-[190px] w-[164px] h-[146px] group-hover:animate-smaller will-change-transform",
   date: "text-C2 text-grayscale-400",
   dDay: "tracking-wider absolute left-0 text-T4 text-base-white bottom-0 py-2 px-3",
   skeleton:
-    "bg-[#F4F4F4] !w-[168px] !h-[202px] flex flex-col rounded-[16px] mt-[8px] mb-[52px]",
+    "bg-[#F4F4F4] !w-[168px] !h-[202px] flex flex-col rounded-2xl mt-2 mb-[52px]",
 };

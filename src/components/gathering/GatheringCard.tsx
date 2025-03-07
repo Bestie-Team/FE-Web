@@ -94,7 +94,7 @@ export default function GatheringCard({
 
 const styles = {
   gatheringWrapper:
-    "relative overflow-hidden rounded-[16px] aspect-square cursor-pointer",
+    "relative overflow-hidden rounded-2xl aspect-square cursor-pointer",
   image:
     "object-cover object-center w-full h-full group-hover:animate-smaller transition duration-75 w-[168px] h-[168px]",
   gradation:

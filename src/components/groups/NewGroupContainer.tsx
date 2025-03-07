@@ -67,7 +67,7 @@ export default function NewGroupContainer({
 
 const styles = {
   leaderImage: "object-cover rounded-full h-12 w-12",
-  groupContainer: "bg-base-white gap-3 p-5 rounded-[16px]",
+  groupContainer: "bg-base-white gap-3 p-5 rounded-2xl",
 
   font: "text-C2 text-grayscale-300",
   bar: "mx-3 bg-grayscale-100 h-[13px] w-[1px]",

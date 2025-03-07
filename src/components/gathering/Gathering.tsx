@@ -51,10 +51,10 @@ export default function Gathering({
         {renderGatherings(gatherings)}
         {isFetching && (
           <>
-            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
-            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
-            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
-            <div className="overflow-hidden rounded-[16px] aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
           </>
         )}
       </div>

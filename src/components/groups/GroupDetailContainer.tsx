@@ -31,11 +31,13 @@ export default function GroupDetailContainer({
 }: GroupDetailPropsType) {
   return (
     <>
-      <GroupBannerContainer
-        imageUrl={groupImageUrl}
-        setIsLoaded={setIsLoaded}
-      />
-      {!isLoaded && <DotSpinner />}
+      <div className="relative">
+        <GroupBannerContainer
+          imageUrl={groupImageUrl}
+          setIsLoaded={setIsLoaded}
+        />
+        {!isLoaded && <DotSpinner />}
+      </div>
       <GroupInfoContainer group={selectedGroup} />
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />

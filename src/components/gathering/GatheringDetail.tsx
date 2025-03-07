@@ -34,10 +34,14 @@ export default function GatheringDetail({
 
   return (
     <>
-      <GatheringBannerContainer
-        gathering={selectedGathering}
-        setImageLoaded={setImageLoaded}
-      />
+      <div className="relative">
+        <GatheringBannerContainer
+          gathering={selectedGathering}
+          setImageLoaded={setImageLoaded}
+        />
+        {!imageLoaded && <DotSpinner />}
+      </div>
+
       <div className="absolute top-4 right-5 flex gap-[14px] z-50">
         <div className="cursor-pointer" onMouseDown={handleShare}>
           <ShareIcon />
@@ -101,7 +105,6 @@ export default function GatheringDetail({
         }
         content={<GatheringMemberContainer members={members} />}
       />
-      {imageLoaded === false ? <DotSpinner /> : null}
     </>
   );
 }

@@ -48,7 +48,7 @@ const PhotoSwiper = memo(
         {feed.images.map((image, idx) => (
           <SwiperSlide
             className={clsx(
-              "relative bg-[#F4F4F4] rounded-[16px] ",
+              "relative bg-[#F4F4F4] rounded-2xl",
               type === "home" ? "shadow-bottom mt-2 mb-[52px]" : ""
             )}
             key={`slide${idx}`}
@@ -96,5 +96,5 @@ const styles = {
     "flex justify-between w-full absolute bottom-0 text-base-white text-C2 px-4 py-[10px] rounded-b-[16px] bg-[#00000080]",
   gatheringImageInfo:
     "flex flex-col justify-between w-full absolute bottom-[-0.5px] text-grayscale-900 text-T5 p-3 pt-2 rounded-b-[16px] bg-base-white",
-  image: "slide-img object-cover rounded-[16px] aspect-[17/18]",
+  image: "slide-img object-cover rounded-2xl aspect-[17/18]",
 };

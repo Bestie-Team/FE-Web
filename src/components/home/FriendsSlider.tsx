@@ -4,7 +4,7 @@ import Spacing from "../shared/Spacing";
 import FriendItem, { AddFriendItem, SeeMoreItem } from "./FriendItem";
 import { useRouter } from "next/navigation";
 import { useFriendsAll } from "../friends/hooks/useFriends";
-import FriendSkeleton from "../shared/skeletons/FriendSkeleton";
+import FriendSkeleton from "../shared/Skeleton/FriendSkeleton";
 import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function FriendsSlider() {
