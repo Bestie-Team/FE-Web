@@ -26,7 +26,7 @@ export default function MemoriesBottomSheet({
       setStep(1);
     }
     onClose();
-    if (link !== "" && link !== "/record") {
+    if (link !== "") {
       router.push(link);
     }
   };
