@@ -4,21 +4,28 @@ import Image from "next/image";
 import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import useUploadGroupCoverImage from "./hooks/useUploadGroupCoverImage";
+import { CreateGroupRequest } from "@/models/group";
+import { SetterOrUpdater } from "recoil";
 
 export default function AddGroupPhoto({
   image,
   setImage,
+  setNewGroup,
 }: {
   image: string | null;
-  setImage: Dispatch<SetStateAction<string>>;
+  setImage?: Dispatch<SetStateAction<string>>;
+  setNewGroup?: SetterOrUpdater<CreateGroupRequest>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
 
   const { mutate: uploadGroupCover } = useUploadGroupCoverImage({
     file: groupImageFile as File,
     onSuccess: (data) => {
-      console.log(data.message);
-      setImage(data.url);
+      if (setImage) {
+        setImage(data.url);
+      } else if (setNewGroup) {
+        setNewGroup((prev) => ({ ...prev, groupImageUrl: data.url }));
+      }
     },
   });
 

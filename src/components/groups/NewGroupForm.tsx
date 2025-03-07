@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Spacing from "../shared/Spacing";
 import AddGroupPhoto from "./AddGroupPhoto";
 import Input from "../shared/Input/Input";
@@ -14,9 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import useMakeGroup from "./hooks/useMakeGroup";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import { usePathname } from "next/navigation";
 import MakingGroupSuccess from "./MakingGroupSuccess";
-import ErrorPage from "../shared/ErrorPage";
 
 export default function NewGroupForm({
   step,
@@ -25,13 +23,9 @@ export default function NewGroupForm({
   step: number;
   setStep: (num: number) => void;
 }) {
-  const [isClient, setIsClient] = useState(false);
-  const pathname = usePathname();
   const queryClient = useQueryClient();
   const [newGroup, setNewGroup] =
     useRecoilState<CreateGroupRequest>(newGroupAtom);
-
-  const [groupImageUrl, setGroupImageUrl] = useState<string>("");
 
   const makeGroupSuccessHandler = async (data: { message: string }) => {
     setStep(0);
@@ -47,32 +41,14 @@ export default function NewGroupForm({
   };
 
   const { mutate: makeGroup, isPending } = useMakeGroup({
-    group: { ...newGroup, groupImageUrl: groupImageUrl },
+    group: newGroup,
     onSuccess: makeGroupSuccessHandler,
   });
-
-  useEffect(() => {
-    if (!isClient) return;
-    return setNewGroup({
-      name: "",
-      description: "",
-      friendIds: null,
-      groupImageUrl: "",
-    });
-  }, [isClient, pathname]);
-
-  useEffect(() => {
-    if (!isClient) setIsClient(true);
-  }, [isClient]);
-
-  if (!isClient) {
-    return <ErrorPage />;
-  }
 
   if (step === 0 || isPending) {
     return (
       <MakingGroupSuccess
-        group={{ ...newGroup, groupImageUrl: groupImageUrl }}
+        group={{ ...newGroup, groupImageUrl: newGroup.groupImageUrl }}
         isPending={isPending}
       />
     );
@@ -81,7 +57,7 @@ export default function NewGroupForm({
   return (
     <form className="min-h-dvh flex flex-col px-5 pt-12">
       <Spacing size={24} />
-      <AddGroupPhoto image={groupImageUrl} setImage={setGroupImageUrl} />
+      <AddGroupPhoto image={newGroup.groupImageUrl} setNewGroup={setNewGroup} />
       <Spacing size={36} />
       <Input
         value={newGroup.name}
