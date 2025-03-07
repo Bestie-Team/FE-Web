@@ -184,5 +184,5 @@ const styles = {
   contentWrapper:
     "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-[12px] text-B3",
   button:
-    "bg-grayscale-50 hover:bg-grayscale-100 px-3 py-2 rounded-[8px] text-T6",
+    "bg-grayscale-50 active:bg-grayscale-100 transition duration-200 px-3 py-2 rounded-[8px] text-T6",
 };

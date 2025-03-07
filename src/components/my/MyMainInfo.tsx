@@ -70,4 +70,4 @@ export default function MyMainInfo({
 }
 
 const boxStyle =
-  "cursor-pointer items-center flex flex-col min-w-[100px] py-4 px-6 bg-grayscale-10 rounded-[20px] hover:bg-grayscale-50";
+  "cursor-pointer items-center flex flex-col min-w-[100px] py-4 px-6 bg-grayscale-10 rounded-[20px] active:bg-grayscale-50";

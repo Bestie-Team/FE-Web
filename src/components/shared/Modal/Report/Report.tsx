@@ -71,8 +71,8 @@ const styles = {
   button: "w-[104px] py-[14px] rounded-full text-T6",
 
   content: "text-B3 text-grayscale-600 text-center max-w-[168px]",
-  cancel: "text-grayscale-300 hover:bg-grayscale-50",
-  report: "bg-grayscale-900 text-base-white hover:bg-grayscale-800",
+  cancel: "text-grayscale-300 active:bg-grayscale-50",
+  report: "bg-grayscale-900 text-base-white active:bg-grayscale-800",
   reportTextarea:
     "h-20 p-2 border-grayscale-200 border-[1px] rounded-md leading-[22.86px] w-full tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none",
 };

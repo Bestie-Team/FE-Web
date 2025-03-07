@@ -30,8 +30,8 @@ export default function TimelineItem({
         <Flex
           direction="column"
           justify="space-between"
-          className="cursor-pointer"
-          onClick={() => router.push(`/gathering/${upcomingGathering.id}`)}
+          className="cursor-pointer active:bg-grayscale-10"
+          onMouseDown={() => router.push(`/gathering/${upcomingGathering.id}`)}
         >
           <span className="text-T4">{upcomingGathering.name}</span>
           <div className={styles.date}>

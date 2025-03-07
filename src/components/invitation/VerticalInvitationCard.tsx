@@ -182,7 +182,7 @@ const styles = {
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",
   fromWrapper: "absolute pr-1 right-[15px] bottom-[22px] gap-1",
   rejectBtn:
-    "bg-grayscale-100 px-6 py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200",
+    "bg-grayscale-100 px-6 py-[14px] rounded-[36px] text-T6 active:bg-grayscale-200",
   acceptBtn:
     "bg-grayscale-900 px-6 py-[14px] text-base-white rounded-[36px] text-T6",
 };

@@ -51,7 +51,7 @@ export default function WelcomeBottomSheet({
 
 const styles = {
   button: "w-full py-[18px] rounded-full",
-  good: "bg-grayscale-900 text-base-white hover:bg-grayscale-800",
-  okay: "bg-base-white text-grayscale-400 hover:bg-grayscale-50",
+  good: "bg-grayscale-900 text-base-white active:bg-grayscale-800",
+  okay: "bg-base-white text-grayscale-400 active:bg-grayscale-50",
   buttonWrapper: "w-full px-5 pt-3 font-[600] text-[14px] leading-[16.8px]",
 };

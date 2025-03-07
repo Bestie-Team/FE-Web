@@ -153,5 +153,5 @@ const styles = {
     "flex items-center px-3 py-2 rounded-lg bg-grayscale-900 text-base-white text-C2 h-fit flex-none",
 
   rejectBtn:
-    "flex items-center px-3 py-2 rounded-lg bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] hover:bg-grayscale-10 flex-none",
+    "flex items-center px-3 py-2 rounded-lg bg-base-white border-[1px] border-grayscale-100 text-C2 max-h-[30px] active:bg-grayscale-10 flex-none",
 };

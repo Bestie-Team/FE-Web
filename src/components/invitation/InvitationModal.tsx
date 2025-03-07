@@ -84,12 +84,12 @@ export default function InvitationModal({
 const styles = {
   dimmed: "flex flex-col justify-center items-center",
 
-  image: "h-[210px] object-cover rounded-[12px]",
+  image: "h-[210px] object-cover rounded-xl",
   subContentWrapper: "absolute pl-1 left-[15px] top-[332px]",
   groupMemberImagesWrapper: "absolute bottom-[15px] left-[15px] pl-1",
   fromWrapper: "absolute pr-1 right-[15px] bottom-[22px]",
   rejectBtn:
-    "bg-grayscale-100 px-6 py-[14px] rounded-[36px] text-T6 hover:bg-grayscale-200",
+    "bg-grayscale-100 px-6 py-[14px] rounded-[36px] text-T6 active:bg-grayscale-200",
   acceptBtn:
     "bg-grayscale-900 px-6 py-[14px] text-base-white rounded-[36px] text-T6",
 };
