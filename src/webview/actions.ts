@@ -1,21 +1,11 @@
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { postMessage } from "@/webview/postMessage";
 
-export const googleLoginMobile = () =>
-  window.ReactNativeWebView?.postMessage(
-    JSON.stringify({ type: WEBVIEW_EVENT.GOOGLE_LOGIN })
-  );
+export const googleLoginMobile = () => postMessage("GOOGLE_LOGIN");
 
-export const kakaoLoginMobile = () =>
-  window.ReactNativeWebView?.postMessage(
-    JSON.stringify({ type: WEBVIEW_EVENT.KAKAO_LOGIN })
-  );
+export const kakaoLoginMobile = () => postMessage("KAKAO_LOGIN");
 
 export const requestNotificationPermission = () =>
-  window.ReactNativeWebView?.postMessage(
-    JSON.stringify({ type: WEBVIEW_EVENT.NOTIFICATION_PERMISSION_REQUEST })
-  );
+  postMessage("NOTIFICATION_PERMISSION_REQUEST");
 
 export const requestCameraPermission = () =>
-  window.ReactNativeWebView?.postMessage(
-    JSON.stringify({ type: WEBVIEW_EVENT.CAMERA_PERMISSION_REQUEST })
-  );
+  postMessage("CAMERA_PERMISSION_REQUEST");
