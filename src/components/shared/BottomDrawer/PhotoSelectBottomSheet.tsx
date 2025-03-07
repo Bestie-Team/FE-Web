@@ -35,7 +35,7 @@ export default function PhotoSelectBottomSheet({
       <Flex direction="column" className="px-6 pb-6">
         <Text className="text-T3">이미지 추가</Text>
         <Spacing size={12} />
-        {actions.map((action, idx) => {
+        {actions.map((action) => {
           return (
             <React.Fragment key={`${action.title}`}>
               <ActionItem
