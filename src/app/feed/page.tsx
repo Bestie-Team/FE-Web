@@ -238,6 +238,9 @@ export default function FeedPage() {
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/mine"],
       }),
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all"],
+      }),
     ]);
   };
 
