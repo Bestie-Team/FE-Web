@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import { useRouter } from "next/navigation";
@@ -18,18 +18,30 @@ export default function MemoriesBottomSheet({
   onClose: () => void;
 }) {
   const router = useRouter();
+
   const setStep = useSetRecoilState(recordStepAtom);
   const [isClosing, setIsClosing] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
-  const handleActionClick = (link) => {
+  useEffect(() => {
+    router.prefetch("/record");
+    router.prefetch("/gathering/new");
+  }, [router]);
+
+  const handleActionClick = (link: string) => {
+    if (isNavigating) return;
+
+    setIsNavigating(true);
+    setIsClosing(true);
     if (link === "/record") {
       setStep(1);
     }
     router.push(link);
 
-    setIsClosing(true);
-
-    onClose();
+    setTimeout(() => {
+      onClose();
+      setIsNavigating(false);
+    }, 50);
   };
 
   return (

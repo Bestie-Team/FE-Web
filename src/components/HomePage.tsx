@@ -144,7 +144,10 @@ export default function HomePage() {
         <MemoizedGathering gatherings={ended} isFetching={isFetching_f} />
       </Flex>
       {isModalOpen && (
-        <MemoriesBottomSheet onClose={handleCloseMemoriesModal} />
+        <MemoriesBottomSheet
+          onClose={handleCloseMemoriesModal}
+          setIsLoading={() => {}}
+        />
       )}
       {isNew && <WelcomeBottomSheet onClose={handleCloseWelcomeModal} />}
     </div>

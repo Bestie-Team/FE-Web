@@ -1,58 +1,66 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import getHeader from "@/utils/getHeader";
+import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
 
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import ErrorPage from "../shared/ErrorPage";
 
-const DynamicComponents: { [key: number]: React.ComponentType<any> } = {
-  1: dynamic(() => import("./ChoosingKindOfMemory"), {
+const ChoosingGatheringToRecord = dynamic(
+  () => import("./ChoosingGatheringToRecord"),
+  {
     loading: () => <DotSpinner />,
     ssr: false,
-  }),
-  2: dynamic(() => import("./ChoosingGatheringToRecord"), {
+  }
+);
+
+const ChooseFriendToShare = dynamic(() => import("./ChooseFriendToShare"), {
+  loading: () => <DotSpinner />,
+  ssr: true,
+});
+
+const CreatingFeed = dynamic(() => import("./CreatingFeed"), {
+  loading: () => <DotSpinner />,
+  ssr: false,
+});
+
+const CreatingFeedNoGathering = dynamic(
+  () => import("./CreatingFeedNoGathering"),
+  {
     loading: () => <DotSpinner />,
     ssr: false,
-  }),
-  2.5: dynamic(() => import("./ChooseFriendToShare"), {
-    loading: () => <DotSpinner />,
-    ssr: false,
-  }),
-  3: dynamic(() => import("./CreatingFeed"), {
-    loading: () => <DotSpinner />,
-    ssr: false,
-  }),
-  3.5: dynamic(() => import("./CreatingFeedNoGathering"), {
-    loading: () => <DotSpinner />,
-    ssr: false,
-  }),
+  }
+);
+
+const DynamicComponents = {
+  1: ChoosingKindOfMemory,
+  2: ChoosingGatheringToRecord,
+  2.5: ChooseFriendToShare,
+  3: CreatingFeed,
+  3.5: CreatingFeedNoGathering,
 };
 
 export default function Record() {
   const header = getHeader("/record");
-  const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useRecoilState(recordStepAtom);
-  const [add, setAdd] = useState<number>(0);
+  const [add, setAdd] = React.useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
 
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
+  const isClient = typeof window !== "undefined";
 
   if (!isClient) {
     return <ErrorPage />;
-  } else if (step === 0) {
+  }
+
+  if (step === 0) {
     return <DotSpinner />;
   }
 
-  // 동적 컴포넌트 렌더링
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
@@ -68,6 +76,7 @@ export default function Record() {
     </>
   );
 }
+
 const styles = {
   headerWrapper: "max-w-[430px] w-full fixed z-10",
 };
