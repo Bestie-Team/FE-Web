@@ -25,29 +25,124 @@ export default function UploadPhotoSwiper({
 
   const maxImages = 5;
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target?.files?.[0];
-    if (!file) return;
+  const convertToWebP = (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new window.Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
 
-    // const maxSize = 5 * 1024 * 1024;
-    // if (file.size > maxSize) {
-    //   lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
-    //   e.target.value = "";
-    //   setImages([]);
-    // }
+          if (!ctx) {
+            console.error("Canvas context가 존재하지 않음");
+            reject(new Error("Canvas context not found"));
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                console.error("WebP 변환 실패");
+                reject(new Error("WebP 변환 실패"));
+                return;
+              }
+              const webpFile = new File(
+                [blob],
+                file.name.replace(/\.\w+$/, ".webp"),
+                {
+                  type: "image/webp",
+                }
+              );
+              resolve(webpFile);
+            },
+            "image/webp",
+            0.8
+          );
+        };
+        img.onerror = (error) => {
+          console.error("이미지 로드 실패", error);
+          reject(error);
+        };
+      };
+      reader.onerror = (error) => {
+        console.error("FileReader 실패", error);
+        reject(error);
+      };
+    });
+  };
+
+  const getFileExt = (fileName: string) => {
+    const ext = fileName.split(".").pop()?.toLowerCase();
+    if (ext === "jpg" || ext === "png" || ext === "jpeg" || ext === "webp") {
+      return ext;
+    }
+    return null;
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target?.files?.[0];
+
     if (filesToUpload.length === maxImages) {
       lightyToast.error(`최대 ${maxImages}장까지만 업로드 가능합니다.`);
       return;
     }
-    const objectUrl = URL.createObjectURL(file);
-    setImages((prev) => [...prev, objectUrl]);
 
-    if (setFilesToUpload) {
-      setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
+    if (file) {
+      const ext = getFileExt(file.name);
+      if (!ext) {
+        lightyToast.error(
+          "지원되지 않는 파일 형식입니다. (jpg, png, jpeg, webp 형식만 가능)"
+        );
+        return null;
+      }
+      const objectUrl = URL.createObjectURL(file);
+      setImages((prev) => [...prev, objectUrl]);
+
+      if (ext === "png" || ext === "jpg" || ext === "jpeg") {
+        const convertedFile = await convertToWebP(file);
+        if (setFilesToUpload) {
+          setFilesToUpload((prev) =>
+            prev ? [...prev, convertedFile] : [convertedFile]
+          );
+        }
+      } else {
+        if (setFilesToUpload) {
+          setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
+        }
+      }
+      return () => URL.revokeObjectURL(objectUrl);
     }
-
-    return () => URL.revokeObjectURL(objectUrl);
   };
+
+  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target?.files?.[0];
+  //   if (!file) return;
+
+  //   const maxSize = 5 * 1024 * 1024;
+  //   if (file.size > maxSize) {
+  //     lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+  //     e.target.value = "";
+  //     setImages([]);
+  //   }
+  //   if (filesToUpload.length === maxImages) {
+  //     lightyToast.error(`최대 ${maxImages}장까지만 업로드 가능합니다.`);
+  //     return;
+  //   }
+  //   const objectUrl = URL.createObjectURL(file);
+  //   setImages((prev) => [...prev, objectUrl]);
+
+  //   if (setFilesToUpload) {
+  //     setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
+  //   }
+
+  //   return () => URL.revokeObjectURL(objectUrl);
+  // };
 
   const handleImageDelete = (num: number) => {
     if (fileInputRef.current) {

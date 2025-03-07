@@ -27,7 +27,6 @@ export default function GroupEditPage() {
   const [step, setStep] = useState(1);
   const router = useRouter();
   const [groupInfo, setGroupInfo] = useState(selectedGroup);
-  const [groupImageUrl, setGroupImageUrl] = useState<string>("");
   const groupMembers = useRecoilValue<lighty.User[] | null>(
     originalGroupMembersAtom
   );
@@ -47,8 +46,7 @@ export default function GroupEditPage() {
     group: {
       name: groupInfo.name,
       description: groupInfo.description,
-      groupImageUrl:
-        groupImageUrl !== "" ? groupImageUrl : groupInfo.groupImageUrl,
+      groupImageUrl: groupInfo.groupImageUrl,
     },
     onSuccess: (data) => lightyToast.success(data.message),
   });
@@ -69,7 +67,7 @@ export default function GroupEditPage() {
           <Spacing size={24} />
           <AddGroupPhoto
             image={groupInfo.groupImageUrl}
-            setImage={setGroupImageUrl}
+            setGroup={setGroupInfo}
           />
           <Spacing size={36} />
           <Input
