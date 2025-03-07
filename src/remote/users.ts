@@ -74,3 +74,20 @@ export async function getIdAvailability({ accountId }: { accountId: string }) {
   });
   return response;
 }
+
+export async function patchNotificationToken(
+  body: lighty.UpdateNotificationTokenRequest
+) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/users/notification-token`;
+    await fetchWithAuth(targetUrl, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("토큰 업로드 실패");
+  }
+}
