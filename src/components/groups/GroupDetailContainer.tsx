@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
 import GroupBannerContainer from "./GroupBannerContainer";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import GroupInfoContainer from "./GroupInfoContainer";
 import LeaderContainer from "../shared/LeaderContainer";
 import Spacing from "../shared/Spacing";
@@ -31,12 +30,12 @@ export default function GroupDetailContainer({
 }: GroupDetailPropsType) {
   return (
     <>
-      <div className="relative">
+      <div className="w-full h-[316px] relative">
         <GroupBannerContainer
           imageUrl={groupImageUrl}
           setIsLoaded={setIsLoaded}
         />
-        {!isLoaded && <DotSpinner />}
+        {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
       <GroupInfoContainer group={selectedGroup} />
       <div className={styles.dividerWrapper}>
@@ -68,7 +67,7 @@ export default function GroupDetailContainer({
 const styles = {
   divider: "flex-shrink-0 h-[1px] w-full bg-grayscale-50",
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",
-  title: "font-[700] text-[16px] leading-[20.8px] flex-grow",
+  title: "font-[700] text-base leading-[20.8px] flex-grow",
   contentWrapper:
     "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-xl text-B3",
 };

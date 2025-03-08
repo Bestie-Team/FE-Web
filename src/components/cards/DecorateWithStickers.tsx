@@ -4,10 +4,10 @@ import html2canvas from "html2canvas";
 import Spacing from "../shared/Spacing";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  cardDecorateModalStateAtom,
   cardFrameAtom,
   cardImageUrlAtom,
   cardSelectedFeedAtom,
+  decoBottomSheetStateAtom,
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
@@ -20,8 +20,8 @@ import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 
 export default function DecorateWithStickers() {
-  const [decoModalOpen, setDecoModalOpen] = useRecoilState(
-    cardDecorateModalStateAtom
+  const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
+    decoBottomSheetStateAtom
   );
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imageRef = React.useRef<HTMLImageElement | null>(null);
@@ -270,11 +270,11 @@ export default function DecorateWithStickers() {
         )}
       </Flex>
 
-      {decoModalOpen ? (
+      {decoBottomSheetState ? (
         <DecoStickerBottomSheet
           handleSticker={handleAddSticker}
-          open={decoModalOpen}
-          onClose={() => setDecoModalOpen(false)}
+          open={decoBottomSheetState}
+          onClose={() => setDecoBottomSheetState(false)}
         />
       ) : null}
     </Flex>

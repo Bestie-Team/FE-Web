@@ -25,6 +25,6 @@ export default function Banner() {
 }
 
 const styles = {
-  text: "text-base-white font-[600] text-[16px] leading-[24px] tracking-[-0.48px]",
+  text: "text-base-white font-[600] text-base leading-[24px] tracking-[-0.48px]",
   textWrapper: "absolute top-[40px] left-[22px] gap-2",
 };

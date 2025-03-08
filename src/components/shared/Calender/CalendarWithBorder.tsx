@@ -23,7 +23,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 export default function LightyCalendarWithBorder({
   gatherings,
 }: {
-  gatherings: Gathering[];
+  gatherings?: Gathering[];
 }) {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom

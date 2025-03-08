@@ -105,11 +105,6 @@ export default function useHeader(pathname: string) {
       else return <HeaderComponent {...(config.props as HeaderWithBtnProps)} />;
     }
 
-    // // Special case for "/?ref=signup"
-    // if (pathname === "/?ref=signup") {
-    //   return <BackgroundReversibleHeader />;
-    // }
-
     return null;
   };
 

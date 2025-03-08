@@ -24,7 +24,7 @@ export const cardSelectedFeedAtom = atom<
   },
 });
 
-export const cardDecorateModalStateAtom = atom<boolean>({
+export const decoBottomSheetStateAtom = atom<boolean>({
   key: "card/decorate",
   default: false,
 });

@@ -1,8 +1,8 @@
 import { Feed } from "@/models/feed";
 import { atom } from "recoil";
 
-export const commentModalStateAtom = atom<boolean>({
-  key: "feed/commentModal",
+export const bottomSheetStateAtom = atom<boolean>({
+  key: "feed/commentBottomSheet",
   default: false,
 });
 

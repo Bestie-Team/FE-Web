@@ -10,18 +10,18 @@ export default function GroupBannerContainer({
   setIsLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
-    <div className="relative">
+    <>
       <Image
         priority
-        alt="groupBannerImage"
+        alt="groupImage"
         src={imageUrl || Lighty}
         width={600}
         height={316}
-        className="h-[316px] w-[600px] object-cover"
+        className="h-[316px] w-full object-cover"
         onLoad={() => setIsLoaded(true)}
       />
       <div className={styles.shade} />
-    </div>
+    </>
   );
 }
 

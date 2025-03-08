@@ -99,7 +99,6 @@ export default function FeedForDisplay() {
             className={styles.image}
             width={340}
             height={360}
-            quality={76}
           />
           <div className={styles.feedImageInfo}>
             <span>{"반가워요"}</span>

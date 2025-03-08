@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Spacing from "../shared/Spacing";
 import AddGroupPhoto from "./AddGroupPhoto";
 import Input from "../shared/Input/Input";
@@ -8,13 +8,17 @@ import Flex from "../shared/Flex";
 import AddFriendsSlider from "./AddFriendsSlider";
 import UserIcon from "../shared/Icon/UserIcon";
 import { CreateGroupRequest } from "@/models/group";
-import { useRecoilState } from "recoil";
-import { newGroupAtom } from "@/atoms/group";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import useMakeGroup from "./hooks/useMakeGroup";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import MakingGroupSuccess from "./MakingGroupSuccess";
+import dynamic from "next/dynamic";
+import DotSpinner from "../shared/Spinner/DotSpinner";
+
+const MakingGroupSuccess = dynamic(() => import("./MakingGroupSuccess"), {
+  ssr: false,
+  loading: () => <DotSpinner />,
+});
 
 export default function NewGroupForm({
   step,
@@ -24,8 +28,12 @@ export default function NewGroupForm({
   setStep: (num: number) => void;
 }) {
   const queryClient = useQueryClient();
-  const [newGroup, setNewGroup] =
-    useRecoilState<CreateGroupRequest>(newGroupAtom);
+  const [newGroup, setNewGroup] = useState<CreateGroupRequest>({
+    name: "",
+    description: "",
+    friendIds: null,
+    groupImageUrl: "",
+  });
 
   const makeGroupSuccessHandler = async (data: { message: string }) => {
     setStep(0);

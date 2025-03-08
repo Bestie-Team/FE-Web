@@ -36,7 +36,10 @@ export default function InvitationModal({
 
   const { mutate: reject } = useRejectInvitationToGathering({
     invitationId: selectedInvitation?.id || "",
-    onSuccess: (data: SuccessResponse) => {
+    onSuccess: async (data: SuccessResponse) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["received", "gathering/invitation"],
+      });
       lightyToast.success(data.message);
       onClickClose(false);
     },

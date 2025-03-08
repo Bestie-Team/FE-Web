@@ -2,12 +2,7 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import {
-  feedDeleteModalAtom,
-  feedDisplayModalAtom,
-  feedHideModalAtom,
-  reportModalAtom,
-} from "@/atoms/modal";
+import { modalStateAtom, reportModalAtom } from "@/atoms/modal";
 import { selectedFeedIdAtom, selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import { Feed } from "@/models/feed";
@@ -20,10 +15,8 @@ interface FeedDropdownMenuProps {
 const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
   ({ items, className, feed }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    const setModalOpen = useSetRecoilState(feedDeleteModalAtom);
+    const setModalOpen = useSetRecoilState(modalStateAtom);
     const setReportModalOpen = useSetRecoilState(reportModalAtom);
-    const setHideModalOpen = useSetRecoilState(feedHideModalAtom);
-    const setDisplayModalOpen = useSetRecoilState(feedDisplayModalAtom);
     const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
     const setSelectedFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
     const router = useRouter();
@@ -31,19 +24,19 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
         setSelectedFeedId(feed.id);
-        setModalOpen(true);
+        setModalOpen({ type: "deleteFeed", isOpen: true });
       } else if (item.includes("수정")) {
         setSelectedFeedInfo(feed);
         router.push("/feed/edit");
       } else if (item.includes("숨기기")) {
         setSelectedFeedInfo(feed);
-        setHideModalOpen(true);
+        setModalOpen({ type: "hideFeed", isOpen: true });
       } else if (item.includes("신고")) {
         setSelectedFeedId(feed.id);
         setReportModalOpen(true);
       } else if (item.includes("숨김 해제")) {
         setSelectedFeedId(feed.id);
-        setDisplayModalOpen(true);
+        setModalOpen({ type: "displayFeed", isOpen: true });
       }
     };
 

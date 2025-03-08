@@ -10,20 +10,14 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-
-const UserListContainer = dynamic(
-  () => import("@/components/users/UserListContainer"),
-  { ssr: false, loading: () => <DotSpinner /> }
-);
+import UserListContainer from "@/components/users/UserListContainer";
 
 export default function SearchPage() {
   const search = useRecoilValue(userSearchAtom);
   const debouncedSearch = useDebounce(search);
 
   const {
-    data: userData,
+    data: searchedUsers,
     loadMore,
     isFetching,
   } = useSearchUsers({
@@ -64,7 +58,10 @@ export default function SearchPage() {
           </Button>
         </Flex>
       )}
-      <UserListContainer isFetching={isFetching} searchedFriends={userData} />
+      <UserListContainer
+        isFetching={isFetching}
+        searchedUsers={searchedUsers}
+      />
     </div>
   );
 }

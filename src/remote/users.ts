@@ -75,6 +75,7 @@ export async function getIdAvailability({ accountId }: { accountId: string }) {
   return response;
 }
 
+
 export async function patchNotificationToken(
   body: lighty.UpdateNotificationTokenRequest
 ) {
@@ -89,5 +90,19 @@ export async function patchNotificationToken(
   } catch (error) {
     console.log(error);
     throw new Error("토큰 업로드 실패");
+
+export async function deleteUser() {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/users`;
+    const response = await fetchWithAuth(targetUrl, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("탈퇴 실패");
+
   }
 }

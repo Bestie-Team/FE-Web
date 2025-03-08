@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { friendDeleteModalAtom, friendReportModalAtom } from "@/atoms/modal";
+import { friendReportModalAtom, modalStateAtom } from "@/atoms/modal";
 
 interface FriendDropdownMenuProps {
   selectedId?: string;
@@ -13,12 +13,12 @@ interface FriendDropdownMenuProps {
 const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
   ({ items, className }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    const setModalOpen = useSetRecoilState(friendDeleteModalAtom);
+    const setModalOpen = useSetRecoilState(modalStateAtom);
     const setReportModalOpen = useSetRecoilState(friendReportModalAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
-        setModalOpen(true);
+        setModalOpen({ type: "deleteFriend", isOpen: true });
       } else if (item.includes("신고")) {
         setReportModalOpen(true);
       }

@@ -19,14 +19,12 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=co
 
 export default function Splash() {
   const { login } = useAuth();
-  const router = useRouter();
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
       try {
         const userInfo = await postLogin({ accessToken, provider });
         if (userInfo) login(userInfo);
-        router.replace("/feed");
       } catch (error) {
         console.error(error);
         lightyToast.error("로그인에 실패했어요");

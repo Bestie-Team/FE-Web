@@ -10,16 +10,14 @@ import { lightyToast } from "@/utils/toast";
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import GatheringForm from "@/components/gathering/GatheringForm";
 
 const components = [
   dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-  dynamic(() => import("@/components/gathering/GatheringForm"), {
-    loading: () => <DotSpinner />,
-    ssr: false,
-  }),
+
   dynamic(() => import("@/components/friends/InviteFriends"), {
     loading: () => <DotSpinner />,
     ssr: false,
@@ -72,10 +70,20 @@ export default function NewGatheringPage() {
 
   const CurrentStepComponent = components[step] || components[0];
 
+  if (step === 1) {
+    return (
+      <GatheringForm
+        formType="new"
+        setStep={setStep}
+        gathering={gatheringInfo}
+        setGathering={setGatheringInfo}
+      />
+    );
+  }
+
   return (
     <CurrentStepComponent
       isPending={isPending}
-      formType="new"
       gathering={gatheringInfo}
       setGathering={setGatheringInfo}
       setStep={setStep}

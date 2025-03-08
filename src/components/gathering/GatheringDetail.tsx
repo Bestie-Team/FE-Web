@@ -11,7 +11,6 @@ import CalendarIcon from "../shared/Icon/CalendarIcon";
 import Image from "next/image";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import UserIcon from "../shared/Icon/UserIcon";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import GatheringMemberContainer from "./GatheringMembersContainer";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { formatToKoreanTime } from "@/utils/makeUTC";
@@ -34,14 +33,13 @@ export default function GatheringDetail({
 
   return (
     <>
-      <div className="relative">
+      <div className="w-full relative h-[316px]">
         <GatheringBannerContainer
           gathering={selectedGathering}
           setImageLoaded={setImageLoaded}
         />
-        {!imageLoaded && <DotSpinner />}
+        {!imageLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
-
       <div className="absolute top-4 right-5 flex gap-[14px] z-50">
         <div className="cursor-pointer" onMouseDown={handleShare}>
           <ShareIcon />
@@ -112,7 +110,7 @@ export default function GatheringDetail({
 const styles = {
   header: "max-w-[430px] z-10 fixed w-full",
 
-  title: "font-[700] text-[16px] leading-[20.8px]",
+  title: "font-[700] text-base leading-[20.8px]",
   contentWrapper:
     "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-xl text-B3",
 };

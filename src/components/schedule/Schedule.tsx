@@ -24,9 +24,10 @@ export default function Schedule({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const upcomingGatherings = expectingGatherings
-    ?.filter((gathering) => new Date(gathering.gatheringDate) >= today)
-    .reverse();
+  const upcomingGatherings =
+    expectingGatherings
+      ?.filter((gathering) => new Date(gathering.gatheringDate) >= today)
+      .reverse() || [];
 
   return (
     <div className="min-h-dvh">
@@ -35,17 +36,11 @@ export default function Schedule({
           <DotSpinner />
         ) : (
           <div className="min-h-[400px]">
-            {upcomingGatherings ? (
-              <LightyCalendarWithBorder gatherings={upcomingGatherings} />
-            ) : null}
+            <LightyCalendarWithBorder gatherings={upcomingGatherings} />
           </div>
         )}
         <Spacing size={28} />
-        {isFetching || !upcomingGatherings ? (
-          <DotSpinner />
-        ) : (
-          <MemoizedUpcomingSchedule gathering={upcomingGatherings} />
-        )}
+        <MemoizedUpcomingSchedule gathering={upcomingGatherings} />
       </Flex>
     </div>
   );

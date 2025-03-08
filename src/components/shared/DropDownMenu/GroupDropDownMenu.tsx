@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
+import { modalStateAtom } from "@/atoms/modal";
 import { useRouter } from "next/navigation";
 import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
 import { GroupEditProps } from "@/app/groups/[id]/page";
@@ -17,16 +17,15 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
   ({ items, className, group }, ref) => {
     const router = useRouter();
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    const setDeleteModalOpen = useSetRecoilState(groupDeleteModalAtom);
-    const setExitModalOpen = useSetRecoilState(groupExitModalAtom);
+    const setOpenModal = useSetRecoilState(modalStateAtom);
     const setSelectedGroup = useSetRecoilState(selectedGroupAtom);
     const setOriginalGroupMembers = useSetRecoilState(originalGroupMembersAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
-        setDeleteModalOpen(true);
+        setOpenModal({ type: "deleteGroup", isOpen: true });
       } else if (item.includes("나가기")) {
-        setExitModalOpen(true);
+        setOpenModal({ type: "exitGroup", isOpen: true });
       } else if (item.includes("수정")) {
         setSelectedGroup({
           groupId: group.id,

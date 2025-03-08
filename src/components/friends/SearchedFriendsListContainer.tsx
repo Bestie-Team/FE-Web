@@ -1,30 +1,22 @@
-import React, { useState } from "react";
-import FriendsListContainer from "./FriendsListContainer";
-import useSearchFriends from "./hooks/useSearchFriends";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+// import React from "react";
+// import FriendsListContainer from "./FriendsListContainer";
+// import useSearchFriends from "./hooks/useSearchFriends";
+// import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+// import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
-export default function SearchedFriendsListContainer({
-  debouncedSearch,
-}: {
-  debouncedSearch: string;
-}) {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+// export default function SearchedFriendsListContainer({
+//   debouncedSearch,
+// }: {
+//   debouncedSearch: string;
+// }) {
+//   const { data, isFetching, loadMore } = useSearchFriends({
+//     search: debouncedSearch,
+//     enabled: debouncedSearch.length >= 2,
+//   });
 
-  const { data, isFetching, loadMore } = useSearchFriends({
-    search: debouncedSearch,
-    enabled: debouncedSearch.length >= 2,
-  });
+//   useInfiniteScroll({ isFetching, loadMore });
 
-  useInfiniteScroll({ isFetching, loadMore });
+//   if (isFetching) return <DotSpinnerSmall />;
 
-  if (isFetching) return <DotSpinnerSmall />;
-
-  return (
-    <FriendsListContainer
-      friends={data}
-      isModalOpen={isModalOpen}
-      setIsModalOpen={setIsModalOpen}
-    />
-  );
-}
+//   return <FriendsListContainer friends={data} />;
+// }
