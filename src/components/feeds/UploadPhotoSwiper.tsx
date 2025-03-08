@@ -43,13 +43,6 @@ export default function UploadPhotoSwiper({
     }
 
     if (file) {
-      const maxSize = 5 * 1024 * 1024;
-      if (file.size > maxSize) {
-        lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
-        e.target.value = "";
-        return;
-      }
-
       const ext = getFileExt(file.name);
       if (!ext) {
         lightyToast.error(
@@ -75,30 +68,6 @@ export default function UploadPhotoSwiper({
       return () => URL.revokeObjectURL(objectUrl);
     }
   };
-
-  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target?.files?.[0];
-  //   if (!file) return;
-
-  //   const maxSize = 5 * 1024 * 1024;
-  //   if (file.size > maxSize) {
-  //     lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
-  //     e.target.value = "";
-  //     setImages([]);
-  //   }
-  //   if (filesToUpload.length === maxImages) {
-  //     lightyToast.error(`최대 ${maxImages}장까지만 업로드 가능합니다.`);
-  //     return;
-  //   }
-  //   const objectUrl = URL.createObjectURL(file);
-  //   setImages((prev) => [...prev, objectUrl]);
-
-  //   if (setFilesToUpload) {
-  //     setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
-  //   }
-
-  //   return () => URL.revokeObjectURL(objectUrl);
-  // };
 
   const handleImageDelete = (num: number) => {
     if (fileInputRef.current) {

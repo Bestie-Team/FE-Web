@@ -1,11 +1,13 @@
 "use client";
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
 import Flex from "./Flex";
 import clsx from "clsx";
+import { lightyToast } from "@/utils/toast";
+import { compressImage } from "@/utils/compress";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -29,23 +31,53 @@ export default function ProfileImageDisplay({
     },
   });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputFile = e.target?.files?.[0];
     if (!inputFile) return;
+    const getFileExt = (fileName: string) => {
+      const ext = fileName.split(".").pop()?.toLowerCase();
+      if (ext === "jpg" || ext === "png" || ext === "jpeg" || ext === "webp") {
+        return ext;
+      }
+      return null;
+    };
 
-    const imageUrl = URL.createObjectURL(inputFile);
+    if (inputFile) {
+      const ext = getFileExt(inputFile.name);
+      if (!ext) {
+        lightyToast.error(
+          "지원되지 않는 파일 형식입니다. (jpg, png, jpeg, webp 형식만 가능)"
+        );
+        return null;
+      }
+      let imageUrl: string | null = null;
 
-    setNewImage(imageUrl);
+      try {
+        if (ext) {
+          const convertedFile = await compressImage(inputFile);
+          if (!convertedFile) return;
+          imageUrl = URL.createObjectURL(convertedFile);
+        } else {
+          imageUrl = URL.createObjectURL(inputFile);
+        }
 
-    // const maxSize = 5 * 1024 * 1024;
-    // if (inputFile.size > maxSize) {
-    //   lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
-    //   e.target.value = "";
-    //   return;
-    // }
+        setNewImage(imageUrl);
 
-    mutate({ file: inputFile });
+        mutate({ file: inputFile });
+      } catch (error) {
+        console.error("Error processing file:", error);
+        lightyToast.error("파일 처리 중 오류가 발생했습니다.");
+      }
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      if (newImage) {
+        URL.revokeObjectURL(newImage);
+      }
+    };
+  }, [newImage]);
 
   return (
     <label

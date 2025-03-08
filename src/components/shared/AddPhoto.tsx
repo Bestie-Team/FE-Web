@@ -2,10 +2,12 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
 import * as lighty from "lighty-type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
 import PlusIcon from "./Icon/PlusIcon";
+import { compressImage } from "@/utils/compress";
+import { lightyToast } from "@/utils/toast";
 
 export interface RegisterRequestType {
   email: string;
@@ -30,36 +32,59 @@ export default function AddPhoto({
 }) {
   const [image, setImage] = useState<string | undefined>(undefined);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputFile = e.target?.files?.[0];
     if (!inputFile) return;
+    const getFileExt = (fileName: string) => {
+      const ext = fileName.split(".").pop()?.toLowerCase();
+      if (ext === "jpg" || ext === "png" || ext === "jpeg" || ext === "webp") {
+        return ext;
+      }
+      return null;
+    };
 
-    // const maxSize = 5 * 1024 * 1024;
-    // if (inputFile.size > maxSize) {
-    //   lightyToast.error("파일첨부 사이즈는 5MB 이내로 가능합니다.");
-    //   e.target.value = "";
-    //   setImage(undefined);
-    //   if (setImageUrl) {
-    //     setImageUrl((prev) => ({
-    //       ...prev,
-    //       profileImageUrl: null,
-    //     }));
-    //   }
-    //   return;
-    // }
+    if (inputFile) {
+      const ext = getFileExt(inputFile.name);
+      if (!ext) {
+        lightyToast.error(
+          "지원되지 않는 파일 형식입니다. (jpg, png, jpeg, webp 형식만 가능)"
+        );
+        return null;
+      }
+      let imageUrl: string | null = null;
 
-    const objectUrl = URL.createObjectURL(inputFile);
-    setImage(objectUrl);
+      try {
+        if (ext) {
+          const convertedFile = await compressImage(inputFile);
+          console.log(convertedFile);
+          if (!convertedFile) return;
+          imageUrl = URL.createObjectURL(convertedFile);
+        } else {
+          imageUrl = URL.createObjectURL(inputFile);
+        }
 
-    if (setImageUrl) {
-      setImageUrl((prev) => ({
-        ...prev,
-        profileImageUrl: inputFile,
-      }));
+        setImage(imageUrl);
+
+        if (setImageUrl) {
+          setImageUrl((prev) => ({
+            ...prev,
+            profileImageUrl: inputFile,
+          }));
+        }
+      } catch (error) {
+        console.error("Error processing file:", error);
+        lightyToast.error("파일 처리 중 오류가 발생했습니다.");
+      }
     }
-
-    return () => URL.revokeObjectURL(objectUrl);
   };
+
+  useEffect(() => {
+    return () => {
+      if (image) {
+        URL.revokeObjectURL(image);
+      }
+    };
+  }, [image]);
 
   return (
     <label
