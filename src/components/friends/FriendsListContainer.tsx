@@ -5,7 +5,6 @@ import Spacing from "../shared/Spacing";
 import Button from "../shared/Button/Button";
 import Link from "next/link";
 import FriendListItem from "./FriendListItem";
-import { SetterOrUpdater } from "recoil";
 
 export default function FriendsListContainer({
   friends,

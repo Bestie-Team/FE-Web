@@ -1,3 +1,4 @@
+import { ModalType } from "@/models/modal";
 import { atom } from "recoil";
 
 export const modalStateAtom = atom<{ type: ModalType | null; isOpen: boolean }>(

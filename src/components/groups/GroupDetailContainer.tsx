@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
 import GroupBannerContainer from "./GroupBannerContainer";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import GroupInfoContainer from "./GroupInfoContainer";
 import LeaderContainer from "../shared/LeaderContainer";
 import Spacing from "../shared/Spacing";
