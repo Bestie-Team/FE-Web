@@ -1,4 +1,5 @@
 import { postGroupCoverImage } from "@/remote/group";
+import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useUploadGroupCoverImage({
@@ -16,5 +17,6 @@ export default function useUploadGroupCoverImage({
         onSuccess(data);
       }
     },
+    onError: (error) => lightyToast.error(error.message),
   });
 }

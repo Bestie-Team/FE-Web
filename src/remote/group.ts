@@ -27,7 +27,7 @@ export async function postGroupCoverImage({ file }: { file: File }) {
     if (error instanceof Response && error.status === 413) {
       throw new Error("업로드 가능한 파일 사이즈를 초과하였습니다");
     }
-    throw new Error("Failed to upload group cover Image");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 

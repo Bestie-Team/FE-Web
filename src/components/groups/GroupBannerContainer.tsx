@@ -15,9 +15,9 @@ export default function GroupBannerContainer({
         priority
         alt="groupImage"
         src={imageUrl || Lighty}
-        width={600}
+        width={500}
         height={316}
-        className="h-[316px] w-full object-cover"
+        className="h-[316px] w-[500px] object-cover"
         onLoad={() => setIsLoaded(true)}
       />
       <div className={styles.shade} />
