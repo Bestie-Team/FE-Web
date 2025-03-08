@@ -18,49 +18,47 @@ export default function GatheringBannerContainer({
   const diff = differenceInCalendarDays(new Date(), date);
   const displayingDate = formatToDisplay(date);
   return (
-    <Flex className="w-full">
-      <div className="w-full relative h-[420px]">
-        <Image
-          priority
-          alt="gatheringBanner"
-          src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
-          width={430}
-          height={420}
-          className="w-[430px] h-[420px] object-cover"
-          onLoad={() => setImageLoaded(true)}
-        />
-        <div className="absolute inset-0 bg-[#00000080]" />
-        <Flex justify="space-between" className={styles.wrapper}>
+    <>
+      <Image
+        priority
+        alt="gatheringBanner"
+        src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
+        width={600}
+        height={316}
+        className="h-[316px] w-[600px] object-cover"
+        onLoad={() => setImageLoaded(true)}
+      />
+      <div className="absolute inset-0 bg-[#00000080]" />
+      <Flex justify="space-between" className={styles.wrapper}>
+        <Flex direction="column">
           <Flex direction="column">
-            <Flex direction="column">
-              {gathering.name.length >= 10 ? (
-                <>
-                  <span className={styles.gatheringName}>
-                    {gathering.name.slice(0, 5)}
-                  </span>
-                  <Spacing size={6} />
-                  <span className={styles.gatheringName}>
-                    {gathering.name.slice(5)}
-                  </span>
-                </>
-              ) : (
-                <span className={styles.gatheringName}>{gathering.name}</span>
-              )}
-            </Flex>
-            <Spacing size={4} />
-            <span className={styles.date}>{displayingDate.slice(0, 14)}</span>
+            {gathering.name.length >= 10 ? (
+              <>
+                <span className={styles.gatheringName}>
+                  {gathering.name.slice(0, 5)}
+                </span>
+                <Spacing size={6} />
+                <span className={styles.gatheringName}>
+                  {gathering.name.slice(5)}
+                </span>
+              </>
+            ) : (
+              <span className={styles.gatheringName}>{gathering.name}</span>
+            )}
           </Flex>
-          <div className={styles.diff}>
-            {diff >= 0 ? `D + ${diff}` : `D${diff}`}
-          </div>
+          <Spacing size={4} />
+          <span className={styles.date}>{displayingDate.slice(0, 14)}</span>
         </Flex>
-      </div>
-    </Flex>
+        <div className={styles.diff}>
+          {diff >= 0 ? `D + ${diff}` : `D${diff}`}
+        </div>
+      </Flex>
+    </>
   );
 }
 
 const styles = {
-  wrapper: "absolute left-0 right-0 bottom-0 p-[24px] pt-0",
+  wrapper: "absolute left-0 right-0 bottom-0 p-6 pt-0",
 
   gatheringName: "text-base-white text-T1",
 

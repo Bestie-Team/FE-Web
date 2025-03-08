@@ -63,5 +63,5 @@ const styles = {
   inputWrapper: `w-full ${maxWidth} ${height} flex items-center gap-3 px-5 py-2 bg-grayscale-10 border rounded-full transition-all duration-300 `,
 
   input:
-    "flex-grow bg-grayscale-10 outline-none text-[16px] leading-[22.86px] tracking-[-0.48px] text-grayscale-700 transform origin-left scale-[0.875]",
+    "flex-grow bg-grayscale-10 outline-none text-base leading-[22.86px] tracking-[-0.48px] text-grayscale-700 transform origin-left scale-[0.875]",
 };

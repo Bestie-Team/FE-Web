@@ -9,17 +9,16 @@ type SearchedUser = lighty.User & { status: FriendRequestStatus };
 
 export default function UserListContainer({
   isFetching,
-  searchedFriends,
+  searchedUsers,
 }: {
   isFetching: boolean;
-  friends?: lighty.User[];
-  searchedFriends?: SearchedUser[];
+  searchedUsers?: SearchedUser[];
 }) {
-  if (searchedFriends) {
+  if (searchedUsers) {
     return (
       <div className="min-h-[calc(100dvh-142px)] pt-[142px] px-5 overflow-y-scroll no-scrollbar">
         <ul>
-          {searchedFriends?.map((friendItem, idx) => {
+          {searchedUsers?.map((friendItem, idx) => {
             return (
               <React.Fragment key={`${friendItem.accountId}`}>
                 <UserListItem userInfo={friendItem} idx={idx} />

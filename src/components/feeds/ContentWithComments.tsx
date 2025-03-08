@@ -1,4 +1,4 @@
-import { commentModalStateAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom } from "@/atoms/feed";
 import Flex from "../shared/Flex";
 import MessageIcon from "../shared/Icon/MessageIcon";
 import Spacing from "../shared/Spacing";
@@ -11,7 +11,7 @@ export default function ContentWithComments({
   content: string;
   commentCount: number;
 }) {
-  const setModalOpen = useSetRecoilState(commentModalStateAtom);
+  const setBottomSheetState = useSetRecoilState(bottomSheetStateAtom);
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>{content}</div>
@@ -19,13 +19,13 @@ export default function ContentWithComments({
       <Flex align="center">
         <MessageIcon
           onClick={() => {
-            setModalOpen(true);
+            setBottomSheetState(true);
           }}
         />
         <Spacing direction="horizontal" size={2} />
         <span
           onClick={() => {
-            setModalOpen(true);
+            setBottomSheetState(true);
           }}
           className="text-B4 text-grayscale-600 cursor-pointer"
         >

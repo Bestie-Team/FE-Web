@@ -5,12 +5,12 @@ import { useSetRecoilState } from "recoil";
 import type { RecoilState } from "recoil";
 import type { FC } from "react";
 
-import { cardDecorateModalStateAtom } from "@/atoms/card";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
 import { recordModalAtom } from "@/atoms/modal";
 import LightyDeco from "../Icon/LightyDeco";
 import PlusIcon from "../Icon/PlusIcon";
 import Tooltip from "../Tooltip/Tooltip";
+import { decoBottomSheetStateAtom } from "@/atoms/card";
 
 interface FloatingButtonProps {
   tooltip?: boolean;
@@ -35,7 +35,7 @@ const PATH_CONFIGS: PathConfig[] = [
   },
   {
     path: "/card",
-    modalAtom: cardDecorateModalStateAtom,
+    modalAtom: decoBottomSheetStateAtom,
     tooltipText: "👀 스티커로 꾸며보세요!",
   },
 ];

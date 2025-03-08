@@ -1,41 +1,16 @@
 import React, { memo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
-import { friendsModalStateAtom, selectedFriendAtom } from "@/atoms/friends";
+import { selectedFriendAtom } from "@/atoms/friends";
 import FriendsListContainer from "./FriendsListContainer";
 import useDeleteFriend from "./hooks/useDeleteFriend";
 import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../shared/Modal/Modal";
-import { friendDeleteModalAtom, friendReportModalAtom } from "@/atoms/modal";
+import { friendReportModalAtom, modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useReport from "../report/hooks/useReport";
 import { useAuth } from "../shared/providers/AuthProvider";
 import Report from "../shared/Modal/Report/Report";
-
-const DeleteFriendModal = memo(
-  ({
-    isOpen,
-    onClose,
-    onDelete,
-  }: {
-    isOpen: boolean;
-    onClose: () => void;
-    onDelete: () => void;
-  }) => {
-    if (!isOpen) return null;
-
-    return (
-      <Modal
-        title="친구를 삭제하시겠어요?"
-        content="복구할 수 없어요."
-        left="취소"
-        right="삭제하기"
-        action={onDelete}
-        onClose={onClose}
-      />
-    );
-  }
-);
 
 const ReportFriendModal = memo(
   ({
@@ -59,7 +34,6 @@ const ReportFriendModal = memo(
   }
 );
 
-DeleteFriendModal.displayName = "DeleteFriendModal";
 ReportFriendModal.displayName = "ReportFriendModal";
 
 export default function UserFriendsListContainer({
@@ -69,10 +43,7 @@ export default function UserFriendsListContainer({
 }) {
   const queryClient = useQueryClient();
   const { userInfo } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useRecoilState(friendsModalStateAtom);
-  const [deleteFriendModalOpen, setDeleteFriendModalOpen] = useRecoilState(
-    friendDeleteModalAtom
-  );
+  const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [reportFriendModalOpen, setReportFriendModalOpen] = useRecoilState(
     friendReportModalAtom
   );
@@ -95,33 +66,41 @@ export default function UserFriendsListContainer({
     onSuccess: deleteSuccessHandler,
     onError: (error) => lightyToast.error(error.message),
   });
-
-  const handleCloseDeleteModal = () => {
-    setDeleteFriendModalOpen(false);
+  const closeModal = () => {
+    setModalState({
+      type: null,
+      isOpen: false,
+    });
   };
 
-  const handleCloseReportModal = () => {
-    setReportFriendModalOpen(false);
+  const MODAL_CONFIGS = {
+    deleteFriend: {
+      title: "친구를 삭제하시겠어요?",
+      content: "복구할 수 없어요.",
+      leftButton: "취소",
+      rightButton: "삭제하기",
+      action: () => deleteFriend(),
+    },
   };
 
   return (
     <>
-      <FriendsListContainer
-        friends={friends}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
-
-      <DeleteFriendModal
-        isOpen={deleteFriendModalOpen}
-        onClose={handleCloseDeleteModal}
-        onDelete={deleteFriend}
-      />
+      <FriendsListContainer friends={friends} />
       <ReportFriendModal
         isOpen={reportFriendModalOpen}
-        onClose={handleCloseReportModal}
+        onClose={() => setReportFriendModalOpen(false)}
         onReport={reportFriend}
       />
+      {modalState.isOpen && modalState.type && (
+        <Modal
+          title={MODAL_CONFIGS[modalState.type].title}
+          content={MODAL_CONFIGS[modalState.type].content}
+          left={MODAL_CONFIGS[modalState.type].leftButton}
+          right={MODAL_CONFIGS[modalState.type].rightButton}
+          action={MODAL_CONFIGS[modalState.type].action}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 }

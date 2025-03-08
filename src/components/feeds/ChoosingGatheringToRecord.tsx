@@ -21,10 +21,10 @@ export default function ChoosingGatheringToRecord({
 
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
-
   const handleImageClick = (gatheringId: string) => {
     setSelectedGatheringId(gatheringId);
   };
+
   if (isFetching) {
     return <DotSpinner />;
   }

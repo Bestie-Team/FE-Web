@@ -5,7 +5,7 @@ import clsx from "clsx";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
 import getHeader from "@/utils/getHeader";
-import { feedDisplayModalAtom } from "@/atoms/modal";
+import { modalStateAtom } from "@/atoms/modal";
 import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import FullPageLoader from "@/components/shared/FullPageLoader";
@@ -22,8 +22,7 @@ export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
   const header = useMemo(() => getHeader("/hidden"), []);
   const isPast = useScrollThreshold();
-  const [feedHideModalOpen, setFeedDisplayModalOpen] =
-    useRecoilState(feedDisplayModalAtom);
+  const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
   const queryClient = useQueryClient();
 
@@ -52,6 +51,22 @@ export default function FeedPage() {
   useInfiniteScroll({ isFetching, loadMore });
 
   if (!isClient) return <FullPageLoader />;
+
+  const MODAL_CONFIGS = {
+    displayFeed: {
+      title: "피드 숨김을 해제할까요?",
+      leftButton: "취소",
+      rightButton: "해제",
+      action: () => displayFeed(),
+    },
+  };
+
+  const closeModal = () => {
+    setModalState({
+      type: null,
+      isOpen: false,
+    });
+  };
 
   return (
     <div className="pt-12">
@@ -87,13 +102,14 @@ export default function FeedPage() {
             className="!pt-12"
             isFetching={isFetching}
           />
-          {feedHideModalOpen && (
+          {modalState.isOpen && modalState.type && (
             <Modal
-              title="피드 숨김을 해제할까요?"
-              left="취소"
-              right="해제"
-              action={displayFeed}
-              onClose={() => setFeedDisplayModalOpen(false)}
+              title={MODAL_CONFIGS[modalState.type].title}
+              content={MODAL_CONFIGS[modalState.type].content}
+              left={MODAL_CONFIGS[modalState.type].leftButton}
+              right={MODAL_CONFIGS[modalState.type].rightButton}
+              action={MODAL_CONFIGS[modalState.type].action}
+              onClose={closeModal}
             />
           )}
         </>

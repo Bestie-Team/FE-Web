@@ -6,16 +6,11 @@ import Button from "../shared/Button/Button";
 import Link from "next/link";
 import FriendListItem from "./FriendListItem";
 import { SetterOrUpdater } from "recoil";
-import Modal from "../shared/Modal/Modal";
 
 export default function FriendsListContainer({
   friends,
-  isModalOpen,
-  setIsModalOpen,
 }: {
   friends?: lighty.User[];
-  isModalOpen: boolean;
-  setIsModalOpen: SetterOrUpdater<boolean>;
 }) {
   return (
     <div className="pb-15 px-5">
@@ -52,14 +47,6 @@ export default function FriendsListContainer({
           })}
         </ul>
       )}
-      {isModalOpen ? (
-        <Modal
-          action={() => {}}
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        />
-      ) : null}
     </div>
   );
 }

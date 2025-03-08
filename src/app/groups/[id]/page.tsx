@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
-import { groupDeleteModalAtom, groupExitModalAtom } from "@/atoms/modal";
+import { modalStateAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
@@ -49,9 +49,8 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const router = useRouter();
   const { userInfo } = useAuth();
   const [isClient, setIsClient] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] =
-    useRecoilState(groupDeleteModalAtom);
-  const [exitModalOpen, setExitModalOpen] = useRecoilState(groupExitModalAtom);
+  const [modalState, setModalState] = useRecoilState(modalStateAtom);
+
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
   const reset = useResetRecoilState(selectedFriendsAtom);
@@ -128,6 +127,30 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const { accountId } = owner;
   const isOwner = accountId === userInfo?.accountId;
 
+  const closeModal = () => {
+    setModalState({
+      type: null,
+      isOpen: false,
+    });
+  };
+
+  const MODAL_CONFIGS = {
+    deleteGroup: {
+      title: "친구를 삭제하시겠어요?",
+      content: "복구할 수 없어요.",
+      leftButton: "취소",
+      rightButton: "삭제하기",
+      action: () => deleteGroup(),
+    },
+    exitGroup: {
+      title: "그룹을 나가시겠어요?",
+      content: "",
+      leftButton: "취소",
+      rightButton: "나가기",
+      action: () => exitGroup(),
+    },
+  };
+
   return (
     <Flex direction="column" className="w-full min-h-dvh bg-base-white">
       <Flex align="center" className={styles.headerWrapper}>
@@ -151,23 +174,14 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
         description={description}
         members={members}
       />
-      {deleteModalOpen && (
+      {modalState.isOpen && modalState.type && (
         <Modal
-          title="그룹을 삭제하시겠어요?"
-          content="그룹 관련 정보가 전부 삭제되며 이는 복구할 수 없어요."
-          left="취소"
-          right="삭제하기"
-          action={() => deleteGroup()}
-          onClose={() => setDeleteModalOpen(false)}
-        />
-      )}
-      {exitModalOpen && (
-        <Modal
-          title="그룹을 나가시겠어요?"
-          left="취소"
-          right="나가기"
-          action={() => exitGroup()}
-          onClose={() => setExitModalOpen(false)}
+          title={MODAL_CONFIGS[modalState.type].title}
+          content={MODAL_CONFIGS[modalState.type].content}
+          left={MODAL_CONFIGS[modalState.type].leftButton}
+          right={MODAL_CONFIGS[modalState.type].rightButton}
+          action={MODAL_CONFIGS[modalState.type].action}
+          onClose={closeModal}
         />
       )}
     </Flex>
@@ -180,7 +194,7 @@ const styles = {
   headerFont: "flex-grow text-T3 text-base-white",
   divider: "flex-shrink-0 h-[1px] w-full bg-grayscale-50",
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",
-  title: "font-[700] text-[16px] leading-[20.8px] flex-grow",
+  title: "font-[700] text-base leading-[20.8px] flex-grow",
   contentWrapper:
     "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-xl text-B3",
   button:

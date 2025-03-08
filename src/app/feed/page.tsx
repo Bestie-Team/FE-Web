@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { commentModalStateAtom } from "@/atoms/feed";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
@@ -15,9 +14,7 @@ import useFeedMine from "@/components/feeds/hooks/useFeedMine";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import Panel from "@/components/shared/Panel/Panel";
 import {
-  commentDeleteModalAtom,
-  feedDeleteModalAtom,
-  feedHideModalAtom,
+  modalStateAtom,
   recordModalAtom,
   reportModalAtom,
 } from "@/atoms/modal";
@@ -42,6 +39,7 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import useNotification from "@/components/notice/hooks/useNotification";
 import { DotWithNumberIcon } from "@/components/shared/Icon/DotIcon";
 import dynamic from "next/dynamic";
+import { bottomSheetStateAtom } from "@/atoms/feed";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -119,46 +117,51 @@ const FeedModals = React.memo(
     onHideFeed: () => void;
     onReportFeed: (reason: { reason: string }) => void;
   }) => {
-    const [deleteModalOpen, setDeleteModalOpen] =
-      useRecoilState(feedDeleteModalAtom);
-    const [commentDeleteModalOpen, setCommentDeleteModalOpen] = useRecoilState(
-      commentDeleteModalAtom
-    );
-    const [feedHideModalOpen, setFeedHideModalOpen] =
-      useRecoilState(feedHideModalAtom);
-
+    const [modalState, setModalState] = useRecoilState(modalStateAtom);
     const [feedReportModalOpen, setFeedReportModalOpen] =
       useRecoilState(reportModalAtom);
 
+    const closeModal = () => {
+      setModalState({
+        type: null,
+        isOpen: false,
+      });
+    };
+
+    const MODAL_CONFIGS = {
+      deleteFeed: {
+        title: "피드를 삭제하시겠어요?",
+        content: "피드 정보가 전부 삭제되며 이는 복구할 수 없어요.",
+        leftButton: "취소",
+        rightButton: "삭제하기",
+        action: () => onDeleteFeed(),
+      },
+      deleteFeedComment: {
+        title: "댓글을 삭제하시겠어요?",
+        content: "댓글 정보가 전부 삭제되며 이는 복구할 수 없어요.",
+        leftButton: "취소",
+        rightButton: "나가기",
+        action: () => onDeleteComment(),
+      },
+
+      hideFeed: {
+        title: "해당 피드를 숨기시겠어요?",
+        leftButton: "취소",
+        rightButton: "숨기기",
+        action: () => onHideFeed(),
+      },
+    };
+
     return (
       <>
-        {deleteModalOpen && (
+        {modalState.isOpen && modalState.type && (
           <Modal
-            title="피드를 삭제하시겠어요?"
-            content="피드 정보가 전부 삭제되며 이는 복구할 수 없어요."
-            left="취소"
-            right="삭제하기"
-            action={onDeleteFeed}
-            onClose={() => setDeleteModalOpen(false)}
-          />
-        )}
-        {commentDeleteModalOpen && (
-          <Modal
-            title="댓글을 삭제하시겠어요?"
-            content="댓글 정보가 전부 삭제되며 이는 복구할 수 없어요."
-            left="취소"
-            right="삭제하기"
-            action={onDeleteComment}
-            onClose={() => setCommentDeleteModalOpen(false)}
-          />
-        )}
-        {feedHideModalOpen && (
-          <Modal
-            title="해당 피드를 숨기시겠어요?"
-            left="취소"
-            right="숨기기"
-            action={onHideFeed}
-            onClose={() => setFeedHideModalOpen(false)}
+            title={MODAL_CONFIGS[modalState.type].title}
+            content={MODAL_CONFIGS[modalState.type].content}
+            left={MODAL_CONFIGS[modalState.type].leftButton}
+            right={MODAL_CONFIGS[modalState.type].rightButton}
+            action={MODAL_CONFIGS[modalState.type].action}
+            onClose={closeModal}
           />
         )}
         {feedReportModalOpen && (
@@ -190,9 +193,8 @@ export default function FeedPage() {
     swiperRef,
     setSelectedTab,
   } = useTabs();
-  const [commentModalOpen, setCommentModalOpen] = useRecoilState(
-    commentModalStateAtom
-  );
+  const [bottomSheetState, setBottomSheetState] =
+    useRecoilState(bottomSheetStateAtom);
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_m = useRef<HTMLDivElement>(null);
@@ -460,10 +462,10 @@ export default function FeedPage() {
           open={recordModalOpen}
         />
       )}
-      {commentModalOpen && (
+      {bottomSheetState && (
         <CommentContainer
           selectedFeedId={selectedFeedId}
-          onClose={() => setCommentModalOpen(false)}
+          onClose={() => setBottomSheetState(false)}
         />
       )}
       <FeedModals

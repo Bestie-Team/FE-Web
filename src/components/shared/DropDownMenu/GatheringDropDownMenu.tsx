@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { gatheringDeleteModalAtom } from "@/atoms/modal";
+import { modalStateAtom } from "@/atoms/modal";
 import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 import { useRouter } from "next/navigation";
 import * as lighty from "lighty-type";
@@ -20,10 +20,10 @@ const GatheringDropdownMenu = forwardRef<
   const router = useRouter();
   const [isHovered, setIsHovered] = useState<number | boolean>(false);
   const setGatheringInfo = useSetRecoilState(selectedGatheringInfoAtom);
-  const setDeleteModalOpen = useSetRecoilState(gatheringDeleteModalAtom);
+  const setOpenModal = useSetRecoilState(modalStateAtom);
   const handleItemClick = (item: string) => {
     if (item.includes("삭제")) {
-      setDeleteModalOpen(true);
+      setOpenModal({ type: "deleteGathering", isOpen: true });
     }
     if (item.includes("수정하기") && gathering) {
       setGatheringInfo(gathering);

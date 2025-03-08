@@ -11,20 +11,17 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
 import { useCallback, useEffect } from "react";
 import Flex from "./shared/Flex";
-import { useRouter } from "next/navigation";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
 
 export default function Splash() {
   const { login } = useAuth();
-  const router = useRouter();
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
       try {
         const userInfo = await postLogin({ accessToken, provider });
         if (userInfo) login(userInfo);
-        router.replace("/feed");
       } catch (error) {
         console.error(error);
         lightyToast.error("로그인에 실패했어요");

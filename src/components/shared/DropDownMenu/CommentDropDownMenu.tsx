@@ -3,7 +3,7 @@ import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { selectedCommentIdAtom } from "@/atoms/comment";
-import { commentDeleteModalAtom } from "@/atoms/modal";
+import { modalStateAtom } from "@/atoms/modal";
 
 interface CommentDropdownMenuProps {
   selectedCommentId?: string;
@@ -14,13 +14,13 @@ interface CommentDropdownMenuProps {
 const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
   ({ items, className, selectedCommentId }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    const setModalOpen = useSetRecoilState(commentDeleteModalAtom);
+    const setModalState = useSetRecoilState(modalStateAtom);
     const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
         setSelectedCommentId(selectedCommentId || "");
-        setModalOpen(true);
+        setModalState({ type: "deleteFeedComment", isOpen: true });
       }
     };
     return (
