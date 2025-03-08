@@ -44,7 +44,6 @@ import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { bottomSheetStateAtom } from "@/atoms/feed";
 
-
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
 });
@@ -208,7 +207,7 @@ export default function FeedPage() {
       order: "DESC" as const,
       minDate: minDate(),
       maxDate: maxDate(),
-      limit: 10,
+      limit: 8,
     }),
     []
   );
@@ -355,13 +354,13 @@ export default function FeedPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper !h-dvh w-full !z-5 overflow-y-scroll no-scrollbar"
+          className="custom-swiper !h-dvh w-full !z-5"
         >
           {feedAll && feedAll.length > 0 ? (
             <SwiperSlide>
               <div
                 ref={containerRef}
-                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-28"
+                className="h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28"
               >
                 <Feed
                   feeds={feedAll}
@@ -374,7 +373,7 @@ export default function FeedPage() {
             <SwiperSlide>
               <div
                 ref={containerRef}
-                className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-28"
+                className="h-full no-scrollbar overflow-y-auto pt-[90px] pb-28"
               >
                 <FeedForDisplay />
               </div>

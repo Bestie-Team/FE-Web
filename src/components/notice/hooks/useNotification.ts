@@ -9,7 +9,7 @@ export default function useNotification() {
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["notification"],
-    queryFn: ({ pageParam: cursor }) => getNotification({ cursor, limit: 5 }),
+    queryFn: ({ pageParam: cursor }) => getNotification({ cursor, limit: 9 }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: defaultCursor,
   });

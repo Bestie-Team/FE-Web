@@ -49,15 +49,18 @@ export default function Gathering({
 
       <div className="grid grid-cols-2 gap-4">
         {renderGatherings(gatherings)}
+
         {isFetching && (
           <>
-            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
-            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
-            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
-            <div className="overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full" />
+            <div className={gatheringSkeleton} />
+            <div className={gatheringSkeleton} />
+            <div className={gatheringSkeleton} />
+            <div className={gatheringSkeleton} />
           </>
         )}
       </div>
     </div>
   );
 }
+const gatheringSkeleton =
+  "overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full animate-pulse";

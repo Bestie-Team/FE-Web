@@ -5,14 +5,17 @@ import Spacing from "../shared/Spacing";
 import Button from "../shared/Button/Button";
 import Link from "next/link";
 import FriendListItem from "./FriendListItem";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function FriendsListContainer({
   friends,
+  isFetching,
 }: {
   friends?: lighty.User[];
+  isFetching: boolean;
 }) {
   return (
-    <div className="pb-15 px-5">
+    <div className="pb-20 px-5">
       {friends?.length === 0 ? (
         <Flex
           direction="column"
@@ -25,7 +28,7 @@ export default function FriendsListContainer({
           </span>
           <Button
             color="#0a0a0a"
-            className="rounded-xl py-[12px] px-[14px] text-base-white text-B3"
+            className="rounded-xl py-3 px-[14px] text-base-white text-B3"
           >
             <Link href="/friends/search">💌 친구 초대하기</Link>
           </Button>
@@ -44,6 +47,7 @@ export default function FriendsListContainer({
               </React.Fragment>
             );
           })}
+          {isFetching && <DotSpinnerSmall />}
         </ul>
       )}
     </div>

@@ -28,6 +28,7 @@ import Gathering from "@/components/gathering/Gathering";
 export default function MyGatheringPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_m = useRef<HTMLDivElement>(null);
+
   const isPast = useScrollThreshold();
   const queryClient = useQueryClient();
   const [isClient, setIsClient] = useState(false);
@@ -51,12 +52,6 @@ export default function MyGatheringPage() {
     isFetching: isFetching_e,
     loadMore: loadMore_e,
   } = useGatheringEnded({ limit: 8 });
-
-  useInfiniteScrollByRef({
-    isFetching,
-    loadMore,
-    targetRef: containerRef_m,
-  });
 
   useInfiniteScrollByRef({
     isFetching: isFetching_e,
@@ -90,6 +85,13 @@ export default function MyGatheringPage() {
       return false;
     }
   };
+
+  useInfiniteScrollByRef({
+    isFetching,
+    loadMore,
+    targetRef: containerRef_m,
+  });
+
   const GatheringPageSwiper = useMemo(() => {
     return (
       <Swiper
@@ -99,26 +101,23 @@ export default function MyGatheringPage() {
         slidesPerView={1}
         spaceBetween={2}
         direction="horizontal"
-        className="!h-dvh w-full overflow-y-scroll no-scrollbar"
+        className="!h-dvh w-full"
       >
-        <SwiperSlide>
-          <div
-            ref={containerRef_m}
-            className="h-full overflow-y-auto no-scrollbar pt-[107px] pb-32"
-          >
+        <SwiperSlide className="pt-[107px]">
+          <div className="h-[calc(100dvh-144px)] overflow-y-scroll no-scrollbar pb-10">
             <Schedule
               expectingGatherings={myGatherings}
               isFetching={isFetching}
             />
           </div>
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="pt-[87px]">
           {(ended && ended.length < 1) || !ended ? (
             <NoGathering type="ENDED" />
           ) : (
             <div
               ref={containerRef}
-              className="h-full overflow-y-auto no-scrollbar pt-[87px] pb-14"
+              className="h-[calc(100dvh-144px)] overflow-y-scroll no-scrollbar pb-10"
             >
               <Gathering
                 ended
@@ -152,6 +151,7 @@ export default function MyGatheringPage() {
       {(!isClient || !myGatherings || !ended) && <DotSpinner />}
       <PullToRefresh
         onRefresh={handleRefresh}
+        refreshingContent={<></>}
         pullingContent={
           <div className="flex justify-center pt-[96px]">
             <DotSpinner />

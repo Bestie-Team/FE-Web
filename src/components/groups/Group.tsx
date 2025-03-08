@@ -58,7 +58,7 @@ export default function Groups() {
   }
 
   return (
-    <div className="min-h-[calc(100dvh-107px)] px-5 text-T4">
+    <div className="h-[calc(100dvh-144px)] px-5 text-T4 pt-3 pb-20">
       <Flex align="center">
         <span>전체 그룹</span>
         <Spacing size={4} direction="horizontal" />
@@ -69,7 +69,7 @@ export default function Groups() {
         </Link>
       </Flex>
       <Spacing size={16} />
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 pb-20">
         {groups && (
           <GroupList groups={groups} onGroupClick={handleGroupClick} />
         )}

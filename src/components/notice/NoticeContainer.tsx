@@ -27,43 +27,42 @@ export default function NoticeContainer() {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5"
+      className="h-[calc(dvh-20px)] overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5"
     >
-      {isFetching ? (
-        <Flex direction="column" className="gap-3">
-          <span className="bg-base-white text-T4 mb-1 w-16 h-5 rounded animate-pulse" />
-          {Array(9)
-            .fill(0)
-            .map((_, index) => (
-              <NoticeSkeleton key={index} />
+      <div className="flex flex-col gap-10 h-full">
+        {today.length > 1 && (
+          <Flex direction="column" className="gap-3">
+            <span className="text-T4 mb-1">오늘의 알림</span>
+            {today.map((notification) => (
+              <ReportNoticeItem
+                key={notification.id}
+                notification={notification}
+              />
             ))}
-        </Flex>
-      ) : (
-        <>
-          {today.length > 1 && (
-            <Flex direction="column" className="gap-3">
-              <span className="text-T4 mb-1">오늘의 알림</span>
-              {today.map((notification) => (
-                <ReportNoticeItem
-                  key={notification.id}
-                  notification={notification}
-                />
+          </Flex>
+        )}
+        {passed.length > 1 && (
+          <Flex direction="column" className="gap-3">
+            <span className="text-T4 mb-1">이전 알림</span>
+            {passed.map((notification) => (
+              <ReportNoticeItem
+                key={notification.id}
+                notification={notification}
+              />
+            ))}
+          </Flex>
+        )}
+        {isFetching && (
+          <Flex direction="column" className="gap-3">
+            <span className="bg-base-white text-T4 mb-1 w-16 h-5 rounded animate-pulse" />
+            {Array(9)
+              .fill(0)
+              .map((_, index) => (
+                <NoticeSkeleton key={index} />
               ))}
-            </Flex>
-          )}
-          {passed.length > 1 && (
-            <Flex direction="column" className="gap-3">
-              <span className="text-T4 mb-1">이전 알림</span>
-              {passed.map((notification) => (
-                <ReportNoticeItem
-                  key={notification.id}
-                  notification={notification}
-                />
-              ))}
-            </Flex>
-          )}
-        </>
-      )}
+          </Flex>
+        )}
+      </div>
     </div>
   );
 }

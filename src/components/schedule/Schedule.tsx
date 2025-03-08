@@ -1,7 +1,6 @@
 "use client";
 import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
 import LightyCalendarWithBorder from "@/components/shared/Calender/CalendarWithBorder";
-import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
@@ -30,23 +29,15 @@ export default function Schedule({
       .reverse() || [];
 
   return (
-    <div className="min-h-dvh">
-      <Flex direction="column" className={styles.container}>
-        {isFetching ? (
-          <DotSpinner />
-        ) : (
-          <div className="min-h-[400px]">
-            <LightyCalendarWithBorder gatherings={upcomingGatherings} />
-          </div>
-        )}
-        <Spacing size={28} />
-        <MemoizedUpcomingSchedule gathering={upcomingGatherings} />
-      </Flex>
+    <div className="flex flex-col items-center">
+      {isFetching ? (
+        <DotSpinner />
+      ) : (
+        <LightyCalendarWithBorder gatherings={upcomingGatherings} />
+      )}
+      <Spacing size={28} />
+
+      <MemoizedUpcomingSchedule gathering={upcomingGatherings} />
     </div>
   );
 }
-
-const styles = {
-  header: "max-w-[430px] fixed pt-12 w-full pl-5 bg-base-white",
-  container: "items-center",
-};

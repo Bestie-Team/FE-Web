@@ -6,24 +6,20 @@ const uuid = uuidv4();
 
 /** 첫 커서는 minDate */
 export default function useGatherings({
-  cursor,
   limit,
   minDate,
   maxDate,
 }: {
-  cursor?: { createdAt: string };
   limit: number;
   minDate: string;
   maxDate: string;
 }) {
-  const defaultCursor = cursor;
+  const defaultCursor = { createdAt: maxDate, id: uuid };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
     queryKey: ["gatherings", minDate, maxDate],
     queryFn: ({ pageParam: cursor }) =>
       getGatherings({
-        cursor: cursor
-          ? { ...cursor, id: uuid }
-          : { createdAt: maxDate, id: uuid },
+        cursor: cursor,
         limit,
         minDate,
         maxDate,

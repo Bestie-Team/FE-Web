@@ -30,8 +30,11 @@ export default function Notice() {
   }
 
   return (
-    <Flex direction="column" className="h-screen bg-grayscale-50">
-      <Flex align="center" className="fixed h-12 gap-[6px]">
+    <Flex direction="column" className="h-dvh bg-grayscale-50 pb-5">
+      <Flex
+        align="center"
+        className="w-full fixed h-12 gap-[6px] bg-grayscale-50"
+      >
         <div
           className={arrowIconContainerStyle}
           onClick={() => {

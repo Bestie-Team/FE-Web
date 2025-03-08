@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import useDebounce from "./debounceForScroll";
 
 interface InfiniteScrollType {
@@ -13,8 +13,13 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
     const documentHeight = document.documentElement.scrollHeight;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
-
-    if (documentHeight - (scrollTop + windowHeight) < 300 && !isFetching) {
+    console.log(
+      documentHeight,
+      scrollTop,
+      windowHeight,
+      documentHeight - (scrollTop + windowHeight)
+    );
+    if (documentHeight - (scrollTop + windowHeight) < 500 && !isFetching) {
       setPage((prev) => prev + 1);
     }
   }, [isFetching]);
@@ -52,22 +57,26 @@ export const useInfiniteScrollByRef = ({
   threshold = 500,
 }: InfiniteScrollRefType) => {
   const [page, setPage] = useState(0);
+  const isLoadingRef = useRef(false);
 
   const checkScrollPosition = useCallback(() => {
-    if (!targetRef.current) return;
+    if (!targetRef.current || isFetching || isLoadingRef.current) return;
 
     const element = targetRef.current;
     const elementHeight = element.scrollHeight;
     const scrollTop = element.scrollTop;
     const clientHeight = element.clientHeight;
-
-    if (elementHeight - (scrollTop + clientHeight) < threshold && !isFetching) {
+    const remainingScroll = elementHeight - (scrollTop + clientHeight);
+    console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
+    if (remainingScroll < threshold) {
+      console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
+      isLoadingRef.current = true;
       setPage((prev) => prev + 1);
     }
-    // console.log(elementHeight - (scrollTop + clientHeight));
   }, [isFetching, targetRef, threshold]);
 
-  const debouncedScroll = useDebounce(checkScrollPosition, 300);
+  // 디바운스 시간을 300ms에서 500ms로 증가하여 더 안정적으로 만듦
+  const debouncedScroll = useDebounce(checkScrollPosition, 500);
 
   useEffect(() => {
     const element = targetRef.current;
@@ -81,8 +90,16 @@ export const useInfiniteScrollByRef = ({
   }, [debouncedScroll, targetRef]);
 
   useEffect(() => {
-    if (page > 0) {
+    if (page > 0 && !isFetching && isLoadingRef.current) {
       loadMore();
+      isLoadingRef.current = false;
     }
-  }, [page, loadMore]);
+  }, [page, loadMore, isFetching]);
+
+  // isFetching이 false로 변경되면 isLoadingRef도 false로 재설정
+  useEffect(() => {
+    if (!isFetching) {
+      isLoadingRef.current = false;
+    }
+  }, [isFetching]);
 };
