@@ -1,12 +1,11 @@
 import { postProfileImage } from "@/remote/profile";
+import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 
 export default function usePostProfileImage({
   onSuccess,
-  onError,
 }: {
   onSuccess: (imageUrl: string) => void;
-  onError: (error: Error) => void;
 }) {
   return useMutation({
     mutationKey: ["post/profile"],
@@ -18,6 +17,6 @@ export default function usePostProfileImage({
       }
     },
     onSuccess: (data: { imageUrl: string }) => onSuccess(data.imageUrl),
-    onError: (error: Error) => onError(error),
+    onError: (error: Error) => lightyToast.error(error.message),
   });
 }

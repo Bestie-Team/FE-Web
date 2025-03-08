@@ -8,6 +8,7 @@ import useUploadInvitationImage from "./hooks/useUploadInvitationImage";
 import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { compressImage } from "@/utils/compress";
 
 export default function AddGatheringPhoto({
   image,
@@ -41,57 +42,57 @@ export default function AddGatheringPhoto({
   //   }
   // };
 
-  const convertToWebP = (file: File): Promise<File> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new window.Image();
-        img.src = event.target?.result as string;
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext("2d");
+  // const convertToWebP = (file: File): Promise<File> => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = (event) => {
+  //       const img = new window.Image();
+  //       img.src = event.target?.result as string;
+  //       img.onload = () => {
+  //         const canvas = document.createElement("canvas");
+  //         canvas.width = img.width;
+  //         canvas.height = img.height;
+  //         const ctx = canvas.getContext("2d");
 
-          if (!ctx) {
-            console.error("Canvas context가 존재하지 않음");
-            reject(new Error("Canvas context not found"));
-            return;
-          }
+  //         if (!ctx) {
+  //           console.error("Canvas context가 존재하지 않음");
+  //           reject(new Error("Canvas context not found"));
+  //           return;
+  //         }
 
-          ctx.drawImage(img, 0, 0);
-          canvas.toBlob(
-            (blob) => {
-              if (!blob) {
-                console.error("WebP 변환 실패");
-                reject(new Error("WebP 변환 실패"));
-                return;
-              }
-              const webpFile = new File(
-                [blob],
-                file.name.replace(/\.\w+$/, ".webp"),
-                {
-                  type: "image/webp",
-                }
-              );
-              resolve(webpFile);
-            },
-            "image/webp",
-            0.8
-          );
-        };
-        img.onerror = (error) => {
-          console.error("이미지 로드 실패", error);
-          reject(error);
-        };
-      };
-      reader.onerror = (error) => {
-        console.error("FileReader 실패", error);
-        reject(error);
-      };
-    });
-  };
+  //         ctx.drawImage(img, 0, 0);
+  //         canvas.toBlob(
+  //           (blob) => {
+  //             if (!blob) {
+  //               console.error("WebP 변환 실패");
+  //               reject(new Error("WebP 변환 실패"));
+  //               return;
+  //             }
+  //             const webpFile = new File(
+  //               [blob],
+  //               file.name.replace(/\.\w+$/, ".webp"),
+  //               {
+  //                 type: "image/webp",
+  //               }
+  //             );
+  //             resolve(webpFile);
+  //           },
+  //           "image/webp",
+  //           0.8
+  //         );
+  //       };
+  //       img.onerror = (error) => {
+  //         console.error("이미지 로드 실패", error);
+  //         reject(error);
+  //       };
+  //     };
+  //     reader.onerror = (error) => {
+  //       console.error("FileReader 실패", error);
+  //       reject(error);
+  //     };
+  //   });
+  // };
   const getFileExt = (fileName: string) => {
     const ext = fileName.split(".").pop()?.toLowerCase();
     if (ext === "jpg" || ext === "png" || ext === "jpeg" || ext === "webp") {
@@ -113,7 +114,7 @@ export default function AddGatheringPhoto({
       }
 
       if (ext === "png" || ext === "jpg" || ext === "jpeg") {
-        const convertedFile = await convertToWebP(file);
+        const convertedFile = await compressImage(file);
         console.log("converted", convertedFile);
         setGatheringImageFile(convertedFile);
         return;
