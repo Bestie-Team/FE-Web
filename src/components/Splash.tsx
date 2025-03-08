@@ -11,7 +11,6 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
 import { useCallback, useEffect } from "react";
 import Flex from "./shared/Flex";
-import { useRouter } from "next/navigation";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { googleLoginMobile, kakaoLoginMobile } from "@/webview/actions";
 
