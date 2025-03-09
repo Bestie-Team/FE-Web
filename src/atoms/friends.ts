@@ -11,16 +11,6 @@ export const selectedFriendsAtom = atom<lighty.User[] | null>({
   default: null,
 });
 
-export const friendsModalStateAtom = atom<boolean>({
-  key: "friends/modal",
-  default: false,
-});
-
-export const friendSearchModalStateAtom = atom<boolean>({
-  key: "friends/search/modal",
-  default: false,
-});
-
 export const userSearchAtom = atom<string>({
   key: "friends/search/users",
   default: "",

@@ -52,7 +52,7 @@ export default function GatheringCard({
       className={clsx(styles.gatheringWrapper, "group")}
       tabIndex={tabIndex}
       onClick={() => {
-        router.push(`/gathering/${gathering.id}`);
+        router.push(`/gathering/${gathering.id}?tab=2`);
       }}
     >
       <Image

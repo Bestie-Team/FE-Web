@@ -1,8 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  feedTabState,
+  gatheringTabState,
+  invitationTabState,
+} from "@/atoms/tab";
+import { usePathname } from "next/navigation";
+import { useRef } from "react";
+import { useRecoilState } from "recoil";
 import { Swiper as SwiperType } from "swiper";
 
+const getTabAtomForPath = (path: string) => {
+  if (path.startsWith("/gathering")) {
+    return gatheringTabState;
+  } else if (path.startsWith("/feed")) {
+    return feedTabState;
+  } else if (path.startsWith("/invitation")) {
+    return invitationTabState;
+  }
+  return feedTabState;
+};
+
 export const useTabs = () => {
-  const [selectedTab, setSelectedTab] = useState<"1" | "2">("1");
+  const pathname = usePathname();
+  const tabAtom = getTabAtomForPath(pathname || "");
+  const [selectedTab, setSelectedTab] = useRecoilState(tabAtom);
+
   const swiperRef = useRef<SwiperType | null>(null);
 
   const handleSlideChange = (index: number) => {
@@ -18,12 +39,6 @@ export const useTabs = () => {
       setSelectedTab(tabName);
     }, 300);
   };
-
-  useEffect(() => {
-    return () => {
-      setSelectedTab("1");
-    };
-  }, [setSelectedTab]);
 
   return {
     selectedTab,

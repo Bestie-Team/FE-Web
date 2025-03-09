@@ -43,6 +43,7 @@ import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { bottomSheetStateAtom } from "@/atoms/feed";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -331,11 +332,11 @@ export default function FeedPage() {
     targetRef: containerRef,
   });
 
-  useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(Number(selectedTab) - 1);
-    }
-  }, [selectedTab, swiperRef]);
+  // useEffect(() => {
+  //   if (swiperRef.current) {
+  //     swiperRef.current.slideTo(Number(selectedTab) - 1);
+  //   }
+  // }, [selectedTab, swiperRef]);
 
   const mailCount = isNewNotification.filter(
     (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
@@ -345,6 +346,7 @@ export default function FeedPage() {
     return (
       <div className="h-dvh">
         <Swiper
+          key={selectedTab}
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -473,7 +475,9 @@ export default function FeedPage() {
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="flex justify-center pt-[96px]">refreshing</div>
+          <div className="flex justify-center pt-[96px]">
+            <DotSpinnerSmall />
+          </div>
         }
       >
         {renderSwipers}

@@ -17,7 +17,7 @@ const components = [
     loading: () => <DotSpinner />,
     ssr: false,
   }),
-
+  () => <></>,
   dynamic(() => import("@/components/friends/InviteFriends"), {
     loading: () => <DotSpinner />,
     ssr: false,

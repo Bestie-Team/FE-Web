@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { GatheringInWhich } from "@/models/gathering";
@@ -24,6 +24,7 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Schedule from "@/components/schedule/Schedule";
 import NoGathering from "@/components/gathering/NoGathering";
 import Gathering from "@/components/gathering/Gathering";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function MyGatheringPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,8 +35,13 @@ export default function MyGatheringPage() {
   const [isClient, setIsClient] = useState(false);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
-  const { selectedTab, handleTabClick, handleSlideChange, swiperRef } =
-    useTabs();
+  const {
+    selectedTab,
+    setSelectedTab,
+    handleTabClick,
+    handleSlideChange,
+    swiperRef,
+  } = useTabs();
 
   const {
     data: myGatherings,
@@ -92,11 +98,33 @@ export default function MyGatheringPage() {
     targetRef: containerRef_m,
   });
 
+  const TabParamHandler = ({
+    setSelectedTab,
+  }: {
+    setSelectedTab: (num: "1" | "2") => void;
+  }) => {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    useEffect(() => {
+      const tabParam = searchParams?.get("tab");
+      if (tabParam === "1" || tabParam === "2") {
+        setSelectedTab(tabParam);
+        router.replace("/gathering");
+      }
+    }, [searchParams, setSelectedTab]);
+
+    return null;
+  };
+
   const GatheringPageSwiper = useMemo(() => {
     return (
       <Swiper
+        key={selectedTab}
         initialSlide={Number(selectedTab) - 1}
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
         onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
         slidesPerView={1}
         spaceBetween={2}
@@ -160,6 +188,9 @@ export default function MyGatheringPage() {
       >
         {GatheringPageSwiper}
       </PullToRefresh>
+      <Suspense fallback={null}>
+        <TabParamHandler setSelectedTab={setSelectedTab} />
+      </Suspense>
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </>
   );
