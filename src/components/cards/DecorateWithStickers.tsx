@@ -13,16 +13,18 @@ import Flex from "../shared/Flex";
 import clsx from "clsx";
 import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/BottomDrawer/DecoStickerBottomSheet";
-import downloadURI from "@/utils/downloadURI";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
+import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
     decoBottomSheetStateAtom
   );
+  const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
+  const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imageRef = React.useRef<HTMLImageElement | null>(null);
   const selectedFrame = useRecoilValue(cardFrameAtom);
@@ -133,7 +135,8 @@ export default function DecorateWithStickers() {
         format: "png",
         multiplier: 2,
       });
-      downloadURI(uri);
+      setImageUri(uri);
+      setImageBottomSheetOpen(true);
     }
   };
 
@@ -277,6 +280,12 @@ export default function DecorateWithStickers() {
           onClose={() => setDecoBottomSheetState(false)}
         />
       ) : null}
+      {imageBottomSheetOpen && imageUri !== "" && (
+        <PhotoSaveBottomSheet
+          onClose={() => setImageBottomSheetOpen(false)}
+          src={imageUri}
+        />
+      )}
     </Flex>
   );
 }
