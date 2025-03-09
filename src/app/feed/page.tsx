@@ -338,7 +338,7 @@ export default function FeedPage() {
 
   const renderSwipers = useMemo(() => {
     return (
-      <div className="h-dvh">
+      <div className="extended-container h-dvh">
         <Swiper
           key={selectedTab}
           initialSlide={Number(selectedTab) - 1}
@@ -426,45 +426,6 @@ export default function FeedPage() {
 
   return (
     <div className="h-dvh">
-      {/* <div
-        style={{ zIndex: 99 }}
-        className="flex fixed right-0 top-0 h-12 items-center gap-1 pr-5"
-      >
-        <div
-          onMouseDown={(e) => {
-            e.stopPropagation();
-            router.push("/invitation");
-          }}
-          className={styles.iconWrapperStyle}
-        >
-          <MailIcon
-            className="relative"
-            width="24"
-            height="24"
-            color="#0A0A0A"
-          />
-          {mailCount.length >= 1 && (
-            <DotWithNumberIcon count={isNewNotification.length} />
-          )}
-        </div>
-        <div
-          onMouseDown={(e) => {
-            e.stopPropagation();
-            router.push("/notice");
-          }}
-          className={styles.iconWrapperStyle}
-        >
-          <NoticeIcon color="#0A0A0A" />
-          {isNewNotification.length >= 1 && (
-            <DotWithNumberIcon count={isNewNotification.length} />
-          )}
-        </div>
-      </div>
-      <Header
-        shadow={isPast}
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-      /> */}
       <ScrollAwareHeader
         visible={visible}
         mailCount={mailCount}
@@ -476,7 +437,7 @@ export default function FeedPage() {
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="flex justify-center pt-[96px]">
+          <div className="extended-container flex justify-center pt-[96px]">
             <DotSpinnerSmall />
           </div>
         }

@@ -52,7 +52,7 @@ export default function ChoosingGatheringToDecorate({
     <Flex
       direction="column"
       justify="space-between"
-      className="bg-base-white h-dvh pt-12 pb-14 overflow-y-scroll no-scrollbar"
+      className="extended-container bg-base-white h-dvh pt-12 pb-14 overflow-y-scroll no-scrollbar"
     >
       <Flex direction="column">
         <div className="px-6">

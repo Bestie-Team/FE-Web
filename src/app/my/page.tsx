@@ -92,47 +92,51 @@ export default function MyPage() {
       {isFetching || !user ? (
         <DotSpinner />
       ) : (
-        <main className="pt-[68px]">
-          <UserProfile
-            userProfileImage={profileInfo?.profileImageUrl}
-            userAccountId={profileInfo?.accountId}
-            userName={user.name}
-          />
-          <Spacing size={12} />
-
-          <MyMainInfo
-            groupCount={user.groupCount}
-            feedCount={user.feedCount}
-            friendsCount={user.friendCount}
-          />
-          <Spacing size={16} />
-          <SettingsMenu logout={handleLogout} />
-          <footer className={styles.termsWrapper}>
-            <Link
-              href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
-              target="_blank"
-              onClick={() => setModalState("open")}
-              className={clsx("mr-[13px]", styles.letter)}
-            >
-              <ins>이용약관</ins>
-            </Link>
-            <Link
-              href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
-              target="_blank"
-              onClick={() => setModalState("privatePolicy")}
-              className={styles.letter}
-            >
-              <ins>개인 정보 처리방침</ins>
-            </Link>
-          </footer>
-          <Spacing size={120} />
-          {modalState !== "none" && (
-            <TermOfUse
-              label={modalState === "open" ? "이용 약관" : "개인 정보 처리방침"}
-              onClick={() => setModalState("none")}
+        <div className="extended-container">
+          <main className="pt-[68px]">
+            <UserProfile
+              userProfileImage={profileInfo?.profileImageUrl}
+              userAccountId={profileInfo?.accountId}
+              userName={user.name}
             />
-          )}
-        </main>
+            <Spacing size={12} />
+
+            <MyMainInfo
+              groupCount={user.groupCount}
+              feedCount={user.feedCount}
+              friendsCount={user.friendCount}
+            />
+            <Spacing size={16} />
+            <SettingsMenu logout={handleLogout} />
+            <footer className={styles.termsWrapper}>
+              <Link
+                href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
+                target="_blank"
+                onClick={() => setModalState("open")}
+                className={clsx("mr-[13px]", styles.letter)}
+              >
+                <ins>이용약관</ins>
+              </Link>
+              <Link
+                href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
+                target="_blank"
+                onClick={() => setModalState("privatePolicy")}
+                className={styles.letter}
+              >
+                <ins>개인 정보 처리방침</ins>
+              </Link>
+            </footer>
+            <Spacing size={120} />
+            {modalState !== "none" && (
+              <TermOfUse
+                label={
+                  modalState === "open" ? "이용 약관" : "개인 정보 처리방침"
+                }
+                onClick={() => setModalState("none")}
+              />
+            )}
+          </main>
+        </div>
       )}
     </div>
   );

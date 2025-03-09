@@ -158,7 +158,10 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <Flex direction="column" className="!min-h-dvh h-full pb-[60px]">
+    <Flex
+      direction="column"
+      className="extended-container !min-h-dvh h-full pb-[60px]"
+    >
       {deco === false ? (
         <Flex
           className="!h-dvh pt-[76px] pb-[60px]"

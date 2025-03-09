@@ -111,7 +111,7 @@ export default function MyGatheringPage() {
 
   const GatheringPageSwiper = useMemo(() => {
     return (
-      <div className="h-dvh">
+      <div className="extended-container h-dvh">
         <Swiper
           key={selectedTab}
           initialSlide={Number(selectedTab) - 1}

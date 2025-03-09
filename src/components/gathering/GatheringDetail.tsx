@@ -38,7 +38,7 @@ export default function GatheringDetail({
   };
 
   return (
-    <>
+    <div className="extended-container">
       <div className="w-full relative h-[316px]">
         <GatheringBannerContainer
           gathering={selectedGathering}
@@ -112,13 +112,11 @@ export default function GatheringDetail({
         }
         content={<GatheringMemberContainer members={members} />}
       />
-    </>
+    </div>
   );
 }
 
 const styles = {
-  header: "max-w-[430px] z-10 fixed w-full",
-
   title: "font-[700] text-base leading-[20.8px]",
   contentWrapper:
     "w-full px-5 py-4 border-[1px] border-grayscale-100 rounded-xl text-B3",
