@@ -316,7 +316,7 @@ export default function FeedPage() {
     },
   });
   const { visible } = useScrollDirection({
-    targetRef: selectedTab === "1" ? containerRef : containerRef_m,
+    elementRef: selectedTab === "1" ? containerRef : containerRef_m,
   });
   useInfiniteScrollByRef({
     isFetching: isFetching_mine,
@@ -338,7 +338,7 @@ export default function FeedPage() {
 
   const renderSwipers = useMemo(() => {
     return (
-      <div className="extended-container h-dvh">
+      <div className="h-dvh">
         <Swiper
           key={selectedTab}
           initialSlide={Number(selectedTab) - 1}
@@ -437,7 +437,7 @@ export default function FeedPage() {
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="extended-container flex justify-center pt-[96px]">
+          <div className="flex justify-center pt-[96px]">
             <DotSpinnerSmall />
           </div>
         }

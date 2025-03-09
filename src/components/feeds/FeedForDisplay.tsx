@@ -73,7 +73,7 @@ export default function FeedForDisplay() {
   }));
 
   return (
-    <Flex direction="column" className="py-3">
+    <Flex direction="column" className="extended-container py-3">
       <InfoBar friendInfo={friendInfo} feed={feed} />
       <Spacing size={12} />
       <Swiper

@@ -5,33 +5,36 @@ import { useState, useEffect, type RefObject } from "react";
 type ScrollDirection = "up" | "down" | null;
 
 export function useScrollDirection<T extends HTMLElement>({
-  targetRef,
+  elementRef,
+  threshold = 144,
 }: {
-  targetRef: RefObject<T>;
+  elementRef: RefObject<T>;
+  threshold?: number;
 }) {
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(null);
   const [prevScrollTop, setPrevScrollTop] = useState(0);
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const element = targetRef.current;
+    const element = elementRef.current;
     if (!element) return;
 
     const handleScroll = () => {
       const currentScrollTop = element.scrollTop;
 
-      if (currentScrollTop < 10) {
+      if (currentScrollTop < threshold) {
         setVisible(true);
         setScrollDirection(null);
         setPrevScrollTop(currentScrollTop);
         return;
       }
 
-      // Determine scroll direction
       if (currentScrollTop > prevScrollTop) {
         if (scrollDirection !== "down") {
           setScrollDirection("down");
-          setVisible(false);
+          if (currentScrollTop >= threshold) {
+            setVisible(false);
+          }
         }
       } else {
         if (scrollDirection !== "up") {
@@ -48,7 +51,7 @@ export function useScrollDirection<T extends HTMLElement>({
     return () => {
       element.removeEventListener("scroll", handleScroll);
     };
-  }, [targetRef, prevScrollTop, scrollDirection]);
+  }, [elementRef, prevScrollTop, scrollDirection, threshold]);
 
   return { scrollDirection, visible };
 }

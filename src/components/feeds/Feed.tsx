@@ -19,7 +19,12 @@ export default function MyFeed({
   isFetching: boolean;
 }) {
   return (
-    <div className={clsx("animate-fadeIn will-change-[opacity]", className)}>
+    <div
+      className={clsx(
+        "extended-container animate-fadeIn will-change-[opacity]",
+        className
+      )}
+    >
       {feeds.map((feed) => (
         <FeedCard key={feed.id} feed={feed} onClick={onClickFeed} />
       ))}
