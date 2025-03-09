@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import Flex from "../Flex";
 import Image from "next/image";
