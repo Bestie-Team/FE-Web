@@ -26,10 +26,16 @@ export default function GatheringDetail({
   const { userInfo } = useAuth();
 
   const [imageLoaded, setImageLoaded] = useState(false);
-  const { gatheringDate, members, hostUser, address, description } =
+  const { gatheringDate, members, hostUser, address, description, name, id } =
     selectedGathering;
   const convertedDate = formatToKoreanTime(gatheringDate);
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
+
+  const sharingData = {
+    url: `https://lighty.today/gathering/${id}`,
+    text: description,
+    title: name,
+  };
 
   return (
     <>
@@ -41,7 +47,10 @@ export default function GatheringDetail({
         {!imageLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
       <div className="absolute top-4 right-5 flex gap-[14px] z-50">
-        <div className="cursor-pointer" onMouseDown={handleShare}>
+        <div
+          className="cursor-pointer"
+          onMouseDown={() => handleShare(sharingData)}
+        >
           <ShareIcon />
         </div>
         {userInfo?.accountId === hostUser.accountId && (

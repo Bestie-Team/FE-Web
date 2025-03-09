@@ -1,10 +1,16 @@
-const handleShare = async () => {
-  if (navigator.share) {
+const isShareSupported = () => navigator.share ?? false;
+
+type Data = {
+  url: string;
+  text: string;
+  title: string;
+  files?: File[];
+};
+
+const handleShare = async (data: Data) => {
+  if (isShareSupported()) {
     try {
-      await navigator.share({
-        title: "Lighty 공유기능 테스트중",
-        url: "https://lighty-git-eunjae-eunjaes-projects-ceae8709.vercel.app/",
-      });
+      await navigator.share(data);
       alert("Shared successfully!");
     } catch (error) {
       console.error("Error sharing:", error);

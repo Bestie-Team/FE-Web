@@ -2,7 +2,6 @@
 import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
 import LightyCalendarWithBorder from "@/components/shared/Calender/CalendarWithBorder";
 import Spacing from "@/components/shared/Spacing";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { Gathering } from "@/models/gathering";
 import React from "react";
 
@@ -15,10 +14,8 @@ MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
 
 export default function Schedule({
   expectingGatherings,
-  isFetching,
 }: {
   expectingGatherings?: Gathering[];
-  isFetching: boolean;
 }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -30,13 +27,8 @@ export default function Schedule({
 
   return (
     <div className="flex flex-col items-center">
-      {isFetching ? (
-        <DotSpinner />
-      ) : (
-        <LightyCalendarWithBorder gatherings={upcomingGatherings} />
-      )}
+      <LightyCalendarWithBorder gatherings={upcomingGatherings} />
       <Spacing size={28} />
-
       <MemoizedUpcomingSchedule gathering={upcomingGatherings} />
     </div>
   );

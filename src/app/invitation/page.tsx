@@ -128,7 +128,15 @@ export default function InvitationPage() {
         </SwiperSlide>
       </Swiper>
     );
-  }, [received, sent, selectedTab, swiperRef, handleSlideChange]);
+  }, [
+    received,
+    sent,
+    selectedTab,
+    swiperRef,
+    handleSlideChange,
+    isFetching,
+    isFetching_s,
+  ]);
 
   useEffect(() => {
     if (!isClient) {

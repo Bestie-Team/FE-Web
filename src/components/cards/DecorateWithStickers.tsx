@@ -133,7 +133,7 @@ export default function DecorateWithStickers() {
         format: "png",
         multiplier: 2,
       });
-      downloadURI(uri, "card.png");
+      downloadURI(uri);
     }
   };
 

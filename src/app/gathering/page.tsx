@@ -25,6 +25,7 @@ import Schedule from "@/components/schedule/Schedule";
 import NoGathering from "@/components/gathering/NoGathering";
 import Gathering from "@/components/gathering/Gathering";
 import { useRouter, useSearchParams } from "next/navigation";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 export default function MyGatheringPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -133,10 +134,7 @@ export default function MyGatheringPage() {
       >
         <SwiperSlide className="pt-[107px]">
           <div className="h-[calc(100dvh-144px)] overflow-y-scroll no-scrollbar pb-10">
-            <Schedule
-              expectingGatherings={myGatherings}
-              isFetching={isFetching}
-            />
+            <Schedule expectingGatherings={myGatherings} />
           </div>
         </SwiperSlide>
         <SwiperSlide className="pt-[87px]">
@@ -150,7 +148,7 @@ export default function MyGatheringPage() {
               <Gathering
                 ended
                 message
-                isFetching={isFetching_e}
+                isFetching={isFetching_e || isFetching}
                 where={GatheringInWhich.GATHERING}
                 gatherings={ended}
               />
@@ -182,7 +180,7 @@ export default function MyGatheringPage() {
         refreshingContent={<></>}
         pullingContent={
           <div className="flex justify-center pt-[96px]">
-            <DotSpinner />
+            <DotSpinnerSmall />
           </div>
         }
       >
