@@ -14,8 +14,12 @@ export default function FeedCard({
   onClick: Dispatch<SetStateAction<string>>;
 }) {
   const writer = feed?.writer;
-  const othersImageUrl = useMemo(
-    () => feed.withMembers.map((other) => other.profileImageUrl),
+  const friendInfo = useMemo(
+    () =>
+      feed.withMembers.map((other) => ({
+        name: other.name,
+        imageUrl: other.profileImageUrl,
+      })),
     [feed]
   );
 
@@ -25,10 +29,9 @@ export default function FeedCard({
 
   if (!writer) return null;
 
-  // 친구 약속일 때 (그룹약속 아니고)
   return (
     <Flex direction="column" className="py-3" onClick={handleClick}>
-      <InfoBar memberImageUrls={othersImageUrl} feed={feed} />
+      <InfoBar friendInfo={friendInfo} feed={feed} />
       <Spacing size={12} />
       <PhotoSwiper feed={feed} type="feed" />
       <Spacing size={8} />

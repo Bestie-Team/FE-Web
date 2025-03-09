@@ -6,6 +6,8 @@ import {
 } from "@/models/gathering";
 import GatheringCard from "./GatheringCard";
 import Message from "../shared/Message";
+import { useState } from "react";
+import NoGathering from "./NoGathering";
 
 type GatheringProps = {
   gatherings: GatheringType[];
@@ -24,32 +26,33 @@ export default function Gathering({
   message,
   isFetching,
 }: GatheringProps) {
-  const renderGatherings = (gatheringsList: GatheringType[]) =>
-    gatheringsList.map((gathering, i) => {
-      return (
-        <GatheringCard
-          ended={ended}
-          key={i}
-          tabIndex={i}
-          gathering={gathering}
-          where={where}
-          pencil={where === "HOME"}
-        />
-      );
-    });
+  const [showMessage, setShowMessage] = useState(true);
+  const renderGatherings = (gatheringsList: GatheringType[]) => {
+    if (gatheringsList.length < 1) {
+      return <NoGathering type="ENDED" />;
+    } else
+      return gatheringsList.map((gathering, i) => {
+        return (
+          <GatheringCard
+            ended={ended}
+            key={i}
+            tabIndex={i}
+            gathering={gathering}
+            where={where}
+            pencil={where === "HOME"}
+          />
+        );
+      });
+  };
 
   return (
-    <div
-      className={clsx(
-        "z-0 pt-3 pb-[80px] w-full px-5 min-h-[calc(100dvh-144px)]",
-        className
+    <div className={clsx("z-0 pt-3 w-full px-5", className)}>
+      {message && showMessage && (
+        <Message onClose={() => setShowMessage(false)} />
       )}
-    >
-      {message && <Message />}
 
       <div className="grid grid-cols-2 gap-4">
         {renderGatherings(gatherings)}
-
         {isFetching && (
           <>
             <div className={gatheringSkeleton} />

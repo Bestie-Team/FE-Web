@@ -50,7 +50,10 @@ export default function FeedForm<
                 {selectedGathering?.description}
               </span>
             </Flex>
-            <TogetherInfo members={selectedGathering?.members} />
+            <TogetherInfo
+              members={selectedGathering?.members}
+              clickable={false}
+            />
           </Flex>
         ) : null}
         <Spacing size={28} />

@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { NavigationOptions } from "swiper/types";
 import { cardFrameAtom, cardSelectedFeedAtom } from "@/atoms/card";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { frames } from "@/constants/photoCard";
 import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
@@ -17,7 +17,7 @@ import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 
 export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
-  const setSelectedFrame = useSetRecoilState(cardFrameAtom);
+  const [selectedFrame, setSelectedFrame] = useRecoilState(cardFrameAtom);
   const ref = useRef<HTMLDivElement>(null);
 
   const prevRef = useRef<HTMLDivElement | null>(null);
@@ -32,8 +32,8 @@ export default function SelectFrameSwiper() {
     "check_purple",
     "check_blue",
     "check_green",
-    "pink_diagonal",
-    "yellow_vertical",
+    "diagonal_pink",
+    "vertical_yellow",
   ];
 
   useEffect(() => {
@@ -44,12 +44,27 @@ export default function SelectFrameSwiper() {
     setSelectedFrame(id);
   };
 
+  const isLastFrame = selectedFrame === frameNames.length - 1;
+  const isFirstFrame = selectedFrame === 0;
+
   return (
     <div className={styles.swiperContainer}>
-      <div ref={prevRef} className={styles.prevButton}>
+      <div
+        ref={prevRef}
+        className={clsx(
+          styles.prevButton,
+          isFirstFrame ? "hidden" : "bg-grayscale-900"
+        )}
+      >
         <ArrowLeftIcon width="24" height="24" color="white" />
       </div>
-      <div ref={nextRef} className={styles.nextButton}>
+      <div
+        ref={nextRef}
+        className={clsx(
+          styles.nextButton,
+          isLastFrame ? "hidden" : "bg-grayscale-900"
+        )}
+      >
         <ArrowRightIcon width="24" height="24" color="white" />
       </div>
       <Swiper
@@ -117,9 +132,9 @@ export default function SelectFrameSwiper() {
 
 const styles = {
   prevButton:
-    "absolute top-[167px] left-[32px] z-10 transform cursor-pointer w-[56px] h-[56px] rounded-full bg-grayscale-900 flex justify-center items-center",
+    "absolute top-[167px] left-[32px] z-10 transform cursor-pointer w-[56px] h-[56px] rounded-full flex justify-center items-center",
   nextButton:
-    "absolute top-[167px] right-[32px] z-10 transform cursor-pointer w-[56px] h-[56px] rounded-full bg-grayscale-900 flex justify-center items-center",
+    "absolute top-[167px] right-[32px] z-10 transform cursor-pointer w-[56px] h-[56px] rounded-full flex justify-center items-center",
   frameWrapper: "relative p-[22px] h-[390px] shadow-custom rounded-[20px]",
   frame: "absolute inset-0 h-full w-full z-[-1] rounded-[20px]",
   swiperContainer: "relative w-full bg-gray-50",

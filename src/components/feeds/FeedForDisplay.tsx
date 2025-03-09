@@ -67,13 +67,14 @@ export default function FeedForDisplay() {
       : new Date(feed.createdAt);
     return formatToDisplay(date).slice(0, 10);
   };
-  const memberImageUrls = feed.withMembers.map(
-    (other) => other.profileImageUrl
-  );
+  const friendInfo = feed.withMembers.map((other) => ({
+    name: other.name,
+    imageUrl: other.profileImageUrl,
+  }));
 
   return (
     <Flex direction="column" className="py-3">
-      <InfoBar memberImageUrls={memberImageUrls} feed={feed} />
+      <InfoBar friendInfo={friendInfo} feed={feed} />
       <Spacing size={12} />
       <Swiper
         slidesPerView={1.077}

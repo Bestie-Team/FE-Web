@@ -47,7 +47,6 @@ export default function ChoosingGatheringToDecorate({
   };
 
   const feeds = data;
-  console.log(feeds);
 
   return (
     <Flex

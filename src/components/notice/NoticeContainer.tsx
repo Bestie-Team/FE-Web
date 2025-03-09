@@ -22,15 +22,19 @@ export default function NoticeContainer() {
     }
   });
 
-  useInfiniteScrollByRef({ isFetching, loadMore, targetRef: containerRef });
+  useInfiniteScrollByRef({
+    isFetching,
+    loadMore,
+    targetRef: containerRef,
+  });
 
   return (
     <div
       ref={containerRef}
-      className="h-[calc(dvh-20px)] overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5"
+      className="h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5 pb-10"
     >
-      <div className="flex flex-col gap-10 h-full">
-        {today.length > 1 && (
+      <div className="flex flex-col gap-5">
+        {today.length > 0 && (
           <Flex direction="column" className="gap-3">
             <span className="text-T4 mb-1">오늘의 알림</span>
             {today.map((notification) => (

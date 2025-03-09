@@ -47,12 +47,14 @@ export default function InvitationPage() {
     isFetching: isFetching_s,
     loadMore: loadMore_s,
     targetRef: containerRef,
+    selectedTab,
   });
 
   useInfiniteScrollByRef({
     isFetching,
     loadMore,
     targetRef: containerRef_r,
+    selectedTab,
   });
 
   const { mutate: read } = useReadNotification({

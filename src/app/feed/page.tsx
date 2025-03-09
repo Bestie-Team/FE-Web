@@ -324,19 +324,15 @@ export default function FeedPage() {
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
     targetRef: containerRef_m,
+    selectedTab,
   });
 
   useInfiniteScrollByRef({
     isFetching,
     loadMore,
     targetRef: containerRef,
+    selectedTab,
   });
-
-  // useEffect(() => {
-  //   if (swiperRef.current) {
-  //     swiperRef.current.slideTo(Number(selectedTab) - 1);
-  //   }
-  // }, [selectedTab, swiperRef]);
 
   const mailCount = isNewNotification.filter(
     (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
@@ -356,7 +352,8 @@ export default function FeedPage() {
           }}
           slidesPerView={1}
           spaceBetween={2}
-          className="custom-swiper !h-dvh w-full !z-5"
+          direction="horizontal"
+          className="custom-swiper !h-dvh w-full"
         >
           {feedAll && feedAll.length > 0 ? (
             <SwiperSlide>
@@ -381,12 +378,12 @@ export default function FeedPage() {
               </div>
             </SwiperSlide>
           )}
-          {feedMine && (
-            <SwiperSlide>
-              {feedMine.length > 0 ? (
+          {feedMine &&
+            (feedMine.length > 0 ? (
+              <SwiperSlide>
                 <div
                   ref={containerRef_m}
-                  className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-28"
+                  className="h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28"
                 >
                   <Feed
                     feeds={feedMine}
@@ -394,18 +391,17 @@ export default function FeedPage() {
                     isFetching={isFetching_mine}
                   />
                 </div>
-              ) : (
-                <SwiperSlide>
-                  <div
-                    ref={containerRef_m}
-                    className="h-full overflow-y-auto no-scrollbar pt-[90px] pb-28"
-                  >
-                    <NoFeed />
-                  </div>
-                </SwiperSlide>
-              )}
-            </SwiperSlide>
-          )}
+              </SwiperSlide>
+            ) : (
+              <SwiperSlide>
+                <div
+                  ref={containerRef_m}
+                  className="h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28"
+                >
+                  <NoFeed />
+                </div>
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
     );

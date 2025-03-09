@@ -48,28 +48,32 @@ interface InfiniteScrollRefType {
   loadMore: () => void;
   targetRef: RefObject<HTMLElement>;
   threshold?: number;
+  selectedTab?: string;
 }
 
 export const useInfiniteScrollByRef = ({
   isFetching,
   loadMore,
   targetRef,
-  threshold = 500,
+  threshold = 200,
+  selectedTab,
 }: InfiniteScrollRefType) => {
   const [page, setPage] = useState(0);
   const isLoadingRef = useRef(false);
 
   const checkScrollPosition = useCallback(() => {
-    if (!targetRef.current || isFetching || isLoadingRef.current) return;
+    if (!targetRef.current || isFetching || isLoadingRef.current) {
+      return;
+    }
 
     const element = targetRef.current;
     const elementHeight = element.scrollHeight;
     const scrollTop = element.scrollTop;
     const clientHeight = element.clientHeight;
     const remainingScroll = elementHeight - (scrollTop + clientHeight);
-    console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
+    // console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
     if (remainingScroll < threshold) {
-      console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
+      // console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
       isLoadingRef.current = true;
       setPage((prev) => prev + 1);
     }
@@ -80,14 +84,14 @@ export const useInfiniteScrollByRef = ({
 
   useEffect(() => {
     const element = targetRef.current;
+
     if (!element) return;
 
     element.addEventListener("scroll", debouncedScroll);
-
     return () => {
       element.removeEventListener("scroll", debouncedScroll);
     };
-  }, [debouncedScroll, targetRef]);
+  }, [debouncedScroll, targetRef, selectedTab]);
 
   useEffect(() => {
     if (page > 0 && !isFetching && isLoadingRef.current) {
@@ -96,7 +100,6 @@ export const useInfiniteScrollByRef = ({
     }
   }, [page, loadMore, isFetching]);
 
-  // isFetching이 false로 변경되면 isLoadingRef도 false로 재설정
   useEffect(() => {
     if (!isFetching) {
       isLoadingRef.current = false;
