@@ -41,12 +41,6 @@ export default function useHeader(pathname: string) {
         pageName: "피드 수정",
       },
     },
-    "/feed": {
-      component: Header,
-      props: {
-        pageName: "추억 피드",
-      },
-    },
     "/social": {
       component: Header,
       props: {

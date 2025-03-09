@@ -88,10 +88,10 @@ const NextLayout = ({ children }: Props) => {
     return (
       <div
         className={clsx(
-          "relative max-w-[430px] mx-auto my-0 min-h-dvh",
+          "max-w-[430px] mx-auto my-0 min-h-dvh",
           isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
             ? "bg-grayscale-50"
-            : "bg-base-white "
+            : "bg-base-white"
         )}
       >
         {children}

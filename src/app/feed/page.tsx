@@ -28,22 +28,20 @@ import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import NoFeed from "@/components/feeds/NoFeed";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useReport from "@/components/report/hooks/useReport";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
-import MailIcon from "@/components/shared/Icon/MailIcon";
-import NoticeIcon from "@/components/shared/Icon/NoticeIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import useNotification from "@/components/notice/hooks/useNotification";
-import { DotWithNumberIcon } from "@/components/shared/Icon/DotIcon";
 import dynamic from "next/dynamic";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { bottomSheetStateAtom } from "@/atoms/feed";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -185,10 +183,9 @@ FeedModals.displayName = "FeedModals";
 export default function FeedPage() {
   const queryClient = useQueryClient();
   const { token } = useAuth();
-  const isPast = useScrollThreshold();
   const [isClient, setIsClient] = useState(false);
   const [selectedFeedId, setSelectedFeedId] = useState("");
-  const router = useRouter();
+
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const {
     selectedTab,
@@ -202,7 +199,6 @@ export default function FeedPage() {
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_m = useRef<HTMLDivElement>(null);
-
   const queryParams = useMemo(
     () => ({
       order: "DESC" as const,
@@ -319,7 +315,9 @@ export default function FeedPage() {
       lightyToast.error("피드신고 실패");
     },
   });
-
+  const { visible } = useScrollDirection({
+    targetRef: selectedTab === "1" ? containerRef : containerRef_m,
+  });
   useInfiniteScrollByRef({
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
@@ -427,8 +425,8 @@ export default function FeedPage() {
   };
 
   return (
-    <div className="relative h-dvh no-scrollbar">
-      <div
+    <div className="h-dvh">
+      {/* <div
         style={{ zIndex: 99 }}
         className="flex fixed right-0 top-0 h-12 items-center gap-1 pr-5"
       >
@@ -464,6 +462,13 @@ export default function FeedPage() {
       </div>
       <Header
         shadow={isPast}
+        selectedTab={selectedTab}
+        handleTabClick={handleTabClick}
+      /> */}
+      <ScrollAwareHeader
+        visible={visible}
+        mailCount={mailCount}
+        isNewNotification={isNewNotification}
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
