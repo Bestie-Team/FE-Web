@@ -16,6 +16,7 @@ import Flex from "../shared/Flex";
 import Link from "next/link";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import useFriendsRequestTotalCount from "./hooks/useFriendsRequestCount";
+import clsx from "clsx";
 
 const ReportFriendModal = memo(
   ({
@@ -101,7 +102,10 @@ export default function UserFriendsListContainer() {
         direction="column"
         justify="space-between"
         align="center"
-        className="px-5 gap-4 pt-3 pb-4"
+        className={clsx(
+          "px-5 gap-4 mt-3 pb-4",
+          window.ReactNativeWebView ? "pt-safe-top" : ""
+        )}
       >
         <Flex justify="space-between" align="center" className="w-full">
           <span className="text-T4" id="friendList">

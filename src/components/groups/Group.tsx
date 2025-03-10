@@ -11,6 +11,7 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import Link from "next/link";
+import clsx from "clsx";
 
 const GroupList = ({ groups }: { groups: Group[] }) => {
   const router = useRouter();
@@ -45,7 +46,12 @@ export default function Groups() {
   }
 
   return (
-    <div className="h-[calc(100dvh-144px)] px-5 text-T4 pt-3 pb-20">
+    <div
+      className={clsx(
+        "h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20",
+        window.ReactNativeWebView ? "pt-safe-top" : ""
+      )}
+    >
       <Flex align="center">
         <span>전체 그룹</span>
         <Spacing size={4} direction="horizontal" />
