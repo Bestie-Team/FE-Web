@@ -17,11 +17,7 @@ const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
   content: "",
 };
 
-export default function CreatingFeed({
-  setStep,
-}: {
-  setStep: (num: number) => void;
-}) {
+export default function CreatingFeed() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const id = useRecoilValue(recordGatheringAtom);
@@ -32,7 +28,6 @@ export default function CreatingFeed({
   });
 
   const handleFeedSuccess = async (data: { message: string }) => {
-    setStep(0);
     router.replace("/feed?tab=2");
     await Promise.all([
       await queryClient.invalidateQueries({

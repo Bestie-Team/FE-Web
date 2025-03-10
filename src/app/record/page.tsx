@@ -8,22 +8,11 @@ import getHeader from "@/utils/getHeader";
 import ChoosingKindOfMemory from "../../components/feeds/ChoosingKindOfMemory";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import ChoosingGatheringToRecord from "@/components/feeds/ChoosingGatheringToRecord";
+import CreatingFeed from "@/components/feeds/CreatingFeed";
+import CreatingFeedNoGathering from "@/components/feeds/CreatingFeedNoGathering";
 
 const ChooseFriendToShare = dynamic(
   () => import("@/components/feeds/ChooseFriendToShare"),
-  {
-    loading: () => <DotSpinner />,
-    ssr: false,
-  }
-);
-
-const CreatingFeed = dynamic(() => import("@/components/feeds/CreatingFeed"), {
-  loading: () => <DotSpinner />,
-  ssr: false,
-});
-
-const CreatingFeedNoGathering = dynamic(
-  () => import("@/components/feeds/CreatingFeedNoGathering"),
   {
     loading: () => <DotSpinner />,
     ssr: false,
@@ -44,10 +33,6 @@ export default function Record() {
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
-
-  if (step === 0) {
-    return <DotSpinner />;
-  }
 
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 

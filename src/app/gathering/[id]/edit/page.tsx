@@ -40,11 +40,16 @@ export default function GatheringEditPage() {
     gathering: gatheringInfo,
     gatheringId: selectedGatheringId || "",
     onSuccess: async (data) => {
+      Promise.all([
+        await queryClient.invalidateQueries({
+          queryKey: ["gatherings", minDate(), maxDate()],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: ["gathering/detail", selectedGatheringId],
+        }),
+      ]);
       router.replace("/gathering");
       lightyToast.success(data.message);
-      await queryClient.invalidateQueries({
-        queryKey: ["gatherings", minDate(), maxDate()],
-      });
     },
     onError: (error) => {
       lightyToast.error(error.message);

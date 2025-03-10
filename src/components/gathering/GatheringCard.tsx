@@ -48,9 +48,9 @@ export default function GatheringCard({
   const { invitationImageUrl, name } = gathering;
   return (
     <div
-      className={clsx(styles.gatheringWrapper, "group")}
-      tabIndex={tabIndex}
+      className={styles.gatheringWrapper}
       onClick={() => {
+        console.log("Mouse down triggered");
         router.push(`/gathering/${gathering.id}?tab=2`);
       }}
     >
@@ -94,15 +94,15 @@ export default function GatheringCard({
 
 const styles = {
   gatheringWrapper:
-    "relative overflow-hidden rounded-2xl aspect-square cursor-pointer",
+    "group relative overflow-hidden rounded-2xl aspect-square cursor-pointer",
   image:
     "object-cover object-center w-full h-full group-hover:animate-smaller transition duration-75 w-[168px] h-[168px]",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:
-    "absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white gap-1",
+    "z-10 absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white gap-1",
   date: "w-full text-C2 text-grayscale-100 gap-1",
 
   button:
-    "absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-2 active:bg-grayscale-100",
+    "z-10 absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-2 active:bg-grayscale-100",
 };

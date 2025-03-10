@@ -11,9 +11,11 @@ import FullPageLoader from "@/components/shared/FullPageLoader";
 import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function EditingFeed() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const containerRef = useRef<HTMLDivElement>(null);
   const header = useMemo(() => getHeader("/feed/edit"), []);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
@@ -37,7 +39,8 @@ export default function EditingFeed() {
   const { mutate: editingFeed, isPending } = useEditFeed({
     content: feedInfo.content,
     feedId: originalFeedValue?.id || "",
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] });
       router.replace("/feed");
       lightyToast.success(data.message);
     },

@@ -7,7 +7,6 @@ import { modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import Spacing from "@/components/shared/Spacing";
 import GatheringDetail from "@/components/gathering/GatheringDetail";
@@ -68,9 +67,8 @@ export default function GatheringDetailPage({
 
     return null;
   };
-
   if (!selectedGathering) {
-    return <DotSpinner />;
+    return;
   }
 
   return (
