@@ -5,7 +5,6 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import useUserDelete from "../users/hooks/useUserDelete";
 import { lightyToast } from "@/utils/toast";
-import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function SettingsMenuItem({
   list,
@@ -14,7 +13,6 @@ export default function SettingsMenuItem({
   list: SettingsItem;
   link: { href: string; target?: string };
 }) {
-  const { logout } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
@@ -25,7 +23,6 @@ export default function SettingsMenuItem({
     onError: (e) => lightyToast.error(e),
     onSuccess: () => {
       lightyToast.success("탈퇴 완료");
-      logout();
     },
   });
 

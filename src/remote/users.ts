@@ -1,5 +1,6 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 /** 유저 검색 */
 export async function getSearchUsers({
@@ -100,6 +101,11 @@ export async function deleteUser() {
       method: "DELETE",
     });
     const data = await response.json();
+    if (data) {
+      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.DEVICE_ID);
+      sessionStorage.removeItem(STORAGE_KEYS.USER_INFO);
+    }
     return data;
   } catch (error) {
     console.log(error);
