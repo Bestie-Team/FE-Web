@@ -191,7 +191,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
 
 const styles = {
   headerWrapper:
-    "z-20 fixed w-full before:h-[48px] left-0 top-0 pr-5 items-center",
+    "max-w-[430px] mx-auto z-20 fixed w-full before:h-[48px] pr-5 items-center",
   headerFont: "flex-grow text-T3 text-base-white",
   divider: "flex-shrink-0 h-[1px] w-full bg-grayscale-50",
   dividerWrapper: "pl-[26px] pr-[14px] bg-base-white",

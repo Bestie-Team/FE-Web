@@ -25,6 +25,7 @@ export default function GroupDetailContainer({
       <div className="w-full h-[316px] relative">
         <GroupBannerContainer
           imageUrl={groupImageUrl}
+          isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
         />
         {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}

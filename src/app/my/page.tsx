@@ -144,7 +144,7 @@ export default function MyPage() {
 
 const styles = {
   headerWrapper:
-    "z-20 h-12 fixed max-w-[430px] w-full transition-shadow duration-300",
+    "z-20 h-12 fixed max-w-[430px] mx-auto w-full transition-shadow duration-300",
   letter: "cursor-pointer",
   termsWrapper: "w-full py-2 px-5 text-C5 text-grayscale-300",
 };

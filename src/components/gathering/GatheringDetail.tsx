@@ -25,7 +25,7 @@ export default function GatheringDetail({
 }) {
   const { userInfo } = useAuth();
 
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const { gatheringDate, members, hostUser, address, description, name, id } =
     selectedGathering;
   const convertedDate = formatToKoreanTime(gatheringDate);
@@ -42,9 +42,10 @@ export default function GatheringDetail({
       <div className="w-full relative h-[316px]">
         <GatheringBannerContainer
           gathering={selectedGathering}
-          setImageLoaded={setImageLoaded}
+          isLoaded={isLoaded}
+          setIsLoaded={setIsLoaded}
         />
-        {!imageLoaded && <div className="absolute bg-grayscale-10 h-full" />}
+        {!setIsLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
       <div className="absolute top-4 right-5 flex gap-[14px] z-50">
         <div

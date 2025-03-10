@@ -5,14 +5,17 @@ import Spacing from "../shared/Spacing";
 import { differenceInCalendarDays } from "date-fns";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
+import clsx from "clsx";
 const DEFAULT_BG_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
 export default function GatheringBannerContainer({
   gathering,
-  setImageLoaded,
+  isLoaded,
+  setIsLoaded,
 }: {
   gathering: GatheringDetailResponse;
-  setImageLoaded: Dispatch<SetStateAction<boolean>>;
+  isLoaded: boolean;
+  setIsLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const date = new Date(gathering.gatheringDate);
   const diff = differenceInCalendarDays(new Date(), date);
@@ -25,8 +28,13 @@ export default function GatheringBannerContainer({
         src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
         width={500}
         height={316}
-        className="h-[316px] w-[500px] object-cover"
-        onLoad={() => setImageLoaded(true)}
+        className={clsx(
+          "h-[316px] w-[500px] object-cover",
+          `transition-opacity duration-500 ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`
+        )}
+        onLoad={() => setIsLoaded(true)}
       />
       <div className="absolute inset-0 bg-[#00000080]" />
       <Flex justify="space-between" className={styles.wrapper}>
