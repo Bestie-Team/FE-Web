@@ -13,7 +13,16 @@ export default function ChooseFriendToShare({
   setStep: Dispatch<SetStateAction<number>>;
 }) {
   return (
-    <div className="absolute inset-0 bg-grayscale-50 min-h-dvh pt-12">
+    <div
+      className="absolute inset-0 bg-grayscale-50 min-h-dvh pt-12"
+      style={
+        window.ReactNativeWebView
+          ? {
+              paddingTop: `calc(env(safe-area-inset-top) + 3rem)`,
+            }
+          : {}
+      }
+    >
       <Flex
         direction="column"
         className="absolute left-0 right-0 pt-5 px-6 gap-4 text-T2"

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
 import Spacing from "../Spacing";
 
@@ -16,9 +17,10 @@ export default function HeaderWithBackBtn({
 }) {
   return (
     <div
-      className={
-        "min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-12 bg-base-white text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5"
-      }
+      className={clsx(
+        "min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-12 bg-base-white text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5",
+        window.ReactNativeWebView ? "pt-safe-top" : ""
+      )}
       style={{
         zIndex: 12,
         position: fixedNot ? "relative" : "fixed",
