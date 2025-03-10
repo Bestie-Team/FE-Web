@@ -106,7 +106,8 @@ export function ScrollAwareHeader({
     <header
       className={clsx(
         "max-w-[430px] mx-auto fixed top-0 left-0 right-0 bg-base-white/80 backdrop-blur-md z-50 transition-transform duration-300 ease-in-out",
-        visible ? "translate-y-0" : "-translate-y-full"
+        visible ? "translate-y-0" : "-translate-y-full",
+        window.ReactNativeWebView ? "pt-safe-top" : ""
       )}
     >
       <Header

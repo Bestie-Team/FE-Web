@@ -7,6 +7,7 @@ import Image from "next/image";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Lighty } from "@/constants/images";
 import MessageIcon from "../shared/Icon/MessageIcon";
+import clsx from "clsx";
 const feed = {
   id: "123412456",
   content: "첫 피드가 작성되면 이 피드는 자동으로 사라져요!",
@@ -73,7 +74,13 @@ export default function FeedForDisplay() {
   }));
 
   return (
-    <Flex direction="column" className="extended-container py-3">
+    <Flex
+      direction="column"
+      className={clsx(
+        "extended-container my-3",
+        window.ReactNativeWebView ? "pt-safe-top" : ""
+      )}
+    >
       <InfoBar friendInfo={friendInfo} feed={feed} />
       <Spacing size={12} />
       <Swiper
@@ -92,7 +99,7 @@ export default function FeedForDisplay() {
           e.stopPropagation();
         }}
       >
-        <SwiperSlide className={"relative bg-[#F4F4F4] rounded-2xl mt-2"}>
+        <SwiperSlide className={"relative bg-[#F4F4F4] rounded-2xl"}>
           <Image
             alt="feedImage"
             loading="eager"

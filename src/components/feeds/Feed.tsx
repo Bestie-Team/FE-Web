@@ -22,6 +22,7 @@ export default function MyFeed({
     <div
       className={clsx(
         "extended-container animate-fadeIn will-change-[opacity]",
+        window.ReactNativeWebView ? "pt-safe-top" : "",
         className
       )}
     >
