@@ -15,6 +15,7 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=co
 
 export default function LogIn() {
   const { login } = useAuth();
+  const isClient = typeof window !== "undefined";
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
@@ -37,14 +38,14 @@ export default function LogIn() {
 
   const loginHandler = (provider: Providers) => {
     if (provider === "google") {
-      if (window.ReactNativeWebView) {
+      if (isClient && window.ReactNativeWebView) {
         googleLoginMobile();
       } else {
         googleLogin();
       }
     }
     if (provider === "kakao") {
-      if (window.ReactNativeWebView) {
+      if (isClient && window.ReactNativeWebView) {
         kakaoLoginMobile();
       } else {
         window.location.href = KAKAO_AUTH_URL;

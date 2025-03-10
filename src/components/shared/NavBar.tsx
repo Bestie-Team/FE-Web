@@ -17,7 +17,6 @@ const NavBar = () => {
   const { data: user } = useUserProfile();
   const { setActiveBtn, pathname, activeBtn } = useActiveNavigation();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
-
   const showSheetButton = useMemo(() => {
     return (
       SHOW_SHEET_PATHS.some((path) => pathname.startsWith(path)) ||

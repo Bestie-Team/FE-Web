@@ -72,13 +72,13 @@ export default function FeedForDisplay() {
     name: other.name,
     imageUrl: other.profileImageUrl,
   }));
-
+  const isClient = typeof window !== "undefined";
   return (
     <Flex
       direction="column"
       className={clsx(
         "extended-container my-3",
-        window.ReactNativeWebView ? "pt-safe-top" : ""
+        isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
       )}
     >
       <InfoBar friendInfo={friendInfo} feed={feed} />

@@ -18,11 +18,12 @@ export default function MyFeed({
   className?: string;
   isFetching: boolean;
 }) {
+  const isClient = typeof window !== "undefined";
   return (
     <div
       className={clsx(
         "extended-container animate-fadeIn will-change-[opacity]",
-        window.ReactNativeWebView ? "pt-safe-top" : "",
+        isClient && window.ReactNativeWebView ? "pt-safe-top" : "",
         className
       )}
     >

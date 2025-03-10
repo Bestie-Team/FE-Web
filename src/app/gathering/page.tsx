@@ -38,7 +38,7 @@ export default function GatheringPage() {
     handleSlideChange,
     swiperRef,
   } = useTabs();
-
+  const isClient = typeof window !== "undefined";
   const { data: myGatherings, isFetching } = useGatherings({
     limit: 50,
     minDate: minDate(),
@@ -118,7 +118,7 @@ export default function GatheringPage() {
           <div
             className={clsx(
               "mt-[107px] h-full overflow-y-scroll no-scrollbar pb-10",
-              window.ReactNativeWebView ? "pt-safe-top" : ""
+              isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
             )}
           >
             <Schedule expectingGatherings={myGatherings} />
@@ -140,7 +140,14 @@ export default function GatheringPage() {
         </SwiperSlide>
       </Swiper>
     );
-  }, [myGatherings, ended, selectedTab, swiperRef, handleSlideChange]);
+  }, [
+    isClient,
+    myGatherings,
+    ended,
+    selectedTab,
+    swiperRef,
+    handleSlideChange,
+  ]);
 
   return (
     <div className="h-dvh">
@@ -180,6 +187,7 @@ const Header = React.memo(
     selectedTab: "1" | "2";
     handleTabClick: (tab: "1" | "2") => void;
   }) => {
+    const isClient = typeof window !== "undefined";
     return (
       <>
         {getHeader("/gathering")}
@@ -189,7 +197,7 @@ const Header = React.memo(
           className={clsx(
             styles.panelWrapper,
             shadow && "shadow-bottom",
-            window.ReactNativeWebView ? "pt-safe-top" : ""
+            isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
           )}
         >
           <Panel

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useEffect, useRef, Suspense } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import Feed from "@/components/feeds/Feed";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
@@ -39,7 +39,6 @@ import { WEBVIEW_EVENT } from "@/webview/types";
 import { bottomSheetStateAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const NoFeed = dynamic(() => import("@/components/feeds/NoFeed"));
@@ -420,28 +419,26 @@ export default function FeedPage() {
 
   return (
     <div className="h-dvh">
-      <Suspense fallback={<FullPageLoader />}>
-        <ScrollAwareHeader
-          visible={visible}
-          mailCount={mailCount}
-          isNewNotification={isNewNotification}
-          selectedTab={selectedTab}
-          handleTabClick={handleTabClick}
-        />
-        <PullToRefresh
-          onRefresh={handleRefresh}
-          pullingContent={
-            <div className="flex justify-center pt-[107px]">
-              <div className="p-4">
-                <DotSpinnerSmall />
-              </div>
+      <ScrollAwareHeader
+        visible={visible}
+        mailCount={mailCount}
+        isNewNotification={isNewNotification}
+        selectedTab={selectedTab}
+        handleTabClick={handleTabClick}
+      />
+      <PullToRefresh
+        onRefresh={handleRefresh}
+        pullingContent={
+          <div className="flex justify-center pt-[107px]">
+            <div className="p-4">
+              <DotSpinnerSmall />
             </div>
-          }
-        >
-          {renderSwipers}
-        </PullToRefresh>
-        <TabParamHandler setSelectedTab={setSelectedTab} />
-      </Suspense>
+          </div>
+        }
+      >
+        {renderSwipers}
+      </PullToRefresh>
+      <TabParamHandler setSelectedTab={setSelectedTab} />
       {recordModalOpen && (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}

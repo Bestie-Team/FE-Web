@@ -1,5 +1,12 @@
-import Header from "@/components/shared/Header/Header";
-import HeaderWithBackBtn from "@/components/shared/Header/HeaderWithBtn";
+import dynamic from "next/dynamic";
+
+const Header = dynamic(() => import("../components/shared/Header/Header"), {
+  ssr: false,
+});
+const HeaderWithBackBtn = dynamic(
+  () => import("../components/shared/Header/HeaderWithBtn"),
+  { ssr: false }
+);
 
 type HeaderWithBtnProps = {
   pageName: string;
