@@ -19,6 +19,7 @@ export default function GatheringDetailPage({
 }) {
   const id = params.id;
   const router = useRouter();
+  const [isLoaded, setIsLoaded] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
   const { data: selectedGathering } = useGatheringDetail({
@@ -93,7 +94,11 @@ export default function GatheringDetailPage({
         <div className="flex-1 text-base-white">{"약속 상세"}</div>
         <Spacing size={6} />
       </header>
-      <GatheringDetail selectedGathering={selectedGathering} />
+      <GatheringDetail
+        selectedGathering={selectedGathering}
+        isLoaded={isLoaded}
+        setIsLoaded={setIsLoaded}
+      />
       {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}

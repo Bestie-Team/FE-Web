@@ -27,7 +27,7 @@ export default function ChoosingGatheringToDecorate({
   >(cardSelectedFeedAtom);
   const router = useRouter();
 
-  const { data = [], isFetching } = useFeedMine({
+  const { data = [] } = useFeedMine({
     order: "DESC",
     minDate: minDate(),
     maxDate: maxDate(),
@@ -72,7 +72,6 @@ export default function ChoosingGatheringToDecorate({
           </span>
           <Spacing size={20} />
         </div>
-        {isFetching && <DotSpinner />}
         {!feeds || feeds.length < 1 ? (
           <NoFeedToMakeCard />
         ) : (

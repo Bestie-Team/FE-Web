@@ -37,7 +37,7 @@ export type GroupEditProps = {
   members?: User[];
 };
 
-export default function ClientSideGroupDetail({
+export default function GroupDetailPage({
   params,
 }: {
   params: { id: string };

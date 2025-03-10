@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import GatheringBannerContainer from "./GatheringBannerContainer";
 import ShareIcon from "../shared/Icon/ShareIcon";
 import { MENU_TYPES } from "../shared/Options";
@@ -18,6 +17,7 @@ import { GatheringDetailResponse } from "@/models/gathering";
 import handleShare from "@/utils/handleShare";
 import { MAP } from "@/constants/images";
 import dynamic from "next/dynamic";
+import { Dispatch, SetStateAction } from "react";
 
 const Options = dynamic(() => import("../shared/Options"), {
   ssr: false,
@@ -25,12 +25,15 @@ const Options = dynamic(() => import("../shared/Options"), {
 
 export default function GatheringDetail({
   selectedGathering,
+  isLoaded,
+  setIsLoaded,
 }: {
   selectedGathering: GatheringDetailResponse;
+  isLoaded: boolean;
+  setIsLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const { userInfo } = useAuth();
 
-  const [isLoaded, setIsLoaded] = useState(false);
   const { gatheringDate, members, hostUser, address, description, name, id } =
     selectedGathering;
   const convertedDate = formatToKoreanTime(gatheringDate);
