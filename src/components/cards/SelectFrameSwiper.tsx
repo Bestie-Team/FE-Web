@@ -114,11 +114,13 @@ export default function SelectFrameSwiper() {
                   </Flex>
                 </Flex>
                 <Image
+                  loading="eager"
                   src={frame}
                   width={282}
                   height={372}
                   alt="card"
                   className={styles.frame}
+                  priority={idx === 0}
                 />
               </div>
               <div className={styles.frameName}>{frameNames[idx]}</div>

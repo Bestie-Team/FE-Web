@@ -56,6 +56,7 @@ export default function GatheringCard({
       }}
     >
       <Image
+        priority={tabIndex < 6}
         src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
         className={clsx(styles.image, "scale-110")}
         alt={name}
@@ -103,5 +104,6 @@ const styles = {
     "absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white gap-1",
   date: "w-full text-C2 text-grayscale-100 gap-1",
 
-  button: "absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-2",
+  button:
+    "absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-2 active:bg-grayscale-100",
 };
