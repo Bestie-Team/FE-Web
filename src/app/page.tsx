@@ -7,14 +7,16 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   const { isAuthenticated } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    setIsLoading(false);
-  }, [isAuthenticated]);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient, isAuthenticated]);
 
-  if (isLoading) {
+  if (!isClient) {
     return <DotSpinner />;
   }
   if (isAuthenticated) {
