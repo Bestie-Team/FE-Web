@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
@@ -18,7 +18,7 @@ const ChoosingGatheringToRecord = dynamic(
 
 const ChooseFriendToShare = dynamic(() => import("./ChooseFriendToShare"), {
   loading: () => <DotSpinner />,
-  ssr: true,
+  ssr: false,
 });
 
 const CreatingFeed = dynamic(() => import("./CreatingFeed"), {
@@ -49,13 +49,15 @@ export default function Record() {
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
 
-  const isClient = typeof window !== "undefined";
+  const [isClient, setIsClient] = useState(false);
 
-  if (!isClient) {
-    return null;
-  }
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
-  if (step === 0) {
+  if (step === 0 || !isClient) {
     return <DotSpinner />;
   }
 

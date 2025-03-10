@@ -5,12 +5,16 @@ import { lightyToast } from "@/utils/toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import GatheringDetail from "@/components/gathering/GatheringDetail";
-import Modal from "@/components/shared/Modal/Modal";
 import { useRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
 import { Suspense, useEffect, useState } from "react";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import Spacing from "@/components/shared/Spacing";
+import dynamic from "next/dynamic";
+
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
+  ssr: false,
+});
 
 export default function GatheringDetailPage({
   params,
@@ -20,6 +24,7 @@ export default function GatheringDetailPage({
   const router = useRouter();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
+  const [isClient, setIsClient] = useState(false);
   const id = params.id;
   const { data: selectedGathering, isPending } = useGatheringDetail({
     id,
@@ -52,7 +57,11 @@ export default function GatheringDetailPage({
     return null;
   };
 
-  const isClient = typeof window !== "undefined";
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   if (!isClient || !selectedGathering) {
     return null;

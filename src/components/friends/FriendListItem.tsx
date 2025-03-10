@@ -73,7 +73,7 @@ export default function FriendListItem({
       )}
       onMouseDown={onClick}
     >
-      <Flex className="w-full">
+      <Flex>
         {!!friendInfo?.profileImageUrl ? (
           <Image
             alt="friendProfile"

@@ -38,7 +38,7 @@ export default function SearchInput({
       className={clsx(
         styles.inputWrapper,
         className,
-        isFocused ? "border-grayscale-900" : "border-grayscale-300"
+        isFocused ? "border-grayscale-900" : "border-grayscale-100"
       )}
     >
       <SearchIcon />

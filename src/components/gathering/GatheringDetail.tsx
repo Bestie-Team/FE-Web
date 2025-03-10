@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import GatheringBannerContainer from "./GatheringBannerContainer";
 import ShareIcon from "../shared/Icon/ShareIcon";
-import Options, { MENU_TYPES } from "../shared/Options";
+import { MENU_TYPES } from "../shared/Options";
 import LeaderContainer from "../shared/LeaderContainer";
 import Spacing from "../shared/Spacing";
 import LightyInfoContainer from "../shared/LightyInfoContainer";
@@ -17,6 +17,11 @@ import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 import handleShare from "@/utils/handleShare";
 import { MAP } from "@/constants/images";
+import dynamic from "next/dynamic";
+
+const Options = dynamic(() => import("../shared/Options"), {
+  ssr: false,
+});
 
 export default function GatheringDetail({
   selectedGathering,
