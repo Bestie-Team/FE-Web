@@ -1,4 +1,3 @@
-"use client";
 import UpcomingSchedule from "@/components/schedule/UpcomingSchedule";
 import LightyCalendarWithBorder from "@/components/shared/Calender/CalendarWithBorder";
 import Spacing from "@/components/shared/Spacing";

@@ -1,36 +1,31 @@
 "use client";
-import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
-import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering";
-import { lightyToast } from "@/utils/toast";
+
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import GatheringDetail from "@/components/gathering/GatheringDetail";
 import { useRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
-import { Suspense, useEffect, useState } from "react";
+import { lightyToast } from "@/utils/toast";
+import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
+import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import Spacing from "@/components/shared/Spacing";
-import dynamic from "next/dynamic";
-
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
-  ssr: false,
-});
+import GatheringDetail from "@/components/gathering/GatheringDetail";
+import Modal from "@/components/shared/Modal/Modal";
 
 export default function GatheringDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
+  const id = params.id;
   const router = useRouter();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
-  const [isClient, setIsClient] = useState(false);
-  const id = params.id;
-  const { data: selectedGathering, isPending } = useGatheringDetail({
+  const { data: selectedGathering } = useGatheringDetail({
     id,
     enabled: !!id,
   });
-
   const { mutate: deleteGathering } = useDeleteGathering({
     id,
     onSuccess: (data) => {
@@ -39,33 +34,6 @@ export default function GatheringDetailPage({
     },
     onError: (error) => lightyToast.error(error.message),
   });
-
-  const TabParamHandler = ({
-    setSelectedTab,
-  }: {
-    setSelectedTab: (num: "1" | "2") => void;
-  }) => {
-    const searchParams = useSearchParams();
-
-    useEffect(() => {
-      const tabParam = searchParams?.get("tab");
-      if (tabParam === "1" || tabParam === "2") {
-        setSelectedTab(tabParam);
-      }
-    }, [searchParams, setSelectedTab]);
-
-    return null;
-  };
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
-  if (!isClient || !selectedGathering) {
-    return null;
-  }
 
   const MODAL_CONFIGS = {
     deleteGathering: {
@@ -84,8 +52,29 @@ export default function GatheringDetailPage({
     });
   };
 
+  const TabParamHandler = ({
+    setSelectedTab,
+  }: {
+    setSelectedTab: (num: "1" | "2") => void;
+  }) => {
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+      const tabParam = searchParams?.get("tab");
+      if (tabParam === "1" || tabParam === "2") {
+        setSelectedTab(tabParam);
+      }
+    }, [searchParams, setSelectedTab]);
+
+    return null;
+  };
+
+  if (!selectedGathering) {
+    return <DotSpinner />;
+  }
+
   return (
-    <div className="relative min-h-dvh">
+    <div className="relative min-h-dvh bg-grayscale-50 w-full">
       <header className={header}>
         <button
           className={
@@ -107,7 +96,6 @@ export default function GatheringDetailPage({
         <Spacing size={6} />
       </header>
       <GatheringDetail selectedGathering={selectedGathering} />
-      {isPending && <DotSpinner />}
       {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}
@@ -118,12 +106,9 @@ export default function GatheringDetailPage({
           onClose={closeModal}
         />
       )}
-      <Suspense fallback={null}>
-        <TabParamHandler setSelectedTab={setSelectedTab} />
-      </Suspense>
+      <TabParamHandler setSelectedTab={setSelectedTab} />
     </div>
   );
 }
-
 const header =
   "absolute top-0 left-0 right-0 flex z-20 max-w-[430px] w-full items-center h-12 text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5";

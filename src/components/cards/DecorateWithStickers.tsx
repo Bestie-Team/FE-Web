@@ -1,4 +1,3 @@
-"use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import Spacing from "../shared/Spacing";

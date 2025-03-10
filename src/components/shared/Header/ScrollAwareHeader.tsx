@@ -1,5 +1,3 @@
-"use client";
-
 import { DotWithNumberIcon } from "../Icon/DotIcon";
 import MailIcon from "../Icon/MailIcon";
 import NoticeIcon from "../Icon/NoticeIcon";

@@ -1,4 +1,3 @@
-"use client";
 import { useRecoilState } from "recoil";
 import Flex from "../shared/Flex";
 import LightyLogo from "../shared/Icon/LightyLogo";
@@ -9,9 +8,14 @@ import DotSpinner from "../shared/Spinner/DotSpinner";
 import { cardSelectedFeedAtom } from "@/atoms/card";
 import { maxDate, minDate } from "@/constants/time";
 import { Feed } from "@/models/feed";
-import { NoFeedToMakeCard } from "../feeds/NoFeed";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
+
+const NoFeedToMakeCard = dynamic(() => import("../feeds/NoFeed"), {
+  ssr: false,
+  loading: () => <DotSpinner />,
+});
 
 export default function ChoosingGatheringToDecorate({
   onNext,

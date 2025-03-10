@@ -1,4 +1,3 @@
-"use client";
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";

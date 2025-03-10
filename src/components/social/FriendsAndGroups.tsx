@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRecoilState } from "recoil";
@@ -17,19 +16,15 @@ const Groups = dynamic(() => import("@/components/groups/Group"), {
 export default function FriendsAndGroups() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isClient, setIsClient] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
 
   useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
     const tabParam = searchParams?.get("tab");
     if (tabParam) {
       setSelectedTab(tabParam === "group" ? "2" : "1");
       router.replace("/social");
     }
-  }, [searchParams, setSelectedTab, isClient]);
+  }, [searchParams, setSelectedTab]);
 
   const renderTabContent = useMemo(() => {
     if (selectedTab === "1") {

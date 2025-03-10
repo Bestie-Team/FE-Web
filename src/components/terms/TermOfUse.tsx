@@ -1,4 +1,3 @@
-"use client";
 import Flex from "../shared/Flex";
 import CloseIcon2 from "../shared/Icon/CloseIcon2";
 

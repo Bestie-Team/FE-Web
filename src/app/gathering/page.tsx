@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { GatheringInWhich } from "@/models/gathering";
@@ -28,10 +28,8 @@ import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 export default function GatheringPage() {
   const gatheringRef = useRef<HTMLDivElement>(null);
-  // const router = useRouter();
   const isPast = useScrollThreshold();
   const queryClient = useQueryClient();
-  const [isClient, setIsClient] = useState(false);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const {
@@ -57,21 +55,6 @@ export default function GatheringPage() {
   useEffect(() => {
     reset();
   }, [reset]);
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
-  // useEffect(() => {
-  //   if (ended && ended.length > 0) {
-  //     ended.slice(6).forEach((end) => {
-  //       router.prefetch(`/gathering/${end.id}`);
-  //       console.log(end.name);
-  //     });
-  //   }
-  // }, [router]);
 
   const handleRefresh = async () => {
     try {
@@ -164,26 +147,28 @@ export default function GatheringPage() {
 
   return (
     <div className="h-dvh">
-      <Header
-        shadow={isPast}
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-      />
-      {(!isClient || !myGatherings || !ended) && <DotSpinner />}
-      <PullToRefresh
-        onRefresh={handleRefresh}
-        pullingContent={
-          <div className="flex justify-center pt-[96px]">
-            <DotSpinnerSmall />
-          </div>
-        }
-      >
-        {GatheringPageSwiper}
-      </PullToRefresh>
-      <Suspense fallback={null}>
+      <Suspense fallback={<DotSpinner />}>
+        <Header
+          shadow={isPast}
+          selectedTab={selectedTab}
+          handleTabClick={handleTabClick}
+        />
+        {/* {(!isClient || !myGatherings || !ended) && <DotSpinner />} */}
+        <PullToRefresh
+          onRefresh={handleRefresh}
+          pullingContent={
+            <div className="flex justify-center pt-[96px]">
+              <DotSpinnerSmall />
+            </div>
+          }
+        >
+          {GatheringPageSwiper}
+        </PullToRefresh>
         <TabParamHandler setSelectedTab={setSelectedTab} />
+        {modalOpen && (
+          <MemoriesBottomSheet onClose={() => setModalOpen(false)} />
+        )}
       </Suspense>
-      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>
   );
 }

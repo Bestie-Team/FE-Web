@@ -1,4 +1,4 @@
-import { useMemo, memo, useEffect, useState } from "react";
+import { useMemo, memo, useEffect, useState, Suspense } from "react";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
@@ -15,7 +15,6 @@ const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
   const { data: user } = useUserProfile();
-  const [isClient, setIsClient] = useState(false);
   const { setActiveBtn, pathname, activeBtn } = useActiveNavigation();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
@@ -51,8 +50,6 @@ const NavBar = () => {
   }, [showSheetButton, pathname]);
 
   useEffect(() => {
-    setIsClient(true);
-
     if (!profileImageUrl) {
       if (user?.profileImageUrl) {
         setProfileImageUrl(user.profileImageUrl);
@@ -60,25 +57,27 @@ const NavBar = () => {
     }
   }, [profileImageUrl, user]);
 
-  if (!user || !isClient) {
+  if (!user) {
     return null;
   }
 
   return (
+    <Suspense>
     <nav
       style={{ zIndex: 99 }}
       className={clsx(
         `
         fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px]
         flex justify-between px-3 pt-1 pb-2 mx-auto
-        border-t border-grayscale-10
-      `,
+        border-t border-grayscale-10`,
         window.ReactNativeWebView ? "pb-safe-bottom" : ""
       )}
-    >
-      {items}
-      {shouldShowFloatingButton && <FloatingButton tooltip={tooltip} />}
-    </nav>
+      >
+        {items}
+        {shouldShowFloatingButton && <FloatingButton tooltip={tooltip} />}
+      </nav>
+    </Suspense>
+>>>>>>> develop
   );
 };
 

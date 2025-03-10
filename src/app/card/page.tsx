@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useState } from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,6 @@ const DecorateWithStickers = dynamic(
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
-  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const handleGatheringChange = () => {
     setStep(step + 1);
@@ -31,16 +30,6 @@ export default function Page() {
       return "프레임 선택";
     } else return "포토 카드";
   };
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
-  if (!isClient) {
-    return <DotSpinner />;
-  }
 
   return (
     <div className="bg-base-white h-dvh overflow-y-scroll no-scrollbar">
@@ -58,13 +47,11 @@ export default function Page() {
         </div>
         <span className="text-T3">{getHeaderName()}</span>
       </header>
-      <Suspense fallback={<DotSpinner />}>
-        {step === 1 && (
-          <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
-        )}
-        {step === 2 && <ChooseFrame onNext={handleGatheringChange} />}
-        {step === 3 && <DecorateWithStickers />}
-      </Suspense>
+      {step === 1 && (
+        <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
+      )}
+      {step === 2 && <ChooseFrame onNext={handleGatheringChange} />}
+      {step === 3 && <DecorateWithStickers />}
     </div>
   );
 }

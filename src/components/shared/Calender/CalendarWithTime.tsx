@@ -1,4 +1,3 @@
-"use client";
 import clsx from "clsx";
 import Button from "../Button/Button";
 import Flex from "../Flex";

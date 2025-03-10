@@ -26,7 +26,6 @@ import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
-import NoFeed from "@/components/feeds/NoFeed";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReport from "@/components/report/hooks/useReport";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -39,9 +38,11 @@ import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { bottomSheetStateAtom } from "@/atoms/feed";
-import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import FullPageLoader from "@/components/shared/FullPageLoader";
+
+const NoFeed = dynamic(() => import("@/components/feeds/NoFeed"));
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -183,7 +184,6 @@ FeedModals.displayName = "FeedModals";
 export default function FeedPage() {
   const queryClient = useQueryClient();
   const { token } = useAuth();
-  const [isClient, setIsClient] = useState(false);
   const [selectedFeedId, setSelectedFeedId] = useState("");
 
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
@@ -227,12 +227,6 @@ export default function FeedPage() {
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, []);
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
 
   const handleDeleteFeedSuccess = async (data: { message: string }) => {
     lightyToast.success(data.message);
@@ -426,24 +420,27 @@ export default function FeedPage() {
 
   return (
     <div className="h-dvh">
-      <ScrollAwareHeader
-        visible={visible}
-        mailCount={mailCount}
-        isNewNotification={isNewNotification}
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-      />
-      {(!isClient || !feedMine || !feedAll) && <DotSpinner />}
-      <PullToRefresh
-        onRefresh={handleRefresh}
-        pullingContent={
-          <div className="flex justify-center pt-[96px]">
-            <DotSpinnerSmall />
-          </div>
-        }
-      >
-        {renderSwipers}
-      </PullToRefresh>
+      <Suspense fallback={<FullPageLoader />}>
+        <ScrollAwareHeader
+          visible={visible}
+          mailCount={mailCount}
+          isNewNotification={isNewNotification}
+          selectedTab={selectedTab}
+          handleTabClick={handleTabClick}
+        />
+        {/* {(!isClient || !feedMine || !feedAll) && <DotSpinner />} */}
+        <PullToRefresh
+          onRefresh={handleRefresh}
+          pullingContent={
+            <div className="flex justify-center pt-[96px]">
+              <DotSpinner />
+            </div>
+          }
+        >
+          {renderSwipers}
+        </PullToRefresh>
+        <TabParamHandler setSelectedTab={setSelectedTab} />
+      </Suspense>
       {recordModalOpen && (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}
@@ -462,9 +459,6 @@ export default function FeedPage() {
         onDeleteComment={deleteComment}
         onHideFeed={hideFeed}
       />
-      <Suspense fallback={null}>
-        <TabParamHandler setSelectedTab={setSelectedTab} />
-      </Suspense>
     </div>
   );
 }

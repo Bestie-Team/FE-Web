@@ -1,4 +1,3 @@
-"use client";
 import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
 import SearchInput from "@/components/shared/Input/SearchBar";

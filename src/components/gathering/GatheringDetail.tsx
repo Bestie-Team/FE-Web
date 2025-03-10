@@ -11,7 +11,7 @@ import CalendarIcon from "../shared/Icon/CalendarIcon";
 import Image from "next/image";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import UserIcon from "../shared/Icon/UserIcon";
-import GatheringMemberContainer from "./GatheringMembersContainer";
+import MemberContainer from "../shared/MembersContainer";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
@@ -116,7 +116,7 @@ export default function GatheringDetail({
         title={
           <span className={styles.title}>{`약속 멤버 ${members.length}`}</span>
         }
-        content={<GatheringMemberContainer members={members} />}
+        content={<MemberContainer members={members} />}
       />
     </div>
   );

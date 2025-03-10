@@ -1,9 +1,9 @@
 import Image from "next/image";
 import "swiper/css";
-import Flex from "../shared/Flex";
+import Flex from "./Flex";
 import * as lighty from "lighty-type";
 
-export default function GatheringMemberContainer({
+export default function MemberContainer({
   members,
 }: {
   members: lighty.User[];

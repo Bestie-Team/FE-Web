@@ -1,7 +1,7 @@
 "use client";
 import InvitationCard from "@/components/invitation/InvitationCard";
 import Spacing from "@/components/shared/Spacing";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import getHeader from "@/utils/getHeader";
@@ -12,15 +12,17 @@ import useSentInvitationToGathering from "@/components/gathering/hooks/useSentIn
 import InvitationModal from "@/components/invitation/InvitationModal";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import FullPageLoader from "@/components/shared/FullPageLoader";
-import NoInvitation from "@/components/invitation/NoInvitation";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import { useQueryClient } from "@tanstack/react-query";
+import dynamic from "next/dynamic";
+const NoInvitation = dynamic(
+  () => import("@/components/invitation/NoInvitation"),
+  { ssr: false }
+);
 
 export default function InvitationPage() {
-  const [isClient, setIsClient] = useState(false);
   const queryClient = useQueryClient();
   const isPast = useScrollThreshold();
   const header = useMemo(() => getHeader("/invitation"), []);
@@ -141,15 +143,9 @@ export default function InvitationPage() {
   ]);
 
   useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-      read();
-    }
-  }, [isClient]);
+    read();
+  }, []);
 
-  if (!isClient) {
-    return <FullPageLoader />;
-  }
   return (
     <div className="h-dvh">
       <div
@@ -168,7 +164,7 @@ export default function InvitationPage() {
           />
         </div>
       </div>
-      {renderSwiper}
+      <Suspense> {renderSwiper}</Suspense>
       {isModalOpen ? (
         <InvitationModal
           onClickClose={setModalOpen}

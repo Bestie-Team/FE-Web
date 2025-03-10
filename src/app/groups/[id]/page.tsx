@@ -4,7 +4,7 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
 import { modalStateAtom } from "@/atoms/modal";
@@ -29,12 +29,6 @@ const SelectFriendsContainer = dynamic(
   }
 );
 
-interface GroupDetailPageProps {
-  params: {
-    id: string;
-  };
-}
-
 export type GroupEditProps = {
   id: string;
   name: string;
@@ -43,17 +37,20 @@ export type GroupEditProps = {
   members?: User[];
 };
 
-export default function GroupDetailPage({ params }: GroupDetailPageProps) {
+export default function ClientSideGroupDetail({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const id = params.id;
   const queryClient = useQueryClient();
   const router = useRouter();
   const { userInfo } = useAuth();
-  const [isClient, setIsClient] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
   const reset = useResetRecoilState(selectedFriendsAtom);
-  const id = params.id;
   const { data: groupDetail } = useGroupDetail(id);
 
   const [openList, setOpenList] = useState<boolean>(false);
@@ -76,17 +73,17 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   };
 
   const { mutate: deleteGroup } = useDeleteGroup({
-    groupId: params.id,
+    groupId: id,
     onSuccess: handleDeleteSuccess,
   });
 
   const { mutate: exitGroup } = useExitGroup({
-    groupId: params.id,
+    groupId: id,
     onSuccess: handleDeleteSuccess,
   });
 
   const { mutate: addMember } = useAddGroupMember({
-    groupId: params.id,
+    groupId: id,
     friendIds:
       selectedFriends && selectedFriends.length > 0
         ? selectedFriends?.map((friend) => friend.id)
@@ -95,12 +92,8 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   });
 
   useEffect(() => {
-    setIsClient(true);
-
     return reset();
-  }, [isClient]);
-
-  if (!isClient) return null;
+  }, []);
 
   if (openList === true) {
     return (
@@ -150,7 +143,10 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   };
 
   return (
-    <Flex direction="column" className="w-full min-h-dvh bg-base-white">
+    <Flex
+      direction="column"
+      className="relative w-full min-h-dvh bg-base-white"
+    >
       <Flex align="center" className={styles.headerWrapper}>
         <div
           className="cursor-pointer pl-[17px] pr-[3px] mr-[6px]"
@@ -163,18 +159,12 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
         <span className={styles.headerFont}>그룹 상세</span>
         <GroupOptions isOwner={isOwner} group={groupEdit} />
       </Flex>
-      <Suspense fallback={<DotSpinner />}>
-        <GroupDetailContainer
-          // groupImageUrl={groupImageUrl}
-          groupDetail={groupDetail}
-          isLoaded={isLoaded}
-          setIsLoaded={setIsLoaded}
-          // selectedGroup={selectedGroup}
-          // owner={owner}
-          // description={description}
-          // members={members}
-        />
-      </Suspense>
+      <GroupDetailContainer
+        groupDetail={groupDetail}
+        isLoaded={isLoaded}
+        setIsLoaded={setIsLoaded}
+      />
+
       {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}

@@ -8,7 +8,6 @@ import { selectedFriendsAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
 
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import GatheringForm from "@/components/gathering/GatheringForm";
 
@@ -34,8 +33,6 @@ const components = [
 
 export default function NewGatheringPage() {
   const [step, setStep] = useState(1);
-  const [isClient, setIsClient] = useState(false);
-
   const reset = useResetRecoilState(newGatheringInfo);
   const resetFriends = useResetRecoilState(selectedFriendsAtom);
   const [gatheringInfo, setGatheringInfo] =
@@ -51,19 +48,12 @@ export default function NewGatheringPage() {
   });
 
   useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-
     return () => {
       reset();
       resetFriends();
     };
-  }, [isClient]);
+  }, []);
 
-  if (!isClient) {
-    return <FullPageLoader />;
-  }
   if (isPending) {
     return <DotSpinner />;
   }

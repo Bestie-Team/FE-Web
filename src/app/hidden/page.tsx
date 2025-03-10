@@ -8,8 +8,7 @@ import getHeader from "@/utils/getHeader";
 import { modalStateAtom } from "@/atoms/modal";
 import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
-import FullPageLoader from "@/components/shared/FullPageLoader";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Modal from "@/components/shared/Modal/Modal";
@@ -19,7 +18,6 @@ import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function FeedPage() {
-  const [isClient, setIsClient] = useState(false);
   const header = useMemo(() => getHeader("/hidden"), []);
   const isPast = useScrollThreshold();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
@@ -42,15 +40,7 @@ export default function FeedPage() {
     onSuccess: displaySuccessHandler,
   });
 
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
   useInfiniteScroll({ isFetching, loadMore });
-
-  if (!isClient) return <FullPageLoader />;
 
   const MODAL_CONFIGS = {
     displayFeed: {
@@ -67,52 +57,48 @@ export default function FeedPage() {
       isOpen: false,
     });
   };
-
+  if (!hiddenFeed || hiddenFeed.length < 0) {
+    return <div>숨김 피드가 없어요</div>;
+  }
   return (
     <div className="pt-12">
       {header}
-      {!hiddenFeed ? (
-        <FullPageLoader />
-      ) : (
-        <>
-          <div
-            className={clsx(filterWrapperStyle, isPast ? "shadow-bottom" : "")}
-          >
-            <div
-              style={{
-                backgroundColor: "#fff",
-              }}
-              className={tabContainerStyle}
-            >
-              <div className={tabWrapperStyle}>
-                <TabButton
-                  title={`숨김 피드`}
-                  onMouseDown={() => {}}
-                  current={true}
-                  fresh={"never"}
-                />
-                <BottomLine />
-              </div>
-              <FilterBar />
-            </div>
-          </div>
-          <Feed
-            feeds={hiddenFeed}
-            onClickFeed={() => {}}
-            className="!pt-12"
-            isFetching={isFetching}
-          />
-          {modalState.isOpen && modalState.type && (
-            <Modal
-              title={MODAL_CONFIGS[modalState.type].title}
-              content={MODAL_CONFIGS[modalState.type].content}
-              left={MODAL_CONFIGS[modalState.type].leftButton}
-              right={MODAL_CONFIGS[modalState.type].rightButton}
-              action={MODAL_CONFIGS[modalState.type].action}
-              onClose={closeModal}
+      <div className={clsx(filterWrapperStyle, isPast ? "shadow-bottom" : "")}>
+        <div
+          style={{
+            backgroundColor: "#fff",
+          }}
+          className={tabContainerStyle}
+        >
+          <div className={tabWrapperStyle}>
+            <TabButton
+              title={`숨김 피드`}
+              onMouseDown={() => {}}
+              current={true}
+              fresh={"never"}
             />
-          )}
-        </>
+            <BottomLine />
+          </div>
+          <FilterBar />
+        </div>
+      </div>
+      <Suspense>
+        <Feed
+          feeds={hiddenFeed}
+          onClickFeed={() => {}}
+          className="!pt-12"
+          isFetching={isFetching}
+        />
+      </Suspense>
+      {modalState.isOpen && modalState.type && (
+        <Modal
+          title={MODAL_CONFIGS[modalState.type].title}
+          content={MODAL_CONFIGS[modalState.type].content}
+          left={MODAL_CONFIGS[modalState.type].leftButton}
+          right={MODAL_CONFIGS[modalState.type].rightButton}
+          action={MODAL_CONFIGS[modalState.type].action}
+          onClose={closeModal}
+        />
       )}
     </div>
   );

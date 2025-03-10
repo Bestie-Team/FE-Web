@@ -1,4 +1,3 @@
-"use client";
 import Spacing from "../Spacing";
 import Text from "../Text";
 import clsx from "clsx";

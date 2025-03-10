@@ -1,4 +1,3 @@
-"use client";
 import dynamic from "next/dynamic";
 import "./CalendarWithBorder.css";
 import { addDays, format } from "date-fns";

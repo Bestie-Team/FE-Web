@@ -1,4 +1,3 @@
-"use client";
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
 import * as lighty from "lighty-type";
