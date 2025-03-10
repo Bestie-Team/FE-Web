@@ -120,7 +120,12 @@ export default function GatheringPage() {
 
   const GatheringPageSwiper = useMemo(() => {
     return (
-      <div className="h-dvh">
+      <div
+        className={clsx(
+          "h-dvh",
+          window.ReactNativeWebView ? "pt-safe-top" : ""
+        )}
+      >
         <Swiper
           key={selectedTab}
           initialSlide={Number(selectedTab) - 1}
@@ -199,7 +204,11 @@ const Header = React.memo(
         <Flex
           id="filter"
           justify="space-between"
-          className={clsx(styles.panelWrapper, shadow && "shadow-bottom")}
+          className={clsx(
+            styles.panelWrapper,
+            shadow && "shadow-bottom",
+            window.ReactNativeWebView ? "pt-safe-top" : ""
+          )}
         >
           <Panel
             selectedTab={selectedTab}
@@ -217,5 +226,5 @@ Header.displayName = "Header";
 
 const styles = {
   panelWrapper:
-    "pt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
+    "mt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
 };
