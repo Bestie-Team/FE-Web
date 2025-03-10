@@ -1,24 +1,12 @@
 "use client";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
 import SignupForm from "@/components/SignupForm";
 import getHeader from "@/utils/getHeader";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 
 export default function SignupPage() {
-  const [isClient, setIsClient] = useState(false);
   const header = getHeader("/signup");
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
-  if (!isClient) {
-    return <FullPageLoader />;
-  }
 
   return (
     <div className="flex flex-col gap-6 bg-base-white h-full">
@@ -33,7 +21,9 @@ export default function SignupPage() {
         <span className="text-B3 text-grayscale-500">
           프로필 사진과 계정 아이디를 필수로 등록해주세요.
         </span>
-        <SignupForm />
+        <Suspense>
+          <SignupForm />
+        </Suspense>
       </div>
     </div>
   );

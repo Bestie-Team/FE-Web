@@ -10,7 +10,6 @@ import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
-import ErrorPage from "../shared/ErrorPage";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
   gatheringId: "",
@@ -90,7 +89,7 @@ export default function CreatingFeed({
     }
   }, [feedInfo.imageUrls, id]);
 
-  if (!selectedGathering || id == "") return <ErrorPage />;
+  if (!selectedGathering || id == "") return;
 
   if (isPending || isUploading) return <FullPageLoader height="100dvh" />;
 

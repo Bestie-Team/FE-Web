@@ -1,5 +1,3 @@
-"use client";
-
 import { usePathname } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import type { RecoilState } from "recoil";

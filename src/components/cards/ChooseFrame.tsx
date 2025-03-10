@@ -1,4 +1,3 @@
-"use client";
 import { cardFrameAtom } from "@/atoms/card";
 import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";

@@ -1,4 +1,3 @@
-"use client";
 import { useRecoilState } from "recoil";
 import Flex from "../shared/Flex";
 import LightyLogo from "../shared/Icon/LightyLogo";
@@ -6,28 +5,26 @@ import Spacing from "../shared/Spacing";
 import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
-import { NoGatheringToRecord } from "../gathering/NoGathering";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
-import DotSpinner from "../shared/Spinner/DotSpinner";
+import dynamic from "next/dynamic";
+const NoGatheringToRecord = dynamic(
+  () => import("../gathering/NoGatheringToRecord")
+);
 
 export default function ChoosingGatheringToRecord({
   onNext,
 }: {
   onNext: (gatheringId: string) => void;
 }) {
-  const { data: gathering_noFeed, isFetching } = useGatheringNoFeeds({
+  const { data: gathering_noFeed } = useGatheringNoFeeds({
     limit: 30,
   });
-
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
   const handleImageClick = (gatheringId: string) => {
     setSelectedGatheringId(gatheringId);
   };
 
-  if (isFetching) {
-    return <DotSpinner />;
-  }
   return (
     <>
       <Flex

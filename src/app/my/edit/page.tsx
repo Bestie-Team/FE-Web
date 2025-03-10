@@ -11,10 +11,10 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import getHeader from "@/utils/getHeader";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function EditPage() {
-  const { data, isFetching, isError } = useUserDetail();
+  const { data } = useUserDetail();
   const queryClient = useQueryClient();
   const [profile, setProfile] = useState<{
     accountId: string;
@@ -65,10 +65,8 @@ export default function EditPage() {
 
   return (
     <div className="min-h-dvh bg-base-white">
-      {header}
-      {isFetching || isError ? (
-        <DotSpinner />
-      ) : (
+      <Suspense fallback={<DotSpinner />}>
+        {header}
         <Flex direction="column" className="px-5">
           <Spacing size={58} />
           <Flex justify="center" className="py-3">
@@ -94,15 +92,15 @@ export default function EditPage() {
             displayLength={15}
           />
         </Flex>
-      )}
-      <FixedBottomButton
-        label="변경 완료"
-        disabled={
-          profile.profileImageUrl == data?.profileImageUrl &&
-          profile.accountId == data?.accountId
-        }
-        onClick={handlePatch}
-      />
+        <FixedBottomButton
+          label="변경 완료"
+          disabled={
+            profile.profileImageUrl == data?.profileImageUrl &&
+            profile.accountId == data?.accountId
+          }
+          onClick={handlePatch}
+        />
+      </Suspense>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-"use client";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 import React, { Dispatch, SetStateAction, useState } from "react";

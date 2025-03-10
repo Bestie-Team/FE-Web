@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import * as lighty from "lighty-type";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import useEditGathering from "@/components/gathering/hooks/useEditGathering";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
@@ -11,14 +10,15 @@ import GatheringEditForm from "@/components/gathering/GatheringEditForm";
 import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 export default function GatheringEditPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [isClient, setIsClient] = useState(false);
   const [step, setStep] = useState(1);
   const originalGatheringValue = useRecoilValue(selectedGatheringInfoAtom);
   const selectedGatheringId = originalGatheringValue?.id;
+
   const INITIAL_FORM_STATE: Partial<lighty.CreateGatheringRequest> = {
     name: originalGatheringValue?.name || "",
     description: originalGatheringValue?.description || "",
@@ -27,8 +27,6 @@ export default function GatheringEditPage() {
   };
 
   useEffect(() => {
-    setIsClient(true);
-
     if (!originalGatheringValue) {
       router.replace("/gathering");
       lightyToast.error("약속 정보를 찾을 수 없습니다.");
@@ -55,22 +53,21 @@ export default function GatheringEditPage() {
 
   if (!originalGatheringValue || originalGatheringValue == null) return null;
 
-  if (!isClient) {
-    return <FullPageLoader />;
-  }
-
   if (isPending || step === 0) {
     return <EditGatheringStatus isPending={isPending} />;
   }
   if (step === 1) {
     return (
-      <GatheringEditForm
-        type="edit"
-        gathering={gatheringInfo}
-        setGathering={setGatheringInfo}
-        setStep={setStep}
-        mutate={editingFeed}
-      />
+      <Suspense fallback={<DotSpinner />}>
+        <GatheringEditForm
+          type="edit"
+          gathering={gatheringInfo}
+          setGathering={setGatheringInfo}
+          setStep={setStep}
+          mutate={editingFeed}
+        />
+      </Suspense>
     );
   }
+  return null;
 }

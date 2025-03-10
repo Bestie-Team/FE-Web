@@ -12,7 +12,6 @@ import Spacing from "@/components/shared/Spacing";
 import getHeader from "@/utils/getHeader";
 import { useEffect, useMemo, useState } from "react";
 import { useRecoilValue } from "recoil";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 import { UpdateGroupRequest } from "@/models/group";
 import useUpdateGroup from "@/components/groups/hooks/useUpdateGroup";
 import { lightyToast } from "@/utils/toast";
@@ -22,7 +21,6 @@ import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
 
 export default function GroupEditPage() {
   const header = useMemo(() => getHeader("/groups/*/edit"), []);
-  const [isClient, setIsClient] = useState(false);
   const selectedGroup = useRecoilValue<UpdateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -32,14 +30,11 @@ export default function GroupEditPage() {
   );
 
   useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
     if (!selectedGroup) {
       router.replace("/social?tab=group");
       lightyToast.error("그룹 정보를 찾을 수 없습니다.");
     }
-  }, [selectedGroup, router, isClient]);
+  }, [selectedGroup, router]);
 
   const { mutate: updateGroup } = useUpdateGroup({
     groupId: groupInfo.groupId,
@@ -56,9 +51,6 @@ export default function GroupEditPage() {
     router.replace("/social?tab=group");
   };
 
-  if (!isClient) {
-    return <FullPageLoader />;
-  }
   if (step === 1) {
     return (
       <div className="min-h-dvh bg-base-white">

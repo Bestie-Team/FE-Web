@@ -1,4 +1,3 @@
-"use client";
 import { Dispatch, SetStateAction } from "react";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Spacing from "../shared/Spacing";

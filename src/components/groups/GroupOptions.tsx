@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";

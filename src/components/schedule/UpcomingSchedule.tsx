@@ -1,8 +1,11 @@
 import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import TimelineItem from "./TimelineItem";
 import { Gathering } from "@/models/gathering";
+import dynamic from "next/dynamic";
+
+const NoSchedule = dynamic(() => import("./NoSchedule"));
+const TimelineItem = dynamic(() => import("./TimelineItem"));
 
 export default function UpcomingSchedule({
   gatherings,
@@ -35,16 +38,4 @@ const styles = {
   scheduleContainer: "w-[350px] px-[5px]",
   timelineWrapper:
     "absolute top-[10px] left-[7.5px] w-[1px] h-full bg-grayscale-100",
-};
-
-const NoSchedule = () => {
-  return (
-    <Flex
-      className="w-full h-[140px] bg-grayscale-10 border-[1px] border-dashed border-grayscale-200 rounded-2xl"
-      justify="center"
-      align="center"
-    >
-      <span className="text-C1 text-grayscale-300">예정된 모임이 없어요</span>
-    </Flex>
-  );
 };

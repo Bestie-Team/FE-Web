@@ -7,7 +7,7 @@ import LightyInfoContainer from "../shared/LightyInfoContainer";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import Flex from "../shared/Flex";
 import UserIcon from "../shared/Icon/UserIcon";
-import GatheringMemberContainer from "../gathering/GatheringMembersContainer";
+import MemberContainer from "../shared/MembersContainer";
 import { GroupDetailResponse } from "lighty-type";
 
 export default function GroupDetailContainer({
@@ -51,7 +51,7 @@ export default function GroupDetailContainer({
         title={
           <span className={styles.title}>{`그룹 멤버 ${members.length}`}</span>
         }
-        content={<GatheringMemberContainer members={members} />}
+        content={<MemberContainer members={members} />}
       />
     </>
   );

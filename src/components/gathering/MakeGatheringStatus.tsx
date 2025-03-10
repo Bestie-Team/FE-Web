@@ -1,4 +1,3 @@
-"use client";
 import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";

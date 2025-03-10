@@ -5,7 +5,7 @@ import UserProfile from "@/components/my/UserProfile";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import getHeader from "@/utils/getHeader";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
@@ -41,14 +41,13 @@ const Header = React.memo(
 Header.displayName = "Header";
 
 export default function MyPage() {
-  const [isClient, setIsClient] = useState(false);
   const [modalState, setModalState] = useState<
     "none" | "open" | "privatePolicy"
   >("none");
   const [profileInfo, setProfileInfo] = useState<
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
-  const { data: user, isFetching } = useUserDetail();
+  const { data: user } = useUserDetail();
   const { logout } = useAuth();
   const router = useRouter();
   const isPast = useScrollThreshold();
@@ -67,20 +66,10 @@ export default function MyPage() {
         };
       } else return undefined;
     };
-    if (isClient) {
-      setProfileInfo((prev) => prev || initializeProfileInfo());
-    }
-  }, [user, isClient]);
+    setProfileInfo((prev) => prev || initializeProfileInfo());
+  }, [user]);
 
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
-  if (!isClient) {
-    return <DotSpinner />;
-  }
+  if (!user) return <DotSpinner />;
 
   return (
     <div className="min-h-dvh w-full">
@@ -89,11 +78,9 @@ export default function MyPage() {
         open={modalState === "open"}
         privatePolicyOpen={modalState === "privatePolicy"}
       />
-      {isFetching || !user ? (
-        <DotSpinner />
-      ) : (
-        <div className="extended-container">
-          <main className="pt-[68px]">
+      <div className="extended-container">
+        <main className="pt-[68px]">
+          <Suspense fallback={<DotSpinner />}>
             <UserProfile
               userProfileImage={profileInfo?.profileImageUrl}
               userAccountId={profileInfo?.accountId}
@@ -106,38 +93,36 @@ export default function MyPage() {
               feedCount={user.feedCount}
               friendsCount={user.friendCount}
             />
-            <Spacing size={16} />
-            <SettingsMenu logout={handleLogout} />
-            <footer className={styles.termsWrapper}>
-              <Link
-                href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
-                target="_blank"
-                onClick={() => setModalState("open")}
-                className={clsx("mr-[13px]", styles.letter)}
-              >
-                <ins>이용약관</ins>
-              </Link>
-              <Link
-                href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
-                target="_blank"
-                onClick={() => setModalState("privatePolicy")}
-                className={styles.letter}
-              >
-                <ins>개인 정보 처리방침</ins>
-              </Link>
-            </footer>
-            <Spacing size={120} />
-            {modalState !== "none" && (
-              <TermOfUse
-                label={
-                  modalState === "open" ? "이용 약관" : "개인 정보 처리방침"
-                }
-                onClick={() => setModalState("none")}
-              />
-            )}
-          </main>
-        </div>
-      )}
+          </Suspense>
+          <Spacing size={16} />
+          <SettingsMenu logout={handleLogout} />
+          <footer className={styles.termsWrapper}>
+            <Link
+              href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
+              target="_blank"
+              onClick={() => setModalState("open")}
+              className={clsx("mr-[13px]", styles.letter)}
+            >
+              <ins>이용약관</ins>
+            </Link>
+            <Link
+              href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
+              target="_blank"
+              onClick={() => setModalState("privatePolicy")}
+              className={styles.letter}
+            >
+              <ins>개인 정보 처리방침</ins>
+            </Link>
+          </footer>
+          <Spacing size={120} />
+          {modalState !== "none" && (
+            <TermOfUse
+              label={modalState === "open" ? "이용 약관" : "개인 정보 처리방침"}
+              onClick={() => setModalState("none")}
+            />
+          )}
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-"use client";
 import clsx from "clsx";
 import React, { ChangeEvent, useState } from "react";
 import EmptySquareIcon from "../Icon/EmptySquareIcon";
