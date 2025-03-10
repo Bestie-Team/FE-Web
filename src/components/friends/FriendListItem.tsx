@@ -73,7 +73,7 @@ export default function FriendListItem({
       )}
       onMouseDown={onClick}
     >
-      <Flex>
+      <Flex className="w-full">
         {!!friendInfo?.profileImageUrl ? (
           <Image
             alt="friendProfile"
@@ -88,7 +88,7 @@ export default function FriendListItem({
           </div>
         )}
         <Spacing direction="horizontal" size={8} />
-        <Flex className="w-full" direction="column">
+        <Flex direction="column">
           <span className="text-T6">{friendInfo?.accountId || "lighty"}</span>
           <Spacing size={2} />
           <span className={styles.name}>{friendInfo?.name || "김땡땡"}</span>
@@ -130,8 +130,7 @@ export default function FriendListItem({
 const styles = {
   iconContainer: "flex justify-center items-center w-5 h-5",
 
-  li: "w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border",
-
+  li: `w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border`,
   img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
   selectBtn:

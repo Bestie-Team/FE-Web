@@ -6,9 +6,7 @@ import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import getHeader from "@/utils/getHeader";
 import ChoosingKindOfMemory from "./ChoosingKindOfMemory";
-
 import DotSpinner from "../shared/Spinner/DotSpinner";
-import ErrorPage from "../shared/ErrorPage";
 
 const ChoosingGatheringToRecord = dynamic(
   () => import("./ChoosingGatheringToRecord"),
@@ -54,7 +52,7 @@ export default function Record() {
   const isClient = typeof window !== "undefined";
 
   if (!isClient) {
-    return <ErrorPage />;
+    return null;
   }
 
   if (step === 0) {

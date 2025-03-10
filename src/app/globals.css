@@ -80,7 +80,9 @@
   .Toastify__toast-container {
     width: 100% !important;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   .Toastify__toast {
     padding-left: 20px;

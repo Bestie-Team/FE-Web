@@ -14,7 +14,6 @@ export default function DotSpinnerSmall({
         zIndex: 20,
         opacity: 1,
         backgroundColor: "transparent",
-        padding: 16,
       }}
     >
       <svg
