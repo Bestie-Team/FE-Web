@@ -26,9 +26,9 @@ import Gathering from "@/components/gathering/Gathering";
 import { useRouter, useSearchParams } from "next/navigation";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
-export default function MyGatheringPage() {
+export default function GatheringPage() {
   const gatheringRef = useRef<HTMLDivElement>(null);
-
+  // const router = useRouter();
   const isPast = useScrollThreshold();
   const queryClient = useQueryClient();
   const [isClient, setIsClient] = useState(false);
@@ -63,6 +63,15 @@ export default function MyGatheringPage() {
       setIsClient(true);
     }
   }, [isClient]);
+
+  // useEffect(() => {
+  //   if (ended && ended.length > 0) {
+  //     ended.slice(6).forEach((end) => {
+  //       router.prefetch(`/gathering/${end.id}`);
+  //       console.log(end.name);
+  //     });
+  //   }
+  // }, [router]);
 
   const handleRefresh = async () => {
     try {

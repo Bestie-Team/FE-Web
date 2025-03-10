@@ -3759,10 +3759,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lighty-type@^1.0.25:
-  version "1.0.25"
-  resolved "https://registry.npmjs.org/lighty-type/-/lighty-type-1.0.25.tgz"
-  integrity sha512-1xaZHX21HRtoTPEdYy0MNIbbvp7USSL+Q06p37tz3lALQ6CFEdIzS4unhKuYMOY+rZtS7onyt8Y4qH+LGwam2w==
+lighty-type@^1.0.27:
+  version "1.0.27"
+  resolved "https://registry.npmjs.org/lighty-type/-/lighty-type-1.0.27.tgz"
+  integrity sha512-1T5Ag0A/nm7sbRo3tqKwxKePYEiztwQGfzW94u4zr0NprkvN+AsXFBW0ljjk7b4gvvXqp2wCil62bYVdsJsVLg==
 
 lilconfig@^2.1.0:
   version "2.1.0"

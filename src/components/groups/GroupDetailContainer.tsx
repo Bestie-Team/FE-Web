@@ -8,26 +8,18 @@ import PencilIcon from "../shared/Icon/PencilIcon";
 import Flex from "../shared/Flex";
 import UserIcon from "../shared/Icon/UserIcon";
 import GatheringMemberContainer from "../gathering/GatheringMembersContainer";
-import * as lighty from "lighty-type";
+import { GroupDetailResponse } from "lighty-type";
 
-interface GroupDetailPropsType {
-  groupImageUrl: string;
-  setIsLoaded: Dispatch<SetStateAction<boolean>>;
-  isLoaded: boolean;
-  selectedGroup: lighty.Group;
-  owner: lighty.User;
-  description: string;
-  members: lighty.User[];
-}
 export default function GroupDetailContainer({
-  groupImageUrl,
-  setIsLoaded,
+  groupDetail,
   isLoaded,
-  selectedGroup,
-  owner,
-  description,
-  members,
-}: GroupDetailPropsType) {
+  setIsLoaded,
+}: {
+  groupDetail: GroupDetailResponse;
+  isLoaded: boolean;
+  setIsLoaded: Dispatch<SetStateAction<boolean>>;
+}) {
+  const { groupImageUrl, owner, description, members } = groupDetail;
   return (
     <>
       <div className="w-full h-[316px] relative">
@@ -37,7 +29,7 @@ export default function GroupDetailContainer({
         />
         {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
-      <GroupInfoContainer group={selectedGroup} />
+      <GroupInfoContainer group={groupDetail} />
       <div className={styles.dividerWrapper}>
         <div className={styles.divider} />
       </div>

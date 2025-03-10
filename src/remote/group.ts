@@ -171,3 +171,19 @@ export async function updateGroup({
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
+
+/** 그룹 상세 조회 */
+export const getGroup = async (id: string) => {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const targetUrl = `${baseUrl}/groups/${id}`;
+  try {
+    const response = await fetchWithAuth(targetUrl, {
+      method: "GET",
+    });
+    const data: lighty.GroupDetailResponse = await response.json();
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw new Error("그룹 상세 조회에 실패하였습니다");
+  }
+};

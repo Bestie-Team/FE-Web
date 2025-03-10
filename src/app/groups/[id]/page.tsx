@@ -1,10 +1,10 @@
 "use client";
 
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
 import Modal from "@/components/shared/Modal/Modal";
 import { modalStateAtom } from "@/atoms/modal";
@@ -12,8 +12,6 @@ import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { User } from "lighty-type";
-import { selectedGroupDetailAtom } from "@/atoms/group";
-import ErrorPage from "@/components/shared/ErrorPage";
 import Flex from "@/components/shared/Flex";
 import GroupOptions from "@/components/groups/GroupOptions";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
@@ -21,6 +19,7 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import GroupDetailContainer from "@/components/groups/GroupDetailContainer";
 import dynamic from "next/dynamic";
 import { selectedFriendsAtom } from "@/atoms/friends";
+import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
 
 const SelectFriendsContainer = dynamic(
   () => import("@/components/friends/SelectFriendsContainer"),
@@ -50,14 +49,14 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
   const { userInfo } = useAuth();
   const [isClient, setIsClient] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
-
+  const [isLoaded, setIsLoaded] = useState(false);
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
   const reset = useResetRecoilState(selectedFriendsAtom);
-  const selectedGroup = useRecoilValue(selectedGroupDetailAtom);
+  const id = params.id;
+  const { data: groupDetail } = useGroupDetail(id);
 
   const [openList, setOpenList] = useState<boolean>(false);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleDeleteSuccess = async () => {
     await Promise.all([
@@ -101,7 +100,7 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
     return reset();
   }, [isClient]);
 
-  if (!isClient || selectedGroup.id == "") return <ErrorPage />;
+  if (!isClient) return null;
 
   if (openList === true) {
     return (
@@ -115,16 +114,15 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
       />
     );
   }
-  const { description, members, owner, groupImageUrl } = selectedGroup;
 
   const groupEdit: GroupEditProps = {
-    id: selectedGroup.id,
-    name: selectedGroup.name,
-    description: selectedGroup.description,
-    groupImageUrl: selectedGroup.groupImageUrl,
-    members: selectedGroup.members,
+    id: groupDetail.id,
+    name: groupDetail.name,
+    description: groupDetail.description,
+    groupImageUrl: groupDetail.groupImageUrl,
+    members: groupDetail.members,
   };
-  const { accountId } = owner;
+  const { accountId } = groupDetail.owner;
   const isOwner = accountId === userInfo?.accountId;
 
   const closeModal = () => {
@@ -165,15 +163,18 @@ export default function GroupDetailPage({ params }: GroupDetailPageProps) {
         <span className={styles.headerFont}>그룹 상세</span>
         <GroupOptions isOwner={isOwner} group={groupEdit} />
       </Flex>
-      <GroupDetailContainer
-        groupImageUrl={groupImageUrl}
-        setIsLoaded={setIsLoaded}
-        isLoaded={isLoaded}
-        selectedGroup={selectedGroup}
-        owner={owner}
-        description={description}
-        members={members}
-      />
+      <Suspense fallback={<DotSpinner />}>
+        <GroupDetailContainer
+          // groupImageUrl={groupImageUrl}
+          groupDetail={groupDetail}
+          isLoaded={isLoaded}
+          setIsLoaded={setIsLoaded}
+          // selectedGroup={selectedGroup}
+          // owner={owner}
+          // description={description}
+          // members={members}
+        />
+      </Suspense>
       {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}

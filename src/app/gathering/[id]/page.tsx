@@ -7,7 +7,6 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import GatheringDetail from "@/components/gathering/GatheringDetail";
 import Modal from "@/components/shared/Modal/Modal";
 import { useRecoilState } from "recoil";
-import ErrorPage from "@/components/shared/ErrorPage";
 import { modalStateAtom } from "@/atoms/modal";
 import { Suspense, useEffect, useState } from "react";
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
@@ -56,8 +55,9 @@ export default function GatheringDetailPage({
   const isClient = typeof window !== "undefined";
 
   if (!isClient || !selectedGathering) {
-    return <ErrorPage />;
+    return null;
   }
+
   const MODAL_CONFIGS = {
     deleteGathering: {
       title: "약속을 삭제하시겠어요?",

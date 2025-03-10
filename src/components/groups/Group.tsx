@@ -4,23 +4,15 @@ import useGroup from "@/components/groups/hooks/useGroups";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Group } from "lighty-type";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import DotSpinner from "../shared/Spinner/DotSpinner";
-import { useSetRecoilState } from "recoil";
-import { selectedGroupDetailAtom } from "@/atoms/group";
 import Link from "next/link";
 
-const GroupList = ({
-  groups,
-  onGroupClick,
-}: {
-  groups: Group[];
-  onGroupClick: ({ groupId, group }: { groupId: string; group: Group }) => void;
-}) => {
+const GroupList = ({ groups }: { groups: Group[] }) => {
   const router = useRouter();
   return groups.map((group) => (
     <GroupContainer
@@ -30,7 +22,6 @@ const GroupList = ({
       onClick={(e: React.MouseEvent<HTMLLIElement>) => {
         e.stopPropagation();
         router.push(`/groups/${group.id}`);
-        onGroupClick({ groupId: group.id, group });
       }}
     />
   ));
@@ -40,10 +31,6 @@ export default function Groups() {
   const [isClient, setIsClient] = useState(false);
   const { data: detail, isFetching: isFetchingDetail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
-  const setSelectedGroup = useSetRecoilState(selectedGroupDetailAtom);
-  const handleGroupClick = useCallback(({ group }: { group: Group }) => {
-    setSelectedGroup(group);
-  }, []);
 
   useEffect(() => {
     if (!isClient) {
@@ -70,9 +57,7 @@ export default function Groups() {
       </Flex>
       <Spacing size={16} />
       <ul className="flex flex-col gap-4 pb-20">
-        {groups && (
-          <GroupList groups={groups} onGroupClick={handleGroupClick} />
-        )}
+        {groups && <GroupList groups={groups} />}
       </ul>
       {(isFetching || isFetchingDetail) && <DotSpinnerSmall />}
     </div>
