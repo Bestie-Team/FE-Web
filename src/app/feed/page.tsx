@@ -23,7 +23,6 @@ import useDeleteFeed from "@/components/feeds/hooks/useDeleteFeed";
 import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
@@ -41,6 +40,7 @@ import { bottomSheetStateAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import FullPageLoader from "@/components/shared/FullPageLoader";
+import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 
 const NoFeed = dynamic(() => import("@/components/feeds/NoFeed"));
 
@@ -428,12 +428,13 @@ export default function FeedPage() {
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
         />
-        {/* {(!isClient || !feedMine || !feedAll) && <DotSpinner />} */}
         <PullToRefresh
           onRefresh={handleRefresh}
           pullingContent={
-            <div className="flex justify-center pt-[96px]">
-              <DotSpinner />
+            <div className="flex justify-center pt-[107px]">
+              <div className="p-4">
+                <DotSpinnerSmall />
+              </div>
             </div>
           }
         >

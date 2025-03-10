@@ -20,7 +20,6 @@ import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import Schedule from "@/components/schedule/Schedule";
 import Gathering from "@/components/gathering/Gathering";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -103,72 +102,70 @@ export default function GatheringPage() {
 
   const GatheringPageSwiper = useMemo(() => {
     return (
-      <div
-        className={clsx(
-          "h-dvh",
-          window.ReactNativeWebView ? "pt-safe-top" : ""
-        )}
+      <Swiper
+        key={selectedTab}
+        initialSlide={Number(selectedTab) - 1}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
+        slidesPerView={1}
+        spaceBetween={2}
+        direction="horizontal"
+        className="!h-dvh w-full"
       >
-        <Swiper
-          key={selectedTab}
-          initialSlide={Number(selectedTab) - 1}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
-          slidesPerView={1}
-          spaceBetween={2}
-          direction="horizontal"
-          className="!h-dvh w-full"
-        >
-          <SwiperSlide>
-            <div className="pt-[107px] h-full overflow-y-scroll no-scrollbar pb-10">
-              <Schedule expectingGatherings={myGatherings} />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide className="!h-dvh">
-            <div
-              ref={gatheringRef}
-              className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
-            >
-              <Gathering
-                ended
-                message
-                isFetching={isFetching_e || isFetching}
-                where={GatheringInWhich.GATHERING}
-                gatherings={ended || []}
-              />
-            </div>
-          </SwiperSlide>
-        </Swiper>
-      </div>
+        <SwiperSlide>
+          <div
+            className={clsx(
+              "mt-[107px] h-full overflow-y-scroll no-scrollbar pb-10",
+              window.ReactNativeWebView ? "pt-safe-top" : ""
+            )}
+          >
+            <Schedule expectingGatherings={myGatherings} />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="!h-dvh">
+          <div
+            ref={gatheringRef}
+            className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
+          >
+            <Gathering
+              ended
+              message
+              isFetching={isFetching_e || isFetching}
+              where={GatheringInWhich.GATHERING}
+              gatherings={ended || []}
+            />
+          </div>
+        </SwiperSlide>
+      </Swiper>
     );
   }, [myGatherings, ended, selectedTab, swiperRef, handleSlideChange]);
 
   return (
     <div className="h-dvh">
-      <Suspense fallback={<DotSpinner />}>
-        <Header
-          shadow={isPast}
-          selectedTab={selectedTab}
-          handleTabClick={handleTabClick}
-        />
-        {/* {(!isClient || !myGatherings || !ended) && <DotSpinner />} */}
-        <PullToRefresh
-          onRefresh={handleRefresh}
-          pullingContent={
-            <div className="flex justify-center pt-[96px]">
+      <Header
+        shadow={isPast}
+        selectedTab={selectedTab}
+        handleTabClick={handleTabClick}
+      />
+
+      <PullToRefresh
+        onRefresh={handleRefresh}
+        pullingContent={
+          <div className="flex justify-center pt-[107px]">
+            <div className="p-4">
               <DotSpinnerSmall />
             </div>
-          }
-        >
-          {GatheringPageSwiper}
-        </PullToRefresh>
+          </div>
+        }
+      >
+        {GatheringPageSwiper}
+      </PullToRefresh>
+      <Suspense>
         <TabParamHandler setSelectedTab={setSelectedTab} />
-        {modalOpen && (
-          <MemoriesBottomSheet onClose={() => setModalOpen(false)} />
-        )}
       </Suspense>
+      {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>
   );
 }
