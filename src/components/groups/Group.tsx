@@ -7,6 +7,7 @@ import { Group } from "lighty-type";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
+import clsx from "clsx";
 import { Suspense } from "react";
 import GroupListSkeleton from "../shared/Skeleton/GroupListSkeleton";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
@@ -33,7 +34,12 @@ export default function Groups() {
   useInfiniteScroll({ isFetching, loadMore });
 
   return (
-    <div className="h-[calc(100dvh-144px)] px-5 text-T4 pt-3 pb-20">
+    <div
+      className={clsx(
+        "h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20",
+        window.ReactNativeWebView ? "pt-safe-top" : ""
+      )}
+    >
       <Suspense fallback={<GroupListSkeleton />}>
         <Flex align="center">
           <span>전체 그룹</span>

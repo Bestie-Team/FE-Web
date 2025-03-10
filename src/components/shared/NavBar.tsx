@@ -4,6 +4,7 @@ import { useActiveNavigation } from "@/hooks/useActiveNavigation";
 import { NavLink } from "./NavBar/NavLink";
 import useUserProfile from "../users/hooks/useUserProfile";
 import dynamic from "next/dynamic";
+import clsx from "clsx";
 
 const FloatingButton = dynamic(() => import("./Button/FloatingButton"), {
   ssr: false,
@@ -62,18 +63,21 @@ const NavBar = () => {
 
   return (
     <Suspense>
-      <nav
-        style={{ zIndex: 99 }}
-        className={`
+    <nav
+      style={{ zIndex: 99 }}
+      className={clsx(
+        `
         fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px]
         flex justify-between px-3 pt-1 pb-2 mx-auto
-        border-t border-grayscale-10
-      `}
+        border-t border-grayscale-10`,
+        window.ReactNativeWebView ? "pb-safe-bottom" : ""
+      )}
       >
         {items}
         {shouldShowFloatingButton && <FloatingButton tooltip={tooltip} />}
       </nav>
     </Suspense>
+>>>>>>> develop
   );
 };
 

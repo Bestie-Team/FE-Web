@@ -209,6 +209,10 @@ const config: Config = {
           "100%": { transform: "scale(1)" },
         },
       },
+      spacing: {
+        "safe-top": "env(safe-area-inset-top)",
+        "safe-bottom": "env(safe-area-inset-bottom)",
+      },
     },
   },
   plugins: [],

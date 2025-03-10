@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextLayout, { NextProvider } from "./providers";
@@ -15,6 +15,11 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: "Lighty",
   description: "소중한 당신의 추억이 빛나도록",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

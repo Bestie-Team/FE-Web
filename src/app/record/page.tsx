@@ -37,7 +37,16 @@ export default function Record() {
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
-    <div className="relative pt-12 min-h-dvh">
+    <div
+      className="relative pt-12 min-h-dvh"
+      style={
+        window.ReactNativeWebView
+          ? {
+              paddingTop: `calc(env(safe-area-inset-top) + 3rem)`,
+            }
+          : {}
+      }
+    >
       <div className={styles.headerWrapper}>{header}</div>
       <CurrentStepComponent
         add={add}

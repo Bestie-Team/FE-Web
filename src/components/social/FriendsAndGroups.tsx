@@ -6,6 +6,7 @@ import Panel from "@/components/shared/Panel/Panel";
 import { friendsSelectedTabAtom } from "@/atoms/friends";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import UserFriendsListContainer from "../friends/UserFriendsListContainer";
+import clsx from "clsx";
 
 const Groups = dynamic(() => import("@/components/groups/Group"), {
   ssr: false,
@@ -33,7 +34,12 @@ export default function FriendsAndGroups() {
 
   return (
     <>
-      <div className="w-full bg-base-white fixed px-5 pt-12 ">
+      <div
+        className={clsx(
+          "w-full bg-base-white fixed px-5 mt-12",
+          window.ReactNativeWebView ? "pt-safe-top" : ""
+        )}
+      >
         <Panel
           title1="친구"
           title2="그룹"

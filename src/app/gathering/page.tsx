@@ -115,7 +115,12 @@ export default function GatheringPage() {
         className="!h-dvh w-full"
       >
         <SwiperSlide>
-          <div className="pt-[107px] h-full overflow-y-scroll no-scrollbar pb-10">
+          <div
+            className={clsx(
+              "mt-[107px] h-full overflow-y-scroll no-scrollbar pb-10",
+              window.ReactNativeWebView ? "pt-safe-top" : ""
+            )}
+          >
             <Schedule expectingGatherings={myGatherings} />
           </div>
         </SwiperSlide>
@@ -181,7 +186,11 @@ const Header = React.memo(
         <Flex
           id="filter"
           justify="space-between"
-          className={clsx(styles.panelWrapper, shadow && "shadow-bottom")}
+          className={clsx(
+            styles.panelWrapper,
+            shadow && "shadow-bottom",
+            window.ReactNativeWebView ? "pt-safe-top" : ""
+          )}
         >
           <Panel
             selectedTab={selectedTab}
@@ -199,5 +208,5 @@ Header.displayName = "Header";
 
 const styles = {
   panelWrapper:
-    "pt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
+    "mt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
 };
