@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRecoilState } from "recoil";
 import Panel from "@/components/shared/Panel/Panel";
 import { friendsSelectedTabAtom } from "@/atoms/friends";
-import DotSpinner from "../shared/Spinner/DotSpinner";
-import UserFriendsListContainer from "../friends/UserFriendsListContainer";
 import clsx from "clsx";
+import UserFriendsListContainer from "../friends/UserFriendsListContainer";
+import GroupListSkeleton from "../shared/Skeleton/GroupListSkeleton";
 
 const Groups = dynamic(() => import("@/components/groups/Group"), {
   ssr: false,
-  loading: () => <DotSpinner />,
+  loading: () => <GroupListSkeleton />,
 });
 
 export default function FriendsAndGroups() {
@@ -25,12 +25,6 @@ export default function FriendsAndGroups() {
       router.replace("/social");
     }
   }, [searchParams, setSelectedTab]);
-
-  const renderTabContent = useMemo(() => {
-    if (selectedTab === "1") {
-      return <UserFriendsListContainer />;
-    } else return <Groups />;
-  }, [selectedTab]);
 
   return (
     <>
@@ -49,7 +43,9 @@ export default function FriendsAndGroups() {
           year={false}
         />
       </div>
-      <div className="h-dvh pt-[87px] pb-14">{renderTabContent}</div>
+      <div className="h-dvh pt-[87px] pb-14">
+        {selectedTab === "1" ? <UserFriendsListContainer /> : <Groups />}
+      </div>
     </>
   );
 }

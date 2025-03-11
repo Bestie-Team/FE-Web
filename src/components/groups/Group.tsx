@@ -8,8 +8,6 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
 import clsx from "clsx";
-import { Suspense } from "react";
-import GroupListSkeleton from "../shared/Skeleton/GroupListSkeleton";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
 
 const GroupList = ({ groups }: { groups: Group[] }) => {
@@ -40,22 +38,20 @@ export default function Groups() {
         window.ReactNativeWebView ? "pt-safe-top" : ""
       )}
     >
-      <Suspense fallback={<GroupListSkeleton />}>
-        <Flex align="center">
-          <span>전체 그룹</span>
-          <Spacing size={4} direction="horizontal" />
-          <span className="flex-grow">{detail?.groupCount}</span>
-          <Spacing size={4} direction="horizontal" />
-          <Link href={`/groups/new`} className={styles.button}>
-            그룹 추가
-          </Link>
-        </Flex>
-        <Spacing size={16} />
-        <ul className="flex flex-col gap-4 pb-20">
-          {groups && <GroupList groups={groups} />}
-          {isFetching && <GroupSkeleton />}
-        </ul>
-      </Suspense>
+      <Flex align="center">
+        <span>전체 그룹</span>
+        <Spacing size={4} direction="horizontal" />
+        <span className="flex-grow">{detail?.groupCount}</span>
+        <Spacing size={4} direction="horizontal" />
+        <Link href={`/groups/new`} className={styles.button}>
+          그룹 추가
+        </Link>
+      </Flex>
+      <Spacing size={16} />
+      <ul className="flex flex-col gap-4 pb-20">
+        {groups && <GroupList groups={groups} />}
+        {isFetching && <GroupSkeleton />}
+      </ul>
     </div>
   );
 }

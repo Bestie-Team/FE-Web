@@ -5,10 +5,11 @@ import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import dynamic from "next/dynamic";
+import FramePageSkeleton from "@/components/shared/Skeleton/FramePageSkeleton";
 
 const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {
   ssr: false,
-  loading: () => <DotSpinner />,
+  loading: () => <FramePageSkeleton />,
 });
 
 const DecorateWithStickers = dynamic(
