@@ -5,12 +5,15 @@ import ReportNoticeItem from "./ReportNoticeItem";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useRef } from "react";
 import NoticeSkeleton from "../shared/Skeleton/NoticeSkeleton";
+import clsx from "clsx";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function NoticeContainer() {
   const { data: notifications = [], isFetching, loadMore } = useNotification();
   const containerRef = useRef<HTMLDivElement>(null);
   const today: Notification[] = [];
   const passed: Notification[] = [];
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   notifications.forEach((notification) => {
     const isToday =
@@ -31,7 +34,10 @@ export default function NoticeContainer() {
   return (
     <div
       ref={containerRef}
-      className="h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5 pb-10"
+      className={clsx(
+        "h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5 pb-10",
+        isReactNativeWebView ? "pt-safe-top" : ""
+      )}
     >
       <div className="flex flex-col gap-5">
         {today.length > 0 && (
