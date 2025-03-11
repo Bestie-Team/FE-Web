@@ -24,10 +24,7 @@ import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";
-import {
-  ReactNativeWebViewProvider,
-  useReactNativeWebView,
-} from "@/components/shared/providers/WebViewProvider";
+import { ReactNativeWebViewProvider } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const NavBar = dynamic(() => import("@/components/shared/NavBar"), {
   ssr: false,
@@ -79,7 +76,6 @@ const NextLayout = ({ children }: Props) => {
   const router = useRouter();
   useScrollToTop();
   const { isAuthenticated } = useAuth();
-  const { isReactNativeWebView } = useReactNativeWebView();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -98,8 +94,7 @@ const NextLayout = ({ children }: Props) => {
           "max-w-[430px] mx-auto my-0 min-h-dvh",
           isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
             ? "bg-grayscale-50"
-            : "bg-base-white",
-          isReactNativeWebView ? "pt-safe-top" : ""
+            : "bg-base-white"
         )}
       >
         {children}
