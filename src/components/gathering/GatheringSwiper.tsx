@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { differenceInCalendarDays } from "date-fns";
 import { Lighty } from "@/constants/images";
 import Button from "../shared/Button/Button";
-import dynamic from "next/dynamic";
 import NoGatheringHome from "./NoGatheringHome";
 
 export default function GatheringSwiper({

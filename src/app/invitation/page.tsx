@@ -16,7 +16,6 @@ import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import { useQueryClient } from "@tanstack/react-query";
-import dynamic from "next/dynamic";
 import NoInvitation from "@/components/invitation/NoInvitation";
 
 export default function InvitationPage() {
