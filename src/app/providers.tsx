@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";
+import { ReactNativeWebViewProvider } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const NavBar = dynamic(() => import("@/components/shared/NavBar"), {
   ssr: false,
@@ -38,7 +39,9 @@ export const NextProvider = ({ children }: Props) => {
     <GoogleOAuthProvider clientId="819938529870-7ng56emjnvtfds459lrb7h1a9g04r4q5.apps.googleusercontent.com">
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <AuthProvider>{children}</AuthProvider>
+          <ReactNativeWebViewProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ReactNativeWebViewProvider>
           <ToastContainer
             position="top-center"
             hideProgressBar

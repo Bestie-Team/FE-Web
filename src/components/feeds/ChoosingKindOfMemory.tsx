@@ -4,6 +4,7 @@ import Spacing from "../shared/Spacing";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function ChoosingKindOfMemory({
   add,
@@ -14,6 +15,7 @@ export default function ChoosingKindOfMemory({
   setAdd: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
+  const { isReactNativeWebView } = useReactNativeWebView();
   return (
     <>
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
@@ -42,6 +44,7 @@ export default function ChoosingKindOfMemory({
         bgColor="#f4f4f4"
         disabled={add < 1}
         label={"다음"}
+        className={isReactNativeWebView ? "mb-safe-bottom" : ""}
         onClick={() => {
           setStep((prev) => prev + add);
         }}

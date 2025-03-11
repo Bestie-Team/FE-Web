@@ -7,6 +7,7 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
 import NoGatheringToRecord from "../gathering/NoGatheringToRecord";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function ChoosingGatheringToRecord({
   onNext,
@@ -21,6 +22,7 @@ export default function ChoosingGatheringToRecord({
   const handleImageClick = (gatheringId: string) => {
     setSelectedGatheringId(gatheringId);
   };
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <>
@@ -52,6 +54,7 @@ export default function ChoosingGatheringToRecord({
             selectedGatheringId={selectedGatheringId}
           />
           <FixedBottomButton
+            className={isReactNativeWebView ? "mb-safe-bottom" : ""}
             bgColor="#f4f4f4"
             disabled={selectedGatheringId === null}
             label={"기록 시작하기"}

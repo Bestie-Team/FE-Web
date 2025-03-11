@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -34,6 +35,7 @@ export default function DecorateWithStickers() {
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const frames = [
     "https://cdn.lighty.today/frame1.jpeg",
@@ -159,7 +161,10 @@ export default function DecorateWithStickers() {
   return (
     <Flex
       direction="column"
-      className="extended-container !min-h-dvh h-full pb-[60px]"
+      className={clsx(
+        "extended-container !min-h-dvh h-full pb-[60px]",
+        isReactNativeWebView ? "pt-safe-top" : ""
+      )}
     >
       {deco === false ? (
         <Flex
@@ -226,11 +231,13 @@ export default function DecorateWithStickers() {
               </div>
             </Flex>
           </div>
-          <BottomButton
-            disabled={selectedFrame == null}
-            onClick={handleCaptureImage}
-            label="꾸미기 시작"
-          />
+          <div className={isReactNativeWebView ? "mb-safe-bottom" : ""}>
+            <BottomButton
+              disabled={selectedFrame == null}
+              onClick={handleCaptureImage}
+              label="꾸미기 시작"
+            />
+          </div>
         </Flex>
       ) : (
         <>
@@ -263,7 +270,12 @@ export default function DecorateWithStickers() {
           />
         </div>
         {deco && (
-          <div className="absolute bottom-[60px] left-0 right-0">
+          <div
+            className={clsx(
+              "absolute bottom-[60px] left-0 right-0",
+              isReactNativeWebView ? "mb-safe-bottom" : ""
+            )}
+          >
             <FloatingButton tooltip />
             <BottomButton
               label={"이미지 저장"}

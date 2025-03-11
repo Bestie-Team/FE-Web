@@ -10,6 +10,7 @@ import { Feed } from "@/models/feed";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { NoFeedToMakeCard } from "../feeds/NoFeed";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -20,6 +21,7 @@ export default function ChoosingGatheringToDecorate({
     Partial<Feed> & { name: string; imageUrl: string; date: string }
   >(cardSelectedFeedAtom);
   const router = useRouter();
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const { data } = useFeedMine({
     order: "DESC",
@@ -50,7 +52,14 @@ export default function ChoosingGatheringToDecorate({
     <Flex
       direction="column"
       justify="space-between"
-      className="extended-container bg-base-white h-dvh pt-12 pb-14 overflow-y-scroll no-scrollbar"
+      className={clsx(
+        "extended-container bg-base-white h-dvh pt-12 pb-14 overflow-y-scroll no-scrollbar"
+      )}
+      style={
+        isReactNativeWebView
+          ? { paddingTop: `calc(env(safe-area-inset-top) + 2rem)` }
+          : {}
+      }
     >
       <Flex direction="column">
         <div className="px-6">
@@ -91,7 +100,8 @@ export default function ChoosingGatheringToDecorate({
           <button
             className={clsx(
               styles.button,
-              selectedFeed.id === "" && "!bg-grayscale-200"
+              selectedFeed.id === "" && "!bg-grayscale-200",
+              isReactNativeWebView ? "mb-safe-bottom" : ""
             )}
             disabled={selectedFeed.id === ""}
             onClick={() => {

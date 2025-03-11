@@ -2,14 +2,21 @@ import { cardFrameAtom } from "@/atoms/card";
 import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
+import clsx from "clsx";
 import { useRecoilValue } from "recoil";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function ChooseFrame({ onNext }: { onNext: () => void }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <Flex
-      className="extended-container bg-base-white h-dvh pb-14 overflow-y-scroll no-scrollbar"
+      className={clsx(
+        "extended-container bg-base-white h-dvh pb-14 overflow-y-scroll",
+        isReactNativeWebView ? "pt-safe-top" : ""
+      )}
+
       justify="space-between"
       direction="column"
     >
@@ -25,7 +32,10 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
       <div className={styles.buttonWrapper}>
         <button
           disabled={selectedFrame == null}
-          className={styles.button}
+          className={clsx(
+            styles.button,
+            isReactNativeWebView ? "mb-safe-bottom" : ""
+          )}
           onClick={() => {
             onNext();
           }}

@@ -7,6 +7,7 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { Feed } from "@/models/feed";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 interface FeedFormProps<T> {
   edit?: () => void;
@@ -38,6 +39,7 @@ export default function FeedForm<
       setFeedInfo((prev) => ({ ...prev, content: e.target.value }));
     }
   };
+  const { isReactNativeWebView } = useReactNativeWebView();
   console.log(selectedGathering, "selectedGatherings");
   return (
     <>
@@ -93,6 +95,7 @@ export default function FeedForm<
         />
       ) : (
         <FixedBottomButton
+          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
           label={"기록 완료"}
           disabled={filesToUpload.length == 0 || !feedInfo?.content}
           onClick={() => {
