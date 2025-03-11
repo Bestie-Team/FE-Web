@@ -21,6 +21,11 @@
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+.ptr__children {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .swiper-slide img.slide-img {
   width: 100%;
   height: 100%;

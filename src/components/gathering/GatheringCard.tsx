@@ -58,6 +58,7 @@ export default function GatheringCard({
         style={{
           transformOrigin: "center center",
           transitionDuration: "50ms",
+          zIndex: 0,
         }}
         src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
         className={clsx(styles.image, "scale-110")}

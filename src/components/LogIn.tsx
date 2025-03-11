@@ -6,7 +6,7 @@ import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "./shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { googleLoginMobile, kakaoLoginMobile } from "@/webview/actions";
 import Tooltip from "./shared/Tooltip/Tooltip";
@@ -15,7 +15,13 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=co
 
 export default function LogIn() {
   const { login } = useAuth();
-  const isClient = typeof window !== "undefined";
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {

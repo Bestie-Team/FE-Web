@@ -23,7 +23,7 @@ export default function ChoosingGatheringToDecorate({
   const router = useRouter();
   const { isReactNativeWebView } = useReactNativeWebView();
 
-  const { data = [] } = useFeedMine({
+  const { data } = useFeedMine({
     order: "DESC",
     minDate: minDate(),
     maxDate: maxDate(),

@@ -7,15 +7,17 @@ import { useRef } from "react";
 import NoticeSkeleton from "../shared/Skeleton/NoticeSkeleton";
 import clsx from "clsx";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import NoNotification from "./NoNotification";
+
 
 export default function NoticeContainer() {
-  const { data: notifications = [], isFetching, loadMore } = useNotification();
+  const { data: notifications, isFetching, loadMore } = useNotification();
   const containerRef = useRef<HTMLDivElement>(null);
   const today: Notification[] = [];
   const passed: Notification[] = [];
   const { isReactNativeWebView } = useReactNativeWebView();
 
-  notifications.forEach((notification) => {
+  notifications?.forEach((notification) => {
     const isToday =
       new Date(notification.createdAt).getDate() === new Date().getDate();
     if (isToday) {
@@ -30,6 +32,8 @@ export default function NoticeContainer() {
     loadMore,
     targetRef: containerRef,
   });
+
+  if (notifications && notifications.length < 1) return <NoNotification />;
 
   return (
     <div

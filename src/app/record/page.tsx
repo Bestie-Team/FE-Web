@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
@@ -33,9 +33,15 @@ export default function Record() {
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
+  const [isClient, setIsClient] = useState(false);
 
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
-  const isClient = typeof window !== "undefined";
+
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
   return (
     <div
       className="relative pt-12 min-h-dvh"

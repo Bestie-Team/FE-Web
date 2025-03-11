@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRecoilState } from "recoil";
@@ -17,6 +17,7 @@ export default function FriendsAndGroups() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     const tabParam = searchParams?.get("tab");
@@ -26,12 +27,18 @@ export default function FriendsAndGroups() {
     }
   }, [searchParams, setSelectedTab]);
 
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
+
   return (
     <>
       <div
         className={clsx(
           "w-full bg-base-white fixed px-5 mt-12",
-          window.ReactNativeWebView ? "pt-safe-top" : ""
+          isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
         )}
       >
         <Panel

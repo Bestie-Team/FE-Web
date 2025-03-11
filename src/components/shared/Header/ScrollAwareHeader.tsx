@@ -91,16 +91,17 @@ Header.displayName = "Header";
 
 interface ScrollAwareHeaderProps extends HeaderProps {
   visible: boolean;
+  isClient: boolean;
 }
 
 export function ScrollAwareHeader({
+  isClient,
   visible,
   selectedTab,
   handleTabClick,
   isNewNotification,
   mailCount,
 }: ScrollAwareHeaderProps) {
-  const isClient = typeof window !== "undefined";
   return (
     <header
       className={clsx(
