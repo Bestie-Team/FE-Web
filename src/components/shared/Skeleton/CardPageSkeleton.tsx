@@ -6,7 +6,7 @@ import LightyLogo from "../Icon/LightyLogo";
 
 export default function CardPageSkeleton() {
   return (
-    <div className="extended-container h-dvh bg-base-white">
+    <div className="extended-container h-dvh bg-base-white overflow-hidden">
       <Flex className="w-full h-12 gap-[6px]" align="center">
         <div className="pl-[17px] py-[10px] pr-[3px]">
           <ArrowLeftIcon />
@@ -22,7 +22,7 @@ export default function CardPageSkeleton() {
         <Spacing size={16} />
         <span className="bg-grayscale-50 w-[240px] h-5 rounded-[4px] animate-pulse" />
       </Flex>
-      <Flex className="px-5 w-full overflow-hidden">
+      <Flex className="w-max px-5 overflow-hidden gap-5 pb-5">
         <Flex
           direction="column"
           className="relative bg-grayscale-50 h-[334px] w-[270px] animate-pulse overflow-hidden rounded-[20px] shadow-lg"
@@ -37,7 +37,7 @@ export default function CardPageSkeleton() {
         </Flex>
         <Flex
           direction="column"
-          className="relative bg-grayscale-50 h-[334px] w-[270px] animate-pulse overflow-hidden rounded-[20px] shadow-lg"
+          className=" relative bg-grayscale-50 h-[334px] w-[270px] animate-pulse overflow-hidden rounded-[20px] shadow-lg"
         >
           <Flex
             direction="column"

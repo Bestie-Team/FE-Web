@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import dynamic from "next/dynamic";
 import FramePageSkeleton from "@/components/shared/Skeleton/FramePageSkeleton";
+import CardPageSkeleton from "@/components/shared/Skeleton/CardPageSkeleton";
 
 const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {
   ssr: false,
@@ -31,6 +32,7 @@ export default function Page() {
       return "프레임 선택";
     } else return "포토 카드";
   };
+  return <CardPageSkeleton />;
 
   return (
     <div className="bg-base-white h-dvh overflow-y-scroll no-scrollbar">
