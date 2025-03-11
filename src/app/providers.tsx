@@ -24,6 +24,10 @@ import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";
+import {
+  ReactNativeWebViewProvider,
+  useReactNativeWebView,
+} from "@/components/shared/providers/WebViewProvider";
 
 const NavBar = dynamic(() => import("@/components/shared/NavBar"), {
   ssr: false,
@@ -38,7 +42,9 @@ export const NextProvider = ({ children }: Props) => {
     <GoogleOAuthProvider clientId="819938529870-7ng56emjnvtfds459lrb7h1a9g04r4q5.apps.googleusercontent.com">
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <AuthProvider>{children}</AuthProvider>
+          <ReactNativeWebViewProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ReactNativeWebViewProvider>
           <ToastContainer
             position="top-center"
             hideProgressBar
@@ -73,6 +79,7 @@ const NextLayout = ({ children }: Props) => {
   const router = useRouter();
   useScrollToTop();
   const { isAuthenticated } = useAuth();
+  const { isReactNativeWebView } = useReactNativeWebView();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -91,7 +98,8 @@ const NextLayout = ({ children }: Props) => {
           "max-w-[430px] mx-auto my-0 min-h-dvh",
           isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
             ? "bg-grayscale-50"
-            : "bg-base-white"
+            : "bg-base-white",
+          isReactNativeWebView ? "pt-safe-top" : ""
         )}
       >
         {children}
