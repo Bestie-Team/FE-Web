@@ -24,7 +24,7 @@ export default function RecordPageSkeleton() {
           <Flex direction="column" className="gap-[6px]">
             <span className="bg-grayscale-50 w-[51px] h-[18px] animate-pulse rounded-[4px]" />
             <span className="bg-grayscale-50 w-[200px] h-[14px] animate-pulse rounded-[4px]" />
-          </Flex>{" "}
+          </Flex>
         </Flex>
       </Flex>
       <Flex direction="column" className="px-6 gap-5">
@@ -33,7 +33,7 @@ export default function RecordPageSkeleton() {
           <Flex direction="column" className="gap-[6px]">
             <span className="bg-grayscale-50 w-[51px] h-[18px] animate-pulse rounded-[4px]" />
             <span className="bg-grayscale-50 w-[200px] h-[14px] animate-pulse rounded-[4px]" />
-          </Flex>{" "}
+          </Flex>
         </Flex>
       </Flex>
     </div>

@@ -48,6 +48,7 @@ export default function TimelineItem({
         width={56}
         height={56}
         className={styles.image}
+        loading="eager"
       />
     </Flex>
   );

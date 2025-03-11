@@ -17,10 +17,7 @@ import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import { useQueryClient } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
-const NoInvitation = dynamic(
-  () => import("@/components/invitation/NoInvitation"),
-  { ssr: false }
-);
+import NoInvitation from "@/components/invitation/NoInvitation";
 
 export default function InvitationPage() {
   const queryClient = useQueryClient();

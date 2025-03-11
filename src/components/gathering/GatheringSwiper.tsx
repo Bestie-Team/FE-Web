@@ -10,8 +10,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { Lighty } from "@/constants/images";
 import Button from "../shared/Button/Button";
 import dynamic from "next/dynamic";
-
-const NoGatheringHome = dynamic(() => import("./NoGatheringHome"));
+import NoGatheringHome from "./NoGatheringHome";
 
 export default function GatheringSwiper({
   percent,

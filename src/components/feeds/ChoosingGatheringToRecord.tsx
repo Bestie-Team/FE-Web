@@ -6,10 +6,7 @@ import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
-import dynamic from "next/dynamic";
-const NoGatheringToRecord = dynamic(
-  () => import("../gathering/NoGatheringToRecord")
-);
+import NoGatheringToRecord from "../gathering/NoGatheringToRecord";
 
 export default function ChoosingGatheringToRecord({
   onNext,

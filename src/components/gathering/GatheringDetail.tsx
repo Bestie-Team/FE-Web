@@ -53,7 +53,7 @@ export default function GatheringDetail({
           isLoaded={isLoaded}
           setIsLoaded={setIsLoaded}
         />
-        {!setIsLoaded && <div className="absolute bg-grayscale-10 h-full" />}
+        {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
       <div className="absolute top-4 right-5 flex gap-[14px] z-50">
         <div

@@ -57,6 +57,7 @@ export default function GatheringCard({
         priority={tabIndex < 6}
         style={{
           transformOrigin: "center center",
+          transitionDuration: "50ms",
         }}
         src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
         className={clsx(styles.image, "scale-110")}
@@ -68,7 +69,7 @@ export default function GatheringCard({
         style={{
           background: styles.gradation,
         }}
-        className="absolute bottom-0 left-0 right-0 h-[73.8%]"
+        className="absolute bottom-0 left-0 right-0 h-[73.8%] dur"
       />
       <Flex direction="column" className={styles.textWrapper}>
         <span className="text-T4 truncate">{name}</span>
@@ -98,7 +99,7 @@ const styles = {
   gatheringWrapper:
     "group relative overflow-hidden rounded-2xl aspect-square cursor-pointer",
   image:
-    "object-cover object-center w-full h-full group-hover:animate-smaller transition duration-75 w-[168px] h-[168px]",
+    "object-cover object-center group-hover:animate-smaller transition w-[200px] h-[200px]",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:

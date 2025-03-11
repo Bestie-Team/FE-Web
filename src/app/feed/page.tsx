@@ -40,8 +40,7 @@ import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader"
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";
-
-const NoFeed = dynamic(() => import("@/components/feeds/NoFeed"));
+import NoFeed from "@/components/feeds/NoFeed";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,

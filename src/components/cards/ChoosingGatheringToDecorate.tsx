@@ -4,18 +4,12 @@ import LightyLogo from "../shared/Icon/LightyLogo";
 import Spacing from "../shared/Spacing";
 import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
 import useFeedMine from "../feeds/hooks/useFeedMine";
-import DotSpinner from "../shared/Spinner/DotSpinner";
 import { cardSelectedFeedAtom } from "@/atoms/card";
 import { maxDate, minDate } from "@/constants/time";
 import { Feed } from "@/models/feed";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import dynamic from "next/dynamic";
-
-const NoFeedToMakeCard = dynamic(() => import("../feeds/NoFeed"), {
-  ssr: false,
-  loading: () => <DotSpinner />,
-});
+import { NoFeedToMakeCard } from "../feeds/NoFeed";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
