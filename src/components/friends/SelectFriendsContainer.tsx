@@ -12,6 +12,7 @@ import Modal from "../shared/Modal/Modal";
 import { friendsToShareAtom } from "@/atoms/record";
 import { useAuth } from "../shared/providers/AuthProvider";
 import clsx from "clsx";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function SelectFriendsContainer({
   type = "default",
@@ -38,6 +39,7 @@ export default function SelectFriendsContainer({
   const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
     friendsToShareAtom
   );
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const { data: friends } = useFriends({ userId: userInfo?.accountId || "" });
 
@@ -137,6 +139,7 @@ export default function SelectFriendsContainer({
         <Spacing size={50} />
       </ul>
       <FixedBottomButton
+        className={isReactNativeWebView ? "mb-safe-bottom" : ""}
         bgColor="bg-grayscale-50"
         label={getLabel()}
         disabled={type == "record" ? false : clickedItems.length < 1}
