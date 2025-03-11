@@ -32,7 +32,7 @@ export default function GroupOptions({
         <GroupDropdownMenu
           group={group}
           ref={ref}
-          items={menuItems}
+          menuItems={menuItems}
           className={styles.menu}
         />
       )}

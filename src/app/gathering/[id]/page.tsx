@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
@@ -10,7 +10,10 @@ import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering"
 import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import Spacing from "@/components/shared/Spacing";
 import GatheringDetail from "@/components/gathering/GatheringDetail";
-import Modal from "@/components/shared/Modal/Modal";
+import TabParamHandler from "@/components/shared/TabParamHandler";
+import dynamic from "next/dynamic";
+
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"));
 
 export default function GatheringDetailPage({
   params,
@@ -52,22 +55,6 @@ export default function GatheringDetailPage({
     });
   };
 
-  const TabParamHandler = ({
-    setSelectedTab,
-  }: {
-    setSelectedTab: (num: "1" | "2") => void;
-  }) => {
-    const searchParams = useSearchParams();
-
-    useEffect(() => {
-      const tabParam = searchParams?.get("tab");
-      if (tabParam === "1" || tabParam === "2") {
-        setSelectedTab(tabParam);
-      }
-    }, [searchParams, setSelectedTab]);
-
-    return null;
-  };
   if (!selectedGathering) {
     return;
   }

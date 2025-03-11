@@ -4,7 +4,7 @@ import Button from "./Button/Button";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
 
-export default function LeaderContainer({ leader }: { leader?: lighty.User }) {
+export default function LeaderContainer({ leader }: { leader: lighty.User }) {
   const { name, accountId, profileImageUrl } = leader!;
   return (
     <Flex
@@ -22,7 +22,7 @@ export default function LeaderContainer({ leader }: { leader?: lighty.User }) {
             className={styles.leaderImage}
           />
         ) : (
-          <div className="rounded-full border-[1.27px] border-base-white h-9 w-9 flex justify-center items-center bg-grayscale-100">
+          <div className={styles.iconContainer}>
             <LightyIcon width="11" height="11" />
           </div>
         )}
@@ -40,11 +40,11 @@ export default function LeaderContainer({ leader }: { leader?: lighty.User }) {
 }
 
 const styles = {
+  iconContainer:
+    "rounded-full border-[1.27px] border-base-white h-9 w-9 flex justify-center items-center bg-grayscale-100",
   leaderInfoContainer: "w-full px-5 py-4 bg-base-white text-B3",
-
   leaderImage:
     "object-cover rounded-full border-[1.27px] border-base-white h-9 w-9",
-
   buttonWrapper:
     "text-C1 text-base-white bg-grayscale-900 px-3 py-2 rounded-lg h-fit",
 };

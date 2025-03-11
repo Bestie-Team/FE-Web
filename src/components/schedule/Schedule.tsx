@@ -4,13 +4,6 @@ import Spacing from "@/components/shared/Spacing";
 import { Gathering } from "@/models/gathering";
 import React from "react";
 
-const MemoizedUpcomingSchedule = React.memo(
-  ({ gathering }: { gathering: Gathering[] }) => (
-    <UpcomingSchedule gatherings={gathering} />
-  )
-);
-MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";
-
 export default function Schedule({
   expectingGatherings,
 }: {
@@ -32,3 +25,11 @@ export default function Schedule({
     </div>
   );
 }
+
+const MemoizedUpcomingSchedule = React.memo(
+  ({ gathering }: { gathering: Gathering[] }) => (
+    <UpcomingSchedule gatherings={gathering} />
+  )
+);
+
+MemoizedUpcomingSchedule.displayName = "MemoizedUpcomingSchedule";

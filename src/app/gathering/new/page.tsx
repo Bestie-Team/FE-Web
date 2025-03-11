@@ -6,10 +6,10 @@ import * as lighty from "lighty-type";
 import { newGatheringInfo } from "@/atoms/gathering";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
-
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import GatheringForm from "@/components/gathering/GatheringForm";
+import FullPageLoader from "@/components/shared/FullPageLoader";
 
 const components = [
   dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
@@ -55,7 +55,7 @@ export default function NewGatheringPage() {
   }, []);
 
   if (isPending) {
-    return <DotSpinner />;
+    return <FullPageLoader />;
   }
 
   const CurrentStepComponent = components[step] || components[0];

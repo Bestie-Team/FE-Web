@@ -50,7 +50,6 @@ export default function GatheringCard({
     <div
       className={styles.gatheringWrapper}
       onClick={() => {
-        console.log("Mouse down triggered");
         router.push(`/gathering/${gathering.id}?tab=2`);
       }}
     >

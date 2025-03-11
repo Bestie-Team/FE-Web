@@ -27,7 +27,6 @@ import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReport from "@/components/report/hooks/useReport";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
@@ -40,6 +39,7 @@ import { bottomSheetStateAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import TabParamHandler from "@/components/shared/TabParamHandler";
 
 const NoFeed = dynamic(() => import("@/components/feeds/NoFeed"));
 
@@ -53,25 +53,6 @@ const Report = dynamic(
     ssr: false,
   }
 );
-
-const TabParamHandler = ({
-  setSelectedTab,
-}: {
-  setSelectedTab: (num: "1" | "2") => void;
-}) => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  useEffect(() => {
-    const tabParam = searchParams?.get("tab");
-    if (tabParam === "1" || tabParam === "2") {
-      setSelectedTab(tabParam);
-      router.replace("/feed");
-    }
-  }, [searchParams, setSelectedTab]);
-
-  return null;
-};
 
 const Header = React.memo(
   ({
@@ -438,7 +419,7 @@ export default function FeedPage() {
       >
         {renderSwipers}
       </PullToRefresh>
-      <TabParamHandler setSelectedTab={setSelectedTab} />
+      <TabParamHandler setSelectedTab={setSelectedTab} pathToReplace="/feed" />
       {recordModalOpen && (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}

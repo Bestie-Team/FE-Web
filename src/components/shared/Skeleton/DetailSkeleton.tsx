@@ -23,7 +23,7 @@ export default function DetailSkeleton() {
         align="center"
         className="w-full pt-6 pb-8 gap-4"
       >
-        <Flex className="px-5 h-[33px]" align="center">
+        <Flex className="w-full px-5 h-[33px]" align="center">
           <div className="bg-grayscale-50 rounded-[4px] w-full h-5 animate-pulse" />
         </Flex>
         <Flex className="w-full px-5">

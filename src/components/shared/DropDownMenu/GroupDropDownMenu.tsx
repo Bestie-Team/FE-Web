@@ -8,26 +8,26 @@ import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
 import { GroupEditProps } from "@/app/groups/[id]/page";
 
 interface GroupDropdownMenuProps {
-  items: string[];
+  menuItems: string[];
   className?: string;
   group: GroupEditProps;
 }
 
 const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
-  ({ items, className, group }, ref) => {
+  ({ menuItems, className, group }, ref) => {
     const router = useRouter();
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setOpenModal = useSetRecoilState(modalStateAtom);
-    const setSelectedGroup = useSetRecoilState(selectedGroupAtom);
+    const setGroup = useSetRecoilState(selectedGroupAtom);
     const setOriginalGroupMembers = useSetRecoilState(originalGroupMembersAtom);
 
-    const handleItemClick = (item: string) => {
-      if (item.includes("삭제")) {
+    const clickedMenuItemHandler = (menuItem: string) => {
+      if (menuItem.includes("삭제")) {
         setOpenModal({ type: "deleteGroup", isOpen: true });
-      } else if (item.includes("나가기")) {
+      } else if (menuItem.includes("나가기")) {
         setOpenModal({ type: "exitGroup", isOpen: true });
-      } else if (item.includes("수정")) {
-        setSelectedGroup({
+      } else if (menuItem.includes("수정")) {
+        setGroup({
           groupId: group.id,
           name: group.name,
           description: group.description,
@@ -57,9 +57,9 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
             boxShadow: styles.shadow,
           }}
         >
-          {items.map((item, index) => {
+          {menuItems.map((menuItem, index) => {
             return (
-              <React.Fragment key={`${item}${index}`}>
+              <React.Fragment key={`${menuItem}${index}`}>
                 <button
                   style={{
                     backgroundColor: isHovered === index ? "#f4f4f4" : "white",
@@ -67,13 +67,13 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
                   onMouseEnter={() => setIsHovered(index)}
                   onMouseLeave={() => setIsHovered(false)}
                   className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
-                    item.includes("삭제") && "text-point-red50"
+                    menuItem.includes("삭제") && "text-point-red50"
                   }`}
-                  onMouseDown={() => handleItemClick(item)}
+                  onMouseDown={() => clickedMenuItemHandler(menuItem)}
                 >
-                  {item}
+                  {menuItem}
                 </button>
-                {index < items.length - 1 ? (
+                {index < menuItems.length - 1 ? (
                   <div className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]" />
                 ) : null}
               </React.Fragment>

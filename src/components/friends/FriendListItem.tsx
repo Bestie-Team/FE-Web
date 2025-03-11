@@ -2,7 +2,6 @@ import Image from "next/image";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import Options, { MENU_TYPES } from "../shared/Options";
 import Button from "../shared/Button/Button";
 import * as lighty from "lighty-type";
 import useAcceptFriendRequest from "./hooks/useAcceptFriendRequest";
@@ -14,6 +13,7 @@ import { selectedFriendAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
 import { useAuth } from "../shared/providers/AuthProvider";
 import LightyIcon from "../shared/Icon/LightyIcon";
+import FriendOption from "../shared/FriendOption";
 
 export default function FriendListItem({
   senderId,
@@ -99,7 +99,7 @@ export default function FriendListItem({
           className={clsx(styles.iconContainer)}
           onClick={() => setSelectedFriend(friendInfo.id)}
         >
-          <Options width="2.5px" height="14.17px" type={MENU_TYPES.FRIEND} />
+          <FriendOption />
         </div>
       ) : null}
       {type === "receivedRequest" ? (

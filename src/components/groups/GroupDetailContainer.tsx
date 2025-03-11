@@ -22,7 +22,7 @@ export default function GroupDetailContainer({
   const { groupImageUrl, owner, description, members } = groupDetail;
   return (
     <>
-      <div className="w-full h-[316px] relative">
+      <div className="w-full h-[px] relative">
         <GroupBannerContainer
           imageUrl={groupImageUrl}
           isLoaded={isLoaded}

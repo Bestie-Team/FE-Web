@@ -1,6 +1,5 @@
 import GatheringBannerContainer from "./GatheringBannerContainer";
 import ShareIcon from "../shared/Icon/ShareIcon";
-import { MENU_TYPES } from "../shared/Options";
 import LeaderContainer from "../shared/LeaderContainer";
 import Spacing from "../shared/Spacing";
 import LightyInfoContainer from "../shared/LightyInfoContainer";
@@ -18,8 +17,9 @@ import handleShare from "@/utils/handleShare";
 import { MAP } from "@/constants/images";
 import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction } from "react";
+import { MENU_TYPES } from "@/models/dropdown";
 
-const Options = dynamic(() => import("../shared/Options"), {
+const GatheringOption = dynamic(() => import("./GatheringOption"), {
   ssr: false,
 });
 
@@ -33,9 +33,9 @@ export default function GatheringDetail({
   setIsLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
   const { userInfo } = useAuth();
-
   const { gatheringDate, members, hostUser, address, description, name, id } =
     selectedGathering;
+
   const convertedDate = formatToKoreanTime(gatheringDate);
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
 
@@ -47,7 +47,7 @@ export default function GatheringDetail({
 
   return (
     <div className="extended-container">
-      <div className="w-full relative h-[316px]">
+      <div className="w-full relative h-[380px]">
         <GatheringBannerContainer
           gathering={selectedGathering}
           isLoaded={isLoaded}
@@ -63,10 +63,9 @@ export default function GatheringDetail({
           <ShareIcon />
         </div>
         {userInfo?.accountId === hostUser.accountId && (
-          <Options
-            type={isEnded ? MENU_TYPES.ENDEDGATHERING : MENU_TYPES.GATHERING}
+          <GatheringOption
+            type={isEnded ? MENU_TYPES.GATHERING_ENDED : MENU_TYPES.GATHERING}
             gathering={selectedGathering}
-            color="white"
           />
         )}
       </div>

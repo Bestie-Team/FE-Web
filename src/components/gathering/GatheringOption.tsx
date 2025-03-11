@@ -1,74 +1,54 @@
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
-import * as lighty from "lighty-type";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GatheringDropdownMenu from "../shared/DropDownMenu/GatheringDropDownMenu";
-
-export const MENU_TYPES = {
-  GATHERING: "gathering",
-  ENDEDGATHERING: "endedGathering",
-} as const;
-
-type MenuType = (typeof MENU_TYPES)[keyof typeof MENU_TYPES];
+import { MENU_TYPES, MenuType } from "@/models/dropdown";
+import { GatheringDetailResponse } from "@/models/gathering";
 
 const MENU_CONFIGS = {
   [MENU_TYPES.GATHERING]: {
     items: ["약속 삭제하기", "약속 수정하기"],
     className: "absolute -bottom-[104px] -right-[4px]",
   },
-  [MENU_TYPES.ENDEDGATHERING]: {
+  [MENU_TYPES.GATHERING_ENDED]: {
     items: ["약속 삭제하기"],
     className: "absolute -bottom-[44px] -right-[4px]",
   },
 };
 
 interface GatheringOptionProps {
-  gathering?: Partial<lighty.CreateGatheringRequest> & { id: string };
-  width?: string;
-  height?: string;
-  color?: string;
+  gathering: GatheringDetailResponse;
   type: MenuType;
 }
 
-export default function Options({
+export default function GatheringOption({
   gathering,
-  width = "24px",
-  height = "24px",
-  color,
   type,
 }: GatheringOptionProps) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdown();
-
-  const containerClassName = `
-    relative
-    cursor-pointer  
-    flex 
-    justify-center
-    items-center}
-   `.trim();
 
   return (
     <div
       ref={btnRef}
       data-testid="options-icon"
       onClick={toggleDropdown}
-      style={{ width, height }}
-      className={containerClassName}
+      style={{ width: 24, height: 24 }}
+      className="relative cursor-pointer flex justify-center items-center"
     >
-      <OptionsSelectIcon color={color} />
+      <OptionsSelectIcon color={"#FFF"} />
       {opened && type === MENU_TYPES.GATHERING && gathering && (
         <GatheringDropdownMenu
           gathering={gathering}
           ref={ref}
-          items={MENU_CONFIGS[type].items}
+          menuItems={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}
         />
       )}
-      {opened && type === MENU_TYPES.ENDEDGATHERING && gathering && (
+      {opened && type === MENU_TYPES.GATHERING_ENDED && gathering && (
         <GatheringDropdownMenu
           gathering={gathering}
           ref={ref}
-          items={MENU_CONFIGS[type].items}
+          menuItems={MENU_CONFIGS[type].items}
           className={MENU_CONFIGS[type].className}
         />
       )}

@@ -5,23 +5,26 @@ import { useSetRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
 import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 import { useRouter } from "next/navigation";
-import * as lighty from "lighty-type";
+import { GatheringDetailResponse } from "@/models/gathering";
 
 interface GatheringDropdownMenuProps {
-  items: string[];
-  gathering: Partial<lighty.CreateGatheringRequest> & { id: string };
-  className?: string;
+  gathering: GatheringDetailResponse;
+  menuItems: string[];
+  className: string;
 }
 
 const GatheringDropdownMenu = forwardRef<
   HTMLElement,
   GatheringDropdownMenuProps
->(({ items, gathering, className }, ref) => {
+>(({ menuItems, gathering, className }, ref) => {
   const router = useRouter();
+
   const [isHovered, setIsHovered] = useState<number | boolean>(false);
+
   const setGatheringInfo = useSetRecoilState(selectedGatheringInfoAtom);
   const setOpenModal = useSetRecoilState(modalStateAtom);
-  const handleItemClick = (item: string) => {
+
+  const clickedMenuItemHandler = (item: string) => {
     if (item.includes("삭제")) {
       setOpenModal({ type: "deleteGathering", isOpen: true });
     }
@@ -48,9 +51,9 @@ const GatheringDropdownMenu = forwardRef<
           boxShadow: styles.shadow,
         }}
       >
-        {items.map((item, index) => {
+        {menuItems.map((menuItem, index) => {
           return (
-            <React.Fragment key={`${item}${index}`}>
+            <React.Fragment key={`${menuItem}${index}`}>
               <button
                 style={{
                   backgroundColor: isHovered === index ? "#f4f4f4" : "white",
@@ -58,13 +61,13 @@ const GatheringDropdownMenu = forwardRef<
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(false)}
                 className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
-                  item.includes("삭제") && "text-point-red50"
+                  menuItem.includes("삭제") && "text-point-red50"
                 }`}
-                onMouseDown={() => handleItemClick(item)}
+                onMouseDown={() => clickedMenuItemHandler(menuItem)}
               >
-                {item}
+                {menuItem}
               </button>
-              {index < items.length - 1 ? (
+              {index < menuItems.length - 1 ? (
                 <div className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]" />
               ) : null}
             </React.Fragment>

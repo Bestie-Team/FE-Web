@@ -27,9 +27,9 @@ export default function GatheringBannerContainer({
         alt="gatheringBanner"
         src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
         width={500}
-        height={316}
+        height={380}
         className={clsx(
-          "h-[316px] w-[500px] object-cover",
+          "h-[380px] w-[500px] object-cover",
           `transition-opacity duration-500 ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`

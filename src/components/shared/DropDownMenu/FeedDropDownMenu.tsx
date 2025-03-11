@@ -8,34 +8,35 @@ import { useRouter } from "next/navigation";
 import { Feed } from "@/models/feed";
 interface FeedDropdownMenuProps {
   feed: Feed;
-  items: string[];
-  className?: string;
+  menuItems: string[];
+  className: string;
 }
 
 const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
-  ({ items, className, feed }, ref) => {
+  ({ menuItems, className, feed }, ref) => {
+    const router = useRouter();
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
+
     const setModalOpen = useSetRecoilState(modalStateAtom);
     const setReportModalOpen = useSetRecoilState(reportModalAtom);
-    const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
-    const setSelectedFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
-    const router = useRouter();
+    const setFeedId = useSetRecoilState(selectedFeedIdAtom);
+    const setFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
 
-    const handleItemClick = (item: string) => {
+    const clickedMenuItemHandler = (item: string) => {
       if (item.includes("삭제")) {
-        setSelectedFeedId(feed.id);
+        setFeedId(feed.id);
         setModalOpen({ type: "deleteFeed", isOpen: true });
       } else if (item.includes("수정")) {
-        setSelectedFeedInfo(feed);
+        setFeedInfo(feed);
         router.push("/feed/edit");
       } else if (item.includes("숨기기")) {
-        setSelectedFeedInfo(feed);
+        setFeedInfo(feed);
         setModalOpen({ type: "hideFeed", isOpen: true });
       } else if (item.includes("신고")) {
-        setSelectedFeedId(feed.id);
+        setFeedId(feed.id);
         setReportModalOpen(true);
       } else if (item.includes("숨김 해제")) {
-        setSelectedFeedId(feed.id);
+        setFeedId(feed.id);
         setModalOpen({ type: "displayFeed", isOpen: true });
       }
     };
@@ -57,9 +58,9 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
             boxShadow: styles.shadow,
           }}
         >
-          {items.map((item, index) => {
+          {menuItems.map((menuItem, index) => {
             return (
-              <React.Fragment key={`${item}${index}`}>
+              <React.Fragment key={`${menuItem}${index}`}>
                 <button
                   style={{
                     backgroundColor: isHovered === index ? "#f4f4f4" : "white",
@@ -67,13 +68,13 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
                   onMouseEnter={() => setIsHovered(index)}
                   onMouseLeave={() => setIsHovered(false)}
                   className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
-                    item.includes("삭제") && "text-point-red50"
+                    menuItem.includes("삭제") && "text-point-red50"
                   }`}
-                  onMouseDown={() => handleItemClick(item)}
+                  onMouseDown={() => clickedMenuItemHandler(menuItem)}
                 >
-                  {item}
+                  {menuItem}
                 </button>
-                {index < items.length - 1 ? (
+                {index < menuItems.length - 1 ? (
                   <div className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]" />
                 ) : null}
               </React.Fragment>

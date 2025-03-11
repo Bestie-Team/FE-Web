@@ -1,25 +1,28 @@
 import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
-import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import { modalStateAtom } from "@/atoms/modal";
+import { lightyToast } from "@/utils/toast";
 
 interface CommentDropdownMenuProps {
-  selectedCommentId?: string;
+  commentId?: string;
   items: string[];
-  className?: string;
 }
 
 const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
-  ({ items, className, selectedCommentId }, ref) => {
+  ({ items, commentId }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setModalState = useSetRecoilState(modalStateAtom);
     const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
-        setSelectedCommentId(selectedCommentId || "");
+        if (!commentId) {
+          lightyToast.error("선택된 댓글이 없습니다");
+        } else {
+          setSelectedCommentId(commentId);
+        }
         setModalState({ type: "deleteFeedComment", isOpen: true });
       }
     };
@@ -30,7 +33,7 @@ const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
           animation: styles.animation,
           willChange: "opacity transform",
         }}
-        className={clsx("z-10", className)}
+        className="z-10 p-1 pl-0 absolute -bottom-[42px] -right-[24px]"
       >
         <Flex
           direction="column"

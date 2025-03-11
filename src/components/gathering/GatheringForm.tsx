@@ -6,12 +6,10 @@ import FeedIcon from "../shared/Icon/FeedIcon";
 import Flex from "../shared/Flex";
 import UserIcon from "../shared/Icon/UserIcon";
 import AddGroupSlider from "../groups/AddGroupSlider";
-import AddFriendsSlider from "../groups/AddFriendsSlider";
 import GatheringInput from "../shared/Input/GatheringInput";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import CalendarBottomSheet from "../shared/BottomDrawer/CalendarBottomSheet";
 import { isValid } from "date-fns";
 import getHeader from "@/utils/getHeader";
 import EmptyLogoIcon from "../shared/Icon/EmptyLogoIcon";
@@ -22,6 +20,12 @@ import { SetterOrUpdater } from "recoil";
 import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
+import dynamic from "next/dynamic";
+
+const AddFriendsSlider = dynamic(() => import("../groups/AddFriendsSlider"));
+const CalendarBottomSheet = dynamic(
+  () => import("../shared/BottomDrawer/CalendarBottomSheet")
+);
 
 export default function GatheringForm({
   formType = "new",
@@ -188,10 +192,12 @@ export default function GatheringForm({
           />
         </div>
       </form>
-      <CalendarBottomSheet
-        onClose={() => setCalendarOpen(false)}
-        open={calendarOpen}
-      />
+      {calendarOpen && (
+        <CalendarBottomSheet
+          onClose={() => setCalendarOpen(false)}
+          open={calendarOpen}
+        />
+      )}
     </div>
   );
 }

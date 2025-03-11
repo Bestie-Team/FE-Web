@@ -9,26 +9,29 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
-import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
 import Flex from "@/components/shared/Flex";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import Schedule from "@/components/schedule/Schedule";
 import Gathering from "@/components/gathering/Gathering";
-import { useRouter, useSearchParams } from "next/navigation";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
+import dynamic from "next/dynamic";
+import TabParamHandler from "@/components/shared/TabParamHandler";
+
+const MemoriesBottomSheet = dynamic(
+  () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
+  { ssr: false }
+);
 
 export default function GatheringPage() {
-  const gatheringRef = useRef<HTMLDivElement>(null);
-  const isPast = useScrollThreshold();
   const queryClient = useQueryClient();
+  const gatheringRef = useRef<HTMLDivElement>(null);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const {
@@ -44,16 +47,11 @@ export default function GatheringPage() {
     minDate: minDate(),
     maxDate: maxDate(),
   });
-
   const {
     data: ended,
     isFetching: isFetching_e,
     loadMore: loadMore_e,
   } = useGatheringEnded({ limit: 8 });
-
-  useEffect(() => {
-    reset();
-  }, [reset]);
 
   const handleRefresh = async () => {
     try {
@@ -65,7 +63,6 @@ export default function GatheringPage() {
           queryKey: ["gatherings/ended"],
         }),
       ]);
-
       return true;
     } catch (error) {
       console.error("Refresh failed:", error);
@@ -73,32 +70,6 @@ export default function GatheringPage() {
       return false;
     }
   };
-
-  const TabParamHandler = ({
-    setSelectedTab,
-  }: {
-    setSelectedTab: (num: "1" | "2") => void;
-  }) => {
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
-    useEffect(() => {
-      const tabParam = searchParams?.get("tab");
-      if (tabParam === "1" || tabParam === "2") {
-        setSelectedTab(tabParam);
-        router.replace("/gathering");
-      }
-    }, [searchParams, setSelectedTab]);
-
-    return null;
-  };
-
-  useInfiniteScrollByRef({
-    isFetching: isFetching_e,
-    loadMore: loadMore_e,
-    targetRef: gatheringRef,
-    selectedTab,
-  });
 
   const GatheringPageSwiper = useMemo(() => {
     return (
@@ -112,7 +83,7 @@ export default function GatheringPage() {
         slidesPerView={1}
         spaceBetween={2}
         direction="horizontal"
-        className="!h-dvh w-full"
+        className="h-dvh w-full"
       >
         <SwiperSlide>
           <div
@@ -124,7 +95,7 @@ export default function GatheringPage() {
             <Schedule expectingGatherings={myGatherings} />
           </div>
         </SwiperSlide>
-        <SwiperSlide className="!h-dvh">
+        <SwiperSlide className="h-dvh">
           <div
             ref={gatheringRef}
             className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
@@ -147,16 +118,32 @@ export default function GatheringPage() {
     selectedTab,
     swiperRef,
     handleSlideChange,
+    isFetching,
+    isFetching_e,
   ]);
+
+  useInfiniteScrollByRef({
+    isFetching: isFetching_e,
+    loadMore: loadMore_e,
+    targetRef: gatheringRef,
+    selectedTab,
+  });
+
+  useEffect(() => {
+    reset();
+  }, [reset]);
 
   return (
     <div className="h-dvh">
-      <Header
-        shadow={isPast}
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-      />
-
+      <Header>
+        <Panel
+          selectedTab={selectedTab}
+          long="short"
+          title1="예정"
+          title2="완료"
+          onClick={handleTabClick}
+        />
+      </Header>
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
@@ -170,48 +157,34 @@ export default function GatheringPage() {
         {GatheringPageSwiper}
       </PullToRefresh>
       <Suspense>
-        <TabParamHandler setSelectedTab={setSelectedTab} />
+        <TabParamHandler
+          setSelectedTab={setSelectedTab}
+          pathToReplace="/gathering"
+        />
       </Suspense>
       {modalOpen && <MemoriesBottomSheet onClose={() => setModalOpen(false)} />}
     </div>
   );
 }
 
-const Header = React.memo(
-  ({
-    shadow,
-    selectedTab,
-    handleTabClick,
-  }: {
-    shadow: boolean;
-    selectedTab: "1" | "2";
-    handleTabClick: (tab: "1" | "2") => void;
-  }) => {
-    const isClient = typeof window !== "undefined";
-    return (
-      <>
-        {getHeader("/gathering")}
-        <Flex
-          id="filter"
-          justify="space-between"
-          className={clsx(
-            styles.panelWrapper,
-            shadow && "shadow-bottom",
-            isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
-          )}
-        >
-          <Panel
-            selectedTab={selectedTab}
-            long="short"
-            title1="예정"
-            title2="완료"
-            onClick={handleTabClick}
-          />
-        </Flex>
-      </>
-    );
-  }
-);
+const Header = React.memo(({ children }: { children: React.ReactNode }) => {
+  const isClient = typeof window !== "undefined";
+  return (
+    <>
+      {getHeader("/gathering")}
+      <Flex
+        id="filter"
+        justify="space-between"
+        className={clsx(
+          styles.panelWrapper,
+          isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
+        )}
+      >
+        {children}
+      </Flex>
+    </>
+  );
+});
 Header.displayName = "Header";
 
 const styles = {

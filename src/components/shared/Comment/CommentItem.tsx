@@ -1,10 +1,10 @@
 import { FeedCommentResponse } from "@/models/feed";
 import Flex from "../Flex";
-import Options from "../Options";
 import Spacing from "../Spacing";
 import { useAuth } from "../providers/AuthProvider";
 import { formatDate } from "@/utils/formatDate";
 import clsx from "clsx";
+import CommentOption from "@/components/feeds/CommentOption";
 
 export default function CommentItem({
   comment,
@@ -33,13 +33,7 @@ export default function CommentItem({
         {isMe && (
           <>
             <Spacing direction="horizontal" size={8} />
-            <Options
-              width="16"
-              height="16"
-              color="#0A0A0A"
-              type="comment"
-              selectedCommentId={comment.id}
-            />
+            <CommentOption commentId={comment.id} />
           </>
         )}
       </div>

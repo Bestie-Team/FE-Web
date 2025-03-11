@@ -5,14 +5,14 @@ import { useSetRecoilState } from "recoil";
 import { friendReportModalAtom, modalStateAtom } from "@/atoms/modal";
 
 interface FriendDropdownMenuProps {
-  selectedId?: string;
-  items: string[];
-  className?: string;
+  menuItems: string[];
+  className: string;
 }
 
 const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
-  ({ items, className }, ref) => {
+  ({ menuItems, className }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
+
     const setModalOpen = useSetRecoilState(modalStateAtom);
     const setReportModalOpen = useSetRecoilState(friendReportModalAtom);
 
@@ -43,7 +43,7 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
             willChange: "opacity transform",
           }}
         >
-          {items.map((item, index) => {
+          {menuItems.map((item, index) => {
             return (
               <React.Fragment key={`${item}${index}`}>
                 <button
@@ -59,7 +59,7 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
                 >
                   {item}
                 </button>
-                {index < items.length - 1 ? (
+                {index < menuItems.length - 1 ? (
                   <div className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]" />
                 ) : null}
               </React.Fragment>

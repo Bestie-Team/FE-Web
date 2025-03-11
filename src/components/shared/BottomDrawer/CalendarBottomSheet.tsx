@@ -58,7 +58,6 @@ export default function CalendarBottomSheet({
                   gatheringDate: converted,
                 }));
               }
-
               console.log(converted, "ISOtime");
             }
             onClose();
