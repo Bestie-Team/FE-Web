@@ -1,8 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useMemo, useRef } from "react";
-import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { GatheringInWhich } from "@/models/gathering";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -34,14 +32,14 @@ export default function GatheringPage() {
   const gatheringRef = useRef<HTMLDivElement>(null);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
-  const {
-    selectedTab,
-    setSelectedTab,
-    handleTabClick,
-    handleSlideChange,
-    swiperRef,
-  } = useTabs();
-  const isClient = typeof window !== "undefined";
+  const { selectedTab, setSelectedTab } = useTabs();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
   const { data: myGatherings, isFetching } = useGatherings({
     limit: 50,
     minDate: minDate(),
@@ -71,56 +69,56 @@ export default function GatheringPage() {
     }
   };
 
-  const GatheringPageSwiper = useMemo(() => {
-    return (
-      <Swiper
-        key={selectedTab}
-        initialSlide={Number(selectedTab) - 1}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
-        onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
-        slidesPerView={1}
-        spaceBetween={2}
-        direction="horizontal"
-        className="h-dvh w-full"
-      >
-        <SwiperSlide>
-          <div
-            className={clsx(
-              "mt-[107px] h-full overflow-y-scroll no-scrollbar pb-10",
-              isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
-            )}
-          >
-            <Schedule expectingGatherings={myGatherings} />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="h-dvh">
-          <div
-            ref={gatheringRef}
-            className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
-          >
-            <Gathering
-              ended
-              message
-              isFetching={isFetching_e || isFetching}
-              where={GatheringInWhich.GATHERING}
-              gatherings={ended || []}
-            />
-          </div>
-        </SwiperSlide>
-      </Swiper>
-    );
-  }, [
-    isClient,
-    myGatherings,
-    ended,
-    selectedTab,
-    swiperRef,
-    handleSlideChange,
-    isFetching,
-    isFetching_e,
-  ]);
+  // const GatheringPageSwiper = useMemo(() => {
+  //   return (
+  //     <Swiper
+  //       key={selectedTab}
+  //       initialSlide={Number(selectedTab) - 1}
+  //       onSwiper={(swiper) => {
+  //         swiperRef.current = swiper;
+  //       }}
+  //       onSlideChange={(swiper) => handleSlideChange(swiper.activeIndex)}
+  //       slidesPerView={1}
+  //       spaceBetween={2}
+  //       direction="horizontal"
+  //       className="h-dvh w-full"
+  //     >
+  //       <SwiperSlide>
+  // <div
+  //   className={clsx(
+  //     "mt-[107px] h-full overflow-y-scroll no-scrollbar pb-10",
+  //     isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
+  //   )}
+  // >
+  //   <Schedule expectingGatherings={myGatherings} />
+  // </div>
+  //       </SwiperSlide>
+  //       <SwiperSlide className="h-dvh">
+  // <div
+  //   ref={gatheringRef}
+  //   className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
+  // >
+  //   <Gathering
+  //     ended
+  //     message
+  //     isFetching={isFetching_e || isFetching}
+  //     where={GatheringInWhich.GATHERING}
+  //     gatherings={ended || []}
+  //   />
+  // </div>
+  //       </SwiperSlide>
+  //     </Swiper>
+  //   );
+  // }, [
+  //   isClient,
+  //   myGatherings,
+  //   ended,
+  //   selectedTab,
+  //   swiperRef,
+  //   handleSlideChange,
+  //   isFetching,
+  //   isFetching_e,
+  // ]);
 
   useInfiniteScrollByRef({
     isFetching: isFetching_e,
@@ -141,7 +139,7 @@ export default function GatheringPage() {
           long="short"
           title1="예정"
           title2="완료"
-          onClick={handleTabClick}
+          onClick={setSelectedTab}
         />
       </Header>
       <PullToRefresh
@@ -154,7 +152,29 @@ export default function GatheringPage() {
           </div>
         }
       >
-        {GatheringPageSwiper}
+        {selectedTab === "1" ? (
+          <div
+            className={clsx(
+              "mt-[107px] h-dvh overflow-y-scroll no-scrollbar pb-10",
+              isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
+            )}
+          >
+            <Schedule expectingGatherings={myGatherings} />
+          </div>
+        ) : (
+          <div
+            ref={gatheringRef}
+            className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
+          >
+            <Gathering
+              ended
+              message
+              isFetching={isFetching_e || isFetching}
+              where={GatheringInWhich.GATHERING}
+              gatherings={ended || []}
+            />
+          </div>
+        )}
       </PullToRefresh>
       <Suspense>
         <TabParamHandler
@@ -168,7 +188,12 @@ export default function GatheringPage() {
 }
 
 const Header = React.memo(({ children }: { children: React.ReactNode }) => {
-  const isClient = typeof window !== "undefined";
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
   return (
     <>
       {getHeader("/gathering")}
@@ -185,6 +210,7 @@ const Header = React.memo(({ children }: { children: React.ReactNode }) => {
     </>
   );
 });
+
 Header.displayName = "Header";
 
 const styles = {

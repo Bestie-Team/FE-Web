@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Flex from "../shared/Flex";
 import InfoBar from "./InfoBar";
 import Spacing from "../shared/Spacing";
@@ -8,59 +8,7 @@ import { formatToDisplay } from "@/utils/makeUTC";
 import { Lighty } from "@/constants/images";
 import MessageIcon from "../shared/Icon/MessageIcon";
 import clsx from "clsx";
-const feed = {
-  id: "123412456",
-  content: "첫 피드가 작성되면 이 피드는 자동으로 사라져요!",
-  images: ["https://cdn.lighty.today/lighty_square.png"],
-  commentCount: 3,
-  writer: {
-    id: "sadfsge23409374",
-    accountId: "lighty",
-    name: "라이티",
-    profileImageUrl: "https://cdn.lighty.today/lighty.jpg",
-  },
-  createdAt: new Date().toISOString(),
-  gathering: {
-    id: "1234456yt4erwfd",
-    name: "반가워요",
-    members: [
-      {
-        id: "sadfsge23409374",
-        accountId: "lighty",
-        name: "라이티",
-        profileImageUrl: "https://cdn.lighty.today/lighty.jpg",
-      },
-      {
-        id: "123jhgsfd8074t6",
-        accountId: "lighty2",
-        name: "라이티2",
-        profileImageUrl: "https://cdn.lighty.today/blanket.jpg",
-      },
-      {
-        id: "sadfsge23409374",
-        accountId: "lighty3",
-        name: "라이티3",
-        profileImageUrl: "https://cdn.lighty.today/cat.jpg",
-      },
-    ],
-    gatheringDate: new Date().toISOString(),
-    invitationImageUrl: "https://cdn.lighty.today/paper.png",
-  },
-  withMembers: [
-    {
-      id: "123jhgsfd8074t6",
-      accountId: "lighty2",
-      name: "라이티2",
-      profileImageUrl: "https://cdn.lighty.today/blanket.jpg",
-    },
-    {
-      id: "sadfsge23409374",
-      accountId: "lighty3",
-      name: "라이티3",
-      profileImageUrl: "https://cdn.lighty.today/cat.jpg",
-    },
-  ],
-};
+
 export default function FeedForDisplay() {
   const formattedDate = () => {
     const date = feed.gathering?.gatheringDate
@@ -72,7 +20,12 @@ export default function FeedForDisplay() {
     name: other.name,
     imageUrl: other.profileImageUrl,
   }));
-  const isClient = typeof window !== "undefined";
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <Flex
       direction="column"
@@ -148,4 +101,58 @@ const styles = {
   wrapper: "pl-6 pr-4 max-w-[430px]",
   content:
     "break-words whitespace-normal overflow-wrap-anywhere text-B4 text-grayscale-800 pr-3",
+};
+
+const feed = {
+  id: "123412456",
+  content: "첫 피드가 작성되면 이 피드는 자동으로 사라져요!",
+  images: ["https://cdn.lighty.today/lighty_square.png"],
+  commentCount: 3,
+  writer: {
+    id: "sadfsge23409374",
+    accountId: "lighty",
+    name: "라이티",
+    profileImageUrl: "https://cdn.lighty.today/lighty.jpg",
+  },
+  createdAt: new Date().toISOString(),
+  gathering: {
+    id: "1234456yt4erwfd",
+    name: "반가워요",
+    members: [
+      {
+        id: "sadfsge23409374",
+        accountId: "lighty",
+        name: "라이티",
+        profileImageUrl: "https://cdn.lighty.today/lighty.jpg",
+      },
+      {
+        id: "123jhgsfd8074t6",
+        accountId: "lighty2",
+        name: "라이티2",
+        profileImageUrl: "https://cdn.lighty.today/blanket.jpg",
+      },
+      {
+        id: "sadfsge23409374",
+        accountId: "lighty3",
+        name: "라이티3",
+        profileImageUrl: "https://cdn.lighty.today/cat.jpg",
+      },
+    ],
+    gatheringDate: new Date().toISOString(),
+    invitationImageUrl: "https://cdn.lighty.today/paper.png",
+  },
+  withMembers: [
+    {
+      id: "123jhgsfd8074t6",
+      accountId: "lighty2",
+      name: "라이티2",
+      profileImageUrl: "https://cdn.lighty.today/blanket.jpg",
+    },
+    {
+      id: "sadfsge23409374",
+      accountId: "lighty3",
+      name: "라이티3",
+      profileImageUrl: "https://cdn.lighty.today/cat.jpg",
+    },
+  ],
 };

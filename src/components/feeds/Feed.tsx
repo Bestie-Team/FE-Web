@@ -1,7 +1,7 @@
 import FeedCard from "@/components/feeds/FeedCard";
 import { Feed } from "@/models/feed";
 import clsx from "clsx";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Spacing from "../shared/Spacing";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 
@@ -18,7 +18,11 @@ export default function MyFeed({
   className?: string;
   isFetching: boolean;
 }) {
-  const isClient = typeof window !== "undefined";
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <div
       className={clsx(

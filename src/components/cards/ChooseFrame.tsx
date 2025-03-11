@@ -9,7 +9,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
   return (
     <Flex
-      className="extended-container bg-base-white h-dvh pb-14 overflow-y-scroll"
+      className="extended-container bg-base-white h-dvh pb-14 overflow-y-scroll no-scrollbar"
       justify="space-between"
       direction="column"
     >
@@ -20,7 +20,6 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
           <span className="text-B3">나만의 특별한 카드를 만들어봐요</span>
         </Flex>
         <Spacing size={28} />
-        {/* <Spacing size={40} /> */}
         <SelectFrameSwiper />
       </div>
       <div className={styles.buttonWrapper}>

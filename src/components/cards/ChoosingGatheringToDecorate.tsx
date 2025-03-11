@@ -21,7 +21,7 @@ export default function ChoosingGatheringToDecorate({
   >(cardSelectedFeedAtom);
   const router = useRouter();
 
-  const { data = [] } = useFeedMine({
+  const { data } = useFeedMine({
     order: "DESC",
     minDate: minDate(),
     maxDate: maxDate(),

@@ -41,6 +41,7 @@ import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import NoFeed from "@/components/feeds/NoFeed";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -164,7 +165,6 @@ export default function FeedPage() {
   const queryClient = useQueryClient();
   const { token } = useAuth();
   const [selectedFeedId, setSelectedFeedId] = useState("");
-
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const {
     selectedTab,
@@ -288,9 +288,11 @@ export default function FeedPage() {
       lightyToast.error("피드신고 실패");
     },
   });
+
   const { visible } = useScrollDirection({
     elementRef: selectedTab === "1" ? containerRef : containerRef_m,
   });
+
   useInfiniteScrollByRef({
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
@@ -396,28 +398,44 @@ export default function FeedPage() {
       return false;
     }
   };
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <div className="h-dvh">
       <ScrollAwareHeader
+        isClient={isClient}
         visible={visible}
         mailCount={mailCount}
         isNewNotification={isNewNotification}
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
-      <PullToRefresh
-        onRefresh={handleRefresh}
-        pullingContent={
-          <div className="flex justify-center pt-[107px]">
-            <div className="p-4">
-              <DotSpinnerSmall />
+      {!isClient ? (
+        <div className="h-full pt-[90px] pb-28 flex items-center justify-center">
+          <div>임시스켈레톤</div>
+        </div>
+      ) : isFetching ? (
+        <div className="h-full pt-[90px] pb-28 flex items-center justify-center">
+          <DotSpinner />
+        </div>
+      ) : (
+        <PullToRefresh
+          onRefresh={handleRefresh}
+          pullingContent={
+            <div className="flex justify-center pt-[107px]">
+              <div className="p-4">
+                <DotSpinnerSmall />
+              </div>
             </div>
-          </div>
-        }
-      >
-        {renderSwipers}
-      </PullToRefresh>
+          }
+        >
+          {renderSwipers}
+        </PullToRefresh>
+      )}
       <TabParamHandler setSelectedTab={setSelectedTab} pathToReplace="/feed" />
       {recordModalOpen && (
         <MemoriesBottomSheet
