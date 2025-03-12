@@ -21,6 +21,7 @@ import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 import dynamic from "next/dynamic";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 const AddFriendsSlider = dynamic(() => import("../groups/AddFriendsSlider"));
 const CalendarBottomSheet = dynamic(
@@ -58,11 +59,19 @@ export default function GatheringForm({
   const title = formType === "new" ? "/gathering/new" : "/gathering/edit";
   const header = useMemo(() => getHeader(title), []);
   const { data: group_data, isFetching } = useGroup({ limit: 50 });
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <div className="min-h-[calc(100dvh+75px)] bg-base-white">
       <div className="z-20 fixed bg-base-white w-full">{header}</div>
-      <form className="flex flex-col px-5 pt-12">
+      <form
+        className="flex flex-col px-5 pt-12"
+        style={
+          isReactNativeWebView
+            ? { paddingTop: "calc(env(safe-area-inset-top) + 3rem)" }
+            : {}
+        }
+      >
         <Spacing size={16} />
         <Flex align="center" className="h-[50px]">
           <EmptyLogoIcon color="#0A0A0A" />
@@ -189,6 +198,7 @@ export default function GatheringForm({
                 if (mutate) mutate();
               }
             }}
+            className={isReactNativeWebView ? "mb-safe-bottom" : ""}
           />
         </div>
       </form>
