@@ -414,6 +414,7 @@ export default function FeedPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
+      {/* TODO 스켈레톤 추가되면 거기도 safe inset 넣던지 공통 태그로 감싸서 하던지 해야해여~ */}
       {!isClient ? (
         <div className="h-full pt-[90px] pb-28 flex items-center justify-center">
           <div>임시스켈레톤</div>
