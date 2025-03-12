@@ -7,7 +7,6 @@ import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
-import DotSpinner from "./Spinner/DotSpinner";
 
 const PhotoSwiper = memo(
   ({
@@ -52,7 +51,13 @@ const PhotoSwiper = memo(
             )}
             key={`slide${idx}`}
           >
-            {loaded === false && <DotSpinner />}
+            {loaded === false && (
+              <div
+                className={
+                  "rounded-2xl w-[340px] h-[360px] bg-grayscale-50 animate-pulse"
+                }
+              />
+            )}
             <Image
               loading="eager"
               src={image || Lighty}
