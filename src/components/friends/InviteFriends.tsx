@@ -4,6 +4,8 @@ import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { Dispatch, SetStateAction } from "react";
 import * as lighty from "lighty-type";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import clsx from "clsx";
 
 export default function InviteFriends({
   setStep,
@@ -14,8 +16,15 @@ export default function InviteFriends({
   type: "default" | "group" | "gathering" | "groupEdit";
   exceptFriends?: lighty.User[] | null;
 }) {
+  const { isReactNativeWebView } = useReactNativeWebView();
+
   return (
-    <div className="h-full bg-grayscale-50">
+    <div
+      className={clsx(
+        "h-full bg-grayscale-50",
+        isReactNativeWebView ? "pt-safe-top" : ""
+      )}
+    >
       <div className="max-w-[430px] fixed w-full z-10 bg-grayscale-50">
         <FriendsPageHeader label="초대할 친구" setStep={setStep} type={type} />
         <div className="px-5">

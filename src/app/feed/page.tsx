@@ -415,6 +415,7 @@ export default function FeedPage() {
         handleTabClick={handleTabClick}
       />
 
+      {/* TODO 스켈레톤 추가되면 거기도 safe inset 넣던지 공통 태그로 감싸서 하던지 해야해여~ */}
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={

@@ -5,6 +5,7 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { HEART_LETTER } from "@/constants/images";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function StepToInvitation({
   setStep,
@@ -12,6 +13,8 @@ export default function StepToInvitation({
   setStep: Dispatch<SetStateAction<number>>;
 }) {
   const header = useMemo(() => getHeader("/gathering/new"), []);
+  const { isReactNativeWebView } = useReactNativeWebView();
+
   return (
     <Flex direction="column" className="h-dvh bg-base-white">
       {header}
@@ -31,7 +34,11 @@ export default function StepToInvitation({
           height={108}
           className="w-[110px] h-[108px]"
         />
-        <FixedBottomButton label={"초대장 만들기"} onClick={() => setStep(4)} />
+        <FixedBottomButton
+          label={"초대장 만들기"}
+          onClick={() => setStep(4)}
+          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+        />
       </Flex>
     </Flex>
   );

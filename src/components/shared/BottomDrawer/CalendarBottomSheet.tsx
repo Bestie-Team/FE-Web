@@ -8,6 +8,8 @@ import { format } from "date-fns";
 import makeUTC from "@/utils/makeUTC";
 import { useState } from "react";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
+import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
+import clsx from "clsx";
 
 export default function CalendarBottomSheet({
   originalDate,
@@ -26,9 +28,18 @@ export default function CalendarBottomSheet({
   const setGatheringInfo = useSetRecoilState(newGatheringInfo);
   const [ampm, setAmpm] = useState<"오전" | "오후">("오전");
   const [selectedTime, setSelectedTime] = useState<string>("12:00");
+  const { isReactNativeWebView } = useReactNativeWebView();
+
   return (
     <BottomSheetWrapper onClose={onClose} open={open} bar={false}>
-      <Flex direction="column" className="px-5 gap-10" align="center">
+      <Flex
+        direction="column"
+        className={clsx(
+          "px-5 gap-10",
+          isReactNativeWebView ? "pb-safe-bottom" : ""
+        )}
+        align="center"
+      >
         <CalendarWithTime
           ampm={ampm}
           selectedTime={selectedTime}

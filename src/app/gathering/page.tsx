@@ -21,6 +21,7 @@ import Gathering from "@/components/gathering/Gathering";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import dynamic from "next/dynamic";
 import TabParamHandler from "@/components/shared/TabParamHandler";
+import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -33,13 +34,8 @@ export default function GatheringPage() {
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, setSelectedTab } = useTabs();
-  const [isClient, setIsClient] = useState(false);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
   const { data: myGatherings, isFetching } = useGatherings({
     limit: 50,
     minDate: minDate(),
@@ -156,7 +152,7 @@ export default function GatheringPage() {
           <div
             className={clsx(
               "mt-[107px] h-dvh overflow-y-scroll no-scrollbar pb-10",
-              isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
+              isReactNativeWebView ? "pt-safe-top" : ""
             )}
           >
             <Schedule expectingGatherings={myGatherings} />
@@ -164,7 +160,9 @@ export default function GatheringPage() {
         ) : (
           <div
             ref={gatheringRef}
-            className="h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
+            className={clsx(
+              "h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
+            )}
           >
             <Gathering
               ended
@@ -172,6 +170,9 @@ export default function GatheringPage() {
               isFetching={isFetching_e || isFetching}
               where={GatheringInWhich.GATHERING}
               gatherings={ended || []}
+              className={
+                isReactNativeWebView ? "mt-safe-top pb-safe-bottom" : ""
+              }
             />
           </div>
         )}

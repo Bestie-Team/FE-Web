@@ -8,6 +8,8 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import FullPageLoader from "../shared/FullPageLoader";
 import { CreateGroupRequest } from "@/models/group";
 import { useMemo } from "react";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import clsx from "clsx";
 
 export default function MakingGroupSuccess({
   group,
@@ -18,8 +20,15 @@ export default function MakingGroupSuccess({
 }) {
   const router = useRouter();
   const header = useMemo(() => getHeader("/groups/new"), []);
+  const { isReactNativeWebView } = useReactNativeWebView();
+
   return (
-    <div className="flex flex-col bg-base-white h-full">
+    <div
+      className={clsx(
+        "flex flex-col bg-base-white h-full",
+        isReactNativeWebView ? "pt-safe-top" : ""
+      )}
+    >
       {header}
       {isPending ? (
         <FullPageLoader />
@@ -37,6 +46,7 @@ export default function MakingGroupSuccess({
           <FixedBottomButton
             label={"홈으로 이동하기"}
             onClick={() => router.replace("/feed")}
+            className={isReactNativeWebView ? "mb-safe-bottom" : ""}
           />
         </Flex>
       )}

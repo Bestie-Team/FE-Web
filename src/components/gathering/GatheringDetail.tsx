@@ -18,6 +18,7 @@ import { MAP } from "@/constants/images";
 import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction } from "react";
 import { MENU_TYPES } from "@/models/dropdown";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 const GatheringOption = dynamic(() => import("./GatheringOption"), {
   ssr: false,
@@ -35,6 +36,7 @@ export default function GatheringDetail({
   const { userInfo } = useAuth();
   const { gatheringDate, members, hostUser, address, description, name, id } =
     selectedGathering;
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const convertedDate = formatToKoreanTime(gatheringDate);
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
@@ -46,7 +48,7 @@ export default function GatheringDetail({
   };
 
   return (
-    <div className="extended-container">
+    <div className={"extended-container"}>
       <div className="w-full relative h-[380px]">
         <GatheringBannerContainer
           gathering={selectedGathering}
@@ -55,7 +57,15 @@ export default function GatheringDetail({
         />
         {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
       </div>
-      <div className="absolute top-4 right-5 flex gap-[14px] z-50">
+      <div
+        className={"absolute top-4 right-5 flex gap-[14px] z-50"}
+        // TODO 헤더랑 분리돼 있고, top으로 위치가 맞춰져 있어서 아이콘 크기랑 계산해서 top을 변경했어요, 나중에 변경해야할듯
+        style={
+          isReactNativeWebView
+            ? { top: "calc(env(safe-area-inset-top) - 12px)" }
+            : {}
+        }
+      >
         <div
           className="cursor-pointer"
           onMouseDown={() => handleShare(sharingData)}

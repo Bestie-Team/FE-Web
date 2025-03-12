@@ -8,6 +8,7 @@ import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { useMemo } from "react";
 import { HEART_LETTER } from "@/constants/images";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function MakingGatheringStatus({
   isPending,
@@ -16,6 +17,7 @@ export default function MakingGatheringStatus({
 }) {
   const header = useMemo(() => getHeader("/gathering/new"), []);
   const router = useRouter();
+  const { isReactNativeWebView } = useReactNativeWebView();
   return (
     <Flex direction="column" className="h-dvh bg-base-white" align="center">
       {header}
@@ -59,6 +61,7 @@ export default function MakingGatheringStatus({
         onClick={() => {
           router.replace("/feed");
         }}
+        className={isReactNativeWebView ? "mb-safe-bottom" : ""}
       />
     </Flex>
   );

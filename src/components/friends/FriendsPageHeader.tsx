@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import clsx from "clsx";
 
 export default function FriendsPageHeader({
   label,
@@ -13,9 +15,15 @@ export default function FriendsPageHeader({
   type: "default" | "group" | "gathering" | "groupEdit";
 }) {
   const router = useRouter();
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
-    <div className={styles.headerWrapper}>
+    <div
+      className={clsx(
+        styles.headerWrapper,
+        isReactNativeWebView ? "pt-safe-top" : ""
+      )}
+    >
       <button
         className={styles.arrowIconContainer}
         onClick={(e: React.MouseEvent<HTMLElement>) => {
@@ -46,5 +54,5 @@ const styles = {
   arrowIconContainer:
     "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer active:animate-shrink-grow",
 
-  headerWrapper: "bg-grayscale-50 pr-5 flex w-full items-center h-12",
+  headerWrapper: "bg-grayscale-50 pr-5 flex w-full items-center min-h-12",
 };

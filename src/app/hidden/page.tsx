@@ -16,6 +16,7 @@ import useDisplayFeed from "@/components/feeds/hooks/useDisplayFeed";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 export default function FeedPage() {
   const header = useMemo(() => getHeader("/hidden"), []);
@@ -23,6 +24,7 @@ export default function FeedPage() {
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
   const queryClient = useQueryClient();
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const {
     data: hiddenFeed,
@@ -63,7 +65,13 @@ export default function FeedPage() {
   return (
     <div className="pt-12">
       {header}
-      <div className={clsx(filterWrapperStyle, isPast ? "shadow-bottom" : "")}>
+      <div
+        className={clsx(
+          filterWrapperStyle,
+          isPast ? "shadow-bottom" : "",
+          isReactNativeWebView ? "pt-safe-top" : ""
+        )}
+      >
         <div
           style={{
             backgroundColor: "#fff",
@@ -86,7 +94,7 @@ export default function FeedPage() {
         <Feed
           feeds={hiddenFeed}
           onClickFeed={() => {}}
-          className="!pt-12"
+          className={clsx("!pt-12", isReactNativeWebView ? "mt-safe-top" : "")}
           isFetching={isFetching}
         />
       </Suspense>

@@ -92,10 +92,10 @@ export default function FeedForm<
               edit();
             }
           }}
+          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
         />
       ) : (
         <FixedBottomButton
-          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
           label={"기록 완료"}
           disabled={filesToUpload.length == 0 || !feedInfo?.content}
           onClick={() => {
@@ -103,6 +103,7 @@ export default function FeedForm<
               uploadImages();
             }
           }}
+          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
         />
       )}
     </>
