@@ -41,7 +41,7 @@ import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import NoFeed from "@/components/feeds/NoFeed";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -414,29 +414,27 @@ export default function FeedPage() {
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />
+
       {/* TODO 스켈레톤 추가되면 거기도 safe inset 넣던지 공통 태그로 감싸서 하던지 해야해여~ */}
-      {!isClient ? (
-        <div className="h-full pt-[90px] pb-28 flex items-center justify-center">
-          <div>임시스켈레톤</div>
-        </div>
-      ) : isFetching ? (
-        <div className="h-full pt-[90px] pb-28 flex items-center justify-center">
-          <DotSpinner />
-        </div>
-      ) : (
-        <PullToRefresh
-          onRefresh={handleRefresh}
-          pullingContent={
-            <div className="flex justify-center pt-[107px]">
-              <div className="p-4">
-                <DotSpinnerSmall />
-              </div>
+      <PullToRefresh
+        onRefresh={handleRefresh}
+        pullingContent={
+          <div className="flex justify-center pt-[107px]">
+            <div className="p-4">
+              <DotSpinnerSmall />
             </div>
-          }
-        >
-          {renderSwipers}
-        </PullToRefresh>
-      )}
+          </div>
+        }
+      >
+        {!isClient || isFetching ? (
+          <div className="h-full w-full pt-[90px] pb-28 flex flex-col">
+            <FeedSkeleton />
+            <FeedSkeleton />
+          </div>
+        ) : (
+          renderSwipers
+        )}
+      </PullToRefresh>
       <TabParamHandler setSelectedTab={setSelectedTab} pathToReplace="/feed" />
       {recordModalOpen && (
         <MemoriesBottomSheet
