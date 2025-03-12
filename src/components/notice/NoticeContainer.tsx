@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 import NoNotification from "./NoNotification";
 
-
 export default function NoticeContainer() {
   const { data: notifications, isFetching, loadMore } = useNotification();
   const containerRef = useRef<HTMLDivElement>(null);

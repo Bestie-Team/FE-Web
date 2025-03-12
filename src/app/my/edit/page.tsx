@@ -5,14 +5,12 @@ import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
 import Input from "@/components/shared/Input/Input";
 import ProfileImageDisplay from "@/components/shared/ProfileImageDisplay";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import Spacing from "@/components/shared/Spacing";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import getHeader from "@/utils/getHeader";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
-import clsx from "clsx";
 import { Suspense, useState } from "react";
 
 export default function EditPage() {
@@ -26,7 +24,6 @@ export default function EditPage() {
     profileImageUrl: data?.profileImageUrl || "",
   });
   const header = getHeader("/my/edit");
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const { mutate: updateImage } = useUpdateProfile({
     onSuccess: async (data: { message: string }) => {
@@ -70,10 +67,7 @@ export default function EditPage() {
     <div className="min-h-dvh bg-base-white">
       <Suspense fallback={<DotSpinner />}>
         {header}
-        <Flex
-          direction="column"
-          className={clsx("px-5", isReactNativeWebView ? "pt-safe-top" : "")}
-        >
+        <Flex direction="column" className={"px-5 pt-safe-top"}>
           <Spacing size={58} />
           <Flex justify="center" className="py-3">
             <ProfileImageDisplay
@@ -105,7 +99,7 @@ export default function EditPage() {
             profile.accountId == data?.accountId
           }
           onClick={handlePatch}
-          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+          className={"mb-safe-bottom"}
         />
       </Suspense>
     </div>

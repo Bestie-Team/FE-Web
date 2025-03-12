@@ -17,7 +17,7 @@ export default function ChooseFriendToShare({
     <div
       className="absolute inset-0 bg-grayscale-50 min-h-dvh pt-12"
       style={
-        isClient && window.ReactNativeWebView
+        isClient && window?.ReactNativeWebView
           ? {
               paddingTop: `calc(env(safe-area-inset-top) + 3rem)`,
             }

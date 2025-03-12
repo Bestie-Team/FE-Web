@@ -4,19 +4,15 @@ import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
 import { useRecoilValue } from "recoil";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function ChooseFrame({ onNext }: { onNext: () => void }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <Flex
       className={clsx(
-        "extended-container bg-base-white h-dvh pb-14 overflow-y-scroll",
-        isReactNativeWebView ? "pt-safe-top" : ""
+        "extended-container bg-base-white h-dvh pb-14 overflow-y-scroll pt-safe-top"
       )}
-
       justify="space-between"
       direction="column"
     >
@@ -32,10 +28,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
       <div className={styles.buttonWrapper}>
         <button
           disabled={selectedFrame == null}
-          className={clsx(
-            styles.button,
-            isReactNativeWebView ? "mb-safe-bottom" : ""
-          )}
+          className={styles.button}
           onClick={() => {
             onNext();
           }}
@@ -48,6 +41,6 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 }
 
 const styles = {
-  button: `bg-grayscale-900 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
+  button: `mb-safe-bottom bg-grayscale-900 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
   buttonWrapper: `w-full px-5 pb-5 pt-3 animate-slide-up will-change-transform`,
 };

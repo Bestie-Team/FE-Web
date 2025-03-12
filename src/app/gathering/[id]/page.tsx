@@ -12,8 +12,6 @@ import Spacing from "@/components/shared/Spacing";
 import GatheringDetail from "@/components/gathering/GatheringDetail";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import dynamic from "next/dynamic";
-import clsx from "clsx";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"));
 
@@ -39,7 +37,6 @@ export default function GatheringDetailPage({
     },
     onError: (error) => lightyToast.error(error.message),
   });
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const MODAL_CONFIGS = {
     deleteGathering: {
@@ -64,12 +61,7 @@ export default function GatheringDetailPage({
 
   return (
     <div className="relative min-h-dvh bg-grayscale-50 w-full">
-      <header
-        className={clsx(
-          header,
-          isReactNativeWebView ? "pt-safe-top pb-safe-bottom" : ""
-        )}
-      >
+      <header className={header}>
         <button
           className={
             "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer active:animate-shrink-grow"
@@ -109,4 +101,4 @@ export default function GatheringDetailPage({
   );
 }
 const header =
-  "absolute top-0 left-0 right-0 flex z-20 max-w-[430px] w-full items-center h-12 text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5";
+  "absolute top-0 left-0 right-0 flex z-20 max-w-[430px] w-full items-center h-12 text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5 pt-safe-top pb-safe-bottom";

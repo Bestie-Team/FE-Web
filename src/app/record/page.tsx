@@ -46,7 +46,7 @@ export default function Record() {
     <div
       className="relative pt-12 min-h-dvh"
       style={
-        isClient && window.ReactNativeWebView
+        isClient && window?.ReactNativeWebView
           ? {
               paddingTop: `calc(env(safe-area-inset-top) + 3rem)`,
             }

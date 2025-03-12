@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from "react";
-import Panel from "../Panel/Panel";
+import React from "react";
 import clsx from "clsx";
 import Flex from "../Flex";
 
+{
+  /**ssr 전용 스켈레톤.. */
+}
+
 export default function SocialPageSkeleton() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
   return (
     <>
       <div
         className={clsx(
-          "w-full bg-base-white fixed px-5 mt-12",
-          isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
+          "extended-container w-full bg-base-white fixed px-5 mt-12 pt-safe-top"
         )}
       >
-        <Panel
-          title1="친구"
-          title2="그룹"
-          long="short"
-          selectedTab={"1"}
-          onClick={() => {}}
-          year={false}
-        />
+        <Flex justify="space-between" className={tabContainerStyle}>
+          <div className={tabWrapperStyle}>
+            <div className={"flex"}>
+              <div className={clsx(textStyle, "text-grayscale-900")}>친구</div>
+            </div>
+            <div className={"flex"}>
+              <div className={clsx(textStyle, "text-grayscale-300")}>그룹</div>
+            </div>
+            {<ShortBottomLine activeTab={"1"} />}
+          </div>
+        </Flex>
       </div>
       <div className="h-dvh pt-[87px] pb-14">
         <Flex
           direction="column"
           justify="space-between"
           align="center"
-          className={clsx(
-            "px-5 gap-4 mt-3 pb-4",
-            window.ReactNativeWebView ? "pt-safe-top" : ""
-          )}
+          className={clsx("px-5 gap-4 mt-3 pb-4 pt-safe-top")}
         >
           <Flex
             justify="space-between"
@@ -61,5 +56,19 @@ export default function SocialPageSkeleton() {
         </Flex>
       </div>
     </>
+  );
+}
+
+export const tabContainerStyle = "max-w-[430px] w-full flex items-center ";
+export const tabWrapperStyle = "relative flex gap-4";
+export const textStyle = "h-[39px] pt-[10px] pb-2 flex items-center text-T4";
+
+export function ShortBottomLine({ activeTab }: { activeTab: string }) {
+  return (
+    <div
+      className={`will-change-transform absolute bottom-0 w-[28px] h-[2px] bg-grayscale-900 transition-transform duration-300 ease-out ${
+        activeTab === "1" ? "translate-x-0" : "translate-x-[46px]"
+      }`}
+    />
   );
 }

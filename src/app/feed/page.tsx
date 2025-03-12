@@ -407,7 +407,6 @@ export default function FeedPage() {
   return (
     <div className="h-dvh">
       <ScrollAwareHeader
-        isClient={isClient}
         visible={visible}
         mailCount={mailCount}
         isNewNotification={isNewNotification}
@@ -420,7 +419,7 @@ export default function FeedPage() {
         onRefresh={handleRefresh}
         pullingContent={
           <div className="flex justify-center pt-[107px]">
-            <div className="p-4">
+            <div className="p-2">
               <DotSpinnerSmall />
             </div>
           </div>
@@ -460,7 +459,7 @@ export default function FeedPage() {
 
 const styles = {
   filterWrapperStyle:
-    "max-w-[430px] pt-12 px-5 fixed flex flex-col w-full bg-base-white transition-shadow duration-300",
+    "z-30 max-w-[430px] pt-12 px-5 fixed flex flex-col w-full bg-base-white transition-shadow duration-300",
   iconWrapperStyle:
     "relative flex justify-center items-center w-10 h-10 p-2 cursor-pointer  hover:animate-shrink-grow-less",
 };

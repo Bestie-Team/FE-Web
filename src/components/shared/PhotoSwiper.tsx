@@ -54,7 +54,7 @@ const PhotoSwiper = memo(
             {loaded === false && (
               <div
                 className={
-                  "rounded-2xl w-[340px] h-[360px] bg-grayscale-50 animate-pulse"
+                  "absolute inset-0 rounded-2xl bg-grayscale-50 animate-pulse"
                 }
               />
             )}

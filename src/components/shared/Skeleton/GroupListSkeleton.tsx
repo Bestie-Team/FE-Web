@@ -2,16 +2,11 @@ import React from "react";
 import GroupSkeleton from "./GroupSkeleton";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
-import clsx from "clsx";
 
 export default function GroupListSkeleton() {
-  const isClient = typeof window !== undefined;
   return (
     <div
-      className={clsx(
-        "h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20",
-        isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
-      )}
+      className={"h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20 pt-safe-top"}
     >
       <Flex align="center" className="h-[33px] w-full">
         <span className="flex-grow" />

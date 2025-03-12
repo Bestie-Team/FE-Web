@@ -201,10 +201,7 @@ const Header = React.memo(({ children }: { children: React.ReactNode }) => {
       <Flex
         id="filter"
         justify="space-between"
-        className={clsx(
-          styles.panelWrapper,
-          isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
-        )}
+        className={clsx(styles.panelWrapper, "pt-safe-top")}
       >
         {children}
       </Flex>

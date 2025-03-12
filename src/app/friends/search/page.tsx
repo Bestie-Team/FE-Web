@@ -11,13 +11,11 @@ import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import Link from "next/link";
 import UserListContainer from "@/components/users/UserListContainer";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import clsx from "clsx";
 
 export default function SearchPage() {
   const search = useRecoilValue(userSearchAtom);
   const debouncedSearch = useDebounce(search);
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const {
     data: searchedUsers,
@@ -49,8 +47,7 @@ export default function SearchPage() {
           align="center"
           justify="center"
           className={clsx(
-            "h-[calc(100dvh-48px)] gap-5",
-            isReactNativeWebView ? "pt-safe-top pb-safe-bottom" : ""
+            "h-[calc(100dvh-48px)] gap-5 pt-safe-top pb-safe-bottom"
           )}
         >
           <span className="text-B2">

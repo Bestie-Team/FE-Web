@@ -8,8 +8,6 @@ import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCa
 import { useAuth } from "../shared/providers/AuthProvider";
 import { useMemo } from "react";
 import { lightyToast } from "@/utils/toast";
-import clsx from "clsx";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function MakingInvitation({
   gathering,
@@ -22,7 +20,6 @@ export default function MakingInvitation({
 }) {
   const { userInfo } = useAuth();
   const header = useMemo(() => getHeader("/gathering/new"), []);
-  const { isReactNativeWebView } = useReactNativeWebView();
   const handleMakeGathering = () => {
     if (gathering.invitationImageUrl !== "") {
       makeGathering();
@@ -36,10 +33,7 @@ export default function MakingInvitation({
       {header}
       <Flex
         direction="column"
-        className={clsx(
-          "min-h-[calc(100dvh+20px)]",
-          isReactNativeWebView ? "pt-safe-top" : ""
-        )}
+        className={"min-h-[calc(100dvh+20px)] pt-safe-top"}
         align="center"
       >
         <Spacing size={40} />
@@ -54,7 +48,7 @@ export default function MakingInvitation({
           bgColor="bg-grayscale-50"
           label={"초대장 보내기"}
           onClick={handleMakeGathering}
-          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+          className={"mb-safe-bottom"}
         />
       </Flex>
     </Flex>

@@ -12,7 +12,6 @@ import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 export default function EditingFeed() {
   const router = useRouter();
@@ -21,7 +20,6 @@ export default function EditingFeed() {
   const header = useMemo(() => getHeader("/feed/edit"), []);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   useEffect(() => {
     if (!originalFeedValue) {
@@ -61,7 +59,7 @@ export default function EditingFeed() {
       <div className={clsx(styles.headerWrapper, "shadow-bottom")}>
         {header}
       </div>
-      <div className={isReactNativeWebView ? "pt-safe-top" : ""}>
+      <div className={"pt-safe-top"}>
         {isPending ? (
           <FullPageLoader />
         ) : (

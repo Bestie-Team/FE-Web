@@ -16,8 +16,7 @@ export default function Header({
         zIndex: 12,
       }}
       className={clsx(
-        "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px]",
-        window.ReactNativeWebView ? "pt-safe-top" : ""
+        "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px] pt-safe-top"
       )}
     >
       <span>{pageName}</span>

@@ -16,7 +16,6 @@ import useDisplayFeed from "@/components/feeds/hooks/useDisplayFeed";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 export default function FeedPage() {
   const header = useMemo(() => getHeader("/hidden"), []);
@@ -24,7 +23,6 @@ export default function FeedPage() {
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
   const queryClient = useQueryClient();
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const {
     data: hiddenFeed,
@@ -65,13 +63,7 @@ export default function FeedPage() {
   return (
     <div className="pt-12">
       {header}
-      <div
-        className={clsx(
-          filterWrapperStyle,
-          isPast ? "shadow-bottom" : "",
-          isReactNativeWebView ? "pt-safe-top" : ""
-        )}
-      >
+      <div className={clsx(filterWrapperStyle, isPast ? "shadow-bottom" : "")}>
         <div
           style={{
             backgroundColor: "#fff",
@@ -94,7 +86,7 @@ export default function FeedPage() {
         <Feed
           feeds={hiddenFeed}
           onClickFeed={() => {}}
-          className={clsx("!pt-12", isReactNativeWebView ? "mt-safe-top" : "")}
+          className={"!pt-12 mt-safe-top"}
           isFetching={isFetching}
         />
       </Suspense>
@@ -113,7 +105,7 @@ export default function FeedPage() {
 }
 
 const filterWrapperStyle =
-  "max-w-[430px] fixed z-10 flex w-full bg-base-white transition-shadow duration-300";
+  "max-w-[430px] fixed z-10 flex w-full bg-base-white transition-shadow duration-300 pt-safe-top";
 
 const tabContainerStyle = "flex w-full px-5 justify-between items-center";
 const tabWrapperStyle = "w-fit";

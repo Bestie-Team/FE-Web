@@ -91,11 +91,9 @@ Header.displayName = "Header";
 
 interface ScrollAwareHeaderProps extends HeaderProps {
   visible: boolean;
-  isClient: boolean;
 }
 
 export function ScrollAwareHeader({
-  isClient,
   visible,
   selectedTab,
   handleTabClick,
@@ -105,9 +103,8 @@ export function ScrollAwareHeader({
   return (
     <header
       className={clsx(
-        "max-w-[430px] mx-auto fixed top-0 left-0 right-0 bg-base-white/80 backdrop-blur-md z-50 transition-transform duration-300 ease-in-out",
-        visible ? "translate-y-0" : "-translate-y-full",
-        isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
+        "max-w-[430px] mx-auto fixed top-0 left-0 right-0 bg-base-white/80 backdrop-blur-md z-50 transition-transform duration-300 ease-in-out pt-safe-top",
+        visible ? "translate-y-0" : "-translate-y-full"
       )}
     >
       <Header

@@ -17,7 +17,6 @@ import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import { useQueryClient } from "@tanstack/react-query";
 import NoInvitation from "@/components/invitation/NoInvitation";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 export default function InvitationPage() {
   const queryClient = useQueryClient();
@@ -26,7 +25,6 @@ export default function InvitationPage() {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_r = useRef<HTMLDivElement>(null);
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const { selectedTab, swiperRef, handleSlideChange, handleTabClick } =
     useTabs();
@@ -145,7 +143,7 @@ export default function InvitationPage() {
   }, []);
 
   return (
-    <div className={clsx("h-dvh", isReactNativeWebView ? "pt-safe-top" : "")}>
+    <div className={"h-dvh pt-safe-top"}>
       <div
         id="filter"
         className={clsx(filterStyle, isPast ? "shadow-bottom" : "")}

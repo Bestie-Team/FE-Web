@@ -7,7 +7,6 @@ import { Group } from "lighty-type";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
-import clsx from "clsx";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
 
 const GroupList = ({ groups }: { groups: Group[] }) => {
@@ -33,10 +32,7 @@ export default function Groups() {
 
   return (
     <div
-      className={clsx(
-        "h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20",
-        window.ReactNativeWebView ? "pt-safe-top" : ""
-      )}
+      className={"h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20 pt-safe-top"}
     >
       <Flex align="center">
         <span>전체 그룹</span>

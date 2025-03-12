@@ -104,7 +104,7 @@
 }
 
 #filter {
-  z-index: 10 !important;
+  z-index: 30;
 }
 
 .react-select__placeholder {

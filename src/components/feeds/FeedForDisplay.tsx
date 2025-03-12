@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Flex from "../shared/Flex";
 import InfoBar from "./InfoBar";
 import Spacing from "../shared/Spacing";
@@ -7,7 +7,6 @@ import Image from "next/image";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Lighty } from "@/constants/images";
 import MessageIcon from "../shared/Icon/MessageIcon";
-import clsx from "clsx";
 
 export default function FeedForDisplay() {
   const formattedDate = () => {
@@ -20,20 +19,9 @@ export default function FeedForDisplay() {
     name: other.name,
     imageUrl: other.profileImageUrl,
   }));
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
-    <Flex
-      direction="column"
-      className={clsx(
-        "extended-container my-3",
-        isClient && window.ReactNativeWebView ? "pt-safe-top" : ""
-      )}
-    >
+    <Flex direction="column" className={"extended-container my-3 pt-safe-top"}>
       <InfoBar friendInfo={friendInfo} feed={feed} />
       <Spacing size={12} />
       <Swiper

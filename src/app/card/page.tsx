@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import dynamic from "next/dynamic";
 import FramePageSkeleton from "@/components/shared/Skeleton/FramePageSkeleton";
-import clsx from "clsx";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {
   ssr: false,
@@ -25,7 +23,6 @@ export default function Page() {
   const handleGatheringChange = () => {
     setStep(step + 1);
   };
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const getHeaderName = () => {
     if (step === 1) {
@@ -37,12 +34,7 @@ export default function Page() {
 
   return (
     <div className={"bg-base-white h-dvh overflow-y-scroll no-scrollbar"}>
-      <header
-        className={clsx(
-          styles.header,
-          isReactNativeWebView ? "pt-safe-top" : ""
-        )}
-      >
+      <header className={styles.header}>
         <div
           className="py-[10px] pl-[17px] pr-[3px] cursor-pointer"
           onClick={() => {
@@ -67,5 +59,5 @@ export default function Page() {
 
 const styles = {
   header:
-    "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px] h-12 bg-base-white",
+    "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px] h-12 bg-base-white pt-safe-top",
 };

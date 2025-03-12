@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import TabButton from "./TabButton";
 import Flex from "../Flex";
@@ -47,12 +46,12 @@ export default function Panel({
         {long === "medium" && <BottomLine activeTab={selectedTab} />}
         {long === "short" && <ShortBottomLine activeTab={selectedTab} />}
       </div>
-      {year && <YearFilter />}
+      {year ? <YearFilter /> : null}
     </Flex>
   );
 }
 
-const tabContainerStyle = "max-w-[430px] w-full flex items-center ";
+const tabContainerStyle = "max-w-[430px] w-full flex items-center";
 const tabWrapperStyle = "relative flex gap-4";
 
 function BottomLine({ activeTab }: { activeTab: string }) {

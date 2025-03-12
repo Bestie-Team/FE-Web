@@ -72,12 +72,7 @@ export default function MyPage() {
   if (!user) return <DotSpinner />;
 
   return (
-    <div
-      className={clsx(
-        "min-h-dvh w-full",
-        window.ReactNativeWebView ? "pt-safe-top" : ""
-      )}
-    >
+    <div className={"min-h-dvh w-full pt-safe-top"}>
       <Header
         shadow={isPast}
         open={modalState === "open"}
