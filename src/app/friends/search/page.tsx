@@ -11,10 +11,13 @@ import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import Link from "next/link";
 import UserListContainer from "@/components/users/UserListContainer";
+import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
+import clsx from "clsx";
 
 export default function SearchPage() {
   const search = useRecoilValue(userSearchAtom);
   const debouncedSearch = useDebounce(search);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const {
     data: searchedUsers,
@@ -29,10 +32,10 @@ export default function SearchPage() {
 
   return (
     <div className="h-dvh">
-      <div className={"fixed bg-grayscale-50 max-w-[430px] w-full z-10"}>
+      <div className="fixed bg-grayscale-50 max-w-[430px] w-full z-10">
         <FriendsPageHeader label="친구 추가" type="default" />
         <Spacing size={20} />
-        <div className="px-5 pb-5 bg-grayscale-50">
+        <div className={clsx("px-5 pb-5 bg-grayscale-50")}>
           <SearchInput
             type="users"
             className="!bg-base-white"
@@ -45,7 +48,10 @@ export default function SearchPage() {
           direction="column"
           align="center"
           justify="center"
-          className="h-[calc(100dvh-48px)] gap-5"
+          className={clsx(
+            "h-[calc(100dvh-48px)] gap-5",
+            isReactNativeWebView ? "pt-safe-top pb-safe-bottom" : ""
+          )}
         >
           <span className="text-B2">
             친구가 아직 라이티를 가입하지 않았다면?
