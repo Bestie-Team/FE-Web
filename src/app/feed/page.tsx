@@ -378,7 +378,15 @@ export default function FeedPage() {
         </Swiper>
       </div>
     );
-  }, [feedAll, feedMine, selectedTab, swiperRef, handleSlideChange]);
+  }, [
+    selectedTab,
+    feedAll,
+    isFetching,
+    feedMine,
+    isFetching_mine,
+    swiperRef,
+    handleSlideChange,
+  ]);
 
   const handleRefresh = async () => {
     try {
@@ -401,8 +409,10 @@ export default function FeedPage() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!isClient) {
+      setIsClient(true);
+    }
+  }, [isClient]);
 
   return (
     <div className="h-dvh">

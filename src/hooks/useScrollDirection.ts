@@ -15,6 +15,7 @@ export function useScrollDirection<T extends HTMLElement>({
 
   useEffect(() => {
     const element = elementRef.current;
+    console.log(elementRef);
     if (!element) return;
 
     const handleScroll = () => {
@@ -49,7 +50,7 @@ export function useScrollDirection<T extends HTMLElement>({
     return () => {
       element.removeEventListener("scroll", handleScroll);
     };
-  }, [elementRef, prevScrollTop, scrollDirection, threshold]);
+  }, [elementRef.current, prevScrollTop, scrollDirection, threshold]);
 
   return { scrollDirection, visible };
 }
