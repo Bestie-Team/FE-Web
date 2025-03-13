@@ -53,7 +53,7 @@ export default function GroupEditPage() {
 
   if (step === 1) {
     return (
-      <div className="min-h-dvh bg-base-white">
+      <div className="min-h-[calc(100dvh+75px)] bg-base-white overflow-auto no-scrollbar">
         {header}
         <form className="flex flex-col px-5 pt-12">
           <Spacing size={24} />

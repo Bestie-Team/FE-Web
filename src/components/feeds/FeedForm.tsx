@@ -40,7 +40,7 @@ export default function FeedForm<
     }
   };
   const { isReactNativeWebView } = useReactNativeWebView();
-  console.log(selectedGathering, "selectedGatherings");
+
   return (
     <>
       <Flex direction="column" className={styles.gatheringInfoWrapper}>
