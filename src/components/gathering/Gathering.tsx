@@ -29,30 +29,18 @@ export default function Gathering({
   const router = useRouter();
   const [showMessage, setShowMessage] = useState(true);
   const renderGatherings = (gatheringsList: GatheringType[]) => {
-    if (gatheringsList.length < 1) {
-      return <NoGathering type="ENDED" />;
-    } else
-      return gatheringsList.map((gathering, i) => {
-        return (
-          <div className="grid grid-cols-2 gap-4" key={i}>
-            <GatheringCard
-              ended={ended}
-              tabIndex={i}
-              gathering={gathering}
-              where={where}
-              pencil={where === "HOME"}
-            />
-            {isFetching && (
-              <>
-                <div className={gatheringSkeleton} />
-                <div className={gatheringSkeleton} />
-                <div className={gatheringSkeleton} />
-                <div className={gatheringSkeleton} />
-              </>
-            )}
-          </div>
-        );
-      });
+    return gatheringsList.map((gathering, i) => {
+      return (
+        <GatheringCard
+          key={i}
+          ended={ended}
+          tabIndex={i}
+          gathering={gathering}
+          where={where}
+          pencil={where === "HOME"}
+        />
+      );
+    });
   };
 
   useEffect(() => {
@@ -67,7 +55,21 @@ export default function Gathering({
       {message && showMessage && (
         <Message onClose={() => setShowMessage(false)} />
       )}
-      {renderGatherings(gatherings)}
+      {gatherings.length < 1 ? (
+        <NoGathering type="ENDED" />
+      ) : (
+        <div className="grid grid-cols-2 gap-4">
+          {renderGatherings(gatherings)}
+          {isFetching && (
+            <>
+              <div className={gatheringSkeleton} />
+              <div className={gatheringSkeleton} />
+              <div className={gatheringSkeleton} />
+              <div className={gatheringSkeleton} />
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

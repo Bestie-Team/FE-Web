@@ -15,7 +15,6 @@ export function useScrollDirection<T extends HTMLElement>({
 
   useEffect(() => {
     const element = elementRef.current;
-    console.log(elementRef);
     if (!element) return;
 
     const handleScroll = () => {
