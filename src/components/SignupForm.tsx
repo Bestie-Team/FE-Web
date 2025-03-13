@@ -56,7 +56,6 @@ export default function SignupForm() {
 
   const { mutate } = useSignup({
     ...formValues,
-    name: oauthData?.name || "",
     email: oauthData?.email || "",
     provider: oauthData?.provider as Provider,
     termsOfServiceConsent: true,
