@@ -13,7 +13,7 @@ export default function Header({
       style={{
         top: 0,
         position: "fixed",
-        zIndex: 32,
+        zIndex: 10,
       }}
       className={clsx(
         "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px] pt-safe-top"

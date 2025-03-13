@@ -5,7 +5,6 @@ import { GatheringInWhich } from "@/models/gathering";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
-import getHeader from "@/utils/getHeader";
 import { useTabs } from "@/hooks/useTabs";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
 import Panel from "@/components/shared/Panel/Panel";
@@ -140,7 +139,16 @@ export default function GatheringPage() {
 const Header = React.memo(({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      {getHeader("/gathering")}
+      <div
+        style={{
+          top: 0,
+          position: "fixed",
+          zIndex: 12,
+        }}
+        className={styles.header}
+      >
+        <span>약속</span>
+      </div>
       <Flex
         id="filter"
         justify="space-between"
@@ -155,6 +163,8 @@ const Header = React.memo(({ children }: { children: React.ReactNode }) => {
 Header.displayName = "Header";
 
 const styles = {
+  header:
+    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px] pt-safe-top",
   panelWrapper:
-    "mt-12 fixed max-w-[430px] px-5 flex w-full bg-base-white transition-shadow duration-300",
+    "mt-12 px-5 fixed max-w-[430px] flex w-full bg-base-white transition-shadow duration-300",
 };
