@@ -18,7 +18,7 @@ function Dimmed({
       data-testid="dimmed-backdrop"
       onClick={onClick}
       className={clsx(
-        "fixed inset-0 z-[var(--dimmed-zIndex)] will-change-[opacity]",
+        "max-w-[430px] mx-auto fixed inset-0 z-[var(--dimmed-zIndex)] will-change-[opacity]",
         isClosing ? "animate-fadeOut" : "animate-fadeIn",
         bright ? "bg-[#00000020]" : "bg-[#00000080]",
         className

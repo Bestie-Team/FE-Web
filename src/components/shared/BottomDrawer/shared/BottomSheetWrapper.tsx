@@ -47,4 +47,4 @@ export default function BottomSheetWrapper({
 }
 
 const containerStyle =
-  "bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zIndex)] pb-[10px]";
+  "max-w-[430px] mx-auto bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zIndex)] pb-[10px]";

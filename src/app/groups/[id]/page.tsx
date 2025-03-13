@@ -143,27 +143,26 @@ export default function GroupDetailPage({
   };
 
   return (
-    <Flex
-      direction="column"
-      className="relative w-full min-h-dvh bg-base-white"
-    >
-      <Flex align="center" className={styles.headerWrapper}>
-        <div
-          className="cursor-pointer pl-[17px] pr-[3px] mr-[6px]"
-          onClick={() => {
-            router.back();
-          }}
-        >
-          <ArrowLeftIcon color="white" />
-        </div>
-        <span className={styles.headerFont}>그룹 상세</span>
-        <GroupOptions isOwner={isOwner} group={groupEdit} />
-      </Flex>
-      <GroupDetailContainer
-        groupDetail={groupDetail}
-        isLoaded={isLoaded}
-        setIsLoaded={setIsLoaded}
-      />
+    <Flex direction="column" className="relative w-full min-h-dvh">
+      <div className="relative pt-safe-top">
+        <Flex align="center" className={styles.headerWrapper}>
+          <div
+            className="cursor-pointer pl-[17px] pr-[3px] mr-[6px]"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            <ArrowLeftIcon color="white" />
+          </div>
+          <span className={styles.headerFont}>그룹 상세</span>
+          <GroupOptions isOwner={isOwner} group={groupEdit} />
+        </Flex>
+        <GroupDetailContainer
+          groupDetail={groupDetail}
+          isLoaded={isLoaded}
+          setIsLoaded={setIsLoaded}
+        />
+      </div>
 
       {modalState.isOpen && modalState.type && (
         <Modal

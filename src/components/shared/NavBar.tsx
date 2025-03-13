@@ -70,7 +70,7 @@ const NavBar = () => {
           `
         fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px]
         flex justify-between px-3 pb-2 mx-auto
-        border-t border-grayscale-10 pt-safe-top`,
+        border-t border-grayscale-10`,
           isReactNativeWebView ? "!pb-safe-bottom" : ""
         )}
       >

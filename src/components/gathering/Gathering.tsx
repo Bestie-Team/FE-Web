@@ -34,14 +34,23 @@ export default function Gathering({
     } else
       return gatheringsList.map((gathering, i) => {
         return (
-          <GatheringCard
-            ended={ended}
-            key={i}
-            tabIndex={i}
-            gathering={gathering}
-            where={where}
-            pencil={where === "HOME"}
-          />
+          <div className="grid grid-cols-2 gap-4" key={i}>
+            <GatheringCard
+              ended={ended}
+              tabIndex={i}
+              gathering={gathering}
+              where={where}
+              pencil={where === "HOME"}
+            />
+            {isFetching && (
+              <>
+                <div className={gatheringSkeleton} />
+                <div className={gatheringSkeleton} />
+                <div className={gatheringSkeleton} />
+                <div className={gatheringSkeleton} />
+              </>
+            )}
+          </div>
         );
       });
   };
@@ -58,18 +67,7 @@ export default function Gathering({
       {message && showMessage && (
         <Message onClose={() => setShowMessage(false)} />
       )}
-
-      <div className="grid grid-cols-2 gap-4">
-        {renderGatherings(gatherings)}
-        {isFetching && (
-          <>
-            <div className={gatheringSkeleton} />
-            <div className={gatheringSkeleton} />
-            <div className={gatheringSkeleton} />
-            <div className={gatheringSkeleton} />
-          </>
-        )}
-      </div>
+      {renderGatherings(gatherings)}
     </div>
   );
 }

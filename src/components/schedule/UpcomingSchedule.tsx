@@ -3,7 +3,6 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { Gathering } from "@/models/gathering";
 import dynamic from "next/dynamic";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 const NoSchedule = dynamic(() => import("./NoSchedule"));
 const TimelineItem = dynamic(() => import("./TimelineItem"));
@@ -13,14 +12,8 @@ export default function UpcomingSchedule({
 }: {
   gatherings: Gathering[];
 }) {
-  const { isReactNativeWebView } = useReactNativeWebView();
   return (
-    <Flex
-      direction="column"
-      className={
-        (styles.scheduleContainer, isReactNativeWebView ? "pb-safe-bottom" : "")
-      }
-    >
+    <Flex direction="column" className={styles.scheduleContainer}>
       <span className="text-T3">다가오는 일정</span>
       <Spacing size={32} />
       <Flex
@@ -42,7 +35,7 @@ export default function UpcomingSchedule({
 }
 
 const styles = {
-  scheduleContainer: "w-[350px] px-[5px]",
+  scheduleContainer: "w-[350px] pb-safe-bottom",
   timelineWrapper:
     "absolute top-[10px] left-[7.5px] w-[1px] h-full bg-grayscale-100",
 };
