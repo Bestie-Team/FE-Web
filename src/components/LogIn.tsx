@@ -6,22 +6,21 @@ import { postLogin } from "@/remote/auth";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "./shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { WEBVIEW_EVENT } from "@/webview/types";
-import { googleLoginMobile, kakaoLoginMobile } from "@/webview/actions";
+import {
+  appleLoginMobile,
+  googleLoginMobile,
+  kakaoLoginMobile,
+} from "@/webview/actions";
 import Tooltip from "./shared/Tooltip/Tooltip";
+import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
 
 export default function LogIn() {
   const { login } = useAuth();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
@@ -44,18 +43,21 @@ export default function LogIn() {
 
   const loginHandler = (provider: Providers) => {
     if (provider === "google") {
-      if (isClient && window.ReactNativeWebView) {
+      if (isReactNativeWebView && window.ReactNativeWebView) {
         googleLoginMobile();
       } else {
         googleLogin();
       }
     }
     if (provider === "kakao") {
-      if (isClient && window.ReactNativeWebView) {
+      if (isReactNativeWebView && window.ReactNativeWebView) {
         kakaoLoginMobile();
       } else {
         window.location.href = KAKAO_AUTH_URL;
       }
+    }
+    if (provider === "apple" && isReactNativeWebView) {
+      appleLoginMobile();
     }
   };
 
@@ -72,6 +74,9 @@ export default function LogIn() {
       }
       if (message.type === WEBVIEW_EVENT.KAKAO_LOGIN_SUCCESS) {
         handleLoginSuccess(message.token, "kakao");
+      }
+      if (message.type === WEBVIEW_EVENT.APPLE_LOGIN_SUCCESS) {
+        handleLoginSuccess(message.token, "apple");
       }
     };
 
