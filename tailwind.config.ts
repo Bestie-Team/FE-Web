@@ -141,6 +141,7 @@ const config: Config = {
         fadeIn: "fadeIn 0.2s ease-in",
         fadeOut: "fadeOut 0.2s ease-out",
         selectOpen: "selectOpen 0.2s ease-in-out",
+        selectClose: "selectClose 0.2s ease-in-out",
         "shrink-grow": "shrinkGrow 0.2s ease-in-out",
         "shrink-grow-less": "shrinkGrowLess 0.3s ease-in-out",
         "slide-from-left": "slideFromLeft 0.3s ease-in-out",
@@ -183,6 +184,18 @@ const config: Config = {
             opacity: "1",
             transform: "translateY(0)",
             visibility: "visible",
+          },
+        },
+        selectClose: {
+          "0%": {
+            opacity: "1",
+            transform: "translateY(0)",
+            visibility: "visible",
+          },
+          "100%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
+            visibility: "hidden",
           },
         },
         shrinkGrow: {

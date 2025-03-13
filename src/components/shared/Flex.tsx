@@ -12,7 +12,7 @@ interface FlexProps {
     | "space-evenly";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
   style?: React.CSSProperties;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
   onMouseDown?: (e: MouseEvent<HTMLDivElement>) => void;
   onTouchStart?: (e: TouchEvent<HTMLDivElement>) => void;
   children: React.ReactNode;

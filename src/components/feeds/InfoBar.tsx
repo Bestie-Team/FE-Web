@@ -7,25 +7,28 @@ import { useAuth } from "../shared/providers/AuthProvider";
 import { Feed } from "@/models/feed";
 import { usePathname } from "next/navigation";
 import LightyIcon from "../shared/Icon/LightyIcon";
-import { useState } from "react";
 import { Lighty } from "@/constants/images";
 import clsx from "clsx";
 import FeedOption from "./FeedOption";
+import { Dispatch, SetStateAction } from "react";
 
 interface FriendInfo {
   name: string;
   imageUrl: string | null;
 }
 export default function InfoBar({
+  isOpen,
+  setIsOpen,
   friendInfo,
   feed,
 }: {
+  isOpen?: boolean;
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
   friendInfo?: FriendInfo[];
   feed: Feed;
 }) {
   const pathname = usePathname();
   const { userInfo } = useAuth();
-  const [showFriends, setShowFriends] = useState(false);
 
   const isMine = feed.writer.accountId === userInfo?.accountId;
   const feedType = pathname.endsWith("/hidden")
@@ -41,14 +44,15 @@ export default function InfoBar({
       {friendInfo && friendInfo.length > 0 && (
         <div
           className="relative"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowFriends((prev) => !prev);
+          onClick={() => {
+            if (!isOpen && setIsOpen) {
+              setIsOpen(true);
+            }
           }}
         >
           <TogetherInfo clickable={true} friendInfo={friendInfo} />
-          {showFriends && friendInfo && (
-            <FriendsInfoContainer friendInfo={friendInfo} />
+          {friendInfo && isOpen && (
+            <FriendsInfoContainer friendInfo={friendInfo} isOpen={isOpen} />
           )}
         </div>
       )}
@@ -111,10 +115,20 @@ export function TogetherInfo({
   );
 }
 
-function FriendsInfoContainer({ friendInfo }: { friendInfo: FriendInfo[] }) {
+function FriendsInfoContainer({
+  friendInfo,
+  isOpen,
+}: {
+  friendInfo: FriendInfo[];
+  isOpen: boolean;
+}) {
   return (
     <Flex
-      className="animate-selectOpen bg-base-white z-30 absolute right-0 mt-[5px] rounded-xl w-[117px] py-[14px] pl-[16px] pr-11 gap-3 border border-grayscale-100 shadow-[0px_0px_16px_0px_rgba(0,0,0,0.12)]"
+      className={clsx(
+        isOpen == true ? "animate-selectOpen" : "animate-selectClose",
+        "",
+        friendsContainer
+      )}
       direction="column"
     >
       {friendInfo.map((info, i) => (
@@ -134,3 +148,6 @@ function FriendsInfoContainer({ friendInfo }: { friendInfo: FriendInfo[] }) {
     </Flex>
   );
 }
+
+const friendsContainer =
+  "bg-base-white z-30 absolute right-0 mt-[5px] rounded-xl w-[117px] py-[14px] pl-[16px] pr-11 gap-3 border border-grayscale-100 shadow-[0px_0px_16px_0px_rgba(0,0,0,0.12)]";
