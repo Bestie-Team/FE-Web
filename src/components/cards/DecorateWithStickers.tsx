@@ -16,11 +16,18 @@ import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
+import { WEBVIEW_EVENT } from "@/webview/types";
+import { lightyToast } from "@/utils/toast";
+import Modal from "../shared/Modal/Modal";
+import clsx from "clsx";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
     decoBottomSheetStateAtom
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
@@ -33,6 +40,7 @@ export default function DecorateWithStickers() {
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const frames = [
     "https://cdn.lighty.today/frame1.jpeg",
@@ -61,6 +69,7 @@ export default function DecorateWithStickers() {
   }, []);
 
   const handleCaptureImage = useCallback(async () => {
+    setDeco(true);
     if (ref.current === null || !fabricCanvasRef.current) return;
     if (imageRef.current) {
       console.log("resize");
@@ -98,7 +107,6 @@ export default function DecorateWithStickers() {
         }
         // setImg(img);
       };
-      setDeco(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
@@ -133,10 +141,35 @@ export default function DecorateWithStickers() {
         format: "png",
         multiplier: 2,
       });
+
+      if (isReactNativeWebView) {
+        saveImageMobile(uri);
+        return;
+      }
       setImageUri(uri);
       setImageBottomSheetOpen(true);
     }
   };
+
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent<string>) => {
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
+      const message: { type: string; token: string } = JSON.parse(data);
+
+      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_SUCCESS) {
+        lightyToast.success("포토 카드 저장 완료");
+      }
+      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_PERMISSION_DENIED) {
+        setIsModalOpen(true);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   useEffect(() => {
     const applyCrop = async () => {
@@ -169,7 +202,7 @@ export default function DecorateWithStickers() {
           justify="space-between"
         >
           <div>
-            <Flex direction="column" className="gap-3 px-6">
+            <Flex direction="column" className="gap-3 px-6 pt-safe-top">
               <span className="text-T2">해당 프레임을 선택할까요?</span>
               <span className="text-B3 text-grayscale-500">
                 꾸미기 시작하면 프레임을 바꿀 수 없어요.
@@ -238,7 +271,12 @@ export default function DecorateWithStickers() {
       ) : (
         <>
           <Spacing size={76} />
-          <Flex className="w-full px-6">
+          <Flex
+            className={clsx(
+              "w-full px-6",
+              isReactNativeWebView ? " pt-safe-top" : ""
+            )}
+          >
             <span className="text-B4 text-grayscale-500">
               점선 영역이 이미지 영역이에요!
             </span>
@@ -246,9 +284,11 @@ export default function DecorateWithStickers() {
           <Spacing size={32} />
         </>
       )}
+      {/* 이 부분이 deco가 false일 때도 렌더링 돼서 아랫 부분에 스크롤 생기고 있었어요. */}
       <Flex
         direction="column"
         align="center"
+        style={{ display: deco ? "flex" : "none" }}
         className="h-full"
         justify="space-between"
       >
@@ -290,6 +330,16 @@ export default function DecorateWithStickers() {
         <PhotoSaveBottomSheet
           onClose={() => setImageBottomSheetOpen(false)}
           src={imageUri}
+        />
+      )}
+
+      {isModalOpen && (
+        <Modal
+          action={() => openSettingsMobile()}
+          onClose={() => setIsModalOpen(false)}
+          content="라이티의 사진 권한을 허용해주세요"
+          left="닫기"
+          right="설정"
         />
       )}
     </Flex>

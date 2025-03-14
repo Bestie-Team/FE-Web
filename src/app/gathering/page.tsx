@@ -78,6 +78,7 @@ export default function GatheringPage() {
   }, [reset]);
 
   return (
+
     <div className="h-dvh" ref={containerRef}>
       <GatheringHeader
         selectedTab={selectedTab}
