@@ -85,7 +85,12 @@ export default function ChoosingGatheringToDecorate({
           />
         )}
       </Flex>
-      <div className={styles.buttonWrapper}>
+      <div
+        className={clsx(
+          styles.buttonWrapper,
+          isReactNativeWebView ? "mb-safe-bottom" : ""
+        )}
+      >
         {feeds.length < 1 ? (
           <button
             disabled={selectedFeed == null}
@@ -100,8 +105,7 @@ export default function ChoosingGatheringToDecorate({
           <button
             className={clsx(
               styles.button,
-              selectedFeed.id === "" && "!bg-grayscale-200",
-              isReactNativeWebView ? "mb-safe-bottom" : ""
+              selectedFeed.id === "" && "!bg-grayscale-200"
             )}
             disabled={selectedFeed.id === ""}
             onClick={() => {
