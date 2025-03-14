@@ -17,14 +17,16 @@ import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
-import { saveImageMobile } from "@/webview/actions";
+import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { lightyToast } from "@/utils/toast";
+import Modal from "../shared/Modal/Modal";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
     decoBottomSheetStateAtom
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
@@ -157,7 +159,10 @@ export default function DecorateWithStickers() {
       const message: { type: string; token: string } = JSON.parse(data);
 
       if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_SUCCESS) {
-        lightyToast.success("저장 완료");
+        lightyToast.success("포토 카드 저장 완료");
+      }
+      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_PERMISSION_DENIED) {
+        setIsModalOpen(true);
       }
     };
 
@@ -318,6 +323,16 @@ export default function DecorateWithStickers() {
         <PhotoSaveBottomSheet
           onClose={() => setImageBottomSheetOpen(false)}
           src={imageUri}
+        />
+      )}
+
+      {isModalOpen && (
+        <Modal
+          action={() => openSettingsMobile()}
+          onClose={() => setIsModalOpen(false)}
+          content="라이티의 사진 권한을 허용해주세요"
+          left="닫기"
+          right="설정"
         />
       )}
     </Flex>

@@ -8,6 +8,8 @@ export const appleLoginMobile = () => postMessage("APPLE_LOGIN");
 
 export const saveImageMobile = (uri: string) => postMessage("SAVE_IMAGE", uri);
 
+export const openSettingsMobile = () => postMessage("OPEN_SETTINGS");
+
 export const requestNotificationPermission = () =>
   postMessage("NOTIFICATION_PERMISSION_REQUEST");
 
