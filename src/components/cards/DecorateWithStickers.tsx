@@ -190,7 +190,7 @@ export default function DecorateWithStickers() {
   return (
     <Flex
       direction="column"
-      className={"extended-container !min-h-dvh h-full pb-[60px] pt-safe-top"}
+      className={"extended-container !min-h-dvh h-full pb-[60px]"}
     >
       {deco === false ? (
         <Flex
@@ -199,7 +199,7 @@ export default function DecorateWithStickers() {
           justify="space-between"
         >
           <div>
-            <Flex direction="column" className="gap-3 px-6">
+            <Flex direction="column" className="gap-3 px-6 pt-safe-top">
               <span className="text-T2">해당 프레임을 선택할까요?</span>
               <span className="text-B3 text-grayscale-500">
                 꾸미기 시작하면 프레임을 바꿀 수 없어요.
