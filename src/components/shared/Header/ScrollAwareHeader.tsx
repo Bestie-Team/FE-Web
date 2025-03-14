@@ -8,10 +8,17 @@ import Panel from "../Panel/Panel";
 import type { Notification } from "lighty-type";
 import Header from "./Header";
 
-interface ScrollAwareHeaderProps extends HeaderProps {
+interface ScrollAwareHeaderProps extends FeedHeaderProps {
   visible: boolean;
 }
-interface HeaderProps {
+
+interface GatheringHeaderProps {
+  className?: string;
+  selectedTab: "1" | "2";
+  setSelectedTab: (tabName: "1" | "2") => void;
+}
+
+interface FeedHeaderProps {
   className?: string;
   mailCount: Notification[];
   selectedTab: "1" | "2";
@@ -44,7 +51,7 @@ const FeedHeader = React.memo(
     selectedTab,
     handleTabClick,
     isNewNotification,
-  }: HeaderProps) => {
+  }: FeedHeaderProps) => {
     const router = useRouter();
     return (
       <Header
@@ -88,6 +95,24 @@ const FeedHeader = React.memo(
 );
 
 FeedHeader.displayName = "FeedHeader";
+
+export const GatheringHeader = React.memo(
+  ({ className, selectedTab, setSelectedTab }: GatheringHeaderProps) => {
+    return (
+      <Header className={className} headerLabel="약속">
+        <Panel
+          selectedTab={selectedTab}
+          long="short"
+          title1="예정"
+          title2="완료"
+          onClick={setSelectedTab}
+        />
+      </Header>
+    );
+  }
+);
+
+GatheringHeader.displayName = "GatheringHeader";
 
 export function ScrollAwareHeader({
   visible,

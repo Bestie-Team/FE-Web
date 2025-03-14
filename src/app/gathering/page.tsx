@@ -7,8 +7,6 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import { useTabs } from "@/hooks/useTabs";
 import useGatherings from "@/components/gathering/hooks/useGatherings";
-import Panel from "@/components/shared/Panel/Panel";
-import Flex from "@/components/shared/Flex";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
@@ -20,7 +18,8 @@ import Gathering from "@/components/gathering/Gathering";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import dynamic from "next/dynamic";
 import TabParamHandler from "@/components/shared/TabParamHandler";
-import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
+import { GatheringHeader } from "@/components/shared/Header/ScrollAwareHeader";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -33,8 +32,7 @@ export default function GatheringPage() {
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, setSelectedTab } = useTabs();
-  const { isReactNativeWebView } = useReactNativeWebView();
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const { data: myGatherings, isFetching } = useGatherings({
     limit: 50,
     minDate: minDate(),
@@ -45,6 +43,10 @@ export default function GatheringPage() {
     isFetching: isFetching_e,
     loadMore: loadMore_e,
   } = useGatheringEnded({ limit: 8 });
+
+  const { visible } = useScrollDirection({
+    elementRef: containerRef,
+  });
 
   const handleRefresh = async () => {
     try {
@@ -76,41 +78,37 @@ export default function GatheringPage() {
   }, [reset]);
 
   return (
-    <div className="h-dvh">
-      <Header>
-        <Panel
-          selectedTab={selectedTab}
-          long="short"
-          title1="예정"
-          title2="완료"
-          onClick={setSelectedTab}
-        />
-      </Header>
+    <div className="h-dvh" ref={containerRef}>
+      <GatheringHeader
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        className={clsx(
+          "pt-safe-top bg-base-white/80 backdrop-blur-md transition-transform duration-300 ease-in-out z-20",
+          visible ? "translate-y-0" : "-translate-y-full"
+        )}
+      />
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="flex justify-center pt-[107px]">
-            <div className="p-4">
-              <DotSpinnerSmall />
-            </div>
+          <div className="flex justify-center p-4 pt-[90px]">
+            <DotSpinnerSmall />
           </div>
         }
       >
         {selectedTab === "1" ? (
           <div
-            className={clsx(
-              "mt-[107px] h-dvh overflow-y-scroll no-scrollbar pb-10",
-              isReactNativeWebView ? "pt-safe-top" : ""
-            )}
+            className={
+              "h-full overflow-y-scroll no-scrollbar pb-10 mt-[87px] pt-safe-top"
+            }
           >
             <Schedule expectingGatherings={myGatherings} />
           </div>
         ) : (
           <div
             ref={gatheringRef}
-            className={clsx(
-              "h-full overflow-y-scroll gathering no-scrollbar pb-36 pt-[87px]"
-            )}
+            className={
+              "h-full overflow-y-scroll gathering no-scrollbar pb-36 mt-[87px]"
+            }
           >
             <Gathering
               ended
@@ -118,9 +116,7 @@ export default function GatheringPage() {
               isFetching={isFetching_e || isFetching}
               where={GatheringInWhich.GATHERING}
               gatherings={ended || []}
-              className={
-                isReactNativeWebView ? "mt-safe-top pb-safe-bottom" : ""
-              }
+              className={"mt-safe-top pb-safe-bottom"}
             />
           </div>
         )}
@@ -135,36 +131,3 @@ export default function GatheringPage() {
     </div>
   );
 }
-
-const Header = React.memo(({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <div
-        style={{
-          top: 0,
-          position: "fixed",
-          zIndex: 12,
-        }}
-        className={styles.header}
-      >
-        <span>약속</span>
-      </div>
-      <Flex
-        id="filter"
-        justify="space-between"
-        className={clsx(styles.panelWrapper, "pt-safe-top")}
-      >
-        {children}
-      </Flex>
-    </>
-  );
-});
-
-Header.displayName = "Header";
-
-const styles = {
-  header:
-    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px] pt-safe-top",
-  panelWrapper:
-    "mt-12 px-5 fixed max-w-[430px] flex w-full bg-base-white transition-shadow duration-300",
-};
