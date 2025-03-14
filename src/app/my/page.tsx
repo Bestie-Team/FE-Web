@@ -6,15 +6,14 @@ import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
 import TermOfUse from "@/components/terms/TermOfUse";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
-import Link from "next/link";
-import getHeader from "@/utils/getHeader";
+import Header from "@/components/shared/Header/Header";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 
-const Header = React.memo(
+const MyHeader = React.memo(
   ({
     open,
     privatePolicyOpen,
@@ -25,20 +24,20 @@ const Header = React.memo(
     shadow: boolean;
   }) => {
     return (
-      <header
+      <div
         className={clsx(
           styles.headerWrapper,
           shadow && "shadow-bottom",
           open || privatePolicyOpen ? "" : "z-20"
         )}
       >
-        {getHeader("/my")}
-      </header>
+        <Header headerLabel="My" />
+      </div>
     );
   }
 );
 
-Header.displayName = "Header";
+MyHeader.displayName = "MyHeader";
 
 export default function MyPage() {
   const [modalState, setModalState] = useState<
@@ -73,7 +72,7 @@ export default function MyPage() {
 
   return (
     <div className="min-h-dvh w-full pt-safe-top">
-      <Header
+      <MyHeader
         shadow={isPast}
         open={modalState === "open"}
         privatePolicyOpen={modalState === "privatePolicy"}
@@ -97,22 +96,22 @@ export default function MyPage() {
           <Spacing size={16} />
           <SettingsMenu logout={handleLogout} />
           <footer className={styles.termsWrapper}>
-            <Link
-              href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
-              target="_blank"
+            <span
+              // href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
+              // target="_blank"
               onClick={() => setModalState("open")}
               className={clsx("mr-[13px]", styles.letter)}
             >
               <ins>이용약관</ins>
-            </Link>
-            <Link
-              href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
-              target="_blank"
+            </span>
+            <span
+              // href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
+              // target="_blank"
               onClick={() => setModalState("privatePolicy")}
               className={styles.letter}
             >
               <ins>개인 정보 처리방침</ins>
-            </Link>
+            </span>
           </footer>
           <Spacing size={120} />
           {modalState !== "none" && (

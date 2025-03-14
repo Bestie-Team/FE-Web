@@ -29,8 +29,9 @@ export default function SentReceivedFriendRequestsList() {
   return (
     <Flex
       direction="column"
-      className="bg-grayscale-50 pt-[68px] px-5 gap-8 h-dvh"
+      className="h-full px-5 pt-safe-top pb-safe-bottom gap-8"
     >
+      <Spacing size={68} />
       {isLoading && <DotSpinner />}
       {receivedRequests &&
         receivedRequests?.length > 0 &&

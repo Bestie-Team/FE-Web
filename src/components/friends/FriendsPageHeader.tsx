@@ -1,8 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
-import Spacing from "../shared/Spacing";
 import { useRouter } from "next/navigation";
-import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
 export default function FriendsPageHeader({
   label,

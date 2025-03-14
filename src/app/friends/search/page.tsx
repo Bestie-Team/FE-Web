@@ -45,7 +45,7 @@ export default function SearchPage() {
     <div className="h-dvh">
       <HeaderWithBtn
         headerLabel="친구 추가"
-        onClickBackBtn={() => router.back}
+        onClickBackBtn={() => router.back()}
         bgColor="#f4f4f4"
       >
         <Spacing size={20} />

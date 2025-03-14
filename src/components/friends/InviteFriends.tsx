@@ -4,6 +4,7 @@ import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { Dispatch, SetStateAction } from "react";
 import * as lighty from "lighty-type";
+import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
 export default function InviteFriends({
   setStep,
@@ -15,10 +16,13 @@ export default function InviteFriends({
   exceptFriends?: lighty.User[] | null;
 }) {
   return (
-    <div className={"h-full bg-grayscale-50 pt-safe-top"}>
-      <div className="max-w-[430px] fixed w-full z-10 bg-grayscale-50">
-        <FriendsPageHeader label="초대할 친구" setStep={setStep} type={type} />
-        <div className="px-5">
+    <div>
+      <HeaderWithBtn
+        headerLabel="초대할 친구"
+        bgColor="#F4F4F4"
+        onClickBackBtn={() => setStep(1)}
+      >
+        <div className="w-full px-5">
           <Spacing size={20} />
           <SearchInput
             className="!bg-base-white"
@@ -26,7 +30,8 @@ export default function InviteFriends({
           />
         </div>
         <Spacing size={16} />
-      </div>
+      </HeaderWithBtn>
+
       <SelectFriendsContainer
         exceptFriends={exceptFriends}
         paddingTop="138px"
