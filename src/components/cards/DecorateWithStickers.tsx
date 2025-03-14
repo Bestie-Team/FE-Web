@@ -21,7 +21,6 @@ import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { lightyToast } from "@/utils/toast";
 import Modal from "../shared/Modal/Modal";
-import clsx from "clsx";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -202,7 +201,7 @@ export default function DecorateWithStickers() {
           justify="space-between"
         >
           <div>
-            <Flex direction="column" className="gap-3 px-6 pt-safe-top">
+            <Flex direction="column" className="gap-3 px-6">
               <span className="text-T2">해당 프레임을 선택할까요?</span>
               <span className="text-B3 text-grayscale-500">
                 꾸미기 시작하면 프레임을 바꿀 수 없어요.
@@ -271,12 +270,7 @@ export default function DecorateWithStickers() {
       ) : (
         <>
           <Spacing size={76} />
-          <Flex
-            className={clsx(
-              "w-full px-6",
-              isReactNativeWebView ? " pt-safe-top" : ""
-            )}
-          >
+          <Flex className={"w-full px-6"}>
             <span className="text-B4 text-grayscale-500">
               점선 영역이 이미지 영역이에요!
             </span>
