@@ -11,10 +11,18 @@ import GatheringDetail from "@/components/gathering/GatheringDetail";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import dynamic from "next/dynamic";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
-import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import handleShare from "@/utils/handleShare";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import ShareIcon from "@/components/shared/Icon/ShareIcon";
+import { MENU_TYPES } from "@/models/dropdown";
 
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"));
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
+  ssr: false,
+});
+const GatheringOptions = dynamic(
+  () => import("@/components/gathering/GatheringOption"),
+  { ssr: false }
+);
 
 export default function GatheringDetailPage({
   params,
@@ -23,6 +31,7 @@ export default function GatheringDetailPage({
 }) {
   const id = params.id;
   const router = useRouter();
+  const { userInfo } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
@@ -39,6 +48,12 @@ export default function GatheringDetailPage({
     onError: (error) => lightyToast.error(error.message),
   });
 
+  const sharingData = {
+    url: `https://lighty.today/gathering/${id}`,
+    text: selectedGathering?.description || "",
+    title: selectedGathering?.name || "",
+  };
+
   const MODAL_CONFIGS = {
     deleteGathering: {
       title: "약속을 삭제하시겠어요?",
@@ -47,12 +62,6 @@ export default function GatheringDetailPage({
       rightButton: "삭제하기",
       action: () => deleteGathering(),
     },
-  };
-
-  const sharingData = {
-    url: `https://lighty.today/gathering/${id}`,
-    text: selectedGathering?.description || "",
-    title: selectedGathering?.name || "",
   };
 
   const closeModal = () => {
@@ -76,6 +85,10 @@ export default function GatheringDetailPage({
     return;
   }
 
+  const { gatheringDate, hostUser } = selectedGathering;
+
+  const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
+
   return (
     <div className="w-full min-h-dvh bg-grayscale-50">
       <HeaderWithBtn
@@ -83,11 +96,21 @@ export default function GatheringDetailPage({
         headerLabel="약속 상세"
         fontColor="white"
         icon={
-          <div
-            className="cursor-pointer"
-            onMouseDown={() => handleShare(sharingData)}
-          >
-            <ShareIcon />
+          <div className={"flex gap-[14px]"}>
+            <div
+              className="cursor-pointer"
+              onMouseDown={() => handleShare(sharingData)}
+            >
+              <ShareIcon />
+            </div>
+            {userInfo?.accountId === hostUser.accountId && (
+              <GatheringOptions
+                type={
+                  isEnded ? MENU_TYPES.GATHERING_ENDED : MENU_TYPES.GATHERING
+                }
+                gathering={selectedGathering}
+              />
+            )}
           </div>
         }
       />

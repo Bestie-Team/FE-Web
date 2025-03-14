@@ -3,12 +3,12 @@ import useUpdateAccountId from "@/components/my/hooks/usePatchAccountId";
 import useUpdateProfile from "@/components/my/hooks/useUpdateProfile";
 import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import Input from "@/components/shared/Input/Input";
 import ProfileImageDisplay from "@/components/shared/ProfileImageDisplay";
 import Spacing from "@/components/shared/Spacing";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
-import getHeader from "@/utils/getHeader";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { Suspense, useState } from "react";
@@ -23,7 +23,6 @@ export default function EditPage() {
     accountId: data?.accountId || "",
     profileImageUrl: data?.profileImageUrl || "",
   });
-  const header = getHeader("/my/edit");
 
   const { mutate: updateImage } = useUpdateProfile({
     onSuccess: async (data: { message: string }) => {
@@ -66,7 +65,7 @@ export default function EditPage() {
   return (
     <div className="min-h-dvh bg-base-white">
       <Suspense fallback={<DotSpinner />}>
-        {header}
+        <HeaderWithBtn headerLabel="프로필 편집" />
         <Flex direction="column" className={"px-5 pt-safe-top"}>
           <Spacing size={58} />
           <Flex justify="center" className="py-3">

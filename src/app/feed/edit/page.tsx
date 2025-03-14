@@ -1,9 +1,7 @@
 "use client";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import getHeader from "@/utils/getHeader";
 import FeedForm from "@/components/feeds/FeedForm";
-import clsx from "clsx";
 import useEditFeed from "@/components/feeds/hooks/useEditFeed";
 import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
@@ -12,12 +10,12 @@ import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 
 export default function EditingFeed() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const containerRef = useRef<HTMLDivElement>(null);
-  const header = useMemo(() => getHeader("/feed/edit"), []);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
 
@@ -55,11 +53,9 @@ export default function EditingFeed() {
   }
 
   return (
-    <div className={styles.container} ref={containerRef}>
-      <div className={clsx(styles.headerWrapper, "shadow-bottom")}>
-        {header}
-      </div>
-      <div className={"pt-safe-top"}>
+    <div className={"bg-base-white h-dvh"} ref={containerRef}>
+      <HeaderWithBtn headerLabel="피드 수정" />
+      <div className="pt-safe-top">
         {isPending ? (
           <FullPageLoader />
         ) : (
@@ -78,7 +74,3 @@ export default function EditingFeed() {
     </div>
   );
 }
-const styles = {
-  container: "bg-base-white h-full",
-  headerWrapper: "bg-base-white max-w-[430px] w-full fixed z-10",
-};

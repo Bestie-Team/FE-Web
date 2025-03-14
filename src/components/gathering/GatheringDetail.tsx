@@ -9,18 +9,10 @@ import Image from "next/image";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import UserIcon from "../shared/Icon/UserIcon";
 import MemberContainer from "../shared/MembersContainer";
-import { useAuth } from "../shared/providers/AuthProvider";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { MAP } from "@/constants/images";
-import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction } from "react";
-import { MENU_TYPES } from "@/models/dropdown";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
-
-const GatheringOption = dynamic(() => import("./GatheringOption"), {
-  ssr: false,
-});
 
 export default function GatheringDetail({
   selectedGathering,
@@ -31,13 +23,10 @@ export default function GatheringDetail({
   isLoaded: boolean;
   setIsLoaded: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { userInfo } = useAuth();
-  const { gatheringDate, members, hostUser, address, description, name, id } =
+  const { gatheringDate, members, hostUser, address, description } =
     selectedGathering;
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const convertedDate = formatToKoreanTime(gatheringDate);
-  const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
 
   return (
     <div>
@@ -48,22 +37,6 @@ export default function GatheringDetail({
           setIsLoaded={setIsLoaded}
         />
         {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
-      </div>
-      <div
-        className={"absolute top-4 right-5 flex gap-[14px] z-50"}
-        // TODO 헤더랑 분리돼 있고, top으로 위치가 맞춰져 있어서 아이콘 크기랑 계산해서 top을 변경했어요, 나중에 변경해야할듯
-        style={
-          isReactNativeWebView
-            ? { top: "calc(env(safe-area-inset-top) - 12px)" }
-            : {}
-        }
-      >
-        {userInfo?.accountId === hostUser.accountId && (
-          <GatheringOption
-            type={isEnded ? MENU_TYPES.GATHERING_ENDED : MENU_TYPES.GATHERING}
-            gathering={selectedGathering}
-          />
-        )}
       </div>
       <LeaderContainer leader={hostUser} />
       <Spacing size={10} color="#f4f4f4" />

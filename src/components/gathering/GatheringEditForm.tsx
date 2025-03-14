@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
@@ -9,7 +9,6 @@ import MapPinIcon from "../shared/Icon/MapPinIcon";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import CalendarBottomSheet from "../shared/BottomDrawer/CalendarBottomSheet";
 import { isValid } from "date-fns";
-import getHeader from "@/utils/getHeader";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import CalendarIcon from "../shared/Icon/CalendarIcon";
 
@@ -29,7 +28,6 @@ export default function GatheringEditForm({
   mutate?: () => void;
 }) {
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const header = useMemo(() => getHeader("/gathering/*/edit"), []);
 
   const isGroupInfoValid = () => {
     return (
@@ -64,91 +62,88 @@ export default function GatheringEditForm({
     return null;
   }
   return (
-    <div className="h-full bg-base-white pt-12">
-      {header}
-      <form className="flex flex-col px-5">
-        <Spacing size={16} />
-        <Spacing size={24} />
-        <Input
-          name="gatheringName"
-          minLength={2}
-          displayLength={10}
-          value={gathering.name || ""}
-          onChange={handleNameChange}
-          placeholder="약속 이름을 입력해 주세요."
-          label={
-            <>
-              <PencilIcon width="16" height="16" color="#0A0A0A" />
-              <Spacing direction="horizontal" size={4} />
-              <span>약속 이름</span>
-            </>
-          }
-        />
-        <Spacing size={36} />
-        <Input
-          name="gatheringDesc"
-          minLength={10}
-          displayLength={40}
-          value={gathering.description || ""}
-          onChange={handleDescriptionChange}
-          placeholder="약속 이름을 설명해 주세요."
-          label={
-            <>
-              <FeedIcon width="16" height="16" color="#0A0A0A" />
-              <Spacing direction="horizontal" size={4} />
-              <span>약속 설명</span>
-            </>
-          }
-        />
-        <Spacing size={36} />
+    <form className="flex flex-col px-5 pt-safe-top">
+      <Spacing size={68} />
+      <Input
+        name="gatheringName"
+        minLength={2}
+        displayLength={10}
+        value={gathering.name || ""}
+        onChange={handleNameChange}
+        placeholder="약속 이름을 입력해 주세요."
+        label={
+          <>
+            <PencilIcon width="16" height="16" color="#0A0A0A" />
+            <Spacing direction="horizontal" size={4} />
+            <span>약속 이름</span>
+          </>
+        }
+      />
+      <Spacing size={36} />
+      <Input
+        name="gatheringDesc"
+        minLength={10}
+        displayLength={40}
+        value={gathering.description || ""}
+        onChange={handleDescriptionChange}
+        placeholder="약속 이름을 설명해 주세요."
+        label={
+          <>
+            <FeedIcon width="16" height="16" color="#0A0A0A" />
+            <Spacing direction="horizontal" size={4} />
+            <span>약속 설명</span>
+          </>
+        }
+      />
+      <Spacing size={36} />
 
-        <div className="grid grid-cols-2 gap-4">
-          <GatheringInput
-            type="date"
-            value={
-              gathering.gatheringDate &&
-              isValid(new Date(gathering.gatheringDate)) ? (
-                <>
-                  <span>
-                    {formatToKoreanTime(gathering.gatheringDate).slice(0, 10)}
-                  </span>
-                  <Spacing size={8} />
-                  <span>
-                    {formatToKoreanTime(gathering.gatheringDate).slice(10)}
-                  </span>
-                </>
-              ) : (
-                "선택하기"
-              )
-            }
-            onClick={() => setCalendarOpen(true)}
-            label={
+      <div className="grid grid-cols-2 gap-4">
+        <GatheringInput
+          type="date"
+          value={
+            gathering.gatheringDate &&
+            isValid(new Date(gathering.gatheringDate)) ? (
               <>
-                <CalendarIcon width="16" height="16" color="#0A0A0A" />
-                <Spacing direction="horizontal" size={4} />
-                <span>약속 일정</span>
+                <span>
+                  {formatToKoreanTime(gathering.gatheringDate).slice(0, 10)}
+                </span>
+                <Spacing size={8} />
+                <span>
+                  {formatToKoreanTime(gathering.gatheringDate).slice(10)}
+                </span>
               </>
-            }
-          />
-          <GatheringInput
-            type="editAddress"
-            value={gathering.address ? gathering.address : "선택하기"}
-            setEditValue={setGathering}
-            label={
-              <>
-                <MapPinIcon width="16" height="16" color="#0A0A0A" />
-                <Spacing direction="horizontal" size={4} />
-                <span>약속 장소</span>
-              </>
-            }
-          />
-          <FixedBottomButton
-            label={"수정 완료"}
-            disabled={!isGroupInfoValid()}
-            onClick={handleSubmit}
-          />
-        </div>
-      </form>
+            ) : (
+              "선택하기"
+            )
+          }
+          onClick={() => setCalendarOpen(true)}
+          label={
+            <>
+              <CalendarIcon width="16" height="16" color="#0A0A0A" />
+              <Spacing direction="horizontal" size={4} />
+              <span>약속 일정</span>
+            </>
+          }
+        />
+        <GatheringInput
+          type="editAddress"
+          value={gathering.address ? gathering.address : "선택하기"}
+          setEditValue={setGathering}
+          label={
+            <>
+              <MapPinIcon width="16" height="16" color="#0A0A0A" />
+              <Spacing direction="horizontal" size={4} />
+              <span>약속 장소</span>
+            </>
+          }
+        />
+        <FixedBottomButton
+          label={"수정 완료"}
+          disabled={!isGroupInfoValid()}
+          onClick={handleSubmit}
+          className="mb-safe-bottom"
+        />
+      </div>
       <CalendarBottomSheet
         originalDate={
           gathering.gatheringDate
@@ -159,6 +154,6 @@ export default function GatheringEditForm({
         onClose={() => setCalendarOpen(false)}
         open={calendarOpen}
       />
-    </div>
+    </form>
   );
 }

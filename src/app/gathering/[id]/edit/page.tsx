@@ -11,6 +11,7 @@ import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 
 export default function GatheringEditPage() {
   const router = useRouter();
@@ -64,13 +65,16 @@ export default function GatheringEditPage() {
   if (step === 1) {
     return (
       <Suspense fallback={<DotSpinner />}>
-        <GatheringEditForm
-          type="edit"
-          gathering={gatheringInfo}
-          setGathering={setGatheringInfo}
-          setStep={setStep}
-          mutate={editingFeed}
-        />
+        <div className="h-full bg-base-white">
+          <HeaderWithBtn headerLabel="약속 수정" />
+          <GatheringEditForm
+            type="edit"
+            gathering={gatheringInfo}
+            setGathering={setGatheringInfo}
+            setStep={setStep}
+            mutate={editingFeed}
+          />
+        </div>
       </Suspense>
     );
   }
