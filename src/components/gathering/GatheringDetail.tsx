@@ -1,5 +1,4 @@
 import GatheringBannerContainer from "./GatheringBannerContainer";
-import ShareIcon from "../shared/Icon/ShareIcon";
 import LeaderContainer from "../shared/LeaderContainer";
 import Spacing from "../shared/Spacing";
 import LightyInfoContainer from "../shared/LightyInfoContainer";
@@ -13,7 +12,6 @@ import MemberContainer from "../shared/MembersContainer";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
-import handleShare from "@/utils/handleShare";
 import { MAP } from "@/constants/images";
 import dynamic from "next/dynamic";
 import { Dispatch, SetStateAction } from "react";
@@ -41,12 +39,6 @@ export default function GatheringDetail({
   const convertedDate = formatToKoreanTime(gatheringDate);
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
 
-  const sharingData = {
-    url: `https://lighty.today/gathering/${id}`,
-    text: description,
-    title: name,
-  };
-
   return (
     <div>
       <div className="w-full relative h-[380px]">
@@ -66,12 +58,6 @@ export default function GatheringDetail({
             : {}
         }
       >
-        <div
-          className="cursor-pointer"
-          onMouseDown={() => handleShare(sharingData)}
-        >
-          <ShareIcon />
-        </div>
         {userInfo?.accountId === hostUser.accountId && (
           <GatheringOption
             type={isEnded ? MENU_TYPES.GATHERING_ENDED : MENU_TYPES.GATHERING}

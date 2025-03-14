@@ -9,22 +9,23 @@ export default function HeaderWithBtn({
   bgColor,
   fontColor,
   headerLabel,
+  onClickBackBtn,
+  children,
 }: {
   icon?: React.ReactNode;
   fixed?: boolean;
   bgColor?: string;
   fontColor?: string;
   headerLabel: string;
+  onClickBackBtn?: () => void;
+  children?: React.ReactNode;
 }) {
   return (
     <Flex
-      justify="space-between"
+      direction="column"
+      justify="center"
       align="center"
-      className={clsx(
-        "pt-safe-top max-w-[430px] w-full h-12 gap-[6px]",
-        "pl-0 pr-5",
-        headerFont
-      )}
+      className={clsx("pt-safe-top max-w-[430px] w-full", headerFont)}
       style={{
         top: 0,
         zIndex: 30,
@@ -32,24 +33,29 @@ export default function HeaderWithBtn({
         backgroundColor: bgColor ? bgColor : "transparent",
       }}
     >
-      <button
-        className={"w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer"}
-        onClick={() => {
-          window.history.back();
-        }}
-      >
-        <ArrowLeftIcon color={fontColor} />
-      </button>
-      <div
-        style={{
-          color: fontColor ? fontColor : "",
-        }}
-        className="flex-1"
-      >
-        {headerLabel}
-      </div>
-      <Spacing size={6} />
-      {icon && <div>{icon}</div>}
+      <Flex align="center" className="w-full gap-[6px] h-12 pl-0 pr-5">
+        <button
+          className={"w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer"}
+          onClick={() => {
+            if (onClickBackBtn) {
+              onClickBackBtn();
+            } else window.history.back();
+          }}
+        >
+          <ArrowLeftIcon color={fontColor} />
+        </button>
+        <div
+          style={{
+            color: fontColor ? fontColor : "",
+          }}
+          className="flex-1"
+        >
+          {headerLabel}
+        </div>
+        <Spacing size={6} />
+        {icon && <div>{icon}</div>}
+      </Flex>
+      {children}
     </Flex>
   );
 }

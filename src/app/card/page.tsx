@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import dynamic from "next/dynamic";
 import FramePageSkeleton from "@/components/shared/Skeleton/FramePageSkeleton";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 
 const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {
   ssr: false,
@@ -32,22 +33,20 @@ export default function Page() {
     } else return "포토 카드";
   };
 
+  const clickBackBtnHandler = () => {
+    if (step === 1) {
+      router.back();
+    }
+    setStep(step - 1);
+  };
+
   return (
-    <div className={"bg-base-white h-dvh overflow-y-scroll no-scrollbar"}>
-      <header className={styles.header}>
-        <div
-          className="py-[10px] pl-[17px] pr-[3px] cursor-pointer"
-          onClick={() => {
-            if (step === 1) {
-              router.back();
-            }
-            setStep(step - 1);
-          }}
-        >
-          <ArrowLeftIcon />
-        </div>
-        <span className="text-T3">{getHeaderName()}</span>
-      </header>
+    <div className="h-dvh">
+      <HeaderWithBtn
+        headerLabel={getHeaderName()}
+        onClickBackBtn={clickBackBtnHandler}
+        bgColor="white"
+      />
       {step === 1 && (
         <ChoosingGatheringToDecorate onNext={handleGatheringChange} />
       )}
@@ -56,8 +55,3 @@ export default function Page() {
     </div>
   );
 }
-
-const styles = {
-  header:
-    "flex w-full max-w-[430px] z-10 fixed items-center gap-[6px] h-12 bg-base-white pt-safe-top",
-};

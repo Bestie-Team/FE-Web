@@ -16,7 +16,6 @@ import useMakeGroup from "./hooks/useMakeGroup";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import MakingGroupSuccess from "./MakingGroupSuccess";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
-import clsx from "clsx";
 
 export default function NewGroupForm({
   step,
@@ -58,12 +57,7 @@ export default function NewGroupForm({
   }
 
   return (
-    <form
-      className={clsx(
-        "min-h-dvh flex flex-col px-5 pt-12",
-        isReactNativeWebView ? "mt-safe-top" : ""
-      )}
-    >
+    <form className="min-h-dvh flex flex-col px-5 pt-12 mt-safe-top">
       <Spacing size={24} />
       <AddGroupPhoto image={newGroup.groupImageUrl} setNewGroup={setNewGroup} />
       <Spacing size={36} />
