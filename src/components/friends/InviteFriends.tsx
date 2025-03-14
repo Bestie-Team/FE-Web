@@ -1,4 +1,3 @@
-import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer";
 import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
@@ -31,7 +30,6 @@ export default function InviteFriends({
         </div>
         <Spacing size={16} />
       </HeaderWithBtn>
-
       <SelectFriendsContainer
         exceptFriends={exceptFriends}
         paddingTop="138px"

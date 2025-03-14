@@ -1,15 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
-import getHeader from "@/utils/getHeader";
 import ChoosingKindOfMemory from "../../components/feeds/ChoosingKindOfMemory";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import ChoosingGatheringToRecord from "@/components/feeds/ChoosingGatheringToRecord";
 import CreatingFeed from "@/components/feeds/CreatingFeed";
 import CreatingFeedNoGathering from "@/components/feeds/CreatingFeedNoGathering";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import { useRouter } from "next/navigation";
+import Spacing from "@/components/shared/Spacing";
 
 const ChooseFriendToShare = dynamic(
   () => import("@/components/feeds/ChooseFriendToShare"),
@@ -28,32 +30,31 @@ const DynamicComponents = {
 };
 
 export default function Record() {
-  const header = getHeader("/record");
+  const router = useRouter();
   const [step, setStep] = useRecoilState(recordStepAtom);
   const [add, setAdd] = useState<number>(0);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
-  const [isClient, setIsClient] = useState(false);
+
+  const clickBackBtnHandler = () => {
+    if (step === 1) {
+      router.back();
+    }
+    if (step === 2.5) {
+      setStep(step - 1.5);
+    } else setStep(step - 1);
+  };
 
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
   return (
-    <div
-      className="relative pt-12 min-h-dvh"
-      style={
-        isClient && window?.ReactNativeWebView
-          ? {
-              paddingTop: `calc(env(safe-area-inset-top) + 3rem)`,
-            }
-          : {}
-      }
-    >
-      <div className={styles.headerWrapper}>{header}</div>
+    <div className="min-h-dvh">
+      <HeaderWithBtn
+        headerLabel="기록하기"
+        onClickBackBtn={clickBackBtnHandler}
+        bgColor={step === 2.5 ? "#F4F4F4" : "white"}
+      />
+      <Spacing size={48} />
       <CurrentStepComponent
         add={add}
         setAdd={setAdd}
@@ -64,7 +65,3 @@ export default function Record() {
     </div>
   );
 }
-
-const styles = {
-  headerWrapper: "max-w-[430px] w-full fixed z-10",
-};
