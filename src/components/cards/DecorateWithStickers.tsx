@@ -21,6 +21,7 @@ import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { lightyToast } from "@/utils/toast";
 import Modal from "../shared/Modal/Modal";
+import clsx from "clsx";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -268,7 +269,12 @@ export default function DecorateWithStickers() {
       ) : (
         <>
           <Spacing size={76} />
-          <Flex className="w-full px-6">
+          <Flex
+            className={clsx(
+              "w-full px-6",
+              isReactNativeWebView ? " pt-safe-top" : ""
+            )}
+          >
             <span className="text-B4 text-grayscale-500">
               점선 영역이 이미지 영역이에요!
             </span>
