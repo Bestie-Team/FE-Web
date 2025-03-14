@@ -12,7 +12,7 @@ interface ScrollAwareHeaderProps extends FeedHeaderProps {
   visible: boolean;
 }
 
-interface GatheringHeaderProps {
+interface HeaderProps {
   className?: string;
   selectedTab: "1" | "2";
   setSelectedTab: (tabName: "1" | "2") => void;
@@ -97,7 +97,7 @@ const FeedHeader = React.memo(
 FeedHeader.displayName = "FeedHeader";
 
 export const GatheringHeader = React.memo(
-  ({ className, selectedTab, setSelectedTab }: GatheringHeaderProps) => {
+  ({ className, selectedTab, setSelectedTab }: HeaderProps) => {
     return (
       <Header className={className} headerLabel="약속">
         <Panel
@@ -113,6 +113,25 @@ export const GatheringHeader = React.memo(
 );
 
 GatheringHeader.displayName = "GatheringHeader";
+
+export const SocialHeader = React.memo(
+  ({ className, selectedTab, setSelectedTab }: HeaderProps) => {
+    return (
+      <Header className={className} headerLabel="소셜">
+        <Panel
+          title1="친구"
+          title2="그룹"
+          long="short"
+          selectedTab={selectedTab}
+          onClick={setSelectedTab}
+          year={false}
+        />
+      </Header>
+    );
+  }
+);
+
+SocialHeader.displayName = "SocialHeader";
 
 export function ScrollAwareHeader({
   visible,
