@@ -43,7 +43,8 @@ export default function FeedForm<
 
   return (
     <>
-      <Flex direction="column" className={styles.gatheringInfoWrapper}>
+      <Flex direction="column" className={"px-5 pt-safe-top pb-0"}>
+        <Spacing size={20} />
         {selectedGathering ? (
           <Flex className="gap-4">
             <Flex direction="column" style={{ flexGrow: 1, gap: "8px" }}>
@@ -111,7 +112,6 @@ export default function FeedForm<
 }
 const styles = {
   selectWrapper: "p-5 pb-4",
-  gatheringInfoWrapper: "p-5 pt-5 pb-0",
   textareaWrapper: "px-[28px] py-4 pb-[98px] gap-3",
 
   recordTextarea:

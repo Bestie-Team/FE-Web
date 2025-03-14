@@ -80,5 +80,5 @@ export default function CreatingFeedNoGathering() {
 }
 
 const styles = {
-  container: "bg-base-white h-dvh",
+  container: "bg-base-white",
 };
