@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
@@ -11,7 +11,6 @@ import { formatToKoreanTime } from "@/utils/makeUTC";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { isValid } from "date-fns";
-import getHeader from "@/utils/getHeader";
 import EmptyLogoIcon from "../shared/Icon/EmptyLogoIcon";
 import AnimatedTabButton from "../shared/Button/AnimatedTabButton";
 import PencilIcon from "../shared/Icon/PencilIcon";
@@ -21,7 +20,7 @@ import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 import dynamic from "next/dynamic";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
 const AddFriendsSlider = dynamic(() => import("../groups/AddFriendsSlider"));
 const CalendarBottomSheet = dynamic(
@@ -56,23 +55,14 @@ export default function GatheringForm({
   };
 
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const title = formType === "new" ? "/gathering/new" : "/gathering/edit";
-  const header = useMemo(() => getHeader(title), []);
+  const title = formType === "new" ? "약속 만들기" : "약속 수정";
   const { data: group_data, isFetching } = useGroup({ limit: 50 });
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <div className="min-h-[calc(100dvh+75px)] bg-base-white">
-      <div className="z-20 fixed bg-base-white w-full">{header}</div>
-      <form
-        className="flex flex-col px-5 pt-12"
-        style={
-          isReactNativeWebView
-            ? { paddingTop: "calc(env(safe-area-inset-top) + 3rem)" }
-            : {}
-        }
-      >
-        <Spacing size={16} />
+      <HeaderWithBtn headerLabel={title} bgColor="white" />
+      <form className="flex flex-col px-5 pt-safe-top">
+        <Spacing size={54} />
         <Flex align="center" className="h-[50px]">
           <EmptyLogoIcon color="#0A0A0A" />
           <Spacing size={4} direction="horizontal" />
@@ -198,7 +188,7 @@ export default function GatheringForm({
                 if (mutate) mutate();
               }
             }}
-            className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+            className="mb-safe-bottom"
           />
         </div>
       </form>

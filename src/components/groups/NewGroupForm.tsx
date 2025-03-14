@@ -15,7 +15,6 @@ import { lightyToast } from "@/utils/toast";
 import useMakeGroup from "./hooks/useMakeGroup";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import MakingGroupSuccess from "./MakingGroupSuccess";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function NewGroupForm({
   step,
@@ -27,7 +26,6 @@ export default function NewGroupForm({
   const queryClient = useQueryClient();
   const [newGroup, setNewGroup] =
     useRecoilState<CreateGroupRequest>(newGroupAtom);
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const makeGroupSuccessHandler = async (data: { message: string }) => {
     setStep(0);
@@ -57,8 +55,8 @@ export default function NewGroupForm({
   }
 
   return (
-    <form className="min-h-dvh flex flex-col px-5 pt-12 mt-safe-top">
-      <Spacing size={24} />
+    <form className="min-h-dvh flex flex-col px-5 pt-safe-top">
+      <Spacing size={72} />
       <AddGroupPhoto image={newGroup.groupImageUrl} setNewGroup={setNewGroup} />
       <Spacing size={36} />
       <Input
@@ -103,7 +101,7 @@ export default function NewGroupForm({
         label={"그룹 생성하기"}
         onClick={makeGroup}
         disabled={newGroup.friendIds == null || newGroup.friendIds.length < 1}
-        className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+        className={"mb-safe-bottom"}
       />
     </form>
   );

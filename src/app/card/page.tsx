@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToDecorate";
-import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import dynamic from "next/dynamic";

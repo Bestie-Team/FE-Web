@@ -60,7 +60,7 @@ export default function GatheringEditPage() {
   if (!originalGatheringValue || originalGatheringValue == null) return null;
 
   if (isPending || step === 0) {
-    return <EditGatheringStatus isPending={isPending} />;
+    return <EditGatheringStatus isPending={isPending} setStep={setStep} />;
   }
   if (step === 1) {
     return (

@@ -1,16 +1,14 @@
 "use client";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
 import SignupForm from "@/components/SignupForm";
-import getHeader from "@/utils/getHeader";
 import { Suspense } from "react";
 
 export default function SignupPage() {
-  const header = getHeader("/signup");
-
   return (
-    <div className="flex flex-col gap-6 bg-base-white h-full">
-      {header}
+    <div className="flex flex-col gap-6 bg-base-white h-full pt-safe-top">
+      <HeaderWithBtn headerLabel="프로필 생성" bgColor="white" />
       <Spacing size={28} />
       <div className={styles.container}>
         <LightyIcon width="20" height="20" color={"#0A0A0A"} />

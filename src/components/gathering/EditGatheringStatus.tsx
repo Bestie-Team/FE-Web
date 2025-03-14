@@ -1,26 +1,28 @@
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import getHeader from "@/utils/getHeader";
 import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import { HEART_LETTER } from "@/constants/images";
 import DotSpinner from "../shared/Spinner/DotSpinner";
-import { useMemo } from "react";
+import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
 export default function EditGatheringStatus({
   isPending,
+  setStep,
 }: {
   isPending: boolean;
+  setStep: (step: number) => void;
 }) {
-  const header = useMemo(() => getHeader("/gathering/*/edit"), []);
-
   return (
     <Flex
       direction="column"
       justify="center"
-      className="bg-base-white min-h-dvh"
+      className="bg-base-white min-h-dvh pt-safe-top"
     >
-      {header}
+      <HeaderWithBtn
+        headerLabel="약속 수정"
+        onClickBackBtn={() => isPending && setStep(1)}
+      />
       <Flex direction="column" align="center">
         <Spacing size={140} />
         {isPending === true ? <DotSpinner /> : <CheckSpinner />}
