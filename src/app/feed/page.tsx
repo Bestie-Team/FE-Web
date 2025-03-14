@@ -7,12 +7,9 @@ import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import clsx from "clsx";
-import getHeader from "@/utils/getHeader";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
-import Panel from "@/components/shared/Panel/Panel";
 import {
   modalStateAtom,
   recordModalAtom,
@@ -51,40 +48,6 @@ const Report = dynamic(
   () => import("@/components/shared/Modal/Report/Report"),
   {
     ssr: false,
-  }
-);
-
-const Header = React.memo(
-  ({
-    shadow,
-    selectedTab,
-    handleTabClick,
-  }: {
-    shadow: boolean;
-    selectedTab: "1" | "2";
-    handleTabClick: (tab: "1" | "2") => void;
-  }) => {
-    return (
-      <>
-        <div
-          id="filter"
-          className={clsx(
-            styles.filterWrapperStyle,
-            shadow ? "shadow-bottom" : ""
-          )}
-        >
-          <Panel
-            selectedTab={selectedTab}
-            long="short"
-            title1="전체"
-            title2="마이"
-            onClick={handleTabClick}
-            year={false}
-          />
-        </div>
-        {getHeader("/feed")}
-      </>
-    );
   }
 );
 
@@ -158,7 +121,6 @@ const FeedModals = React.memo(
   }
 );
 
-Header.displayName = "Header";
 FeedModals.displayName = "FeedModals";
 
 export default function FeedPage() {
@@ -435,7 +397,7 @@ export default function FeedPage() {
           </div>
         }
       >
-        {!isClient || isFetching ? (
+        {!isClient ? (
           <div className="h-full w-full pt-[90px] pb-28 flex flex-col">
             <FeedSkeleton />
             <FeedSkeleton />
@@ -466,10 +428,3 @@ export default function FeedPage() {
     </div>
   );
 }
-
-const styles = {
-  filterWrapperStyle:
-    "z-30 max-w-[430px] pt-12 px-5 fixed flex flex-col w-full bg-base-white transition-shadow duration-300",
-  iconWrapperStyle:
-    "relative flex justify-center items-center w-10 h-10 p-2 cursor-pointer  hover:animate-shrink-grow-less",
-};

@@ -10,24 +10,22 @@ import {
 
 export function FeedSkeleton() {
   return (
-    <div>
-      <Flex className="extended-container pl-5 pt-5" direction="column">
-        <Flex className="gap-[6px]">
-          <div className="w-9 h-9 rounded-full bg-grayscale-50 animate-pulse" />
-          <Flex className="gap-[2px]" direction="column">
-            <span className="w-40 h-[18px] rounded-[4px] bg-grayscale-50 animate-pulse" />
-            <span className="w-[29px] h-[14px] rounded-[4px] bg-grayscale-50 animate-pulse" />
-          </Flex>
-        </Flex>
-        <Spacing size={12} />
-        <div className="w-[340px] h-[390px] rounded-2xl bg-grayscale-50 animate-pulse" />
-        <Spacing size={8} />
-        <Flex direction="column" className="pl-1 gap-[4px]">
-          <span className="w-80 h-5 bg-grayscale-50 animate-pulse rounded-[4px]" />
-          <span className="w-11 h-5 bg-grayscale-50 animate-pulse rounded-[4px]" />
+    <Flex className="pl-5 pt-5" direction="column">
+      <Flex className="gap-[6px]">
+        <div className="w-9 h-9 rounded-full bg-grayscale-50 animate-pulse" />
+        <Flex className="gap-[2px]" direction="column">
+          <span className="w-40 h-[18px] rounded-[4px] bg-grayscale-50 animate-pulse" />
+          <span className="w-[29px] h-[14px] rounded-[4px] bg-grayscale-50 animate-pulse" />
         </Flex>
       </Flex>
-    </div>
+      <Spacing size={12} />
+      <div className="w-[340px] h-[390px] rounded-2xl bg-grayscale-50 animate-pulse" />
+      <Spacing size={8} />
+      <Flex direction="column" className="pl-1 gap-[4px]">
+        <span className="w-80 h-5 bg-grayscale-50 animate-pulse rounded-[4px]" />
+        <span className="w-11 h-5 bg-grayscale-50 animate-pulse rounded-[4px]" />
+      </Flex>
+    </Flex>
   );
 }
 

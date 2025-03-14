@@ -158,7 +158,7 @@ export default function DecorateWithStickers() {
   return (
     <Flex
       direction="column"
-      className={"extended-container !min-h-dvh h-full pb-[60px] pt-safe-top"}
+      className={"!min-h-dvh h-full pb-[60px] pt-safe-top"}
     >
       {deco === false ? (
         <Flex

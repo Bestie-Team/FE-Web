@@ -72,13 +72,13 @@ export default function MyPage() {
   if (!user) return <DotSpinner />;
 
   return (
-    <div className={"min-h-dvh w-full pt-safe-top"}>
+    <div className="min-h-dvh w-full pt-safe-top">
       <Header
         shadow={isPast}
         open={modalState === "open"}
         privatePolicyOpen={modalState === "privatePolicy"}
       />
-      <div className="extended-container">
+      <div>
         <main className="pt-[68px]">
           <Suspense fallback={<DotSpinner />}>
             <UserProfile

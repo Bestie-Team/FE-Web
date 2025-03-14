@@ -1,31 +1,44 @@
 import clsx from "clsx";
-import Spacing from "../Spacing";
+import Flex from "../Flex";
 
 export default function Header({
-  pageName,
+  px = "px-5",
   icon,
+  fixed = true,
+  headerLabel,
+  className,
+  children,
 }: {
-  pageName: string;
+  px?: string;
   icon?: React.ReactNode;
+  fixed?: boolean;
+  headerLabel: string;
+  className?: string;
+  children?: React.ReactNode;
 }) {
   return (
-    <div
+    <header
       style={{
+        position: fixed ? "fixed" : undefined,
         top: 0,
-        position: "fixed",
-        zIndex: 10,
+        zIndex: 20,
       }}
       className={clsx(
-        "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px] pt-safe-top"
+        "pt-safe-top relative max-w-[430px] w-full flex flex-col justify-center",
+        headerFont,
+        headerColor,
+        px ?? "px-5",
+        className
       )}
     >
-      <span>{pageName}</span>
-      {icon && (
-        <>
-          <Spacing size={8} />
-          <div className="pr-5">{icon}</div>
-        </>
-      )}
-    </div>
+      <Flex className="w-full h-12" align="center" justify="space-between">
+        <span>{headerLabel}</span>
+        {icon && <div className="ml-2">{icon}</div>}
+      </Flex>
+      {children}
+    </header>
   );
 }
+
+const headerFont = "text-[20px] font-[700] leading-[26px] tracking-[-0.3px]";
+const headerColor = "bg-base-white";

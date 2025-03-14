@@ -52,9 +52,9 @@ export default function ChoosingGatheringToDecorate({
     <Flex
       direction="column"
       justify="space-between"
-      className={clsx(
-        "extended-container bg-base-white h-dvh pt-12 pb-14 overflow-y-scroll no-scrollbar"
-      )}
+      className={
+        "bg-base-white h-dvh pt-12 pb-14 overflow-y-scroll no-scrollbar"
+      }
       style={
         isReactNativeWebView
           ? { paddingTop: `calc(env(safe-area-inset-top) + 2rem)` }

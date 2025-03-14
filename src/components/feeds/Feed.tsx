@@ -21,7 +21,7 @@ export default function MyFeed({
   return (
     <div
       className={clsx(
-        "extended-container animate-fadeIn will-change-[opacity] pt-safe-top",
+        "animate-fadeIn will-change-[opacity] pt-safe-top",
         className
       )}
     >

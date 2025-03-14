@@ -48,7 +48,7 @@ export default function GatheringDetail({
   };
 
   return (
-    <div className={"extended-container"}>
+    <div>
       <div className="w-full relative h-[380px]">
         <GatheringBannerContainer
           gathering={selectedGathering}

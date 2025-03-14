@@ -1,24 +1,25 @@
 import dynamic from "next/dynamic";
-
 const Header = dynamic(() => import("../components/shared/Header/Header"), {
   ssr: false,
 });
-const HeaderWithBackBtn = dynamic(
+const HeaderWithBtn = dynamic(
   () => import("../components/shared/Header/HeaderWithBtn"),
   { ssr: false }
 );
 
 type HeaderWithBtnProps = {
-  pageName: string;
-  color?: string;
+  fixed?: boolean;
+  headerLabel: string;
   fontColor?: string;
+  bgColor?: string;
   icon?: React.ReactNode;
-  fixedNot?: boolean;
 };
 
 type HeaderProps = {
-  pageName: string;
+  px?: string;
   icon?: React.ReactNode;
+  fixed?: boolean;
+  headerLabel: string;
 };
 
 type HeaderConfig = {
@@ -35,62 +36,62 @@ type HeaderConfig = {
 export default function useHeader(pathname: string) {
   const headerConfig: HeaderConfig = {
     "/invitation": {
-      component: HeaderWithBackBtn,
-      props: { pageName: "초대장", color: "white" },
+      component: HeaderWithBtn,
+      props: { headerLabel: "초대장", bgColor: "white" },
     },
     "/signup": {
-      component: HeaderWithBackBtn,
-      props: { pageName: "프로필 생성", color: "white" },
+      component: HeaderWithBtn,
+      props: { headerLabel: "프로필 생성", bgColor: "white" },
     },
     "/feed/edit": {
-      component: HeaderWithBackBtn,
+      component: HeaderWithBtn,
       props: {
-        pageName: "피드 수정",
+        headerLabel: "피드 수정",
       },
     },
     "/social": {
       component: Header,
       props: {
-        pageName: "소셜",
+        headerLabel: "소셜",
       },
     },
     "/hidden": {
-      component: HeaderWithBackBtn,
-      props: { pageName: "피드 관리", color: "white" },
+      component: HeaderWithBtn,
+      props: { headerLabel: "피드 관리", bgColor: "white" },
     },
     "/record": {
-      component: HeaderWithBackBtn,
-      props: { pageName: "기록하기", color: "transparent" },
+      component: HeaderWithBtn,
+      props: { headerLabel: "기록하기" },
     },
     "/my/edit": {
-      component: HeaderWithBackBtn,
-      props: { pageName: "프로필 편집" },
+      component: HeaderWithBtn,
+      props: { headerLabel: "프로필 편집" },
     },
     "/my": {
       component: Header,
-      props: { pageName: "My" },
+      props: { headerLabel: "My" },
     },
 
     "/gathering/": {
-      component: HeaderWithBackBtn,
+      component: HeaderWithBtn,
       props: pathname.endsWith("new")
-        ? { pageName: "약속 만들기", color: "transparent", fixedNot: true }
+        ? { headerLabel: "약속 만들기", fixed: false }
         : pathname.endsWith("edit")
-        ? { pageName: "약속 수정", color: "#FFF" }
-        : { fontColor: "#FFF", pageName: "약속 상세" },
+        ? { headerLabel: "약속 수정", bgColor: "#FFF" }
+        : { fontColor: "#FFF", headerLabel: "약속 상세" },
     },
     "/gathering": {
       component: Header,
-      props: { pageName: "나의 약속" },
+      props: { headerLabel: "나의 약속" },
     },
     "/groups": {
-      component: HeaderWithBackBtn,
+      component: HeaderWithBtn,
       props:
         pathname.endsWith("new") || pathname.endsWith("done")
-          ? { pageName: "그룹 생성", color: "#FFF" }
+          ? { headerLabel: "그룹 생성", bgColor: "#FFF" }
           : pathname.endsWith("edit")
-          ? { pageName: "그룹 수정", color: "white" }
-          : { pageName: "나의 그룹", color: "#f4f4f4" },
+          ? { headerLabel: "그룹 수정", bgColor: "white" }
+          : { headerLabel: "나의 그룹", bgColor: "#f4f4f4" },
     },
   };
   const getMatchedHeader = () => {

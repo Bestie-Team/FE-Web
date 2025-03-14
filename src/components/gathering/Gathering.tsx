@@ -51,7 +51,7 @@ export default function Gathering({
   }, []);
 
   return (
-    <div className={clsx("z-0 pt-3 w-full px-5 extended-container", className)}>
+    <div className={clsx("z-0 pt-3 w-full px-5", className)}>
       {message && showMessage && (
         <Message onClose={() => setShowMessage(false)} />
       )}

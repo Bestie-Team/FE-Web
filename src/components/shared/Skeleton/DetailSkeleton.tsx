@@ -3,10 +3,7 @@ import Flex from "../Flex";
 
 export default function DetailSkeleton() {
   return (
-    <Flex
-      direction="column"
-      className="extended-container bg-base-white h-dvh w-full"
-    >
+    <Flex direction="column" className="pt-safe-top bg-base-white h-dvh w-full">
       <div className="bg-grayscale-50 w-full h-[380px] animate-pulse" />
       <Flex direction="column" className="w-full">
         <div className="w-full px-6 py-5 bg-base-white">
