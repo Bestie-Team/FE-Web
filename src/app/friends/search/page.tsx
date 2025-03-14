@@ -1,5 +1,4 @@
 "use client";
-import FriendsPageHeader from "@/components/friends/FriendsPageHeader";
 import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { userSearchAtom } from "@/atoms/friends";
@@ -28,16 +27,6 @@ export default function SearchPage() {
     search: debouncedSearch,
     enabled: debouncedSearch.length >= 2,
   });
-
-  // const clickBackBtnHandler = () => {
-  //   if (type === "groupEdit" || type === "group" || type === "gathering") {
-  //     if (setStep) {
-  //       setStep(1);
-  //     }
-  //   } else {
-  //     router.back();
-  //   }
-  // };
 
   useInfiniteScroll({ isFetching, loadMore });
 

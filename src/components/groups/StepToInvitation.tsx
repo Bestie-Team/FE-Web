@@ -2,7 +2,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { HEART_LETTER } from "@/constants/images";
 import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
