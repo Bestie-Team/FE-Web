@@ -61,6 +61,7 @@ export default function DecorateWithStickers() {
   }, []);
 
   const handleCaptureImage = useCallback(async () => {
+    setDeco(true);
     if (ref.current === null || !fabricCanvasRef.current) return;
     if (imageRef.current) {
       console.log("resize");
@@ -98,7 +99,6 @@ export default function DecorateWithStickers() {
         }
         // setImg(img);
       };
-      setDeco(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
@@ -244,9 +244,11 @@ export default function DecorateWithStickers() {
           <Spacing size={32} />
         </>
       )}
+      {/* 이 부분이 deco가 false일 때도 렌더링 돼서 아랫 부분에 스크롤 생기고 있었어요. */}
       <Flex
         direction="column"
         align="center"
+        style={{ display: deco ? "flex" : "none" }}
         className="h-full"
         justify="space-between"
       >
