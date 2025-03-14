@@ -77,7 +77,7 @@ export default function GatheringPage() {
 
   return (
     <div className="h-dvh">
-      <Header>
+      <Header isWebView={isReactNativeWebView}>
         <Panel
           selectedTab={selectedTab}
           long="short"
@@ -136,35 +136,43 @@ export default function GatheringPage() {
   );
 }
 
-const Header = React.memo(({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <div
-        style={{
-          top: 0,
-          position: "fixed",
-          zIndex: 12,
-        }}
-        className={styles.header}
-      >
-        <span>약속</span>
-      </div>
-      <Flex
-        id="filter"
-        justify="space-between"
-        className={clsx(styles.panelWrapper, "pt-safe-top")}
-      >
-        {children}
-      </Flex>
-    </>
-  );
-});
+const Header = React.memo(
+  ({
+    children,
+    isWebView,
+  }: {
+    children: React.ReactNode;
+    isWebView: boolean;
+  }) => {
+    return (
+      <>
+        <div
+          style={{
+            top: 0,
+            position: "fixed",
+            zIndex: 99,
+          }}
+          className={clsx(styles.header, isWebView ? "pt-safe-top" : "")}
+        >
+          <span>약속</span>
+        </div>
+        <Flex
+          id="filter"
+          justify="space-between"
+          className={clsx(styles.panelWrapper, isWebView ? "pt-safe-top" : "")}
+        >
+          {children}
+        </Flex>
+      </>
+    );
+  }
+);
 
 Header.displayName = "Header";
 
 const styles = {
   header:
-    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px] pt-safe-top",
+    "min-w-[320px] max-w-[430px] w-full flex justify-between items-center min-h-12 bg-base-white pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px]",
   panelWrapper:
     "mt-12 px-5 fixed max-w-[430px] flex w-full bg-base-white transition-shadow duration-300",
 };
