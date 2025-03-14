@@ -12,6 +12,7 @@ import useSignup from "./users/hooks/useSignup";
 import { lightyToast } from "@/utils/toast";
 import { getIdAvailability } from "@/remote/users";
 import validateForm from "@/utils/validateSignupForm";
+import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
@@ -31,6 +32,7 @@ export default function SignupForm() {
     useState<RegisterRequestType>(INITIAL_FORM_STATE);
   const [oauthData, setOauthData] = useState<lighty.LoginFailResponse>();
   const [idNotAvailable, setIdNotAvailable] = useState(false);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const handleAccountIdChange = useCallback(async (value: string) => {
     if (value.length <= 40) {
@@ -149,7 +151,11 @@ export default function SignupForm() {
       <span className="text-C2 text-grayscale-500 px-2">
         *계정 아이디는 프로필에 노출되며, 친구 추가 시 활용돼요!
       </span>
-      <FixedBottomButton label="다음" onClick={signupNextHandler} />
+      <FixedBottomButton
+        label="다음"
+        onClick={signupNextHandler}
+        className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+      />
       {modalOpen && (
         <TermsBottomSheet
           onClose={() => setModalOpen(false)}

@@ -1,18 +1,26 @@
 "use client";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
+import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import Spacing from "@/components/shared/Spacing";
 import SignupForm from "@/components/SignupForm";
 import getHeader from "@/utils/getHeader";
+import clsx from "clsx";
 import { Suspense } from "react";
 
 export default function SignupPage() {
   const header = getHeader("/signup");
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <div className="flex flex-col gap-6 bg-base-white h-full">
       {header}
       <Spacing size={28} />
-      <div className={styles.container}>
+      <div
+        className={clsx(
+          styles.container,
+          isReactNativeWebView ? "pt-safe-top" : ""
+        )}
+      >
         <LightyIcon width="20" height="20" color={"#0A0A0A"} />
         <div className={styles.greeting}>
           <div>반가워요!</div>
