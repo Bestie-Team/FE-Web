@@ -18,7 +18,7 @@ export default function Schedule({
       .reverse() || [];
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center pt-5">
       <LightyCalendarWithBorder gatherings={upcomingGatherings} />
       <Spacing size={28} />
       <MemoizedUpcomingSchedule gathering={upcomingGatherings} />

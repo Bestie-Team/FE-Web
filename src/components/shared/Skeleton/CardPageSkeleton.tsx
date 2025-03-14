@@ -6,7 +6,7 @@ import LightyLogo from "../Icon/LightyLogo";
 
 export default function CardPageSkeleton() {
   return (
-    <div className="extended-container h-dvh bg-base-white overflow-hidden">
+    <div className="pt-safe-top h-dvh bg-base-white overflow-hidden">
       <Flex className="w-full h-12 gap-[6px]" align="center">
         <div className="pl-[17px] py-[10px] pr-[3px]">
           <ArrowLeftIcon />

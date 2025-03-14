@@ -7,13 +7,22 @@ import { modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
 import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering";
-import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
-import Spacing from "@/components/shared/Spacing";
 import GatheringDetail from "@/components/gathering/GatheringDetail";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import dynamic from "next/dynamic";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import handleShare from "@/utils/handleShare";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import ShareIcon from "@/components/shared/Icon/ShareIcon";
+import { MENU_TYPES } from "@/models/dropdown";
 
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"));
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
+  ssr: false,
+});
+const GatheringOptions = dynamic(
+  () => import("@/components/gathering/GatheringOption"),
+  { ssr: false }
+);
 
 export default function GatheringDetailPage({
   params,
@@ -22,6 +31,7 @@ export default function GatheringDetailPage({
 }) {
   const id = params.id;
   const router = useRouter();
+  const { userInfo } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
@@ -37,6 +47,12 @@ export default function GatheringDetailPage({
     },
     onError: (error) => lightyToast.error(error.message),
   });
+
+  const sharingData = {
+    url: `https://lighty.today/gathering/${id}`,
+    text: selectedGathering?.description || "",
+    title: selectedGathering?.name || "",
+  };
 
   const MODAL_CONFIGS = {
     deleteGathering: {
@@ -55,32 +71,49 @@ export default function GatheringDetailPage({
     });
   };
 
+  const clickBackBtnHandler = () => {
+    if (selectedTab == "1") {
+      router.push("/gathering?tab=1");
+    } else if (selectedTab == "2") {
+      router.push("/gathering?tab=2");
+    } else {
+      router.back();
+    }
+  };
+
   if (!selectedGathering) {
     return;
   }
 
+  const { gatheringDate, hostUser } = selectedGathering;
+
+  const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
+
   return (
-    <div className="relative min-h-dvh bg-grayscale-50 w-full">
-      <header className={header}>
-        <button
-          className={
-            "w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer active:animate-shrink-grow"
-          }
-          onClick={() => {
-            if (selectedTab == "1") {
-              router.push("/gathering?tab=1");
-            } else if (selectedTab == "2") {
-              router.push("/gathering?tab=2");
-            } else {
-              router.back();
-            }
-          }}
-        >
-          <ArrowLeftIcon color="#FFF" />
-        </button>
-        <div className="flex-1 text-base-white">{"약속 상세"}</div>
-        <Spacing size={6} />
-      </header>
+    <div className="w-full min-h-dvh bg-grayscale-50">
+      <HeaderWithBtn
+        onClickBackBtn={clickBackBtnHandler}
+        headerLabel="약속 상세"
+        fontColor="white"
+        icon={
+          <div className={"flex gap-[14px]"}>
+            <div
+              className="cursor-pointer"
+              onMouseDown={() => handleShare(sharingData)}
+            >
+              <ShareIcon />
+            </div>
+            {userInfo?.accountId === hostUser.accountId && (
+              <GatheringOptions
+                type={
+                  isEnded ? MENU_TYPES.GATHERING_ENDED : MENU_TYPES.GATHERING
+                }
+                gathering={selectedGathering}
+              />
+            )}
+          </div>
+        }
+      />
       <GatheringDetail
         selectedGathering={selectedGathering}
         isLoaded={isLoaded}
@@ -100,5 +133,3 @@ export default function GatheringDetailPage({
     </div>
   );
 }
-const header =
-  "absolute top-0 left-0 right-0 flex z-20 max-w-[430px] w-full items-center h-12 text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5 pt-safe-top pb-safe-bottom";

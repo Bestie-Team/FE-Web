@@ -5,7 +5,7 @@ import React from "react";
 
 export default function RecordPageSkeleton() {
   return (
-    <div className="h-dvh bg-base-white w-full extended-container">
+    <div className="h-dvh bg-base-white w-full pt-safe-top">
       <Flex className="w-full h-12 gap-[6px]" align="center">
         <div className="pl-[17px] py-[10px] pr-[3px]">
           <ArrowLeftIcon />

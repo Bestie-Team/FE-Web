@@ -29,4 +29,4 @@ export default function TermOfUse({ label, onClick }: TermOfUseProps) {
   );
 }
 
-const containerStyle = `bg-base-white animate-slide-up will-change-transform w-full max-w-[430px] min-w-[350px] min-h-dvh`;
+const containerStyle = `bg-base-white animate-slide-up will-change-transform w-full max-w-[430px] min-w-[350px] min-h-dvh overflow-y-scroll`;

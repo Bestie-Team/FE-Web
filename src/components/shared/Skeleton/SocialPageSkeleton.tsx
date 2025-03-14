@@ -9,11 +9,7 @@ import Flex from "../Flex";
 export default function SocialPageSkeleton() {
   return (
     <>
-      <div
-        className={clsx(
-          "extended-container w-full bg-base-white fixed px-5 mt-12 pt-safe-top"
-        )}
-      >
+      <div className={"pt-safe-top w-full bg-base-white fixed px-5 mt-12"}>
         <Flex justify="space-between" className={tabContainerStyle}>
           <div className={tabWrapperStyle}>
             <div className={"flex"}>
@@ -31,7 +27,7 @@ export default function SocialPageSkeleton() {
           direction="column"
           justify="space-between"
           align="center"
-          className={clsx("px-5 gap-4 mt-3 pb-4 pt-safe-top")}
+          className={"px-5 gap-4 mt-3 pb-4 pt-safe-top"}
         >
           <Flex
             justify="space-between"

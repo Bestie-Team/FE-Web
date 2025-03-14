@@ -1,26 +1,20 @@
 import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import getHeader from "@/utils/getHeader";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
-import { useMemo } from "react";
 import { HEART_LETTER } from "@/constants/images";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function MakingGatheringStatus({
   isPending,
 }: {
   isPending: boolean;
 }) {
-  const header = useMemo(() => getHeader("/gathering/new"), []);
   const router = useRouter();
-  const { isReactNativeWebView } = useReactNativeWebView();
   return (
     <Flex direction="column" className="h-dvh bg-base-white" align="center">
-      {header}
       <Flex
         className="h-[calc(100dvh-120px)]"
         direction="column"
@@ -61,7 +55,7 @@ export default function MakingGatheringStatus({
         onClick={() => {
           router.replace("/feed");
         }}
-        className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+        className="mb-safe-bottom"
       />
     </Flex>
   );

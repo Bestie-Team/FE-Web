@@ -5,8 +5,6 @@ import ReportNoticeItem from "./ReportNoticeItem";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useRef } from "react";
 import NoticeSkeleton from "../shared/Skeleton/NoticeSkeleton";
-import clsx from "clsx";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 import NoNotification from "./NoNotification";
 
 export default function NoticeContainer() {
@@ -14,7 +12,6 @@ export default function NoticeContainer() {
   const containerRef = useRef<HTMLDivElement>(null);
   const today: Notification[] = [];
   const passed: Notification[] = [];
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   notifications?.forEach((notification) => {
     const isToday =
@@ -37,12 +34,9 @@ export default function NoticeContainer() {
   return (
     <div
       ref={containerRef}
-      className={clsx(
-        "h-dvh overflow-y-scroll no-scrollbar gap-10 pt-[60px] px-5 pb-10",
-        isReactNativeWebView ? "pt-safe-top" : ""
-      )}
+      className="h-dvh pt-safe-top overflow-y-scroll no-scrollbar gap-10 px-5 pb-10"
     >
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 pt-[60px]">
         {today.length > 0 && (
           <Flex direction="column" className="gap-3">
             <span className="text-T4 mb-1">오늘의 알림</span>

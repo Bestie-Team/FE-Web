@@ -1,23 +1,23 @@
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import getHeader from "@/utils/getHeader";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { HEART_LETTER } from "@/constants/images";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
 export default function StepToInvitation({
   setStep,
 }: {
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const header = useMemo(() => getHeader("/gathering/new"), []);
-  const { isReactNativeWebView } = useReactNativeWebView();
-
   return (
-    <Flex direction="column" className="h-dvh bg-base-white">
-      {header}
+    <Flex direction="column" className="h-dvh bg-base-white pt-safe-top">
+      <HeaderWithBtn
+        headerLabel="초대장 생성"
+        onClickBackBtn={() => setStep((prev) => prev - 1)}
+        bgColor="white"
+      />
       <Flex direction="column" className="h-dvh" align="center">
         <Spacing size={140} />
         <span className="text-T2">이제 초대장을 만들 차례에요!</span>
@@ -37,7 +37,7 @@ export default function StepToInvitation({
         <FixedBottomButton
           label={"초대장 만들기"}
           onClick={() => setStep(4)}
-          className={isReactNativeWebView ? "mb-safe-bottom" : ""}
+          className="mb-safe-bottom"
         />
       </Flex>
     </Flex>

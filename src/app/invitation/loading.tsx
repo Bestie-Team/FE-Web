@@ -5,16 +5,16 @@ import Spacing from "@/components/shared/Spacing";
 
 export default function Loading() {
   return (
-    <div className={"h-dvh pt-safe-top"}>
+    <div className={"h-dvh pt-safe-top pb-safe-bottom"}>
       <div
         id="filter"
         className={
-          "max-w-[430px] pt-12 fixed flex flex-col w-full bg-base-white"
+          "max-w-[430px] pt-safe-top fixed flex flex-col w-full bg-base-white"
         }
       >
         <div
           className={
-            "pt-safe-top min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-12 text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5"
+            "min-w-[320px] max-w-[430px] w-full flex justify-between items-center h-12 text-[18px] font-[700] leading-[23.4px] tracking-[-0.54px] gap-[6px] pl-[0px] pr-5"
           }
           style={{
             zIndex: 30,
@@ -52,7 +52,7 @@ export default function Loading() {
           </Flex>
         </div>
       </div>
-      <div className="h-dvh ">
+      <div className="h-dvh pt-safe-top">
         <Spacing size={110} />
         <InvitationCardSkeleton />
         <Spacing size={24} />

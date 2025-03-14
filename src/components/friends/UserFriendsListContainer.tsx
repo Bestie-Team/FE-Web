@@ -101,7 +101,7 @@ export default function UserFriendsListContainer() {
         direction="column"
         justify="space-between"
         align="center"
-        className={"px-5 gap-4 mt-3 pb-4 pt-safe-top"}
+        className="px-5 gap-4 mt-3 pb-4"
       >
         <Flex justify="space-between" align="center" className="w-full">
           <span className="text-T4" id="friendList">
@@ -124,7 +124,6 @@ export default function UserFriendsListContainer() {
         </Link>
       </Flex>
       <FriendsListContainer friends={friends} isFetching={isFetching} />
-
       <ReportFriendModal
         isOpen={reportFriendModalOpen}
         onClose={() => setReportFriendModalOpen(false)}

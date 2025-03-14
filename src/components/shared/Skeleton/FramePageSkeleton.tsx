@@ -5,7 +5,7 @@ import React from "react";
 
 export default function FramePageSkeleton() {
   return (
-    <div className="h-dvh bg-grayscale-50 w-full extended-container">
+    <div className="h-dvh bg-grayscale-50 w-full pt-safe-top">
       <Flex className="w-full h-12 gap-[6px]" align="center">
         <div className="pl-[17px] py-[10px] pr-[3px]">
           <ArrowLeftIcon />

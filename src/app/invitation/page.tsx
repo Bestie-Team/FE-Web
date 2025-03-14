@@ -1,28 +1,24 @@
 "use client";
 import InvitationCard from "@/components/invitation/InvitationCard";
 import Spacing from "@/components/shared/Spacing";
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import getHeader from "@/utils/getHeader";
-import clsx from "clsx";
 import { useTabs } from "@/hooks/useTabs";
 import useReceivedInvitationToGathering from "@/components/gathering/hooks/useReceivedInvitationToGathering";
 import useSentInvitationToGathering from "@/components/gathering/hooks/useSentInvitationToGathering";
 import InvitationModal from "@/components/invitation/InvitationModal";
 import Panel from "@/components/shared/Panel/Panel";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import { useQueryClient } from "@tanstack/react-query";
 import NoInvitation from "@/components/invitation/NoInvitation";
 import InvitationCardSkeleton from "@/components/shared/Skeleton/InvitationCardSkeleton";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 
 export default function InvitationPage() {
   const queryClient = useQueryClient();
-  const isPast = useScrollThreshold();
-  const header = useMemo(() => getHeader("/invitation"), []);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_r = useRef<HTMLDivElement>(null);
@@ -78,7 +74,7 @@ export default function InvitationPage() {
         <SwiperSlide>
           <div
             ref={containerRef_r}
-            className="h-dvh overflow-y-auto no-scrollbar"
+            className="pt-safe-top h-dvh overflow-y-auto no-scrollbar"
           >
             {received && received.length > 0 ? (
               <>
@@ -104,7 +100,7 @@ export default function InvitationPage() {
         <SwiperSlide>
           <div
             ref={containerRef}
-            className="h-dvh overflow-y-auto no-scrollbar"
+            className="pt-safe-top h-dvh overflow-y-auto no-scrollbar"
           >
             {sent && sent.length > 0 ? (
               <>
@@ -144,12 +140,8 @@ export default function InvitationPage() {
   }, []);
 
   return (
-    <div className={"h-dvh pt-safe-top"}>
-      <div
-        id="filter"
-        className={clsx(filterStyle, isPast ? "shadow-bottom" : "")}
-      >
-        {header}
+    <div className={"h-dvh"}>
+      <HeaderWithBtn headerLabel="초대장">
         <div className="w-full px-5">
           <Panel
             bgColor="transparent"
@@ -160,8 +152,8 @@ export default function InvitationPage() {
             onClick={handleTabClick}
           />
         </div>
-      </div>
-      <Suspense> {renderSwiper}</Suspense>
+      </HeaderWithBtn>
+      {renderSwiper}
       {isModalOpen ? (
         <InvitationModal
           onClickClose={setModalOpen}
@@ -171,6 +163,3 @@ export default function InvitationPage() {
     </div>
   );
 }
-
-const filterStyle =
-  "max-w-[430px] pt-12 fixed flex flex-col w-full bg-base-white";

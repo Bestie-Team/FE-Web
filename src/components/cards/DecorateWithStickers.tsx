@@ -191,7 +191,9 @@ export default function DecorateWithStickers() {
   return (
     <Flex
       direction="column"
-      className={"extended-container !min-h-dvh h-full pb-[60px]"}
+      className={
+        "pt-safe-top !min-h-dvh h-full pb-[60px] overflow-scroll no-scrollbar"
+      }
     >
       {deco === false ? (
         <Flex
@@ -317,7 +319,6 @@ export default function DecorateWithStickers() {
           </div>
         )}
       </Flex>
-
       {decoBottomSheetState ? (
         <DecoStickerBottomSheet
           handleSticker={handleAddSticker}

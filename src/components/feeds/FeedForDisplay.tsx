@@ -21,7 +21,7 @@ export default function FeedForDisplay() {
   }));
 
   return (
-    <Flex direction="column" className={"extended-container my-3 pt-safe-top"}>
+    <Flex direction="column" className={"my-3 pt-safe-top"}>
       <InfoBar friendInfo={friendInfo} feed={feed} />
       <Spacing size={12} />
       <Swiper

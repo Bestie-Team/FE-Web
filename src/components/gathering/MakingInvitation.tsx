@@ -1,4 +1,3 @@
-import getHeader from "@/utils/getHeader";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
@@ -6,20 +5,23 @@ import * as lighty from "lighty-type";
 import { SetterOrUpdater } from "recoil";
 import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCard";
 import { useAuth } from "../shared/providers/AuthProvider";
-import { useMemo } from "react";
 import { lightyToast } from "@/utils/toast";
+import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
+import { Dispatch, SetStateAction } from "react";
 
 export default function MakingInvitation({
   gathering,
   setGathering,
   makeGathering,
+  setStep,
 }: {
   gathering: lighty.CreateGatheringRequest;
   setGathering: SetterOrUpdater<lighty.CreateGatheringRequest>;
   makeGathering: () => void;
+  setStep: Dispatch<SetStateAction<number>>;
 }) {
   const { userInfo } = useAuth();
-  const header = useMemo(() => getHeader("/gathering/new"), []);
+
   const handleMakeGathering = () => {
     if (gathering.invitationImageUrl !== "") {
       makeGathering();
@@ -30,7 +32,11 @@ export default function MakingInvitation({
   };
   return (
     <Flex direction="column" className="bg-grayscale-50 h-full">
-      {header}
+      <HeaderWithBtn
+        headerLabel="초대장 만들기"
+        bgColor="#F4F4F4"
+        onClickBackBtn={() => setStep((prev: number) => prev - 1)}
+      />
       <Flex
         direction="column"
         className={"min-h-[calc(100dvh+20px)] pt-safe-top"}

@@ -21,7 +21,7 @@ export default function GroupDetailContainer({
 }) {
   const { groupImageUrl, owner, description, members } = groupDetail;
   return (
-    <div className="absolute top-0">
+    <div>
       <div className="w-full relative">
         <GroupBannerContainer
           imageUrl={groupImageUrl}

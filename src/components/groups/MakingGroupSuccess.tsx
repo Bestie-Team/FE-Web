@@ -1,13 +1,12 @@
 import { useRouter } from "next/navigation";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import getHeader from "@/utils/getHeader";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import NewGroupContainer from "./NewGroupContainer";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import FullPageLoader from "../shared/FullPageLoader";
 import { CreateGroupRequest } from "@/models/group";
-import { useMemo } from "react";
+import Header from "../shared/Header/Header";
 
 export default function MakingGroupSuccess({
   group,
@@ -17,11 +16,10 @@ export default function MakingGroupSuccess({
   isPending: boolean;
 }) {
   const router = useRouter();
-  const header = useMemo(() => getHeader("/groups/new"), []);
 
   return (
     <div className={"flex flex-col bg-base-white h-full pt-safe-top"}>
-      {header}
+      <Header headerLabel="그룹 생성" />
       {isPending ? (
         <FullPageLoader />
       ) : (

@@ -1,25 +1,22 @@
 "use client";
 import FilterBar from "@/components/shared/YearFilter";
 import { useRecoilState, useRecoilValue } from "recoil";
-import clsx from "clsx";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
-import getHeader from "@/utils/getHeader";
 import { modalStateAtom } from "@/atoms/modal";
 import Feed from "@/components/feeds/Feed";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
-import { Suspense, useMemo } from "react";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import { Suspense } from "react";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Modal from "@/components/shared/Modal/Modal";
 import useDisplayFeed from "@/components/feeds/hooks/useDisplayFeed";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import Spacing from "@/components/shared/Spacing";
 
 export default function FeedPage() {
-  const header = useMemo(() => getHeader("/hidden"), []);
-  const isPast = useScrollThreshold();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
   const queryClient = useQueryClient();
@@ -61,15 +58,9 @@ export default function FeedPage() {
     return <div>숨김 피드가 없어요</div>;
   }
   return (
-    <div className="pt-12">
-      {header}
-      <div className={clsx(filterWrapperStyle, isPast ? "shadow-bottom" : "")}>
-        <div
-          style={{
-            backgroundColor: "#fff",
-          }}
-          className={tabContainerStyle}
-        >
+    <div className="min-h-dvh pt-safe-top">
+      <HeaderWithBtn headerLabel="숨김 피드" bgColor="white">
+        <div className={tabContainerStyle}>
           <div className={tabWrapperStyle}>
             <TabButton
               title={`숨김 피드`}
@@ -81,12 +72,12 @@ export default function FeedPage() {
           </div>
           <FilterBar />
         </div>
-      </div>
+      </HeaderWithBtn>
       <Suspense>
+        <Spacing size={96} />
         <Feed
           feeds={hiddenFeed}
           onClickFeed={() => {}}
-          className={"!pt-12 mt-safe-top"}
           isFetching={isFetching}
         />
       </Suspense>
@@ -103,9 +94,6 @@ export default function FeedPage() {
     </div>
   );
 }
-
-const filterWrapperStyle =
-  "max-w-[430px] fixed z-10 flex w-full bg-base-white transition-shadow duration-300 pt-safe-top";
 
 const tabContainerStyle = "flex w-full px-5 justify-between items-center";
 const tabWrapperStyle = "w-fit";

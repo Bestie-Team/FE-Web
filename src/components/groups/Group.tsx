@@ -31,9 +31,7 @@ export default function Groups() {
   useInfiniteScroll({ isFetching, loadMore });
 
   return (
-    <div
-      className={"h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20 pt-safe-top"}
-    >
+    <div className="h-[calc(100dvh-144px)] px-5 text-T4 mt-3">
       <Flex align="center">
         <span>전체 그룹</span>
         <Spacing size={4} direction="horizontal" />

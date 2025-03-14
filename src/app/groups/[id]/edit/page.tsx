@@ -9,8 +9,7 @@ import PencilIcon from "@/components/shared/Icon/PencilIcon";
 import UserIcon from "@/components/shared/Icon/UserIcon";
 import Input from "@/components/shared/Input/Input";
 import Spacing from "@/components/shared/Spacing";
-import getHeader from "@/utils/getHeader";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { UpdateGroupRequest } from "@/models/group";
 import useUpdateGroup from "@/components/groups/hooks/useUpdateGroup";
@@ -18,9 +17,9 @@ import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import * as lighty from "lighty-type";
 import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
+import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 
 export default function GroupEditPage() {
-  const header = useMemo(() => getHeader("/groups/*/edit"), []);
   const selectedGroup = useRecoilValue<UpdateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -54,9 +53,9 @@ export default function GroupEditPage() {
   if (step === 1) {
     return (
       <div className="min-h-[calc(100dvh+75px)] bg-base-white overflow-auto no-scrollbar">
-        {header}
-        <form className="flex flex-col px-5 pt-12">
-          <Spacing size={24} />
+        <HeaderWithBtn headerLabel="그룹 수정" bgColor="white" />
+        <form className="flex flex-col px-5 pt-safe-top">
+          <Spacing size={72} />
           <AddGroupPhoto
             image={groupInfo.groupImageUrl}
             setGroup={setGroupInfo}
@@ -105,7 +104,11 @@ export default function GroupEditPage() {
           <Spacing size={8} />
           <AddOnlyFriendsSlider setStep={setStep} groupMembers={groupMembers} />
         </form>
-        <FixedBottomButton label={"수정 완료"} onClick={handleEdit} />
+        <FixedBottomButton
+          label={"수정 완료"}
+          onClick={handleEdit}
+          className="mb-safe-bottom"
+        />
       </div>
     );
   } else if (step === 2) {

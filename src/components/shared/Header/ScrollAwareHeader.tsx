@@ -6,12 +6,23 @@ import React from "react";
 import clsx from "clsx";
 import Panel from "../Panel/Panel";
 import type { Notification } from "lighty-type";
+import Header from "./Header";
+
+interface ScrollAwareHeaderProps extends FeedHeaderProps {
+  visible: boolean;
+}
 
 interface HeaderProps {
-  shadow?: boolean;
+  className?: string;
+  selectedTab: "1" | "2";
+  setSelectedTab: (tabName: "1" | "2") => void;
+}
+
+interface FeedHeaderProps {
+  className?: string;
+  mailCount: Notification[];
   selectedTab: "1" | "2";
   handleTabClick: (tab: "1" | "2") => void;
-  mailCount: Notification[];
   isNewNotification: Notification[];
 }
 
@@ -27,28 +38,27 @@ const IconButton = ({
       e.stopPropagation();
       onClick(e);
     }}
-    className="relative flex justify-center items-center w-10 h-10 p-2 cursor-pointer hover:animate-shrink-grow-less"
+    className="relative flex justify-center items-center w-10 h-10 p-2 cursor-pointer"
   >
     {children}
   </div>
 );
 
-const Header = React.memo(
+const FeedHeader = React.memo(
   ({
-    shadow = false,
+    className,
+    mailCount,
     selectedTab,
     handleTabClick,
     isNewNotification,
-    mailCount,
-  }: HeaderProps) => {
+  }: FeedHeaderProps) => {
     const router = useRouter();
-
     return (
-      <div className="flex flex-col">
-        <div className="w-full flex justify-between items-center h-12 pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px]">
-          <span>{"추억 피드"}</span>
-
-          <div className="flex items-center gap-1 pr-5">
+      <Header
+        className={className}
+        headerLabel="추억 피드"
+        icon={
+          <div className="flex items-center gap-1">
             <IconButton onClick={() => router.push("/invitation")}>
               <MailIcon
                 className="relative"
@@ -60,7 +70,6 @@ const Header = React.memo(
                 <DotWithNumberIcon count={mailCount.length} />
               )}
             </IconButton>
-
             <IconButton onClick={() => router.push("/notice")}>
               <NoticeIcon color="#0A0A0A" />
               {isNewNotification.length >= 1 && (
@@ -68,11 +77,9 @@ const Header = React.memo(
               )}
             </IconButton>
           </div>
-        </div>
-        <div
-          id="filter"
-          className={clsx("px-5 w-full", shadow ? "shadow-bottom" : "")}
-        >
+        }
+      >
+        <div id="filter">
           <Panel
             selectedTab={selectedTab}
             long="short"
@@ -82,16 +89,49 @@ const Header = React.memo(
             year={false}
           />
         </div>
-      </div>
+      </Header>
     );
   }
 );
 
-Header.displayName = "Header";
+FeedHeader.displayName = "FeedHeader";
 
-interface ScrollAwareHeaderProps extends HeaderProps {
-  visible: boolean;
-}
+export const GatheringHeader = React.memo(
+  ({ className, selectedTab, setSelectedTab }: HeaderProps) => {
+    return (
+      <Header className={className} headerLabel="약속">
+        <Panel
+          selectedTab={selectedTab}
+          long="short"
+          title1="예정"
+          title2="완료"
+          onClick={setSelectedTab}
+        />
+      </Header>
+    );
+  }
+);
+
+GatheringHeader.displayName = "GatheringHeader";
+
+export const SocialHeader = React.memo(
+  ({ className, selectedTab, setSelectedTab }: HeaderProps) => {
+    return (
+      <Header className={className} headerLabel="소셜">
+        <Panel
+          title1="친구"
+          title2="그룹"
+          long="short"
+          selectedTab={selectedTab}
+          onClick={setSelectedTab}
+          year={false}
+        />
+      </Header>
+    );
+  }
+);
+
+SocialHeader.displayName = "SocialHeader";
 
 export function ScrollAwareHeader({
   visible,
@@ -101,18 +141,15 @@ export function ScrollAwareHeader({
   mailCount,
 }: ScrollAwareHeaderProps) {
   return (
-    <header
+    <FeedHeader
       className={clsx(
-        "max-w-[430px] mx-auto fixed top-0 left-0 right-0 bg-base-white/80 backdrop-blur-md z-50 transition-transform duration-300 ease-in-out pt-safe-top",
+        "pt-safe-top bg-base-white/80 backdrop-blur-md transition-transform duration-300 ease-in-out z-20",
         visible ? "translate-y-0" : "-translate-y-full"
       )}
-    >
-      <Header
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-        isNewNotification={isNewNotification}
-        mailCount={mailCount}
-      />
-    </header>
+      selectedTab={selectedTab}
+      handleTabClick={handleTabClick}
+      isNewNotification={isNewNotification}
+      mailCount={mailCount}
+    />
   );
 }

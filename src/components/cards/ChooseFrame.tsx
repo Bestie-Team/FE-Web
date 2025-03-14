@@ -2,7 +2,6 @@ import { cardFrameAtom } from "@/atoms/card";
 import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
-import clsx from "clsx";
 import { useRecoilValue } from "recoil";
 
 export default function ChooseFrame({ onNext }: { onNext: () => void }) {
@@ -10,9 +9,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
   return (
     <Flex
-      className={clsx(
-        "extended-container bg-base-white h-dvh pb-14 overflow-y-scroll pt-safe-top"
-      )}
+      className="pt-safe-top h-dvh pb-14 overflow-y-scroll no-scrollbar"
       justify="space-between"
       direction="column"
     >
