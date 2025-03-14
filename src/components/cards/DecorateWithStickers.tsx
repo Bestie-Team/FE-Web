@@ -16,6 +16,10 @@ import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import { saveImageMobile } from "@/webview/actions";
+import { WEBVIEW_EVENT } from "@/webview/types";
+import { lightyToast } from "@/utils/toast";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -33,6 +37,7 @@ export default function DecorateWithStickers() {
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const frames = [
     "https://cdn.lighty.today/frame1.jpeg",
@@ -133,10 +138,32 @@ export default function DecorateWithStickers() {
         format: "png",
         multiplier: 2,
       });
+
+      if (isReactNativeWebView) {
+        saveImageMobile(uri);
+        return;
+      }
       setImageUri(uri);
       setImageBottomSheetOpen(true);
     }
   };
+
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent<string>) => {
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
+      const message: { type: string; token: string } = JSON.parse(data);
+
+      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_SUCCESS) {
+        lightyToast.success("저장 완료");
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   useEffect(() => {
     const applyCrop = async () => {
