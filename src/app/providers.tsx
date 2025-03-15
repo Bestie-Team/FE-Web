@@ -95,7 +95,10 @@ const NextLayout = ({ children }: Props) => {
     return (
       <div
         className={clsx(
-          "max-w-[430px] mx-auto my-0 min-h-dvh",
+          pathname === "/feed" || pathname === "/gathering"
+            ? ""
+            : "h-dvh overflow-y-scroll no-scrollbar",
+          "max-w-[430px] mx-auto my-0",
           isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
             ? "bg-grayscale-50"
             : "bg-base-white"

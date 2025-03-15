@@ -45,7 +45,8 @@ export default function GatheringPage() {
   } = useGatheringEnded({ limit: 8 });
 
   const { visible } = useScrollDirection({
-    elementRef: containerRef,
+    elementRef: gatheringRef,
+    selectedTab,
   });
 
   const handleRefresh = async () => {
@@ -96,19 +97,13 @@ export default function GatheringPage() {
         }
       >
         {selectedTab === "1" ? (
-          <div
-            className={
-              "h-full overflow-y-scroll no-scrollbar pb-10 mt-[87px] pt-safe-top"
-            }
-          >
+          <div className={"h-full overflow-y-scroll no-scrollbar pb-10"}>
             <Schedule expectingGatherings={myGatherings} />
           </div>
         ) : (
           <div
             ref={gatheringRef}
-            className={
-              "h-full overflow-y-scroll gathering no-scrollbar pb-36 mt-[87px]"
-            }
+            className={"h-full overflow-y-scroll gathering no-scrollbar pb-36"}
           >
             <Gathering
               ended

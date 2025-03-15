@@ -143,10 +143,7 @@ export default function GroupDetailPage() {
   };
 
   return (
-    <Flex
-      direction="column"
-      className="w-full min-h-dvh overflow-y-scroll no-scrollbar"
-    >
+    <Flex direction="column" className="w-full min-h-dvh">
       <HeaderWithBtn
         headerLabel="그룹 상세"
         fontColor="white"

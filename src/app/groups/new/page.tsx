@@ -30,7 +30,7 @@ export default function NewGroupPage() {
     return <InviteFriends setStep={setStep} type="group" />;
   }
   return (
-    <div className="min-h-[calc(100dvh+74px)] bg-base-white overflow-y-scroll no-scrollbar">
+    <div className="min-h-[calc(100dvh+74px)] bg-base-white">
       <HeaderWithBtn headerLabel="그룹 생성" bgColor="white" />
       <NewGroupForm step={step} setStep={setStep} />
     </div>

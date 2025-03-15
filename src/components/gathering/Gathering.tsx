@@ -8,6 +8,7 @@ import Message from "../shared/Message";
 import { useEffect, useState } from "react";
 import NoGathering from "./NoGathering";
 import { useRouter } from "next/navigation";
+import Spacing from "../shared/Spacing";
 
 type GatheringProps = {
   gatherings: GatheringType[];
@@ -52,6 +53,7 @@ export default function Gathering({
 
   return (
     <div className={clsx("z-0 pt-3 w-full px-5", className)}>
+      <Spacing size={87} />
       {message && showMessage && (
         <Message onClose={() => setShowMessage(false)} />
       )}

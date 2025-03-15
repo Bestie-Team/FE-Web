@@ -12,7 +12,8 @@ import MemberContainer from "../shared/MembersContainer";
 import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { MAP } from "@/constants/images";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 export default function GatheringDetail({
   selectedGathering,
@@ -25,12 +26,13 @@ export default function GatheringDetail({
 }) {
   const { gatheringDate, members, hostUser, address, description } =
     selectedGathering;
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const convertedDate = formatToKoreanTime(gatheringDate);
+  useIntersectionObserver({ elementRef: containerRef, threshold: 0.38 });
 
   return (
     <div>
-      <div className="w-full relative h-[380px]">
+      <div className="w-full relative h-[380px]" ref={containerRef}>
         <GatheringBannerContainer
           gathering={selectedGathering}
           isLoaded={isLoaded}

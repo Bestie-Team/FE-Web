@@ -71,7 +71,7 @@ export default function MyPage() {
   if (!user) return <DotSpinner />;
 
   return (
-    <div className="min-h-dvh w-full pt-safe-top overflow-y-scroll no-scrollbar">
+    <div className="min-h-dvh w-full pt-safe-top">
       <MyHeader
         shadow={isPast}
         open={modalState === "open"}

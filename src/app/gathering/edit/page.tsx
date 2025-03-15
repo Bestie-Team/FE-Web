@@ -65,7 +65,7 @@ export default function GatheringEditPage() {
   if (step === 1) {
     return (
       <Suspense fallback={<DotSpinner />}>
-        <div className="h-full bg-base-white overflow-y-scroll no-scrollbar">
+        <div className="h-dvh bg-base-white">
           <HeaderWithBtn headerLabel="약속 수정" />
           <GatheringEditForm
             type="edit"

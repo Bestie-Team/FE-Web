@@ -32,10 +32,7 @@ export default function NoticeContainer() {
   if (notifications && notifications.length < 1) return <NoNotification />;
 
   return (
-    <div
-      ref={containerRef}
-      className="h-dvh pt-safe-top overflow-y-scroll no-scrollbar gap-10 px-5 pb-10"
-    >
+    <div ref={containerRef} className="pt-safe-top gap-10 px-5 pb-10">
       <div className="flex flex-col gap-5 pt-[60px]">
         {today.length > 0 && (
           <Flex direction="column" className="gap-3">

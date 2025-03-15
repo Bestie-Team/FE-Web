@@ -258,6 +258,7 @@ export default function FeedPage() {
 
   const { visible } = useScrollDirection({
     elementRef: selectedTab === "1" ? containerRef : containerRef_m,
+    selectedTab,
   });
 
   useInfiniteScrollByRef({

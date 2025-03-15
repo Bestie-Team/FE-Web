@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
@@ -15,6 +15,8 @@ import handleShare from "@/utils/handleShare";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import { MENU_TYPES } from "@/models/dropdown";
+import { isIntersectingAtom } from "@/atoms/scroll";
+import { isIn } from "validator";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -29,6 +31,7 @@ export default function GatheringDetailPage() {
   const id = searchParams.get("id");
   const router = useRouter();
   const { userInfo } = useAuth();
+  const isIntersecting = useRecoilValue(isIntersectingAtom);
   const [isLoaded, setIsLoaded] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
@@ -85,13 +88,13 @@ export default function GatheringDetailPage() {
   const { gatheringDate, hostUser } = selectedGathering;
 
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
-
   return (
-    <div className="w-full min-h-dvh bg-grayscale-50 overflow-y-scroll no-scrollbar">
+    <div className="w-full min-h-dvh bg-grayscale-50">
       <HeaderWithBtn
         onClickBackBtn={clickBackBtnHandler}
         headerLabel="약속 상세"
-        fontColor="white"
+        fontColor={!isIntersecting ? "#0A0A0A" : "white"}
+        bgColor={!isIntersecting ? "white" : ""}
         icon={
           <div className={"flex gap-[14px]"}>
             <div

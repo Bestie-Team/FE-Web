@@ -9,7 +9,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
   return (
     <Flex
-      className="pt-safe-top h-dvh pb-14 overflow-y-scroll no-scrollbar"
+      className="pt-safe-top pb-14"
       justify="space-between"
       direction="column"
     >

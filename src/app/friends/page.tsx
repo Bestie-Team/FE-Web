@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function FriendsPage() {
   const router = useRouter();
   return (
-    <div className="bg-grayscale-50 h-dvh overflow-y-scroll no-scrollbar">
+    <div className="bg-grayscale-50 h-dvh">
       <HeaderWithBtn
         headerLabel="친구 요청"
         bgColor="#F4F4F4"

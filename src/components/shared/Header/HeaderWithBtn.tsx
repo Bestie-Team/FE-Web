@@ -25,7 +25,10 @@ export default function HeaderWithBtn({
       direction="column"
       justify="center"
       align="center"
-      className={clsx("pt-safe-top max-w-[430px] w-full", headerFont)}
+      className={clsx(
+        "pt-safe-top max-w-[430px] w-full transition-transform duration-300 ease-in-out",
+        headerFont
+      )}
       style={{
         top: 0,
         zIndex: 30,
