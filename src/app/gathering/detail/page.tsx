@@ -16,7 +16,6 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import { MENU_TYPES } from "@/models/dropdown";
 import { isIntersectingAtom } from "@/atoms/scroll";
-import { isIn } from "validator";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
