@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import Feed from "@/components/feeds/Feed";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -39,6 +38,13 @@ import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import NoFeed from "@/components/feeds/NoFeed";
 import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
+import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
+import Spacing from "@/components/shared/Spacing";
+import FeedCard from "@/components/feeds/FeedCard";
+import { MENU_CONFIGS } from "@/components/feeds/FeedOption";
+import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu";
+import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
+import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -220,7 +226,6 @@ export default function FeedPage() {
     loadMore: loadMore_mine,
     isFetching: isFetching_mine,
   } = useFeedMine({ ...queryParams, enabled: !!token });
-
   const { data: noti = [] } = useNotification();
 
   const isNewNotification = noti.filter((n) => n.readAt == null);
@@ -272,6 +277,10 @@ export default function FeedPage() {
   const mailCount = isNewNotification.filter(
     (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
   );
+  const { btnRef, toggleDropdown, openedDropdownId, ref, closeDropdown } =
+    useDropdown();
+
+  const { openedBoxId, c_ref, boxRef, toggleBox, closeBox } = useFriendsBox();
 
   const renderSwipers = useMemo(() => {
     return (
@@ -292,23 +301,58 @@ export default function FeedPage() {
         >
           {feedAll && feedAll.length > 0 ? (
             <SwiperSlide>
-              <div
-                ref={containerRef}
-                className="h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28"
-              >
-                <Feed
-                  feeds={feedAll}
-                  onClickFeed={setSelectedFeedId}
-                  isFetching={isFetching}
-                />
+              <div ref={containerRef} className={styles.feedWrapper}>
+                <div className={"pt-safe-top"}>
+                  {feedAll.map((feed) => (
+                    <div key={feed.id} className="relative">
+                      <FeedCard feed={feed} onClick={setSelectedFeedId}>
+                        <InfoBar
+                          ref={boxRef}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleBox(feed.id);
+                          }}
+                          withMembers={feed.withMembers}
+                          feed={feed}
+                        />
+                        <div className="absolute top-11 right-14" ref={c_ref}>
+                          {openedBoxId == feed.id && (
+                            <FriendsInfoContainer
+                              withMembers={feed.withMembers}
+                              isOpen={openedBoxId === feed.id}
+                            />
+                          )}
+                        </div>
+                      </FeedCard>
+                      <div
+                        ref={btnRef}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleDropdown(feed.id);
+                        }}
+                        style={{ width: 24, height: 24 }}
+                        className={styles.optionWrapper}
+                      >
+                        <OptionsSelectIcon />
+                        {openedDropdownId === feed.id && (
+                          <FeedDropdownMenu
+                            feed={feed}
+                            ref={ref}
+                            menuItems={MENU_CONFIGS["feed"].menuItems}
+                            className={MENU_CONFIGS["feed"].className}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  <Spacing size={50} />
+                  {isFetching && <FeedSkeleton />}
+                </div>
               </div>
             </SwiperSlide>
           ) : (
             <SwiperSlide>
-              <div
-                ref={containerRef}
-                className="h-full no-scrollbar overflow-y-auto pt-[90px] pb-28"
-              >
+              <div ref={containerRef} className={styles.feedWrapper}>
                 <FeedForDisplay />
               </div>
             </SwiperSlide>
@@ -316,23 +360,61 @@ export default function FeedPage() {
           {feedMine &&
             (feedMine.length > 0 ? (
               <SwiperSlide>
-                <div
-                  ref={containerRef_m}
-                  className="h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28"
-                >
-                  <Feed
-                    feeds={feedMine}
-                    onClickFeed={setSelectedFeedId}
-                    isFetching={isFetching_mine}
-                  />
+                <div ref={containerRef_m} className={styles.feedWrapper}>
+                  <div className={"pt-safe-top"}>
+                    {feedMine.map((feed) => (
+                      <div key={feed.id} className="relative">
+                        <FeedCard
+                          key={feed.id}
+                          feed={feed}
+                          onClick={setSelectedFeedId}
+                        >
+                          <InfoBar
+                            ref={boxRef}
+                            onClick={() => {
+                              toggleBox(feed.id);
+                            }}
+                            withMembers={feed.withMembers}
+                            feed={feed}
+                          />
+                          {feed.withMembers && openedBoxId === feed.id && (
+                            <div className="absolute top-5 right-5" ref={c_ref}>
+                              <FriendsInfoContainer
+                                withMembers={feed.withMembers}
+                                isOpen={openedBoxId === feed.id}
+                              />
+                            </div>
+                          )}
+                        </FeedCard>
+                        <div
+                          ref={btnRef}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleDropdown(feed.id);
+                          }}
+                          style={{ width: 24, height: 24 }}
+                          className={styles.optionWrapper}
+                        >
+                          <OptionsSelectIcon />
+                          {openedDropdownId === feed.id && (
+                            <FeedDropdownMenu
+                              feed={feed}
+                              ref={ref}
+                              menuItems={MENU_CONFIGS["feed"].menuItems}
+                              className={MENU_CONFIGS["feed"].className}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    <Spacing size={50} />
+                    {isFetching_mine && <FeedSkeleton />}
+                  </div>
                 </div>
               </SwiperSlide>
             ) : (
               <SwiperSlide>
-                <div
-                  ref={containerRef_m}
-                  className="h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28"
-                >
+                <div ref={containerRef_m} className={styles.feedWrapper}>
                   <NoFeed />
                 </div>
               </SwiperSlide>
@@ -377,7 +459,17 @@ export default function FeedPage() {
   }, [isClient]);
 
   return (
-    <div className="h-dvh">
+    <div
+      className="h-dvh"
+      onClick={() => {
+        closeDropdown();
+        closeBox();
+      }}
+      onTouchStart={() => {
+        closeDropdown();
+        closeBox();
+      }}
+    >
       <ScrollAwareHeader
         visible={visible}
         mailCount={mailCount}
@@ -386,7 +478,6 @@ export default function FeedPage() {
         handleTabClick={handleTabClick}
       />
 
-      {/* TODO 스켈레톤 추가되면 거기도 safe inset 넣던지 공통 태그로 감싸서 하던지 해야해여~ */}
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
@@ -428,3 +519,9 @@ export default function FeedPage() {
     </div>
   );
 }
+
+const styles = {
+  optionWrapper:
+    "absolute top-5 right-5 cursor-pointer flex justify-center items-center pt-[5.5px] pb-1",
+  feedWrapper: "h-full overflow-y-scroll no-scrollbar pt-[90px] pb-28",
+};

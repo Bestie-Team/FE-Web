@@ -1,5 +1,5 @@
 import React from "react";
-import { useDropdown } from "@/hooks/useDropdown";
+import { useDropdownWithNoId } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GroupDropdownMenu from "../shared/DropDownMenu/GroupDropDownMenu";
 import { GroupEditProps } from "@/app/groups/[id]/page";
@@ -11,7 +11,7 @@ export default function GroupOptions({
   isOwner: boolean;
   group: GroupEditProps;
 }) {
-  const { opened, ref, btnRef, toggleDropdown } = useDropdown();
+  const { opened, ref, btnRef, toggleDropdown } = useDropdownWithNoId();
   const menuItems = isOwner
     ? ["그룹 삭제하기", "그룹 수정하기"]
     : ["그룹 나가기", "그룹 신고하기"];

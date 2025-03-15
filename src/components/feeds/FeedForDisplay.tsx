@@ -15,14 +15,10 @@ export default function FeedForDisplay() {
       : new Date(feed.createdAt);
     return formatToDisplay(date).slice(0, 10);
   };
-  const friendInfo = feed.withMembers.map((other) => ({
-    name: other.name,
-    imageUrl: other.profileImageUrl,
-  }));
 
   return (
     <Flex direction="column" className={"my-3 pt-safe-top"}>
-      <InfoBar friendInfo={friendInfo} feed={feed} />
+      <InfoBar withMembers={feed.withMembers} feed={feed} onClick={() => {}} />
       <Spacing size={12} />
       <Swiper
         slidesPerView={1.077}

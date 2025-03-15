@@ -4,8 +4,8 @@ import Spacing from "../shared/Spacing";
 import { Gathering } from "@/models/gathering";
 import dynamic from "next/dynamic";
 
-const NoSchedule = dynamic(() => import("./NoSchedule"));
-const TimelineItem = dynamic(() => import("./TimelineItem"));
+const NoSchedule = dynamic(() => import("./NoSchedule"), { ssr: false });
+const TimelineItem = dynamic(() => import("./TimelineItem"), { ssr: false });
 
 export default function UpcomingSchedule({
   gatherings,

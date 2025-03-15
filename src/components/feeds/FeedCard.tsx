@@ -2,27 +2,20 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
-import InfoBar from "./InfoBar";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Feed } from "@/models/feed";
 
 export default function FeedCard({
   feed,
   onClick,
+  children,
 }: {
   feed: Feed;
   onClick: Dispatch<SetStateAction<string>>;
+  children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const writer = feed?.writer;
-  const friendInfo = useMemo(
-    () =>
-      feed.withMembers.map((other) => ({
-        name: other.name,
-        imageUrl: other.profileImageUrl,
-      })),
-    [feed]
-  );
 
   const handleClick = () => {
     onClick(feed.id);
@@ -35,12 +28,7 @@ export default function FeedCard({
 
   return (
     <Flex direction="column" className="py-3" onClick={handleClick}>
-      <InfoBar
-        friendInfo={friendInfo}
-        feed={feed}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      {children}
       <Spacing size={12} />
       <PhotoSwiper feed={feed} type="feed" />
       <Spacing size={8} />

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
-import Modal from "@/components/shared/Modal/Modal";
 import { modalStateAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
@@ -28,6 +27,10 @@ const SelectFriendsContainer = dynamic(
     loading: () => <DotSpinner />,
   }
 );
+
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
+  ssr: false,
+});
 
 export type GroupEditProps = {
   id: string;

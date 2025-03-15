@@ -18,18 +18,18 @@ interface OptionsProps {
 }
 
 export default function CommentOption({ commentId }: OptionsProps) {
-  const { opened, ref, btnRef, toggleDropdown } = useDropdown();
+  const { openedDropdownId, ref, btnRef, toggleDropdown } = useDropdown();
 
   return (
     <div
       ref={btnRef}
       data-testid="options-icon"
-      onClick={toggleDropdown}
+      onClick={() => toggleDropdown(commentId || "")}
       style={{ width: 16, height: 16 }}
       className="relative cursor-pointer flex justify-center items-center"
     >
       <OptionsSelectIcon width={"2px"} height={"11.3px"} color={"#0A0A0A"} />
-      {opened && (
+      {openedDropdownId && (
         <CommentDropdownMenu
           ref={ref}
           commentId={commentId}

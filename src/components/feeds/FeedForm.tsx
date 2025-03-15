@@ -2,12 +2,12 @@ import React, { Dispatch, SetStateAction } from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import UploadPhotoSwiper from "./UploadPhotoSwiper";
-import { TogetherInfo } from "./InfoBar";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { Feed } from "@/models/feed";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import { TogetherInfo } from "./InfoBar";
 
 interface FeedFormProps<T> {
   edit?: () => void;
@@ -54,10 +54,7 @@ export default function FeedForm<
               </span>
             </Flex>
             {selectedGathering.members.length > 0 && (
-              <TogetherInfo
-                members={selectedGathering?.members}
-                clickable={false}
-              />
+              <TogetherInfo members={selectedGathering?.members} />
             )}
           </Flex>
         ) : null}

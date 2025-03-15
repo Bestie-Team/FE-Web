@@ -1,5 +1,5 @@
 import React from "react";
-import { useDropdown } from "@/hooks/useDropdown";
+import { useDropdownWithNoId } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GatheringDropdownMenu from "../shared/DropDownMenu/GatheringDropDownMenu";
 import { MENU_TYPES, MenuType } from "@/models/dropdown";
@@ -25,7 +25,7 @@ export default function GatheringOption({
   gathering,
   type,
 }: GatheringOptionProps) {
-  const { opened, ref, btnRef, toggleDropdown } = useDropdown();
+  const { opened, ref, btnRef, toggleDropdown } = useDropdownWithNoId();
 
   return (
     <div
