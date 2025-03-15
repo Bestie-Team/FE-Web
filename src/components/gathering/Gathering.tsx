@@ -5,9 +5,8 @@ import {
 } from "@/models/gathering";
 import GatheringCard from "./GatheringCard";
 import Message from "../shared/Message";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NoGathering from "./NoGathering";
-import { useRouter } from "next/navigation";
 import Spacing from "../shared/Spacing";
 
 type GatheringProps = {
@@ -27,7 +26,6 @@ export default function Gathering({
   message,
   isFetching,
 }: GatheringProps) {
-  const router = useRouter();
   const [showMessage, setShowMessage] = useState(true);
   const renderGatherings = (gatheringsList: GatheringType[]) => {
     return gatheringsList.map((gathering, i) => {
@@ -43,13 +41,6 @@ export default function Gathering({
       );
     });
   };
-
-  useEffect(() => {
-    const firstFewGatherings = gatherings.slice(0, 6);
-    firstFewGatherings.forEach((gathering) => {
-      router.prefetch(`/gatherings/${gathering.id}`);
-    });
-  }, []);
 
   return (
     <div className={clsx("z-0 pt-3 w-full px-5", className)}>

@@ -1,16 +1,23 @@
 "use client";
 
 import { useAuth } from "@/components/shared/providers/AuthProvider";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
-  if (isAuthenticated) {
-    router.push("/feed");
-  } else if (!isAuthenticated) {
-    router.push("/signin");
-  }
-  return null;
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/feed");
+      return;
+    } else if (!isAuthenticated) {
+      router.push("/signin");
+      return;
+    }
+  }, [pathname, isAuthenticated]);
+
+  return <></>;
 }
