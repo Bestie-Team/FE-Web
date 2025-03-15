@@ -325,15 +325,18 @@ export default function FeedPage() {
                         </div>
                       </FeedCard>
                       <div
-                        ref={btnRef}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleDropdown(feed.id);
-                        }}
                         style={{ width: 24, height: 24 }}
                         className={styles.optionWrapper}
                       >
-                        <OptionsSelectIcon />
+                        <div
+                          ref={btnRef}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleDropdown(feed.id);
+                          }}
+                        >
+                          <OptionsSelectIcon />
+                        </div>
                         {openedDropdownId === feed.id && (
                           <FeedDropdownMenu
                             feed={feed}
@@ -371,14 +374,18 @@ export default function FeedPage() {
                         >
                           <InfoBar
                             ref={boxRef}
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               toggleBox(feed.id);
                             }}
                             withMembers={feed.withMembers}
                             feed={feed}
                           />
-                          {feed.withMembers && openedBoxId === feed.id && (
-                            <div className="absolute top-5 right-5" ref={c_ref}>
+                          {openedBoxId === feed.id && (
+                            <div
+                              className="absolute top-11 right-14"
+                              ref={c_ref}
+                            >
                               <FriendsInfoContainer
                                 withMembers={feed.withMembers}
                                 isOpen={openedBoxId === feed.id}
@@ -387,15 +394,18 @@ export default function FeedPage() {
                           )}
                         </FeedCard>
                         <div
-                          ref={btnRef}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleDropdown(feed.id);
-                          }}
                           style={{ width: 24, height: 24 }}
                           className={styles.optionWrapper}
                         >
-                          <OptionsSelectIcon />
+                          <div
+                            ref={btnRef}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleDropdown(feed.id);
+                            }}
+                          >
+                            <OptionsSelectIcon />
+                          </div>
                           {openedDropdownId === feed.id && (
                             <FeedDropdownMenu
                               feed={feed}
