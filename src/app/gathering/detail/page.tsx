@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
@@ -24,23 +24,20 @@ const GatheringOptions = dynamic(
   { ssr: false }
 );
 
-export default function GatheringDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const id = params.id;
+export default function GatheringDetailPage() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const router = useRouter();
   const { userInfo } = useAuth();
   const [isLoaded, setIsLoaded] = useState(false);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
   const { data: selectedGathering } = useGatheringDetail({
-    id,
+    id: id || "",
     enabled: !!id,
   });
   const { mutate: deleteGathering } = useDeleteGathering({
-    id,
+    id: id || "",
     onSuccess: (data) => {
       lightyToast.success(data.message);
       router.replace("/gathering");
@@ -49,7 +46,7 @@ export default function GatheringDetailPage({
   });
 
   const sharingData = {
-    url: `https://lighty.today/gathering/${id}`,
+    url: `https://lighty.today/gathering/detail?id=${id}`,
     text: selectedGathering?.description || "",
     title: selectedGathering?.name || "",
   };
@@ -90,7 +87,7 @@ export default function GatheringDetailPage({
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
 
   return (
-    <div className="w-full min-h-dvh bg-grayscale-50">
+    <div className="w-full min-h-dvh bg-grayscale-50 overflow-y-scroll no-scrollbar">
       <HeaderWithBtn
         onClickBackBtn={clickBackBtnHandler}
         headerLabel="약속 상세"

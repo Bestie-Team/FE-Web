@@ -50,7 +50,7 @@ export default function GatheringCard({
     <div
       className={styles.gatheringWrapper}
       onClick={() => {
-        router.push(`/gathering/${gathering.id}?tab=2`);
+        router.push(`/gathering/detail?id=${gathering.id}?tab=2`);
       }}
     >
       <Image

@@ -30,7 +30,7 @@ const GatheringDropdownMenu = forwardRef<
     }
     if (item.includes("수정하기") && gathering) {
       setGatheringInfo(gathering);
-      router.push(`/gathering/${gathering.id}/edit`);
+      router.push(`/gathering/edit`);
     }
   };
 

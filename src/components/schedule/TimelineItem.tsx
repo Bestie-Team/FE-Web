@@ -22,7 +22,9 @@ export default function TimelineItem({
     <Flex
       className="w-full active:bg-grayscale-10"
       justify="space-between"
-      onClick={() => router.push(`/gathering/${upcomingGathering.id}?tab=1`)}
+      onClick={() =>
+        router.push(`/gathering/detail?id=${upcomingGathering.id}?tab=1`)
+      }
     >
       <Flex>
         <TimelineButton />

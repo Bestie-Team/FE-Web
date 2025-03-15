@@ -2,7 +2,7 @@
 
 import { useRecoilState, useResetRecoilState } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
@@ -40,12 +40,9 @@ export type GroupEditProps = {
   members?: User[];
 };
 
-export default function GroupDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const id = params.id;
+export default function GroupDetailPage() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const queryClient = useQueryClient();
   const router = useRouter();
   const { userInfo } = useAuth();
@@ -54,7 +51,7 @@ export default function GroupDetailPage({
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
   const reset = useResetRecoilState(selectedFriendsAtom);
-  const { data: groupDetail } = useGroupDetail(id);
+  const { data: groupDetail } = useGroupDetail(id ? id : "");
 
   const [openList, setOpenList] = useState<boolean>(false);
 
@@ -76,17 +73,17 @@ export default function GroupDetailPage({
   };
 
   const { mutate: deleteGroup } = useDeleteGroup({
-    groupId: id,
+    groupId: id || "",
     onSuccess: handleDeleteSuccess,
   });
 
   const { mutate: exitGroup } = useExitGroup({
-    groupId: id,
+    groupId: id || "",
     onSuccess: handleDeleteSuccess,
   });
 
   const { mutate: addMember } = useAddGroupMember({
-    groupId: id,
+    groupId: id || "",
     friendIds:
       selectedFriends && selectedFriends.length > 0
         ? selectedFriends?.map((friend) => friend.id)
@@ -146,7 +143,10 @@ export default function GroupDetailPage({
   };
 
   return (
-    <Flex direction="column" className="w-full min-h-dvh">
+    <Flex
+      direction="column"
+      className="w-full min-h-dvh overflow-y-scroll no-scrollbar"
+    >
       <HeaderWithBtn
         headerLabel="그룹 상세"
         fontColor="white"
