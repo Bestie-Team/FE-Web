@@ -53,7 +53,6 @@ export default function CreatingFeedNoGathering() {
           imageUrls: data.imageUrls,
         }));
       }
-      setFilesToUpload([]);
     },
     onError: (error) => lightyToast.error(error.message),
   });

@@ -100,6 +100,7 @@ export default function GatheringDetailPage() {
             <div
               className="cursor-pointer"
               onMouseDown={() => handleShare(sharingData)}
+              onClick={() => handleShare(sharingData)}
             >
               <ShareIcon />
             </div>

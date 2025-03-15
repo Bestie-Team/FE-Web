@@ -13,6 +13,9 @@ import Flex from "@/components/shared/Flex";
 export default function OnBoardCardSlider() {
   const nextRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
+  const onClickHandler = () => {
+    router.replace("/feed?ref=signup");
+  };
   return (
     <div
       className="absolute inset-0 h-dvh min-h-[400px] bg-grayscale-50 pt-6"
@@ -70,9 +73,8 @@ export default function OnBoardCardSlider() {
         <div
           role="button"
           ref={nextRef}
-          onMouseDown={() => {
-            router.replace("/feed?ref=signup");
-          }}
+          onMouseDown={onClickHandler}
+          onClick={onClickHandler}
           className={styles.button}
         >
           다음

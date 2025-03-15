@@ -52,6 +52,9 @@ export default function GatheringCard({
       onClick={() => {
         router.push(`/gathering/detail?id=${gathering.id}?tab=2`);
       }}
+      onMouseDown={() => {
+        router.push(`/gathering/detail?id=${gathering.id}?tab=2`);
+      }}
     >
       <Image
         priority={tabIndex < 6}
@@ -88,6 +91,7 @@ export default function GatheringCard({
           name="moveToFeed_button"
           className={styles.button}
           onClick={handleClickGathering}
+          onMouseDown={handleClickGathering}
         >
           <PencilIcon color="#0A0A0A" />
         </Button>

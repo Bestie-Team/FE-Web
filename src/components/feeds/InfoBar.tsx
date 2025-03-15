@@ -60,6 +60,7 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
     <Flex className="gap-[6px]">
       {!!writer.profileImageUrl ? (
         <Image
+          loading="eager"
           src={writer.profileImageUrl}
           width={36}
           height={36}

@@ -97,7 +97,11 @@ export default function GatheringPage() {
         }
       >
         {selectedTab === "1" ? (
-          <div className={"h-full overflow-y-scroll no-scrollbar pb-10"}>
+          <div
+            className={
+              "h-full overflow-y-scroll no-scrollbar pb-10 pt-safe-top"
+            }
+          >
             <Schedule expectingGatherings={myGatherings} />
           </div>
         ) : (

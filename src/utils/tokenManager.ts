@@ -25,8 +25,9 @@ export async function refreshAccessToken() {
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
 
       return accessToken;
-    } else {
-      throw new Error(`token is ${accessToken}}`);
+    }
+    if (response.status === 404) {
+      window.location.href = "/signin";
     }
   } catch (error) {
     console.error("토큰 갱신 실패:", error);

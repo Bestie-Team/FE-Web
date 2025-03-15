@@ -14,7 +14,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
       direction="column"
     >
       <div>
-        <Spacing size={88} />
+        <Spacing size={76} />
         <Flex className="px-6 gap-4" direction="column">
           <span className="text-T2">프레임을 선택해 주세요</span>
           <span className="text-B3">나만의 특별한 카드를 만들어봐요</span>

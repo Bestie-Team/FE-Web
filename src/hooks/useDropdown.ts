@@ -7,8 +7,8 @@ export function useDropdown() {
 
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as Node | null;
-    if (btnRef.current?.contains(target)) return;
-    if (ref.current && !ref.current.contains(target)) {
+    if (ref.current?.contains(target)) return;
+    if (btnRef.current && !btnRef.current.contains(target)) {
       setOpenedDropdownId(null);
     }
   };
@@ -40,8 +40,8 @@ export function useFriendsBox() {
 
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as Node | null;
-    if (boxRef.current?.contains(target)) return;
-    if (c_ref.current && !c_ref.current.contains(target)) {
+    if (c_ref.current?.contains(target)) return;
+    if (boxRef.current && !boxRef.current.contains(target)) {
       setOpenedBoxId(null);
     }
   };

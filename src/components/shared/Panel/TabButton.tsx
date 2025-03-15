@@ -18,6 +18,7 @@ export default function TabButton({
     <div className={"flex cursor-pointer"}>
       <div
         onMouseDown={onMouseDown}
+        onClick={onMouseDown}
         className={clsx(
           textStyle,
           current ? "text-grayscale-900" : "text-grayscale-300"

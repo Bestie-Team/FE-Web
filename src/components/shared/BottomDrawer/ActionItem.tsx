@@ -22,6 +22,10 @@ export default function ActionItem({
         e.stopPropagation();
         onClick();
       }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
     >
       <div className={styles.button}>{icon}</div>
       <Flex className={styles.descWrapper}>

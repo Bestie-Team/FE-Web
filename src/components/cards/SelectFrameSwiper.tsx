@@ -72,6 +72,7 @@ export default function SelectFrameSwiper() {
           prevEl: prevRef.current,
           nextEl: nextRef.current,
         }}
+        onActiveIndexChange={(swiper) => onChangeFrame(swiper.activeIndex)}
         onNavigationNext={(swiper) => onChangeFrame(swiper.activeIndex)}
         onNavigationPrev={(swiper) => onChangeFrame(swiper.activeIndex)}
         modules={[Navigation]}

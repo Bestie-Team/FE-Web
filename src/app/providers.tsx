@@ -78,14 +78,10 @@ const NextLayout = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
   const pathname = usePathname();
 
-  if (isAuthenticated && pathname === "/") {
-    router.replace("/feed");
-  }
-
   useEffect(() => {
     const isPublicPath = isPathIncluded(pathname, PUBLIC_PATHS);
     if (!isAuthenticated && !isPublicPath) {
-      router.replace("/");
+      router.replace("/signin");
     }
   }, [isAuthenticated, pathname, router]);
 

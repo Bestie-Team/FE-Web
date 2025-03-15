@@ -306,7 +306,7 @@ export default function FeedPage() {
                 <div className={"pt-safe-top"}>
                   {feedAll.map((feed) => (
                     <div key={feed.id} className="relative">
-                      <FeedCard feed={feed} onClick={setSelectedFeedId}>
+                      <FeedCard feed={feed}>
                         <InfoBar
                           ref={boxRef}
                           onClick={(e) => {
@@ -334,6 +334,7 @@ export default function FeedPage() {
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleDropdown(feed.id);
+                            setSelectedFeedId(feed.id);
                           }}
                         >
                           <OptionsSelectIcon />
@@ -368,11 +369,7 @@ export default function FeedPage() {
                   <div className={"pt-safe-top"}>
                     {feedMine.map((feed) => (
                       <div key={feed.id} className="relative">
-                        <FeedCard
-                          key={feed.id}
-                          feed={feed}
-                          onClick={setSelectedFeedId}
-                        >
+                        <FeedCard key={feed.id} feed={feed}>
                           <InfoBar
                             ref={boxRef}
                             onClick={(e) => {
@@ -403,6 +400,7 @@ export default function FeedPage() {
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleDropdown(feed.id);
+                              setSelectedFeedId(feed.id);
                             }}
                           >
                             <OptionsSelectIcon />

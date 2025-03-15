@@ -46,15 +46,17 @@ export default function FriendItem({
 }
 
 export function AddFriendItem({ onClick }: { onClick?: () => void }) {
+  const onClickHandler = () => {
+    if (onClick) {
+      onClick();
+    } else return;
+  };
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
       <div
         className="p-[6px]"
-        onMouseDown={() => {
-          if (onClick) {
-            onClick();
-          } else return;
-        }}
+        onMouseDown={onClickHandler}
+        onClick={onClickHandler}
       >
         <div className={iconWrapperStyle}>
           <PlusIcon

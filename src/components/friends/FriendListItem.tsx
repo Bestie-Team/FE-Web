@@ -71,6 +71,7 @@ export default function FriendListItem({
         styles.li,
         clicked ? "border-grayscale-900" : "border-grayscale-100"
       )}
+      onClick={onClick}
       onMouseDown={onClick}
     >
       <Flex>
