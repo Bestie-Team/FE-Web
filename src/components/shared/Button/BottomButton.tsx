@@ -15,6 +15,7 @@ export default function BottomButton({
         className={styles.button}
         disabled={disabled}
         onMouseDown={onClick}
+        onClick={onClick}
       >
         {label}
       </button>

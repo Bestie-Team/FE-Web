@@ -38,6 +38,10 @@ const IconButton = ({
       e.stopPropagation();
       onClick(e);
     }}
+    onClick={(e) => {
+      e.stopPropagation();
+      onClick(e);
+    }}
     className="relative flex justify-center items-center w-10 h-10 p-2 cursor-pointer"
   >
     {children}

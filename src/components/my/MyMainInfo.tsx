@@ -38,6 +38,19 @@ export default function MyMainInfo({
       value: friendsCount,
     },
   ];
+  const onClickHandler = (box: {
+    label: string;
+    icon: React.ReactNode;
+    value: number;
+    link: string;
+  }) => {
+    if (box.label == "작성피드") {
+      setActiveBtn(2);
+      router.push(box.link);
+    } else {
+      router.push(box.link);
+    }
+  };
 
   return (
     <Flex className="py-0 px-5 gap-[14px]" justify="center">
@@ -46,14 +59,8 @@ export default function MyMainInfo({
           <div
             key={idx}
             className={boxStyle}
-            onMouseDown={() => {
-              if (box.label == "작성피드") {
-                setActiveBtn(2);
-                router.push(box.link);
-              } else {
-                router.push(box.link);
-              }
-            }}
+            onMouseDown={() => onClickHandler(box)}
+            onClick={() => onClickHandler(box)}
           >
             <div>{box.icon}</div>
             <Spacing size={4} />

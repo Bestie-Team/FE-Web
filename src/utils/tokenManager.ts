@@ -4,6 +4,7 @@ import { API_CONFIG } from "@/remote/shared";
 export async function refreshAccessToken() {
   const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
   const baseUrl = API_CONFIG.getBaseUrl();
+
   if (deviceId === null) {
     throw new Error("디바이스 아이디가 없습니다.");
   }
@@ -25,8 +26,9 @@ export async function refreshAccessToken() {
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
 
       return accessToken;
-    } else {
-      throw new Error(`token is ${accessToken}}`);
+    }
+    if (response.status === 404) {
+      window.location.href = "/";
     }
   } catch (error) {
     console.error("토큰 갱신 실패:", error);

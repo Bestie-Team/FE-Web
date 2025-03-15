@@ -53,6 +53,7 @@ export default function UserListItem({
         clicked ? "border-grayscale-900" : "border-base-white"
       )}
       onMouseDown={onClick}
+      onClick={onClick}
     >
       {!!userInfo?.profileImageUrl ? (
         <Image

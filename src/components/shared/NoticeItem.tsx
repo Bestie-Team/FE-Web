@@ -34,6 +34,7 @@ export default function NoticeItem({
         clickable && "cursor-pointer"
       )}
       onMouseDown={onClick}
+      onClick={onClick}
     >
       <Flex
         align="center"

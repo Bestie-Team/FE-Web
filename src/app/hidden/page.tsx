@@ -100,7 +100,7 @@ export default function FeedPage() {
         <div className={"pt-safe-top"}>
           {hiddenFeed.map((feed) => (
             <div key={feed.id} className="relative">
-              <FeedCard feed={feed} onClick={() => {}}>
+              <FeedCard feed={feed}>
                 <InfoBar
                   ref={boxRef}
                   onClick={(e) => {

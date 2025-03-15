@@ -52,16 +52,11 @@ export default function ChoosingGatheringToDecorate({
     <Flex
       direction="column"
       justify="space-between"
-      className={"pt-12 pb-14"}
-      style={
-        isReactNativeWebView
-          ? { paddingTop: `calc(env(safe-area-inset-top) + 2rem)` }
-          : {}
-      }
+      className="pb-14 pt-safe-top"
     >
       <Flex direction="column">
         <div className="px-6">
-          <Spacing size={28} />
+          <Spacing size={76} />
           <LightyLogo />
           <Spacing size={16} />
           <span className="text-T2">어떤 피드의</span>

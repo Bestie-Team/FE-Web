@@ -300,7 +300,7 @@ export default function DecorateWithStickers() {
           />
         </div>
         {deco && (
-          <div className="mx-auto max-w-[430px] w-full mb-safe-bottom">
+          <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
             <FloatingButton tooltip />
             <BottomButton
               label={"이미지 저장"}
