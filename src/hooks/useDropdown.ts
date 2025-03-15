@@ -1,20 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 
 export function useDropdown() {
   const [openedDropdownId, setOpenedDropdownId] = useState<string | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
+  /**드롭다운 메뉴*/
+  const dropDownRef = useRef<HTMLDivElement>(null);
+  /**옵션 버튼 */
   const btnRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (event) => {
     const target = event.target as Node | null;
-    if (ref.current?.contains(target)) return;
-    if (btnRef.current && !btnRef.current.contains(target)) {
+    if (btnRef.current?.contains(target)) return;
+    if (dropDownRef.current && !dropDownRef.current.contains(target)) {
       setOpenedDropdownId(null);
     }
   };
 
-  const closeDropdown = () => {
-    setOpenedDropdownId(null);
+  const closeDropdown = (event: MouseEvent<HTMLDivElement>) => {
+    const target = event.target as Node | null;
+    if (dropDownRef.current && !dropDownRef.current.contains(target)) {
+      setOpenedDropdownId(null);
+    }
   };
 
   useEffect(() => {
@@ -30,18 +35,26 @@ export function useDropdown() {
     setOpenedDropdownId(openedDropdownId === feedId ? null : feedId);
   };
 
-  return { openedDropdownId, ref, btnRef, toggleDropdown, closeDropdown };
+  return {
+    openedDropdownId,
+    dropDownRef,
+    btnRef,
+    toggleDropdown,
+    closeDropdown,
+  };
 }
 
 export function useFriendsBox() {
   const [openedBoxId, setOpenedBoxId] = useState<string | null>(null);
-  const c_ref = useRef<HTMLDivElement>(null);
-  const boxRef = useRef<HTMLDivElement>(null);
+  /**친구 상세정보 컨테이너 */
+  const friendsRef = useRef<HTMLDivElement>(null);
+  /**친구 정보 컨테이너 */
+  const fBtnRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (event) => {
     const target = event.target as Node | null;
-    if (c_ref.current?.contains(target)) return;
-    if (boxRef.current && !boxRef.current.contains(target)) {
+    if (fBtnRef.current?.contains(target)) return;
+    if (friendsRef.current && !friendsRef.current.contains(target)) {
       setOpenedBoxId(null);
     }
   };
@@ -64,7 +77,7 @@ export function useFriendsBox() {
     console.log(boxId, "boxId");
   };
 
-  return { openedBoxId, c_ref, boxRef, toggleBox, closeBox };
+  return { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox };
 }
 
 export function useDropdownWithNoId() {
@@ -72,7 +85,7 @@ export function useDropdownWithNoId() {
   const ref = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = (event) => {
     const target = event.target as Node | null;
     if (btnRef.current?.contains(target)) return;
     if (ref.current && !ref.current.contains(target)) {

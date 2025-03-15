@@ -25,7 +25,7 @@ interface OptionsProps {
 }
 
 export default function FeedOption({ feed, type }: OptionsProps) {
-  const { openedDropdownId, ref } = useDropdown();
+  const { openedDropdownId, dropDownRef } = useDropdown();
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function FeedOption({ feed, type }: OptionsProps) {
         feed && (
           <FeedDropdownMenu
             feed={feed}
-            ref={ref}
+            ref={dropDownRef}
             menuItems={MENU_CONFIGS[type].menuItems}
             className={MENU_CONFIGS[type].className}
           />
@@ -43,7 +43,7 @@ export default function FeedOption({ feed, type }: OptionsProps) {
       {openedDropdownId === feed.id && type === MENU_TYPES.FEED && feed && (
         <FeedDropdownMenu
           feed={feed}
-          ref={ref}
+          ref={dropDownRef}
           menuItems={MENU_CONFIGS[type].menuItems}
           className={MENU_CONFIGS[type].className}
         />
@@ -51,7 +51,7 @@ export default function FeedOption({ feed, type }: OptionsProps) {
       {openedDropdownId === feed.id && type === MENU_TYPES.HIDDEN && feed && (
         <FeedDropdownMenu
           feed={feed}
-          ref={ref}
+          ref={dropDownRef}
           menuItems={MENU_CONFIGS[type].menuItems}
           className={MENU_CONFIGS[type].className}
         />

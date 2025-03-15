@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect, useRef, MouseEvent } from "react";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -278,10 +278,17 @@ export default function FeedPage() {
   const mailCount = isNewNotification.filter(
     (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
   );
-  const { btnRef, toggleDropdown, openedDropdownId, ref, closeDropdown } =
-    useDropdown();
 
-  const { openedBoxId, c_ref, boxRef, toggleBox, closeBox } = useFriendsBox();
+  const {
+    btnRef,
+    toggleDropdown,
+    openedDropdownId,
+    dropDownRef,
+    closeDropdown,
+  } = useDropdown();
+
+  const { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox } =
+    useFriendsBox();
 
   const renderSwipers = useMemo(() => {
     return (
@@ -308,7 +315,7 @@ export default function FeedPage() {
                     <div key={feed.id} className="relative">
                       <FeedCard feed={feed}>
                         <InfoBar
-                          ref={boxRef}
+                          ref={fBtnRef}
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleBox(feed.id);
@@ -316,7 +323,10 @@ export default function FeedPage() {
                           withMembers={feed.withMembers}
                           feed={feed}
                         />
-                        <div className="absolute top-11 right-14" ref={c_ref}>
+                        <div
+                          className="absolute top-11 right-14"
+                          ref={friendsRef}
+                        >
                           {openedBoxId == feed.id && (
                             <FriendsInfoContainer
                               withMembers={feed.withMembers}
@@ -342,7 +352,7 @@ export default function FeedPage() {
                         {openedDropdownId === feed.id && (
                           <FeedDropdownMenu
                             feed={feed}
-                            ref={ref}
+                            ref={dropDownRef}
                             menuItems={MENU_CONFIGS["feed"].menuItems}
                             className={MENU_CONFIGS["feed"].className}
                           />
@@ -371,7 +381,7 @@ export default function FeedPage() {
                       <div key={feed.id} className="relative">
                         <FeedCard key={feed.id} feed={feed}>
                           <InfoBar
-                            ref={boxRef}
+                            ref={fBtnRef}
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleBox(feed.id);
@@ -382,7 +392,7 @@ export default function FeedPage() {
                           {openedBoxId === feed.id && (
                             <div
                               className="absolute top-11 right-14"
-                              ref={c_ref}
+                              ref={friendsRef}
                             >
                               <FriendsInfoContainer
                                 withMembers={feed.withMembers}
@@ -408,7 +418,7 @@ export default function FeedPage() {
                           {openedDropdownId === feed.id && (
                             <FeedDropdownMenu
                               feed={feed}
-                              ref={ref}
+                              ref={dropDownRef}
                               menuItems={MENU_CONFIGS["feed"].menuItems}
                               className={MENU_CONFIGS["feed"].className}
                             />
@@ -470,12 +480,12 @@ export default function FeedPage() {
   return (
     <div
       className="h-dvh"
-      onClick={() => {
-        closeDropdown();
+      onClick={(e: MouseEvent<HTMLDivElement>) => {
+        closeDropdown(e);
         closeBox();
       }}
-      onTouchStart={() => {
-        closeDropdown();
+      onMouseDown={(e: MouseEvent<HTMLDivElement>) => {
+        closeDropdown(e);
         closeBox();
       }}
     >
