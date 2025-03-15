@@ -60,10 +60,16 @@ export default function FeedPage() {
       isOpen: false,
     });
   };
-  const { btnRef, toggleDropdown, openedDropdownId, ref, closeDropdown } =
-    useDropdown();
+  const {
+    btnRef,
+    toggleDropdown,
+    openedDropdownId,
+    dropDownRef,
+    closeDropdown,
+  } = useDropdown();
 
-  const { openedBoxId, c_ref, boxRef, toggleBox, closeBox } = useFriendsBox();
+  const { openedBoxId, fBtnRef, friendsRef, toggleBox, closeBox } =
+    useFriendsBox();
 
   if (!hiddenFeed || hiddenFeed.length < 0) {
     return <div>숨김 피드가 없어요</div>;
@@ -72,12 +78,12 @@ export default function FeedPage() {
   return (
     <div
       className="min-h-dvh pt-safe-top"
-      onClick={() => {
-        closeDropdown();
+      onClick={(e) => {
+        closeDropdown(e);
         closeBox();
       }}
-      onTouchStart={() => {
-        closeDropdown();
+      onMouseDown={(e) => {
+        closeDropdown(e);
         closeBox();
       }}
     >
@@ -102,7 +108,7 @@ export default function FeedPage() {
             <div key={feed.id} className="relative">
               <FeedCard feed={feed}>
                 <InfoBar
-                  ref={boxRef}
+                  ref={fBtnRef}
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleBox(feed.id);
@@ -110,7 +116,7 @@ export default function FeedPage() {
                   withMembers={feed.withMembers}
                   feed={feed}
                 />
-                <div className="absolute top-11 right-14" ref={c_ref}>
+                <div className="absolute top-11 right-14" ref={friendsRef}>
                   {openedBoxId == feed.id && (
                     <FriendsInfoContainer
                       withMembers={feed.withMembers}
@@ -132,7 +138,7 @@ export default function FeedPage() {
                 {openedDropdownId === feed.id && (
                   <FeedDropdownMenu
                     feed={feed}
-                    ref={ref}
+                    ref={dropDownRef}
                     menuItems={MENU_CONFIGS["hidden"].menuItems}
                     className={MENU_CONFIGS["hidden"].className}
                   />
@@ -143,12 +149,6 @@ export default function FeedPage() {
           <Spacing size={50} />
           {isFetching && <FeedSkeleton />}
         </div>
-
-        {/* <Feed
-          feeds={hiddenFeed}
-          onClickFeed={() => {}}
-          isFetching={isFetching}
-        /> */}
       </Suspense>
       {modalState.isOpen && modalState.type && (
         <Modal
