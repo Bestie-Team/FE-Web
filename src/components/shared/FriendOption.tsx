@@ -1,5 +1,5 @@
 import React from "react";
-import { useDropdown } from "@/hooks/useDropdown";
+import { useDropdownWithNoId } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
 import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { MENU_TYPES } from "@/models/dropdown";
@@ -12,7 +12,7 @@ const MENU_CONFIGS = {
 };
 
 export default function FriendOption() {
-  const { opened, ref, btnRef, toggleDropdown } = useDropdown();
+  const { opened, ref, btnRef, toggleDropdown } = useDropdownWithNoId();
 
   return (
     <div

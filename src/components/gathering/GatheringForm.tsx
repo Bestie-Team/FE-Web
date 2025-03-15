@@ -22,9 +22,12 @@ import { lightyToast } from "@/utils/toast";
 import dynamic from "next/dynamic";
 import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
 
-const AddFriendsSlider = dynamic(() => import("../groups/AddFriendsSlider"));
+const AddFriendsSlider = dynamic(() => import("../groups/AddFriendsSlider"), {
+  ssr: false,
+});
 const CalendarBottomSheet = dynamic(
-  () => import("../shared/BottomDrawer/CalendarBottomSheet")
+  () => import("../shared/BottomDrawer/CalendarBottomSheet"),
+  { ssr: false }
 );
 
 export default function GatheringForm({

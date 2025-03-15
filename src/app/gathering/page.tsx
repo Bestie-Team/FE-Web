@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import { GatheringHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useRouter } from "next/navigation";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -33,6 +34,7 @@ export default function GatheringPage() {
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, setSelectedTab } = useTabs();
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const { data: myGatherings, isFetching } = useGatherings({
     limit: 50,
     minDate: minDate(),
@@ -77,8 +79,14 @@ export default function GatheringPage() {
     reset();
   }, [reset]);
 
-  return (
+  useEffect(() => {
+    myGatherings
+      ?.slice(0, 3)
+      .forEach((g) => router.prefetch(`/gathering/${g.id}`));
+    ended?.slice(0, 3).forEach((g) => router.prefetch(`/gathering/${g.id}`));
+  }, [ended]);
 
+  return (
     <div className="h-dvh" ref={containerRef}>
       <GatheringHeader
         selectedTab={selectedTab}

@@ -1,6 +1,4 @@
 "use client";
-import { useAuth } from "@/components/shared/providers/AuthProvider";
-import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import Flex from "@/components/shared/Flex";
 import LogIn from "@/components/LogIn";
@@ -8,12 +6,9 @@ import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 
 export default function Page() {
-  const { isAuthenticated } = useAuth();
-  const router = useRouter();
-
-  if (isAuthenticated) {
-    router.replace("/feed");
-  }
+  // if (isAuthenticated) {
+  //   router.replace("/feed");
+  // }
 
   return (
     <Flex
