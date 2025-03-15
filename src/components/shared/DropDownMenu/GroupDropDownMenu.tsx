@@ -5,7 +5,7 @@ import { useSetRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
 import { useRouter } from "next/navigation";
 import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
-import { GroupEditProps } from "@/app/groups/[id]/page";
+import { GroupEditProps } from "@/app/groups/detail/page";
 
 interface GroupDropdownMenuProps {
   menuItems: string[];
@@ -36,7 +36,7 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
         if (group.members) {
           setOriginalGroupMembers([...group.members]);
         }
-        router.push(`/groups/${group.id}/edit`);
+        router.push(`/groups/edit`);
       }
     };
 

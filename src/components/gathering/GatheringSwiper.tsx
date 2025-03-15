@@ -58,7 +58,7 @@ export default function GatheringSwiper({
             return (
               <SwiperSlide
                 onClick={() => {
-                  router.push(`/gathering/${id}`);
+                  router.push(`/gathering/detail?id=${id}`);
                 }}
                 className={clsx(styles.slide, "group")}
                 key={`slide${idx}`}

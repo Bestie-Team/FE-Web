@@ -2,7 +2,7 @@ import React from "react";
 import { useDropdownWithNoId } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GroupDropdownMenu from "../shared/DropDownMenu/GroupDropDownMenu";
-import { GroupEditProps } from "@/app/groups/[id]/page";
+import { GroupEditProps } from "@/app/groups/detail/page";
 
 export default function GroupOptions({
   isOwner,

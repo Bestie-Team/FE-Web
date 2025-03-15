@@ -62,7 +62,7 @@ export default function GatheringForm({
   const { data: group_data, isFetching } = useGroup({ limit: 50 });
 
   return (
-    <div className="min-h-[calc(100dvh+75px)] bg-base-white">
+    <div className="min-h-[calc(100dvh+75px)] bg-base-white overflow-y-scroll no-scrollbar">
       <HeaderWithBtn headerLabel={title} bgColor="white" />
       <form className="flex flex-col px-5 pt-safe-top">
         <Spacing size={54} />

@@ -28,7 +28,7 @@ export default function FriendsAndGroups() {
   }, [searchParams, setSelectedTab]);
 
   return (
-    <div className="h-dvh pt-safe-top">
+    <div className="h-dvh pt-safe-top overflow-y-scroll no-scrollbar">
       <SocialHeader selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       <div className="pt-[87px] pb-14">
         {selectedTab === "1" ? <UserFriendsListContainer /> : <Groups />}

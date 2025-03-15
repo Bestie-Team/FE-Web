@@ -8,7 +8,6 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
-import { useEffect } from "react";
 
 const GroupList = ({ groups }: { groups: Group[] }) => {
   const router = useRouter();
@@ -19,20 +18,15 @@ const GroupList = ({ groups }: { groups: Group[] }) => {
       className="cursor-pointer"
       onClick={(e: React.MouseEvent<HTMLLIElement>) => {
         e.stopPropagation();
-        router.push(`/groups/${group.id}`);
+        router.push(`/groups/detail?id=${group.id}`);
       }}
     />
   ));
 };
 
 export default function Groups() {
-  const router = useRouter();
   const { data: detail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
-
-  useEffect(() => {
-    groups?.slice(0, 6).forEach((g) => router.prefetch(`/groups/${g.id}`));
-  }, []);
 
   useInfiniteScroll({ isFetching, loadMore });
 
