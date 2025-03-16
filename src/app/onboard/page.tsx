@@ -22,7 +22,7 @@ export default function OnBoardCardSlider() {
 
     if (!swiperRef.current) return;
     else if (nextRef.current?.textContent == "시작하기") {
-      router.push("/feed");
+      router.push("/feed?ref=signup");
     }
     console.log(swiperRef.current.activeIndex, onBoardCardContents.length - 1);
   };
