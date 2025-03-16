@@ -18,8 +18,10 @@ import { useRouter } from "next/navigation";
 import * as lighty from "lighty-type";
 import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function GroupEditPage() {
+  const queryClient = useQueryClient();
   const selectedGroup = useRecoilValue<UpdateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -42,7 +44,12 @@ export default function GroupEditPage() {
       description: groupInfo.description,
       groupImageUrl: groupInfo.groupImageUrl,
     },
-    onSuccess: (data) => lightyToast.success(data.message),
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["groups"],
+      });
+      lightyToast.success(data.message);
+    },
   });
 
   const handleEdit = () => {

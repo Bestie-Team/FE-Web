@@ -55,7 +55,7 @@ export const useInfiniteScrollByRef = ({
   isFetching,
   loadMore,
   targetRef,
-  threshold = 200,
+  threshold = 360,
 }: // selectedTab,
 InfiniteScrollRefType) => {
   const [page, setPage] = useState(0);
