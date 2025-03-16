@@ -24,21 +24,13 @@ export async function refreshAccessToken() {
 
     if (accessToken) {
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-
       return accessToken;
     }
-    if (response.status === 401) {
-      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-      window.location.href = "/signin";
-    }
+    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    return null;
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-    window.location.href = "/signin";
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : `${String(error)} failed refresh token`
-    );
+    return null;
   }
 }

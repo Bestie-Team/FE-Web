@@ -83,13 +83,17 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
   try {
     const baseUrl = API_CONFIG.getBaseUrl();
 
-    const uuid = uuidv4();
-    localStorage.setItem(STORAGE_KEYS.DEVICE_ID, uuid);
+    let deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
+
+    if (deviceId == null) {
+      deviceId = uuidv4();
+      localStorage.setItem(STORAGE_KEYS.DEVICE_ID, deviceId);
+    }
 
     const response = await fetch(`${baseUrl}/auth/register`, {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json", "Device-Id": uuid },
+      headers: { "Content-Type": "application/json", "Device-Id": deviceId },
       body: JSON.stringify({
         ...RegisterRequest,
         profileImageUrl: null,
