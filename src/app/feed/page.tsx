@@ -337,8 +337,9 @@ export default function FeedPage() {
                 onRefresh={handleRefreshAll}
                 pullingContent={<></>}
                 refreshingContent={
-                  <div className="flex justify-center pt-[90px]">
+                  <div className="flex justify-center pt-safe-top">
                     <div className="p-2">
+                      <Spacing size={90} />
                       <DotSpinnerSmall />
                     </div>
                   </div>
@@ -418,8 +419,9 @@ export default function FeedPage() {
                 onRefresh={handleRefreshMine}
                 pullingContent={<></>}
                 refreshingContent={
-                  <div className="flex justify-center pt-[90px]">
+                  <div className="flex justify-center pt-safe-top">
                     <div className="p-2">
+                      <Spacing size={90} />
                       <DotSpinnerSmall />
                     </div>
                   </div>
