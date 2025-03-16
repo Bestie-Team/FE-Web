@@ -39,9 +39,7 @@ export const NextProvider = ({ children }: Props) => {
     <GoogleOAuthProvider clientId="819938529870-7ng56emjnvtfds459lrb7h1a9g04r4q5.apps.googleusercontent.com">
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <ReactNativeWebViewProvider>
-            <AuthProvider>{children}</AuthProvider>
-          </ReactNativeWebViewProvider>
+          <ReactNativeWebViewProvider>{children}</ReactNativeWebViewProvider>
           <ToastContainer
             position="top-center"
             hideProgressBar

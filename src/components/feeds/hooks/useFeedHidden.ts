@@ -28,7 +28,7 @@ export default function useFeedHidden({ limit }: { limit: number }) {
     fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetching]);
 
-  const friends = data?.pages.map(({ feeds }) => feeds).flat();
+  const friends = data?.pages.map(({ feeds }) => feeds).flat() || undefined;
 
   return { data: friends, loadMore, isFetching, hasNextPage };
 }

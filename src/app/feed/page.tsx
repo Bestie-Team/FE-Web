@@ -307,7 +307,7 @@ export default function FeedPage() {
           direction="horizontal"
           className="custom-swiper !h-dvh w-full"
         >
-          {feedAll && feedAll.length > 0 ? (
+          {feedAll && feedAll.length > 0 && (
             <SwiperSlide>
               <div ref={containerRef} className={styles.feedWrapper}>
                 <div className={"pt-safe-top"}>
@@ -368,83 +368,84 @@ export default function FeedPage() {
                 </div>
               </div>
             </SwiperSlide>
-          ) : (
+          )}
+          {feedAll && feedAll.length === 0 && (
             <SwiperSlide>
               <div ref={containerRef} className={styles.feedWrapper}>
                 <FeedForDisplay />
               </div>
             </SwiperSlide>
           )}
-          {feedMine &&
-            (feedMine.length > 0 ? (
-              <SwiperSlide>
-                <div ref={containerRef_m} className={styles.feedWrapper}>
-                  <div className={"pt-safe-top"}>
-                    {feedMine.map((feed) => (
-                      <div key={feed.id} className="relative">
-                        <FeedCard
-                          key={feed.id}
+          {feedMine && feedMine.length > 0 && (
+            <SwiperSlide>
+              <div ref={containerRef_m} className={styles.feedWrapper}>
+                <div className={"pt-safe-top"}>
+                  {feedMine.map((feed) => (
+                    <div key={feed.id} className="relative">
+                      <FeedCard
+                        key={feed.id}
+                        feed={feed}
+                        onClick={() => setSelectedFeedId(feed.id)}
+                      >
+                        <InfoBar
+                          ref={fBtnRef}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleBox(feed.id);
+                          }}
+                          withMembers={feed.withMembers}
                           feed={feed}
-                          onClick={() => setSelectedFeedId(feed.id)}
-                        >
-                          <InfoBar
-                            ref={fBtnRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleBox(feed.id);
-                            }}
-                            withMembers={feed.withMembers}
-                            feed={feed}
-                          />
-                          {openedBoxId === feed.id && (
-                            <div
-                              className="absolute top-11 right-14"
-                              ref={friendsRef}
-                            >
-                              <FriendsInfoContainer
-                                withMembers={feed.withMembers}
-                                isOpen={openedBoxId === feed.id}
-                              />
-                            </div>
-                          )}
-                        </FeedCard>
-                        <div
-                          style={{ width: 24, height: 24 }}
-                          className={styles.optionWrapper}
-                        >
+                        />
+                        {openedBoxId === feed.id && (
                           <div
-                            ref={btnRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleDropdown(feed.id);
-                              setSelectedFeedId(feed.id);
-                            }}
+                            className="absolute top-11 right-14"
+                            ref={friendsRef}
                           >
-                            <OptionsSelectIcon />
-                          </div>
-                          {openedDropdownId === feed.id && (
-                            <FeedDropdownMenu
-                              feed={feed}
-                              ref={dropDownRef}
-                              menuItems={MENU_CONFIGS["feed_mine"].menuItems}
-                              className={MENU_CONFIGS["feed_mine"].className}
+                            <FriendsInfoContainer
+                              withMembers={feed.withMembers}
+                              isOpen={openedBoxId === feed.id}
                             />
-                          )}
+                          </div>
+                        )}
+                      </FeedCard>
+                      <div
+                        style={{ width: 24, height: 24 }}
+                        className={styles.optionWrapper}
+                      >
+                        <div
+                          ref={btnRef}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleDropdown(feed.id);
+                            setSelectedFeedId(feed.id);
+                          }}
+                        >
+                          <OptionsSelectIcon />
                         </div>
+                        {openedDropdownId === feed.id && (
+                          <FeedDropdownMenu
+                            feed={feed}
+                            ref={dropDownRef}
+                            menuItems={MENU_CONFIGS["feed_mine"].menuItems}
+                            className={MENU_CONFIGS["feed_mine"].className}
+                          />
+                        )}
                       </div>
-                    ))}
-                    <Spacing size={50} />
-                    {isFetching_mine && <FeedSkeleton />}
-                  </div>
+                    </div>
+                  ))}
+                  <Spacing size={50} />
+                  {isFetching_mine && <FeedSkeleton />}
                 </div>
-              </SwiperSlide>
-            ) : (
-              <SwiperSlide>
-                <div ref={containerRef_m} className={styles.feedWrapper}>
-                  <NoFeed />
-                </div>
-              </SwiperSlide>
-            ))}
+              </div>
+            </SwiperSlide>
+          )}
+          {feedMine && feedMine.length === 0 && (
+            <SwiperSlide>
+              <div ref={containerRef_m} className={styles.feedWrapper}>
+                <NoFeed />
+              </div>
+            </SwiperSlide>
+          )}
         </Swiper>
       </div>
     );
