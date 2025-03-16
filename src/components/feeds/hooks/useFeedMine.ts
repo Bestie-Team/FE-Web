@@ -31,15 +31,17 @@ export default function useFeedMine({
     staleTime: 60 * 1000,
     enabled,
   });
+
   const loadMore = useCallback(() => {
     if (hasNextPage === false || isFetching) {
       return;
     }
+
     fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetching]);
 
   const friends = useMemo(
-    () => data?.pages.flatMap(({ feeds }) => feeds) ?? [],
+    () => data?.pages.flatMap(({ feeds }) => feeds) ?? undefined,
     [data]
   );
 

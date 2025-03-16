@@ -30,8 +30,6 @@ export default function CreatingFeedNoGathering() {
         queryKey: ["user/detail"],
       }),
     ]);
-
-    lightyToast.success(data.message);
   };
 
   const { mutate: makeFriendsFeed, isPending } = useMakeFriendsFeed({

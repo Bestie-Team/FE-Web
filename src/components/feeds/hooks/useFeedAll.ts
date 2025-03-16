@@ -40,7 +40,7 @@ export default function useFeedAll({
   }, [fetchNextPage, hasNextPage, isFetching]);
 
   const friends = useMemo(
-    () => data?.pages.flatMap(({ feeds }) => feeds) ?? [],
+    () => data?.pages.flatMap(({ feeds }) => feeds) ?? undefined,
     [data]
   );
   return { data: friends, loadMore, isFetching, hasNextPage };

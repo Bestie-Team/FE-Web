@@ -75,7 +75,7 @@ export default function FeedPage() {
   const { openedBoxId, fBtnRef, friendsRef, toggleBox, closeBox } =
     useFriendsBox();
 
-  if (!hiddenFeed || hiddenFeed.length < 0) {
+  if (!hiddenFeed || hiddenFeed.length === 0) {
     return <div>숨김 피드가 없어요</div>;
   }
 
