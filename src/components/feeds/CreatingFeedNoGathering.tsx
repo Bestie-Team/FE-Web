@@ -20,7 +20,7 @@ export default function CreatingFeedNoGathering() {
     imageUrls: [],
     content: "",
   });
-  const handleFeedSuccess = async (data: { message: string }) => {
+  const handleFeedSuccess = async () => {
     router.replace("/feed?tab=2");
     await Promise.all([
       await queryClient.invalidateQueries({

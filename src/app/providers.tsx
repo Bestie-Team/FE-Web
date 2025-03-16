@@ -14,10 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import {
-  AuthProvider,
-  useAuth,
-} from "@/components/shared/providers/AuthProvider";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer, Zoom } from "react-toastify";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";

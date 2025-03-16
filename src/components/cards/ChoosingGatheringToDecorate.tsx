@@ -77,7 +77,7 @@ export default function ChoosingGatheringToDecorate({
         )}
       </Flex>
       <div className={styles.buttonWrapper}>
-        {feeds.length < 1 ? (
+        {feeds && feeds.length < 1 ? (
           <button
             disabled={selectedFeed == null}
             className={styles.button}
