@@ -426,8 +426,8 @@ export default function FeedPage() {
                             <FeedDropdownMenu
                               feed={feed}
                               ref={dropDownRef}
-                              menuItems={MENU_CONFIGS["feed"].menuItems}
-                              className={MENU_CONFIGS["feed"].className}
+                              menuItems={MENU_CONFIGS["feed_mine"].menuItems}
+                              className={MENU_CONFIGS["feed_mine"].className}
                             />
                           )}
                         </div>

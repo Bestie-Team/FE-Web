@@ -29,9 +29,13 @@ export function FeedSkeleton() {
   );
 }
 
-export default function FeedPageSkeleton() {
+export default function FeedPageSkeleton({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   return (
-    <div className="h-dvh w-full pt-safe-top">
+    <div className="relative h-dvh w-full pt-safe-top">
       <header className="flex flex-col">
         <div className="w-full flex justify-between items-center h-12 pl-5 text-[20px] font-[700] leading-[26px] tracking-[-0.3px]">
           <span>{"추억 피드"}</span>
@@ -55,7 +59,8 @@ export default function FeedPageSkeleton() {
         </div>
       </header>
       <div className="h-dvh">
-        <div className="pt-[90px] pb-28">
+        <div className="pb-28">
+          {children}
           <FeedSkeleton />
           <FeedSkeleton />
         </div>
