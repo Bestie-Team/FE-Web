@@ -64,6 +64,7 @@ const NAVBAR_PATHS = [
   "/card",
   "/social",
   "/my",
+  "/",
 ] as const;
 
 const isPathIncluded = (path: string, pathList: readonly string[]) =>
@@ -79,6 +80,14 @@ const NextLayout = ({ children }: Props) => {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (isAuthenticated && pathname === "/") {
+      router.push("/feed");
+      return;
+    } else if (!isAuthenticated && pathname === "/") {
+      router.push("/signin");
+      return;
+    }
+
     const isPublicPath = isPathIncluded(pathname, PUBLIC_PATHS);
     if (!isAuthenticated && !isPublicPath) {
       router.replace("/signin");
