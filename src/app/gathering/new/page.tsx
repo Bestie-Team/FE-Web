@@ -9,7 +9,6 @@ import { lightyToast } from "@/utils/toast";
 import useMakeGathering from "@/components/gathering/hooks/useMakeGathering";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import GatheringForm from "@/components/gathering/GatheringForm";
-import FullPageLoader from "@/components/shared/FullPageLoader";
 
 const components = [
   dynamic(() => import("@/components/gathering/MakeGatheringStatus"), {
@@ -53,10 +52,6 @@ export default function NewGatheringPage() {
       resetFriends();
     };
   }, []);
-
-  if (isPending) {
-    return <FullPageLoader />;
-  }
 
   const CurrentStepComponent = components[step] || components[0];
 

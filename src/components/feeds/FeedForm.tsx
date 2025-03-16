@@ -43,7 +43,7 @@ export default function FeedForm<
 
   return (
     <>
-      <Flex direction="column" className={"px-5 pb-0"}>
+      <Flex direction="column" className="px-5 pb-0">
         <Spacing size={20} />
         {selectedGathering ? (
           <Flex className="gap-4">

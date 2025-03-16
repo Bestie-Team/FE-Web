@@ -3,12 +3,12 @@ import * as lighty from "lighty-type";
 import { useRouter } from "next/navigation";
 import FeedForm from "./FeedForm";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
-import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
 import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
 import { useRecoilValue } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
 import { lightyToast } from "@/utils/toast";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function CreatingFeedNoGathering() {
   const queryClient = useQueryClient();
@@ -20,6 +20,7 @@ export default function CreatingFeedNoGathering() {
     imageUrls: [],
     content: "",
   });
+
   const handleFeedSuccess = async () => {
     router.replace("/feed?tab=2");
     await Promise.all([
@@ -61,8 +62,6 @@ export default function CreatingFeedNoGathering() {
     }
   }, [feedInfo.imageUrls]);
 
-  if (isPending || isUploading) return <FullPageLoader height="100dvh" />;
-
   return (
     <div className={styles.container}>
       <FeedForm
@@ -72,10 +71,11 @@ export default function CreatingFeedNoGathering() {
         filesToUpload={filesToUpload}
         setFilesToUpload={setFilesToUpload}
       />
+      {(isPending || isUploading) && <DotSpinner />}
     </div>
   );
 }
 
 const styles = {
-  container: "bg-base-white",
+  container: "relative bg-base-white",
 };
