@@ -2,42 +2,49 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
+import { UserDetailResponse } from "lighty-type";
 
 export interface SettingsItem {
   title: string;
   info: null | string[];
   link: { href: string; target?: string };
 }
-const SettingsMenu = React.memo(({ logout }: { logout: () => void }) => {
-  return (
-    <Flex direction="column" className="pt-8 gap-9">
-      {settings.map((setting) => {
-        return (
-          <ul key={setting.category} className="flex flex-col">
-            <span className="px-5 text-C1 text-grayscale-400">
-              {setting.category}
-            </span>
-            {setting.list.map((list: SettingsItem, idx) => {
-              return (
-                <ul
-                  key={idx}
-                  onClick={() => {
-                    if (list.title === "로그아웃") {
-                      logout();
-                    }
-                  }}
-                >
-                  <Spacing size={8} />
-                  <SettingsMenuItem list={list} link={list.link} />
-                </ul>
-              );
-            })}
-          </ul>
-        );
-      })}
-    </Flex>
-  );
-});
+const SettingsMenu = React.memo(
+  ({ logout, user }: { logout: () => void; user: UserDetailResponse }) => {
+    return (
+      <Flex direction="column" className="pt-8 gap-9">
+        {settings.map((setting) => {
+          return (
+            <ul key={setting.category} className="flex flex-col">
+              <span className="px-5 text-C1 text-grayscale-400">
+                {setting.category}
+              </span>
+              {setting.list.map((list: SettingsItem, idx) => {
+                return (
+                  <ul
+                    key={idx}
+                    onClick={() => {
+                      if (list.title === "로그아웃") {
+                        logout();
+                      }
+                    }}
+                  >
+                    <Spacing size={8} />
+                    <SettingsMenuItem
+                      list={list}
+                      link={list.link}
+                      user={user}
+                    />
+                  </ul>
+                );
+              })}
+            </ul>
+          );
+        })}
+      </Flex>
+    );
+  }
+);
 
 SettingsMenu.displayName = "SettingsMenu";
 

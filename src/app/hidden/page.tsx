@@ -81,7 +81,7 @@ export default function FeedPage() {
 
   return (
     <div
-      className="min-h-dvh pt-safe-top"
+      className="min-h-dvh"
       onClick={(e) => {
         closeDropdown(e);
         closeBox();

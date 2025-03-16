@@ -188,19 +188,14 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <Flex
-      direction="column"
-      className={
-        "pt-safe-top !min-h-dvh h-full pb-[60px] overflow-scroll no-scrollbar"
-      }
-    >
-      {deco === false ? (
+    <div className="h-dvh overflow-y-scroll no-scrollbar">
+      {!deco && (
         <Flex
-          className="!h-dvh pt-[76px] pb-[60px]"
+          className="min-h-dvh pt-safe-top pb-12"
           direction="column"
           justify="space-between"
         >
-          <div>
+          <div className="pt-[76px]">
             <Flex direction="column" className="gap-3 px-6">
               <span className="text-T2">해당 프레임을 선택할까요?</span>
               <span className="text-B3 text-grayscale-500">
@@ -259,7 +254,7 @@ export default function DecorateWithStickers() {
               </div>
             </Flex>
           </div>
-          <div className={"mb-safe-bottom"}>
+          <div className="mb-safe-bottom">
             <BottomButton
               disabled={selectedFrame == null}
               onClick={handleCaptureImage}
@@ -267,49 +262,46 @@ export default function DecorateWithStickers() {
             />
           </div>
         </Flex>
-      ) : (
-        <>
-          <Spacing size={76} />
-          <Flex className={"w-full px-6"}>
-            <span className="text-B4 text-grayscale-500">
-              점선 영역이 이미지 영역이에요!
-            </span>
-          </Flex>
-          <Spacing size={32} />
-        </>
       )}
       {/* 이 부분이 deco가 false일 때도 렌더링 돼서 아랫 부분에 스크롤 생기고 있었어요. */}
       <Flex
         direction="column"
-        align="center"
-        style={{ display: deco ? "flex" : "none" }}
-        className="h-full"
         justify="space-between"
+        className="min-h-dvh pt-safe-top pb-12 w-full"
+        style={{ display: deco ? "flex" : "none" }}
       >
-        <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
-          <canvas
-            ref={canvasElementRef}
-            id="canvas"
-            style={{
-              width: "282px",
-              height: "372px",
-              backgroundImage: `url(${cardImgUrl})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          />
-        </div>
-        {deco && (
-          <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
-            <FloatingButton tooltip />
-            <BottomButton
-              label={"이미지 저장"}
-              onClick={() => {
-                handleExport();
+        <Flex
+          className="w-full px-6 pt-[76px]"
+          direction="column"
+          align="center"
+        >
+          <span className="text-B4 text-grayscale-500 w-full">
+            점선 영역이 이미지 영역이에요!
+          </span>
+          <Spacing size={32} />
+          <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
+            <canvas
+              ref={canvasElementRef}
+              id="canvas"
+              style={{
+                width: "282px",
+                height: "372px",
+                backgroundImage: `url(${cardImgUrl})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
               }}
             />
           </div>
-        )}
+        </Flex>
+        <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
+          <FloatingButton tooltip />
+          <BottomButton
+            label={"이미지 저장"}
+            onClick={() => {
+              handleExport();
+            }}
+          />
+        </div>
       </Flex>
       {decoBottomSheetState ? (
         <DecoStickerBottomSheet
@@ -334,7 +326,7 @@ export default function DecorateWithStickers() {
           right="설정"
         />
       )}
-    </Flex>
+    </div>
   );
 }
 

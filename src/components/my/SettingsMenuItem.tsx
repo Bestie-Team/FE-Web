@@ -5,18 +5,23 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import useUserDelete from "../users/hooks/useUserDelete";
 import { lightyToast } from "@/utils/toast";
+import { UserDetailResponse } from "lighty-type";
 
 export default function SettingsMenuItem({
   list,
   link,
+  user,
 }: {
   list: SettingsItem;
   link: { href: string; target?: string };
+  user: UserDetailResponse;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
-    if (list.title === "탈퇴하기") {
+    if (list.title === "계정정보") {
+    } else if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
+      list.info = [`SNS정보 로그인(${user.provider ?? ""})`, user.email ?? ""];
     }
   };
   const { mutate: deleteUser } = useUserDelete({
