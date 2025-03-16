@@ -31,7 +31,7 @@ export default function MakingInvitation({
     }
   };
   return (
-    <Flex direction="column" className="bg-grayscale-50 h-full">
+    <Flex direction="column" className="bg-grayscale-50 h-full pt-12">
       <HeaderWithBtn
         headerLabel="초대장 만들기"
         bgColor="#F4F4F4"
@@ -39,7 +39,7 @@ export default function MakingInvitation({
       />
       <Flex
         direction="column"
-        className={"min-h-[calc(100dvh+20px)] pt-safe-top"}
+        className="min-h-[calc(100dvh+20px)] pt-safe-top"
         align="center"
       >
         <Spacing size={40} />

@@ -265,14 +265,14 @@ export default function FeedPage() {
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
     targetRef: containerRef_m,
-    // selectedTab,
+    selectedTab,
   });
 
   useInfiniteScrollByRef({
     isFetching,
     loadMore,
     targetRef: containerRef,
-    // selectedTab,
+    selectedTab,
   });
 
   const mailCount = isNewNotification.filter(

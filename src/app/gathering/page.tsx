@@ -28,11 +28,12 @@ const MemoriesBottomSheet = dynamic(
 
 export default function GatheringPage() {
   const queryClient = useQueryClient();
-  const gatheringRef = useRef<HTMLDivElement>(null);
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, setSelectedTab } = useTabs();
   const containerRef = useRef<HTMLDivElement>(null);
+  const tab1ContainerRef = useRef<HTMLDivElement>(null);
+  const tab2ContainerRef = useRef<HTMLDivElement>(null);
   const { data: myGatherings, isFetching } = useGatherings({
     limit: 50,
     minDate: minDate(),
@@ -45,7 +46,7 @@ export default function GatheringPage() {
   } = useGatheringEnded({ limit: 8 });
 
   const { visible } = useScrollDirection({
-    elementRef: gatheringRef,
+    elementRef: containerRef,
     selectedTab,
   });
 
@@ -70,7 +71,8 @@ export default function GatheringPage() {
   useInfiniteScrollByRef({
     isFetching: isFetching_e,
     loadMore: loadMore_e,
-    targetRef: gatheringRef,
+    targetRef: tab2ContainerRef,
+    selectedTab,
   });
 
   useEffect(() => {
@@ -97,6 +99,7 @@ export default function GatheringPage() {
       >
         {selectedTab === "1" ? (
           <div
+            ref={tab1ContainerRef}
             className={
               "h-full overflow-y-scroll no-scrollbar pb-10 pt-safe-top"
             }
@@ -105,8 +108,8 @@ export default function GatheringPage() {
           </div>
         ) : (
           <div
-            ref={gatheringRef}
-            className={"h-full overflow-y-scroll gathering no-scrollbar pb-36"}
+            ref={tab2ContainerRef}
+            className={"h-full overflow-y-scroll gathering no-scrollbar"}
           >
             <Gathering
               ended
