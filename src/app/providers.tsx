@@ -12,12 +12,9 @@ declare global {
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { ToastContainer, Zoom } from "react-toastify";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";
@@ -52,7 +49,6 @@ export const NextProvider = ({ children }: Props) => {
 };
 
 const DARK_BACKGROUND_PATHS = ["/friends", "/friends/search"] as const;
-const PUBLIC_PATHS = ["/signup", "/auth"] as const;
 const NAVBAR_PATHS = [
   "/feed",
   "/gathering",
@@ -69,25 +65,8 @@ const isPathEqual = (path: string, pathList: readonly string[]) =>
   pathList.some((item) => path === item);
 
 const NextLayout = ({ children }: Props) => {
-  const router = useRouter();
   useScrollToTop();
-  const { isAuthenticated } = useAuth();
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (isAuthenticated && pathname === "/") {
-      router.push("/feed");
-      return;
-    } else if (!isAuthenticated && pathname === "/") {
-      router.push("/signin");
-      return;
-    }
-
-    const isPublicPath = isPathIncluded(pathname, PUBLIC_PATHS);
-    if (!isAuthenticated && !isPublicPath) {
-      router.replace("/signin");
-    }
-  }, [isAuthenticated, pathname, router]);
 
   const showNavBar = isPathEqual(pathname, NAVBAR_PATHS);
 
