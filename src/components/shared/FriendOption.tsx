@@ -19,10 +19,9 @@ export default function FriendOption() {
       ref={btnRef}
       data-testid="options-icon"
       onClick={toggleDropdown}
-      style={{ width: 2.5, height: 14.7 }}
       className="relative cursor-pointer flex justify-center items-center"
     >
-      <OptionsSelectIcon />
+      <OptionsSelectIcon width="2.5" height="14.7" />
       {opened && (
         <FriendDropdownMenu
           ref={ref}

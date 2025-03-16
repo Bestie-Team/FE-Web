@@ -265,19 +265,44 @@ export default function FeedPage() {
     isFetching: isFetching_mine,
     loadMore: loadMore_mine,
     targetRef: containerRef_m,
-    selectedTab,
+    // selectedTab,
   });
 
   useInfiniteScrollByRef({
     isFetching,
     loadMore,
     targetRef: containerRef,
-    selectedTab,
+    // selectedTab,
   });
 
   const mailCount = isNewNotification.filter(
     (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
   );
+
+  const handleRefreshAll = async () => {
+    try {
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all"],
+      });
+      return true;
+    } catch (error) {
+      console.error("Refresh failed:", error);
+      lightyToast.error("새로고침에 실패했어요");
+      return false;
+    }
+  };
+  const handleRefreshMine = async () => {
+    try {
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine"],
+      });
+      return true;
+    } catch (error) {
+      console.error("Refresh failed:", error);
+      lightyToast.error("새로고침에 실패했어요");
+      return false;
+    }
+  };
 
   const {
     btnRef,
@@ -294,7 +319,6 @@ export default function FeedPage() {
     return (
       <div className="h-dvh">
         <Swiper
-          key={selectedTab}
           initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -308,69 +332,81 @@ export default function FeedPage() {
           className="custom-swiper !h-dvh w-full"
         >
           {feedAll && feedAll.length > 0 && (
-            <SwiperSlide>
-              <div ref={containerRef} className={styles.feedWrapper}>
-                <div className={"pt-safe-top"}>
-                  {feedAll.map((feed) => (
-                    <div key={feed.id} className="relative">
-                      <FeedCard
-                        feed={feed}
-                        onClick={() => setSelectedFeedId(feed.id)}
-                      >
-                        <InfoBar
-                          ref={fBtnRef}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleBox(feed.id);
-                          }}
-                          withMembers={feed.withMembers}
+            <SwiperSlide className="!h-dvh">
+              <PullToRefresh
+                onRefresh={handleRefreshAll}
+                pullingContent={<></>}
+                refreshingContent={
+                  <div className="flex justify-center pt-[90px]">
+                    <div className="p-2">
+                      <DotSpinnerSmall />
+                    </div>
+                  </div>
+                }
+              >
+                <div ref={containerRef} className={styles.feedWrapper}>
+                  <div className={"pt-safe-top"}>
+                    {feedAll.map((feed) => (
+                      <div key={feed.id} className="relative">
+                        <FeedCard
                           feed={feed}
-                        />
-                        <div
-                          className="absolute top-11 right-14"
-                          ref={friendsRef}
+                          onClick={() => setSelectedFeedId(feed.id)}
                         >
-                          {openedBoxId == feed.id && (
-                            <FriendsInfoContainer
-                              withMembers={feed.withMembers}
-                              isOpen={openedBoxId === feed.id}
+                          <InfoBar
+                            ref={fBtnRef}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleBox(feed.id);
+                            }}
+                            withMembers={feed.withMembers}
+                            feed={feed}
+                          />
+                          <div
+                            className="absolute top-11 right-14"
+                            ref={friendsRef}
+                          >
+                            {openedBoxId == feed.id && (
+                              <FriendsInfoContainer
+                                withMembers={feed.withMembers}
+                                isOpen={openedBoxId === feed.id}
+                              />
+                            )}
+                          </div>
+                        </FeedCard>
+                        <div
+                          style={{ width: 24, height: 24 }}
+                          className={styles.optionWrapper}
+                        >
+                          <div
+                            ref={btnRef}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleDropdown(feed.id);
+                              setSelectedFeedId(feed.id);
+                            }}
+                          >
+                            <OptionsSelectIcon />
+                          </div>
+                          {openedDropdownId === feed.id && (
+                            <FeedDropdownMenu
+                              feed={feed}
+                              ref={dropDownRef}
+                              menuItems={MENU_CONFIGS["feed"].menuItems}
+                              className={MENU_CONFIGS["feed"].className}
                             />
                           )}
                         </div>
-                      </FeedCard>
-                      <div
-                        style={{ width: 24, height: 24 }}
-                        className={styles.optionWrapper}
-                      >
-                        <div
-                          ref={btnRef}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleDropdown(feed.id);
-                            setSelectedFeedId(feed.id);
-                          }}
-                        >
-                          <OptionsSelectIcon />
-                        </div>
-                        {openedDropdownId === feed.id && (
-                          <FeedDropdownMenu
-                            feed={feed}
-                            ref={dropDownRef}
-                            menuItems={MENU_CONFIGS["feed"].menuItems}
-                            className={MENU_CONFIGS["feed"].className}
-                          />
-                        )}
                       </div>
-                    </div>
-                  ))}
-                  <Spacing size={50} />
-                  {isFetching && <FeedSkeleton />}
+                    ))}
+                    <Spacing size={50} />
+                    {isFetching && <FeedSkeleton />}
+                  </div>
                 </div>
-              </div>
+              </PullToRefresh>
             </SwiperSlide>
           )}
           {feedAll && feedAll.length === 0 && (
-            <SwiperSlide>
+            <SwiperSlide className="!h-dvh">
               <div ref={containerRef} className={styles.feedWrapper}>
                 <FeedForDisplay />
               </div>
@@ -378,65 +414,77 @@ export default function FeedPage() {
           )}
           {feedMine && feedMine.length > 0 && (
             <SwiperSlide>
-              <div ref={containerRef_m} className={styles.feedWrapper}>
-                <div className={"pt-safe-top"}>
-                  {feedMine.map((feed) => (
-                    <div key={feed.id} className="relative">
-                      <FeedCard
-                        key={feed.id}
-                        feed={feed}
-                        onClick={() => setSelectedFeedId(feed.id)}
-                      >
-                        <InfoBar
-                          ref={fBtnRef}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleBox(feed.id);
-                          }}
-                          withMembers={feed.withMembers}
-                          feed={feed}
-                        />
-                        {openedBoxId === feed.id && (
-                          <div
-                            className="absolute top-11 right-14"
-                            ref={friendsRef}
-                          >
-                            <FriendsInfoContainer
-                              withMembers={feed.withMembers}
-                              isOpen={openedBoxId === feed.id}
-                            />
-                          </div>
-                        )}
-                      </FeedCard>
-                      <div
-                        style={{ width: 24, height: 24 }}
-                        className={styles.optionWrapper}
-                      >
-                        <div
-                          ref={btnRef}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleDropdown(feed.id);
-                            setSelectedFeedId(feed.id);
-                          }}
-                        >
-                          <OptionsSelectIcon />
-                        </div>
-                        {openedDropdownId === feed.id && (
-                          <FeedDropdownMenu
-                            feed={feed}
-                            ref={dropDownRef}
-                            menuItems={MENU_CONFIGS["feed_mine"].menuItems}
-                            className={MENU_CONFIGS["feed_mine"].className}
-                          />
-                        )}
-                      </div>
+              <PullToRefresh
+                onRefresh={handleRefreshMine}
+                pullingContent={<></>}
+                refreshingContent={
+                  <div className="flex justify-center pt-[90px]">
+                    <div className="p-2">
+                      <DotSpinnerSmall />
                     </div>
-                  ))}
-                  <Spacing size={50} />
-                  {isFetching_mine && <FeedSkeleton />}
+                  </div>
+                }
+              >
+                <div ref={containerRef_m} className={styles.feedWrapper}>
+                  <div className={"pt-safe-top"}>
+                    {feedMine.map((feed) => (
+                      <div key={feed.id} className="relative">
+                        <FeedCard
+                          key={feed.id}
+                          feed={feed}
+                          onClick={() => setSelectedFeedId(feed.id)}
+                        >
+                          <InfoBar
+                            ref={fBtnRef}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleBox(feed.id);
+                            }}
+                            withMembers={feed.withMembers}
+                            feed={feed}
+                          />
+                          {openedBoxId === feed.id && (
+                            <div
+                              className="absolute top-11 right-14"
+                              ref={friendsRef}
+                            >
+                              <FriendsInfoContainer
+                                withMembers={feed.withMembers}
+                                isOpen={openedBoxId === feed.id}
+                              />
+                            </div>
+                          )}
+                        </FeedCard>
+                        <div
+                          style={{ width: 24, height: 24 }}
+                          className={styles.optionWrapper}
+                        >
+                          <div
+                            ref={btnRef}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleDropdown(feed.id);
+                              setSelectedFeedId(feed.id);
+                            }}
+                          >
+                            <OptionsSelectIcon />
+                          </div>
+                          {openedDropdownId === feed.id && (
+                            <FeedDropdownMenu
+                              feed={feed}
+                              ref={dropDownRef}
+                              menuItems={MENU_CONFIGS["feed_mine"].menuItems}
+                              className={MENU_CONFIGS["feed_mine"].className}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    <Spacing size={50} />
+                    {isFetching_mine && <FeedSkeleton />}
+                  </div>
                 </div>
-              </div>
+              </PullToRefresh>
             </SwiperSlide>
           )}
           {feedMine && feedMine.length === 0 && (
@@ -459,24 +507,6 @@ export default function FeedPage() {
     handleSlideChange,
   ]);
 
-  const handleRefresh = async () => {
-    try {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: ["get/feeds/all"],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: ["get/feeds/mine"],
-        }),
-      ]);
-
-      return true;
-    } catch (error) {
-      console.error("Refresh failed:", error);
-      lightyToast.error("새로고침에 실패했어요");
-      return false;
-    }
-  };
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -505,25 +535,15 @@ export default function FeedPage() {
         handleTabClick={handleTabClick}
       />
 
-      <PullToRefresh
-        onRefresh={handleRefresh}
-        pullingContent={
-          <div className="flex justify-center pt-[107px]">
-            <div className="p-2">
-              <DotSpinnerSmall />
-            </div>
-          </div>
-        }
-      >
-        {!isClient ? (
-          <div className="h-full w-full pt-[90px] pb-28 flex flex-col">
-            <FeedSkeleton />
-            <FeedSkeleton />
-          </div>
-        ) : (
-          renderSwipers
-        )}
-      </PullToRefresh>
+      {!isClient ? (
+        <div className="h-full w-full pt-[90px] pb-28 flex flex-col">
+          <FeedSkeleton />
+          <FeedSkeleton />
+        </div>
+      ) : (
+        renderSwipers
+      )}
+
       <TabParamHandler setSelectedTab={setSelectedTab} pathToReplace="/feed" />
       {recordModalOpen && (
         <MemoriesBottomSheet

@@ -21,7 +21,7 @@ export default function FeedCard({
     <Flex direction="column" className="py-3" onClick={onClick}>
       {children}
       <Spacing size={12} />
-      <PhotoSwiper feed={feed} type="feed" />
+      <PhotoSwiper feed={feed} />
       <Spacing size={8} />
       <ContentWithComments
         content={feed.content}
