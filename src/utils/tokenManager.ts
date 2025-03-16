@@ -27,10 +27,18 @@ export async function refreshAccessToken() {
 
       return accessToken;
     }
+    if (response.status === 401) {
+      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+      window.location.href = "/signin";
+    }
   } catch (error) {
+    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    window.location.href = "/signin";
     console.error("토큰 갱신 실패:", error);
     throw new Error(
-      error instanceof Error ? error.message : `${String(error)}42줄`
+      error instanceof Error
+        ? error.message
+        : `${String(error)} failed refresh token`
     );
   }
 }

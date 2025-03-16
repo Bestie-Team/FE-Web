@@ -519,7 +519,7 @@ export default function FeedPage() {
 
   return (
     <div
-      className="h-dvh"
+      className="h-dvh pb-safe-bottom"
       onClick={(e: MouseEvent<HTMLDivElement>) => {
         closeDropdown(e);
         closeBox();
