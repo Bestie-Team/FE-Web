@@ -43,7 +43,7 @@ export default function Gathering({
   };
 
   return (
-    <div className={clsx("z-0 pt-3 w-full px-5", className)}>
+    <div className={clsx("pt-3 w-full px-5 h-full", className)}>
       <Spacing size={87} />
       {message && showMessage && (
         <Message onClose={() => setShowMessage(false)} />
@@ -63,6 +63,7 @@ export default function Gathering({
           )}
         </div>
       )}
+      <Spacing size={120} />
     </div>
   );
 }

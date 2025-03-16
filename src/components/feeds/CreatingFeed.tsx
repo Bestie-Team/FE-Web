@@ -7,9 +7,9 @@ import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
 import FeedForm from "./FeedForm";
 import useMakeGatheringFeed from "./hooks/useMakeFeed";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
-import FullPageLoader from "../shared/FullPageLoader";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+import DotSpinner from "../shared/Spinner/DotSpinner";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
   gatheringId: "",
@@ -52,7 +52,6 @@ export default function CreatingFeed() {
       ...prev,
       imageUrls: data.imageUrls,
     }));
-    setFilesToUpload([]);
   };
 
   const { mutate: makeGatheringFeed, isPending } = useMakeGatheringFeed({
@@ -69,7 +68,6 @@ export default function CreatingFeed() {
     onSuccess: handleImageUploadSuccess,
     onError: (error) => {
       lightyToast.error(error.message);
-      setFilesToUpload([]);
     },
   });
 
@@ -85,16 +83,17 @@ export default function CreatingFeed() {
 
   if (!selectedGathering || id == "") return;
 
-  if (isPending || isUploading) return <FullPageLoader height="100dvh" />;
-
   return (
-    <FeedForm
-      uploadImages={uploadImages}
-      feedInfo={feedInfo}
-      setFeedInfo={setFeedInfo}
-      filesToUpload={filesToUpload}
-      setFilesToUpload={setFilesToUpload}
-      selectedGathering={selectedGathering}
-    />
+    <div className="relative">
+      <FeedForm
+        uploadImages={uploadImages}
+        feedInfo={feedInfo}
+        setFeedInfo={setFeedInfo}
+        filesToUpload={filesToUpload}
+        setFilesToUpload={setFilesToUpload}
+        selectedGathering={selectedGathering}
+      />
+      {(isPending || isUploading) && <DotSpinner />}
+    </div>
   );
 }

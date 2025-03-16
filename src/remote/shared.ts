@@ -68,7 +68,6 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
       response = await fetchFn();
     } catch (e) {
       console.log(e);
-      window.location.href = "/signin";
       return;
     }
   }

@@ -48,7 +48,7 @@ interface InfiniteScrollRefType {
   loadMore: () => void;
   targetRef: RefObject<HTMLElement>;
   threshold?: number;
-  // selectedTab?: string;
+  selectedTab?: string;
 }
 
 export const useInfiniteScrollByRef = ({
@@ -56,8 +56,8 @@ export const useInfiniteScrollByRef = ({
   loadMore,
   targetRef,
   threshold = 360,
-}: // selectedTab,
-InfiniteScrollRefType) => {
+  selectedTab,
+}: InfiniteScrollRefType) => {
   const [page, setPage] = useState(0);
   const isLoadingRef = useRef(false);
 
@@ -66,18 +66,35 @@ InfiniteScrollRefType) => {
       return;
     }
 
+    if (!targetRef.current || isFetching || isLoadingRef.current) {
+      console.log("스크롤 체크 중단:", {
+        refExists: !!targetRef.current,
+        isFetching,
+        isLoading: isLoadingRef.current,
+      });
+      return;
+    }
+
     const element = targetRef.current;
     const elementHeight = element.scrollHeight;
     const scrollTop = element.scrollTop;
     const clientHeight = element.clientHeight;
     const remainingScroll = elementHeight - (scrollTop + clientHeight);
-    // console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
+
+    console.log("스크롤 위치 체크:", {
+      elementHeight,
+      scrollTop,
+      clientHeight,
+      remainingScroll,
+      threshold,
+    });
+
     if (remainingScroll < threshold) {
-      // console.log(elementHeight, scrollTop, clientHeight, remainingScroll);
+      console.log("무한 스크롤 트리거됨!");
       isLoadingRef.current = true;
       setPage((prev) => prev + 1);
     }
-  }, [isFetching, targetRef, threshold]);
+  }, [isFetching, targetRef, threshold, selectedTab]);
 
   // 디바운스 시간을 300ms에서 500ms로 증가하여 더 안정적으로 만듦
   const debouncedScroll = useDebounce(checkScrollPosition, 500);
