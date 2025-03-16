@@ -16,6 +16,7 @@ import Flex from "../shared/Flex";
 import Link from "next/link";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import useFriendsRequestTotalCount from "./hooks/useFriendsRequestCount";
+import SocialPageSkeleton from "../shared/Skeleton/SocialPageSkeleton";
 
 const ReportFriendModal = memo(
   ({
@@ -52,7 +53,7 @@ export default function UserFriendsListContainer() {
   const { data: requestCount = { count: 0 }, isFetching: isFetching_c } =
     useFriendsRequestTotalCount();
   const {
-    data: friends = [],
+    data: friends,
     loadMore,
     isFetching,
   } = useFriends({
@@ -95,6 +96,9 @@ export default function UserFriendsListContainer() {
 
   useInfiniteScroll({ isFetching, loadMore });
 
+  if (!friends) {
+    return <SocialPageSkeleton />;
+  }
   return (
     <>
       <Flex

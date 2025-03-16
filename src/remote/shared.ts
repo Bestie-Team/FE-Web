@@ -27,10 +27,9 @@ export const API_CONFIG = {
   },
   getHeaders: () => {
     const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    if (!token) throw new Error(ERROR_MESSAGES.NO_AUTH);
 
     return {
-      Authorization: `Bearer ${token}`,
+      Authorization: token ? `Bearer ${token}` : "",
     };
   },
 };
@@ -42,7 +41,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
       return await fetch(url, {
         ...options,
         headers: {
-          ...options.headers,
+          ...(options.headers || {}),
           ...API_CONFIG.getHeaders(),
         },
       });
@@ -51,17 +50,41 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
     }
   };
 
-  let response = await fetchFn();
-
-  if (response.status === 401) {
-    await refreshAccessToken();
-
+  let response;
+  try {
     response = await fetchFn();
+  } catch (e) {
+    console.error("Fetch failed:", e);
+    throw new Error("Failed to fetch data");
   }
 
-  if (!response.ok) {
-    const res = await response.json();
-    throw new Error(res.message);
+  if (!response) {
+    throw new Error("No response received");
+  }
+
+  if (response?.status === 401) {
+    try {
+      await refreshAccessToken();
+      response = await fetchFn();
+    } catch (e) {
+      console.log(e);
+      window.location.href = "/signin";
+      return;
+    }
+  }
+  if (response?.status === 404) {
+    alert("요청한 리소스를 찾을 수 없습니다. 홈 페이지로 이동합니다.");
+    window.location.href = "/";
+  }
+
+  if (!response?.ok) {
+    try {
+      const res = await response.json();
+      throw new Error(res.message || "An error occurred");
+    } catch (e) {
+      console.log(e);
+      throw new Error("Failed to parse error response");
+    }
   }
 
   return response;

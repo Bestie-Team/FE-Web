@@ -75,7 +75,6 @@ export default function CreatingFeed() {
 
   const { data: selectedGathering } = useGatheringDetail({
     id,
-    enabled: id !== "",
   });
 
   useEffect(() => {

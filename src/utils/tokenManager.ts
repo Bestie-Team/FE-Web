@@ -27,9 +27,6 @@ export async function refreshAccessToken() {
 
       return accessToken;
     }
-    if (response.status === 404) {
-      window.location.href = "/";
-    }
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
     throw new Error(

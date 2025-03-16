@@ -5,8 +5,8 @@ export default function useFeedComments({ feedId }: { feedId: string }) {
   return useQuery({
     queryKey: ["get/comments", { feedId }],
     queryFn: () => getFeedComments({ feedId }),
-    throwOnError: true,
     refetchOnWindowFocus: "always",
     staleTime: 60 * 1000,
+    enabled: feedId !== "",
   });
 }

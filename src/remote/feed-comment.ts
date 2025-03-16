@@ -13,6 +13,9 @@ export async function getFeedComments({ feedId }: { feedId: string }) {
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
+    if (!response) {
+      throw new Error("Response is undefined");
+    }
     const data: FeedCommentResponse[] = await response.json();
     return data;
   } catch (error) {
