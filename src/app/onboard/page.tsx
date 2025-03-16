@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { MouseEvent, useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -9,13 +9,24 @@ import Image from "next/image";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import Flex from "@/components/shared/Flex";
+import { Swiper as SwiperType } from "swiper";
 
 export default function OnBoardCardSlider() {
   const nextRef = useRef<HTMLDivElement | null>(null);
+  const swiperRef = useRef<SwiperType | null>(null);
+  const [button, setButton] = useState("다음");
   const router = useRouter();
-  const onClickHandler = () => {
-    router.replace("/feed?ref=signup");
+
+  const onClickHandler = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    if (!swiperRef.current) return;
+    else if (nextRef.current?.textContent == "시작하기") {
+      router.push("/feed");
+    }
+    console.log(swiperRef.current.activeIndex, onBoardCardContents.length - 1);
   };
+
   return (
     <div
       className="absolute inset-0 h-dvh min-h-[400px] bg-grayscale-50 pt-6"
@@ -24,6 +35,16 @@ export default function OnBoardCardSlider() {
       }}
     >
       <Swiper
+        onSlideChange={(swiper) => {
+          if (swiper.activeIndex === onBoardCardContents.length - 1) {
+            setButton("시작하기");
+          } else {
+            setButton("다음");
+          }
+        }}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
         modules={[Pagination, Navigation]}
         navigation={{
           nextEl: nextRef.current,
@@ -70,14 +91,8 @@ export default function OnBoardCardSlider() {
         ))}
       </Swiper>
       <div className={styles.buttonWrapper}>
-        <div
-          role="button"
-          ref={nextRef}
-          onMouseDown={onClickHandler}
-          onClick={onClickHandler}
-          className={styles.button}
-        >
-          다음
+        <div ref={nextRef} className={styles.button} onClick={onClickHandler}>
+          {button}
         </div>
       </div>
     </div>
@@ -167,5 +182,6 @@ const onBoardCardContents = [
 const styles = {
   buttonWrapper:
     "bg-base-white w-full px-5 py-3 font-[600] text-base text-center leading-[16.8px]",
-  button: "rounded-full bg-grayscale-900 py-[18px] w-full text-base-white",
+  button:
+    "rounded-full bg-grayscale-900 py-[18px] w-full text-base-white cursor-pointer",
 };
