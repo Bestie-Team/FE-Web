@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/components/shared/providers/AuthProvider";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -19,5 +20,5 @@ export default function Page() {
     }
   }, [pathname, isAuthenticated]);
 
-  return <></>;
+  return <DotSpinner />;
 }

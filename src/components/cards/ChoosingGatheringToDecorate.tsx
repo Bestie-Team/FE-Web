@@ -10,7 +10,6 @@ import { Feed } from "@/models/feed";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { NoFeedToMakeCard } from "../feeds/NoFeed";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
@@ -21,7 +20,6 @@ export default function ChoosingGatheringToDecorate({
     Partial<Feed> & { name: string; imageUrl: string; date: string }
   >(cardSelectedFeedAtom);
   const router = useRouter();
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const { data } = useFeedMine({
     order: "DESC",
@@ -52,7 +50,7 @@ export default function ChoosingGatheringToDecorate({
     <Flex
       direction="column"
       justify="space-between"
-      className="pb-14 pt-safe-top"
+      className="h-dvh relative pt-safe-top pb-safe-bottom overflow-y-scroll no-scrollbar"
     >
       <Flex direction="column">
         <div className="px-6">
@@ -78,12 +76,7 @@ export default function ChoosingGatheringToDecorate({
           />
         )}
       </Flex>
-      <div
-        className={clsx(
-          styles.buttonWrapper,
-          isReactNativeWebView ? "mb-safe-bottom" : ""
-        )}
-      >
+      <div className={styles.buttonWrapper}>
         {feeds.length < 1 ? (
           <button
             disabled={selectedFeed == null}
@@ -115,5 +108,5 @@ export default function ChoosingGatheringToDecorate({
 
 const styles = {
   button: `bg-grayscale-900 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
-  buttonWrapper: `w-full px-5 pb-5 pt-3 animate-slide-up will-change-transform`,
+  buttonWrapper: `w-full px-5 pt-3 animate-slide-up will-change-transform pb-16`,
 };

@@ -86,7 +86,6 @@ export default function MyPage() {
               userName={user.name}
             />
             <Spacing size={12} />
-
             <MyMainInfo
               groupCount={user.groupCount}
               feedCount={user.feedCount}
@@ -94,7 +93,7 @@ export default function MyPage() {
             />
           </Suspense>
           <Spacing size={16} />
-          <SettingsMenu logout={handleLogout} />
+          <SettingsMenu logout={handleLogout} user={user} />
           <footer className={styles.termsWrapper}>
             <span
               // href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"

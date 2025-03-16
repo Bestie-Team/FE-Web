@@ -9,7 +9,7 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
   return (
     <Flex
-      className="pt-safe-top pb-14"
+      className="relative h-dvh pt-safe-top pb-safe-bottom overflow-y-scroll no-scrollbar"
       justify="space-between"
       direction="column"
     >
@@ -39,5 +39,5 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 
 const styles = {
   button: `mb-safe-bottom bg-grayscale-900 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
-  buttonWrapper: `w-full px-5 pb-5 pt-3 animate-slide-up will-change-transform`,
+  buttonWrapper: `w-full px-5 pb-16 pt-3 animate-slide-up will-change-transform`,
 };
