@@ -18,7 +18,8 @@ interface OptionsProps {
 }
 
 export default function CommentOption({ commentId }: OptionsProps) {
-  const { openedDropdownId, ref, btnRef, toggleDropdown } = useDropdown();
+  const { openedDropdownId, dropDownRef, btnRef, toggleDropdown } =
+    useDropdown();
 
   return (
     <div
@@ -31,7 +32,7 @@ export default function CommentOption({ commentId }: OptionsProps) {
       <OptionsSelectIcon width={"2px"} height={"11.3px"} color={"#0A0A0A"} />
       {openedDropdownId && (
         <CommentDropdownMenu
-          ref={ref}
+          ref={dropDownRef}
           commentId={commentId}
           items={MENU_CONFIGS[MENU_TYPES.COMMENT].items}
         />

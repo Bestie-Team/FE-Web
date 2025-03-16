@@ -86,7 +86,7 @@ export default function ClickableGatheringSwiperForDeco({
               alt={`feed${idx + 1}`}
               className={clsx(
                 styles.image,
-                `transition-opacity duration-500 ${
+                `transition-opacity duration-75 ${
                   isLoaded ? "opacity-100" : "opacity-0"
                 }`
               )}

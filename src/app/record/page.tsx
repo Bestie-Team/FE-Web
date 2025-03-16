@@ -48,7 +48,7 @@ export default function Record() {
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-dvh pt-safe-top">
       <HeaderWithBtn
         headerLabel="기록하기"
         onClickBackBtn={clickBackBtnHandler}

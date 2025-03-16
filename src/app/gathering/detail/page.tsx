@@ -16,6 +16,7 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import { MENU_TYPES } from "@/models/dropdown";
 import { isIntersectingAtom } from "@/atoms/scroll";
+import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -36,7 +37,6 @@ export default function GatheringDetailPage() {
   const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
   const { data: selectedGathering } = useGatheringDetail({
     id: id || "",
-    enabled: !!id,
   });
   const { mutate: deleteGathering } = useDeleteGathering({
     id: id || "",
@@ -81,12 +81,13 @@ export default function GatheringDetailPage() {
   };
 
   if (!selectedGathering) {
-    return;
+    return <DetailSkeleton />;
   }
 
   const { gatheringDate, hostUser } = selectedGathering;
 
   const isEnded = new Date(gatheringDate).getTime() < new Date().getTime();
+
   return (
     <div className="w-full min-h-dvh bg-grayscale-50">
       <HeaderWithBtn

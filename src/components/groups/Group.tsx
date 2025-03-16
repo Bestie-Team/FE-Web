@@ -8,6 +8,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
+import GroupListSkeleton from "../shared/Skeleton/GroupListSkeleton";
 
 const GroupList = ({ groups }: { groups: Group[] }) => {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function Groups() {
       </Flex>
       <Spacing size={16} />
       <ul className="flex flex-col gap-4 pb-20">
-        {groups && <GroupList groups={groups} />}
+        {groups ? <GroupList groups={groups} /> : <GroupListSkeleton />}
         {isFetching && <GroupSkeleton />}
       </ul>
     </div>

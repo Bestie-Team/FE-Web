@@ -19,6 +19,7 @@ import dynamic from "next/dynamic";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
 
 const SelectFriendsContainer = dynamic(
   () => import("@/components/friends/SelectFriendsContainer"),
@@ -106,6 +107,10 @@ export default function GroupDetailPage() {
         }}
       />
     );
+  }
+
+  if (!groupDetail) {
+    return <DetailSkeleton />;
   }
 
   const groupEdit: GroupEditProps = {

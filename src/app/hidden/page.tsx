@@ -5,11 +5,11 @@ import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
 import { modalStateAtom } from "@/atoms/modal";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Modal from "@/components/shared/Modal/Modal";
 import useDisplayFeed from "@/components/feeds/hooks/useDisplayFeed";
-import { selectedFeedIdAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom, selectedFeedIdAtom } from "@/atoms/feed";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
@@ -21,11 +21,15 @@ import FeedCard from "@/components/feeds/FeedCard";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
+import CommentContainer from "@/components/shared/Comment/CommentContainer";
 
 export default function FeedPage() {
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
+  const [feedId, setFeedId] = useState("");
   const queryClient = useQueryClient();
+  const [bottomSheetState, setBottomSheetState] =
+    useRecoilState(bottomSheetStateAtom);
 
   const {
     data: hiddenFeed,
@@ -106,7 +110,7 @@ export default function FeedPage() {
         <div className={"pt-safe-top"}>
           {hiddenFeed.map((feed) => (
             <div key={feed.id} className="relative">
-              <FeedCard feed={feed}>
+              <FeedCard feed={feed} onClick={() => setFeedId(feed.id)}>
                 <InfoBar
                   ref={fBtnRef}
                   onClick={(e) => {
@@ -150,6 +154,12 @@ export default function FeedPage() {
           {isFetching && <FeedSkeleton />}
         </div>
       </Suspense>
+      {bottomSheetState && (
+        <CommentContainer
+          selectedFeedId={feedId}
+          onClose={() => setBottomSheetState(false)}
+        />
+      )}
       {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}

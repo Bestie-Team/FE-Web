@@ -22,7 +22,7 @@ export default function GroupBannerContainer({
         height={380}
         className={clsx(
           "h-[380px] w-[500px] object-cover",
-          `transition-opacity duration-500 ${
+          `transition-opacity duration-75 ${
             isLoaded ? "opacity-100" : "opacity-0"
           }`
         )}

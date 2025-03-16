@@ -18,7 +18,7 @@ export default function UpcomingSchedule({
       <Spacing size={32} />
       <Flex
         direction="column"
-        className="relative min-h-[calc(100dvh-655px)] gap-12"
+        className="relative min-h-[calc(100dvh-655px)] gap-12 pb-28"
       >
         {gatherings.length > 0 && <div className={styles.timelineWrapper} />}
         {gatherings.length === 0 ? (
@@ -28,7 +28,6 @@ export default function UpcomingSchedule({
             <TimelineItem key={i} upcomingGathering={gathering} />
           ))
         )}
-        <Spacing size={48} />
       </Flex>
     </Flex>
   );

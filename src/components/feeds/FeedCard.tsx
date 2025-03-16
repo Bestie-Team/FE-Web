@@ -3,7 +3,6 @@ import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
 import { Feed } from "@/models/feed";
-import { Dispatch, SetStateAction } from "react";
 
 export default function FeedCard({
   feed,
