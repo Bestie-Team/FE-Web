@@ -6,7 +6,9 @@ export async function refreshAccessToken() {
   const baseUrl = API_CONFIG.getBaseUrl();
 
   if (deviceId === null) {
-    throw new Error("디바이스 아이디가 없습니다.");
+    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.USER_INFO);
+    return null;
   }
 
   try {
@@ -18,7 +20,13 @@ export async function refreshAccessToken() {
         "Device-Id": deviceId,
       },
     });
-
+    if (!response.ok) {
+      if (response.status === 401) {
+        localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+        localStorage.removeItem(STORAGE_KEYS.USER_INFO);
+      }
+      return null;
+    }
     const data: { accessToken: string } = await response.json();
     const { accessToken } = data;
 
@@ -26,11 +34,10 @@ export async function refreshAccessToken() {
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
       return accessToken;
     }
-    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     return null;
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
-    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    // localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     return null;
   }
 }

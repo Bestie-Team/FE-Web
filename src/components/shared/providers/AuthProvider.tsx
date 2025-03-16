@@ -21,6 +21,8 @@ interface AuthContextType {
   logout: () => void;
   isAuthenticated: boolean;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
+  isLoading: boolean;
+  updateUserInfo: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,81 +30,106 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [token, setToken] = useState<string | null>(() => {
-    if (typeof window === "undefined") return null;
-    else {
-      const userToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-      return userToken;
-    }
-  });
-  const [userInfo, setUserInfo] = useState<UserInfoMini | null>(() => {
-    if (typeof window === "undefined") return null;
-    else {
-      const savedUserInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-      return savedUserInfo ? JSON.parse(savedUserInfo) : null;
-    }
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
 
-  const updateUserInfo = async () => {
+  const initialize = async () => {
+    setIsLoading(true);
+    try {
+      if (typeof window === "undefined") {
+        setIsLoading(false);
+        return;
+      }
+
+      const storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+      const storedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
+
+      // 토큰이 없으면 초기화 완료
+      if (!storedToken) {
+        setToken(null);
+        setUserInfo(null);
+        setIsLoading(false);
+        return;
+      }
+
+      // 토큰 설정
+      setToken(storedToken);
+
+      // 사용자 정보가 있으면 설정
+      if (storedUserInfo) {
+        setUserInfo(JSON.parse(storedUserInfo));
+      }
+
+      // 토큰 유효성 검증 및 사용자 정보 업데이트
+      try {
+        const user = await getUserAuth();
+        if (user) {
+          const newUserInfo = {
+            accountId: user.accountId,
+            profileImageUrl: user.profileImageUrl,
+          };
+          localStorage.setItem(
+            STORAGE_KEYS.USER_INFO,
+            JSON.stringify(newUserInfo)
+          );
+          setUserInfo(newUserInfo);
+        } else {
+          // 사용자 정보를 가져오지 못했으면 로그아웃
+          logout();
+        }
+      } catch (error) {
+        console.error("사용자 정보 조회 실패:", error);
+        // API 오류 시 로그아웃
+        logout();
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  const updateUserInfo = async (): Promise<void> => {
     try {
       const user = await getUserAuth();
-      if (!user) return;
+      if (!user) {
+        logout();
+        return;
+      }
 
       const newUserInfo = {
         accountId: user.accountId,
         profileImageUrl: user.profileImageUrl,
       };
 
-      sessionStorage.setItem(
-        STORAGE_KEYS.USER_INFO,
-        JSON.stringify(newUserInfo)
-      );
+      localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(newUserInfo));
       setUserInfo(newUserInfo);
     } catch (error) {
       console.error("사용자 정보 조회 실패:", error);
-      setUserInfo(null);
+      logout();
     }
   };
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const accessToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-      if (!accessToken) {
-        setToken(null);
-        setUserInfo(null);
-        return;
-      }
-
-      if (token !== accessToken) {
-        setToken(accessToken);
-      }
-
-      if (!userInfo) {
-        await updateUserInfo();
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      updateUserInfo();
-    }
-  }, [token]);
-
   const login = (userInfo: lighty.LoginResponse) => {
-    setToken(userInfo.accessToken);
-    setUserInfo({
+    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, userInfo.accessToken);
+
+    const userInfoData = {
       accountId: userInfo.accountId,
       profileImageUrl: userInfo.profileImageUrl,
-    });
+    };
+
+    localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfoData));
+
+    setToken(userInfo.accessToken);
+    setUserInfo(userInfoData);
   };
 
   const logout = () => {
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-    localStorage.removeItem(STORAGE_KEYS.DEVICE_ID);
-    sessionStorage.removeItem(STORAGE_KEYS.USER_INFO);
+    localStorage.removeItem(STORAGE_KEYS.USER_INFO);
     setToken(null);
     setUserInfo(null);
   };
@@ -114,7 +141,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUserInfo,
     login,
     logout,
-    isAuthenticated: !!token,
+    isAuthenticated: !!token && !!userInfo,
+    isLoading,
+    updateUserInfo,
   };
 
   return (

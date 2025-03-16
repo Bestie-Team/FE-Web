@@ -47,7 +47,7 @@ const NavBar = () => {
   ));
 
   const shouldShowFloatingButton = useMemo(() => {
-    return showSheetButton || pathname === "/";
+    return showSheetButton;
   }, [showSheetButton, pathname]);
 
   useEffect(() => {

@@ -52,7 +52,7 @@ export default function MyPage() {
   const isPast = useScrollThreshold();
 
   const handleLogout = useCallback(async () => {
-    router.push("/signin");
+    router.push("/");
     logout();
   }, [router, logout]);
 

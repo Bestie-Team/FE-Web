@@ -36,14 +36,16 @@ export const API_CONFIG = {
 
 // 기본 fetch 함수
 export const fetchWithAuth = async (url: string, options: RequestInit) => {
+  const getAuthHeaders = () => {
+    const headers = { ...(options.headers || {}), ...API_CONFIG.getHeaders() };
+    return headers;
+  };
+
   const fetchFn = async () => {
     try {
       return await fetch(url, {
         ...options,
-        headers: {
-          ...(options.headers || {}),
-          ...API_CONFIG.getHeaders(),
-        },
+        headers: getAuthHeaders(),
       });
     } catch (e) {
       throw Error(`Network Error, ${e}`);
@@ -62,32 +64,36 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
     throw new Error("No response received");
   }
 
-  if (response?.status === 401) {
-    try {
-      const newToken = await refreshAccessToken();
-      if (!!newToken) {
+  if (response.status === 401) {
+    const newToken = await refreshAccessToken();
+
+    if (newToken) {
+      try {
         response = await fetchFn();
-      } else {
-        throw new Error("Authentication failed");
+      } catch (e) {
+        console.error("Retry fetch failed:", e);
+        throw new Error("Failed to fetch data after token refresh");
       }
-    } catch (e) {
-      console.error(e);
-      window.location.href = "/signin";
+    } else {
+      // 토큰 갱신 실패 - 로그인 페이지로 리디렉션하지만 오류도 반환
+      // 리디렉션은 컴포넌트에서 처리하도록 변경
       throw new Error("Authentication failed");
     }
   }
-  if (response?.status === 404) {
-    alert("요청한 리소스를 찾을 수 없습니다. 홈 페이지로 이동합니다.");
-    window.location.href = "/";
+
+  if (response.status === 404) {
+    throw new Error("Resource not found");
   }
 
   if (!response?.ok) {
     try {
       const res = await response.json();
-      throw new Error(res.message || "An error occurred");
+      throw new Error(res.message || `Server error: ${response.status}`);
     } catch (e) {
-      console.log(e);
-      throw new Error("Failed to parse error response");
+      if (e instanceof SyntaxError) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+      throw e;
     }
   }
 
