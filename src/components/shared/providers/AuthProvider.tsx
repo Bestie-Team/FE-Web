@@ -65,21 +65,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    if (accessToken == null) {
-      return;
-    }
+    const checkAuth = async () => {
+      const accessToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+      if (!accessToken) {
+        setToken(null);
+        setUserInfo(null);
+        return;
+      }
 
-    getUserAuth();
-    if (token !== accessToken) {
-      setToken(accessToken);
-      return;
-    }
+      if (token !== accessToken) {
+        setToken(accessToken);
+      }
 
-    if (!userInfo) {
+      if (!userInfo) {
+        await updateUserInfo();
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    if (token) {
       updateUserInfo();
     }
-  }, [userInfo, token]);
+  }, [token]);
 
   const login = (userInfo: lighty.LoginResponse) => {
     setToken(userInfo.accessToken);

@@ -5,9 +5,7 @@ import Spacing from "../Spacing";
 
 export default function GroupListSkeleton() {
   return (
-    <div
-      className={"h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20 pt-safe-top"}
-    >
+    <div className="h-[calc(100dvh-144px)] px-5 text-T4 mt-3 pb-20">
       <Flex align="center" className="h-[33px] w-full">
         <span className="flex-grow" />
         <Spacing size={4} direction="horizontal" />

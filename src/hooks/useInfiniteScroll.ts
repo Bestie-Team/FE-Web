@@ -96,8 +96,7 @@ export const useInfiniteScrollByRef = ({
     }
   }, [isFetching, targetRef, threshold, selectedTab]);
 
-  // 디바운스 시간을 300ms에서 500ms로 증가하여 더 안정적으로 만듦
-  const debouncedScroll = useDebounce(checkScrollPosition, 500);
+  const debouncedScroll = useDebounce(checkScrollPosition, 300);
 
   useEffect(() => {
     const element = targetRef.current;

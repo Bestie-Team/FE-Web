@@ -18,7 +18,7 @@ export default function FeedCard({
   if (!writer) return null;
 
   return (
-    <Flex direction="column" className="py-3" onClick={onClick}>
+    <Flex direction="column" className="py-3 pb-16" onClick={onClick}>
       {children}
       <Spacing size={12} />
       <PhotoSwiper feed={feed} />

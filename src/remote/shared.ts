@@ -64,11 +64,16 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
 
   if (response?.status === 401) {
     try {
-      await refreshAccessToken();
-      response = await fetchFn();
+      const newToken = await refreshAccessToken();
+      if (!!newToken) {
+        response = await fetchFn();
+      } else {
+        throw new Error("Authentication failed");
+      }
     } catch (e) {
-      console.log(e);
-      return;
+      console.error(e);
+      window.location.href = "/signin";
+      throw new Error("Authentication failed");
     }
   }
   if (response?.status === 404) {
