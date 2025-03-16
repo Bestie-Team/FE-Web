@@ -32,9 +32,9 @@ export async function refreshAccessToken() {
       window.location.href = "/signin";
     }
   } catch (error) {
+    console.error("토큰 갱신 실패:", error);
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     window.location.href = "/signin";
-    console.error("토큰 갱신 실패:", error);
     throw new Error(
       error instanceof Error
         ? error.message
