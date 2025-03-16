@@ -71,7 +71,6 @@ export default function GatheringPage() {
     isFetching: isFetching_e,
     loadMore: loadMore_e,
     targetRef: gatheringRef,
-    selectedTab,
   });
 
   useEffect(() => {
@@ -91,7 +90,7 @@ export default function GatheringPage() {
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="flex justify-center p-4 pt-[90px]">
+          <div className="flex justify-center p-4">
             <DotSpinnerSmall />
           </div>
         }

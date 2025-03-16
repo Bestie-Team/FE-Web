@@ -48,7 +48,7 @@ interface InfiniteScrollRefType {
   loadMore: () => void;
   targetRef: RefObject<HTMLElement>;
   threshold?: number;
-  selectedTab?: string;
+  // selectedTab?: string;
 }
 
 export const useInfiniteScrollByRef = ({
@@ -56,8 +56,8 @@ export const useInfiniteScrollByRef = ({
   loadMore,
   targetRef,
   threshold = 200,
-  selectedTab,
-}: InfiniteScrollRefType) => {
+}: // selectedTab,
+InfiniteScrollRefType) => {
   const [page, setPage] = useState(0);
   const isLoadingRef = useRef(false);
 
@@ -91,7 +91,7 @@ export const useInfiniteScrollByRef = ({
     return () => {
       element.removeEventListener("scroll", debouncedScroll);
     };
-  }, [debouncedScroll, targetRef, selectedTab]);
+  }, [debouncedScroll, targetRef]);
 
   useEffect(() => {
     if (page > 0 && !isFetching && isLoadingRef.current) {

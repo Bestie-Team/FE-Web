@@ -33,7 +33,7 @@ const SettingsMenu = React.memo(
                     <SettingsMenuItem
                       list={list}
                       link={list.link}
-                      user={user}
+                      user={[`SNS 로그인(${user.email})`, user.provider]}
                     />
                   </ul>
                 );
@@ -81,7 +81,7 @@ const settings = [
         info: ["SNS 로그인(카카오)", "eun2763@naver.com"],
         link: { href: "" },
       },
-      { title: "앱버전", info: ["V.2.3(최신버전)"], link: { href: "" } },
+      { title: "앱버전", info: ["V.1.0(최신버전)"], link: { href: "" } },
       {
         title: "탈퇴하기",
         info: null,

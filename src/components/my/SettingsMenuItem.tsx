@@ -5,7 +5,6 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import useUserDelete from "../users/hooks/useUserDelete";
 import { lightyToast } from "@/utils/toast";
-import { UserDetailResponse } from "lighty-type";
 
 export default function SettingsMenuItem({
   list,
@@ -14,14 +13,12 @@ export default function SettingsMenuItem({
 }: {
   list: SettingsItem;
   link: { href: string; target?: string };
-  user: UserDetailResponse;
+  user: string[];
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
-    if (list.title === "계정정보") {
-    } else if (list.title === "탈퇴하기") {
+    if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
-      list.info = [`SNS정보 로그인(${user.provider ?? ""})`, user.email ?? ""];
     }
   };
   const { mutate: deleteUser } = useUserDelete({
@@ -36,10 +33,10 @@ export default function SettingsMenuItem({
       <li className={liStyle} onClick={handleClick}>
         <span className="text-T5">{list.title}</span>
         <Flex direction="column" justify="center" style={{ gap: "2px" }}>
-          {list.info?.map((infoCont, i) => {
+          {list.info?.map((info, i) => {
             return (
               <span key={i} className="text-C2 text-grayscale-300">
-                {infoCont}
+                {list.title === "계정 정보" ? user[i] : info}
               </span>
             );
           })}

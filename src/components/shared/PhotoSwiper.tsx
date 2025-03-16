@@ -1,23 +1,13 @@
 import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Spacing from "./Spacing";
-import clsx from "clsx";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
 
 const PhotoSwiper = memo(
-  ({
-    feed,
-    percent = 1.077,
-    type,
-  }: {
-    feed: Feed;
-    percent?: number;
-    type?: "home" | "feed";
-  }) => {
+  ({ feed, percent = 1.077 }: { feed: Feed; percent?: number }) => {
     const [loaded, setLoaded] = useState(false);
     const formattedDate = () => {
       const date = feed.gathering?.gatheringDate
@@ -45,18 +35,11 @@ const PhotoSwiper = memo(
       >
         {feed.images.map((image, idx) => (
           <SwiperSlide
-            className={clsx(
-              "relative bg-[#F4F4F4] rounded-2xl",
-              type === "home" ? "shadow-bottom mt-2 mb-[52px]" : ""
-            )}
+            className="relative bg-[#F4F4F4] rounded-2xl"
             key={`slide${idx}`}
           >
             {loaded === false && (
-              <div
-                className={
-                  "absolute inset-0 rounded-2xl bg-grayscale-50 animate-pulse"
-                }
-              />
+              <div className="absolute inset-0 rounded-2xl bg-grayscale-50" />
             )}
             <Image
               loading="eager"
@@ -69,13 +52,13 @@ const PhotoSwiper = memo(
               onLoad={() => setLoaded(true)}
             />
 
-            {idx === 0 && type === "feed" && (
+            {idx === 0 && (
               <div className={styles.feedImageInfo}>
                 <span>{feed.gathering?.name}</span>
                 <span>{formattedDate()}</span>
               </div>
             )}
-            {type === "home" && (
+            {/* {type === "home" && (
               <div className={styles.gatheringImageInfo}>
                 <span>{feed.gathering?.name}</span>
                 <Spacing size={4} />
@@ -83,7 +66,7 @@ const PhotoSwiper = memo(
                   {formattedDate()}
                 </span>
               </div>
-            )}
+            )} */}
           </SwiperSlide>
         ))}
       </Swiper>
@@ -92,6 +75,7 @@ const PhotoSwiper = memo(
 );
 
 PhotoSwiper.displayName = "PhotoSwiper";
+
 export default PhotoSwiper;
 
 const styles = {
