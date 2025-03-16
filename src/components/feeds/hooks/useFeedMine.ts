@@ -44,6 +44,6 @@ export default function useFeedMine({
     () => data?.pages.flatMap(({ feeds }) => feeds) ?? undefined,
     [data]
   );
-
+  console.log(friends);
   return { data: friends, loadMore, isFetching, hasNextPage };
 }
