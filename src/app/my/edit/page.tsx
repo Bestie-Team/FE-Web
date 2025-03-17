@@ -27,9 +27,14 @@ export default function EditPage() {
   const { mutate: updateImage } = useUpdateProfile({
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
-      await queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
-      });
+      Promise.all([
+        await queryClient.invalidateQueries({
+          queryKey: ["user/detail"],
+        }),
+        await queryClient.invalidateQueries({
+          queryKey: ["user/profile/alarm"],
+        }),
+      ]);
     },
     onError: (error) => lightyToast.error(error.message),
   });
