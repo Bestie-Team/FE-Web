@@ -109,7 +109,7 @@ export default function SelectFriendsContainer({
   return (
     <Flex
       direction="column"
-      className={clsx("pt-safe-top px-5 pb-[72px] h-dvh", className)}
+      className={clsx("px-5 pb-[72px] h-dvh", className)}
       style={{
         backgroundColor: "#F4F4F4",
       }}
