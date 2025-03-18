@@ -21,6 +21,7 @@ export default function UploadPhotoSwiper({
   setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const [selectOpen, setSelectOpen] = useState(false);
   const [images, setImages] = useState<string[]>(
     feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
@@ -153,7 +154,7 @@ export default function UploadPhotoSwiper({
           onClose={() => setSelectOpen(false)}
           handleImageUpload={(e) => handleImageUpload(e)}
           fileInputRef={fileInputRef}
-          onClickCamera={() => {}}
+          cameraInputRef={cameraInputRef}
         />
       )}
     </div>
