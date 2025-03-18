@@ -20,7 +20,7 @@ export default function Schedule({
   return (
     <div className="w-full flex flex-col items-center pt-5">
       <Spacing size={87} />
-      <LightyCalendarWithBorder gatherings={upcomingGatherings} />
+      <LightyCalendarWithBorder gatherings={expectingGatherings} />
       <Spacing size={28} />
       <MemoizedUpcomingSchedule gathering={upcomingGatherings} />
     </div>

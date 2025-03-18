@@ -86,7 +86,7 @@ export default function AddGatheringPhoto({
         align="center"
         direction="column"
         className="relative overflow-hidden w-[300px] h-[210px] bg-grayscale-50 rounded-[14.62px] text-C1 text-grayscale-300"
-        onClick={() => setSelectOpen(false)}
+        onClick={() => setSelectOpen(true)}
       >
         {image ? (
           <>

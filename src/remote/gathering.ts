@@ -76,6 +76,28 @@ export async function getGatheringNoFeed({
   }
 }
 
+/** 모든 약속 목록 조회 */
+export async function getGatheringAll({
+  cursor,
+  limit = 365,
+  minDate,
+  maxDate,
+}: Partial<PaginationParams>) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const response = await fetchWithAuth(
+      `${baseUrl}/gatherings/all?cursor=${encodeURIComponent(
+        JSON.stringify(cursor)
+      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
+      { method: "GET" }
+    );
+    const data: lighty.GatheringListResponse = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}
+
 /** 약속 상세 조회 */
 export async function getGatheringDetail({
   gatheringId,

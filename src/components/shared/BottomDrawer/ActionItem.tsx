@@ -27,7 +27,7 @@ export default function ActionItem({
       <Flex className={styles.descWrapper}>
         <Flex direction="column" className="gap-1 flex-grow items-start">
           <span className="text-T5">{title}</span>
-          <span className={styles.subTitle}>{subTitle}</span>
+          {subTitle && <span className={styles.subTitle}>{subTitle}</span>}
         </Flex>
         <ArrowRightIcon />
       </Flex>

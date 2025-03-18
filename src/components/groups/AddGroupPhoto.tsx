@@ -85,7 +85,7 @@ export default function AddGroupPhoto({
         justify="center"
         align="center"
         direction="column"
-        onClick={() => setSelectOpen(false)}
+        onClick={() => setSelectOpen(true)}
         className="overflow-hidden w-[170px] h-[170px] bg-grayscale-50 rounded-[14.62px] text-C1 text-grayscale-300"
       >
         {image ? (

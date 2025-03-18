@@ -6,7 +6,6 @@ import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import { useTabs } from "@/hooks/useTabs";
-import useGatherings from "@/components/gathering/hooks/useGatherings";
 import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
@@ -20,6 +19,7 @@ import dynamic from "next/dynamic";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import { GatheringHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import useGatheringAll from "@/components/gathering/hooks/useGatheringAll";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -34,11 +34,8 @@ export default function GatheringPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const tab1ContainerRef = useRef<HTMLDivElement>(null);
   const tab2ContainerRef = useRef<HTMLDivElement>(null);
-  const { data: myGatherings, isFetching } = useGatherings({
-    limit: 50,
-    minDate: minDate(),
-    maxDate: maxDate(),
-  });
+  const { data: gatheringAll, isFetching } = useGatheringAll();
+
   const {
     data: ended,
     isFetching: isFetching_e,
@@ -104,7 +101,7 @@ export default function GatheringPage() {
               "h-full overflow-y-scroll no-scrollbar pb-10 pt-safe-top"
             }
           >
-            <Schedule expectingGatherings={myGatherings} />
+            <Schedule expectingGatherings={gatheringAll} />
           </div>
         ) : (
           <div
