@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import { lightyToast } from "@/utils/toast";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import { compressImage } from "@/utils/compress";
+import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
 
 export default function UploadPhotoSwiper({
   feedInfoToEdit,
@@ -20,6 +21,7 @@ export default function UploadPhotoSwiper({
   setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectOpen, setSelectOpen] = useState(false);
   const [images, setImages] = useState<string[]>(
     feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
   );
@@ -90,26 +92,29 @@ export default function UploadPhotoSwiper({
           <SwiperSlide className={styles.slide}>
             <>
               <div className="bg-grayscale-10 w-full h-[250px] rounded-[20px] border-[1px] border-dashed border-grayscale-200" />
-              <div className={styles.inputWrapper}>
-                <label className="cursor-pointer">
-                  <input
+              <div
+                className={styles.inputWrapper}
+                onClick={() => setSelectOpen(true)}
+              >
+                {/* <label className="cursor-pointer"> */}
+                {/* <input
                     ref={fileInputRef}
                     type="file"
                     accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
                     onChange={handleImageUpload}
                     className="hidden"
                     multiple
-                  />
-                  <Flex direction="column" align="center">
-                    <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
-                    <Spacing size={6} />
-                    <span>
-                      <span className="text-T6 text-grayscale-300">사진</span>
-                      <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
-                      <span className="text-T6 text-grayscale-300">/5</span>
-                    </span>
-                  </Flex>
-                </label>
+                  /> */}
+                <Flex direction="column" align="center">
+                  <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
+                  <Spacing size={6} />
+                  <span>
+                    <span className="text-T6 text-grayscale-300">사진</span>
+                    <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
+                    <span className="text-T6 text-grayscale-300">/5</span>
+                  </span>
+                </Flex>
+                {/* </label> */}
               </div>
             </>
           </SwiperSlide>
@@ -143,6 +148,14 @@ export default function UploadPhotoSwiper({
           <div className="w-1" />
         </SwiperSlide>
       </Swiper>
+      {selectOpen && (
+        <PhotoSelectBottomSheet
+          onClose={() => setSelectOpen(false)}
+          handleImageUpload={(e) => handleImageUpload(e)}
+          fileInputRef={fileInputRef}
+          onClickCamera={() => {}}
+        />
+      )}
     </div>
   );
 }

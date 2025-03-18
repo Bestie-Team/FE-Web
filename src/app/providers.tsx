@@ -55,7 +55,6 @@ const NAVBAR_PATHS = [
   "/card",
   "/social",
   "/my",
-  "/",
 ] as const;
 
 const isPathIncluded = (path: string, pathList: readonly string[]) =>
@@ -67,27 +66,24 @@ const isPathEqual = (path: string, pathList: readonly string[]) =>
 const NextLayout = ({ children }: Props) => {
   useScrollToTop();
   const pathname = usePathname();
-
   const showNavBar = isPathEqual(pathname, NAVBAR_PATHS);
 
-  {
-    return (
-      <div
-        className={clsx(
-          pathname === "/feed" || pathname === "/gathering"
-            ? ""
-            : "h-dvh overflow-y-scroll no-scrollbar",
-          "max-w-[430px] mx-auto my-0",
-          isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
-            ? "bg-grayscale-50"
-            : "bg-base-white"
-        )}
-      >
-        {children}
-        {showNavBar && <NavBar />}
-      </div>
-    );
-  }
+  return (
+    <div
+      className={clsx(
+        pathname === "/feed" || pathname === "/gathering"
+          ? ""
+          : "h-dvh overflow-y-scroll no-scrollbar",
+        "max-w-[430px] mx-auto my-0",
+        isPathIncluded(pathname, DARK_BACKGROUND_PATHS)
+          ? "bg-grayscale-50"
+          : "bg-base-white"
+      )}
+    >
+      {children}
+      {showNavBar && <NavBar />}
+    </div>
+  );
 };
 
 export default NextLayout;
