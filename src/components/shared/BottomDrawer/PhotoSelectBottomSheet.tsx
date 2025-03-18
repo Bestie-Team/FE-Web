@@ -81,29 +81,24 @@ export default function PhotoSelectBottomSheet({
             <ArrowRightIcon />
           </Flex>
         </label>
-        {actions.map((action) => {
-          return (
-            <React.Fragment key={`${action.title}`}>
-              <input
-                ref={cameraInputRef}
-                type="file"
-                accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
-                capture="environment"
-                onChange={handleImageUpload}
-                className="hidden"
-                multiple
-              />
-              <ActionItem
-                padding="py-4"
-                onClick={onClickCamera}
-                icon={action.icon}
-                title={action.title}
-              />
-            </React.Fragment>
-          );
-        })}
+        <>
+          <input
+            ref={cameraInputRef}
+            type="file"
+            accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
+            capture="environment"
+            onChange={handleImageUpload}
+            className="hidden"
+            multiple
+          />
+          <ActionItem
+            padding="py-4"
+            onClick={onClickCamera}
+            icon={<CameraIcon />}
+            title={"카메라로 촬영하기"}
+          />
+        </>
       </Flex>
-
       {isModalOpen && (
         <Modal
           content="'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
@@ -115,11 +110,3 @@ export default function PhotoSelectBottomSheet({
     </BottomSheetWrapper>
   );
 }
-
-const actions = [
-  {
-    icon: <CameraIcon />,
-    title: "카메라로 촬영하기",
-    link: "/card",
-  },
-];

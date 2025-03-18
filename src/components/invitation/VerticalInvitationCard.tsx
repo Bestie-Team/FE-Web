@@ -77,7 +77,6 @@ export function VerticalInvitationCard({
                 image={invitationImageUrl}
                 setImage={setGathering}
               />
-
               <Spacing size={10} />
               <span className="text-T1 pl-1">{name}</span>
               <span className="text-B4 pl-1 text-grayscale-600">

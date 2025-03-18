@@ -97,15 +97,6 @@ export default function UploadPhotoSwiper({
                 className={styles.inputWrapper}
                 onClick={() => setSelectOpen(true)}
               >
-                {/* <label className="cursor-pointer"> */}
-                {/* <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    multiple
-                  /> */}
                 <Flex direction="column" align="center">
                   <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
                   <Spacing size={6} />

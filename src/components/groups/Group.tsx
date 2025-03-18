@@ -18,7 +18,7 @@ const GroupList = ({ groups }: { groups: Group[] }) => {
       group={group}
       className="cursor-pointer"
       onClick={(e: React.MouseEvent<HTMLLIElement>) => {
-        e.stopPropagation();
+        e.preventDefault();
         router.push(`/groups/detail?id=${group.id}`);
       }}
     />

@@ -1,12 +1,13 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
 import Flex from "./Flex";
 import clsx from "clsx";
 import { lightyToast } from "@/utils/toast";
 import { compressImage } from "@/utils/compress";
+import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -22,6 +23,9 @@ export default function ProfileImageDisplay({
   >;
   small?: boolean;
 }) {
+  const [selectOpen, setSelectOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const [newImage, setNewImage] = useState<string>(userImage ? userImage : "");
   const { mutate } = usePostProfileImage({
     onSuccess: async (imageUrl) => {
@@ -31,6 +35,7 @@ export default function ProfileImageDisplay({
   });
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectOpen(false);
     const inputFile = e.target?.files?.[0];
     if (!inputFile) return;
     const getFileExt = (fileName: string) => {
@@ -79,13 +84,14 @@ export default function ProfileImageDisplay({
   }, [newImage]);
 
   return (
-    <label
-      style={{
-        display: "inline-block",
-        width: "fit-content",
-      }}
-      htmlFor="fileInput"
-    >
+    // <label
+    //   style={{
+    //     display: "inline-block",
+    //     width: "fit-content",
+    //   }}
+    //   htmlFor="fileInput"
+    // >
+    <>
       <Flex
         style={{
           width: small ? `72px` : "84px",
@@ -93,6 +99,7 @@ export default function ProfileImageDisplay({
           padding: small ? "4px" : "4.67px",
         }}
         className={uploadContainerStyle}
+        onClick={() => setSelectOpen(true)}
       >
         <Flex
           justify="center"
@@ -130,16 +137,25 @@ export default function ProfileImageDisplay({
           }}
           className="absolute bottom-[4.33px] right-[4.33px]"
         />
-        <input
+        {/* <input
           className="hidden"
           id="fileInput"
           type="file"
           accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
           name="imageUrl"
           onChange={handleFileChange}
-        />
+        /> */}
       </Flex>
-    </label>
+      {selectOpen && (
+        <PhotoSelectBottomSheet
+          onClose={() => setSelectOpen(false)}
+          handleImageUpload={(e) => handleFileChange(e)}
+          fileInputRef={fileInputRef}
+          cameraInputRef={cameraInputRef}
+        />
+      )}
+    </>
+    // </label>
   );
 }
 

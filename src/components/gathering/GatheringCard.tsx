@@ -49,10 +49,9 @@ export default function GatheringCard({
   return (
     <div
       className={styles.gatheringWrapper}
-      onClick={() => {
-        router.push(`/gathering/detail?id=${gathering.id}?tab=2`);
-      }}
-      onMouseDown={() => {
+      onMouseDown={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
         router.push(`/gathering/detail?id=${gathering.id}?tab=2`);
       }}
     >

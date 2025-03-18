@@ -1,12 +1,13 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
 import Image from "next/image";
 import * as lighty from "lighty-type";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
 import PlusIcon from "./Icon/PlusIcon";
 import { compressImage } from "@/utils/compress";
 import { lightyToast } from "@/utils/toast";
+import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
 
 export interface RegisterRequestType {
   email: string;
@@ -30,8 +31,12 @@ export default function AddPhoto({
   setImageUrl?: React.Dispatch<React.SetStateAction<RegisterRequestType>>;
 }) {
   const [image, setImage] = useState<string | undefined>(undefined);
+  const [selectOpen, setSelectOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectOpen(false);
     const inputFile = e.target?.files?.[0];
     if (!inputFile) return;
     const getFileExt = (fileName: string) => {
@@ -86,85 +91,73 @@ export default function AddPhoto({
   }, [image]);
 
   return (
-    <label
+    <div
       style={{
-        display: "inline-block",
-        width: "fit-content",
+        width: small ? `72px` : "84px",
+        height: small ? `72px` : "84px",
+        padding: small ? "4px" : "4.67px",
       }}
-      htmlFor="fileInput"
+      onClick={() => setSelectOpen(true)}
+      className={clsx(uploadContainerStyle, uploadable ? "cursor-pointer" : "")}
     >
       <div
         style={{
-          width: small ? `72px` : "84px",
-          height: small ? `72px` : "84px",
-          padding: small ? "4px" : "4.67px",
+          width: small ? `64px` : "74.67px",
+          height: small ? `64px` : "74.67px",
         }}
-        className={clsx(
-          uploadContainerStyle,
-          uploadable ? "cursor-pointer" : ""
-        )}
+        className={imageWrapperStyle}
       >
-        <div
-          style={{
-            width: small ? `64px` : "74.67px",
-            height: small ? `64px` : "74.67px",
-          }}
-          className={imageWrapperStyle}
-        >
-          {imageUrl || image ? (
-            <Image
-              priority
-              src={imageUrl ? imageUrl : image || ""}
-              alt="upload_image"
-              width={small ? 64 : 74.67}
-              height={small ? 64 : 74.67}
-              style={{
-                width: small ? 64 : 74.67,
-                height: small ? 64 : 74.67,
-              }}
-              className={clsx(
-                "object-cover",
-                small ? "w-14 h-14" : "w-[74.67px] h-[74.67px]"
-              )}
-            />
-          ) : (
-            <PhotoIcon />
-          )}
-        </div>
-
-        <PlusCircleButtonSmall
-          style={{
-            bottom: small ? `2px` : "4.33px",
-            right: small ? `2px` : "4.33px",
-          }}
-          className="absolute bottom-[4.33px] right-[4.33px]"
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: small ? `2px` : "4.33px",
-            right: small ? `2px` : "4.33px",
-          }}
-          className="bg-grayscale-900 rounded-full w-6 h-6 flex items-center justify-center"
-        >
-          {uploadable ? (
-            <PlusIcon width="13.71" height="13.71" />
-          ) : (
-            <EmptyLogoIcon width="13.71" height="13.71" color="white" />
-          )}
-        </div>
-        {uploadable ? (
-          <input
-            className="hidden"
-            id="fileInput"
-            type="file"
-            accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
-            name="imageUrl"
-            onChange={handleFileChange}
+        {imageUrl || image ? (
+          <Image
+            priority
+            src={imageUrl ? imageUrl : image || ""}
+            alt="upload_image"
+            width={small ? 64 : 74.67}
+            height={small ? 64 : 74.67}
+            style={{
+              width: small ? 64 : 74.67,
+              height: small ? 64 : 74.67,
+            }}
+            className={clsx(
+              "object-cover",
+              small ? "w-14 h-14" : "w-[74.67px] h-[74.67px]"
+            )}
           />
-        ) : null}
+        ) : (
+          <PhotoIcon />
+        )}
       </div>
-    </label>
+
+      <PlusCircleButtonSmall
+        style={{
+          bottom: small ? `2px` : "4.33px",
+          right: small ? `2px` : "4.33px",
+        }}
+        className="absolute bottom-[4.33px] right-[4.33px]"
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: small ? `2px` : "4.33px",
+          right: small ? `2px` : "4.33px",
+        }}
+        className="bg-grayscale-900 rounded-full w-6 h-6 flex items-center justify-center"
+      >
+        {uploadable ? (
+          <PlusIcon width="13.71" height="13.71" />
+        ) : (
+          <EmptyLogoIcon width="13.71" height="13.71" color="white" />
+        )}
+      </div>
+      {uploadable && selectOpen && (
+        <PhotoSelectBottomSheet
+          onClose={() => setSelectOpen(false)}
+          handleImageUpload={(e) => handleFileChange(e)}
+          fileInputRef={fileInputRef}
+          cameraInputRef={cameraInputRef}
+        />
+      )}
+    </div>
   );
 }
 

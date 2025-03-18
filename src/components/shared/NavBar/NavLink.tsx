@@ -21,7 +21,10 @@ export const NavLink = ({
     <Link
       aria-label={`move to ${name} page`}
       href={href}
-      onMouseDown={onMouseDown}
+      onMouseDown={(e) => {
+        e.stopPropagation();
+        onMouseDown();
+      }}
     >
       <div className="flex justify-center w-16 h-11 items-center active:animate-shrink-grow">
         {icon(isActive, profileImageUrl ?? "")}

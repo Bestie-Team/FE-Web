@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
 import PhotoIcon from "../shared/Icon/PhotoIcon";
@@ -8,6 +14,7 @@ import { CreateGroupRequest, UpdateGroupRequest } from "@/models/group";
 import { SetterOrUpdater } from "recoil";
 import { lightyToast } from "@/utils/toast";
 import { compressImage } from "@/utils/compress";
+import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
 
 export default function AddGroupPhoto({
   image,
@@ -19,7 +26,9 @@ export default function AddGroupPhoto({
   setNewGroup?: SetterOrUpdater<CreateGroupRequest>;
 }) {
   const [groupImageFile, setGroupImageFile] = useState<File>();
-
+  const [selectOpen, setSelectOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const { mutate: uploadGroupCover } = useUploadGroupCoverImage({
     file: groupImageFile as File,
     onSuccess: (data) => {
@@ -40,6 +49,7 @@ export default function AddGroupPhoto({
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectOpen(false);
     const file = e.target?.files?.[0];
 
     if (file) {
@@ -70,18 +80,12 @@ export default function AddGroupPhoto({
   }, [groupImageFile]);
 
   return (
-    <label
-      style={{
-        display: "inline-block",
-        width: "fit-content",
-        cursor: "pointer",
-      }}
-      htmlFor="fileInput"
-    >
+    <>
       <Flex
         justify="center"
         align="center"
         direction="column"
+        onClick={() => setSelectOpen(false)}
         className="overflow-hidden w-[170px] h-[170px] bg-grayscale-50 rounded-[14.62px] text-C1 text-grayscale-300"
       >
         {image ? (
@@ -100,13 +104,14 @@ export default function AddGroupPhoto({
           </>
         )}
       </Flex>
-      <input
-        id="fileInput"
-        type="file"
-        accept="image/jpeg, image/jpg, image/webp, image/png"
-        className="hidden"
-        onChange={handleFileChange}
-      />
-    </label>
+      {selectOpen && (
+        <PhotoSelectBottomSheet
+          onClose={() => setSelectOpen(false)}
+          handleImageUpload={(e) => handleFileChange(e)}
+          fileInputRef={fileInputRef}
+          cameraInputRef={cameraInputRef}
+        />
+      )}
+    </>
   );
 }
