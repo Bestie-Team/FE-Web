@@ -22,7 +22,7 @@ export default function SelectFriendsContainer({
   className,
 }: {
   type?: "default" | "record" | "group" | "gathering" | "groupEdit";
-  paddingTop?: string;
+  paddingTop?: number;
   action?: () => void;
   setStep?: Dispatch<SetStateAction<number>>;
   exceptFriends?: lighty.User[] | null;
@@ -114,7 +114,7 @@ export default function SelectFriendsContainer({
         backgroundColor: "#F4F4F4",
       }}
     >
-      <Spacing size={Number(paddingTop) ?? 177} />
+      <Spacing size={paddingTop ?? 177} />
       <span className="text-T5">{`친구 ${friends ? friends.length : 0}`}</span>
       <Spacing size={12} />
       <ul>

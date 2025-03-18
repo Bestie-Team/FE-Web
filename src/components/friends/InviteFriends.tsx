@@ -32,7 +32,7 @@ export default function InviteFriends({
       </HeaderWithBtn>
       <SelectFriendsContainer
         exceptFriends={exceptFriends}
-        paddingTop="138px"
+        paddingTop={138}
         setStep={setStep}
         type={type}
       />

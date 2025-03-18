@@ -43,7 +43,7 @@ export default function ChooseFriendToShare({
         ) : (
           <SelectFriendsContainer
             className="!px-0 !h-[calc(100dvh-288px)] overflow-y-scroll no-scrollbar"
-            paddingTop="0"
+            paddingTop={0}
             type="record"
             setStep={setStep}
           />

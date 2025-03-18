@@ -13,7 +13,7 @@ function useFriends({ userId }: { userId?: string }) {
       return getFriends({ ...pageParam, limit: 10 });
     },
     retry: (failureCount, error) => {
-      if (failureCount === 7) {
+      if (failureCount === 10) {
         return false;
       } else if (error) {
         lightyToast.error("친구를 찾을 수 없어요.");

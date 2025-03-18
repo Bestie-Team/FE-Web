@@ -14,10 +14,10 @@ export default function useGroup({ limit = 6 }: { limit?: number }) {
         limit: limit ?? 7,
       }),
     retry: (failureCount, error) => {
-      if (failureCount === 7) {
+      if (failureCount === 10) {
         return false;
       } else if (error) {
-        lightyToast.error("친구를 찾을 수 없어요.");
+        lightyToast.error("그룹을 찾을 수 없어요.");
         router.back();
         return false;
       }
