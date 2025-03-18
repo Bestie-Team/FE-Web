@@ -3,9 +3,23 @@ import LogIn from "@/components/LogIn";
 import Flex from "@/components/shared/Flex";
 import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
-import { Suspense } from "react";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import STORAGE_KEYS from "@/constants/storageKeys";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect } from "react";
 
 export default function SignInPage() {
+  const router = useRouter();
+  const { setToken } = useAuth();
+
+  useEffect(() => {
+    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    if (token !== null) {
+      setToken(token);
+      router.replace("/feed");
+    }
+  }, []);
+
   return (
     <Flex
       direction="column"
