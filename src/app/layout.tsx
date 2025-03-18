@@ -5,6 +5,7 @@ import NextLayout, { NextProvider } from "./providers";
 import { GA_ID } from "./lib/gtm";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { AuthProvider } from "@/components/shared/providers/AuthProvider";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -33,7 +34,9 @@ export default function RootLayout({
       <body className={`${pretendard.variable} antialiased h-full`}>
         <NextProvider>
           <AuthProvider>
-            <NextLayout>{children}</NextLayout>
+            <ProtectedRoute>
+              <NextLayout>{children}</NextLayout>
+            </ProtectedRoute>
           </AuthProvider>
         </NextProvider>
         <div
