@@ -3,45 +3,49 @@ import LogIn from "@/components/LogIn";
 import Flex from "@/components/shared/Flex";
 import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { Suspense } from "react";
 
 export default function SignInPage() {
-  return (
-    <Flex
-      direction="column"
-      justify="space-between"
-      className={styles.splashContainer}
-    >
-      <Flex direction="column" className={styles.centerWrapper}>
-        <Flex direction="column" align="center" className="gap-1">
-          <div className="text-B3 text-base-white mt-[200px]">
-            소중한 당신의 추억을 빛내줄
-          </div>
-          <LargeLightyLogo />
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return (
+      <Flex
+        direction="column"
+        justify="space-between"
+        className={styles.splashContainer}
+      >
+        <Flex direction="column" className={styles.centerWrapper}>
+          <Flex direction="column" align="center" className="gap-1">
+            <div className="text-B3 text-base-white mt-[200px]">
+              소중한 당신의 추억을 빛내줄
+            </div>
+            <LargeLightyLogo />
+          </Flex>
+          <LightyIcon width="22.4" height="22.4" />
         </Flex>
-        <LightyIcon width="22.4" height="22.4" />
-      </Flex>
-      <Flex direction="column" className={styles.buttonContainer}>
-        <Flex
-          direction="column"
-          justify="center"
-          align="center"
-          className={styles.loginButtonWrapper}
-        >
-          <Suspense>
-            <LogIn />
-          </Suspense>
-          <div className={styles.textWrapper}>
-            <span>가입 시</span>
-            <span className={styles.text}>이용약관</span>
-            <span>및 </span>
-            <span className={styles.text}>개인정보처리방침</span>
-            <span>에 동의하게 됩니다.</span>
-          </div>
+        <Flex direction="column" className={styles.buttonContainer}>
+          <Flex
+            direction="column"
+            justify="center"
+            align="center"
+            className={styles.loginButtonWrapper}
+          >
+            <Suspense>
+              <LogIn />
+            </Suspense>
+            <div className={styles.textWrapper}>
+              <span>가입 시</span>
+              <span className={styles.text}>이용약관</span>
+              <span>및 </span>
+              <span className={styles.text}>개인정보처리방침</span>
+              <span>에 동의하게 됩니다.</span>
+            </div>
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
-  );
+    );
+  } else return null;
 }
 
 const styles = {
