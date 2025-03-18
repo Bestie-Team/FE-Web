@@ -18,10 +18,6 @@ export default function ActionItem({
   return (
     <button
       className={clsx(styles.container, padding)}
-      onMouseDown={(e) => {
-        e.stopPropagation();
-        onClick();
-      }}
       onClick={(e) => {
         e.stopPropagation();
         onClick();

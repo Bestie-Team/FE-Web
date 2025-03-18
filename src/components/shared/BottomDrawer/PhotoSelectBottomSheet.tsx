@@ -1,4 +1,4 @@
-import React, { RefObject } from "react";
+import React, { RefObject, useEffect, useState } from "react";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Text from "../Text";
@@ -7,21 +7,55 @@ import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import PhotoIcon from "../Icon/PhotoIcon";
 import CameraIcon from "../Icon/CameraIcon";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
+import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
+import { requestCameraPermission } from "@/webview/actions";
+import { WEBVIEW_EVENT } from "@/webview/types";
+import Modal from "../Modal/Modal";
 
 export default function PhotoSelectBottomSheet({
   onClose,
-  onClickCamera,
   fileInputRef,
+  cameraInputRef,
   handleImageUpload,
 }: {
   onClose: () => void;
-  onClickCamera: () => void;
   fileInputRef: RefObject<HTMLInputElement>;
+  cameraInputRef: RefObject<HTMLInputElement>;
   handleImageUpload: (e: any) => void;
 }) {
   const handleClose = () => {
     onClose();
   };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isReactNativeWebView } = useReactNativeWebView();
+
+  const closeModal = () => setIsModalOpen(false);
+
+  const onClickCamera = () => {
+    if (isReactNativeWebView) {
+      requestCameraPermission();
+    }
+  };
+
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent<string>) => {
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
+      const message: { type: string; token: string } = JSON.parse(data);
+
+      if (message.type === WEBVIEW_EVENT.CAMERA_OPEN) {
+        cameraInputRef.current?.click();
+      }
+      if (message.type === WEBVIEW_EVENT.CAMERA_PERMISSION_DENIED) {
+        setIsModalOpen(true);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   return (
     <BottomSheetWrapper onClose={handleClose}>
@@ -50,11 +84,18 @@ export default function PhotoSelectBottomSheet({
         {actions.map((action) => {
           return (
             <React.Fragment key={`${action.title}`}>
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
+                capture="environment"
+                onChange={handleImageUpload}
+                className="hidden"
+                multiple
+              />
               <ActionItem
                 padding="py-4"
-                onClick={() => {
-                  onClickCamera();
-                }}
+                onClick={onClickCamera}
                 icon={action.icon}
                 title={action.title}
               />
@@ -62,6 +103,15 @@ export default function PhotoSelectBottomSheet({
           );
         })}
       </Flex>
+
+      {isModalOpen && (
+        <Modal
+          content="'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
+          left="닫기"
+          action={closeModal}
+          onClose={closeModal}
+        />
+      )}
     </BottomSheetWrapper>
   );
 }
