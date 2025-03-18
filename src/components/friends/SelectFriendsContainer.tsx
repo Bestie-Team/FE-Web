@@ -109,12 +109,12 @@ export default function SelectFriendsContainer({
   return (
     <Flex
       direction="column"
-      className={clsx("px-5 pb-[72px] h-dvh", className)}
+      className={clsx("pt-safe-top px-5 pb-[72px] h-dvh", className)}
       style={{
         backgroundColor: "#F4F4F4",
-        paddingTop: paddingTop ?? "177px",
       }}
     >
+      <Spacing size={Number(paddingTop) ?? 177} />
       <span className="text-T5">{`친구 ${friends ? friends.length : 0}`}</span>
       <Spacing size={12} />
       <ul>
