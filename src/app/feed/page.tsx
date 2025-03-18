@@ -346,7 +346,7 @@ export default function FeedPage() {
                 }
               >
                 <div ref={containerRef} className={styles.feedWrapper}>
-                  <div className={"pt-safe-top"}>
+                  <div className="pt-safe-top">
                     {feedAll.map((feed) => (
                       <div key={feed.id} className="relative">
                         <FeedCard
@@ -374,7 +374,7 @@ export default function FeedPage() {
                             )}
                           </div>
                         </FeedCard>
-                        {isFetching && <DotSpinnerSmall />}
+
                         <div
                           style={{ width: 24, height: 24 }}
                           className={styles.optionWrapper}
@@ -400,7 +400,7 @@ export default function FeedPage() {
                         </div>
                       </div>
                     ))}
-                    <Spacing size={50} />
+                    {isFetching && <DotSpinnerSmall />}
                   </div>
                 </div>
               </PullToRefresh>
@@ -428,7 +428,7 @@ export default function FeedPage() {
                 }
               >
                 <div ref={containerRef_m} className={styles.feedWrapper}>
-                  <div className={"pt-safe-top"}>
+                  <div className="pt-safe-top">
                     {feedMine.map((feed) => (
                       <div key={feed.id} className="relative">
                         <FeedCard
@@ -457,7 +457,6 @@ export default function FeedPage() {
                             </div>
                           )}
                         </FeedCard>
-                        {isFetching_mine && <DotSpinnerSmall />}
                         <div
                           style={{ width: 24, height: 24 }}
                           className={styles.optionWrapper}
@@ -483,8 +482,7 @@ export default function FeedPage() {
                         </div>
                       </div>
                     ))}
-
-                    <Spacing size={50} />
+                    {isFetching_mine && <DotSpinnerSmall />}
                   </div>
                 </div>
               </PullToRefresh>
@@ -573,5 +571,5 @@ export default function FeedPage() {
 const styles = {
   optionWrapper:
     "absolute top-5 right-5 cursor-pointer flex justify-center items-center pt-[5.5px] pb-1",
-  feedWrapper: "h-full overflow-y-scroll no-scrollbar pt-[90px] pb-16",
+  feedWrapper: "h-full overflow-y-scroll no-scrollbar pt-[90px] pb-14",
 };
