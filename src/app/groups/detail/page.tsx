@@ -100,7 +100,7 @@ export default function GroupDetailPage() {
     return (
       <SelectFriendsContainer
         type="group"
-        paddingTop="20px"
+        paddingTop={20}
         action={() => {
           setOpenList(false);
           addMember();

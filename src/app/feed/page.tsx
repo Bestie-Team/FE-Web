@@ -374,6 +374,7 @@ export default function FeedPage() {
                             )}
                           </div>
                         </FeedCard>
+                        {isFetching && <DotSpinnerSmall />}
                         <div
                           style={{ width: 24, height: 24 }}
                           className={styles.optionWrapper}
@@ -400,7 +401,6 @@ export default function FeedPage() {
                       </div>
                     ))}
                     <Spacing size={50} />
-                    {isFetching && <FeedSkeleton />}
                   </div>
                 </div>
               </PullToRefresh>
@@ -457,6 +457,7 @@ export default function FeedPage() {
                             </div>
                           )}
                         </FeedCard>
+                        {isFetching_mine && <DotSpinnerSmall />}
                         <div
                           style={{ width: 24, height: 24 }}
                           className={styles.optionWrapper}
@@ -482,8 +483,8 @@ export default function FeedPage() {
                         </div>
                       </div>
                     ))}
+
                     <Spacing size={50} />
-                    {isFetching_mine && <FeedSkeleton />}
                   </div>
                 </div>
               </PullToRefresh>
