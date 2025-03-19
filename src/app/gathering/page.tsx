@@ -6,7 +6,6 @@ import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import clsx from "clsx";
 import { useTabs } from "@/hooks/useTabs";
-import { maxDate, minDate } from "@/constants/time";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import PullToRefresh from "react-simple-pull-to-refresh";
@@ -20,6 +19,7 @@ import TabParamHandler from "@/components/shared/TabParamHandler";
 import { GatheringHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import useGatheringAll from "@/components/gathering/hooks/useGatheringAll";
+import Spacing from "@/components/shared/Spacing";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -51,7 +51,7 @@ export default function GatheringPage() {
     try {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["gatherings", minDate(), maxDate()],
+          queryKey: ["gatherings/all"],
         }),
         queryClient.invalidateQueries({
           queryKey: ["gatherings/ended"],
@@ -89,8 +89,11 @@ export default function GatheringPage() {
       <PullToRefresh
         onRefresh={handleRefresh}
         pullingContent={
-          <div className="flex justify-center p-4">
-            <DotSpinnerSmall />
+          <div className="flex justify-center pt-safe-top">
+            <div className="p-2">
+              <Spacing size={90} />
+              <DotSpinnerSmall />
+            </div>
           </div>
         }
       >

@@ -9,7 +9,6 @@ import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 import GatheringEditForm from "@/components/gathering/GatheringEditForm";
 import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
-import { maxDate, minDate } from "@/constants/time";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 
@@ -42,8 +41,8 @@ export default function GatheringEditPage() {
     gatheringId: selectedGatheringId || "",
     onSuccess: async (data) => {
       Promise.all([
-        await queryClient.invalidateQueries({
-          queryKey: ["gatherings", minDate(), maxDate()],
+        queryClient.invalidateQueries({
+          queryKey: ["gatherings/all"],
         }),
         await queryClient.invalidateQueries({
           queryKey: ["gathering/detail", selectedGatheringId],
