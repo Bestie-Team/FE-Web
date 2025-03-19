@@ -16,11 +16,9 @@ export default function NoticeSettingPage() {
         onClickBackBtn={() => router.back()}
       />
       <Spacing size={48} />
-      <div className="pt-safe-top">
-        <Flex direction="column" className="pt-3">
-          <SettingItem isOn={isOn} setIsOn={setIsOn} />
-        </Flex>
-      </div>
+      <Flex direction="column" className="pt-3">
+        <SettingItem isOn={isOn} setIsOn={setIsOn} />
+      </Flex>
     </div>
   );
 }
