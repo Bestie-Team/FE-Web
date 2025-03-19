@@ -1,15 +1,8 @@
 import Flex from "@/components/shared/Flex";
-import ArrowLeftIcon from "@/components/shared/Icon/ArrowLeftIcon";
 
 export default function FriendToShareSkeleton() {
   return (
-    <div className="h-dvh bg-grayscale-50 w-full pt-safe-top animate-pulse max-w-[430px] mx-auto px-5">
-      <Flex className="w-full h-12 gap-[6px]" align="center">
-        <div className="ml-[-3px] py-[10px] pr-[3px]">
-          <ArrowLeftIcon />
-        </div>
-        <span className="text-T3">기록하기</span>
-      </Flex>
+    <div className="w-full px-5 bg-grayscale-50 animate-pulse">
       <Flex className="pt-5 px-1 gap-4 pb-8" direction="column">
         <div className="w-6 h-6 rounded-[4px] bg-base-white" />
         <div className="w-[280px] h-[26px] rounded-[4px] bg-base-white" />
