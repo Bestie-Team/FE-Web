@@ -48,7 +48,6 @@ export default function Record() {
 
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
-  return <FriendToShareSkeleton />;
   return (
     <div
       className={clsx(
