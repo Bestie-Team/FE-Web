@@ -88,6 +88,7 @@ export default function PhotoSelectBottomSheet({
             ref={cameraInputRef}
             type="file"
             accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
+            capture="environment"
             onChange={handleImageUpload}
             className="hidden"
             multiple
