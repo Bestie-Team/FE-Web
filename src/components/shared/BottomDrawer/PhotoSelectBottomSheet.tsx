@@ -98,7 +98,6 @@ export default function PhotoSelectBottomSheet({
             title={"카메라로 촬영하기"}
           />
         </>
-        <Spacing size={24} />
       </Flex>
       {isModalOpen && (
         <Modal

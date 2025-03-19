@@ -26,7 +26,10 @@ export default function ActionItem({
     >
       <div className={styles.button}>{icon}</div>
       <Flex className={styles.descWrapper}>
-        <Flex direction="column" className="flex-grow gap-1 items-start">
+        <Flex
+          direction="column"
+          className="flex-grow gap-1 items-start justify-center"
+        >
           <span className="text-T5">{title}</span>
           {subTitle && (
             <>
@@ -34,7 +37,9 @@ export default function ActionItem({
             </>
           )}
         </Flex>
-        <ArrowRightIcon />
+        <div className="self-center">
+          <ArrowRightIcon />
+        </div>
       </Flex>
     </button>
   );
@@ -44,7 +49,7 @@ const styles = {
   container:
     "flex gap-3 py-3 w-full active:bg-grayscale-100 transition duration-75",
 
-  descWrapper: "gap-3 flex-grow cursor-pointer items-center",
+  descWrapper: "gap-3 flex-grow cursor-pointer items-center items-stretch",
   button:
     "bg-grayscale-900 w-10 h-10 flex justify-center items-center rounded-full cursor-default",
 
