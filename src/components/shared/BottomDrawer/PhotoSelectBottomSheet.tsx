@@ -58,7 +58,7 @@ export default function PhotoSelectBottomSheet({
 
   return (
     <BottomSheetWrapper onClose={handleClose}>
-      <Flex direction="column" className="px-6 pb-safe-bottom">
+      <Flex direction="column" className="px-6">
         <Text className="text-T3">이미지 추가</Text>
         <Spacing size={12} />
         <label className={styles.buttonWrapper}>
@@ -81,7 +81,7 @@ export default function PhotoSelectBottomSheet({
           </Flex>
         </label>
         <Flex
-          className="gap-3 py-3 w-full active:bg-grayscale-100 transition duration-75"
+          className="gap-3 py-4 w-full active:bg-grayscale-100 transition duration-75"
           onClick={onClickCamera}
         >
           <input
@@ -117,7 +117,7 @@ export default function PhotoSelectBottomSheet({
 
 const styles = {
   buttonWrapper:
-    "flex gap-3 py-3 w-full active:bg-grayscale-100 transition duration-75",
+    "flex gap-3 py-4 w-full active:bg-grayscale-100 transition duration-75",
   iconWrapper:
     "bg-grayscale-900 w-10 h-10 flex justify-center items-center rounded-full cursor-default",
   descriptionContainer: "gap-3 flex-grow cursor-pointer items-center",
