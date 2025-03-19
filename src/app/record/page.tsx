@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import useDebounce from "@/hooks/debounce";
 import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
 import ChoosingKindOfMemory from "../../components/feeds/ChoosingKindOfMemory";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import ChoosingGatheringToRecord from "@/components/feeds/ChoosingGatheringToRecord";
 import CreatingFeed from "@/components/feeds/CreatingFeed";
 import CreatingFeedNoGathering from "@/components/feeds/CreatingFeedNoGathering";
@@ -13,11 +12,12 @@ import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import { useRouter } from "next/navigation";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
+import FriendToShareSkeleton from "@/components/shared/Skeleton/FriendToShareSkeleton";
 
 const ChooseFriendToShare = dynamic(
   () => import("@/components/feeds/ChooseFriendToShare"),
   {
-    loading: () => <DotSpinner />,
+    loading: () => <FriendToShareSkeleton />,
     ssr: false,
   }
 );
@@ -48,6 +48,7 @@ export default function Record() {
 
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
+  return <FriendToShareSkeleton />;
   return (
     <div
       className={clsx(
