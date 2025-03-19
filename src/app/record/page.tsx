@@ -12,6 +12,7 @@ import CreatingFeedNoGathering from "@/components/feeds/CreatingFeedNoGathering"
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import { useRouter } from "next/navigation";
 import Spacing from "@/components/shared/Spacing";
+import clsx from "clsx";
 
 const ChooseFriendToShare = dynamic(
   () => import("@/components/feeds/ChooseFriendToShare"),
@@ -48,7 +49,12 @@ export default function Record() {
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];
 
   return (
-    <div className="min-h-dvh pt-safe-top">
+    <div
+      className={clsx(
+        "min-h-dvh pt-safe-top",
+        step === 2.5 ? "bg-grayscale-50" : "bg-base-white"
+      )}
+    >
       <HeaderWithBtn
         headerLabel="기록하기"
         onClickBackBtn={clickBackBtnHandler}

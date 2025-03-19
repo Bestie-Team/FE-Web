@@ -12,18 +12,8 @@ export default function ChooseFriendToShare({
   debouncedSearch: string;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
-  const isClient = typeof window !== "undefined";
   return (
-    <div
-      className="max-w-[430px] bg-grayscale-50 min-h-dvh pt-5"
-      style={
-        isClient && window?.ReactNativeWebView
-          ? {
-              paddingTop: `calc(env(safe-area-inset-top) + 3rem)`,
-            }
-          : {}
-      }
-    >
+    <div className="max-w-[430px] bg-grayscale-50 min-h-dvh pt-5">
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
         <LightyIcon width="24" height="24" color="#0A0A0A" />
         <span>추억을 공유하고 싶은 사람이 있나요?</span>

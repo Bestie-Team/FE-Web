@@ -59,7 +59,7 @@ export default function PhotoSelectBottomSheet({
 
   return (
     <BottomSheetWrapper onClose={handleClose}>
-      <Flex direction="column" className="px-6 pb-6">
+      <Flex direction="column" className="px-6 pb-safe-bottom">
         <Text className="text-T3">이미지 추가</Text>
         <Spacing size={12} />
         <label className="flex gap-3 py-3 w-full active:bg-grayscale-100 transition duration-75">
@@ -98,6 +98,7 @@ export default function PhotoSelectBottomSheet({
             title={"카메라로 촬영하기"}
           />
         </>
+        <Spacing size={24} />
       </Flex>
       {isModalOpen && (
         <Modal

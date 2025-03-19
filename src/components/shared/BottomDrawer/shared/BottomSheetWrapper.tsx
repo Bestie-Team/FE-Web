@@ -35,7 +35,7 @@ export default function BottomSheetWrapper({
           `${isClosing ? "animate-slideOut" : "animate-slideIn"}`
         )}
       >
-        <Flex direction="column" className="pb-safe-bottom">
+        <Flex direction="column">
           <Flex justify="center" className="pt-[6px] pb-[18px]">
             {bar ? <RectIcon /> : null}
           </Flex>
