@@ -99,7 +99,6 @@ export default function GatheringDetailPage() {
           <div className={"flex gap-[14px]"}>
             <div
               className="cursor-pointer"
-              onMouseDown={() => handleShare(sharingData)}
               onClick={() => handleShare(sharingData)}
             >
               <ShareIcon />

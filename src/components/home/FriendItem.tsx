@@ -53,11 +53,7 @@ export function AddFriendItem({ onClick }: { onClick?: () => void }) {
   };
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
-      <div
-        className="p-[6px]"
-        onMouseDown={onClickHandler}
-        onClick={onClickHandler}
-      >
+      <div className="p-[6px]" onClick={onClickHandler}>
         <div className={iconWrapperStyle}>
           <PlusIcon
             width="20"

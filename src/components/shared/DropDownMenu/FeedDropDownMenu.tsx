@@ -70,10 +70,6 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
                   className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
                     menuItem.includes("삭제") && "text-point-red50"
                   }`}
-                  onMouseDown={(e) => {
-                    e.stopPropagation();
-                    clickedMenuItemHandler(menuItem);
-                  }}
                   onClick={(e) => {
                     e.stopPropagation();
                     clickedMenuItemHandler(menuItem);

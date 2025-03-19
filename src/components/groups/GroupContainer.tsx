@@ -23,7 +23,6 @@ export default function GroupContainer({
     <li
       className={clsx(styles.groupContainer, className)}
       onMouseDown={(e) => onClick(e)}
-      onClick={(e) => onClick(e)}
     >
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">

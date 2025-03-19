@@ -55,7 +55,10 @@ const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
                   className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
                     item.includes("삭제") && "text-point-red50"
                   }`}
-                  onMouseDown={() => handleItemClick(item)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleItemClick(item);
+                  }}
                 >
                   {item}
                 </button>

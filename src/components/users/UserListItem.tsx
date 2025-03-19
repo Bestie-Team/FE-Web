@@ -18,12 +18,10 @@ import LightyIcon from "../shared/Icon/LightyIcon";
 export default function UserListItem({
   userInfo,
   idx,
-  onClick,
   clicked,
 }: {
   userInfo: lighty.User & { status: FriendRequestStatus };
   idx: number;
-  onClick?: () => void;
   clicked?: boolean;
 }) {
   const queryClient = useQueryClient();
@@ -52,8 +50,6 @@ export default function UserListItem({
         styles.li,
         clicked ? "border-grayscale-900" : "border-base-white"
       )}
-      onMouseDown={onClick}
-      onClick={onClick}
     >
       {!!userInfo?.profileImageUrl ? (
         <Image

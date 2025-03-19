@@ -59,7 +59,6 @@ export default function MyMainInfo({
           <div
             key={idx}
             className={boxStyle}
-            onMouseDown={() => onClickHandler(box)}
             onClick={() => onClickHandler(box)}
           >
             <div>{box.icon}</div>

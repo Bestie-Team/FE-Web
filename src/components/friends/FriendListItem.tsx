@@ -72,7 +72,6 @@ export default function FriendListItem({
         clicked ? "border-grayscale-900" : "border-grayscale-100"
       )}
       onClick={onClick}
-      onMouseDown={onClick}
     >
       <Flex>
         {!!friendInfo?.profileImageUrl ? (

@@ -33,7 +33,6 @@ export default function NoticeItem({
         "p-4 rounded-2xl bg-base-white",
         clickable && "cursor-pointer"
       )}
-      onMouseDown={onClick}
       onClick={onClick}
     >
       <Flex

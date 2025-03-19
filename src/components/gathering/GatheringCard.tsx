@@ -89,7 +89,6 @@ export default function GatheringCard({
         <Button
           name="moveToFeed_button"
           className={styles.button}
-          onClick={handleClickGathering}
           onMouseDown={handleClickGathering}
         >
           <PencilIcon color="#0A0A0A" />

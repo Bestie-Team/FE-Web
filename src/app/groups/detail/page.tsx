@@ -132,7 +132,7 @@ export default function GroupDetailPage() {
 
   const MODAL_CONFIGS = {
     deleteGroup: {
-      title: "친구를 삭제하시겠어요?",
+      title: "그룹을 삭제하시겠어요?",
       content: "복구할 수 없어요.",
       leftButton: "취소",
       rightButton: "삭제하기",
