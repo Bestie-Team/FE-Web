@@ -40,7 +40,6 @@ const PATH_CONFIGS: PathConfig[] = [
 
 const FloatingButton: FC<FloatingButtonProps> = ({ tooltip = false }) => {
   const pathname = usePathname();
-
   const getPathConfig = () => {
     return (
       PATH_CONFIGS.find((config) => pathname === config.path) ?? PATH_CONFIGS[0]
@@ -57,7 +56,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({ tooltip = false }) => {
   return (
     <>
       {tooltip && currentConfig.tooltipText && (
-        <div className="absolute bottom-[92px] right-[84px] z-14">
+        <div className="absolute bottom-[92px] right-[84px] z-14 pb-safe-bottom">
           <Tooltip
             direction="right"
             closeButton={true}

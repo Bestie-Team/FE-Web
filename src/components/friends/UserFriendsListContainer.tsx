@@ -99,6 +99,7 @@ export default function UserFriendsListContainer() {
   if (!friends) {
     return <SocialPageSkeleton />;
   }
+
   return (
     <>
       <Flex

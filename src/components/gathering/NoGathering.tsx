@@ -9,7 +9,7 @@ export default function NoGathering({ type }: { type: NoGatheringType }) {
       direction="column"
       align="center"
       justify="center"
-      className="h-full gap-[13px] mt-safe-top"
+      className="h-full gap-[13px]"
     >
       <div className="w-10 h-10 p-[5px]">
         <ThinLightyLogo />

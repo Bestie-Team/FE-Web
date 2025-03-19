@@ -19,7 +19,7 @@ export default function FriendOption() {
       ref={btnRef}
       data-testid="options-icon"
       onClick={toggleDropdown}
-      className="relative cursor-pointer flex justify-center items-center"
+      className="relative cursor-pointer mx-auto"
     >
       <OptionsSelectIcon width="2.5" height="14.17" />
       {opened && (

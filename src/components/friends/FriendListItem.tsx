@@ -128,7 +128,7 @@ export default function FriendListItem({
 }
 
 const styles = {
-  iconContainer: "flex items-center w-5 h-5 justify-center",
+  iconContainer: "flex items-center w-5 h-5",
 
   li: `w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border`,
   img: "rounded-full object-cover h-9 w-9",
