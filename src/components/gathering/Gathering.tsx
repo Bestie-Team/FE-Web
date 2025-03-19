@@ -6,7 +6,6 @@ import {
 import GatheringCard from "./GatheringCard";
 import Message from "../shared/Message";
 import { useState } from "react";
-import NoGathering from "./NoGathering";
 import Spacing from "../shared/Spacing";
 
 type GatheringProps = {
@@ -48,21 +47,18 @@ export default function Gathering({
       {message && showMessage && (
         <Message onClose={() => setShowMessage(false)} />
       )}
-      {gatherings.length < 1 ? (
-        <NoGathering type="ENDED" />
-      ) : (
-        <div className="grid grid-cols-2 gap-4">
-          {renderGatherings(gatherings)}
-          {isFetching && (
-            <>
-              <div className={gatheringSkeleton} />
-              <div className={gatheringSkeleton} />
-              <div className={gatheringSkeleton} />
-              <div className={gatheringSkeleton} />
-            </>
-          )}
-        </div>
-      )}
+
+      <div className="grid grid-cols-2 gap-4">
+        {renderGatherings(gatherings)}
+        {isFetching && (
+          <>
+            <div className={gatheringSkeleton} />
+            <div className={gatheringSkeleton} />
+            <div className={gatheringSkeleton} />
+            <div className={gatheringSkeleton} />
+          </>
+        )}
+      </div>
       <Spacing size={120} />
     </div>
   );

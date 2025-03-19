@@ -20,6 +20,7 @@ import { GatheringHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import useGatheringAll from "@/components/gathering/hooks/useGatheringAll";
 import Spacing from "@/components/shared/Spacing";
+import NoGathering from "@/components/gathering/NoGathering";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -111,14 +112,17 @@ export default function GatheringPage() {
             ref={tab2ContainerRef}
             className="h-full overflow-y-scroll no-scrollbar gathering"
           >
-            <Gathering
-              ended
-              message
-              isFetching={isFetching_e || isFetching}
-              where={GatheringInWhich.GATHERING}
-              gatherings={ended || []}
-              className={"mt-safe-top pb-safe-bottom"}
-            />
+            {ended && ended.length > 0 && (
+              <Gathering
+                ended
+                message
+                isFetching={isFetching_e || isFetching}
+                where={GatheringInWhich.GATHERING}
+                gatherings={ended}
+                className={"mt-safe-top pb-safe-bottom"}
+              />
+            )}
+            {ended && ended.length === 0 && <NoGathering type="ENDED" />}
           </div>
         )}
       </PullToRefresh>

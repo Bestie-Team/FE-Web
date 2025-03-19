@@ -131,7 +131,7 @@ FeedModals.displayName = "FeedModals";
 
 export default function FeedPage() {
   const queryClient = useQueryClient();
-  const { token } = useAuth();
+  const { token, userInfo } = useAuth();
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const {
@@ -393,8 +393,20 @@ export default function FeedPage() {
                             <FeedDropdownMenu
                               feed={feed}
                               ref={dropDownRef}
-                              menuItems={MENU_CONFIGS["feed"].menuItems}
-                              className={MENU_CONFIGS["feed"].className}
+                              menuItems={
+                                MENU_CONFIGS[
+                                  feed.writer.accountId === userInfo?.accountId
+                                    ? "feed_mine"
+                                    : "feed"
+                                ].menuItems
+                              }
+                              className={
+                                MENU_CONFIGS[
+                                  feed.writer.accountId === userInfo?.accountId
+                                    ? "feed_mine"
+                                    : "feed"
+                                ].className
+                              }
                             />
                           )}
                         </div>
@@ -520,6 +532,10 @@ export default function FeedPage() {
     <div
       className="h-dvh pb-safe-bottom"
       onMouseDown={(e: MouseEvent<HTMLDivElement>) => {
+        closeDropdown(e);
+        closeBox();
+      }}
+      onClick={(e: MouseEvent<HTMLDivElement>) => {
         closeDropdown(e);
         closeBox();
       }}

@@ -7,7 +7,7 @@ export default function NoInvitation({ type }: { type: InvitationType }) {
   return (
     <Flex
       direction="column"
-      className="pt-safe-top h-screen gap-[13px]"
+      className="pt-safe-top h-full gap-[13px]"
       justify="center"
       align="center"
     >

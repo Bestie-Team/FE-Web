@@ -30,7 +30,7 @@ export default function NoticeItem({
   return (
     <Flex
       className={clsx(
-        "p-4 rounded-2xl bg-base-white",
+        "p-4 rounded-2xl bg-base-white hover:bg-grayscale-10",
         clickable && "cursor-pointer"
       )}
       onClick={onClick}
