@@ -21,7 +21,7 @@ export default function FriendOption() {
       onClick={toggleDropdown}
       className="relative cursor-pointer flex justify-center items-center"
     >
-      <OptionsSelectIcon width="2.5" height="14.7" />
+      <OptionsSelectIcon width="2.5" height="14.17" />
       {opened && (
         <FriendDropdownMenu
           ref={ref}

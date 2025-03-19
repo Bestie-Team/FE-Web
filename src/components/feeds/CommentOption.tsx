@@ -29,7 +29,7 @@ export default function CommentOption({ commentId }: OptionsProps) {
       style={{ width: 16, height: 16 }}
       className="relative cursor-pointer flex justify-center items-center"
     >
-      <OptionsSelectIcon width={"2px"} height={"11.3px"} color={"#0A0A0A"} />
+      <OptionsSelectIcon width="2" height="11.3" color={"#0A0A0A"} />
       {openedDropdownId && (
         <CommentDropdownMenu
           ref={dropDownRef}
