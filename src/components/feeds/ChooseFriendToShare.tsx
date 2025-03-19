@@ -15,7 +15,7 @@ export default function ChooseFriendToShare({
   const isClient = typeof window !== "undefined";
   return (
     <div
-      className="absolute inset-0 bg-grayscale-50 min-h-dvh pt-12"
+      className="max-w-[430px] bg-grayscale-50 min-h-dvh pt-5"
       style={
         isClient && window?.ReactNativeWebView
           ? {
@@ -24,10 +24,7 @@ export default function ChooseFriendToShare({
           : {}
       }
     >
-      <Flex
-        direction="column"
-        className="absolute left-0 right-0 pt-5 px-6 gap-4 text-T2"
-      >
+      <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
         <LightyIcon width="24" height="24" color="#0A0A0A" />
         <span>추억을 공유하고 싶은 사람이 있나요?</span>
         <span className="text-B3 text-grayscale-500 mb-4">

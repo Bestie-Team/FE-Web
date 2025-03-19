@@ -35,7 +35,7 @@ export default function BottomSheetWrapper({
           `${isClosing ? "animate-slideOut" : "animate-slideIn"}`
         )}
       >
-        <Flex direction="column" className="pb-[10px]">
+        <Flex direction="column" className="pb-safe-bottom">
           <Flex justify="center" className="pt-[6px] pb-[18px]">
             {bar ? <RectIcon /> : null}
           </Flex>
@@ -47,4 +47,4 @@ export default function BottomSheetWrapper({
 }
 
 const containerStyle =
-  "max-w-[430px] mx-auto bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zIndex)] pb-safe-bottom";
+  "max-w-[430px] mx-auto bg-base-white absolute left-0 right-0 bottom-0 rounded-t-[16px] w-full overflow-hidden z-[var(--bottomSheet-zIndex)] pb-[10px]";

@@ -19,15 +19,20 @@ export default function ActionItem({
     <button
       className={clsx(styles.container, padding)}
       onClick={(e) => {
+        e.preventDefault();
         e.stopPropagation();
         onClick();
       }}
     >
       <div className={styles.button}>{icon}</div>
       <Flex className={styles.descWrapper}>
-        <Flex direction="column" className="gap-1 flex-grow items-start">
+        <Flex direction="column" className="flex-grow gap-1 items-start">
           <span className="text-T5">{title}</span>
-          {subTitle && <span className={styles.subTitle}>{subTitle}</span>}
+          {subTitle && (
+            <>
+              <span className={styles.subTitle}>{subTitle}</span>
+            </>
+          )}
         </Flex>
         <ArrowRightIcon />
       </Flex>
