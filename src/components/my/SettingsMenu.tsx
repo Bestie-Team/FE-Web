@@ -83,6 +83,11 @@ const settings = [
       },
       { title: "앱버전", info: ["V.1.0(최신버전)"], link: { href: "" } },
       {
+        title: "알림 설정",
+        info: null,
+        link: { href: "/settings/notice" },
+      },
+      {
         title: "탈퇴하기",
         info: null,
         link: { href: "" },

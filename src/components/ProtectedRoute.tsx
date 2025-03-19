@@ -11,7 +11,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && pathname === "/") {
       router.push("/feed");
     }
   }, [isAuthenticated]);
