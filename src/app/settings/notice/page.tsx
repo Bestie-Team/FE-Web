@@ -34,7 +34,9 @@ function SettingItem({
     <Flex className="p-5" justify="space-between" align="center">
       <Flex direction="column" className="gap-1">
         <span className="text-T4">서비스 소식 알림</span>
-        <span className="text-B4">초대장, 친구 신청, 그룹 초대 알림</span>
+        <span className="text-B4 text-[#A0A1A3]">
+          초대장, 친구 신청, 그룹 초대 알림
+        </span>
       </Flex>
       <ToggleButton isOn={isOn} setIsOn={setIsOn} />
     </Flex>
