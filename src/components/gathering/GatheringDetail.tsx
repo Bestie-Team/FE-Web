@@ -28,7 +28,7 @@ export default function GatheringDetail({
     selectedGathering;
   const containerRef = useRef<HTMLDivElement>(null);
   const convertedDate = formatToKoreanTime(gatheringDate);
-  useIntersectionObserver({ elementRef: containerRef, threshold: 0.38 });
+  useIntersectionObserver({ elementRef: containerRef, threshold: 0.5 });
 
   return (
     <div>

@@ -31,7 +31,6 @@ export default function GatheringPage() {
   const reset = useResetRecoilState(newGatheringInfo);
   const [modalOpen, setModalOpen] = useRecoilState(gatheringModalStateAtom);
   const { selectedTab, setSelectedTab } = useTabs();
-  const containerRef = useRef<HTMLDivElement>(null);
   const tab1ContainerRef = useRef<HTMLDivElement>(null);
   const tab2ContainerRef = useRef<HTMLDivElement>(null);
   const { data: gatheringAll, isFetching } = useGatheringAll();
@@ -43,7 +42,7 @@ export default function GatheringPage() {
   } = useGatheringEnded({ limit: 8 });
 
   const { visible } = useScrollDirection({
-    elementRef: containerRef,
+    elementRef: selectedTab === "1" ? tab1ContainerRef : tab2ContainerRef,
     selectedTab,
   });
 
@@ -77,18 +76,19 @@ export default function GatheringPage() {
   }, [reset]);
 
   return (
-    <div className="h-dvh" ref={containerRef}>
+    <div className="h-dvh pb-safe-bottom">
       <GatheringHeader
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
         className={clsx(
-          "pt-safe-top bg-base-white/80 backdrop-blur-md transition-transform duration-300 ease-in-out z-20",
+          "bg-base-white/80 backdrop-blur-md transition-transform duration-300 ease-in-out z-20",
           visible ? "translate-y-0" : "-translate-y-full"
         )}
       />
       <PullToRefresh
         onRefresh={handleRefresh}
-        pullingContent={
+        pullingContent={<></>}
+        refreshingContent={
           <div className="flex justify-center pt-safe-top">
             <div className="p-2">
               <Spacing size={90} />
@@ -101,7 +101,7 @@ export default function GatheringPage() {
           <div
             ref={tab1ContainerRef}
             className={
-              "h-full overflow-y-scroll no-scrollbar pb-10 pt-safe-top"
+              "h-full overflow-y-scroll no-scrollbar pb-14 pt-safe-top"
             }
           >
             <Schedule expectingGatherings={gatheringAll} />
@@ -109,7 +109,7 @@ export default function GatheringPage() {
         ) : (
           <div
             ref={tab2ContainerRef}
-            className={"h-full overflow-y-scroll gathering no-scrollbar"}
+            className="h-full overflow-y-scroll no-scrollbar gathering"
           >
             <Gathering
               ended
