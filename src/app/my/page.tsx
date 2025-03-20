@@ -4,7 +4,6 @@ import MyMainInfo from "@/components/my/MyMainInfo";
 import UserProfile from "@/components/my/UserProfile";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
-import TermOfUse from "@/components/terms/TermOfUse";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
 import Header from "@/components/shared/Header/Header";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
@@ -12,37 +11,21 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
+import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
 
-const MyHeader = React.memo(
-  ({
-    open,
-    privatePolicyOpen,
-    shadow,
-  }: {
-    open: boolean;
-    privatePolicyOpen: boolean;
-    shadow: boolean;
-  }) => {
-    return (
-      <div
-        className={clsx(
-          styles.headerWrapper,
-          shadow && "shadow-bottom",
-          open || privatePolicyOpen ? "" : "z-20"
-        )}
-      >
-        <Header headerLabel="My" />
-      </div>
-    );
-  }
-);
+const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
+  return (
+    <div
+      className={clsx(styles.headerWrapper, shadow && "shadow-bottom", "z-20")}
+    >
+      <Header headerLabel="My" />
+    </div>
+  );
+});
 
 MyHeader.displayName = "MyHeader";
 
 export default function MyPage() {
-  const [modalState, setModalState] = useState<
-    "none" | "open" | "privatePolicy"
-  >("none");
   const [profileInfo, setProfileInfo] = useState<
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
@@ -72,11 +55,7 @@ export default function MyPage() {
 
   return (
     <div className="min-h-dvh w-full pt-safe-top">
-      <MyHeader
-        shadow={isPast}
-        open={modalState === "open"}
-        privatePolicyOpen={modalState === "privatePolicy"}
-      />
+      <MyHeader shadow={isPast} />
       <div>
         <main className="pt-[68px]">
           <Suspense fallback={<DotSpinner />}>
@@ -96,29 +75,19 @@ export default function MyPage() {
           <SettingsMenu logout={handleLogout} user={user} />
           <footer className={styles.termsWrapper}>
             <span
-              // href="https://curious-lettuce-6c7.notion.site/155c4ba8c0728033941adeca5c02f345"
-              // target="_blank"
-              onClick={() => setModalState("open")}
+              onClick={() => openTermsMobile()}
               className={clsx("mr-[13px]", styles.letter)}
             >
               <ins>이용약관</ins>
             </span>
             <span
-              // href="https://curious-lettuce-6c7.notion.site/154c4ba8c07280008378ce95a2effe3a"
-              // target="_blank"
-              onClick={() => setModalState("privatePolicy")}
+              onClick={() => openPrivacyPolicyMobile()}
               className={styles.letter}
             >
               <ins>개인 정보 처리방침</ins>
             </span>
           </footer>
           <Spacing size={120} />
-          {modalState !== "none" && (
-            <TermOfUse
-              label={modalState === "open" ? "이용 약관" : "개인 정보 처리방침"}
-              onClick={() => setModalState("none")}
-            />
-          )}
         </main>
       </div>
     </div>

@@ -10,6 +10,10 @@ export const saveImageMobile = (uri: string) => postMessage("SAVE_IMAGE", uri);
 
 export const openSettingsMobile = () => postMessage("OPEN_SETTINGS");
 
+export const openPrivacyPolicyMobile = () => postMessage("OPEN_PRIVACY_POLICY");
+
+export const openTermsMobile = () => postMessage("OPEN_TERMS");
+
 export const requestNotificationPermission = () =>
   postMessage("NOTIFICATION_PERMISSION_REQUEST");
 
