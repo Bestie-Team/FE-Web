@@ -2,7 +2,13 @@ import React from "react";
 
 export default function OptionsSelectIcon({ color }: { color?: string }) {
   return (
-    <svg viewBox="0 0 3 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={3}
+      height={17}
+      viewBox="0 0 3 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g id="Group 427319931">
         <path
           id="Vector"
