@@ -1,7 +1,7 @@
 import React from "react";
 import { useDropdown } from "@/hooks/useDropdown";
 import { Feed } from "@/models/feed";
-import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
+import { OptionsSelectIconXSmall } from "../shared/Icon/OptionsSelectIcon";
 import CommentDropdownMenu from "../shared/DropDownMenu/CommentDropDownMenu";
 import { MENU_TYPES } from "@/models/dropdown";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
@@ -24,7 +24,7 @@ export default function CommentOption({ commentId }: OptionsProps) {
       style={{ width: 16, height: 16 }}
       className="relative cursor-pointer flex justify-center items-center"
     >
-      <OptionsSelectIcon width="2" height="11.3" color={"#0A0A0A"} />
+      <OptionsSelectIconXSmall />
       {openedDropdownId && (
         <CommentDropdownMenu
           ref={dropDownRef}

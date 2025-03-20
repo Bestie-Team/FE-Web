@@ -25,7 +25,7 @@ export default function GatheringOption({
       style={{ width: 24, height: 24 }}
       className="relative cursor-pointer flex justify-center items-center"
     >
-      <OptionsSelectIcon color={"#FFF"} />
+      <OptionsSelectIcon color="#FFF" />
       {opened && type === MENU_TYPES.GATHERING && gathering && (
         <GatheringDropdownMenu
           gathering={gathering}
