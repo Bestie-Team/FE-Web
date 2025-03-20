@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../shared/Modal/Modal";
 import { friendReportModalAtom, modalStateAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
-import useReport from "../report/hooks/useReport";
+import useReport, { ReportContentTypes } from "../report/hooks/useReport";
 import { useAuth } from "../shared/providers/AuthProvider";
 import Report from "../shared/Modal/Report/Report";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -26,7 +26,7 @@ const ReportFriendModal = memo(
   }: {
     isOpen: boolean;
     onClose: () => void;
-    onReport: (reason: { reason: string }) => void;
+    onReport: (reason: ReportContentTypes) => void;
   }) => {
     if (!isOpen) return null;
 
@@ -73,7 +73,6 @@ export default function UserFriendsListContainer() {
   });
 
   const { mutate: reportFriend } = useReport({
-    report: { reportedId: selectedFriendId, type: "FRIEND" },
     onSuccess: deleteSuccessHandler,
     onError: (error) => lightyToast.error(error.message),
   });

@@ -7,3 +7,5 @@ export type ModalType =
   | "deleteFeedComment"
   | "hideFeed"
   | "displayFeed";
+
+export type ReportModalType = "feed" | "comment";

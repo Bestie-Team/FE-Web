@@ -14,6 +14,9 @@ export const MENU_CONFIGS = {
     className: "z-100 absolute -bottom-[42px] right-[4px]",
   },
   [MENU_TYPES.COMMENT]: {
+    items: ["신고하기"],
+  },
+  [MENU_TYPES.COMMENT_MINE]: {
     items: ["삭제하기"],
   },
   [MENU_TYPES.GATHERING]: {

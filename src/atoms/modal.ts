@@ -1,4 +1,4 @@
-import { ModalType } from "@/models/modal";
+import { ModalType, ReportModalType } from "@/models/modal";
 import { atom } from "recoil";
 
 export const modalStateAtom = atom<{ type: ModalType | null; isOpen: boolean }>(
@@ -21,7 +21,13 @@ export const recordModalAtom = atom<boolean>({
   default: false,
 });
 
-export const reportModalAtom = atom<boolean>({
-  key: "report",
-  default: false,
+export const reportModalAtom = atom<{
+  type: ReportModalType | null;
+  isOpen: boolean;
+}>({
+  key: "modal/report",
+  default: {
+    type: null,
+    isOpen: false,
+  },
 });

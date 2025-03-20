@@ -4,21 +4,26 @@ import Flex from "../../Flex";
 import Spacing from "../../Spacing";
 import Button from "../../Button/Button";
 import clsx from "clsx";
+import { ReportContentTypes } from "@/components/report/hooks/useReport";
 
 export default function Report({
-  title = "해당 피드를 신고하시겠어요?",
+  title = "해당 피드/댓글을 신고하시겠어요?",
   action,
   onClose,
 }: {
   title?: string;
-  action: (reason: { reason: string }) => void;
+  action: (reason: ReportContentTypes) => void;
   onClose: () => void;
 }) {
-  const [reason, setReason] = useState("");
+  const [report, setReport] = useState<ReportContentTypes>({
+    reportedId: "",
+    type: "FEED",
+    reason: "",
+  });
   const [step, setStep] = useState(1);
   const handleReport = () => {
     onClose();
-    action({ reason });
+    action(report);
   };
   return (
     <Dimmed className={styles.dimmed}>
@@ -34,8 +39,10 @@ export default function Report({
             <Spacing size={12} />
             <textarea
               className={styles.reportTextarea}
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
+              value={report.reason}
+              onChange={(e) =>
+                setReport((prev) => ({ ...prev, reason: e.target.value }))
+              }
             />
             <Spacing size={24} />
           </>

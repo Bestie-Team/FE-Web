@@ -22,7 +22,9 @@ import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
-import useReport from "@/components/report/hooks/useReport";
+import useReport, {
+  ReportContentTypes,
+} from "@/components/report/hooks/useReport";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
@@ -67,7 +69,7 @@ const FeedModals = React.memo(
     onDeleteFeed: () => void;
     onDeleteComment: () => void;
     onHideFeed: () => void;
-    onReportFeed: (reason: { reason: string }) => void;
+    onReportFeed: (reason: ReportContentTypes) => void;
   }) => {
     const [modalState, setModalState] = useRecoilState(modalStateAtom);
     const setFeedId = useSetRecoilState(selectedFeedIdAtom);
@@ -118,10 +120,12 @@ const FeedModals = React.memo(
             onClose={closeModal}
           />
         )}
-        {feedReportModalOpen && (
+        {feedReportModalOpen.isOpen && (
           <Report
             action={onReportFeed}
-            onClose={() => setFeedReportModalOpen(false)}
+            onClose={() =>
+              setFeedReportModalOpen({ type: null, isOpen: false })
+            }
           />
         )}
       </>
@@ -135,6 +139,7 @@ export default function FeedPage() {
   const queryClient = useQueryClient();
   const { token, userInfo } = useAuth();
   const [selectedFeedId, setSelectedFeedId] = useState("");
+  const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
   const {
     selectedTab,
@@ -209,7 +214,7 @@ export default function FeedPage() {
   };
 
   const handleReportFeedSuccess = async () => {
-    lightyToast.success("피드를 신고했어요");
+    lightyToast.success("신고가 접수되었어요!");
     await Promise.all([
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/all"],
@@ -251,10 +256,9 @@ export default function FeedPage() {
   });
 
   const { mutate: reportFeed } = useReport({
-    report: { reportedId: selectedFeedId, type: "FEED" },
     onSuccess: handleReportFeedSuccess,
     onError: () => {
-      lightyToast.error("피드신고 실패");
+      lightyToast.error("신고 실패");
     },
   });
 
@@ -352,7 +356,10 @@ export default function FeedPage() {
                       <div key={feed.id} className="relative">
                         <FeedCard
                           feed={feed}
-                          onClick={() => setSelectedFeedId(feed.id)}
+                          onClick={() => {
+                            setSelectedFeedId(feed.id);
+                            setSelectedFeedWriter(feed.writer.accountId);
+                          }}
                         >
                           <InfoBar
                             ref={fBtnRef}
@@ -447,7 +454,10 @@ export default function FeedPage() {
                         <FeedCard
                           key={feed.id}
                           feed={feed}
-                          onClick={() => setSelectedFeedId(feed.id)}
+                          onClick={() => {
+                            setSelectedFeedId(feed.id);
+                            setSelectedFeedWriter(feed.writer.accountId);
+                          }}
                         >
                           <InfoBar
                             ref={fBtnRef}
@@ -568,6 +578,7 @@ export default function FeedPage() {
       {bottomSheetState && (
         <CommentContainer
           selectedFeedId={selectedFeedId}
+          selectedFeedWriter={selectedFeedWriter}
           onClose={() => setBottomSheetState(false)}
         />
       )}

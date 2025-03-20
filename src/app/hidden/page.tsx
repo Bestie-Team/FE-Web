@@ -26,6 +26,7 @@ import { MENU_CONFIGS } from "@/constants/menu-configs";
 export default function FeedPage() {
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
+  const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
   const [feedId, setFeedId] = useState("");
   const queryClient = useQueryClient();
   const [bottomSheetState, setBottomSheetState] =
@@ -115,7 +116,13 @@ export default function FeedPage() {
         <div className={"pt-safe-top"}>
           {hiddenFeed.map((feed) => (
             <div key={feed.id} className="relative">
-              <FeedCard feed={feed} onClick={() => setFeedId(feed.id)}>
+              <FeedCard
+                feed={feed}
+                onClick={() => {
+                  setFeedId(feed.id);
+                  setSelectedFeedWriter(feed.writer.id);
+                }}
+              >
                 <InfoBar
                   ref={fBtnRef}
                   onClick={(e) => {
@@ -162,6 +169,7 @@ export default function FeedPage() {
       {bottomSheetState && (
         <CommentContainer
           selectedFeedId={feedId}
+          selectedFeedWriter={selectedFeedWriter}
           onClose={() => setBottomSheetState(false)}
         />
       )}
