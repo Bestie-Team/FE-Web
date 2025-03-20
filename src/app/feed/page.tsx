@@ -165,11 +165,13 @@ export default function FeedPage() {
       if (typeof event.data !== "string") {
         data = JSON.stringify(event.data);
       }
-      const message: { type: string; notificationToken: string } =
+      const message: { type: string; notificationToken: string | null } =
         JSON.parse(data);
 
       if (message.type === WEBVIEW_EVENT.AGREE_NOTIFICATION_PERMISSION) {
-        patchNotificationToken({ token: message.notificationToken });
+        if (message.notificationToken) {
+          patchNotificationToken({ token: message.notificationToken });
+        }
       }
     };
 
