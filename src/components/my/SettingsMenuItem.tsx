@@ -3,17 +3,19 @@ import Flex from "../shared/Flex";
 import { SettingsItem } from "./SettingsMenu";
 import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
-import useUserDelete from "../users/hooks/useUserDelete";
-import { lightyToast } from "@/utils/toast";
+// import useUserDelete from "../users/hooks/useUserDelete";
+// import { lightyToast } from "@/utils/toast";
 
 export default function SettingsMenuItem({
   list,
   link,
   user,
+  logout,
 }: {
   list: SettingsItem;
   link: { href: string; target?: string };
   user: string[];
+  logout: () => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
@@ -21,12 +23,13 @@ export default function SettingsMenuItem({
       setIsModalOpen(true);
     }
   };
-  const { mutate: deleteUser } = useUserDelete({
-    onError: (e) => lightyToast.error(e),
-    onSuccess: () => {
-      lightyToast.success("탈퇴 완료");
-    },
-  });
+  // const { mutate: deleteUser } = useUserDelete({
+  //   onError: (e) => lightyToast.error(e),
+  //   onSuccess: () => {
+  //     lightyToast.success("탈퇴 완료");
+  //     logout();
+  //   },
+  // });
 
   return (
     <Link {...link}>
@@ -44,7 +47,7 @@ export default function SettingsMenuItem({
       </li>
       {isModalOpen ? (
         <Modal
-          action={() => deleteUser()}
+          action={() => {}}
           title="탈퇴하시겠어요?"
           content="탈퇴 시 모든 활동 내용이 삭제되며 해당 정보는 복구할 수 없어요."
           left="닫기"

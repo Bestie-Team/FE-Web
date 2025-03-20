@@ -31,9 +31,10 @@ const SettingsMenu = React.memo(
                   >
                     <Spacing size={8} />
                     <SettingsMenuItem
+                      logout={logout}
                       list={list}
                       link={list.link}
-                      user={[`SNS 로그인(${user.email})`, user.provider]}
+                      user={[`SNS 로그인(${user.provider})`]}
                     />
                   </ul>
                 );
