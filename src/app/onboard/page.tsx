@@ -1,62 +1,48 @@
 "use client";
-import React, { MouseEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { NavigationOptions } from "swiper/types";
 import Image from "next/image";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import Flex from "@/components/shared/Flex";
-import { Swiper as SwiperType } from "swiper";
+import type { Swiper as SwiperType } from "swiper";
 
 export default function OnBoardCardSlider() {
-  const nextRef = useRef<HTMLDivElement | null>(null);
+  const nextButtonRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
-  const [button, setButton] = useState("다음");
+  const [buttonText, setButtonText] = useState("다음");
+  const [isLastSlide, setIsLastSlide] = useState(false);
   const router = useRouter();
 
-  const onClickHandler = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-
-    if (!swiperRef.current) return;
-    if (nextRef.current?.textContent == "시작하기") {
+  const handleNextClick = () => {
+    if (isLastSlide) {
       router.push("/feed?ref=signup");
+      return;
     }
-    if (swiperRef.current.activeIndex === onBoardCardContents.length - 1) {
-      setButton("시작하기");
-      return;
-    } else {
-      setButton("다음");
-      return;
+
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
     }
   };
 
   return (
-    <div
-      className="max-w-[430px] w-full h-dvh min-h-[400px] bg-grayscale-50 pt-6"
-      style={{
-        zIndex: 999,
-      }}
-    >
+    <div className="max-w-[430px] w-full h-dvh min-h-[400px] bg-grayscale-50 pt-6">
       <Swiper
+        modules={[Pagination, Navigation]}
+        className="h-[calc(100dvh-100px)]"
+        slidesPerView={1}
+        pagination={{ type: "bullets" }}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        modules={[Pagination, Navigation]}
-        navigation={{
-          nextEl: nextRef.current,
+        onSlideChange={(swiper) => {
+          const isLast = swiper.isEnd;
+          setIsLastSlide(isLast);
+          setButtonText(isLast ? "시작하기" : "다음");
         }}
-        className="h-[calc(100dvh-100px)]"
-        slidesPerView={1}
-        onBeforeInit={(swiper) => {
-          if (swiper.params.navigation) {
-            const navigation = swiper.params.navigation as NavigationOptions;
-            navigation.nextEl = nextRef.current;
-          }
-        }}
-        pagination={{ type: "bullets" }}
       >
         {onBoardCardContents.map(({ title, description, imageUrl }, idx) => (
           <SwiperSlide className="h-full" key={idx}>
@@ -78,8 +64,8 @@ export default function OnBoardCardSlider() {
                 {description}
               </Flex>
               <Image
-                alt="title"
-                src={imageUrl}
+                alt={`${title} 이미지`}
+                src={imageUrl || "/placeholder.svg"}
                 width={390}
                 height={460}
                 loading="eager"
@@ -90,8 +76,12 @@ export default function OnBoardCardSlider() {
         ))}
       </Swiper>
       <div className={styles.buttonWrapper}>
-        <div ref={nextRef} className={styles.button} onClick={onClickHandler}>
-          {button}
+        <div
+          ref={nextButtonRef}
+          className={styles.button}
+          onClick={handleNextClick}
+        >
+          {buttonText}
         </div>
       </div>
     </div>
@@ -129,7 +119,6 @@ const onBoardCardContents = [
     ),
     imageUrl: "https://cdn.lighty.today/onBoard/2.webp",
   },
-
   {
     title: "포토 카드",
     description: (
@@ -144,7 +133,6 @@ const onBoardCardContents = [
       </Flex>
     ),
     imageUrl: "https://cdn.lighty.today/onBoard/3.webp",
-    width: 430,
   },
   {
     title: "약속 만들기",
