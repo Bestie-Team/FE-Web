@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
+import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
   return (
@@ -33,6 +34,19 @@ export default function MyPage() {
   const { logout } = useAuth();
   const router = useRouter();
   const isPast = useScrollThreshold();
+  const { isReactNativeWebView } = useReactNativeWebView();
+
+  const openTermsPage = () => {
+    if (isReactNativeWebView) {
+      openTermsMobile();
+    }
+  };
+
+  const openPrivacyPolicyPage = () => {
+    if (isReactNativeWebView) {
+      openPrivacyPolicyMobile();
+    }
+  };
 
   const handleLogout = useCallback(async () => {
     router.push("/");
@@ -75,15 +89,12 @@ export default function MyPage() {
           <SettingsMenu logout={handleLogout} user={user} />
           <footer className={styles.termsWrapper}>
             <span
-              onClick={() => openTermsMobile()}
+              onClick={openTermsPage}
               className={clsx("mr-[13px]", styles.letter)}
             >
               <ins>이용약관</ins>
             </span>
-            <span
-              onClick={() => openPrivacyPolicyMobile()}
-              className={styles.letter}
-            >
+            <span onClick={openPrivacyPolicyPage} className={styles.letter}>
               <ins>개인 정보 처리방침</ins>
             </span>
           </footer>
