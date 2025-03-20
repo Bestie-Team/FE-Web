@@ -18,6 +18,22 @@ export default function NoFeed() {
   );
 }
 
+export function NoFeedHidden() {
+  return (
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      className="min-h-[calc(100dvh-148px)] gap-[13px]"
+    >
+      <div className="w-10 h-10 p-[5px]">
+        <FeedIcon width="30" height="30" />
+      </div>
+      <span className="text-T4 text-grayscale-300">숨김 피드가 없어요.</span>
+    </Flex>
+  );
+}
+
 function FeedIcon({ width, height }: { width?: string; height?: string }) {
   return (
     <svg

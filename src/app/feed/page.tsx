@@ -22,7 +22,9 @@ import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 import { maxDate, minDate } from "@/constants/time";
 import { lightyToast } from "@/utils/toast";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
-import useReport from "@/components/report/hooks/useReport";
+import useReport, {
+  ReportContentTypes,
+} from "@/components/report/hooks/useReport";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
@@ -67,7 +69,7 @@ const FeedModals = React.memo(
     onDeleteFeed: () => void;
     onDeleteComment: () => void;
     onHideFeed: () => void;
-    onReportFeed: (reason: { reason: string }) => void;
+    onReportFeed: (reason: ReportContentTypes) => void;
   }) => {
     const [modalState, setModalState] = useRecoilState(modalStateAtom);
     const setFeedId = useSetRecoilState(selectedFeedIdAtom);

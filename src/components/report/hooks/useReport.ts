@@ -2,6 +2,11 @@ import * as lighty from "lighty-type";
 import { postReport } from "@/remote/report";
 import { useMutation } from "@tanstack/react-query";
 
+export interface ReportContentTypes {
+  reportedId: string;
+  type: lighty.ReportTypes;
+  reason: string;
+}
 export default function useReport({
   onSuccess,
   onError,
