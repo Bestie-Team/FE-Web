@@ -5,15 +5,18 @@ import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { MENU_TYPES } from "@/models/dropdown";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
 
-export default function FriendOption() {
+export default function FriendOption({ onClick }: { onClick: () => void }) {
   const { opened, ref, btnRef, toggleDropdown } = useDropdownWithNoId();
 
   return (
     <div
       ref={btnRef}
       data-testid="options-icon"
-      onClick={toggleDropdown}
-      className="relative cursor-pointer mx-auto"
+      onClick={() => {
+        onClick();
+        toggleDropdown();
+      }}
+      className="relative cursor-pointer mx-auto w-5 h-5 flex-shrink-0"
     >
       <OptionsSelectIcon width="2.5" height="14.17" />
       {opened && (

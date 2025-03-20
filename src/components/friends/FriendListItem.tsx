@@ -95,12 +95,7 @@ export default function FriendListItem({
         </Flex>
       </Flex>
       {type === "friend" ? (
-        <div
-          className={clsx(styles.iconContainer)}
-          onClick={() => setSelectedFriend(friendInfo.id)}
-        >
-          <FriendOption />
-        </div>
+        <FriendOption onClick={() => setSelectedFriend(friendInfo.id)} />
       ) : null}
       {type === "receivedRequest" ? (
         <Flex>
@@ -128,7 +123,7 @@ export default function FriendListItem({
 }
 
 const styles = {
-  iconContainer: "flex items-center w-5 h-5",
+  // iconContainer: "flex items-center w-5 h-5",
 
   li: `w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border`,
   img: "rounded-full object-cover h-9 w-9",
