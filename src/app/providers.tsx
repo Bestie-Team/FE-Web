@@ -48,7 +48,11 @@ export const NextProvider = ({ children }: Props) => {
   );
 };
 
-const DARK_BACKGROUND_PATHS = ["/friends", "/friends/search"] as const;
+const DARK_BACKGROUND_PATHS = [
+  "/friends",
+  "/friends/search",
+  "/onboard",
+] as const;
 const NAVBAR_PATHS = [
   "/feed",
   "/gathering",

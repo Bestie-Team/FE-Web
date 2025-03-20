@@ -29,10 +29,10 @@ export default function OnBoardCardSlider() {
   };
 
   return (
-    <div className="max-w-[430px] w-full h-dvh min-h-[400px] bg-grayscale-50 pt-6">
+    <div className="relative max-w-[430px] w-full h-dvh min-h-[400px] bg-grayscale-50 pt-safe-top">
       <Swiper
         modules={[Pagination, Navigation]}
-        className="h-[calc(100dvh-100px)]"
+        className="h-[calc(100dvh-76px)] mb-safe-bottom"
         slidesPerView={1}
         pagination={{ type: "bullets" }}
         onSwiper={(swiper) => {
@@ -47,7 +47,7 @@ export default function OnBoardCardSlider() {
         {onBoardCardContents.map(({ title, description, imageUrl }, idx) => (
           <SwiperSlide className="h-full" key={idx}>
             <Flex
-              className="h-full pt-20 pb-4 gap-10"
+              className="h-full pt-14 gap-10"
               direction="column"
               justify="space-between"
               align="center"
@@ -168,7 +168,7 @@ const onBoardCardContents = [
 
 const styles = {
   buttonWrapper:
-    "bg-base-white w-full px-5 py-3 font-[600] text-base text-center leading-[16.8px]",
+    "absolute bottom-0 bg-base-white w-full px-5 py-3 font-[600] text-base text-center leading-[16.8px] mb-safe-bottom",
   button:
     "rounded-full bg-grayscale-900 py-[18px] w-full text-base-white cursor-pointer",
 };
