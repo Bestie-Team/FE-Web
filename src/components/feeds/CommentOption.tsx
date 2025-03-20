@@ -20,7 +20,9 @@ export default function CommentOption({ commentId, type }: OptionsProps) {
     <div
       ref={btnRef}
       data-testid="options-icon"
-      onClick={() => toggleDropdown(commentId || "")}
+      onClick={() => {
+        toggleDropdown(commentId || "");
+      }}
       style={{ width: 16, height: 16 }}
       className="relative cursor-pointer flex justify-center items-center"
     >

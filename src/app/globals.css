@@ -32,6 +32,10 @@
 }
 
 .swiper-pagination {
+  display: none;
+}
+/* 
+.swiper-pagination {
   bottom: 32px !important;
   padding-right: 24px !important;
   text-align: right !important;
@@ -39,6 +43,7 @@
   font-weight: 500;
   line-height: 20px;
 }
+  
 
 .swiper-pagination-current {
   color: white;
@@ -72,7 +77,7 @@
 
 .swiper-pagination-bullet-active.swiper-pagination-bullet {
   background: #0a0a0a !important;
-}
+} */
 
 @media only screen and (max-width: 480px) {
   .Toastify__toast-container--top-center,

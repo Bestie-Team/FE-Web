@@ -23,6 +23,7 @@ export default function CommentItem({
   const { writer, content, createdAt } = comment;
   const time = formatDate(new Date(createdAt));
 
+  console.log("ismyfeed", isMyFeed, userInfo?.accountId, feedWriterId);
   return (
     <Flex
       align="center"

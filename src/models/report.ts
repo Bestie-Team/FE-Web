@@ -6,4 +6,4 @@ export interface ReportRequestInterface {
   type: lighty.ReportTypes;
 }
 
-export type ReportTypes = "FRIEND" | "FEED" | "GROUP" | "FEED_COMMENT";
+export type ReportTypes = lighty.ReportTypes;

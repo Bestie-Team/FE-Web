@@ -21,27 +21,26 @@ export default function OnBoardCardSlider() {
     e.stopPropagation();
 
     if (!swiperRef.current) return;
-    else if (nextRef.current?.textContent == "시작하기") {
+    if (nextRef.current?.textContent == "시작하기") {
       router.push("/feed?ref=signup");
     }
-    console.log(swiperRef.current.activeIndex, onBoardCardContents.length - 1);
+    if (swiperRef.current.activeIndex === onBoardCardContents.length - 1) {
+      setButton("시작하기");
+      return;
+    } else {
+      setButton("다음");
+      return;
+    }
   };
 
   return (
     <div
-      className="absolute inset-0 h-dvh min-h-[400px] bg-grayscale-50 pt-6"
+      className="max-w-[430px] w-full h-dvh min-h-[400px] bg-grayscale-50 pt-6"
       style={{
         zIndex: 999,
       }}
     >
       <Swiper
-        onSlideChange={(swiper) => {
-          if (swiper.activeIndex === onBoardCardContents.length - 1) {
-            setButton("시작하기");
-          } else {
-            setButton("다음");
-          }
-        }}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}

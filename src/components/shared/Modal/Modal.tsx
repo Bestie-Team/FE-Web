@@ -40,8 +40,8 @@ export default function Modal({
               <Spacing size={12} direction="horizontal" />
               <Button
                 onClick={() => {
-                  onClose();
                   action();
+                  onClose();
                 }}
                 className={clsx(styles.button, styles.report)}
               >

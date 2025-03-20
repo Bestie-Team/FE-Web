@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from "react";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { modalStateAtom, reportModalAtom } from "@/atoms/modal";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { selectedFeedIdAtom, selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import { Feed } from "@/models/feed";
@@ -16,10 +16,10 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
   ({ menuItems, className, feed }, ref) => {
     const router = useRouter();
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-
+    const setReportModal = useSetRecoilState(reportModalAtom);
     const setModalOpen = useSetRecoilState(modalStateAtom);
-    const setReportModalOpen = useSetRecoilState(reportModalAtom);
     const setFeedId = useSetRecoilState(selectedFeedIdAtom);
+    const setReport = useSetRecoilState(reportInfoAtom);
     const setFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
 
     const handleModalOpen = (type: ModalType) => {
@@ -43,7 +43,8 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
         handleModalOpen("hideFeed");
       } else if (item.includes("신고")) {
         setFeedId(feed.id);
-        setReportModalOpen({ type: "feed", isOpen: true });
+        setReport((prev) => ({ ...prev, reportId: feed.id, type: "FEED" }));
+        setReportModal({ type: "FEED", isOpen: true });
       } else if (item.includes("숨김 해제")) {
         setFeedId(feed.id);
         handleModalOpen("displayFeed");

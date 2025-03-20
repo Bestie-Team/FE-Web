@@ -8,4 +8,4 @@ export type ModalType =
   | "hideFeed"
   | "displayFeed";
 
-export type ReportModalType = "feed" | "comment";
+export type ReportModalType = "FRIEND" | "FEED" | "GROUP" | "FEED_COMMENT";

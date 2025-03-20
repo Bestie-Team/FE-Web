@@ -1,5 +1,12 @@
 "use client";
-import React, { useState, useMemo, useEffect, useRef, MouseEvent } from "react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  MouseEvent,
+  useCallback,
+} from "react";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,6 +19,7 @@ import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottom
 import {
   modalStateAtom,
   recordModalAtom,
+  reportInfoAtom,
   reportModalAtom,
 } from "@/atoms/modal";
 import { useQueryClient } from "@tanstack/react-query";
@@ -47,6 +55,7 @@ import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu"
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
+import MODAL_CONFIGS from "@/constants/modal-configs";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -71,42 +80,30 @@ const FeedModals = React.memo(
     onHideFeed: () => void;
     onReportFeed: (reason: ReportContentTypes) => void;
   }) => {
-    const [modalState, setModalState] = useRecoilState(modalStateAtom);
     const setFeedId = useSetRecoilState(selectedFeedIdAtom);
-    const [feedReportModalOpen, setFeedReportModalOpen] =
-      useRecoilState(reportModalAtom);
+    const [report, setReport] = useRecoilState(reportInfoAtom);
+    const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
+    const [modalState, setModalState] = useRecoilState(modalStateAtom);
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
       setFeedId("");
       setModalState({
         type: null,
         isOpen: false,
       });
-    };
+    }, []);
 
-    const MODAL_CONFIGS = {
-      deleteFeed: {
-        title: "피드를 삭제하시겠어요?",
-        content: "피드 정보가 전부 삭제되며 이는 복구할 수 없어요.",
-        leftButton: "취소",
-        rightButton: "삭제하기",
-        action: () => onDeleteFeed(),
-      },
-      deleteFeedComment: {
-        title: "댓글을 삭제하시겠어요?",
-        content: "댓글 정보가 전부 삭제되며 이는 복구할 수 없어요.",
-        leftButton: "취소",
-        rightButton: "나가기",
-        action: () => onDeleteComment(),
-      },
+    const handleReport = useCallback(() => {
+      onReportFeed({ ...report });
+      setReportModal({ type: null, isOpen: false });
+    }, [report]);
 
-      hideFeed: {
-        title: "해당 피드를 숨기시겠어요?",
-        leftButton: "취소",
-        rightButton: "숨기기",
-        action: () => onHideFeed(),
-      },
-    };
+    const modalAction =
+      modalState.type === "deleteFeed"
+        ? onDeleteFeed
+        : modalState.type === "hideFeed"
+        ? onHideFeed
+        : onDeleteComment;
 
     return (
       <>
@@ -116,16 +113,16 @@ const FeedModals = React.memo(
             content={MODAL_CONFIGS[modalState.type].content}
             left={MODAL_CONFIGS[modalState.type].leftButton}
             right={MODAL_CONFIGS[modalState.type].rightButton}
-            action={MODAL_CONFIGS[modalState.type].action}
+            action={modalAction}
             onClose={closeModal}
           />
         )}
-        {feedReportModalOpen.isOpen && (
+        {reportModal.isOpen && (
           <Report
-            action={onReportFeed}
-            onClose={() =>
-              setFeedReportModalOpen({ type: null, isOpen: false })
-            }
+            report={report}
+            setReport={setReport}
+            handleReport={handleReport}
+            onClose={() => setReportModal({ type: null, isOpen: false })}
           />
         )}
       </>
@@ -141,6 +138,7 @@ export default function FeedPage() {
   const [selectedFeedId, setSelectedFeedId] = useState("");
   const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
   const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
+
   const {
     selectedTab,
     handleTabClick,

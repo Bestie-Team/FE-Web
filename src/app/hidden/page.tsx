@@ -3,7 +3,7 @@ import FilterBar from "@/components/shared/YearFilter";
 import { useRecoilState, useRecoilValue } from "recoil";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
-import { modalStateAtom } from "@/atoms/modal";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import useFeedHidden from "@/components/feeds/hooks/useFeedHidden";
 import { Suspense, useState } from "react";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -22,10 +22,18 @@ import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
+import MODAL_CONFIGS from "@/constants/modal-configs";
+import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
+import { selectedCommentIdAtom } from "@/atoms/comment";
+import Report from "@/components/shared/Modal/Report/Report";
+import useReport from "@/components/report/hooks/useReport";
 
 export default function FeedPage() {
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
+  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
   const selectedFeedId = useRecoilValue(selectedFeedIdAtom);
+  const commentId = useRecoilValue(selectedCommentIdAtom);
+  const [report, setReport] = useRecoilState(reportInfoAtom);
   const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
   const [feedId, setFeedId] = useState("");
   const queryClient = useQueryClient();
@@ -53,16 +61,29 @@ export default function FeedPage() {
     onSuccess: displaySuccessHandler,
   });
 
-  useInfiniteScroll({ isFetching, loadMore });
-
-  const MODAL_CONFIGS = {
-    displayFeed: {
-      title: "피드 숨김을 해제할까요?",
-      leftButton: "취소",
-      rightButton: "해제",
-      action: () => displayFeed(),
+  const { mutate: deleteComment } = useDeleteComment({
+    commentId: commentId,
+    onSuccess: async (data: { message: string }) => {
+      lightyToast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["get/comments", { feedId }],
+      });
     },
-  };
+  });
+
+  const { mutate: reportComment } = useReport({
+    onSuccess: async (data: { message: string }) => {
+      lightyToast.success(data.message);
+      await queryClient.invalidateQueries({
+        queryKey: ["get/comments", { feedId }],
+      });
+    },
+    onError: (e) => {
+      lightyToast.error(e.message);
+    },
+  });
+
+  useInfiniteScroll({ isFetching, loadMore });
 
   const closeModal = () => {
     setModalState({
@@ -120,7 +141,7 @@ export default function FeedPage() {
                 feed={feed}
                 onClick={() => {
                   setFeedId(feed.id);
-                  setSelectedFeedWriter(feed.writer.id);
+                  setSelectedFeedWriter(feed.writer.accountId);
                 }}
               >
                 <InfoBar
@@ -179,8 +200,23 @@ export default function FeedPage() {
           content={MODAL_CONFIGS[modalState.type].content}
           left={MODAL_CONFIGS[modalState.type].leftButton}
           right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={MODAL_CONFIGS[modalState.type].action}
+          action={
+            modalState.type === "displayFeed"
+              ? () => displayFeed()
+              : () => deleteComment()
+          }
           onClose={closeModal}
+        />
+      )}
+      {reportModal.isOpen === true && (
+        <Report
+          setReport={setReport}
+          report={report}
+          handleReport={() => {
+            reportComment(report);
+            setReportModal((prev) => ({ ...prev, isOpen: false }));
+          }}
+          onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
         />
       )}
     </div>

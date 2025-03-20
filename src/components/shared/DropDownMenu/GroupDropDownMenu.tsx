@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import { modalStateAtom } from "@/atoms/modal";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { useRouter } from "next/navigation";
 import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
 import { GroupEditProps } from "@/app/groups/detail/page";
@@ -17,15 +17,17 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
   ({ menuItems, className, group }, ref) => {
     const router = useRouter();
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    const setOpenModal = useSetRecoilState(modalStateAtom);
+    const setModal = useSetRecoilState(modalStateAtom);
+    const setReportModal = useSetRecoilState(reportModalAtom);
     const setGroup = useSetRecoilState(selectedGroupAtom);
+    const setReport = useSetRecoilState(reportInfoAtom);
     const setOriginalGroupMembers = useSetRecoilState(originalGroupMembersAtom);
 
     const clickedMenuItemHandler = (menuItem: string) => {
       if (menuItem.includes("삭제")) {
-        setOpenModal({ type: "deleteGroup", isOpen: true });
+        setModal({ type: "deleteGroup", isOpen: true });
       } else if (menuItem.includes("나가기")) {
-        setOpenModal({ type: "exitGroup", isOpen: true });
+        setModal({ type: "exitGroup", isOpen: true });
       } else if (menuItem.includes("수정")) {
         setGroup({
           groupId: group.id,
@@ -37,6 +39,13 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
           setOriginalGroupMembers([...group.members]);
         }
         router.push(`/groups/edit`);
+      } else if (menuItem.includes("신고")) {
+        setReport((prev) => ({
+          ...prev,
+          type: "GROUP",
+          reportedId: group.id,
+        }));
+        setReportModal({ isOpen: true, type: "GROUP" });
       }
     };
 

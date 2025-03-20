@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import useAddGroupMember from "@/components/groups/hooks/useAddGroupMember";
-import { modalStateAtom } from "@/atoms/modal";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
@@ -20,6 +20,8 @@ import { selectedFriendsAtom } from "@/atoms/friends";
 import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
+import useReport from "@/components/report/hooks/useReport";
+import MODAL_CONFIGS from "@/constants/modal-configs";
 
 const SelectFriendsContainer = dynamic(
   () => import("@/components/friends/SelectFriendsContainer"),
@@ -32,6 +34,8 @@ const SelectFriendsContainer = dynamic(
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
 });
+
+const Report = dynamic(() => import("@/components/shared/Modal/Report/Report"));
 
 export type GroupEditProps = {
   id: string;
@@ -48,6 +52,8 @@ export default function GroupDetailPage() {
   const router = useRouter();
   const { userInfo } = useAuth();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
+  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
+  const [report, setReport] = useRecoilState(reportInfoAtom);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
@@ -92,6 +98,11 @@ export default function GroupDetailPage() {
     onSuccess: addMemberSuccessHandler,
   });
 
+  const { mutate: reportGroup } = useReport({
+    onSuccess: (data: { message: string }) => lightyToast.success(data.message),
+    onError: (error: Error) => lightyToast.error(error.message),
+  });
+
   useEffect(() => {
     return reset();
   }, []);
@@ -130,22 +141,8 @@ export default function GroupDetailPage() {
     });
   };
 
-  const MODAL_CONFIGS = {
-    deleteGroup: {
-      title: "그룹을 삭제하시겠어요?",
-      content: "복구할 수 없어요.",
-      leftButton: "취소",
-      rightButton: "삭제하기",
-      action: () => deleteGroup(),
-    },
-    exitGroup: {
-      title: "그룹을 나가시겠어요?",
-      content: "",
-      leftButton: "취소",
-      rightButton: "나가기",
-      action: () => exitGroup(),
-    },
-  };
+  const modalAction =
+    modalState.type === "deleteGroup" ? () => deleteGroup() : () => exitGroup();
 
   return (
     <Flex direction="column" className="w-full min-h-dvh">
@@ -165,8 +162,19 @@ export default function GroupDetailPage() {
           content={MODAL_CONFIGS[modalState.type].content}
           left={MODAL_CONFIGS[modalState.type].leftButton}
           right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={MODAL_CONFIGS[modalState.type].action}
+          action={modalAction}
           onClose={closeModal}
+        />
+      )}
+      {reportModal.isOpen && (
+        <Report
+          report={report}
+          setReport={setReport}
+          handleReport={() => {
+            reportGroup(report);
+            setReportModal((prev) => ({ ...prev, isOpen: false }));
+          }}
+          onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
         />
       )}
     </Flex>

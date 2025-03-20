@@ -1,9 +1,9 @@
 import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import { useSetRecoilState } from "recoil";
-import { selectedCommentIdAtom } from "@/atoms/comment";
-import { modalStateAtom, reportModalAtom } from "@/atoms/modal";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
+import { selectedCommentIdAtom } from "@/atoms/comment";
 
 interface CommentDropdownMenuProps {
   commentId?: string;
@@ -13,22 +13,28 @@ interface CommentDropdownMenuProps {
 const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
   ({ items, commentId }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-    const setModalState = useSetRecoilState(modalStateAtom);
-    const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
-    const setFeedReportModalOpen = useSetRecoilState(reportModalAtom);
+    const setModal = useSetRecoilState(modalStateAtom);
+    const setReportModal = useSetRecoilState(reportModalAtom);
+    const setReport = useSetRecoilState(reportInfoAtom);
+    const setCommentId = useSetRecoilState(selectedCommentIdAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
         if (!commentId) {
         } else {
-          setSelectedCommentId(commentId);
+          setCommentId(commentId);
+          setModal({ type: "deleteFeedComment", isOpen: true });
         }
-        setModalState({ type: "deleteFeedComment", isOpen: true });
       } else if (item.includes("신고")) {
         if (!commentId) {
           lightyToast.error("선택된 댓글이 없습니다");
         } else {
-          setFeedReportModalOpen({ type: "comment", isOpen: true });
+          setReport((prev) => ({
+            ...prev,
+            type: "FEED_COMMENT",
+            reportedId: commentId,
+          }));
+          setReportModal({ type: "FEED_COMMENT", isOpen: true });
         }
       }
     };
@@ -61,7 +67,7 @@ const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
                   className={`text-B4  w-[131px] rounded-lg px-4 py-[10px] text-left ${
                     item.includes("삭제") && "text-point-red50"
                   }`}
-                  onClick={(e) => {
+                  onMouseDown={(e) => {
                     e.stopPropagation();
                     handleItemClick(item);
                   }}

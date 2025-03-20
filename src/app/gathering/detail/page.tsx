@@ -17,6 +17,7 @@ import ShareIcon from "@/components/shared/Icon/ShareIcon";
 import { MENU_TYPES } from "@/models/dropdown";
 import { isIntersectingAtom } from "@/atoms/scroll";
 import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
+import MODAL_CONFIGS from "@/constants/modal-configs";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -51,16 +52,6 @@ export default function GatheringDetailPage() {
     url: `https://lighty.today/gathering/detail?id=${id}`,
     text: selectedGathering?.description || "",
     title: selectedGathering?.name || "",
-  };
-
-  const MODAL_CONFIGS = {
-    deleteGathering: {
-      title: "약속을 삭제하시겠어요?",
-      content: "약속 관련 정보가 전부 삭제되며 이는 복구할 수 없어요.",
-      leftButton: "취소",
-      rightButton: "삭제하기",
-      action: () => deleteGathering(),
-    },
   };
 
   const closeModal = () => {
@@ -125,7 +116,7 @@ export default function GatheringDetailPage() {
           content={MODAL_CONFIGS[modalState.type].content}
           left={MODAL_CONFIGS[modalState.type].leftButton}
           right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={MODAL_CONFIGS[modalState.type].action}
+          action={() => deleteGathering()}
           onClose={closeModal}
         />
       )}

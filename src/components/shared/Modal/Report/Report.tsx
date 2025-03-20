@@ -1,52 +1,44 @@
-import { useState } from "react";
 import Dimmed from "../../Dimmed";
 import Flex from "../../Flex";
 import Spacing from "../../Spacing";
 import Button from "../../Button/Button";
 import clsx from "clsx";
 import { ReportContentTypes } from "@/components/report/hooks/useReport";
+import { SetterOrUpdater } from "recoil";
 
 export default function Report({
-  title = "해당 피드/댓글을 신고하시겠어요?",
-  action,
+  report,
+  setReport,
+  handleReport,
   onClose,
 }: {
-  title?: string;
-  action: (reason: ReportContentTypes) => void;
+  report: ReportContentTypes;
+  setReport: SetterOrUpdater<ReportContentTypes>;
+  handleReport: () => void;
   onClose: () => void;
 }) {
-  const [report, setReport] = useState<ReportContentTypes>({
-    reportedId: "",
-    type: "FEED",
-    reason: "",
-  });
-  const [step, setStep] = useState(1);
-  const handleReport = () => {
-    onClose();
-    action(report);
-  };
   return (
     <Dimmed className={styles.dimmed}>
       <Flex align="center" direction="column" className={styles.modalWrapper}>
-        {step === 1 ? (
-          <>
-            <div className="text-T3 text-center">{title}</div>
-            <Spacing size={12} />
-          </>
-        ) : (
-          <>
-            <div className="text-T3 text-center">신고 사유를 입력해 주세요</div>
-            <Spacing size={12} />
-            <textarea
-              className={styles.reportTextarea}
-              value={report.reason}
-              onChange={(e) =>
-                setReport((prev) => ({ ...prev, reason: e.target.value }))
-              }
-            />
-            <Spacing size={24} />
-          </>
-        )}
+        <>
+          <div className="w-full text-T3 text-left">
+            신고 사유를 입력해 주세요
+          </div>
+          <Spacing size={12} />
+          <span className="w-full text-B3 text-grayscale-500 mb-2">
+            신고는 모두 익명으로 처리돼요.
+            <br />
+            걱정마세요!
+          </span>
+          <textarea
+            className={styles.reportTextarea}
+            value={report.reason}
+            onChange={(e) =>
+              setReport((prev) => ({ ...prev, reason: e.target.value }))
+            }
+          />
+          <Spacing size={24} />
+        </>
         <Flex className="w-full gap-3" justify="center">
           <Button
             onClick={onClose}
@@ -55,11 +47,7 @@ export default function Report({
             취소
           </Button>
           <Button
-            onClick={() => {
-              if (step === 1) {
-                setStep(2);
-              } else handleReport();
-            }}
+            onClick={handleReport}
             className={clsx(styles.button, styles.report)}
           >
             신고하기
@@ -81,5 +69,5 @@ const styles = {
   cancel: "text-grayscale-300 active:bg-grayscale-50",
   report: "bg-grayscale-900 text-base-white active:bg-grayscale-800",
   reportTextarea:
-    "h-20 p-2 border-grayscale-200 border-[1px] rounded-md leading-[22.86px] w-full tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none",
+    "h-20 p-2 border-grayscale-200 border-[1px] rounded-[6px] leading-[22.86px] w-full tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none",
 };
