@@ -16,7 +16,7 @@ export default function FriendOption({ onClick }: { onClick: () => void }) {
         onClick();
         toggleDropdown();
       }}
-      className="relative cursor-pointer mx-auto w-5 h-5 flex-shrink-0"
+      className="flex items-center justify-center relative cursor-pointer text-center w-5 h-5"
     >
       <OptionsSelectIcon width="2.5" height="14.17" />
       {opened && (
