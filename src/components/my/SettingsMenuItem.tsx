@@ -18,6 +18,7 @@ export default function SettingsMenuItem({
   logout: () => void;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(logout);
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
