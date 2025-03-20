@@ -5,16 +5,20 @@ import { useAuth } from "../providers/AuthProvider";
 import { formatDate } from "@/utils/formatDate";
 import clsx from "clsx";
 import CommentOption from "@/components/feeds/CommentOption";
+import { MENU_TYPES } from "@/models/dropdown";
 
 export default function CommentItem({
   comment,
+  feedWriterId,
 }: {
   comment: FeedCommentResponse;
+  feedWriterId: string;
 }) {
   const { userInfo } = useAuth();
   if (!comment) return;
 
-  const isMe = userInfo?.accountId === comment.writer.accountId;
+  const isMyComment = userInfo?.accountId === comment.writer.accountId;
+  const isMyFeed = userInfo?.accountId === feedWriterId;
 
   const { writer, content, createdAt } = comment;
   const time = formatDate(new Date(createdAt));
@@ -22,18 +26,21 @@ export default function CommentItem({
   return (
     <Flex
       align="center"
-      className={clsx(styles.container, isMe ? "!bg-grayscale-50" : "")}
+      className={clsx(styles.container, isMyComment ? "!bg-grayscale-50" : "")}
     >
       <div className="flex flex-row flex-wrap items-center gap-2">
         <span className={styles.commenter}>
-          {isMe ? `${writer.name}(나)` : writer.name}
+          {isMyComment ? `${writer.name}(나)` : writer.name}
         </span>
         <span className={styles.comment}>{content}</span>
         <span className={styles.time}>{time}</span>
-        {isMe && (
+        {(isMyFeed || isMyComment) && (
           <>
             <Spacing direction="horizontal" size={8} />
-            <CommentOption commentId={comment.id} />
+            <CommentOption
+              commentId={comment.id}
+              type={isMyComment ? MENU_TYPES.COMMENT_MINE : MENU_TYPES.COMMENT}
+            />
           </>
         )}
       </div>

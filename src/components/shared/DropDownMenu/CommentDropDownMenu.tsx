@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import { useSetRecoilState } from "recoil";
 import { selectedCommentIdAtom } from "@/atoms/comment";
-import { modalStateAtom } from "@/atoms/modal";
+import { modalStateAtom, reportModalAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 
 interface CommentDropdownMenuProps {
@@ -15,15 +15,21 @@ const CommentDropdownMenu = forwardRef<HTMLElement, CommentDropdownMenuProps>(
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setModalState = useSetRecoilState(modalStateAtom);
     const setSelectedCommentId = useSetRecoilState(selectedCommentIdAtom);
+    const setFeedReportModalOpen = useSetRecoilState(reportModalAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
         if (!commentId) {
-          lightyToast.error("선택된 댓글이 없습니다");
         } else {
           setSelectedCommentId(commentId);
         }
         setModalState({ type: "deleteFeedComment", isOpen: true });
+      } else if (item.includes("신고")) {
+        if (!commentId) {
+          lightyToast.error("선택된 댓글이 없습니다");
+        } else {
+          setFeedReportModalOpen({ type: "comment", isOpen: true });
+        }
       }
     };
     return (

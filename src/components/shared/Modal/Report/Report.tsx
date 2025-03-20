@@ -6,7 +6,7 @@ import Button from "../../Button/Button";
 import clsx from "clsx";
 
 export default function Report({
-  title = "해당 피드를 신고하시겠어요?",
+  title = "해당 피드/댓글을 신고하시겠어요?",
   action,
   onClose,
 }: {

@@ -11,12 +11,13 @@ import useFeedComments from "@/components/feeds/hooks/useGetComments";
 import { useQueryClient } from "@tanstack/react-query";
 import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
-import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
 
 export default function CommentContainer({
+  selectedFeedWriter,
   selectedFeedId,
   onClose,
 }: {
+  selectedFeedWriter: string;
   selectedFeedId: string;
   onClose: () => void;
 }) {
@@ -24,7 +25,6 @@ export default function CommentContainer({
 
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const { data: comments } = useFeedComments({ feedId: selectedFeedId });
 
@@ -78,13 +78,7 @@ export default function CommentContainer({
         )}
         onAnimationEnd={handleAnimationEnd}
       >
-        <Flex
-          direction="column"
-          className={clsx(
-            "w-full",
-            isReactNativeWebView ? "pb-safe-bottom" : ""
-          )}
-        >
+        <Flex direction="column" className="w-full pb-safe-bottom">
           <Flex justify="center" className="w-full pt-[6px] pb-[18px]">
             <RectIcon />
           </Flex>
@@ -92,7 +86,11 @@ export default function CommentContainer({
           <Spacing size={12} />
           <Flex direction="column" className={styles.commentWrapper}>
             {comments?.map((comment) => (
-              <CommentItem key={comment.id} comment={comment} />
+              <CommentItem
+                key={comment.id}
+                comment={comment}
+                feedWriterId={selectedFeedWriter}
+              />
             ))}
           </Flex>
           <div className={styles.inputWrapper}>
