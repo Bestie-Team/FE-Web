@@ -4,17 +4,7 @@ import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import GatheringDropdownMenu from "../shared/DropDownMenu/GatheringDropDownMenu";
 import { MENU_TYPES, MenuType } from "@/models/dropdown";
 import { GatheringDetailResponse } from "@/models/gathering";
-
-const MENU_CONFIGS = {
-  [MENU_TYPES.GATHERING]: {
-    items: ["약속 삭제하기", "약속 수정하기"],
-    className: "absolute -bottom-[104px] -right-[4px]",
-  },
-  [MENU_TYPES.GATHERING_ENDED]: {
-    items: ["약속 삭제하기"],
-    className: "absolute -bottom-[44px] -right-[4px]",
-  },
-};
+import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 interface GatheringOptionProps {
   gathering: GatheringDetailResponse;

@@ -4,7 +4,7 @@ import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useFeedAll from "@/components/feeds/hooks/useFeedAll";
 import useFeedMine from "@/components/feeds/hooks/useFeedMine";
@@ -31,7 +31,7 @@ import dynamic from "next/dynamic";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
-import { bottomSheetStateAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom, selectedFeedIdAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
@@ -41,10 +41,10 @@ import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import Spacing from "@/components/shared/Spacing";
 import FeedCard from "@/components/feeds/FeedCard";
-import { MENU_CONFIGS } from "@/components/feeds/FeedOption";
 import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu";
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
+import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -70,10 +70,12 @@ const FeedModals = React.memo(
     onReportFeed: (reason: { reason: string }) => void;
   }) => {
     const [modalState, setModalState] = useRecoilState(modalStateAtom);
+    const setFeedId = useSetRecoilState(selectedFeedIdAtom);
     const [feedReportModalOpen, setFeedReportModalOpen] =
       useRecoilState(reportModalAtom);
 
     const closeModal = () => {
+      setFeedId("");
       setModalState({
         type: null,
         isOpen: false,
@@ -274,7 +276,6 @@ export default function FeedPage() {
     targetRef: containerRef,
     selectedTab,
   });
-
   const mailCount = isNewNotification.filter(
     (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
   );

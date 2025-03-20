@@ -4,21 +4,7 @@ import { useDropdown } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import FeedDropdownMenu from "../shared/DropDownMenu/FeedDropDownMenu";
 import { useAuth } from "../shared/providers/AuthProvider";
-
-export const MENU_CONFIGS = {
-  [MENU_TYPES.FEED_MINE]: {
-    menuItems: ["숨기기", "수정하기", "삭제하기"],
-    className: "z-100 absolute -bottom-[142px] right-[4px]",
-  },
-  [MENU_TYPES.FEED]: {
-    menuItems: ["숨기기", "신고하기"],
-    className: "z-100 absolute -bottom-[94px] right-[4px]",
-  },
-  [MENU_TYPES.HIDDEN]: {
-    menuItems: ["숨김 해제"],
-    className: "z-100 absolute -bottom-[42px] right-[4px]",
-  },
-};
+import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 interface OptionsProps {
   feed: Feed;

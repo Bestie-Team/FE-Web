@@ -13,12 +13,12 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
     const documentHeight = document.documentElement.scrollHeight;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
-    console.log(
-      documentHeight,
-      scrollTop,
-      windowHeight,
-      documentHeight - (scrollTop + windowHeight)
-    );
+    // console.log(
+    //   documentHeight,
+    //   scrollTop,
+    //   windowHeight,
+    //   documentHeight - (scrollTop + windowHeight)
+    // );
     if (documentHeight - (scrollTop + windowHeight) < 360 && !isFetching) {
       setPage((prev) => prev + 1);
     }
@@ -81,16 +81,16 @@ export const useInfiniteScrollByRef = ({
     const clientHeight = element.clientHeight;
     const remainingScroll = elementHeight - (scrollTop + clientHeight);
 
-    console.log("스크롤 위치 체크:", {
-      elementHeight,
-      scrollTop,
-      clientHeight,
-      remainingScroll,
-      threshold,
-    });
+    // console.log("스크롤 위치 체크:", {
+    //   elementHeight,
+    //   scrollTop,
+    //   clientHeight,
+    //   remainingScroll,
+    //   threshold,
+    // });
 
     if (remainingScroll < threshold) {
-      console.log("무한 스크롤 트리거됨!");
+      // console.log("무한 스크롤 트리거됨!");
       isLoadingRef.current = true;
       setPage((prev) => prev + 1);
     }

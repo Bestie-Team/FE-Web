@@ -4,12 +4,7 @@ import { Feed } from "@/models/feed";
 import OptionsSelectIcon from "../shared/Icon/OptionsSelectIcon";
 import CommentDropdownMenu from "../shared/DropDownMenu/CommentDropDownMenu";
 import { MENU_TYPES } from "@/models/dropdown";
-
-const MENU_CONFIGS = {
-  [MENU_TYPES.COMMENT]: {
-    items: ["삭제하기"],
-  },
-};
+import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 interface OptionsProps {
   feed?: Feed;

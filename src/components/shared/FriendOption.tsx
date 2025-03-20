@@ -3,13 +3,7 @@ import { useDropdownWithNoId } from "@/hooks/useDropdown";
 import OptionsSelectIcon from "./Icon/OptionsSelectIcon";
 import FriendDropdownMenu from "./DropDownMenu/FriendDropDownMenu";
 import { MENU_TYPES } from "@/models/dropdown";
-
-const MENU_CONFIGS = {
-  [MENU_TYPES.FRIEND]: {
-    items: ["친구 삭제", "유저 신고하기"],
-    className: "absolute -bottom-[104px] -right-[4px]",
-  },
-};
+import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 export default function FriendOption() {
   const { opened, ref, btnRef, toggleDropdown } = useDropdownWithNoId();

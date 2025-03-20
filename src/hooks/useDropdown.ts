@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 export function useDropdown() {
   const [openedDropdownId, setOpenedDropdownId] = useState<string | null>(null);
@@ -7,22 +7,22 @@ export function useDropdown() {
   /**옵션 버튼 */
   const btnRef = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = (event) => {
-    const target = event.target as Node | null;
-    if (btnRef.current?.contains(target)) return;
-    if (dropDownRef.current && !dropDownRef.current.contains(target)) {
-      setOpenedDropdownId(null);
-    }
-  };
-
-  const closeDropdown = (event: MouseEvent<HTMLDivElement>) => {
+  const closeDropdown = useCallback((event: MouseEvent<HTMLDivElement>) => {
     const target = event.target as Node | null;
     if (dropDownRef.current && !dropDownRef.current.contains(target)) {
       setOpenedDropdownId(null);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      const target = event.target as Node | null;
+      if (btnRef.current?.contains(target)) return;
+      if (dropDownRef.current && !dropDownRef.current.contains(target)) {
+        setOpenedDropdownId(null);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside, {
       passive: true,
     });
@@ -31,9 +31,9 @@ export function useDropdown() {
     };
   }, []);
 
-  const toggleDropdown = (feedId: string) => {
-    setOpenedDropdownId(openedDropdownId === feedId ? null : feedId);
-  };
+  const toggleDropdown = useCallback((feedId: string) => {
+    setOpenedDropdownId((prevId) => (prevId === feedId ? null : feedId));
+  }, []);
 
   return {
     openedDropdownId,

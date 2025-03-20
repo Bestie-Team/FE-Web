@@ -15,13 +15,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import Spacing from "@/components/shared/Spacing";
 import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu";
-import { MENU_CONFIGS } from "@/components/feeds/FeedOption";
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
 import FeedCard from "@/components/feeds/FeedCard";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
+import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 export default function FeedPage() {
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
