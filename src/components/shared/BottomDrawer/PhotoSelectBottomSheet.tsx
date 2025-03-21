@@ -111,6 +111,7 @@ export default function PhotoSelectBottomSheet({
         <Modal
           content="'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
           left="닫기"
+          right="허용"
           action={requestCameraPermission}
           onClose={closeModal}
         />
