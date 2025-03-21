@@ -244,7 +244,8 @@ export default function FeedPage() {
                 }
               >
                 <div ref={containerRef} className={styles.feedWrapper}>
-                  <div className="pt-safe-top">
+                  {/**바로 아래의 pb를 높일수록 스크롤에 빨리 반응 */}
+                  <div className="pt-safe-top pb-14">
                     {feedAll.map((feed) => (
                       <div key={feed.id} className="relative">
                         <FeedCard
