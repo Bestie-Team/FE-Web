@@ -11,10 +11,8 @@ import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useFeedAll from "@/components/feeds/hooks/useFeedAll";
-import useFeedMine from "@/components/feeds/hooks/useFeedMine";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import {
   modalStateAtom,
@@ -22,21 +20,10 @@ import {
   reportInfoAtom,
   reportModalAtom,
 } from "@/atoms/modal";
-import { useQueryClient } from "@tanstack/react-query";
-import useDeleteFeed from "@/components/feeds/hooks/useDeleteFeed";
-import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
-import { selectedCommentIdAtom } from "@/atoms/comment";
-import useHideFeed from "@/components/feeds/hooks/useHideFeed";
-import { maxDate, minDate } from "@/constants/time";
-import { lightyToast } from "@/utils/toast";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
-import useReport, {
-  ReportContentTypes,
-} from "@/components/report/hooks/useReport";
+import { ReportContentTypes } from "@/components/report/hooks/useReport";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
-import { useAuth } from "@/components/shared/providers/AuthProvider";
-import useNotification from "@/components/notice/hooks/useNotification";
 import dynamic from "next/dynamic";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
@@ -47,7 +34,6 @@ import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import NoFeed from "@/components/feeds/NoFeed";
-import { FeedSkeleton } from "@/components/shared/Skeleton/FeedSkeleton";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import Spacing from "@/components/shared/Spacing";
 import FeedCard from "@/components/feeds/FeedCard";
@@ -56,6 +42,7 @@ import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
 import MODAL_CONFIGS from "@/constants/modal-configs";
+import useFeed from "@/components/feeds/hooks/useFeed";
 
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
@@ -133,11 +120,36 @@ const FeedModals = React.memo(
 FeedModals.displayName = "FeedModals";
 
 export default function FeedPage() {
-  const queryClient = useQueryClient();
-  const { token, userInfo } = useAuth();
-  const [selectedFeedId, setSelectedFeedId] = useState("");
   const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
-  const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
+  const [bottomSheetState, setBottomSheetState] =
+    useRecoilState(bottomSheetStateAtom);
+  const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
+  const {
+    selectedFeedId,
+    setSelectedFeedId,
+
+    feedAll,
+    feedMine,
+
+    isFetching,
+    isFetching_mine,
+
+    loadMore,
+    loadMore_mine,
+
+    handleRefreshAll,
+    handleRefreshMine,
+
+    deleteFeed,
+    deleteComment,
+    hideFeed,
+    reportFeed,
+
+    isNewNotification,
+    mailCount,
+
+    userInfo,
+  } = useFeed();
 
   const {
     selectedTab,
@@ -146,20 +158,9 @@ export default function FeedPage() {
     swiperRef,
     setSelectedTab,
   } = useTabs();
-  const [bottomSheetState, setBottomSheetState] =
-    useRecoilState(bottomSheetStateAtom);
-  const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_m = useRef<HTMLDivElement>(null);
-  const queryParams = useMemo(
-    () => ({
-      order: "DESC" as const,
-      minDate: minDate(),
-      maxDate: maxDate(),
-      limit: 8,
-    }),
-    []
-  );
 
   useEffect(() => {
     requestNotificationPermission();
@@ -182,86 +183,6 @@ export default function FeedPage() {
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
-  const handleDeleteFeedSuccess = async (data: { message: string }) => {
-    lightyToast.success(data.message);
-    await queryClient.invalidateQueries({
-      queryKey: ["get/feeds/mine"],
-    });
-  };
-
-  const handleDeleteCommentSuccess = async () => {
-    lightyToast.success("댓글을 삭제했습니다");
-    await Promise.all([
-      await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId: selectedFeedId }],
-      }),
-    ]);
-  };
-
-  const handleHideFeedSuccess = async () => {
-    lightyToast.success("피드를 숨겼어요");
-    await Promise.all([
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/hidden"],
-      }),
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine"],
-      }),
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
-      }),
-    ]);
-  };
-
-  const handleReportFeedSuccess = async () => {
-    lightyToast.success("신고가 접수되었어요!");
-    await Promise.all([
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
-      }),
-    ]);
-  };
-
-  const {
-    data: feedAll,
-    loadMore,
-    isFetching,
-  } = useFeedAll({ ...queryParams, enabled: !!token });
-
-  const {
-    data: feedMine,
-    loadMore: loadMore_mine,
-    isFetching: isFetching_mine,
-  } = useFeedMine({ ...queryParams, enabled: !!token });
-  const { data: noti = [] } = useNotification();
-
-  const isNewNotification = noti.filter((n) => n.readAt == null);
-
-  const { mutate: deleteFeed } = useDeleteFeed({
-    feedId: selectedFeedId,
-    onSuccess: handleDeleteFeedSuccess,
-  });
-
-  const { mutate: deleteComment } = useDeleteComment({
-    commentId: selectedCommentId,
-    onSuccess: handleDeleteCommentSuccess,
-  });
-
-  const { mutate: hideFeed } = useHideFeed({
-    feedId: selectedFeedId,
-    onSuccess: handleHideFeedSuccess,
-    onError: () => {
-      lightyToast.error("피드를 숨기지 못했어요");
-    },
-  });
-
-  const { mutate: reportFeed } = useReport({
-    onSuccess: handleReportFeedSuccess,
-    onError: () => {
-      lightyToast.error("신고 실패");
-    },
-  });
-
   const { visible } = useScrollDirection({
     elementRef: selectedTab === "1" ? containerRef : containerRef_m,
     selectedTab,
@@ -280,34 +201,6 @@ export default function FeedPage() {
     targetRef: containerRef,
     selectedTab,
   });
-  const mailCount = isNewNotification.filter(
-    (notification) => notification.type === "GATHERING_INVITATION_RECEIVED"
-  );
-
-  const handleRefreshAll = async () => {
-    try {
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
-      });
-      return true;
-    } catch (error) {
-      console.error("Refresh failed:", error);
-      lightyToast.error("새로고침에 실패했어요");
-      return false;
-    }
-  };
-  const handleRefreshMine = async () => {
-    try {
-      await queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine"],
-      });
-      return true;
-    } catch (error) {
-      console.error("Refresh failed:", error);
-      lightyToast.error("새로고침에 실패했어요");
-      return false;
-    }
-  };
 
   const {
     btnRef,
@@ -531,14 +424,6 @@ export default function FeedPage() {
     handleSlideChange,
   ]);
 
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    if (!isClient) {
-      setIsClient(true);
-    }
-  }, [isClient]);
-
   return (
     <div
       className="h-dvh pb-safe-bottom"
@@ -559,14 +444,7 @@ export default function FeedPage() {
         handleTabClick={handleTabClick}
       />
 
-      {!isClient ? (
-        <div className="h-full w-full pt-[90px] pb-28 flex flex-col">
-          <FeedSkeleton />
-          <FeedSkeleton />
-        </div>
-      ) : (
-        renderSwipers
-      )}
+      {renderSwipers}
 
       <TabParamHandler setSelectedTab={setSelectedTab} pathToReplace="/feed" />
       {recordModalOpen && (

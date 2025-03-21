@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Lighty } from "@/constants/images";
-import MessageIcon from "../shared/Icon/MessageIcon";
 
 export default function FeedForDisplay() {
   const formattedDate = () => {
@@ -18,7 +17,7 @@ export default function FeedForDisplay() {
 
   return (
     <Flex direction="column" className={"my-3 pt-safe-top"}>
-      <InfoBar withMembers={feed.withMembers} feed={feed} onClick={() => {}} />
+      <InfoBar withMembers={[]} feed={feed} onClick={() => {}} />
       <Spacing size={12} />
       <Swiper
         slidesPerView={1.077}
@@ -26,15 +25,6 @@ export default function FeedForDisplay() {
         grabCursor={true}
         style={{ paddingLeft: "20px" }}
         className="custom-swiper w-full"
-        onTouchStart={(swiper, e) => {
-          e.stopPropagation();
-        }}
-        onTouchMove={(swiper, e) => {
-          e.stopPropagation();
-        }}
-        onTouchEnd={(swiper, e) => {
-          e.stopPropagation();
-        }}
       >
         <SwiperSlide className={"relative bg-[#F4F4F4] rounded-2xl"}>
           <Image
@@ -59,17 +49,6 @@ export default function FeedForDisplay() {
         </SwiperSlide>
       </Swiper>
       <Spacing size={8} />
-      <div className={styles.wrapper}>
-        <div className={styles.content}>{feed.content}</div>
-        <Spacing size={4} />
-        <Flex align="center" onClick={() => {}}>
-          <MessageIcon />
-          <Spacing direction="horizontal" size={2} />
-          <span className="text-B4 text-grayscale-600 cursor-pointer">
-            {feed.commentCount}
-          </span>
-        </Flex>
-      </div>
     </Flex>
   );
 }
@@ -82,7 +61,6 @@ const styles = {
   gatheringImageInfo:
     "flex flex-col justify-between w-full absolute bottom-[-0.5px] text-grayscale-900 text-T5 p-3 pt-2 rounded-b-[16px] bg-base-white",
   image: "slide-img object-cover rounded-2xl aspect-[17/18]",
-  wrapper: "pl-6 pr-4 max-w-[430px]",
   content:
     "break-words whitespace-normal overflow-wrap-anywhere text-B4 text-grayscale-800 pr-3",
 };
