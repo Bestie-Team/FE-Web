@@ -38,23 +38,35 @@ export default function PhotoSelectBottomSheet({
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent<string>) => {
-      let data = event.data;
-      if (typeof event.data !== "string") {
-        data = JSON.stringify(event.data);
-      }
-      const message: { type: string; token: string } = JSON.parse(data);
+      try {
+        let data = event.data;
+        if (typeof event.data !== "string") {
+          data = JSON.stringify(event.data);
+        }
+        const message: { type: string; token: string } = JSON.parse(data);
 
-      if (message.type === WEBVIEW_EVENT.CAMERA_OPEN) {
-        cameraInputRef.current?.click();
-      }
-      if (message.type === WEBVIEW_EVENT.CAMERA_PERMISSION_DENIED) {
-        setIsModalOpen(true);
+        if (message.type === WEBVIEW_EVENT.CAMERA_OPEN) {
+          if (cameraInputRef.current) {
+            cameraInputRef.current.value = "";
+            cameraInputRef.current.click();
+          }
+        }
+        if (message.type === WEBVIEW_EVENT.CAMERA_PERMISSION_DENIED) {
+          setIsModalOpen(true);
+        }
+      } catch (error) {
+        console.error("Error handling message:", error);
       }
     };
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [cameraInputRef]);
+
+  const handleCameraCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Camera triggered", e.target.files);
+    handleImageUpload(e);
+  };
 
   return (
     <BottomSheetWrapper onClose={handleClose}>
@@ -91,7 +103,7 @@ export default function PhotoSelectBottomSheet({
               type="file"
               accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
               capture="environment"
-              onChange={handleImageUpload}
+              onChange={handleCameraCapture}
               className="hidden"
               multiple
             />
