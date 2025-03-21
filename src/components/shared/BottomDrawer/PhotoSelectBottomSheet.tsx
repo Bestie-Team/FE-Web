@@ -47,8 +47,6 @@ export default function PhotoSelectBottomSheet({
 
         if (message.type === WEBVIEW_EVENT.CAMERA_OPEN) {
           if (cameraInputRef.current) {
-            cameraInputRef.current.value = "";
-            cameraInputRef.current.click();
           }
         }
         if (message.type === WEBVIEW_EVENT.CAMERA_PERMISSION_DENIED) {
@@ -105,7 +103,6 @@ export default function PhotoSelectBottomSheet({
               capture="environment"
               onChange={handleCameraCapture}
               className="hidden"
-              multiple
             />
             <div className={styles.iconWrapper}>
               <CameraIcon />

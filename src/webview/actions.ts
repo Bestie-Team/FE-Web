@@ -15,3 +15,5 @@ export const requestNotificationPermission = () =>
 
 export const requestCameraPermission = () =>
   postMessage("CAMERA_PERMISSION_REQUEST");
+
+export const requestOpenCamera = () => postMessage("OPEN_CAMERA");
