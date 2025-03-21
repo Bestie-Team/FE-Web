@@ -32,7 +32,7 @@ export default function PhotoSelectBottomSheet({
 
   const onClickCamera = () => {
     if (isReactNativeWebView) {
-      setIsModalOpen(true);
+      requestCameraPermission();
     }
   };
 
@@ -113,7 +113,6 @@ export default function PhotoSelectBottomSheet({
           left="닫기"
           onClose={() => {
             closeModal();
-            requestCameraPermission();
           }}
         />
       )}
