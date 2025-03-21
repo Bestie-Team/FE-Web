@@ -1,6 +1,6 @@
 "use client";
 import { RecoilRoot } from "recoil";
-import React from "react";
+import React, { useEffect } from "react";
 interface Props {
   children?: React.ReactNode;
 }
@@ -15,6 +15,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { usePathname } from "next/navigation";
 import { ToastContainer, Zoom } from "react-toastify";
 import clsx from "clsx";
+import { GA_ID } from "./lib/gtm";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";
@@ -71,6 +72,14 @@ const NextLayout = ({ children }: Props) => {
   useScrollToTop();
   const pathname = usePathname();
   const showNavBar = isPathEqual(pathname, NAVBAR_PATHS);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.gtag("config", GA_ID || "", {
+        page_path: pathname,
+      });
+    }
+  }, [pathname]);
 
   return (
     <div

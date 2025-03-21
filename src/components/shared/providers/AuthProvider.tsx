@@ -10,6 +10,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
+import { GA_ID, generateRandomGoogleUserId } from "@/app/lib/gtm";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -87,6 +88,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setIsLoading(false);
     }
   };
+
+  const [user, setUser] = useState<{ id: string } | null>(null);
+
+  useEffect(() => {
+    if (!!userInfo) {
+      generateRandomGoogleUserId(userInfo?.accountId).then((value) => {
+        setUser({ id: value });
+      });
+
+      if (typeof window !== "undefined" && user) {
+        window.gtag("config", GA_ID || "", {
+          user_id: user.id,
+        });
+      }
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     initialize();
