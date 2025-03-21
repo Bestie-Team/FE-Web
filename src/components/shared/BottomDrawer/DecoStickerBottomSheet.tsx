@@ -93,7 +93,7 @@ export default function DecoStickerBottomSheet({
                         align="center"
                         className="absolute inset-0"
                       >
-                        <div className="flex flex-col !bg-[#00000020] justify-center items-center p-6 rounded-2xl gap-3 opacity-50">
+                        <div className={styles.blurWrapper}>
                           <LockIcon />
                           <span className="text-T5 text-base-white">
                             프리미엄 회원만 이용 가능해요.
@@ -112,6 +112,8 @@ export default function DecoStickerBottomSheet({
 }
 
 const styles = {
+  blurWrapper:
+    "flex flex-col !bg-[#00000020] justify-center items-center p-6 rounded-2xl gap-3 opacity-50",
   stickerKind: "py-2 px-3 text-B2 cursor-pointer",
   wrapper: "relative grid grid-cols-4 grid-rows-3 gap-5 w-fit",
   box: "bg-grayscale-50 rounded-xl w-16 h-16",

@@ -1,123 +1,29 @@
 "use client";
-import React, {
-  useState,
-  useMemo,
-  useEffect,
-  useRef,
-  MouseEvent,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
-import {
-  modalStateAtom,
-  recordModalAtom,
-  reportInfoAtom,
-  reportModalAtom,
-} from "@/atoms/modal";
+import { recordModalAtom } from "@/atoms/modal";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
-import { ReportContentTypes } from "@/components/report/hooks/useReport";
 import { useTabs } from "@/hooks/useTabs";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
-import dynamic from "next/dynamic";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
-import { bottomSheetStateAtom, selectedFeedIdAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import NoFeed from "@/components/feeds/NoFeed";
-import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import Spacing from "@/components/shared/Spacing";
-import FeedCard from "@/components/feeds/FeedCard";
-import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu";
-import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
-import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
-import { MENU_CONFIGS } from "@/constants/menu-configs";
-import MODAL_CONFIGS from "@/constants/modal-configs";
 import useFeed from "@/components/feeds/hooks/useFeed";
-
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
-  ssr: false,
-});
-
-const Report = dynamic(
-  () => import("@/components/shared/Modal/Report/Report"),
-  {
-    ssr: false,
-  }
-);
-
-const FeedModals = React.memo(
-  ({
-    onDeleteFeed,
-    onDeleteComment,
-    onHideFeed,
-    onReportFeed,
-  }: {
-    onDeleteFeed: () => void;
-    onDeleteComment: () => void;
-    onHideFeed: () => void;
-    onReportFeed: (reason: ReportContentTypes) => void;
-  }) => {
-    const setFeedId = useSetRecoilState(selectedFeedIdAtom);
-    const [report, setReport] = useRecoilState(reportInfoAtom);
-    const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
-    const [modalState, setModalState] = useRecoilState(modalStateAtom);
-
-    const closeModal = useCallback(() => {
-      setFeedId("");
-      setModalState({
-        type: null,
-        isOpen: false,
-      });
-    }, []);
-
-    const handleReport = useCallback(() => {
-      onReportFeed({ ...report });
-      setReportModal({ type: null, isOpen: false });
-    }, [report]);
-
-    const modalAction =
-      modalState.type === "deleteFeed"
-        ? onDeleteFeed
-        : modalState.type === "hideFeed"
-        ? onHideFeed
-        : onDeleteComment;
-
-    return (
-      <>
-        {modalState.isOpen && modalState.type && (
-          <Modal
-            title={MODAL_CONFIGS[modalState.type].title}
-            content={MODAL_CONFIGS[modalState.type].content}
-            left={MODAL_CONFIGS[modalState.type].leftButton}
-            right={MODAL_CONFIGS[modalState.type].rightButton}
-            action={modalAction}
-            onClose={closeModal}
-          />
-        )}
-        {reportModal.isOpen && (
-          <Report
-            report={report}
-            setReport={setReport}
-            handleReport={handleReport}
-            onClose={() => setReportModal({ type: null, isOpen: false })}
-          />
-        )}
-      </>
-    );
-  }
-);
-
-FeedModals.displayName = "FeedModals";
+import { FeedList } from "@/components/feeds/FeedList";
+import { FeedModals } from "@/components/feeds/FeedModals";
 
 export default function FeedPage() {
   const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
@@ -125,8 +31,8 @@ export default function FeedPage() {
     useRecoilState(bottomSheetStateAtom);
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const {
-    selectedFeedId,
-    setSelectedFeedId,
+    feedId,
+    setFeedId,
 
     feedAll,
     feedMine,
@@ -202,19 +108,24 @@ export default function FeedPage() {
     selectedTab,
   });
 
-  const {
-    btnRef,
-    toggleDropdown,
-    openedDropdownId,
-    dropDownRef,
-    closeDropdown,
-  } = useDropdown();
+  const handleFeedSelect = useCallback(
+    (feedId: string, accountId: string) => {
+      setFeedId(feedId);
+      setSelectedFeedWriter(accountId);
+    },
+    [setFeedId]
+  );
 
-  const { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox } =
-    useFriendsBox();
+  return (
+    <div className="h-dvh pb-safe-bottom">
+      <ScrollAwareHeader
+        visible={visible}
+        mailCount={mailCount}
+        isNewNotification={isNewNotification}
+        selectedTab={selectedTab}
+        handleTabClick={handleTabClick}
+      />
 
-  const renderSwipers = useMemo(() => {
-    return (
       <div className="h-dvh">
         <Swiper
           initialSlide={Number(selectedTab) - 1}
@@ -246,75 +157,13 @@ export default function FeedPage() {
                 <div ref={containerRef} className={styles.feedWrapper}>
                   {/**바로 아래의 pb를 높일수록 스크롤에 빨리 반응 */}
                   <div className="pt-safe-top pb-14">
-                    {feedAll.map((feed) => (
-                      <div key={feed.id} className="relative">
-                        <FeedCard
-                          feed={feed}
-                          onClick={() => {
-                            setSelectedFeedId(feed.id);
-                            setSelectedFeedWriter(feed.writer.accountId);
-                          }}
-                        >
-                          <InfoBar
-                            ref={fBtnRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleBox(feed.id);
-                            }}
-                            withMembers={feed.withMembers}
-                            feed={feed}
-                          />
-                          <div
-                            className="absolute top-11 right-14"
-                            ref={friendsRef}
-                          >
-                            {openedBoxId == feed.id && (
-                              <FriendsInfoContainer
-                                withMembers={feed.withMembers}
-                                isOpen={openedBoxId === feed.id}
-                              />
-                            )}
-                          </div>
-                        </FeedCard>
-
-                        <div
-                          style={{ width: 24, height: 24 }}
-                          className={styles.optionWrapper}
-                        >
-                          <div
-                            ref={btnRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleDropdown(feed.id);
-                              setSelectedFeedId(feed.id);
-                            }}
-                          >
-                            <OptionsSelectIcon />
-                          </div>
-                          {openedDropdownId === feed.id && (
-                            <FeedDropdownMenu
-                              feed={feed}
-                              ref={dropDownRef}
-                              menuItems={
-                                MENU_CONFIGS[
-                                  feed.writer.accountId === userInfo?.accountId
-                                    ? "feed_mine"
-                                    : "feed"
-                                ].menuItems
-                              }
-                              className={
-                                MENU_CONFIGS[
-                                  feed.writer.accountId === userInfo?.accountId
-                                    ? "feed_mine"
-                                    : "feed"
-                                ].className
-                              }
-                            />
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                    {isFetching && <DotSpinnerSmall />}
+                    <FeedList
+                      feeds={feedAll}
+                      userInfo={userInfo}
+                      onFeedSelect={handleFeedSelect}
+                      isFetching={isFetching}
+                      loadMore={loadMore}
+                    />
                   </div>
                 </div>
               </PullToRefresh>
@@ -343,63 +192,14 @@ export default function FeedPage() {
               >
                 <div ref={containerRef_m} className={styles.feedWrapper}>
                   <div className="pt-safe-top">
-                    {feedMine.map((feed) => (
-                      <div key={feed.id} className="relative">
-                        <FeedCard
-                          key={feed.id}
-                          feed={feed}
-                          onClick={() => {
-                            setSelectedFeedId(feed.id);
-                            setSelectedFeedWriter(feed.writer.accountId);
-                          }}
-                        >
-                          <InfoBar
-                            ref={fBtnRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleBox(feed.id);
-                            }}
-                            withMembers={feed.withMembers}
-                            feed={feed}
-                          />
-                          {openedBoxId === feed.id && (
-                            <div
-                              className="absolute top-11 right-14"
-                              ref={friendsRef}
-                            >
-                              <FriendsInfoContainer
-                                withMembers={feed.withMembers}
-                                isOpen={openedBoxId === feed.id}
-                              />
-                            </div>
-                          )}
-                        </FeedCard>
-                        <div
-                          style={{ width: 24, height: 24 }}
-                          className={styles.optionWrapper}
-                        >
-                          <div
-                            ref={btnRef}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleDropdown(feed.id);
-                              setSelectedFeedId(feed.id);
-                            }}
-                          >
-                            <OptionsSelectIcon />
-                          </div>
-                          {openedDropdownId === feed.id && (
-                            <FeedDropdownMenu
-                              feed={feed}
-                              ref={dropDownRef}
-                              menuItems={MENU_CONFIGS["feed_mine"].menuItems}
-                              className={MENU_CONFIGS["feed_mine"].className}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                    {isFetching_mine && <DotSpinnerSmall />}
+                    <FeedList
+                      feeds={feedMine}
+                      userInfo={userInfo}
+                      onFeedSelect={handleFeedSelect}
+                      isFetching={isFetching_mine}
+                      isMine={true}
+                      loadMore={loadMore_mine}
+                    />
                   </div>
                 </div>
               </PullToRefresh>
@@ -414,53 +214,24 @@ export default function FeedPage() {
           )}
         </Swiper>
       </div>
-    );
-  }, [
-    selectedTab,
-    feedAll,
-    isFetching,
-    feedMine,
-    isFetching_mine,
-    swiperRef,
-    handleSlideChange,
-  ]);
-
-  return (
-    <div
-      className="h-dvh pb-safe-bottom"
-      onMouseDown={(e: MouseEvent<HTMLDivElement>) => {
-        closeDropdown(e);
-        closeBox();
-      }}
-      onClick={(e: MouseEvent<HTMLDivElement>) => {
-        closeDropdown(e);
-        closeBox();
-      }}
-    >
-      <ScrollAwareHeader
-        visible={visible}
-        mailCount={mailCount}
-        isNewNotification={isNewNotification}
-        selectedTab={selectedTab}
-        handleTabClick={handleTabClick}
-      />
-
-      {renderSwipers}
 
       <TabParamHandler setSelectedTab={setSelectedTab} pathToReplace="/feed" />
+
       {recordModalOpen && (
         <MemoriesBottomSheet
           onClose={() => setRecordModalOpen(false)}
           open={recordModalOpen}
         />
       )}
+
       {bottomSheetState && (
         <CommentContainer
-          selectedFeedId={selectedFeedId}
+          selectedFeedId={feedId}
           selectedFeedWriter={selectedFeedWriter}
           onClose={() => setBottomSheetState(false)}
         />
       )}
+
       <FeedModals
         onReportFeed={reportFeed}
         onDeleteFeed={deleteFeed}
@@ -472,7 +243,5 @@ export default function FeedPage() {
 }
 
 const styles = {
-  optionWrapper:
-    "absolute top-5 right-5 cursor-pointer flex justify-center items-center pt-[5.5px] pb-1",
   feedWrapper: "h-full overflow-y-scroll no-scrollbar pt-[90px] pb-14",
 };

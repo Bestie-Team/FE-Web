@@ -1,23 +1,26 @@
 import useNotification from "@/components/notice/hooks/useNotification";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import useFeedAll from "./useFeedAll";
 import useDeleteFeed from "./useDeleteFeed";
 import useDeleteComment from "./useDeleteComment";
 import useHideFeed from "./useHideFeed";
 import useReport from "@/components/report/hooks/useReport";
 import { lightyToast } from "@/utils/toast";
-import { useRecoilValue } from "recoil";
-import { selectedCommentIdAtom } from "@/atoms/comment";
 import { useQueryClient } from "@tanstack/react-query";
 import { maxDate, minDate } from "@/constants/time";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import useFeedMine from "./useFeedMine";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { selectedFeedIdAtom } from "@/atoms/feed";
+import { selectedCommentIdAtom } from "@/atoms/comment";
+import { reportInfoAtom } from "@/atoms/modal";
 
 export default function useFeed() {
+  const resetReportInfo = useResetRecoilState(reportInfoAtom);
+  const [feedId, setFeedId] = useRecoilState(selectedFeedIdAtom);
+  const commentId = useRecoilValue(selectedCommentIdAtom);
   const { token, userInfo } = useAuth();
   const queryClient = useQueryClient();
-  const selectedCommentId = useRecoilValue(selectedCommentIdAtom);
-  const [selectedFeedId, setSelectedFeedId] = useState("");
 
   const queryParams = useMemo(
     () => ({
@@ -57,11 +60,9 @@ export default function useFeed() {
 
   const handleDeleteCommentSuccess = async () => {
     lightyToast.success("댓글을 삭제했습니다");
-    await Promise.all([
-      await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId: selectedFeedId }],
-      }),
-    ]);
+    await queryClient.invalidateQueries({
+      queryKey: ["get/comments", { feedId }],
+    });
   };
 
   const handleHideFeedSuccess = async () => {
@@ -81,6 +82,7 @@ export default function useFeed() {
 
   const handleReportFeedSuccess = async () => {
     lightyToast.success("신고가 접수되었어요!");
+    resetReportInfo();
     await Promise.all([
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/all"],
@@ -115,17 +117,17 @@ export default function useFeed() {
   );
 
   const { mutate: deleteFeed } = useDeleteFeed({
-    feedId: selectedFeedId,
+    feedId: feedId,
     onSuccess: handleDeleteFeedSuccess,
   });
 
   const { mutate: deleteComment } = useDeleteComment({
-    commentId: selectedCommentId,
+    commentId: commentId,
     onSuccess: handleDeleteCommentSuccess,
   });
 
   const { mutate: hideFeed } = useHideFeed({
-    feedId: selectedFeedId,
+    feedId: feedId,
     onSuccess: handleHideFeedSuccess,
     onError: () => {
       lightyToast.error("피드를 숨기지 못했어요");
@@ -139,8 +141,8 @@ export default function useFeed() {
     },
   });
   return {
-    selectedFeedId,
-    setSelectedFeedId,
+    feedId,
+    setFeedId,
 
     feedAll,
     feedMine,

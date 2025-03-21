@@ -43,7 +43,7 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
         handleModalOpen("hideFeed");
       } else if (item.includes("신고")) {
         setFeedId(feed.id);
-        setReport((prev) => ({ ...prev, reportId: feed.id, type: "FEED" }));
+        setReport((prev) => ({ ...prev, reportedId: feed.id, type: "FEED" }));
         setReportModal({ type: "FEED", isOpen: true });
       } else if (item.includes("숨김 해제")) {
         setFeedId(feed.id);
