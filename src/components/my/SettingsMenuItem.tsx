@@ -5,6 +5,7 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
 import { lightyToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 export default function SettingsMenuItem({
   list,
@@ -17,6 +18,7 @@ export default function SettingsMenuItem({
   user: string[];
   logout: () => void;
 }) {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   console.log(logout);
   const handleClick = () => {
@@ -29,6 +31,7 @@ export default function SettingsMenuItem({
     try {
       const deletion = await deleteUser();
       if (deletion) {
+        router.push("/");
         logout();
       }
     } catch (error) {
