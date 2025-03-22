@@ -47,7 +47,6 @@ const SettingsMenu = React.memo(
                   <ul key={idx} onClick={() => clickSettingsListHandler(list)}>
                     <Spacing size={8} />
                     <SettingsMenuItem
-                      logout={logout}
                       list={list}
                       link={list.link}
                       user={[`SNS 로그인(${user.provider})`]}

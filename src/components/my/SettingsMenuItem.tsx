@@ -4,20 +4,22 @@ import { SettingsItem } from "./SettingsMenu";
 import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
+import { useAuth } from "../shared/providers/AuthProvider";
+import { lightyToast } from "@/utils/toast";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 
 export default function SettingsMenuItem({
   list,
   link,
   user,
-  logout,
 }: {
   list: SettingsItem;
   link: { href: string; target?: string };
   user: string[];
-  logout: () => void;
 }) {
+  const { logout } = useAuth();
+  const [deleting, setDeleting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(logout);
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
@@ -26,9 +28,19 @@ export default function SettingsMenuItem({
 
   const accountDelete = async () => {
     const deletion = await deleteUser();
+    // 삭제 진행 중임을 표시 (로딩 인디케이터 등)
+    setDeleting(true);
+
     if (deletion) {
-      logout();
+      if (typeof window !== "undefined") {
+        logout();
+      }
+      window.location.href = "/";
+      setDeleting(false);
       return;
+    } else {
+      lightyToast.error("탈퇴 실패");
+      setDeleting(false);
     }
   };
 
@@ -56,6 +68,7 @@ export default function SettingsMenuItem({
           onClose={() => setIsModalOpen(false)}
         />
       ) : null}
+      {deleting && <DotSpinnerSmall />}
     </Link>
   );
 }
