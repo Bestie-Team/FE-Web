@@ -18,6 +18,6 @@ export const useKakaoAuth = ({
         redirect_uri: redirect_uri ?? "",
         auth_code: auth_code,
       }),
-    enabled: !!client_id && !!redirect_uri,
+    enabled: !!client_id && !!redirect_uri && auth_code !== "",
   });
 };

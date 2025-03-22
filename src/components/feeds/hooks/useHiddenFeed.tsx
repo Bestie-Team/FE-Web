@@ -16,7 +16,7 @@ export default function useHiddenFeed() {
   const commentId = useRecoilValue(selectedCommentIdAtom);
 
   const {
-    data: hiddenFeed,
+    data: hiddenFeed = [],
     loadMore,
     isFetching,
   } = useFeedHidden({ limit: 100 });

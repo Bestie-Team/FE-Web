@@ -123,13 +123,11 @@ export default function FriendListItem({
 }
 
 const styles = {
-  // iconContainer: "flex items-center w-5 h-5",
-
-  li: `w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between cursor-pointer border`,
+  li: `w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between border`,
   img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
   selectBtn:
-    "flex-none w-full items-center px-3 py-2 rounded-lg bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit",
+    "flex-none w-full items-center px-3 py-2 rounded-lg bg-base-white text-grayscale-900 border-[1px] border-grayscale-100 text-C2 h-fit cursor-pointer",
   acceptBtn:
     "flex items-center px-3 py-2 rounded-lg bg-grayscale-900 text-base-white text-C2 h-fit flex-none",
 

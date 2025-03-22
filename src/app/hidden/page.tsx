@@ -47,7 +47,7 @@ export default function FeedPage() {
     });
   };
 
-  if (!hiddenFeed || hiddenFeed.length === 0) {
+  if (!hiddenFeed) {
     return <NoFeedHidden />;
   }
 
@@ -70,14 +70,17 @@ export default function FeedPage() {
       <Suspense>
         <Spacing size={96} />
         <div className="pt-safe-top pb-14">
-          <FeedList
-            feeds={hiddenFeed}
-            userInfo={false}
-            onFeedSelect={handleFeedSelect}
-            isFetching={isFetching}
-            isMine={true}
-            loadMore={loadMore}
-          />
+          {hiddenFeed && hiddenFeed.length < 1 && <NoFeedHidden />}
+          {hiddenFeed && hiddenFeed.length > 0 && (
+            <FeedList
+              feeds={hiddenFeed}
+              userInfo={false}
+              onFeedSelect={handleFeedSelect}
+              isFetching={isFetching}
+              isMine={true}
+              loadMore={loadMore}
+            />
+          )}
         </div>
       </Suspense>
       {bottomSheetState && (

@@ -90,7 +90,6 @@ const FeedHeader = React.memo(
             title1="전체"
             title2="마이"
             onClick={handleTabClick}
-            year={false}
           />
         </div>
       </Header>
@@ -128,7 +127,6 @@ export const SocialHeader = React.memo(
           long="short"
           selectedTab={selectedTab}
           onClick={setSelectedTab}
-          year={false}
         />
       </Header>
     );

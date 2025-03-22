@@ -1,7 +1,7 @@
 import React from "react";
 import TabButton from "./TabButton";
 import Flex from "../Flex";
-import YearFilter from "../YearFilter";
+// import YearFilter from "../YearFilter";
 
 export type PanelLength = "short" | "medium" | "long" | "longer";
 
@@ -12,15 +12,15 @@ export default function Panel({
   onClick,
   bgColor,
   selectedTab,
-  year = true,
-}: {
+}: // year = true,
+{
   title1?: string;
   title2?: string;
   long: PanelLength;
   bgColor?: string;
   onClick: (tabName: "1" | "2") => void;
   selectedTab: "1" | "2";
-  year?: boolean;
+  // year?: boolean;
 }) {
   return (
     <Flex
@@ -46,7 +46,7 @@ export default function Panel({
         {long === "medium" && <BottomLine activeTab={selectedTab} />}
         {long === "short" && <ShortBottomLine activeTab={selectedTab} />}
       </div>
-      {year ? <YearFilter /> : null}
+      {/* {year ? <YearFilter /> : null} */}
     </Flex>
   );
 }

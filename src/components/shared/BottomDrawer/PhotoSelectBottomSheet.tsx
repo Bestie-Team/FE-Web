@@ -71,7 +71,7 @@ export default function PhotoSelectBottomSheet({
             multiple
           />
           <div className={styles.iconWrapper}>
-            <PhotoIcon />
+            <PhotoIcon width="18" height="18" color="white" />
           </div>
           <Flex className={styles.descriptionContainer}>
             <Flex direction="column" className={styles.textWrapper}>
