@@ -5,6 +5,7 @@ import CloseIcon from "../shared/Icon/CloseIcon";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import * as lighty from "lighty-type";
 import LightyIcon from "../shared/Icon/LightyIcon";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 interface Props {
   friendInfo?: lighty.User;
   groupInfo?: GroupInfoResponse;
@@ -23,6 +24,7 @@ export default function DeletableFriendItem({
           {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
             <Image
               alt="friendProfile"
+              loader={cloudFrontLoader}
               src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
               className={style.image}
               width={56}

@@ -4,6 +4,7 @@ import clsx from "clsx";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
 import React from "react";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function GroupMemberImages({
   members,
@@ -46,6 +47,7 @@ export default function GroupMemberImages({
                 src={imageUrl}
                 width={width ? width : 28}
                 height={height ? height : 28}
+                loader={cloudFrontLoader}
                 className={clsx(styles.groupImage, imageWidthHeight)}
                 alt={`writer${i}`}
               />

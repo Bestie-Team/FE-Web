@@ -10,6 +10,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { Lighty } from "@/constants/images";
 import Button from "../shared/Button/Button";
 import NoGatheringHome from "./NoGatheringHome";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function GatheringSwiper({
   percent,
@@ -65,6 +66,7 @@ export default function GatheringSwiper({
               >
                 <Button className="relative w-full h-[146px]">
                   <Image
+                    loader={cloudFrontLoader}
                     src={invitationImageUrl || Lighty}
                     alt={`invitationImage${idx + 1}`}
                     className={clsx(styles.image, "scale-110")}

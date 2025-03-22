@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { lightyToast } from "@/utils/toast";
 import { compressImage } from "@/utils/compress";
 import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -121,6 +122,7 @@ export default function ProfileImageDisplay({
                 width: small ? 64 : 74.67,
                 height: small ? 64 : 74.67,
               }}
+              loader={cloudFrontLoader}
               className={clsx(
                 "object-cover",
                 small ? "w-8 h-8" : "w-[74.7px] h-[74.7px]"

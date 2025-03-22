@@ -6,6 +6,7 @@ import clsx from "clsx";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import LightyIcon from "../shared/Icon/LightyIcon";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function GroupContainer({
   group,
@@ -31,6 +32,7 @@ export default function GroupContainer({
               alt="leaderImg"
               width={48}
               height={48}
+              loader={cloudFrontLoader}
               className={styles.leaderImage}
               src={groupImageUrl || ""}
             />

@@ -5,6 +5,7 @@ import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 const PhotoSwiper = memo(
   ({ feed, percent = 1.077 }: { feed: Feed; percent?: number }) => {
@@ -43,6 +44,7 @@ const PhotoSwiper = memo(
             )}
             <Image
               loading="eager"
+              loader={cloudFrontLoader}
               src={image || Lighty}
               alt={`Feed image ${idx + 1}`}
               className={styles.image}

@@ -3,6 +3,7 @@ import Flex from "./Flex";
 import Button from "./Button/Button";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function LeaderContainer({ leader }: { leader: lighty.User }) {
   const { name, accountId, profileImageUrl } = leader!;
@@ -16,6 +17,7 @@ export default function LeaderContainer({ leader }: { leader: lighty.User }) {
         {!!profileImageUrl ? (
           <Image
             alt="leader"
+            loader={cloudFrontLoader}
             width={36}
             height={36}
             src={profileImageUrl}

@@ -10,6 +10,7 @@ import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom, recordStepAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
 import clsx from "clsx";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
@@ -57,6 +58,7 @@ export default function GatheringCard({
     >
       <Image
         priority={tabIndex < 6}
+        loader={cloudFrontLoader}
         style={{
           transformOrigin: "center center",
           transitionDuration: "50ms",

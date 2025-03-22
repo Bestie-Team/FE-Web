@@ -14,6 +14,7 @@ import { lightyToast } from "@/utils/toast";
 import { useAuth } from "../shared/providers/AuthProvider";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import FriendOption from "../shared/FriendOption";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function FriendListItem({
   senderId,
@@ -77,6 +78,7 @@ export default function FriendListItem({
         {!!friendInfo?.profileImageUrl ? (
           <Image
             alt="friendProfile"
+            loader={cloudFrontLoader}
             src={friendInfo?.profileImageUrl || ""}
             width={36}
             height={36}

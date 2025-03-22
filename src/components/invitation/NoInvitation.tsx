@@ -1,6 +1,7 @@
 import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 type InvitationType = "RECEIVED" | "SENT";
 export default function NoInvitation({ type }: { type: InvitationType }) {
@@ -13,6 +14,7 @@ export default function NoInvitation({ type }: { type: InvitationType }) {
     >
       <Image
         alt="no_invit"
+        loader={cloudFrontLoader}
         src="https://cdn.lighty.today/no_invit.svg"
         width={40}
         height={40}

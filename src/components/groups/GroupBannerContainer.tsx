@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { Lighty } from "@/constants/images";
 import clsx from "clsx";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function GroupBannerContainer({
   imageUrl,
@@ -17,6 +18,7 @@ export default function GroupBannerContainer({
       <Image
         priority
         alt="groupImage"
+        loader={cloudFrontLoader}
         src={imageUrl || Lighty}
         width={500}
         height={380}

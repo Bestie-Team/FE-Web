@@ -2,6 +2,7 @@ import Image from "next/image";
 import Flex from "../Flex";
 import { INVITATION } from "@/constants/images";
 import Spacing from "../Spacing";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function InvitationCardSkeleton() {
   return (
@@ -10,6 +11,7 @@ export default function InvitationCardSkeleton() {
         <Image
           priority
           src={INVITATION}
+          loader={cloudFrontLoader}
           className="!h-[169px] w-[350px] flex-grow"
           width={350}
           height={169}

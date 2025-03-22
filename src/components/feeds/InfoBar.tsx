@@ -8,6 +8,7 @@ import LightyIcon from "../shared/Icon/LightyIcon";
 import { Lighty } from "@/constants/images";
 import clsx from "clsx";
 import { forwardRef, MouseEvent } from "react";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 interface InfoBarProps {
   withMembers: lighty.User[];
@@ -63,6 +64,7 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
       {!!writer.profileImageUrl ? (
         <Image
           loading="eager"
+          loader={cloudFrontLoader}
           src={writer.profileImageUrl}
           width={36}
           height={36}
@@ -128,6 +130,7 @@ export function FriendsInfoContainer({
       {friendInfo.map((info, i) => (
         <Flex align="center" className="gap-[2px]" key={info.name}>
           <Image
+            loader={cloudFrontLoader}
             src={info.imageUrl || Lighty}
             alt={`friend${i}`}
             width={24}

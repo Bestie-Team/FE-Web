@@ -6,6 +6,7 @@ import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { HEART_LETTER } from "@/constants/images";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function MakingGatheringStatus({
   isPending,
@@ -43,6 +44,7 @@ export default function MakingGatheringStatus({
         <Spacing size={24} />
         <div className="p-[13px]">
           <Image
+            loader={cloudFrontLoader}
             src={HEART_LETTER}
             alt="invitation_img"
             width={110}

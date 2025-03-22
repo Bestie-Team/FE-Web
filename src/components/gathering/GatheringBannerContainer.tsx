@@ -6,6 +6,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { GatheringDetailResponse } from "@/models/gathering";
 import clsx from "clsx";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 const DEFAULT_BG_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
 export default function GatheringBannerContainer({
@@ -25,6 +26,7 @@ export default function GatheringBannerContainer({
       <Image
         priority
         alt="gatheringBanner"
+        loader={cloudFrontLoader}
         src={gathering.invitationImageUrl || DEFAULT_BG_IMAGE}
         width={500}
         height={380}

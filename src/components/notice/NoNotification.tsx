@@ -1,6 +1,7 @@
 import React from "react";
 import Flex from "../shared/Flex";
 import Image from "next/image";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function NoNotification() {
   return (
@@ -12,6 +13,7 @@ export default function NoNotification() {
     >
       <Image
         alt="no_notification"
+        loader={cloudFrontLoader}
         src="https://cdn.lighty.today/nofitication.svg"
         width={40}
         height={40}

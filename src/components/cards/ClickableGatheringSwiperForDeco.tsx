@@ -6,6 +6,7 @@ import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Feed } from "@/models/feed";
 import { useState } from "react";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function ClickableGatheringSwiperForDeco({
   feed,
@@ -81,6 +82,7 @@ export default function ClickableGatheringSwiperForDeco({
           >
             <Image
               loading="eager"
+              loader={cloudFrontLoader}
               priority={idx === 0 || idx === 1}
               src={images[0] || ""}
               alt={`feed${idx + 1}`}

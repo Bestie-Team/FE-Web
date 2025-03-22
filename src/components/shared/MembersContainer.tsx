@@ -2,6 +2,7 @@ import Image from "next/image";
 import "swiper/css";
 import Flex from "./Flex";
 import * as lighty from "lighty-type";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function MemberContainer({
   members,
@@ -19,6 +20,7 @@ export default function MemberContainer({
         >
           <div className={styles.image}>
             <Image
+              loader={cloudFrontLoader}
               src={profileImageUrl || "https://cdn.lighty.today/default.png"}
               alt={`gatheringMember${idx + 1}`}
               width={40}

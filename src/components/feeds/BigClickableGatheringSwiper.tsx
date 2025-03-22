@@ -5,6 +5,7 @@ import clsx from "clsx";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Gathering } from "@/models/gathering";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function BigClickableGatheringSwiper({
   gathering,
@@ -40,6 +41,7 @@ export default function BigClickableGatheringSwiper({
             key={`gathering${id}`}
           >
             <Image
+              loader={cloudFrontLoader}
               src={invitationImageUrl}
               alt={`gathering${idx + 1}`}
               className={styles.image}

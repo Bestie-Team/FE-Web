@@ -12,6 +12,7 @@ import {
 } from "@/constants/photoCard";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import LockIcon from "../Icon/LockIcon";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function DecoStickerBottomSheet({
   open = true,
@@ -70,6 +71,7 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
+                      loader={cloudFrontLoader}
                       loading={idx < 2 ? "eager" : "lazy"}
                       className={clsx(
                         "cursor-pointer w-16 h-16 object-cover",

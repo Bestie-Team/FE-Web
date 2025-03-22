@@ -144,7 +144,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.removeItem(STORAGE_KEYS.USER_INFO);
     setToken(null);
     setUserInfo(null);
-    router.push("/");
+
+    setTimeout(() => {
+      router.push("/");
+    }, 500);
   };
 
   const contextValue = {

@@ -15,6 +15,7 @@ import { SetterOrUpdater } from "recoil";
 import { lightyToast } from "@/utils/toast";
 import { compressImage } from "@/utils/compress";
 import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
+import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function AddGroupPhoto({
   image,
@@ -91,6 +92,7 @@ export default function AddGroupPhoto({
         {image ? (
           <Image
             src={image}
+            loader={cloudFrontLoader}
             alt="upload_image"
             width={170}
             height={170}
