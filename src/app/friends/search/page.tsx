@@ -13,6 +13,7 @@ import UserListContainer from "@/components/users/UserListContainer";
 import clsx from "clsx";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import { useRouter } from "next/navigation";
+import handleShare from "@/utils/handleShare";
 
 export default function SearchPage() {
   const search = useRecoilValue(userSearchAtom);
@@ -29,6 +30,12 @@ export default function SearchPage() {
   });
 
   useInfiniteScroll({ isFetching, loadMore });
+
+  const sharingData = {
+    url: `https://lighty.today`,
+    text: "친구가 라이티에 초대했어요! 라이티에서 추억을 쌓아볼까요?",
+    title: "Lighty, 나만의 프라이빗 일기 SNS",
+  };
 
   return (
     <div className="h-dvh">
@@ -52,18 +59,24 @@ export default function SearchPage() {
           align="center"
           justify="center"
           className={clsx(
-            "h-[calc(100dvh-48px)] gap-5 pt-safe-top pb-safe-bottom"
+            "h-[calc(100dvh-278px)] gap-5 pt-safe-top pb-safe-bottom"
           )}
         >
-          <span className="text-B2">
-            친구가 아직 라이티를 가입하지 않았다면?
-          </span>
-          <Button
-            color="#0a0a0a"
-            className="rounded-xl py-3 px-[14px] text-base-white text-B3"
+          <Flex
+            className="pb-5 gap-5 items-center justify-center"
+            direction="column"
           >
-            <Link href="/friends/search">💌 친구 초대하기</Link>
-          </Button>
+            <span className="text-B2">
+              친구가 아직 라이티를 가입하지 않았다면?
+            </span>
+            <Button
+              color="#0a0a0a"
+              className="rounded-xl py-3 px-[14px] text-base-white text-B3"
+              onClick={() => handleShare(sharingData)}
+            >
+              💌 친구 초대하기
+            </Button>
+          </Flex>
         </Flex>
       )}
       <UserListContainer
