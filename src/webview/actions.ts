@@ -14,6 +14,10 @@ export const openPrivacyPolicyMobile = () => postMessage("OPEN_PRIVACY_POLICY");
 
 export const openTermsMobile = () => postMessage("OPEN_TERMS");
 
+export const openAskMobile = () => postMessage("OPEN_ASK");
+
+export const openSuggestMobile = () => postMessage("OPEN_SUGGEST");
+
 export const requestNotificationPermission = () =>
   postMessage("NOTIFICATION_PERMISSION_REQUEST");
 
