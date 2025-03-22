@@ -27,7 +27,10 @@ export default function SettingsMenuItem({
 
   const accountDelete = async () => {
     try {
-      await deleteUser();
+      const deletion = await deleteUser();
+      if (deletion) {
+        logout();
+      }
     } catch (error) {
       if (error instanceof Error) {
         lightyToast.error(error.message);

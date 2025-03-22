@@ -100,13 +100,8 @@ export async function deleteUser() {
     const response = await fetchWithAuth(targetUrl, {
       method: "DELETE",
     });
-    if (response.status) {
-      const logout = () => {
-        localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-        localStorage.removeItem(STORAGE_KEYS.USER_INFO);
-        window.location.href = "/";
-      };
-      logout();
+    if (response.status === 204) {
+      return "탈퇴 성공";
     }
   } catch (error) {
     console.log(error);
