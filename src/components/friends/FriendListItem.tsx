@@ -114,7 +114,7 @@ export default function FriendListItem({
         </Button>
       )}
       {type === "select" ? (
-        <Flex>
+        <Flex onClick={onClick}>
           <Button className={styles.selectBtn}>선택</Button>
         </Flex>
       ) : null}
