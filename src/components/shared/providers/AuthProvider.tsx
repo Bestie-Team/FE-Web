@@ -10,6 +10,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
+import { useRouter } from "next/navigation";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -33,6 +34,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
+  const router = useRouter();
 
   const initialize = async () => {
     setIsLoading(true);
@@ -102,6 +104,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     initialize();
   }, []);
 
+  useEffect(() => {
+    if (!token) {
+      router.push("/");
+    }
+  }, [token, router]);
+
   const updateUserInfo = async (): Promise<void> => {
     try {
       const user = await getUserAuth();
@@ -142,6 +150,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.removeItem(STORAGE_KEYS.USER_INFO);
     setToken(null);
     setUserInfo(null);
+    router.push("/");
   };
 
   const contextValue = {

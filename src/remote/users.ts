@@ -1,5 +1,6 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
+import { lightyToast } from "@/utils/toast";
 
 /** 유저 검색 */
 export async function getSearchUsers({
@@ -104,6 +105,6 @@ export async function deleteUser() {
     }
   } catch (error) {
     console.log(error);
-    throw new Error("탈퇴하지 못했어요.");
+    lightyToast.error("탈퇴 실패");
   }
 }

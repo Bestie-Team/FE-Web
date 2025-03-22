@@ -66,7 +66,6 @@ export default function MyPage() {
   };
 
   const handleLogout = useCallback(async () => {
-    router.push("/");
     logout();
   }, [router, logout]);
 
