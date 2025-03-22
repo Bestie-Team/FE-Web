@@ -38,6 +38,7 @@ export default function MyMainInfo({
       value: friendsCount,
     },
   ];
+
   const onClickHandler = (box: {
     label: string;
     icon: React.ReactNode;

@@ -46,10 +46,6 @@ export default function FeedPage() {
     });
   };
 
-  if (!hiddenFeed) {
-    return <NoFeedHidden />;
-  }
-
   return (
     <div className="min-h-dvh">
       <HeaderWithBtn headerLabel="숨김 피드" bgColor="white">

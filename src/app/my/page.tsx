@@ -48,61 +48,78 @@ export default function MyPage() {
     }
   };
 
-  const handleLogout = useCallback(async () => {
-    router.push("/");
-    logout();
-  }, [router, logout]);
+  const openAskPage = () => {
+    if (isReactNativeWebView) {
+      //
+    }
+  };
 
-  useEffect(() => {
-    const initializeProfileInfo = () => {
-      if (user && user.profileImageUrl) {
-        return {
-          profileImageUrl: user.profileImageUrl,
-          accountId: user.accountId,
-        };
-      } else return undefined;
-    };
-    setProfileInfo((prev) => prev || initializeProfileInfo());
-  }, [user]);
+  const openSuggestPage = () => {
+    if (isReactNativeWebView) {
+      //
+    }
 
-  if (!user) return <DotSpinner />;
+    const handleLogout = useCallback(async () => {
+      router.push("/");
+      logout();
+    }, [router, logout]);
 
-  return (
-    <div className="min-h-dvh w-full pt-safe-top">
-      <MyHeader shadow={isPast} />
-      <div>
-        <main className="pt-[68px]">
-          <Suspense fallback={<DotSpinner />}>
-            <UserProfile
-              userProfileImage={profileInfo?.profileImageUrl}
-              userAccountId={profileInfo?.accountId}
-              userName={user.name}
+    useEffect(() => {
+      const initializeProfileInfo = () => {
+        if (user && user.profileImageUrl) {
+          return {
+            profileImageUrl: user.profileImageUrl,
+            accountId: user.accountId,
+          };
+        } else return undefined;
+      };
+      setProfileInfo((prev) => prev || initializeProfileInfo());
+    }, [user]);
+
+    if (!user) return <DotSpinner />;
+
+    return (
+      <div className="min-h-dvh w-full pt-safe-top">
+        <MyHeader shadow={isPast} />
+        <div>
+          <main className="pt-[68px]">
+            <Suspense fallback={<DotSpinner />}>
+              <UserProfile
+                userProfileImage={profileInfo?.profileImageUrl}
+                userAccountId={profileInfo?.accountId}
+                userName={user.name}
+              />
+              <Spacing size={12} />
+              <MyMainInfo
+                groupCount={user.groupCount}
+                feedCount={user.feedCount}
+                friendsCount={user.friendCount}
+              />
+            </Suspense>
+            <Spacing size={16} />
+            <SettingsMenu
+              logout={handleLogout}
+              user={user}
+              openAskPageFn={openAskPage}
+              openSuggestPageFn={openSuggestPage}
             />
-            <Spacing size={12} />
-            <MyMainInfo
-              groupCount={user.groupCount}
-              feedCount={user.feedCount}
-              friendsCount={user.friendCount}
-            />
-          </Suspense>
-          <Spacing size={16} />
-          <SettingsMenu logout={handleLogout} user={user} />
-          <footer className={styles.termsWrapper}>
-            <span
-              onClick={openTermsPage}
-              className={clsx("mr-[13px]", styles.letter)}
-            >
-              <ins>이용약관</ins>
-            </span>
-            <span onClick={openPrivacyPolicyPage} className={styles.letter}>
-              <ins>개인 정보 처리방침</ins>
-            </span>
-          </footer>
-          <Spacing size={120} />
-        </main>
+            <footer className={styles.termsWrapper}>
+              <span
+                onClick={openTermsPage}
+                className={clsx("mr-[13px]", styles.letter)}
+              >
+                <ins>이용약관</ins>
+              </span>
+              <span onClick={openPrivacyPolicyPage} className={styles.letter}>
+                <ins>개인 정보 처리방침</ins>
+              </span>
+            </footer>
+            <Spacing size={120} />
+          </main>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 }
 
 const styles = {

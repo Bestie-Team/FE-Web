@@ -9,8 +9,31 @@ export interface SettingsItem {
   info: null | string[];
   link: { href: string; target?: string };
 }
+
+export interface SettingsMenuPropsType {
+  logout: () => void;
+  user: UserDetailResponse;
+  openAskPageFn: () => void;
+  openSuggestPageFn: () => void;
+}
+
 const SettingsMenu = React.memo(
-  ({ logout, user }: { logout: () => void; user: UserDetailResponse }) => {
+  ({
+    logout,
+    user,
+    openAskPageFn,
+    openSuggestPageFn,
+  }: SettingsMenuPropsType) => {
+    const clickSettingsListHandler = (list: SettingsItem) => {
+      if (list.title === "로그아웃") {
+        logout();
+      } else if (list.title === "문의하기") {
+        openAskPageFn();
+      } else if (list.title === "건의하기") {
+        openSuggestPageFn();
+      }
+    };
+
     return (
       <Flex direction="column" className="pt-8 gap-9">
         {settings.map((setting) => {
@@ -21,14 +44,7 @@ const SettingsMenu = React.memo(
               </span>
               {setting.list.map((list: SettingsItem, idx) => {
                 return (
-                  <ul
-                    key={idx}
-                    onClick={() => {
-                      if (list.title === "로그아웃") {
-                        logout();
-                      }
-                    }}
-                  >
+                  <ul key={idx} onClick={() => clickSettingsListHandler(list)}>
                     <Spacing size={8} />
                     <SettingsMenuItem
                       logout={logout}
@@ -65,12 +81,14 @@ const settings = [
       {
         title: "문의하기",
         info: null,
-        link: { href: "https://forms.gle/jNXBCFiiK2ZCo3eZA", target: "_blank" },
+        link: { href: "" },
+        // link: { href: "https://forms.gle/jNXBCFiiK2ZCo3eZA", target: "_blank" },
       },
       {
         title: "건의하기",
         info: null,
-        link: { href: "https://forms.gle/YCbp9AYf3YamubP77", target: "_blank" },
+        link: { href: "" },
+        // link: { href: "https://forms.gle/YCbp9AYf3YamubP77", target: "_blank" },
       },
     ],
   },
