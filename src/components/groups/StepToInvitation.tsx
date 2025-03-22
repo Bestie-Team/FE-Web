@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { HEART_LETTER } from "@/constants/images";
 import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function StepToInvitation({
   setStep,
@@ -29,8 +28,8 @@ export default function StepToInvitation({
         <Spacing size={48} />
         <Image
           priority
-          src={HEART_LETTER}
-          loader={cloudFrontLoader}
+          src={`${HEART_LETTER}?w=${110}&q=${95}`}
+          unoptimized={true}
           alt="invitation_img"
           width={110}
           height={108}

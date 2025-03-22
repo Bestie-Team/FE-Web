@@ -14,7 +14,6 @@ import { GatheringDetailResponse } from "@/models/gathering";
 import { MAP } from "@/constants/images";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function GatheringDetail({
   selectedGathering,
@@ -61,12 +60,12 @@ export default function GatheringDetail({
             <span className="text-T5 flex-grow">{address}</span>
             <Spacing size={8} direction="horizontal" />
             <Image
-              loader={cloudFrontLoader}
               className="rounded-[10.8px] w-9 h-9 object-cover"
               alt="mapIcon"
               width={36}
               height={36}
-              src={MAP}
+              src={`${MAP}?w=${36}&q=${95}`}
+              unoptimized={true}
             />
           </Flex>
         }

@@ -54,7 +54,12 @@ export default function UserListItem({
       {!!userInfo?.profileImageUrl ? (
         <Image
           alt="friendProfile"
-          src={userInfo?.profileImageUrl || ""}
+          src={
+            userInfo?.profileImageUrl
+              ? `${userInfo?.profileImageUrl}?w=${36}&q=${95}`
+              : ""
+          }
+          unoptimized={true}
           width={36}
           height={36}
           className={styles.img}

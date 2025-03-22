@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Lighty } from "@/constants/images";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function FeedForDisplay() {
   const formattedDate = () => {
@@ -30,9 +29,13 @@ export default function FeedForDisplay() {
         <SwiperSlide className={"relative bg-[#F4F4F4] rounded-2xl"}>
           <Image
             alt="feedImage"
-            loader={cloudFrontLoader}
             loading="eager"
-            src={feed.gathering.invitationImageUrl || Lighty}
+            unoptimized={true}
+            src={
+              feed.gathering.invitationImageUrl
+                ? `${feed.gathering.invitationImageUrl}?w=${340}&q=${95}`
+                : `${Lighty}?w=${340}&q=${95}`
+            }
             className={styles.image}
             width={340}
             height={360}

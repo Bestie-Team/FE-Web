@@ -5,7 +5,6 @@ import * as lighty from "lighty-type";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import clsx from "clsx";
 import LightyIcon from "../shared/Icon/LightyIcon";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 interface Props {
   groupInfo?: lighty.Group;
@@ -34,8 +33,12 @@ export default function SelectableGroupItem({
           {!!groupInfo?.groupImageUrl ? (
             <Image
               alt="groupImage"
-              loader={cloudFrontLoader}
-              src={groupInfo?.groupImageUrl || ""}
+              src={
+                groupInfo?.groupImageUrl
+                  ? `${groupInfo?.groupImageUrl}?w=${60}&q=${95}`
+                  : ""
+              }
+              unoptimized={true}
               className={clsx(clicked ? style.clickedImage : style.image)}
               width={clicked ? 56 : 56.8}
               height={clicked ? 56 : 56.8}

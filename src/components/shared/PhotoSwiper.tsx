@@ -5,7 +5,6 @@ import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 const PhotoSwiper = memo(
   ({ feed, percent = 1.077 }: { feed: Feed; percent?: number }) => {
@@ -44,8 +43,12 @@ const PhotoSwiper = memo(
             )}
             <Image
               loading="eager"
-              loader={cloudFrontLoader}
-              src={image || Lighty}
+              src={
+                image
+                  ? `${image}?w=${340}&q=${95}`
+                  : `${Lighty}?w=${340}&q=${95}`
+              }
+              unoptimized={true}
               alt={`Feed image ${idx + 1}`}
               className={styles.image}
               width={340}
@@ -60,15 +63,6 @@ const PhotoSwiper = memo(
                 <span>{formattedDate()}</span>
               </div>
             )}
-            {/* {type === "home" && (
-              <div className={styles.gatheringImageInfo}>
-                <span>{feed.gathering?.name}</span>
-                <Spacing size={4} />
-                <span className="text-C2 text-grayscale-400">
-                  {formattedDate()}
-                </span>
-              </div>
-            )} */}
           </SwiperSlide>
         ))}
       </Swiper>

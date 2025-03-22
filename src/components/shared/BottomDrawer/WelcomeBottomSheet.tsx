@@ -5,7 +5,6 @@ import Button from "../Button/Button";
 import clsx from "clsx";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { FIREWORKS } from "@/constants/images";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function WelcomeBottomSheet({
   onClose,
@@ -27,10 +26,10 @@ export default function WelcomeBottomSheet({
           priority
           width={176}
           height={180}
-          loader={cloudFrontLoader}
+          src={`${FIREWORKS}?w=${176}&q=${95}`}
+          unoptimized={true}
           className="w-[176px] h-[180px]"
           alt="welcomeImg"
-          src={FIREWORKS}
         />
         <div className={styles.buttonWrapper}>
           <Button

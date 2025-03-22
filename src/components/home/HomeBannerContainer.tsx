@@ -9,7 +9,6 @@ import "swiper/css/pagination";
 import { BANNER_DATA } from "@/constants/banner";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useRef } from "react";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export interface AD_IMAGE {
   src: string;
@@ -38,8 +37,8 @@ const BannerSlide = ({
       <Image
         priority
         alt="homeBanner"
-        loader={cloudFrontLoader}
-        src={image}
+        src={`${image}?w=${600}&q=${95}`}
+        unoptimized={true}
         width={600}
         height={420}
         className={styles.homeBannerImage}
@@ -56,8 +55,8 @@ const BannerSlide = ({
     {ad_image != null && (
       <Image
         priority
-        src={ad_image.src}
-        loader={cloudFrontLoader}
+        src={`${ad_image.src}?w=${ad_image.width}&q=${95}`}
+        unoptimized={true}
         alt={title}
         className={ad_image.className}
         width={ad_image.width}

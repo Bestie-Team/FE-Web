@@ -8,7 +8,6 @@ import PlusIcon from "./Icon/PlusIcon";
 import { compressImage } from "@/utils/compress";
 import { lightyToast } from "@/utils/toast";
 import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export interface RegisterRequestType {
   email: string;
@@ -111,8 +110,12 @@ export default function AddPhoto({
         {imageUrl || image ? (
           <Image
             priority
-            loader={cloudFrontLoader}
-            src={imageUrl ? imageUrl : image || ""}
+            src={
+              (imageUrl && `${imageUrl}?w=${small ? 64 : 75}&q=${95}`) ||
+              (image && `${image}?w=${small ? 64 : 75}&q=${95}`) ||
+              ""
+            }
+            unoptimized={true}
             alt="upload_image"
             width={small ? 64 : 74.67}
             height={small ? 64 : 74.67}

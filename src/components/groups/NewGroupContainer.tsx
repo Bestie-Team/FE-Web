@@ -5,7 +5,6 @@ import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
 import { CreateGroupRequest } from "@/models/group";
 import LightyIcon from "../shared/Icon/LightyIcon";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function NewGroupContainer({
   group,
@@ -35,11 +34,11 @@ export default function NewGroupContainer({
           {!!groupImageUrl ? (
             <Image
               alt="leaderImg"
-              loader={cloudFrontLoader}
+              src={groupImageUrl ? `${groupImageUrl}?w=${500}&q=${95}` : ""}
+              unoptimized={true}
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={groupImageUrl || ""}
             />
           ) : (
             <div className="rounded-full w-12 h-12 flex justify-center items-center bg-grayscale-100">

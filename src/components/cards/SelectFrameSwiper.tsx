@@ -14,7 +14,6 @@ import { frames } from "@/constants/photoCard";
 import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
@@ -93,8 +92,7 @@ export default function SelectFrameSwiper() {
                 <Flex direction="column" className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      loader={cloudFrontLoader}
-                      src={selectedFeed.imageUrl}
+                      src={`${selectedFeed.imageUrl}?w=${230}&q=${95}`}
                       width={230}
                       height={230}
                       style={{
@@ -102,6 +100,7 @@ export default function SelectFrameSwiper() {
                       }}
                       alt="img"
                       className={styles.image}
+                      unoptimized={true}
                     />
                   </div>
                   <Flex direction="column" className="px-5 py-[15px]">
@@ -118,8 +117,8 @@ export default function SelectFrameSwiper() {
                 </Flex>
                 <Image
                   loading="eager"
-                  loader={cloudFrontLoader}
-                  src={frame}
+                  unoptimized={true}
+                  src={`${frame}?w=${282}&q=${95}`}
                   width={282}
                   height={372}
                   alt="card"

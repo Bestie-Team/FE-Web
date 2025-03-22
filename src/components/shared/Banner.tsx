@@ -2,7 +2,6 @@ import Image from "next/image";
 import Flex from "./Flex";
 import ArrowRightWithBody from "./Icon/ArrowRightWithBody";
 import { AD_BANNER } from "@/constants/images";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function Banner() {
   return (
@@ -12,8 +11,8 @@ export default function Banner() {
         className="h-[124px] w-[450px]"
         width={450}
         height={124}
-        loader={cloudFrontLoader}
-        src={AD_BANNER}
+        src={`${AD_BANNER}?w=${450}&q=${95}`}
+        unoptimized={true}
       />
       <Flex className={styles.textWrapper} align="center">
         <Flex direction="column">

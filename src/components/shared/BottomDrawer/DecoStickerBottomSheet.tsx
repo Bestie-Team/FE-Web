@@ -12,7 +12,6 @@ import {
 } from "@/constants/photoCard";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import LockIcon from "../Icon/LockIcon";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function DecoStickerBottomSheet({
   open = true,
@@ -71,7 +70,10 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
-                      loader={cloudFrontLoader}
+                      src={`https://cdn.lighty.today/${
+                        selectedStickers.path
+                      }/${sticker}?w=${64}&q=${95}`}
+                      unoptimized={true}
                       loading={idx < 2 ? "eager" : "lazy"}
                       className={clsx(
                         "cursor-pointer w-16 h-16 object-cover",
@@ -82,7 +84,6 @@ export default function DecoStickerBottomSheet({
                           `https://cdn.lighty.today/${selectedStickers.path}/${sticker}`
                         )
                       }
-                      src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
                       alt={`sticker${idx}`}
                       width={64}
                       height={64}

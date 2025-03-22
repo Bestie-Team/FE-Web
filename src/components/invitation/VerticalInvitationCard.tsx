@@ -11,7 +11,6 @@ import { formatToKoreanTime } from "@/utils/makeUTC";
 import { GatheringInvitation } from "@/models/gathering";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import { Lighty } from "@/constants/images";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function UploadableVerticalInvitationCard({
   gathering,
@@ -64,8 +63,8 @@ export function VerticalInvitationCard({
     return (
       <div className="relative">
         <Image
-          loader={cloudFrontLoader}
-          src="https://cdn.lighty.today/vertical_invitation.svg"
+          src={`https://cdn.lighty.today/vertical_invitation.svg?w=${330}&q=${95}`}
+          unoptimized={true}
           alt="verticalBar"
           width={330}
           height={460}
@@ -124,8 +123,8 @@ export function VerticalInvitationCard({
       <div className="relative">
         <Image
           priority
-          loader={cloudFrontLoader}
-          src="https://cdn.lighty.today/vertical_invitation.svg"
+          src={`https://cdn.lighty.today/vertical_invitation.svg?w=${330}&q=${95}`}
+          unoptimized={true}
           alt="verticalBar"
           width={330}
           height={460}
@@ -139,8 +138,12 @@ export function VerticalInvitationCard({
                 {invitationImageLoaded ? null : <DotSpinner />}
                 <Image
                   priority
-                  loader={cloudFrontLoader}
-                  src={invitation_image_url || Lighty}
+                  src={
+                    invitation_image_url
+                      ? `${invitation_image_url}?w=${300}&q=${95}`
+                      : `${Lighty}?w=${300}&q=${95}`
+                  }
+                  unoptimized={true}
                   className={styles.image}
                   width={300}
                   height={210}

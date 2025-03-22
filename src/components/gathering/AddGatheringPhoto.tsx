@@ -10,7 +10,6 @@ import { lightyToast } from "@/utils/toast";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import { compressImage } from "@/utils/compress";
 import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function AddGatheringPhoto({
   image,
@@ -93,8 +92,8 @@ export default function AddGatheringPhoto({
           <>
             {isLoaded === false ? <DotSpinner /> : null}
             <Image
-              src={image}
-              loader={cloudFrontLoader}
+              src={`${image}?w=${300}&q=${95}`}
+              unoptimized={true}
               alt="upload_image"
               width={300}
               height={210}

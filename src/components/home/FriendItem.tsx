@@ -5,7 +5,6 @@ import PlusIcon from "../shared/Icon/PlusIcon";
 import { GroupInfoResponse } from "@/models/group";
 import * as lighty from "lighty-type";
 import LightyIcon from "../shared/Icon/LightyIcon";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function FriendItem({
   friendInfo,
@@ -23,8 +22,14 @@ export default function FriendItem({
         {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
           <Image
             alt="friendImage"
-            loader={cloudFrontLoader}
-            src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
+            src={
+              (friendInfo?.profileImageUrl &&
+                `${friendInfo?.profileImageUrl}?w=${56}&q=${95}`) ||
+              (groupInfo?.imageUrl &&
+                `${groupInfo?.imageUrl}?w=${56}&q=${95}`) ||
+              ""
+            }
+            unoptimized={true}
             className="rounded-full object-cover w-14 h-14 border-[1.2px] border-grayscale-100"
             width={56}
             height={56}

@@ -10,7 +10,6 @@ import { lightyToast } from "@/utils/toast";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import { compressImage } from "@/utils/compress";
 import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function UploadPhotoSwiper({
   feedInfoToEdit,
@@ -118,8 +117,8 @@ export default function UploadPhotoSwiper({
             key={`${imageUrl}${idx}`}
           >
             <Image
-              src={imageUrl}
-              loader={cloudFrontLoader}
+              src={`${imageUrl}?w=${270}&q=${95}`}
+              unoptimized={true}
               alt={`${idx + 1}번째 이미지`}
               className={clsx(
                 styles.uploadedImage,

@@ -5,7 +5,6 @@ import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import { HEART_LETTER } from "@/constants/images";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function EditGatheringStatus({
   isPending,
@@ -38,8 +37,8 @@ export default function EditGatheringStatus({
         <Spacing size={24} />
         <div className="p-[13px]">
           <Image
-            src={HEART_LETTER}
-            loader={cloudFrontLoader}
+            src={`${HEART_LETTER}?w=${110}&q=${95}`}
+            unoptimized={true}
             alt="invitation_img"
             width={110}
             height={108}

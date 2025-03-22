@@ -4,7 +4,7 @@ import { GroupInfoResponse } from "@/models/group";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import * as lighty from "lighty-type";
 import LightyIcon from "../shared/Icon/LightyIcon";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
+
 interface Props {
   friendInfo?: lighty.User;
   groupInfo?: GroupInfoResponse;
@@ -21,8 +21,14 @@ export default function UnDeletableFriendItem({
           {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
             <Image
               alt="friendProfile"
-              loader={cloudFrontLoader}
-              src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
+              src={
+                (friendInfo?.profileImageUrl &&
+                  `${friendInfo?.profileImageUrl}?w=${56}&q=${95}`) ||
+                (groupInfo?.imageUrl &&
+                  `${groupInfo?.imageUrl}?w=${56}&q=${95}`) ||
+                ""
+              }
+              unoptimized={true}
               className={style.image}
               width={56}
               height={56}

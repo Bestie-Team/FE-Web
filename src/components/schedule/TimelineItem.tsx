@@ -7,7 +7,6 @@ import { Gathering } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { differenceInCalendarDays } from "date-fns";
 import { useRouter } from "next/navigation";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function TimelineItem({
   upcomingGathering,
@@ -47,8 +46,8 @@ export default function TimelineItem({
       </Flex>
       <Image
         alt="timelineImage"
-        loader={cloudFrontLoader}
-        src={upcomingGathering.invitationImageUrl}
+        src={`${upcomingGathering.invitationImageUrl}?w=${56}&q=${95}`}
+        unoptimized={true}
         width={56}
         height={56}
         className={styles.image}

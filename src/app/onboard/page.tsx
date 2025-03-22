@@ -9,7 +9,6 @@ import { Navigation, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import Flex from "@/components/shared/Flex";
 import type { Swiper as SwiperType } from "swiper";
-import cloudFrontLoader from "@/utils/cloudfrontLoader";
 
 export default function OnBoardCardSlider() {
   const nextButtonRef = useRef<HTMLDivElement>(null);
@@ -65,14 +64,15 @@ export default function OnBoardCardSlider() {
                 {description}
               </Flex>
               <Image
-                loader={cloudFrontLoader}
                 alt={`${title} 이미지`}
-                src={imageUrl || "/placeholder.svg"}
+                unoptimized={true}
+                src={
+                  imageUrl ? `${imageUrl}?w=${390}&q=${95}` : "/placeholder.svg"
+                }
                 width={390}
                 height={460}
                 loading="eager"
                 className={"object-contain h-5/6"}
-                unoptimized={true}
               />
             </Flex>
           </SwiperSlide>
