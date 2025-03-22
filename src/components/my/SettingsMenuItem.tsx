@@ -3,7 +3,7 @@ import Flex from "../shared/Flex";
 import { SettingsItem } from "./SettingsMenu";
 import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
-import useUserDelete from "../users/hooks/useUserDelete";
+import { deleteUser } from "@/remote/users";
 import { lightyToast } from "@/utils/toast";
 
 export default function SettingsMenuItem({
@@ -25,13 +25,15 @@ export default function SettingsMenuItem({
     }
   };
 
-  const { mutate: deleteUser } = useUserDelete({
-    onError: (message) => lightyToast.error(message),
-    onSuccess: () => {
-      lightyToast.success("탈퇴 완료");
-      logout();
-    },
-  });
+  const accountDelete = async () => {
+    try {
+      await deleteUser();
+    } catch (error) {
+      if (error instanceof Error) {
+        lightyToast.error(error.message);
+      } else lightyToast.error(String(error));
+    }
+  };
 
   return (
     <Link {...link}>
@@ -49,7 +51,7 @@ export default function SettingsMenuItem({
       </li>
       {isModalOpen ? (
         <Modal
-          action={deleteUser}
+          action={accountDelete}
           title="탈퇴하시겠어요?"
           content="탈퇴 시 모든 활동 내용이 삭제되며 해당 정보는 복구할 수 없어요."
           left="닫기"

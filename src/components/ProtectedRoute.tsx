@@ -22,6 +22,9 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
       !isLoading &&
       !isAuthenticated &&
       pathname !== "/" &&
+      !pathname.includes("kakao") &&
+      !pathname.includes("google") &&
+      !pathname.includes("apple") &&
       !pathname.includes("/signup")
     ) {
       router.push("/");
