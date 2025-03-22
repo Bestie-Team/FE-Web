@@ -11,7 +11,12 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useScrollThreshold } from "@/hooks/useScrollThreshold";
-import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
+import {
+  openAskMobile,
+  openPrivacyPolicyMobile,
+  openSuggestMobile,
+  openTermsMobile,
+} from "@/webview/actions";
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
@@ -50,13 +55,13 @@ export default function MyPage() {
 
   const openAskPage = () => {
     if (isReactNativeWebView) {
-      //
+      openAskMobile();
     }
   };
 
   const openSuggestPage = () => {
     if (isReactNativeWebView) {
-      //
+      openSuggestMobile();
     }
   };
 
