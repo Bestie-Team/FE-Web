@@ -104,12 +104,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     initialize();
   }, []);
 
-  useEffect(() => {
-    if (!token) {
-      router.push("/");
-    }
-  }, [token, router]);
-
   const updateUserInfo = async (): Promise<void> => {
     try {
       const user = await getUserAuth();
