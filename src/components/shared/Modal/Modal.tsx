@@ -14,7 +14,7 @@ export default function Modal({
 }: {
   title?: string;
   content?: string;
-  action: () => void;
+  action?: () => void;
   left?: string;
   right?: string;
   onClose: () => void;
@@ -40,8 +40,10 @@ export default function Modal({
               <Spacing size={12} direction="horizontal" />
               <Button
                 onClick={() => {
-                  onClose();
-                  action();
+                  if (action) {
+                    action();
+                    onClose();
+                  }
                 }}
                 className={clsx(styles.button, styles.report)}
               >

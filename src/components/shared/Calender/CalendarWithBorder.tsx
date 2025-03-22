@@ -68,7 +68,7 @@ export default function LightyCalendarWithBorder({
         <Flex
           justify="center"
           className="w-full absolute bottom-[-10px]"
-          style={{ zIndex: 99 }}
+          style={{ zIndex: 9 }}
         >
           <CalendarLightyIcon />
         </Flex>

@@ -21,7 +21,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     if (
       !isLoading &&
       !isAuthenticated &&
-      !pathname.includes("/") &&
+      pathname !== "/" &&
       !pathname.includes("/signup")
     ) {
       router.push("/");
@@ -30,14 +30,6 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return <DotSpinner />;
-  }
-
-  if (
-    !isAuthenticated &&
-    !pathname.includes("/") &&
-    !pathname.includes("/signup")
-  ) {
-    return null;
   }
 
   return <>{children}</>;

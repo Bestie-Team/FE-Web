@@ -28,7 +28,7 @@ export default function CreatingFeed() {
   });
 
   const handleFeedSuccess = async (data: { message: string }) => {
-    router.replace("/feed?tab=2");
+    router.replace("/feed");
     await Promise.all([
       await queryClient.invalidateQueries({
         queryKey: ["gatherings/no-feed"],

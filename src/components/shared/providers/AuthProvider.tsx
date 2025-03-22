@@ -89,6 +89,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
+    if (!!userInfo) {
+      if (typeof window !== "undefined" && userInfo.accountId) {
+        window.gtag("config", process.env.NEXT_PUBLIC_GTM_ID || "", {
+          user_id: userInfo.accountId,
+        });
+      }
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
     initialize();
   }, []);
 

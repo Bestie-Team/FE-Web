@@ -1,11 +1,10 @@
-import React, { memo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedFriendAtom } from "@/atoms/friends";
 import FriendsListContainer from "./FriendsListContainer";
 import useDeleteFriend from "./hooks/useDeleteFriend";
 import { useQueryClient } from "@tanstack/react-query";
 import Modal from "../shared/Modal/Modal";
-import { friendReportModalAtom, modalStateAtom } from "@/atoms/modal";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useReport from "../report/hooks/useReport";
 import { useAuth } from "../shared/providers/AuthProvider";
@@ -17,38 +16,14 @@ import Link from "next/link";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import useFriendsRequestTotalCount from "./hooks/useFriendsRequestCount";
 import SocialPageSkeleton from "../shared/Skeleton/SocialPageSkeleton";
-
-const ReportFriendModal = memo(
-  ({
-    isOpen,
-    onClose,
-    onReport,
-  }: {
-    isOpen: boolean;
-    onClose: () => void;
-    onReport: (reason: { reason: string }) => void;
-  }) => {
-    if (!isOpen) return null;
-
-    return (
-      <Report
-        title="친구를 신고하시겠어요?"
-        action={onReport}
-        onClose={onClose}
-      />
-    );
-  }
-);
-
-ReportFriendModal.displayName = "ReportFriendModal";
+import MODAL_CONFIGS from "@/constants/modal-configs";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
   const { userInfo } = useAuth();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
-  const [reportFriendModalOpen, setReportFriendModalOpen] = useRecoilState(
-    friendReportModalAtom
-  );
+  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
+  const [report, setReport] = useRecoilState(reportInfoAtom);
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
   const { data: requestCount = { count: 0 }, isFetching: isFetching_c } =
     useFriendsRequestTotalCount();
@@ -73,7 +48,6 @@ export default function UserFriendsListContainer() {
   });
 
   const { mutate: reportFriend } = useReport({
-    report: { reportedId: selectedFriendId, type: "FRIEND" },
     onSuccess: deleteSuccessHandler,
     onError: (error) => lightyToast.error(error.message),
   });
@@ -82,16 +56,6 @@ export default function UserFriendsListContainer() {
       type: null,
       isOpen: false,
     });
-  };
-
-  const MODAL_CONFIGS = {
-    deleteFriend: {
-      title: "친구를 삭제하시겠어요?",
-      content: "복구할 수 없어요.",
-      leftButton: "취소",
-      rightButton: "삭제하기",
-      action: () => deleteFriend(),
-    },
   };
 
   useInfiniteScroll({ isFetching, loadMore });
@@ -129,18 +93,24 @@ export default function UserFriendsListContainer() {
         </Link>
       </Flex>
       <FriendsListContainer friends={friends} isFetching={isFetching} />
-      <ReportFriendModal
-        isOpen={reportFriendModalOpen}
-        onClose={() => setReportFriendModalOpen(false)}
-        onReport={reportFriend}
-      />
+      {reportModal.isOpen && (
+        <Report
+          setReport={setReport}
+          report={report}
+          onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
+          handleReport={() => {
+            reportFriend(report);
+            setReportModal((prev) => ({ ...prev, isOpen: false }));
+          }}
+        />
+      )}
       {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}
           content={MODAL_CONFIGS[modalState.type].content}
           left={MODAL_CONFIGS[modalState.type].leftButton}
           right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={MODAL_CONFIGS[modalState.type].action}
+          action={() => deleteFriend()}
           onClose={closeModal}
         />
       )}

@@ -37,11 +37,13 @@ const InfoBar = forwardRef<HTMLElement, InfoBarProps>(
             className={styles.friendInfoWrapper}
           >
             <span className="text-C2">with</span>
-            <GroupMemberImages
-              gap={8}
-              members={withMembers}
-              memberImageUrls={memberImageUrls}
-            />
+            {withMembers.length > 0 && (
+              <GroupMemberImages
+                gap={8}
+                members={withMembers}
+                memberImageUrls={memberImageUrls}
+              />
+            )}
           </div>
         )}
         <Spacing direction="horizontal" size={12} />

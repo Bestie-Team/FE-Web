@@ -3,16 +3,16 @@ import { useDropdown } from "@/hooks/useDropdown";
 import { Feed } from "@/models/feed";
 import { OptionsSelectIconXSmall } from "../shared/Icon/OptionsSelectIcon";
 import CommentDropdownMenu from "../shared/DropDownMenu/CommentDropDownMenu";
-import { MENU_TYPES } from "@/models/dropdown";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
 
 interface OptionsProps {
   feed?: Feed;
   isMine?: boolean;
   commentId?: string;
+  type: string;
 }
 
-export default function CommentOption({ commentId }: OptionsProps) {
+export default function CommentOption({ commentId, type }: OptionsProps) {
   const { openedDropdownId, dropDownRef, btnRef, toggleDropdown } =
     useDropdown();
 
@@ -20,7 +20,9 @@ export default function CommentOption({ commentId }: OptionsProps) {
     <div
       ref={btnRef}
       data-testid="options-icon"
-      onClick={() => toggleDropdown(commentId || "")}
+      onClick={() => {
+        toggleDropdown(commentId || "");
+      }}
       style={{ width: 16, height: 16 }}
       className="relative cursor-pointer flex justify-center items-center"
     >
@@ -29,7 +31,7 @@ export default function CommentOption({ commentId }: OptionsProps) {
         <CommentDropdownMenu
           ref={dropDownRef}
           commentId={commentId}
-          items={MENU_CONFIGS[MENU_TYPES.COMMENT].items}
+          items={MENU_CONFIGS[type].items}
         />
       )}
     </div>

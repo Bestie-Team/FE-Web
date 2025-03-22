@@ -1,8 +1,9 @@
 import React, { forwardRef, useState } from "react";
 import Flex from "../Flex";
 import clsx from "clsx";
-import { useSetRecoilState } from "recoil";
-import { friendReportModalAtom, modalStateAtom } from "@/atoms/modal";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
+import { selectedFriendAtom } from "@/atoms/friends";
 
 interface FriendDropdownMenuProps {
   menuItems: string[];
@@ -12,15 +13,21 @@ interface FriendDropdownMenuProps {
 const FriendDropdownMenu = forwardRef<HTMLElement, FriendDropdownMenuProps>(
   ({ menuItems, className }, ref) => {
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
-
-    const setModalOpen = useSetRecoilState(modalStateAtom);
-    const setReportModalOpen = useSetRecoilState(friendReportModalAtom);
+    const friendId = useRecoilValue(selectedFriendAtom);
+    const setReport = useSetRecoilState(reportInfoAtom);
+    const setModal = useSetRecoilState(modalStateAtom);
+    const setReportModal = useSetRecoilState(reportModalAtom);
 
     const handleItemClick = (item: string) => {
       if (item.includes("삭제")) {
-        setModalOpen({ type: "deleteFriend", isOpen: true });
+        setModal({ type: "deleteFriend", isOpen: true });
       } else if (item.includes("신고")) {
-        setReportModalOpen(true);
+        setReport((prev) => ({
+          ...prev,
+          reportedId: friendId,
+          type: "FRIEND",
+        }));
+        setReportModal({ type: "FRIEND", isOpen: true });
       }
     };
 

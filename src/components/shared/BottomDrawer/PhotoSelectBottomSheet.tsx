@@ -58,7 +58,7 @@ export default function PhotoSelectBottomSheet({
 
   return (
     <BottomSheetWrapper onClose={handleClose}>
-      <Flex direction="column" className="px-6">
+      <Flex direction="column" className="px-6 pb-safe-bottom">
         <Text className="text-T3">이미지 추가</Text>
         <Spacing size={12} />
         <label className={styles.buttonWrapper}>
@@ -80,38 +80,42 @@ export default function PhotoSelectBottomSheet({
             <ArrowRightIcon />
           </Flex>
         </label>
-        <Flex
-          className="gap-3 py-4 w-full active:bg-grayscale-100 transition duration-75"
-          onClick={onClickCamera}
-        >
-          <input
-            ref={cameraInputRef}
-            type="file"
-            accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
-            capture="environment"
-            onChange={handleImageUpload}
-            className="hidden"
-            multiple
-          />
-          <div className={styles.iconWrapper}>
-            <CameraIcon />
-          </div>
-          <Flex className={styles.descriptionContainer}>
-            <Flex direction="column" className={styles.textWrapper}>
-              <span className="text-T5">카메라로 촬영하기</span>
+        {isReactNativeWebView && (
+          <>
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
+              capture="environment"
+              onChange={handleImageUpload}
+              className="hidden"
+              multiple
+            />
+            <Flex
+              className="gap-3 py-4 w-full active:bg-grayscale-100 transition duration-75"
+              onClick={onClickCamera}
+            >
+              <div className={styles.iconWrapper}>
+                <CameraIcon />
+              </div>
+              <Flex className={styles.descriptionContainer}>
+                <Flex direction="column" className={styles.textWrapper}>
+                  <span className="text-T5">카메라로 촬영하기</span>
+                </Flex>
+                <ArrowRightIcon />
+              </Flex>
             </Flex>
-            <ArrowRightIcon />
-          </Flex>
-        </Flex>
+          </>
+        )}
+        {isModalOpen && (
+          <Modal
+            content="'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
+            left="닫기"
+            action={closeModal}
+            onClose={closeModal}
+          />
+        )}
       </Flex>
-      {isModalOpen && (
-        <Modal
-          content="'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
-          left="닫기"
-          action={closeModal}
-          onClose={closeModal}
-        />
-      )}
     </BottomSheetWrapper>
   );
 }

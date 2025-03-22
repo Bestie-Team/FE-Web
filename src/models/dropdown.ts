@@ -1,5 +1,6 @@
 export const MENU_TYPES = {
   COMMENT: "comment",
+  COMMENT_MINE: "comment_mine",
   FEED_MINE: "feed_mine",
   FRIEND: "friend",
   GROUP: "group",
