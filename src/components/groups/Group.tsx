@@ -9,6 +9,8 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
 import GroupListSkeleton from "../shared/Skeleton/GroupListSkeleton";
+import { useEffect, useRef } from "react";
+import { useScrollRestorationOfRef } from "@/hooks/useScrollRestorationOfRef";
 
 const GroupList = ({ groups }: { groups: Group[] }) => {
   const router = useRouter();
@@ -26,13 +28,25 @@ const GroupList = ({ groups }: { groups: Group[] }) => {
 };
 
 export default function Groups() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { data: detail } = useUserDetail();
   const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
+  const { restoreScrollPosition } = useScrollRestorationOfRef(
+    "social-scroll-tab",
+    containerRef
+  );
+
+  useEffect(() => {
+    restoreScrollPosition();
+  }, [restoreScrollPosition]);
 
   useInfiniteScroll({ isFetching, loadMore });
 
   return (
-    <div className="h-[calc(100dvh-144px)] px-5 text-T4 mt-3">
+    <div
+      ref={containerRef}
+      className="h-[calc(100dvh-144px)] px-5 text-T4 mt-3 overflow-y-scroll no-scrollbar"
+    >
       <Flex align="center">
         <span>전체 그룹</span>
         <Spacing size={4} direction="horizontal" />

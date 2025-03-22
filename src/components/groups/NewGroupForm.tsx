@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Spacing from "../shared/Spacing";
 import AddGroupPhoto from "./AddGroupPhoto";
 import Input from "../shared/Input/Input";
@@ -8,13 +8,14 @@ import Flex from "../shared/Flex";
 import AddFriendsSlider from "./AddFriendsSlider";
 import UserIcon from "../shared/Icon/UserIcon";
 import { CreateGroupRequest } from "@/models/group";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { newGroupAtom } from "@/atoms/group";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import useMakeGroup from "./hooks/useMakeGroup";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import MakingGroupSuccess from "./MakingGroupSuccess";
+import { selectedFriendsAtom } from "@/atoms/friends";
 
 export default function NewGroupForm({
   step,
@@ -24,6 +25,7 @@ export default function NewGroupForm({
   setStep: (num: number) => void;
 }) {
   const queryClient = useQueryClient();
+  const reset = useResetRecoilState(selectedFriendsAtom);
   const [newGroup, setNewGroup] =
     useRecoilState<CreateGroupRequest>(newGroupAtom);
 
@@ -43,7 +45,14 @@ export default function NewGroupForm({
   const { mutate: makeGroup, isPending } = useMakeGroup({
     group: newGroup,
     onSuccess: makeGroupSuccessHandler,
+    onError: (e) => lightyToast.error(e.message),
   });
+
+  useEffect(() => {
+    if (step === 0 || isPending) {
+      return () => reset();
+    }
+  }, [step]);
 
   if (step === 0 || isPending) {
     return (

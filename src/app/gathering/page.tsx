@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { GatheringInWhich } from "@/models/gathering";
 import { gatheringModalStateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -21,6 +21,7 @@ import { useScrollDirection } from "@/hooks/useScrollDirection";
 import useGatheringAll from "@/components/gathering/hooks/useGatheringAll";
 import Spacing from "@/components/shared/Spacing";
 import NoGathering from "@/components/gathering/NoGathering";
+import { useScrollRestorationOfRef } from "@/hooks/useScrollRestorationOfRef";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -34,13 +35,34 @@ export default function GatheringPage() {
   const { selectedTab, setSelectedTab } = useTabs();
   const tab1ContainerRef = useRef<HTMLDivElement>(null);
   const tab2ContainerRef = useRef<HTMLDivElement>(null);
-  const { data: gatheringAll, isFetching } = useGatheringAll();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const {
     data: ended,
     isFetching: isFetching_e,
     loadMore: loadMore_e,
   } = useGatheringEnded({ limit: 8 });
+
+  const { data: gatheringAll, isFetching } = useGatheringAll();
+
+  const { restoreScrollPosition: restoreTab1 } = useScrollRestorationOfRef(
+    "gathering-scroll-tab1",
+    tab1ContainerRef
+  );
+
+  const { restoreScrollPosition: restoreTab2 } = useScrollRestorationOfRef(
+    "gathering-scroll-tab2",
+    tab2ContainerRef
+  );
+
+  // 탭 변경 시 해당 탭의 스크롤 위치 복원
+  useEffect(() => {
+    if (selectedTab === "1" && tab1ContainerRef.current) {
+      restoreTab1();
+    } else if (selectedTab === "2" && tab2ContainerRef.current) {
+      restoreTab2();
+    }
+  }, [selectedTab, restoreTab1, restoreTab2]);
 
   const { visible } = useScrollDirection({
     elementRef: selectedTab === "1" ? tab1ContainerRef : tab2ContainerRef,
@@ -76,6 +98,28 @@ export default function GatheringPage() {
     reset();
   }, [reset]);
 
+  useEffect(() => {
+    if (!isInitialized && (gatheringAll || ended)) {
+      setIsInitialized(true);
+
+      // 데이터 로딩 후 스크롤 위치 복원
+      setTimeout(() => {
+        if (selectedTab === "1" && tab1ContainerRef.current) {
+          restoreTab1();
+        } else if (selectedTab === "2" && tab2ContainerRef.current) {
+          restoreTab2();
+        }
+      }, 500);
+    }
+  }, [
+    isInitialized,
+    gatheringAll,
+    ended,
+    selectedTab,
+    restoreTab1,
+    restoreTab2,
+  ]);
+
   return (
     <div className="h-dvh pb-safe-bottom">
       <GatheringHeader
@@ -101,16 +145,14 @@ export default function GatheringPage() {
         {selectedTab === "1" ? (
           <div
             ref={tab1ContainerRef}
-            className={
-              "h-full overflow-y-scroll no-scrollbar pb-14 pt-safe-top"
-            }
+            className={"h-dvh overflow-y-scroll no-scrollbar pb-14 pt-safe-top"}
           >
             <Schedule expectingGatherings={gatheringAll} />
           </div>
         ) : (
           <div
             ref={tab2ContainerRef}
-            className="h-full overflow-y-scroll no-scrollbar gathering"
+            className="h-dvh overflow-y-scroll no-scrollbar gathering"
           >
             {ended && ended.length > 0 && (
               <Gathering

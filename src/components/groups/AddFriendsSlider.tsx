@@ -34,7 +34,7 @@ export default function AddFriendsSlider({
   useEffect(() => {
     const friendIds = friends
       ? friends.map((friendItem) => friendItem.id)
-      : null;
+      : undefined;
     if (type === "group" && setGroup) {
       setGroup((prev: CreateGroupRequest) => ({
         ...prev,
