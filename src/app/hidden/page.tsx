@@ -1,5 +1,4 @@
 "use client";
-import FilterBar from "@/components/shared/YearFilter";
 import { useRecoilState } from "recoil";
 import TabButton from "@/components/shared/Panel/TabButton";
 import { BottomLine } from "@/components/shared/BottomLine";
@@ -64,7 +63,6 @@ export default function FeedPage() {
             />
             <BottomLine />
           </div>
-          <FilterBar />
         </div>
       </HeaderWithBtn>
       <Suspense>
