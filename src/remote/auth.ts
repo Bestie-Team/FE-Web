@@ -182,7 +182,7 @@ export async function getUserAuth() {
   }
 }
 
-export async function logout(deviceId: string) {
+export async function getLogout(deviceId: string) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const targetUrl = `${baseUrl}/users/profile`;

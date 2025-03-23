@@ -9,7 +9,7 @@ import React, {
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
-import { getUserAuth } from "@/remote/auth";
+import { getLogout, getUserAuth } from "@/remote/auth";
 import { useRouter } from "next/navigation";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
@@ -175,6 +175,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const userDeletion = () => {
     logout();
+    const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
+    if (deviceId) {
+      try {
+        getLogout(deviceId);
+      } catch (e) {
+        console.log(e);
+        throw new Error("탈퇴 실패");
+      }
+    }
     setUserDeleted(true);
   };
 
