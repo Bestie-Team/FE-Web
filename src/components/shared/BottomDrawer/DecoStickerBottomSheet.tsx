@@ -72,9 +72,7 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
-                      src={`https://cdn.lighty.today/${
-                        selectedStickers.path
-                      }/${sticker}?w=${64}&q=${95}`}
+                      src={`https://cdn.lighty.today/${selectedStickers.path}`}
                       unoptimized={true}
                       loading={idx < 2 ? "eager" : "lazy"}
                       className={clsx(
