@@ -275,9 +275,6 @@ export default function DecorateWithStickers() {
           direction="column"
           align="center"
         >
-          <span className="text-B4 text-grayscale-500 w-full">
-            점선 영역이 이미지 영역이에요!
-          </span>
           <Spacing size={32} />
           <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
             <canvas

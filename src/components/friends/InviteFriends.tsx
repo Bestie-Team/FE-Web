@@ -31,6 +31,7 @@ export default function InviteFriends({
         <Spacing size={16} />
       </HeaderWithBtn>
       <SelectFriendsContainer
+        className="pt-safe-top"
         exceptFriends={exceptFriends}
         paddingTop={138}
         setStep={setStep}
