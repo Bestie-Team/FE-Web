@@ -4,10 +4,17 @@ import Flex from "@/components/shared/Flex";
 import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
-import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense, useMemo } from "react";
 
 export default function SignInPage() {
-  const { isAuthenticated } = useAuth();
+  const { token, userInfo } = useAuth();
+  const isAuthenticated = useMemo(
+    () => !!token && !!userInfo,
+    [token, userInfo]
+  );
+  const router = useRouter();
+
   if (!isAuthenticated) {
     return (
       <Flex
@@ -45,7 +52,10 @@ export default function SignInPage() {
         </Flex>
       </Flex>
     );
-  } else return null;
+  } else {
+    router.push("/feed");
+    return null;
+  }
 }
 
 const styles = {
