@@ -31,15 +31,17 @@ export default function Report({
           <span className="w-full text-B3 text-grayscale-500 mb-2">
             모든 신고는 익명으로 처리돼요.
             <br />
-            `다만, 신고한 $
-            {type === "FRIEND"
-              ? "유저는 차단"
-              : type === "FEED"
-              ? "피드는 숨김"
-              : type === "FEED_COMMENT"
-              ? "댓글은 숨김"
-              : "그룹은 숨김"}
-            처리돼요.`
+            {`다만, 신고한 
+            ${
+              type === "FRIEND"
+                ? "유저는 차단"
+                : type === "FEED"
+                ? "피드는 숨김"
+                : type === "FEED_COMMENT"
+                ? "댓글은 숨김"
+                : "그룹은 숨김"
+            }
+            처리돼요.`}
           </span>
           <textarea
             className={styles.reportTextarea}

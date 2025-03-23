@@ -81,7 +81,7 @@ export default function DecorateWithStickers() {
       });
       const dataUrl = canvas.toDataURL("image/png", 1.0);
       const img = new Image();
-
+      img.crossOrigin = "anonymous";
       img.src = dataUrl;
       img.onload = async () => {
         const canvas = fabricCanvasRef.current;
