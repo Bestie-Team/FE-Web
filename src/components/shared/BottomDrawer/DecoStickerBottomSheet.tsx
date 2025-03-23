@@ -5,7 +5,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import {
   emoji_stickers,
-  pastel_stickers,
+  sparkle_stickers,
   // sparkle_stickers,
   // sweets_stickers,
   // vintage_stickers,
@@ -27,10 +27,10 @@ export default function DecoStickerBottomSheet({
   // const decoKinds = ["이모지", "스파클", "파스텔", "스위츠", "빈티지"];
   const stickers = () => {
     if (selectedKind === "스파클") {
-      return { stickers: pastel_stickers, path: `deco_stickers/sparkke` };
+      return { stickers: sparkle_stickers, path: `deco_stickers/sparkle` };
     } else if (selectedKind === "이모지") {
       return { stickers: emoji_stickers, path: `deco_stickers/emoji` };
-    }
+    } else return null;
     // } else if (selectedKind === "파스텔")
     //   return { stickers: sparkle_stickers, path: `deco_stickers/pastel` };
     // else if (selectedKind === "스위츠")
