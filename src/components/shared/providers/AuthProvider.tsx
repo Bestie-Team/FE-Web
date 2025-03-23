@@ -11,6 +11,7 @@ import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
 import { getLogout, getUserAuth } from "@/remote/auth";
 import { useRouter } from "next/navigation";
+import { lightyToast } from "@/utils/toast";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -52,7 +53,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       await new Promise((resolve) => setTimeout(resolve, 300));
 
-      // 여러 번 시도하여 토큰을 확인
       let storedToken: string | null = null;
       let storedUserInfo: string | null = null;
       let attempts = 0;
@@ -62,7 +62,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         storedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
 
         if (!storedToken) {
-          // 토큰을 찾지 못했다면 짧은 지연 후 다시 시도
           await new Promise((resolve) => setTimeout(resolve, 100));
           attempts++;
         }
@@ -173,18 +172,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     router.push("/");
   };
 
-  const userDeletion = () => {
-    logout();
+  const userDeletion = async () => {
+    setUserDeleted(true);
     const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
     if (deviceId) {
       try {
-        getLogout(deviceId);
+        const loggedOut = await getLogout(deviceId);
+        if (loggedOut) {
+          logout();
+        }
       } catch (e) {
         console.log(e);
-        throw new Error("탈퇴 실패");
+        lightyToast.error("탈퇴 실패");
       }
     }
-    setUserDeleted(true);
   };
 
   const contextValue = {
