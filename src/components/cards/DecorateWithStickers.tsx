@@ -135,19 +135,21 @@ export default function DecorateWithStickers() {
 
   const handleExport = () => {
     if (!stageRef.current) return;
-    if (fabricCanvasRef.current) {
-      const uri = fabricCanvasRef.current.toDataURL({
-        format: "png",
-        multiplier: 2,
-      });
+    setTimeout(() => {
+      if (fabricCanvasRef.current) {
+        const uri = fabricCanvasRef.current.toDataURL({
+          format: "png",
+          multiplier: 2,
+        });
 
-      if (isReactNativeWebView) {
-        saveImageMobile(uri);
-        return;
+        if (isReactNativeWebView) {
+          saveImageMobile(uri);
+          return;
+        }
+        setImageUri(uri);
+        setImageBottomSheetOpen(true);
       }
-      setImageUri(uri);
-      setImageBottomSheetOpen(true);
-    }
+    }, 100);
   };
 
   useEffect(() => {
