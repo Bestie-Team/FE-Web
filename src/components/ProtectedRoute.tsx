@@ -24,6 +24,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     console.log(pathname, isAuthenticated);
     if (
+      !isLoading &&
       !isAuthenticated &&
       pathname !== "/" &&
       !pathname.includes("kakao") &&
@@ -34,7 +35,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     ) {
       router.replace("/");
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router, isLoading, pathname]);
 
   if (isLoading) {
     return <DotSpinner />;

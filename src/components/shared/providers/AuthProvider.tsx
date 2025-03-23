@@ -50,12 +50,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         return;
       }
 
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       const storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
       const storedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
 
-      // 토큰이 없으면 초기화 완료
+      // 토큰이 없으면 초기화
       if (!storedToken) {
-        console.log("🚨 초기화 시 토큰이 없어서 로그인 상태 해제");
         setToken(null);
         setUserInfo(null);
         setIsLoading(false);
