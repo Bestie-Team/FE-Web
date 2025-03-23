@@ -23,7 +23,15 @@ export default function CommentOption({ commentId, type }: OptionsProps) {
       onClick={() => {
         toggleDropdown(commentId || "");
       }}
-      style={{ width: 16, height: 16 }}
+      style={{
+        width: "24px",
+        height: "16px",
+        paddingLeft: "6px",
+        minWidth: "24px",
+        display: "flex",
+        opacity: 1,
+        zIndex: 10,
+      }}
       className="relative cursor-pointer flex justify-center items-center"
     >
       <OptionsSelectIconXSmall />

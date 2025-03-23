@@ -91,69 +91,74 @@ export default function AddPhoto({
   }, [image]);
 
   return (
-    <div
-      style={{
-        width: small ? `72px` : "84px",
-        height: small ? `72px` : "84px",
-        padding: small ? "4px" : "4.67px",
-      }}
-      onClick={() => setSelectOpen(true)}
-      className={clsx(uploadContainerStyle, uploadable ? "cursor-pointer" : "")}
-    >
+    <>
       <div
         style={{
-          width: small ? `64px` : "74.67px",
-          height: small ? `64px` : "74.67px",
+          width: small ? `72px` : "84px",
+          height: small ? `72px` : "84px",
+          padding: small ? "4px" : "4.67px",
         }}
-        className={imageWrapperStyle}
-      >
-        {imageUrl || image ? (
-          <Image
-            priority
-            src={
-              (imageUrl && `${imageUrl}?w=${small ? 64 : 75}&q=${95}`) ||
-              (image ? image : "")
-            }
-            unoptimized={true}
-            alt="upload_image"
-            width={small ? 64 : 74.67}
-            height={small ? 64 : 74.67}
-            style={{
-              width: small ? 64 : 74.67,
-              height: small ? 64 : 74.67,
-            }}
-            className={clsx(
-              "object-cover",
-              small ? "w-14 h-14" : "w-[74.67px] h-[74.67px]"
-            )}
-          />
-        ) : (
-          <PhotoIcon />
+        onClick={() => setSelectOpen(true)}
+        className={clsx(
+          uploadContainerStyle,
+          uploadable ? "cursor-pointer" : ""
         )}
-      </div>
+      >
+        <div
+          style={{
+            width: small ? `64px` : "74.67px",
+            height: small ? `64px` : "74.67px",
+          }}
+          className={imageWrapperStyle}
+        >
+          {imageUrl || image ? (
+            <Image
+              priority
+              src={
+                (imageUrl && `${imageUrl}?w=${small ? 64 : 75}&q=${95}`) ||
+                (image ? image : "")
+              }
+              unoptimized={true}
+              alt="upload_image"
+              width={small ? 64 : 74.67}
+              height={small ? 64 : 74.67}
+              style={{
+                width: small ? 64 : 74.67,
+                height: small ? 64 : 74.67,
+              }}
+              className={clsx(
+                "object-cover",
+                small ? "w-14 h-14" : "w-[74.67px] h-[74.67px]"
+              )}
+            />
+          ) : (
+            <PhotoIcon />
+          )}
+        </div>
 
-      <PlusCircleButtonSmall
-        style={{
-          bottom: small ? `2px` : "4.33px",
-          right: small ? `2px` : "4.33px",
-        }}
-        className="absolute bottom-[4.33px] right-[4.33px]"
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: small ? `2px` : "4.33px",
-          right: small ? `2px` : "4.33px",
-        }}
-        className="bg-grayscale-900 rounded-full w-6 h-6 flex items-center justify-center"
-      >
-        {uploadable ? (
-          <PlusIcon width="13.71" height="13.71" />
-        ) : (
-          <EmptyLogoIcon width="13.71" height="13.71" color="white" />
-        )}
+        <PlusCircleButtonSmall
+          style={{
+            bottom: small ? `2px` : "4.33px",
+            right: small ? `2px` : "4.33px",
+          }}
+          className="absolute bottom-[4.33px] right-[4.33px]"
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: small ? `2px` : "4.33px",
+            right: small ? `2px` : "4.33px",
+          }}
+          className="bg-grayscale-900 rounded-full w-6 h-6 flex items-center justify-center"
+        >
+          {uploadable ? (
+            <PlusIcon width="13.71" height="13.71" />
+          ) : (
+            <EmptyLogoIcon width="13.71" height="13.71" color="white" />
+          )}
+        </div>
       </div>
-      {uploadable && selectOpen && (
+      {selectOpen && uploadable && (
         <PhotoSelectBottomSheet
           onClose={() => setSelectOpen(false)}
           handleImageUpload={(e) => handleFileChange(e)}
@@ -161,7 +166,7 @@ export default function AddPhoto({
           cameraInputRef={cameraInputRef}
         />
       )}
-    </div>
+    </>
   );
 }
 

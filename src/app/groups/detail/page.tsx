@@ -79,6 +79,14 @@ export default function GroupDetailPage() {
     setSelectedFriends([]);
   };
 
+  const reportSuccessHandler = async (data: { message: string }) => {
+    await queryClient.invalidateQueries({
+      queryKey: ["groups"],
+    });
+    router.replace("/social?tab=group");
+    lightyToast.success(data.message);
+  };
+
   const { mutate: deleteGroup } = useDeleteGroup({
     groupId: id || "",
     onSuccess: handleDeleteSuccess,
@@ -99,7 +107,7 @@ export default function GroupDetailPage() {
   });
 
   const { mutate: reportGroup } = useReport({
-    onSuccess: (data: { message: string }) => lightyToast.success(data.message),
+    onSuccess: reportSuccessHandler,
     onError: (error: Error) => lightyToast.error(error.message),
   });
 

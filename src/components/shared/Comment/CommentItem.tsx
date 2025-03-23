@@ -36,13 +36,13 @@ export default function CommentItem({
         <span className={styles.comment}>{content}</span>
         <span className={styles.time}>{time}</span>
         {showOptions === true && (
-          <>
+          <div>
             <Spacing direction="horizontal" size={8} />
             <CommentOption
               commentId={comment.id}
               type={isMyComment ? MENU_TYPES.COMMENT_MINE : MENU_TYPES.COMMENT}
             />
-          </>
+          </div>
         )}
       </div>
     </Flex>

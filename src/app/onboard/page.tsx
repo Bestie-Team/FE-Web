@@ -174,7 +174,7 @@ const onBoardCardContents = [
 
 const styles = {
   buttonWrapper:
-    "absolute bottom-0 bg-base-white w-full px-5 py-3 font-[600] text-base text-center leading-[16.8px] mb-safe-bottom",
+    "absolute bottom-0 bg-base-white w-full px-5 py-3 font-[600] text-base text-center leading-[16.8px] pb-safe-bottom",
   button:
     "rounded-full bg-grayscale-900 py-[18px] w-full text-base-white cursor-pointer",
 };

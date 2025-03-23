@@ -24,7 +24,7 @@ function useFriends({ userId }: { userId?: string }) {
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: {
-      name: "가가",
+      name: "가",
       accountId: "aaaaa",
     },
     staleTime: 5 * 1000,
@@ -52,7 +52,7 @@ export function useFriendsAll({ userId }: { userId: string }) {
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: {
-      name: "가가",
+      name: "가",
       accountId: "aaaaa",
     },
     staleTime: 5 * 60 * 1000,

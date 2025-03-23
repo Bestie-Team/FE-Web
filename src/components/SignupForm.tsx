@@ -117,7 +117,7 @@ export default function SignupForm() {
   return (
     <Flex direction="column">
       <div className="mx-auto w-21 py-3">
-        <AddPhoto setImageUrl={setFormValues} uploadable />
+        <AddPhoto setImageUrl={setFormValues} uploadable={true} />
       </div>
       <Spacing size={16} />
 
