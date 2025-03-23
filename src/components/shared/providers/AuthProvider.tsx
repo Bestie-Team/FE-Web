@@ -10,6 +10,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
+import { useRouter } from "next/navigation";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -23,6 +24,8 @@ interface AuthContextType {
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
   isLoading: boolean;
   updateUserInfo: () => Promise<void>;
+  setUserDeleted: React.Dispatch<React.SetStateAction<boolean>>;
+  userDeletion: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,8 +36,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
+  const [userDeleted, setUserDeleted] = useState(false);
+  const router = useRouter();
 
   const initialize = async () => {
+    if (userDeleted) {
+      return;
+    }
     setIsLoading(true);
     try {
       if (typeof window === "undefined") {
@@ -47,6 +55,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       // 토큰이 없으면 초기화 완료
       if (!storedToken) {
+        console.log("🚨 초기화 시 토큰이 없어서 로그인 상태 해제");
         setToken(null);
         setUserInfo(null);
         setIsLoading(false);
@@ -139,9 +148,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    // console.log(
+    //   "AUTH_TOKEN 삭제 후:",
+    //   localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN)
+    // );
+    sessionStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.USER_INFO);
+    document.cookie =
+      "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     setToken(null);
     setUserInfo(null);
+
+    router.push("/");
+  };
+
+  const userDeletion = () => {
+    setUserDeleted(true);
+    logout();
   };
 
   const contextValue = {
@@ -154,6 +177,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     isAuthenticated: !!token && !!userInfo,
     isLoading,
     updateUserInfo,
+    setUserDeleted,
+    userDeletion,
   };
 
   return (
