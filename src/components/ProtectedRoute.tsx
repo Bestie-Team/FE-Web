@@ -14,7 +14,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     if (isAuthenticated && pathname === "/") {
       router.push("/feed");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, pathname]);
 
   useEffect(() => {
     // 로딩 중이 아니고, 인증되지 않았으며, 로그인/회원가입 페이지가 아닌 경우
