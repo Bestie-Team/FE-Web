@@ -148,10 +148,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-    // console.log(
-    //   "AUTH_TOKEN 삭제 후:",
-    //   localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN)
-    // );
     sessionStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.USER_INFO);
     document.cookie =
