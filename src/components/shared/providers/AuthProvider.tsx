@@ -50,10 +50,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         return;
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      const storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-      const storedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
+      // 여러 번 시도하여 토큰을 확인
+      let storedToken: string | null = null;
+      let storedUserInfo: string | null = null;
+      let attempts = 0;
+
+      while (attempts < 3 && !storedToken) {
+        storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+        storedUserInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
+
+        if (!storedToken) {
+          // 토큰을 찾지 못했다면 짧은 지연 후 다시 시도
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          attempts++;
+        }
+      }
 
       // 토큰이 없으면 초기화
       if (!storedToken) {
