@@ -9,9 +9,8 @@ import React, {
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
-import { getLogout, getUserAuth } from "@/remote/auth";
+import { getUserAuth } from "@/remote/auth";
 import { useRouter } from "next/navigation";
-import { lightyToast } from "@/utils/toast";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -26,7 +25,6 @@ interface AuthContextType {
   isLoading: boolean;
   updateUserInfo: () => Promise<void>;
   setUserDeleted: React.Dispatch<React.SetStateAction<boolean>>;
-  userDeletion: () => void;
   userDeleted: boolean;
 }
 
@@ -171,30 +169,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUserInfo(null);
 
     router.push("/");
-
-    if (typeof window !== "undefined") {
-      setTimeout(() => {
-        if (window.location.pathname !== "/") {
-          window.location.href = "/";
-        }
-      }, 100);
-    }
-  };
-
-  const userDeletion = async () => {
-    setUserDeleted(true);
-    const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
-    if (deviceId) {
-      try {
-        const loggedOut = await getLogout(deviceId);
-        if (loggedOut) {
-          logout();
-        }
-      } catch (e) {
-        console.log(e);
-        lightyToast.error("탈퇴 실패");
-      }
-    }
   };
 
   const contextValue = {
@@ -208,7 +182,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     isLoading,
     updateUserInfo,
     setUserDeleted,
-    userDeletion,
     userDeleted,
   };
 

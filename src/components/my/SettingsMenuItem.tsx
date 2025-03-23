@@ -4,9 +4,12 @@ import { SettingsItem } from "./SettingsMenu";
 import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
-import { useAuth } from "../shared/providers/AuthProvider";
+// import { useAuth } from "../shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
+import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import { getLogout } from "@/remote/auth";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function SettingsMenuItem({
   list,
@@ -17,8 +20,8 @@ export default function SettingsMenuItem({
   link: { href: string; target?: string };
   user: string[];
 }) {
-  const { userDeletion } = useAuth();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
@@ -27,22 +30,20 @@ export default function SettingsMenuItem({
   };
 
   const accountDelete = async () => {
+    setLoading(true);
+    const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
     try {
-      const deletion = await deleteUser();
-
-      if (deletion) {
-        userDeletion();
-        router.push("/");
-
-        if (typeof window !== "undefined") {
-          window.location.href = "/";
-        }
-      } else {
-        lightyToast.error("탈퇴 실패");
+      await deleteUser();
+      if (deviceId) {
+        await getLogout(deviceId);
       }
+      localStorage.clear();
+      router.push("/");
     } catch (error) {
       console.log(error);
       lightyToast.error("accountdeletion error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,6 +61,7 @@ export default function SettingsMenuItem({
           })}
         </Flex>
       </li>
+      {loading && <DotSpinnerSmall />}
       {isModalOpen ? (
         <Modal
           action={accountDelete}
