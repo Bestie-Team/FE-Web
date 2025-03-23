@@ -181,3 +181,22 @@ export async function getUserAuth() {
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
+
+export async function logout(deviceId: string) {
+  const baseUrl = API_CONFIG.getBaseUrl();
+  try {
+    const targetUrl = `${baseUrl}/users/profile`;
+    const response = await fetch(targetUrl, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Device-Id": deviceId,
+      },
+    });
+    if (response.status === 204) {
+      return "로그아웃";
+    }
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : String(error));
+  }
+}

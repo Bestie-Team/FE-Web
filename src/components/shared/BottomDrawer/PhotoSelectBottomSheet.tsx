@@ -68,6 +68,7 @@ export default function PhotoSelectBottomSheet({
             accept="image/jpeg, image/jpg, image/bmp, image/webp, image/png"
             onChange={handleImageUpload}
             className="hidden"
+            capture={false}
             multiple
           />
           <div className={styles.iconWrapper}>

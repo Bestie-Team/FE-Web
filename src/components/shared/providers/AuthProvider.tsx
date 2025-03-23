@@ -163,8 +163,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const userDeletion = () => {
-    setUserDeleted(true);
     logout();
+    setUserDeleted(true);
   };
 
   const contextValue = {
