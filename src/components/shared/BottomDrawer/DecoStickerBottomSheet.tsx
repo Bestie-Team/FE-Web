@@ -39,8 +39,8 @@ export default function DecoStickerBottomSheet({
     //   return { stickers: vintage_stickers, path: `deco_stickers/vintage` };
     // else return null;
   };
-
   const selectedStickers = stickers();
+
   return (
     <BottomSheetWrapper bar onClose={onClose} open={open} bright={true}>
       <Flex direction="column" className="p-6 pt-1" align="center">
@@ -72,8 +72,7 @@ export default function DecoStickerBottomSheet({
                     className={styles.box}
                   >
                     <Image
-                      src={`https://cdn.lighty.today/${selectedStickers.path}`}
-                      unoptimized={true}
+                      src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
                       loading={idx < 2 ? "eager" : "lazy"}
                       className={clsx(
                         "cursor-pointer w-16 h-16 object-cover",
