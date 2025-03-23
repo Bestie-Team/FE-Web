@@ -1,6 +1,7 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 import { lightyToast } from "@/utils/toast";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 /** 유저 검색 */
 export async function getSearchUsers({
@@ -42,6 +43,7 @@ export async function getUserDetail() {
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
     });
+
     const data: lighty.UserDetailResponse = await response.json();
     return data;
   } catch (error) {

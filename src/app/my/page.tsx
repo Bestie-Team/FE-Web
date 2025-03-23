@@ -81,7 +81,7 @@ export default function MyPage() {
     setProfileInfo((prev) => prev || initializeProfileInfo());
   }, [user]);
 
-  if (!user) return <DotSpinner />;
+  if (!user) return null;
 
   return (
     <div className="min-h-dvh w-full pt-safe-top">
