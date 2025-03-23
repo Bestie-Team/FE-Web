@@ -145,10 +145,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     setToken(userInfo.accessToken);
     setUserInfo(userInfoData);
-
-    setTimeout(() => {
-      router.push("/feed");
-    }, 100);
   };
 
   const logout = () => {

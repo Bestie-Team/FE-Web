@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "./shared/providers/AuthProvider";
 import DotSpinner from "./shared/Spinner/DotSpinner";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading, token, userInfo } = useAuth();
+  const isAuthenticated = useMemo(
+    () => !!token && !!userInfo,
+    [token, userInfo]
+  );
+
   const router = useRouter();
   const pathname = usePathname();
 
