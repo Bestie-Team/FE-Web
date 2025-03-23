@@ -20,6 +20,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     if (
       !isAuthenticated &&
       pathname !== "/" &&
+      !pathname.includes("kakao") &&
       !pathname.includes("oauth") &&
       !pathname.includes("google") &&
       !pathname.includes("apple") &&
