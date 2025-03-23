@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "./shared/providers/AuthProvider";
 import DotSpinner from "./shared/Spinner/DotSpinner";
@@ -9,17 +9,23 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated && pathname === "/") {
-      router.push("/feed");
+    if (!isLoading) {
+      setHasCheckedAuth(true);
     }
-  }, [isAuthenticated, pathname]);
+  }, [isLoading]);
 
   useEffect(() => {
-    // 로딩 중이 아니고, 인증되지 않았으며, 로그인/회원가입 페이지가 아닌 경우
+    if (hasCheckedAuth && isAuthenticated && pathname === "/") {
+      router.replace("/feed");
+    }
+  }, [isAuthenticated, pathname, hasCheckedAuth, router]);
+
+  useEffect(() => {
     if (
-      !isLoading &&
+      hasCheckedAuth &&
       !isAuthenticated &&
       pathname !== "/" &&
       !pathname.includes("kakao") &&
@@ -27,9 +33,9 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
       !pathname.includes("apple") &&
       !pathname.includes("/signup")
     ) {
-      router.push("/");
+      router.replace("/");
     }
-  }, [isAuthenticated, isLoading, router, pathname]);
+  }, [isAuthenticated, isLoading, pathname, hasCheckedAuth, router]);
 
   if (isLoading) {
     return <DotSpinner />;
