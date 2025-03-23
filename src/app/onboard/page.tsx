@@ -66,19 +66,22 @@ export default function OnBoardCardSlider() {
               <Image
                 alt={`${title} 이미지`}
                 unoptimized={true}
-                src={
-                  imageUrl ? `${imageUrl}?w=${390}&q=${95}` : "/placeholder.svg"
-                }
+                src={imageUrl || "/placeholder.svg"}
                 width={390}
                 height={460}
                 loading="eager"
-                className={"object-contain h-5/6"}
+                className="object-contain h-5/6"
               />
             </Flex>
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className={styles.buttonWrapper}>
+      <div
+        className={styles.buttonWrapper}
+        style={{
+          zIndex: 20,
+        }}
+      >
         <div
           ref={nextButtonRef}
           className={styles.button}

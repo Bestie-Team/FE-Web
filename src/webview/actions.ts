@@ -23,3 +23,6 @@ export const requestNotificationPermission = () =>
 
 export const requestCameraPermission = () =>
   postMessage("CAMERA_PERMISSION_REQUEST");
+
+export const requestAlbumPermission = () =>
+  postMessage("REQUEST_ALBUM_PERMISSION");

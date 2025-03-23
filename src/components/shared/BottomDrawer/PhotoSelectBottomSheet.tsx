@@ -7,7 +7,10 @@ import PhotoIcon from "../Icon/PhotoIcon";
 import CameraIcon from "../Icon/CameraIcon";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
-import { requestCameraPermission } from "@/webview/actions";
+import {
+  requestAlbumPermission,
+  requestCameraPermission,
+} from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import Modal from "../Modal/Modal";
 
@@ -25,14 +28,23 @@ export default function PhotoSelectBottomSheet({
   const handleClose = () => {
     onClose();
   };
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState({
+    camera: false,
+    album: false,
+  });
   const { isReactNativeWebView } = useReactNativeWebView();
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => setIsModalOpen({ camera: false, album: false });
 
   const onClickCamera = () => {
     if (isReactNativeWebView) {
       requestCameraPermission();
+    }
+  };
+
+  const onClickAlbum = () => {
+    if (isReactNativeWebView) {
+      requestAlbumPermission();
     }
   };
 
@@ -48,7 +60,14 @@ export default function PhotoSelectBottomSheet({
         cameraInputRef.current?.click();
       }
       if (message.type === WEBVIEW_EVENT.CAMERA_PERMISSION_DENIED) {
-        setIsModalOpen(true);
+        setIsModalOpen({ camera: true, album: false });
+      }
+
+      if (message.type === WEBVIEW_EVENT.ALBUM_OPEN) {
+        fileInputRef.current?.click();
+      }
+      if (message.type === WEBVIEW_EVENT.ALBUM_PERMISSION_DENIED) {
+        setIsModalOpen({ camera: false, album: true });
       }
     };
 
@@ -61,7 +80,7 @@ export default function PhotoSelectBottomSheet({
       <Flex direction="column" className="px-6 pb-safe-bottom">
         <Text className="text-T3">이미지 추가</Text>
         <Spacing size={12} />
-        <label className={styles.buttonWrapper}>
+        <>
           <input
             ref={fileInputRef}
             type="file"
@@ -70,16 +89,18 @@ export default function PhotoSelectBottomSheet({
             accept="image/*"
             multiple
           />
-          <div className={styles.iconWrapper}>
-            <PhotoIcon width="18" height="18" color="white" />
-          </div>
-          <Flex className={styles.descriptionContainer}>
-            <Flex direction="column" className={styles.textWrapper}>
-              <span className="text-T5">앨범에서 선택하기</span>
+          <label className={styles.buttonWrapper} onClick={onClickAlbum}>
+            <div className={styles.iconWrapper}>
+              <PhotoIcon width="18" height="18" color="white" />
+            </div>
+            <Flex className={styles.descriptionContainer}>
+              <Flex direction="column" className={styles.textWrapper}>
+                <span className="text-T5">앨범에서 선택하기</span>
+              </Flex>
+              <ArrowRightIcon />
             </Flex>
-            <ArrowRightIcon />
-          </Flex>
-        </label>
+          </label>
+        </>
         {isReactNativeWebView && (
           <>
             <input
@@ -107,9 +128,13 @@ export default function PhotoSelectBottomSheet({
             </Flex>
           </>
         )}
-        {isModalOpen && (
+        {(isModalOpen.album || isModalOpen.camera) && (
           <Modal
-            content="'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
+            content={
+              isModalOpen.album
+                ? "'설정 > 앱 > Lighty' 에서 사진 권한을 허용해주세요"
+                : "'설정 > 앱 > Lighty' 에서 카메라 권한을 허용해주세요"
+            }
             left="닫기"
             action={closeModal}
             onClose={closeModal}
@@ -119,7 +144,6 @@ export default function PhotoSelectBottomSheet({
     </BottomSheetWrapper>
   );
 }
-
 const styles = {
   buttonWrapper:
     "flex gap-3 py-4 w-full active:bg-grayscale-100 transition duration-75",

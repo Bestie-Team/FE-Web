@@ -6,12 +6,12 @@ import clsx from "clsx";
 import {
   emoji_stickers,
   pastel_stickers,
-  sparkle_stickers,
-  sweets_stickers,
-  vintage_stickers,
+  // sparkle_stickers,
+  // sweets_stickers,
+  // vintage_stickers,
 } from "@/constants/photoCard";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
-import LockIcon from "../Icon/LockIcon";
+// import LockIcon from "../Icon/LockIcon";
 
 export default function DecoStickerBottomSheet({
   open = true,
@@ -23,19 +23,21 @@ export default function DecoStickerBottomSheet({
   onClose: () => void;
 }) {
   const [selectedKind, setSelectedKind] = useState("이모지");
-  const decoKinds = ["이모지", "스파클", "파스텔", "스위츠", "빈티지"];
+  const decoKinds = ["이모지", "스파클"];
+  // const decoKinds = ["이모지", "스파클", "파스텔", "스위츠", "빈티지"];
   const stickers = () => {
-    if (selectedKind === "파스텔") {
-      return { stickers: pastel_stickers, path: `deco_stickers/pastel` };
+    if (selectedKind === "스파클") {
+      return { stickers: pastel_stickers, path: `deco_stickers/sparkke` };
     } else if (selectedKind === "이모지") {
       return { stickers: emoji_stickers, path: `deco_stickers/emoji` };
-    } else if (selectedKind === "스파클")
-      return { stickers: sparkle_stickers, path: `deco_stickers/sparkle` };
-    else if (selectedKind === "스위츠")
-      return { stickers: sweets_stickers, path: `deco_stickers/sweets` };
-    else if (selectedKind === "빈티지")
-      return { stickers: vintage_stickers, path: `deco_stickers/vintage` };
-    else return null;
+    }
+    // } else if (selectedKind === "파스텔")
+    //   return { stickers: sparkle_stickers, path: `deco_stickers/pastel` };
+    // else if (selectedKind === "스위츠")
+    //   return { stickers: sweets_stickers, path: `deco_stickers/sweets` };
+    // else if (selectedKind === "빈티지")
+    //   return { stickers: vintage_stickers, path: `deco_stickers/vintage` };
+    // else return null;
   };
 
   const selectedStickers = stickers();
@@ -88,7 +90,7 @@ export default function DecoStickerBottomSheet({
                       width={64}
                       height={64}
                     />
-                    {(selectedKind === "스위츠" ||
+                    {/* {(selectedKind === "스위츠" ||
                       selectedKind === "파스텔" ||
                       selectedKind === "빈티지") && (
                       <Flex
@@ -103,7 +105,7 @@ export default function DecoStickerBottomSheet({
                           </span>
                         </div>
                       </Flex>
-                    )}
+                    )} */}
                   </Flex>
                 ))
               : null}

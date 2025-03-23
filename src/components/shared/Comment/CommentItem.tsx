@@ -15,7 +15,7 @@ export default function CommentItem({
   feedWriterId: string;
 }) {
   const { userInfo } = useAuth();
-  if (!comment) return;
+  if (!comment) return null;
 
   const isMyComment = userInfo?.accountId === comment.writer.accountId;
   const isMyFeed = userInfo?.accountId === feedWriterId;
@@ -23,7 +23,7 @@ export default function CommentItem({
   const { writer, content, createdAt } = comment;
   const time = formatDate(new Date(createdAt));
 
-  console.log("ismyfeed", isMyFeed, userInfo?.accountId, feedWriterId);
+  const showOptions = isMyFeed || isMyComment;
   return (
     <Flex
       align="center"
@@ -35,7 +35,7 @@ export default function CommentItem({
         </span>
         <span className={styles.comment}>{content}</span>
         <span className={styles.time}>{time}</span>
-        {(isMyFeed || isMyComment) && (
+        {showOptions === true && (
           <>
             <Spacing direction="horizontal" size={8} />
             <CommentOption
