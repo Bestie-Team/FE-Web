@@ -82,12 +82,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
   }
 
   if (response.status === 404) {
-    const userInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
-    if (!userInfo) {
-      window.location.href = "/";
-    } else {
-      throw new Error("Resource not found");
-    }
+    throw new Error("Resource not found");
   }
 
   if (!response?.ok) {
