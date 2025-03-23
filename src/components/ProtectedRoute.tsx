@@ -22,7 +22,6 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }, [pathname, router, isAuthenticated]);
 
   useEffect(() => {
-    console.log(pathname, isAuthenticated);
     if (
       !isLoading &&
       !isAuthenticated &&

@@ -5,7 +5,7 @@ import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
-import { Suspense, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 
 export default function SignInPage() {
   const { token, userInfo } = useAuth();
@@ -14,6 +14,12 @@ export default function SignInPage() {
     [token, userInfo]
   );
   const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/feed");
+    }
+  }, [isAuthenticated]);
 
   if (!isAuthenticated) {
     return (
