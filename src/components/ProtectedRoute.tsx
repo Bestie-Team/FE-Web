@@ -6,7 +6,7 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import DotSpinner from "./shared/Spinner/DotSpinner";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isLoading, token, userInfo } = useAuth();
+  const { isLoading, token, userInfo, userDeleted } = useAuth();
   const isAuthenticated = useMemo(
     () => !!token && !!userInfo,
     [token, userInfo]
@@ -33,8 +33,19 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
       !pathname.includes("/signup")
     ) {
       router.replace("/");
+    } else if (
+      userDeleted &&
+      !isAuthenticated &&
+      pathname !== "/" &&
+      !pathname.includes("kakao") &&
+      !pathname.includes("oauth") &&
+      !pathname.includes("google") &&
+      !pathname.includes("apple") &&
+      !pathname.includes("/signup")
+    ) {
+      router.replace("/");
     }
-  }, [isAuthenticated, router, isLoading, pathname]);
+  }, [isAuthenticated, router, isLoading, pathname, userDeleted]);
 
   if (isLoading) {
     return <DotSpinner />;

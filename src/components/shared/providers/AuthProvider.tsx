@@ -27,6 +27,7 @@ interface AuthContextType {
   updateUserInfo: () => Promise<void>;
   setUserDeleted: React.Dispatch<React.SetStateAction<boolean>>;
   userDeletion: () => void;
+  userDeleted: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -208,6 +209,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     updateUserInfo,
     setUserDeleted,
     userDeletion,
+    userDeleted,
   };
 
   return (
