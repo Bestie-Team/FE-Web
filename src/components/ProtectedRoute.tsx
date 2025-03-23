@@ -28,7 +28,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     ) {
       router.replace("/");
     }
-  }, [isAuthenticated, pathname, router]);
+  }, [isAuthenticated, router]);
 
   if (isLoading) {
     return <DotSpinner />;
