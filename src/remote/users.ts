@@ -1,7 +1,6 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 import { lightyToast } from "@/utils/toast";
-import STORAGE_KEYS from "@/constants/storageKeys";
 
 /** 유저 검색 */
 export async function getSearchUsers({
