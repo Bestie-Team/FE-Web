@@ -6,6 +6,7 @@ import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 export default function SettingsMenuItem({
   list,
@@ -16,6 +17,7 @@ export default function SettingsMenuItem({
   link: { href: string; target?: string };
   user: string[];
 }) {
+  const router = useRouter();
   const { logout } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
@@ -31,7 +33,7 @@ export default function SettingsMenuItem({
     if (deletion) {
       if (typeof window !== "undefined") {
         logout();
-        window.location.href = "/";
+        router.push("/");
         return;
       }
     } else {
