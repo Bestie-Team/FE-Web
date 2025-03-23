@@ -4,12 +4,9 @@ import { SettingsItem } from "./SettingsMenu";
 import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
-// import { useAuth } from "../shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
-import { getLogout } from "@/remote/auth";
-import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function SettingsMenuItem({
   list,
@@ -31,14 +28,20 @@ export default function SettingsMenuItem({
 
   const accountDelete = async () => {
     setLoading(true);
-    const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
     try {
       await deleteUser();
-      if (deviceId) {
-        await getLogout(deviceId);
-      }
       localStorage.clear();
-      router.push("/");
+
+      document.cookie =
+        "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      setTimeout(() => {
+        window.location.href = "/";
+        // 백업 라우팅 방식
+        if (router && router.push) {
+          router.push("/");
+        }
+      }, 100);
     } catch (error) {
       console.log(error);
       lightyToast.error("accountdeletion error");

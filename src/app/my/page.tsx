@@ -18,6 +18,8 @@ import {
   openTermsMobile,
 } from "@/webview/actions";
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
+import { getLogout } from "@/remote/auth";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
   return (
@@ -66,6 +68,10 @@ export default function MyPage() {
   };
 
   const handleLogout = useCallback(async () => {
+    const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
+    if (deviceId) {
+      await getLogout(deviceId);
+    }
     logout();
   }, [router, logout]);
 
