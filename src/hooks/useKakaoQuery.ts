@@ -11,13 +11,16 @@ export const useKakaoAuth = ({
   auth_code: string;
 }) => {
   return useQuery({
-    queryKey: ["getKakaoAuth"],
+    queryKey: ["getKakaoAuth", client_id, redirect_uri, auth_code],
     queryFn: async () =>
       await getKakaoToken({
         client_id: client_id ?? "",
         redirect_uri: redirect_uri ?? "",
-        auth_code: auth_code,
+        auth_code,
       }),
-    enabled: !!client_id && !!redirect_uri && auth_code !== "",
+    enabled: Boolean(auth_code),
+    staleTime: 1000 * 60 * 5,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000),
   });
 };
