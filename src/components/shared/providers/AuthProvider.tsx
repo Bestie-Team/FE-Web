@@ -170,6 +170,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUserInfo(null);
 
     router.push("/");
+
+    if (typeof window !== "undefined") {
+      setTimeout(() => {
+        if (window.location.pathname !== "/") {
+          window.location.href = "/";
+        }
+      }, 100);
+    }
   };
 
   const userDeletion = async () => {

@@ -6,6 +6,7 @@ import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 export default function SettingsMenuItem({
   list,
@@ -17,6 +18,7 @@ export default function SettingsMenuItem({
   user: string[];
 }) {
   const { userDeletion } = useAuth();
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
@@ -25,18 +27,22 @@ export default function SettingsMenuItem({
   };
 
   const accountDelete = async () => {
-    const deletion = await deleteUser();
+    try {
+      const deletion = await deleteUser();
 
-    if (deletion) {
-      if (typeof window !== "undefined") {
+      if (deletion) {
         userDeletion();
+        router.push("/");
 
-        setTimeout(() => {
-          window.location.replace("/");
-        }, 500);
+        if (typeof window !== "undefined") {
+          window.location.href = "/";
+        }
+      } else {
+        lightyToast.error("탈퇴 실패");
       }
-    } else {
-      lightyToast.error("탈퇴 실패");
+    } catch (error) {
+      console.log(error);
+      console.error("accountdeletion error");
     }
   };
 
