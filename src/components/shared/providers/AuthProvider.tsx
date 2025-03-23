@@ -116,6 +116,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const user = await getUserAuth();
       if (!user) {
         logout();
+
         return;
       }
 
@@ -144,6 +145,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     setToken(userInfo.accessToken);
     setUserInfo(userInfoData);
+
+    setTimeout(() => {
+      router.push("/feed");
+    }, 100);
   };
 
   const logout = () => {
