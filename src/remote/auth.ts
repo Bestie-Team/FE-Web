@@ -185,9 +185,9 @@ export async function getUserAuth() {
 export async function getLogout(deviceId: string) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
-    const targetUrl = `${baseUrl}/users/profile`;
+    const targetUrl = `${baseUrl}/auth/logout`;
     const response = await fetch(targetUrl, {
-      method: "GET",
+      method: "DELETE",
       credentials: "include",
       headers: {
         "Device-Id": deviceId,

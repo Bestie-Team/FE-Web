@@ -42,7 +42,7 @@ export default function SettingsMenuItem({
       }
     } catch (error) {
       console.log(error);
-      console.error("accountdeletion error");
+      lightyToast.error("accountdeletion error");
     }
   };
 
