@@ -7,12 +7,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { selectedCommentIdAtom } from "@/atoms/comment";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 export default function useHiddenFeed() {
   const queryClient = useQueryClient();
   const [feedId, setFeedId] = useRecoilState(selectedFeedIdAtom);
-  const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
   const commentId = useRecoilValue(selectedCommentIdAtom);
 
   const {
@@ -59,9 +58,8 @@ export default function useHiddenFeed() {
   });
 
   const handleFeedSelect = useCallback(
-    (feedId: string, accountId: string) => {
+    (feedId: string) => {
       setFeedId(feedId);
-      setSelectedFeedWriter(accountId);
     },
     [setFeedId]
   );
@@ -75,6 +73,5 @@ export default function useHiddenFeed() {
     deleteComment,
     reportComment,
     handleFeedSelect,
-    selectedFeedWriter,
   };
 }

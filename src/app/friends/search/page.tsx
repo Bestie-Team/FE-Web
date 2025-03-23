@@ -25,7 +25,7 @@ export default function SearchPage() {
     isFetching,
   } = useSearchUsers({
     search: debouncedSearch,
-    enabled: debouncedSearch.length >= 2,
+    enabled: debouncedSearch.length >= 1,
   });
 
   useInfiniteScroll({ isFetching, loadMore });

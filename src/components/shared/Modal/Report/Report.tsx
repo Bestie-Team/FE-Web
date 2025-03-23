@@ -5,17 +5,20 @@ import Button from "../../Button/Button";
 import clsx from "clsx";
 import { ReportContentTypes } from "@/components/report/hooks/useReport";
 import { SetterOrUpdater } from "recoil";
+import { ReportModalType } from "@/models/modal";
 
 export default function Report({
   report,
   setReport,
   handleReport,
   onClose,
+  type,
 }: {
   report: ReportContentTypes;
   setReport: SetterOrUpdater<ReportContentTypes>;
   handleReport: () => void;
   onClose: () => void;
+  type: ReportModalType | null;
 }) {
   return (
     <Dimmed className={styles.dimmed}>
@@ -26,9 +29,17 @@ export default function Report({
           </div>
           <Spacing size={12} />
           <span className="w-full text-B3 text-grayscale-500 mb-2">
-            신고는 모두 익명으로 처리돼요.
+            모든 신고는 익명으로 처리돼요.
             <br />
-            걱정마세요!
+            `다만, 신고한 $
+            {type === "FRIEND"
+              ? "유저는 차단"
+              : type === "FEED"
+              ? "피드는 숨김"
+              : type === "FEED_COMMENT"
+              ? "댓글은 숨김"
+              : "그룹은 숨김"}
+            처리돼요.`
           </span>
           <textarea
             className={styles.reportTextarea}

@@ -13,11 +13,9 @@ import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
 
 export default function CommentContainer({
-  selectedFeedWriter,
   selectedFeedId,
   onClose,
 }: {
-  selectedFeedWriter: string;
   selectedFeedId: string;
   onClose: () => void;
 }) {
@@ -86,11 +84,7 @@ export default function CommentContainer({
           <Spacing size={12} />
           <Flex direction="column" className={styles.commentWrapper}>
             {comments?.map((comment) => (
-              <CommentItem
-                key={comment.id}
-                comment={comment}
-                feedWriterId={selectedFeedWriter}
-              />
+              <CommentItem key={comment.id} comment={comment} />
             ))}
           </Flex>
           <div className={styles.inputWrapper}>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -26,7 +26,6 @@ import { FeedList } from "@/components/feeds/FeedList";
 import { FeedModals } from "@/components/feeds/FeedModals";
 
 export default function FeedPage() {
-  const [selectedFeedWriter, setSelectedFeedWriter] = useState("");
   const [bottomSheetState, setBottomSheetState] =
     useRecoilState(bottomSheetStateAtom);
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
@@ -109,9 +108,8 @@ export default function FeedPage() {
   });
 
   const handleFeedSelect = useCallback(
-    (feedId: string, accountId: string) => {
+    (feedId: string) => {
       setFeedId(feedId);
-      setSelectedFeedWriter(accountId);
     },
     [setFeedId]
   );
@@ -227,7 +225,6 @@ export default function FeedPage() {
       {bottomSheetState && (
         <CommentContainer
           selectedFeedId={feedId}
-          selectedFeedWriter={selectedFeedWriter}
           onClose={() => setBottomSheetState(false)}
         />
       )}

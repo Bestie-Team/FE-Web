@@ -67,6 +67,7 @@ export const FeedModals: React.FC<FeedModalsProps> = ({
       )}
       {reportModal.isOpen && (
         <Report
+          type={reportModal.type}
           report={report}
           setReport={setReport}
           handleReport={handleReport}

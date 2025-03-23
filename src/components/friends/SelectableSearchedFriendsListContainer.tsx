@@ -26,7 +26,7 @@ export default function SelectableSearchedFriendsListContainer({
   );
   const { data: searchedFriends, isFetching } = useSearchFriends({
     search: debouncedSearch,
-    enabled: debouncedSearch.length >= 2,
+    enabled: debouncedSearch.length >= 1,
   });
 
   const toggleItemClick = (idx: number) => {

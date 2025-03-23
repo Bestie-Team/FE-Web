@@ -25,7 +25,6 @@ export default function FeedPage() {
     reportComment,
     deleteComment,
     handleFeedSelect,
-    selectedFeedWriter,
     feedId,
   } = useHiddenFeed();
 
@@ -80,7 +79,6 @@ export default function FeedPage() {
       {bottomSheetState && (
         <CommentContainer
           selectedFeedId={feedId}
-          selectedFeedWriter={selectedFeedWriter}
           onClose={() => setBottomSheetState(false)}
         />
       )}
@@ -100,6 +98,7 @@ export default function FeedPage() {
       )}
       {reportModal.isOpen === true && (
         <Report
+          type={reportModal.type}
           setReport={setReport}
           report={report}
           handleReport={() => {

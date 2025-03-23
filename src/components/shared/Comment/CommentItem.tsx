@@ -9,21 +9,17 @@ import { MENU_TYPES } from "@/models/dropdown";
 
 export default function CommentItem({
   comment,
-  feedWriterId,
 }: {
   comment: FeedCommentResponse;
-  feedWriterId: string;
 }) {
   const { userInfo } = useAuth();
   if (!comment) return null;
 
   const isMyComment = userInfo?.accountId === comment.writer.accountId;
-  const isMyFeed = userInfo?.accountId === feedWriterId;
 
   const { writer, content, createdAt } = comment;
   const time = formatDate(new Date(createdAt));
 
-  const showOptions = isMyFeed || isMyComment;
   return (
     <Flex
       align="center"
@@ -35,15 +31,14 @@ export default function CommentItem({
         </span>
         <span className={styles.comment}>{content}</span>
         <span className={styles.time}>{time}</span>
-        {showOptions === true && (
-          <div>
-            <Spacing direction="horizontal" size={8} />
-            <CommentOption
-              commentId={comment.id}
-              type={isMyComment ? MENU_TYPES.COMMENT_MINE : MENU_TYPES.COMMENT}
-            />
-          </div>
-        )}
+
+        <div>
+          <Spacing direction="horizontal" size={8} />
+          <CommentOption
+            commentId={comment.id}
+            type={isMyComment ? MENU_TYPES.COMMENT_MINE : MENU_TYPES.COMMENT}
+          />
+        </div>
       </div>
     </Flex>
   );

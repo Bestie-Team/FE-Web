@@ -176,6 +176,7 @@ export default function GroupDetailPage() {
       )}
       {reportModal.isOpen && (
         <Report
+          type={reportModal.type}
           report={report}
           setReport={setReport}
           handleReport={() => {

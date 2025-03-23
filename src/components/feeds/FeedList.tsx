@@ -15,7 +15,7 @@ import { UserInfoMini } from "../shared/providers/AuthProvider";
 interface FeedListProps {
   feeds: any[];
   userInfo: false | UserInfoMini | null;
-  onFeedSelect: (feedId: string, accountId: string) => void;
+  onFeedSelect: (feedId: string) => void;
   isFetching: boolean;
   loadMore: () => void;
   isMine?: boolean;
@@ -63,10 +63,7 @@ export const FeedList: React.FC<FeedListProps> = ({
     >
       {feeds.map((feed) => (
         <div key={feed.id} className="relative">
-          <FeedCard
-            feed={feed}
-            onClick={() => onFeedSelect(feed.id, feed.writer.accountId)}
-          >
+          <FeedCard feed={feed} onClick={() => onFeedSelect(feed.id)}>
             <InfoBar
               ref={fBtnRef}
               onClick={(e) => {

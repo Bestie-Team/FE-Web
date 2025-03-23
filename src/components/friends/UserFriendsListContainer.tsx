@@ -95,6 +95,7 @@ export default function UserFriendsListContainer() {
       <FriendsListContainer friends={friends} isFetching={isFetching} />
       {reportModal.isOpen && (
         <Report
+          type={reportModal.type}
           setReport={setReport}
           report={report}
           onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
