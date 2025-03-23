@@ -6,24 +6,28 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import DotSpinner from "./shared/Spinner/DotSpinner";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const [hasCheckedAuth, setHasCheckedAuth] = useState<null | boolean>(null);
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   useEffect(() => {
     if (!isLoading) {
-      setHasCheckedAuth(true);
+      setHasCheckedAuth(isAuthenticated);
     }
-  }, [isLoading]);
+  }, [isLoading, isAuthenticated]);
 
   useEffect(() => {
+    if (hasCheckedAuth === null) return;
+
     if (hasCheckedAuth && isAuthenticated && pathname === "/") {
       router.replace("/feed");
     }
-  }, [isAuthenticated, pathname, hasCheckedAuth, router]);
+  }, [pathname, hasCheckedAuth, router]);
 
   useEffect(() => {
+    if (hasCheckedAuth === null) return;
+
     if (
       hasCheckedAuth &&
       !isAuthenticated &&
@@ -35,9 +39,9 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     ) {
       router.replace("/");
     }
-  }, [isAuthenticated, isLoading, pathname, hasCheckedAuth, router]);
+  }, [isAuthenticated, pathname, router]);
 
-  if (isLoading) {
+  if (isLoading || hasCheckedAuth === null) {
     return <DotSpinner />;
   }
 
