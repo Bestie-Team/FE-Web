@@ -82,7 +82,7 @@ export default function ClickableGatheringSwiperForDeco({
             <Image
               loading="eager"
               priority={idx === 0 || idx === 1}
-              src={images[0] ? `${images[0]}` : ""}
+              src={images[0]}
               alt={`feed${idx + 1}`}
               className={clsx(
                 styles.image,

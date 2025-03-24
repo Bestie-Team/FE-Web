@@ -71,7 +71,7 @@ export default function GroupEditPage() {
 
   const handleEdit = () => {
     updateGroup();
-    // router.replace("/social?tab=group");
+    router.replace("/social?tab=group");
   };
 
   if (step === 1) {
