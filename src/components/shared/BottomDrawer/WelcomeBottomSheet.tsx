@@ -26,8 +26,7 @@ export default function WelcomeBottomSheet({
           priority
           width={176}
           height={180}
-          src={`${FIREWORKS}?w=${176}&q=${95}`}
-          unoptimized={true}
+          src={FIREWORKS}
           className="w-[176px] h-[180px]"
           alt="welcomeImg"
         />

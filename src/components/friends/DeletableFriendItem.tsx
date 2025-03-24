@@ -24,14 +24,7 @@ export default function DeletableFriendItem({
           {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
             <Image
               alt="friendProfile"
-              src={
-                (friendInfo?.profileImageUrl &&
-                  `${friendInfo?.profileImageUrl}?w=${56}&q=${95}`) ||
-                (groupInfo?.imageUrl &&
-                  `${groupInfo?.imageUrl}?w=${56}&q=${95}`) ||
-                ""
-              }
-              unoptimized={true}
+              src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
               className={style.image}
               width={56}
               height={56}

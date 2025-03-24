@@ -28,10 +28,9 @@ export default function GatheringBannerContainer({
         alt="gatheringBanner"
         src={
           gathering.invitationImageUrl
-            ? `${gathering.invitationImageUrl}?w=${500}&q=${95}`
-            : `${DEFAULT_BG_IMAGE}?w=${500}&q=${95}`
+            ? `${gathering.invitationImageUrl}`
+            : `${DEFAULT_BG_IMAGE}`
         }
-        unoptimized={true}
         width={500}
         height={380}
         className={clsx(

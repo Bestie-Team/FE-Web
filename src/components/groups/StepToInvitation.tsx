@@ -28,8 +28,7 @@ export default function StepToInvitation({
         <Spacing size={48} />
         <Image
           priority
-          src={`${HEART_LETTER}?w=${110}&q=${95}`}
-          unoptimized={true}
+          src={HEART_LETTER}
           alt="invitation_img"
           width={110}
           height={108}

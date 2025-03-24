@@ -64,8 +64,7 @@ export default function GatheringDetail({
               alt="mapIcon"
               width={36}
               height={36}
-              src={`${MAP}?w=${36}&q=${95}`}
-              unoptimized={true}
+              src={MAP}
             />
           </Flex>
         }

@@ -63,8 +63,7 @@ export function VerticalInvitationCard({
     return (
       <div className="relative">
         <Image
-          src={`https://cdn.lighty.today/vertical_invitation.svg?w=${330}&q=${95}`}
-          unoptimized={true}
+          src="https://cdn.lighty.today/vertical_invitation.svg"
           alt="verticalBar"
           width={330}
           height={460}
@@ -123,8 +122,7 @@ export function VerticalInvitationCard({
       <div className="relative">
         <Image
           priority
-          src={`https://cdn.lighty.today/vertical_invitation.svg?w=${330}&q=${95}`}
-          unoptimized={true}
+          src="https://cdn.lighty.today/vertical_invitation.svg"
           alt="verticalBar"
           width={330}
           height={460}
@@ -138,12 +136,7 @@ export function VerticalInvitationCard({
                 {invitationImageLoaded ? null : <DotSpinner />}
                 <Image
                   priority
-                  src={
-                    invitation_image_url
-                      ? `${invitation_image_url}?w=${300}&q=${95}`
-                      : `${Lighty}?w=${300}&q=${95}`
-                  }
-                  unoptimized={true}
+                  src={invitation_image_url ? invitation_image_url : Lighty}
                   className={styles.image}
                   width={300}
                   height={210}

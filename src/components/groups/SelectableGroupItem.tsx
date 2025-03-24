@@ -33,12 +33,7 @@ export default function SelectableGroupItem({
           {!!groupInfo?.groupImageUrl ? (
             <Image
               alt="groupImage"
-              src={
-                groupInfo?.groupImageUrl
-                  ? `${groupInfo?.groupImageUrl}?w=${60}&q=${95}`
-                  : ""
-              }
-              unoptimized={true}
+              src={groupInfo?.groupImageUrl ? groupInfo?.groupImageUrl : ""}
               className={clsx(clicked ? style.clickedImage : style.image)}
               width={clicked ? 56 : 56.8}
               height={clicked ? 56 : 56.8}

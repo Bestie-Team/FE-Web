@@ -90,8 +90,7 @@ export default function AddGroupPhoto({
       >
         {image ? (
           <Image
-            src={`${image}?w=${170}&q=${95}`}
-            unoptimized={true}
+            src={image}
             alt="upload_image"
             width={170}
             height={170}

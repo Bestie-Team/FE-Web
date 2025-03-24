@@ -17,12 +17,7 @@ export default function GroupBannerContainer({
       <Image
         priority
         alt="groupImage"
-        src={
-          imageUrl
-            ? `${imageUrl}?w=${500}&q=${95}`
-            : `${Lighty}?w=${500}&q=${95}`
-        }
-        unoptimized={true}
+        src={imageUrl ? imageUrl : Lighty}
         width={500}
         height={380}
         className={clsx(

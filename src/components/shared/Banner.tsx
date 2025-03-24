@@ -11,8 +11,7 @@ export default function Banner() {
         className="h-[124px] w-[450px]"
         width={450}
         height={124}
-        src={`${AD_BANNER}?w=${450}&q=${95}`}
-        unoptimized={true}
+        src={AD_BANNER}
       />
       <Flex className={styles.textWrapper} align="center">
         <Flex direction="column">

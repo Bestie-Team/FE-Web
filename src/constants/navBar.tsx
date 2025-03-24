@@ -50,11 +50,7 @@ const NAV_ITEMS: NavItem[] = [
         className={`w-6 h-6 box-content border-[1.7px] rounded-full object-cover ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}
-        src={
-          (src && `${src}?w=${24}&q=${95}`) ||
-          (DEFAULT_IMAGE && `${DEFAULT_IMAGE}?w=${24}&q=${95}`)
-        }
-        unoptimized={true}
+        src={src || DEFAULT_IMAGE}
         width={24}
         height={24}
         alt="profileImage"

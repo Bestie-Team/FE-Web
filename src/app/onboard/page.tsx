@@ -65,7 +65,6 @@ export default function OnBoardCardSlider() {
               </Flex>
               <Image
                 alt={`${title} 이미지`}
-                unoptimized={true}
                 src={imageUrl || "/placeholder.svg"}
                 width={390}
                 height={460}

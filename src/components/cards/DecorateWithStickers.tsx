@@ -16,11 +16,17 @@ import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
+import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
+import { WEBVIEW_EVENT } from "@/webview/types";
+import { lightyToast } from "@/utils/toast";
+import Modal from "../shared/Modal/Modal";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
     decoBottomSheetStateAtom
   );
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
@@ -33,6 +39,7 @@ export default function DecorateWithStickers() {
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const { isReactNativeWebView } = useReactNativeWebView();
 
   const frames = [
     "https://cdn.lighty.today/frame1.jpeg",
@@ -61,10 +68,8 @@ export default function DecorateWithStickers() {
   }, []);
 
   const handleCaptureImage = useCallback(async () => {
-    if (ref.current === null || !fabricCanvasRef.current) {
-      console.log(ref.current, fabricCanvasRef.current);
-      return;
-    }
+    setDeco(true);
+    if (ref.current === null || !fabricCanvasRef.current) return;
     if (imageRef.current) {
       console.log("resize");
     }
@@ -101,7 +106,6 @@ export default function DecorateWithStickers() {
         }
         // setImg(img);
       };
-      setDeco(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
     }
@@ -136,10 +140,35 @@ export default function DecorateWithStickers() {
         format: "png",
         multiplier: 2,
       });
+
+      if (isReactNativeWebView) {
+        saveImageMobile(uri);
+        return;
+      }
       setImageUri(uri);
       setImageBottomSheetOpen(true);
     }
   };
+
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent<string>) => {
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
+      const message: { type: string; token: string } = JSON.parse(data);
+
+      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_SUCCESS) {
+        lightyToast.success("포토 카드 저장 완료");
+      }
+      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_PERMISSION_DENIED) {
+        setIsModalOpen(true);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   useEffect(() => {
     const applyCrop = async () => {
@@ -159,17 +188,14 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <Flex
-      direction="column"
-      className={"extended-container !min-h-dvh h-full pb-[60px] pt-safe-top"}
-    >
-      {deco === false ? (
+    <div className="h-dvh overflow-y-scroll no-scrollbar">
+      {!deco && (
         <Flex
-          className="!h-dvh pt-[76px] pb-[60px]"
+          className="min-h-dvh pt-safe-top pb-12"
           direction="column"
           justify="space-between"
         >
-          <div>
+          <div className="pt-[76px]">
             <Flex direction="column" className="gap-3 px-6">
               <span className="text-T2">해당 프레임을 선택할까요?</span>
               <span className="text-B3 text-grayscale-500">
@@ -233,55 +259,50 @@ export default function DecorateWithStickers() {
               disabled={selectedFrame == null}
               onClick={handleCaptureImage}
               label="꾸미기 시작"
-              color={selectedFrame == null ? "!bg-grayscale-200" : ""}
             />
           </div>
         </Flex>
-      ) : (
-        <>
-          <Spacing size={76} />
-          <Flex className="w-full px-6">
-            <span className="text-B4 text-grayscale-500">
-              점선 영역이 이미지 영역이에요!
-            </span>
-          </Flex>
-          <Spacing size={32} />
-        </>
       )}
+      {/* 이 부분이 deco가 false일 때도 렌더링 돼서 아랫 부분에 스크롤 생기고 있었어요. */}
       <Flex
         direction="column"
-        align="center"
-        className="h-full"
         justify="space-between"
+        className="min-h-dvh pt-safe-top pb-12 w-full"
+        style={{ display: deco ? "flex" : "none" }}
       >
-        <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
-          <canvas
-            ref={canvasElementRef}
-            id="canvas"
-            style={{
-              width: "282px",
-              height: "372px",
-              backgroundImage: `url(${cardImgUrl})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          />
-        </div>
-        {deco && (
-          <div
-            className={"absolute bottom-[60px] left-0 right-0 mb-safe-bottom"}
-          >
-            <FloatingButton tooltip />
-            <BottomButton
-              label={"이미지 저장"}
-              onClick={() => {
-                handleExport();
+        <Flex
+          className="w-full px-6 pt-[76px]"
+          direction="column"
+          align="center"
+        >
+          <span className="text-B4 text-grayscale-500 w-full">
+            점선 영역이 이미지 영역이에요!
+          </span>
+          <Spacing size={32} />
+          <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
+            <canvas
+              ref={canvasElementRef}
+              id="canvas"
+              style={{
+                width: "282px",
+                height: "372px",
+                backgroundImage: `url(${cardImgUrl})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
               }}
             />
           </div>
-        )}
+        </Flex>
+        <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
+          <FloatingButton tooltip />
+          <BottomButton
+            label={"이미지 저장"}
+            onClick={() => {
+              handleExport();
+            }}
+          />
+        </div>
       </Flex>
-
       {decoBottomSheetState ? (
         <DecoStickerBottomSheet
           handleSticker={handleAddSticker}
@@ -295,7 +316,17 @@ export default function DecorateWithStickers() {
           src={imageUri}
         />
       )}
-    </Flex>
+
+      {isModalOpen && (
+        <Modal
+          action={() => openSettingsMobile()}
+          onClose={() => setIsModalOpen(false)}
+          content="라이티의 사진 권한을 허용해주세요"
+          left="닫기"
+          right="설정"
+        />
+      )}
+    </div>
   );
 }
 

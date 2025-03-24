@@ -13,8 +13,7 @@ export default function NoInvitation({ type }: { type: InvitationType }) {
     >
       <Image
         alt="no_invit"
-        src={`https://cdn.lighty.today/no_invit.svg?w=${40}&q=${95}`}
-        unoptimized={true}
+        src={`https://cdn.lighty.today/no_invit.svg`}
         width={40}
         height={40}
       />

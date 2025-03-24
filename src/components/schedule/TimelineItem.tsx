@@ -46,8 +46,7 @@ export default function TimelineItem({
       </Flex>
       <Image
         alt="timelineImage"
-        src={`${upcomingGathering.invitationImageUrl}?w=${56}&q=${95}`}
-        unoptimized={true}
+        src={upcomingGathering.invitationImageUrl}
         width={56}
         height={56}
         className={styles.image}

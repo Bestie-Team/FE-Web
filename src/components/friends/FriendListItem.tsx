@@ -78,11 +78,8 @@ export default function FriendListItem({
           <Image
             alt="friendProfile"
             src={
-              (friendInfo?.profileImageUrl &&
-                `${friendInfo?.profileImageUrl}?w=${36}&q=${95}`) ||
-              ""
+              (friendInfo?.profileImageUrl && friendInfo?.profileImageUrl) || ""
             }
-            unoptimized={true}
             width={36}
             height={36}
             className={styles.img}

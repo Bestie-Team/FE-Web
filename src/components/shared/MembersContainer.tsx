@@ -21,10 +21,9 @@ export default function MemberContainer({
             <Image
               src={
                 profileImageUrl
-                  ? `${profileImageUrl}?w=${40}&q=${95}`
-                  : `https://cdn.lighty.today/default.png?w=${40}&q=${95}`
+                  ? profileImageUrl
+                  : `https://cdn.lighty.today/default.png`
               }
-              unoptimized={true}
               alt={`gatheringMember${idx + 1}`}
               width={40}
               height={40}

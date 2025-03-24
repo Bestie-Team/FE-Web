@@ -65,12 +65,7 @@ export default function GatheringSwiper({
               >
                 <Button className="relative w-full h-[146px]">
                   <Image
-                    src={
-                      invitationImageUrl
-                        ? `${invitationImageUrl}?w=${164}&q=${95}`
-                        : `${Lighty}?w=${164}&q=${95}`
-                    }
-                    unoptimized={true}
+                    src={invitationImageUrl ? invitationImageUrl : Lighty}
                     alt={`invitationImage${idx + 1}`}
                     className={clsx(styles.image, "scale-110")}
                     width={164}

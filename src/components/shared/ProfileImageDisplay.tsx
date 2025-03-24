@@ -113,8 +113,7 @@ export default function ProfileImageDisplay({
           {newImage ? (
             <Image
               priority
-              src={`${newImage}?w=${small ? 64 : 74.67}&q=${95}`}
-              unoptimized={true}
+              src={newImage}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}

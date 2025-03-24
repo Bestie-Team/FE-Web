@@ -40,8 +40,7 @@ export default function BigClickableGatheringSwiper({
             key={`gathering${id}`}
           >
             <Image
-              unoptimized={true}
-              src={`${invitationImageUrl}?w=${270}&q=${95}`}
+              src={`${invitationImageUrl}`}
               alt={`gathering${idx + 1}`}
               className={styles.image}
               width={270}

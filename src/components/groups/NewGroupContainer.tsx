@@ -34,8 +34,7 @@ export default function NewGroupContainer({
           {!!groupImageUrl ? (
             <Image
               alt="leaderImg"
-              src={groupImageUrl ? `${groupImageUrl}?w=${500}&q=${95}` : ""}
-              unoptimized={true}
+              src={groupImageUrl ? groupImageUrl : ""}
               width={48}
               height={48}
               className={styles.leaderImage}

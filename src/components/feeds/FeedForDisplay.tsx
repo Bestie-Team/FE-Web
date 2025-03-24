@@ -30,11 +30,10 @@ export default function FeedForDisplay() {
           <Image
             alt="feedImage"
             loading="eager"
-            unoptimized={true}
             src={
               feed.gathering.invitationImageUrl
-                ? `${feed.gathering.invitationImageUrl}?w=${340}&q=${95}`
-                : `${Lighty}?w=${340}&q=${95}`
+                ? feed.gathering.invitationImageUrl
+                : Lighty
             }
             className={styles.image}
             width={340}

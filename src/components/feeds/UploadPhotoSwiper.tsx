@@ -117,8 +117,7 @@ export default function UploadPhotoSwiper({
             key={`${imageUrl}${idx}`}
           >
             <Image
-              src={`${imageUrl}?w=${270}&q=${95}`}
-              unoptimized={true}
+              src={imageUrl}
               alt={`${idx + 1}번째 이미지`}
               className={clsx(
                 styles.uploadedImage,

@@ -63,8 +63,7 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
       {!!writer.profileImageUrl ? (
         <Image
           loading="eager"
-          unoptimized={true}
-          src={`${writer.profileImageUrl}?w=${36}&q=${95}`}
+          src={writer.profileImageUrl}
           width={36}
           height={36}
           className="w-9 h-9 object-cover rounded-full overflow-hidden"
@@ -132,12 +131,7 @@ export function FriendsInfoContainer({
             alt={`friend${i}`}
             width={24}
             height={24}
-            src={
-              info.imageUrl
-                ? `${info.imageUrl}?w=${24}&q=${95}`
-                : `${Lighty}?w=${24}&q=${95}`
-            }
-            unoptimized={true}
+            src={info.imageUrl ? info.imageUrl : Lighty}
             className="w-6 h-6 object-cover rounded-full"
           />
           <span className="flex-none text-C2 text-grayscale-600">

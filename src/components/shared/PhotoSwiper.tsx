@@ -43,12 +43,7 @@ const PhotoSwiper = memo(
             )}
             <Image
               loading="eager"
-              src={
-                image
-                  ? `${image}?w=${340}&q=${95}`
-                  : `${Lighty}?w=${340}&q=${95}`
-              }
-              unoptimized={true}
+              src={image ? image : Lighty}
               alt={`Feed image ${idx + 1}`}
               className={styles.image}
               width={340}

@@ -62,12 +62,7 @@ export default function GatheringCard({
           transitionDuration: "50ms",
           zIndex: 0,
         }}
-        src={
-          !invitationImageUrl
-            ? `${DEFAULT_IMAGE}?w=${168}&q=${95}`
-            : `${invitationImageUrl}?w=${168}&q=${95}`
-        }
-        unoptimized={true}
+        src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
         className={clsx(styles.image, "scale-110")}
         alt={name}
         width={168}

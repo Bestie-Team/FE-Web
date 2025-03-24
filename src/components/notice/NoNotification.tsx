@@ -12,8 +12,7 @@ export default function NoNotification() {
     >
       <Image
         alt="no_notification"
-        src={`https://cdn.lighty.today/nofitication.svg?w=${40}&q=${95}`}
-        unoptimized={true}
+        src="https://cdn.lighty.today/nofitication.svg"
         width={40}
         height={40}
       />

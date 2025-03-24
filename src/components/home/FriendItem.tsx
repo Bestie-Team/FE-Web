@@ -22,14 +22,7 @@ export default function FriendItem({
         {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
           <Image
             alt="friendImage"
-            src={
-              (friendInfo?.profileImageUrl &&
-                `${friendInfo?.profileImageUrl}?w=${56}&q=${95}`) ||
-              (groupInfo?.imageUrl &&
-                `${groupInfo?.imageUrl}?w=${56}&q=${95}`) ||
-              ""
-            }
-            unoptimized={true}
+            src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
             className="rounded-full object-cover w-14 h-14 border-[1.2px] border-grayscale-100"
             width={56}
             height={56}

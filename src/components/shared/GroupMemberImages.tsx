@@ -43,8 +43,7 @@ export default function GroupMemberImages({
               <Image
                 key={`group${i}`}
                 style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
-                src={`${imageUrl}?w=${width ? width : 28}&q=${95}`}
-                unoptimized={true}
+                src={imageUrl}
                 width={width ? width : 28}
                 height={height ? height : 28}
                 className={clsx(styles.groupImage, imageWidthHeight)}

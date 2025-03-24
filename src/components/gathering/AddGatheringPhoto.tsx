@@ -92,8 +92,7 @@ export default function AddGatheringPhoto({
           <>
             {isLoaded === false ? <DotSpinner /> : null}
             <Image
-              src={`${image}?w=${300}&q=${95}`}
-              unoptimized={true}
+              src={image}
               alt="upload_image"
               width={300}
               height={210}

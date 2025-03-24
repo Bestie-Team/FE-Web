@@ -13,6 +13,7 @@ import { frames } from "@/constants/photoCard";
 import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
+import Image from "next/image";
 
 export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
@@ -90,7 +91,7 @@ export default function SelectFrameSwiper() {
               <div ref={ref} className={clsx(styles.frameWrapper)}>
                 <Flex direction="column" className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
-                    <img
+                    <Image
                       src={`${selectedFeed.imageUrl}`}
                       width={230}
                       height={230}
@@ -113,7 +114,7 @@ export default function SelectFrameSwiper() {
                     </span>
                   </Flex>
                 </Flex>
-                <img
+                <Image
                   loading="eager"
                   src={`${frame}`}
                   width={282}

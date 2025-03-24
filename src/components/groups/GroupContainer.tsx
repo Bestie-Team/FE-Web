@@ -32,8 +32,7 @@ export default function GroupContainer({
               width={48}
               height={48}
               className={styles.leaderImage}
-              src={`${groupImageUrl}?w=${48}&q=${95}`}
-              unoptimized={true}
+              src={groupImageUrl}
             />
           ) : (
             <div className="rounded-full w-12 h-12 flex justify-center items-center bg-grayscale-100">

@@ -114,11 +114,7 @@ export default function AddPhoto({
           {imageUrl || image ? (
             <Image
               priority
-              src={
-                (imageUrl && `${imageUrl}?w=${small ? 64 : 75}&q=${95}`) ||
-                (image ? image : "")
-              }
-              unoptimized={true}
+              src={imageUrl || image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}
               height={small ? 64 : 74.67}

@@ -43,8 +43,7 @@ export default function MakingGatheringStatus({
         <Spacing size={24} />
         <div className="p-[13px]">
           <Image
-            src={`${HEART_LETTER}?w=${110}&q=${95}`}
-            unoptimized={true}
+            src={HEART_LETTER}
             alt="invitation_img"
             width={110}
             height={108}
