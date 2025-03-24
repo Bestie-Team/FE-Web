@@ -13,6 +13,7 @@ import { lightyToast } from "@/utils/toast";
 import { getIdAvailability } from "@/remote/users";
 import validateForm from "@/utils/validateSignupForm";
 import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
+import { 약관목록 } from "@/constants/terms";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
@@ -33,6 +34,12 @@ export default function SignupForm() {
   const [oauthData, setOauthData] = useState<lighty.LoginFailResponse>();
   const [idNotAvailable, setIdNotAvailable] = useState(false);
   const { isReactNativeWebView } = useReactNativeWebView();
+  const [termsAgreements, setTermsAgreements] = useState(() => {
+    return 약관목록.reduce<Record<string, boolean>>(
+      (prev, term) => ({ ...prev, [term.id]: false }),
+      {}
+    );
+  });
 
   const handleAccountIdChange = useCallback(async (value: string) => {
     if (value.length <= 40) {
@@ -61,7 +68,7 @@ export default function SignupForm() {
     email: oauthData?.email || "",
     provider: oauthData?.provider as Provider,
     termsOfServiceConsent: true,
-    privacyPolicyConsent: true,
+    privacyPolicyConsent: termsAgreements["03"],
     onSuccess: useCallback((data) => {
       lightyToast.success(data.message);
     }, []),
@@ -158,6 +165,8 @@ export default function SignupForm() {
       />
       {modalOpen && (
         <TermsBottomSheet
+          termsAgreements={termsAgreements}
+          setTermsAgreements={setTermsAgreements}
           onClose={() => setModalOpen(false)}
           handleSignup={mutate}
         />

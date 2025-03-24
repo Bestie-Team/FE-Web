@@ -97,7 +97,7 @@ const settings = [
       {
         title: "계정 정보",
         info: ["SNS 로그인(카카오)", "eun2763@naver.com"],
-        link: { href: "/onboard" },
+        link: { href: "" },
       },
       { title: "앱버전", info: ["V.1.0(최신버전)"], link: { href: "" } },
       {

@@ -4,11 +4,15 @@ import Flex from "@/components/shared/Flex";
 import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
+import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
+import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useMemo } from "react";
 
 export default function SignInPage() {
   const { token, userInfo } = useAuth();
+  const { isReactNativeWebView } = useReactNativeWebView();
+
   const isAuthenticated = useMemo(
     () => !!token && !!userInfo,
     [token, userInfo]
@@ -20,6 +24,18 @@ export default function SignInPage() {
       router.push("/feed");
     }
   }, [isAuthenticated]);
+
+  const openTermsPage = () => {
+    if (isReactNativeWebView) {
+      openTermsMobile();
+    }
+  };
+
+  const openPrivacyPolicyPage = () => {
+    if (isReactNativeWebView) {
+      openPrivacyPolicyMobile();
+    }
+  };
 
   if (!isAuthenticated) {
     return (
@@ -49,9 +65,13 @@ export default function SignInPage() {
             </Suspense>
             <div className={styles.textWrapper}>
               <span>가입 시</span>
-              <span className={styles.text}>이용약관</span>
+              <span className={styles.text} onClick={openTermsPage}>
+                이용약관
+              </span>
               <span>및 </span>
-              <span className={styles.text}>개인정보처리방침</span>
+              <span className={styles.text} onClick={openPrivacyPolicyPage}>
+                개인정보처리방침
+              </span>
               <span>에 동의하게 됩니다.</span>
             </div>
           </Flex>

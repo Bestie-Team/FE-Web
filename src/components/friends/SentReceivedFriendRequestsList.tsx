@@ -27,18 +27,16 @@ export default function SentReceivedFriendRequestsList() {
   }));
 
   return (
-    <Flex
-      direction="column"
-      className="h-full px-5 pt-safe-top pb-safe-bottom gap-8"
-    >
-      <Spacing size={68} />
-      {isLoading && <DotSpinner />}
-      {receivedRequests &&
-        receivedRequests?.length > 0 &&
-        renderRequests(receivedRequests, "받은 요청", "receivedRequest")}
-      {sentRequests &&
-        sentRequests?.length > 0 &&
-        renderRequests(sentRequests, "보낸 요청", "sentRequest")}
+    <Flex direction="column" className="h-full px-5 pt-safe-top pb-safe-bottom">
+      <Flex direction="column" className="h-full pt-16 gap-8">
+        {isLoading && <DotSpinner />}
+        {receivedRequests &&
+          receivedRequests?.length > 0 &&
+          renderRequests(receivedRequests, "받은 요청", "receivedRequest")}
+        {sentRequests &&
+          sentRequests?.length > 0 &&
+          renderRequests(sentRequests, "보낸 요청", "sentRequest")}
+      </Flex>
     </Flex>
   );
 }

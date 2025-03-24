@@ -25,7 +25,7 @@ export default function ChooseFriendToShare({
           type="record"
           className="!bg-base-white placeholder:!text-grayscale-300 placeholder:!font-[500]"
         />
-        {debouncedSearch.length > 0 ? (
+        {debouncedSearch !== "" && debouncedSearch.length > 0 ? (
           <SelectableSearchedFriendsListContainer
             className="!px-0 !h-[calc(100dvh-288px)] overflow-y-scroll no-scrollbar"
             debouncedSearch={debouncedSearch}

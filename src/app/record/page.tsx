@@ -39,6 +39,7 @@ export default function Record() {
 
   const clickBackBtnHandler = () => {
     if (step === 1) {
+      setStep(0);
       router.back();
     }
     if (step === 2.5) {
