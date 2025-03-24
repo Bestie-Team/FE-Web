@@ -7,6 +7,8 @@ import { deleteUser } from "@/remote/users";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
+import useUserDetail from "@/components/users/hooks/useUserDetail";
+import { appleLoginMobile } from "@/webview/actions";
 
 export default function SettingsMenuItem({
   list,
@@ -18,6 +20,7 @@ export default function SettingsMenuItem({
   user: string[];
 }) {
   const router = useRouter();
+  const { data: userInfo } = useUserDetail();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
@@ -27,11 +30,15 @@ export default function SettingsMenuItem({
   };
 
   const accountDelete = async () => {
+    if (userInfo?.provider === "APPLE") {
+      appleLoginMobile();
+      return;
+    }
     setLoading(true);
+
     try {
       await deleteUser();
       localStorage.clear();
-
       document.cookie =
         "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
@@ -69,7 +76,7 @@ export default function SettingsMenuItem({
         <Modal
           action={accountDelete}
           title="탈퇴하시겠어요?"
-          content="탈퇴 시 모든 활동 내용이 삭제되며 해당 정보는 복구할 수 없어요."
+          content="30일 이내에 로그인 시 계정이 복구되며, 이후엔 불가해요."
           left="닫기"
           right="탈퇴"
           onClose={() => setIsModalOpen(false)}
