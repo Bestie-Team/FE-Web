@@ -140,7 +140,7 @@ export default function DecorateWithStickers() {
         scale: Math.min(2, window.devicePixelRatio), // 모바일 최적화: 성능을 고려한 scale 조정
         useCORS: true,
         allowTaint: false,
-        backgroundColor: null,
+        backgroundColor: "transparent",
         logging: false,
       });
 
