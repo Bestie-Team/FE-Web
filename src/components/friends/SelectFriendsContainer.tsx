@@ -89,6 +89,15 @@ export default function SelectFriendsContainer({
     setFriendsToAdd(clickedFriends);
     setStep?.(1);
   };
+  const handleSubmitSelectionToGroupEdit = () => {
+    const clickedFriends = clickedItems.map((idx) => friends[idx]);
+    const except = exceptFriends?.map((friend) => friend.id);
+    const newFriends = clickedFriends.filter(
+      (friend) => !except?.includes(friend.id)
+    );
+    setFriendsToAdd(newFriends);
+    setStep?.(1);
+  };
 
   const onClick = () => {
     if (type === "group" || type === "gathering") {
@@ -96,6 +105,7 @@ export default function SelectFriendsContainer({
     } else if (type === "record") {
       handleSubmitSelectionToShare();
     } else if (type === "groupEdit") {
+      handleSubmitSelectionToGroupEdit();
     } else handleSubmitSelection();
 
     console.log(exceptFriends);

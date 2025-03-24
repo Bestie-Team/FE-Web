@@ -87,7 +87,7 @@ export async function postGroupMember({
     const response = await fetchWithAuth(targetUrl, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
-      body: JSON.stringify(userIds),
+      body: JSON.stringify({ userIds }),
     });
     console.log(response);
     return { message: "그룹원을 성공적으로 추가하였습니다" };

@@ -19,9 +19,12 @@ import * as lighty from "lighty-type";
 import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import { useQueryClient } from "@tanstack/react-query";
+import { selectedFriendsAtom } from "@/atoms/friends";
+import { postGroupMember } from "@/remote/group";
 
 export default function GroupEditPage() {
   const queryClient = useQueryClient();
+  const friendsToAdd = useRecoilValue(selectedFriendsAtom);
   const selectedGroup = useRecoilValue<UpdateGroupRequest>(selectedGroupAtom);
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -37,6 +40,24 @@ export default function GroupEditPage() {
     }
   }, [selectedGroup, router]);
 
+  const updateSuccessHandler = async (data: { message: string }) => {
+    if (friendsToAdd !== null && friendsToAdd.length > 0) {
+      try {
+        await postGroupMember({
+          groupId: groupInfo.groupId,
+          userIds: friendsToAdd.map((friend) => friend.id),
+        });
+      } catch (e) {
+        lightyToast.error("그룹원 추가 실패");
+        console.log(e);
+      }
+    }
+    await queryClient.invalidateQueries({
+      queryKey: ["groups"],
+    });
+    lightyToast.success(data.message);
+  };
+
   const { mutate: updateGroup } = useUpdateGroup({
     groupId: groupInfo.groupId,
     group: {
@@ -44,17 +65,13 @@ export default function GroupEditPage() {
       description: groupInfo.description,
       groupImageUrl: groupInfo.groupImageUrl,
     },
-    onSuccess: async (data) => {
-      await queryClient.invalidateQueries({
-        queryKey: ["groups"],
-      });
-      lightyToast.success(data.message);
-    },
+    onSuccess: updateSuccessHandler,
+    onError: (error) => lightyToast.error(error.message),
   });
 
   const handleEdit = () => {
     updateGroup();
-    router.replace("/social?tab=group");
+    // router.replace("/social?tab=group");
   };
 
   if (step === 1) {

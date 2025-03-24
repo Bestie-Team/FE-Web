@@ -31,7 +31,6 @@ export default function AddOnlyFriendsSlider({
       });
     }
   }, [selected]);
-  console.log(groupMembers);
 
   return (
     <div className="w-full">

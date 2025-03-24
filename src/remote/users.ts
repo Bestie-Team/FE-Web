@@ -1,7 +1,6 @@
 import * as lighty from "lighty-type";
 import { API_CONFIG, fetchWithAuth } from "./shared";
 import { lightyToast } from "@/utils/toast";
-import { logger } from "@/utils/logger";
 
 /** 유저 검색 */
 export async function getSearchUsers({
@@ -97,7 +96,6 @@ export async function patchNotificationToken(
 
 // TODO body 타입은 dto 업데이트 후 수정해야해요.
 export async function deleteUser(body?: { authorizationCode?: string }) {
-  logger.info("탈퇴 요청 시작");
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const targetUrl = `${baseUrl}/users`;
