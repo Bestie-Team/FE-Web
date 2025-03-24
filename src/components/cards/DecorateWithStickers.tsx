@@ -59,11 +59,14 @@ export default function DecorateWithStickers() {
       fabricCanvasRef.current = new fabric.Canvas(canvasElementRef.current, {
         width: 282,
         height: 372,
+        preserveObjectStacking: true,
       });
     }
     return () => {
-      fabricCanvasRef.current?.dispose();
-      fabricCanvasRef.current = null;
+      if (fabricCanvasRef.current) {
+        fabricCanvasRef.current.dispose();
+        fabricCanvasRef.current = null;
+      }
     };
   }, []);
 
@@ -77,12 +80,17 @@ export default function DecorateWithStickers() {
       const canvas = await html2canvas(ref.current, {
         scale: 3,
         useCORS: true,
+        allowTaint: false,
         backgroundColor: null,
+        logging: false,
       });
-      const dataUrl = canvas.toDataURL("image/png", 1.0);
-      const img = new Image();
 
-      img.src = dataUrl;
+      const dataUrl = canvas.toDataURL("image/png", 1.0);
+
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+
+      // img.src = dataUrl;
       img.onload = async () => {
         const canvas = fabricCanvasRef.current;
         if (canvas) {
@@ -104,32 +112,40 @@ export default function DecorateWithStickers() {
           canvas.backgroundImage = bgImage;
           canvas.renderAll();
         }
-        // setImg(img);
       };
+      img.onerror = (error) => {
+        console.error("이미지 로드 오류:", error);
+        lightyToast.error("이미지 로드에 실패했습니다");
+      };
+
+      img.src = dataUrl;
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
+      lightyToast.error("이미지 캡처에 실패했습니다");
     }
   }, []);
 
   const handleAddSticker = async (path: string) => {
-    if (fabricCanvasRef.current) {
-      const canvas = fabricCanvasRef.current;
-      try {
-        const stickerObj = await fabric.Image.fromURL(path, {
-          crossOrigin: "anonymous",
-        });
-        stickerObj.set({
-          scaleX: 0.25,
-          scaleY: 0.25,
-        });
-
-        canvas.add(stickerObj);
-        canvas.renderAll();
-      } catch (error) {
-        console.error("Error adding sticker:", error);
-      }
-    } else {
+    if (!fabricCanvasRef.current) {
       console.error("Canvas reference is not initialized.");
+      return;
+    }
+    const canvas = fabricCanvasRef.current;
+
+    try {
+      const stickerObj = await fabric.Image.fromURL(path, {
+        crossOrigin: "anonymous",
+      });
+      stickerObj.set({
+        scaleX: 0.25,
+        scaleY: 0.25,
+      });
+
+      canvas.add(stickerObj);
+      canvas.renderAll();
+    } catch (error) {
+      console.error("Error adding sticker:", error);
+      lightyToast.error("스티커 추가에 실패했습니다");
     }
   };
 
@@ -172,6 +188,8 @@ export default function DecorateWithStickers() {
 
   useEffect(() => {
     const applyCrop = async () => {
+      if (!selectedFeed.imageUrl) return;
+
       try {
         const croppedImageUrl = await cropAndResizeImage(
           selectedFeed.imageUrl as string,
@@ -181,6 +199,7 @@ export default function DecorateWithStickers() {
         setCroppedImage(croppedImageUrl);
       } catch (err) {
         console.error("이미지 자르기 실패:", err);
+        lightyToast.error("이미지 처리에 실패했습니다");
       }
     };
 
@@ -287,6 +306,7 @@ export default function DecorateWithStickers() {
                 backgroundImage: `url(${cardImgUrl})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
+                touchAction: "none",
               }}
             />
           </div>

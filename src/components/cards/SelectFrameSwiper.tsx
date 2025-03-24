@@ -1,4 +1,3 @@
-import Image from "next/image";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -91,8 +90,8 @@ export default function SelectFrameSwiper() {
               <div ref={ref} className={clsx(styles.frameWrapper)}>
                 <Flex direction="column" className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
-                    <Image
-                      src={`${selectedFeed.imageUrl}?w=${230}&q=${95}`}
+                    <img
+                      src={`${selectedFeed.imageUrl}`}
                       width={230}
                       height={230}
                       style={{
@@ -100,7 +99,6 @@ export default function SelectFrameSwiper() {
                       }}
                       alt="img"
                       className={styles.image}
-                      unoptimized={true}
                     />
                   </div>
                   <Flex direction="column" className="px-5 py-[15px]">
@@ -115,15 +113,13 @@ export default function SelectFrameSwiper() {
                     </span>
                   </Flex>
                 </Flex>
-                <Image
+                <img
                   loading="eager"
-                  unoptimized={true}
-                  src={`${frame}?w=${282}&q=${95}`}
+                  src={`${frame}`}
                   width={282}
                   height={372}
                   alt="card"
                   className={styles.frame}
-                  priority={idx === 0}
                 />
               </div>
               <div className={styles.frameName}>{frameNames[idx]}</div>
