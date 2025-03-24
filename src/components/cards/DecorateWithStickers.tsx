@@ -61,7 +61,10 @@ export default function DecorateWithStickers() {
   }, []);
 
   const handleCaptureImage = useCallback(async () => {
-    if (ref.current === null || !fabricCanvasRef.current) return;
+    if (ref.current === null || !fabricCanvasRef.current) {
+      console.log(ref.current, fabricCanvasRef.current);
+      return;
+    }
     if (imageRef.current) {
       console.log("resize");
     }
