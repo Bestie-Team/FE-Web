@@ -21,7 +21,6 @@ import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { lightyToast } from "@/utils/toast";
 import Modal from "../shared/Modal/Modal";
-import NextImage from "next/image";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -31,7 +30,7 @@ export default function DecorateWithStickers() {
   const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
-  const imageRef = React.useRef<HTMLImageElement | null>(null);
+  // const imageRef = React.useRef<HTMLImageElement | null>(null);
   const selectedFrame = useRecoilValue(cardFrameAtom);
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
   const stageRef = React.useRef<HTMLDivElement | null>(null);
@@ -68,49 +67,155 @@ export default function DecorateWithStickers() {
     };
   }, []);
 
-  const handleCaptureImage = useCallback(async () => {
-    setDeco(true);
-    if (ref.current === null || !fabricCanvasRef.current) return;
-    if (imageRef.current) {
-      console.log("resize");
-    }
-    try {
-      const canvas = await html2canvas(ref.current, {
-        scale: 3,
-        useCORS: true,
-        backgroundColor: null,
-      });
-      const dataUrl = canvas.toDataURL("image/png", 1.0);
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = dataUrl;
-      img.onload = async () => {
-        const canvas = fabricCanvasRef.current;
-        if (canvas) {
-          const bgImage = new fabric.Image(img, {
-            originX: "left",
-            originY: "top",
-            crossOrigin: "anonymous",
+  // const handleCaptureImage = useCallback(async () => {
+  //   setDeco(true);
+  //   if (ref.current === null || !fabricCanvasRef.current) return;
+  //   if (imageRef.current) {
+  //     console.log("resize");
+  //   }
+  //   try {
+  //     const canvas = await html2canvas(ref.current, {
+  //       scale: 3,
+  //       useCORS: true,
+  //       backgroundColor: null,
+  //     });
+  //     const dataUrl = canvas.toDataURL("image/png", 1.0);
+  //     const img = new Image();
+  //     img.crossOrigin = "anonymous";
+  //     img.src = dataUrl;
+  //     img.onload = async () => {
+  //       const canvas = fabricCanvasRef.current;
+  //       if (canvas) {
+  //         const bgImage = new fabric.Image(img, {
+  //           originX: "left",
+  //           originY: "top",
+  //           crossOrigin: "anonymous",
+  //         });
+
+  //         const canvasAspectRatio = canvas.width! / canvas.height!;
+  //         const imageAspectRatio = img.width / img.height;
+
+  //         if (imageAspectRatio > canvasAspectRatio) {
+  //           bgImage.scaleToWidth(canvas.width!);
+  //         } else {
+  //           bgImage.scaleToHeight(canvas.height!);
+  //         }
+
+  //         canvas.backgroundImage = bgImage;
+  //         canvas.renderAll();
+  //       }
+  //       // setImg(img);
+  //     };
+  //   } catch (err) {
+  //     console.error("이미지 캡처 오류:", err);
+  //   }
+  // }, []);
+
+  const handleCaptureImage = useCallback(
+    async (ref: any, setDeco: any, fabricCanvasRef: any) => {
+      try {
+        if (ref.current === null) {
+          console.error("캡처할 요소가 없습니다 (ref.current is null)");
+          return;
+        }
+
+        // 요소가 실제로 DOM에 존재하는지 확인
+        if (!document.body.contains(ref.current)) {
+          console.error("캡처할 요소가 DOM에 존재하지 않습니다");
+          return;
+        }
+
+        // 요소의 크기 확인
+        const rect = ref.current.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) {
+          console.error("캡처할 요소의 크기가 0입니다:", rect);
+          return;
+        }
+
+        console.log("캡처 시도 중...", ref.current);
+
+        const images = ref.current.querySelectorAll("img");
+        const imagePromises = Array.from(images).map((element) => {
+          const img = element as HTMLImageElement;
+
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
           });
+        });
 
-          const canvasAspectRatio = canvas.width! / canvas.height!;
-          const imageAspectRatio = img.width / img.height;
+        await Promise.all(imagePromises);
 
-          if (imageAspectRatio > canvasAspectRatio) {
-            bgImage.scaleToWidth(canvas.width!);
-          } else {
-            bgImage.scaleToHeight(canvas.height!);
+        // html2canvas 옵션 설정
+        const canvas = await html2canvas(ref.current, {
+          scale: 3,
+          useCORS: true,
+          allowTaint: true, // CORS 문제 해결을 위해 추가
+          backgroundColor: null,
+          logging: true,
+          onclone: (documentClone, element) => {
+            // 복제된 요소 확인
+            console.log("복제된 요소:", element);
+            return documentClone;
+          },
+        });
+
+        const dataUrl = canvas.toDataURL("image/png", 1.0);
+        console.log("캡처 성공:", dataUrl.substring(0, 50) + "...");
+
+        setDeco(true);
+
+        setTimeout(() => {
+          if (!fabricCanvasRef.current) {
+            console.error("Fabric 캔버스가 초기화되지 않았습니다");
+            return;
           }
 
-          canvas.backgroundImage = bgImage;
-          canvas.renderAll();
-        }
-        // setImg(img);
-      };
-    } catch (err) {
-      console.error("이미지 캡처 오류:", err);
-    }
-  }, []);
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+
+          img.onload = () => {
+            console.log("이미지 로드 성공:", img.width, "x", img.height);
+
+            const canvas = fabricCanvasRef.current;
+            if (!canvas) {
+              console.error("Fabric 캔버스가 없습니다");
+              return;
+            }
+
+            const bgImage = new fabric.Image(img, {
+              originX: "left",
+              originY: "top",
+              crossOrigin: "anonymous",
+            });
+
+            const canvasAspectRatio = canvas.width! / canvas.height!;
+            const imageAspectRatio = img.width / img.height;
+
+            if (imageAspectRatio > canvasAspectRatio) {
+              bgImage.scaleToWidth(canvas.width!);
+            } else {
+              bgImage.scaleToHeight(canvas.height!);
+            }
+
+            canvas.backgroundImage = bgImage;
+            canvas.renderAll();
+            console.log("캔버스에 배경 이미지 설정 완료");
+          };
+
+          img.onerror = (error) => {
+            console.error("이미지 로드 오류:", error);
+          };
+
+          img.src = dataUrl;
+        }, 300);
+      } catch (err) {
+        console.error("이미지 캡처 오류:", err);
+      }
+    },
+    []
+  );
 
   const handleAddSticker = async (path: string) => {
     if (fabricCanvasRef.current) {
@@ -216,7 +321,7 @@ export default function DecorateWithStickers() {
                 id="card"
                 className="relative rounded-[20px] w-full"
               >
-                <NextImage
+                <img
                   alt="frame"
                   height={372}
                   width={282}
@@ -226,7 +331,7 @@ export default function DecorateWithStickers() {
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     {croppedImage ? (
-                      <NextImage
+                      <img
                         src={croppedImage}
                         alt="Cropped Image"
                         width={230}
@@ -260,7 +365,7 @@ export default function DecorateWithStickers() {
           <div className="mb-safe-bottom">
             <BottomButton
               disabled={selectedFrame == null}
-              onClick={handleCaptureImage}
+              onClick={() => handleCaptureImage(ref, setDeco, fabricCanvasRef)}
               label="꾸미기 시작"
             />
           </div>
