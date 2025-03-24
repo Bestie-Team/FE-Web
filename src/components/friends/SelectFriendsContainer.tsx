@@ -95,6 +95,7 @@ export default function SelectFriendsContainer({
       handleSubmitSelectionToNew();
     } else if (type === "record") {
       handleSubmitSelectionToShare();
+    } else if (type === "groupEdit") {
     } else handleSubmitSelection();
 
     console.log(exceptFriends);
