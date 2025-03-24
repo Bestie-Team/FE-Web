@@ -3,7 +3,6 @@ import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";
 import SignupForm from "@/components/SignupForm";
-import clsx from "clsx";
 import { Suspense } from "react";
 
 export default function SignupPage() {
@@ -11,7 +10,7 @@ export default function SignupPage() {
     <div className="flex flex-col gap-6 bg-base-white h-full pt-safe-top">
       <HeaderWithBtn headerLabel="프로필 생성" bgColor="white" />
       <Spacing size={28} />
-      <div className={clsx(styles.container, "pt-safe-top")}>
+      <div className={styles.container}>
         <LightyIcon width="20" height="20" color={"#0A0A0A"} />
         <div className={styles.greeting}>
           <div>반가워요!</div>

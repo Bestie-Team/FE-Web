@@ -74,7 +74,7 @@ export default function SignupForm() {
     return (
       !isValidate ||
       formValues.profileImageUrl == null ||
-      formValues.accountId.length < 5 ||
+      formValues.accountId.length < 4 ||
       formValues.name == null ||
       idNotAvailable
     );
