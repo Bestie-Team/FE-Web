@@ -21,6 +21,7 @@ import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { lightyToast } from "@/utils/toast";
 import Modal from "../shared/Modal/Modal";
+import NextImage from "next/image";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -215,7 +216,7 @@ export default function DecorateWithStickers() {
                 id="card"
                 className="relative rounded-[20px] w-full"
               >
-                <img
+                <NextImage
                   alt="frame"
                   height={372}
                   width={282}
@@ -225,7 +226,7 @@ export default function DecorateWithStickers() {
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     {croppedImage ? (
-                      <img
+                      <NextImage
                         src={croppedImage}
                         alt="Cropped Image"
                         width={230}
