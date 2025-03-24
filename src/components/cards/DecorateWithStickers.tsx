@@ -16,20 +16,15 @@ import { format } from "date-fns";
 import FloatingButton from "../shared/Button/FloatingButton";
 import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
-import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
-import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
-import { WEBVIEW_EVENT } from "@/webview/types";
-import { lightyToast } from "@/utils/toast";
-import Modal from "../shared/Modal/Modal";
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
     decoBottomSheetStateAtom
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const imageRef = React.useRef<HTMLImageElement | null>(null);
   const selectedFrame = useRecoilValue(cardFrameAtom);
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
   const stageRef = React.useRef<HTMLDivElement | null>(null);
@@ -38,7 +33,6 @@ export default function DecorateWithStickers() {
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   const frames = [
     "https://cdn.lighty.today/frame1.jpeg",
@@ -58,158 +52,77 @@ export default function DecorateWithStickers() {
       fabricCanvasRef.current = new fabric.Canvas(canvasElementRef.current, {
         width: 282,
         height: 372,
-        preserveObjectStacking: true,
       });
     }
     return () => {
-      if (fabricCanvasRef.current) {
-        fabricCanvasRef.current.dispose();
-        fabricCanvasRef.current = null;
-      }
+      fabricCanvasRef.current?.dispose();
+      fabricCanvasRef.current = null;
     };
   }, []);
 
-  // const handleCaptureImage = useCallback(async () => {
-  //   setDeco(true);
-  //   if (ref.current === null || !fabricCanvasRef.current) {
-  //     console.log(ref.current, ref);
-  //     console.log(fabricCanvasRef.current);
-  //     return;
-  //   }
-
-  //   try {
-  //     const canvas = await html2canvas(ref.current, {
-  //       scale: 3,
-  //       useCORS: true,
-  //       allowTaint: false,
-  //       backgroundColor: null,
-  //       logging: false,
-  //     });
-
-  //     const dataUrl = canvas.toDataURL("image/png", 1.0);
-
-  //     const img = new Image();
-  //     img.crossOrigin = "anonymous";
-
-  //     // img.src = dataUrl;
-  //     img.onload = async () => {
-  //       const canvas = fabricCanvasRef.current;
-  //       if (canvas) {
-  //         const bgImage = new fabric.Image(img, {
-  //           originX: "left",
-  //           originY: "top",
-  //           crossOrigin: "anonymous",
-  //         });
-
-  //         const canvasAspectRatio = canvas.width! / canvas.height!;
-  //         const imageAspectRatio = img.width / img.height;
-
-  //         if (imageAspectRatio > canvasAspectRatio) {
-  //           bgImage.scaleToWidth(canvas.width!);
-  //         } else {
-  //           bgImage.scaleToHeight(canvas.height!);
-  //         }
-
-  //         canvas.backgroundImage = bgImage;
-  //         canvas.renderAll();
-  //       }
-  //     };
-  //     img.onerror = (error) => {
-  //       console.error("이미지 로드 오류:", error);
-  //       lightyToast.error("이미지 로드에 실패했습니다");
-  //     };
-
-  //     img.src = dataUrl;
-  //   } catch (err) {
-  //     console.error("이미지 캡처 오류:", err);
-  //     lightyToast.error("이미지 캡처에 실패했습니다");
-  //   }
-  // }, [croppedImage, ref.current]);
-
   const handleCaptureImage = useCallback(async () => {
-    setDeco(true);
-    if (!ref.current || !fabricCanvasRef.current) {
-      console.log(ref.current, ref);
-      console.log(fabricCanvasRef.current);
-      return;
+    if (ref.current === null || !fabricCanvasRef.current) return;
+    if (imageRef.current) {
+      console.log("resize");
     }
-
     try {
-      // 📌 html2canvas 설정 최적화
       const canvas = await html2canvas(ref.current, {
-        scale: Math.min(2, window.devicePixelRatio),
+        scale: 3,
         useCORS: true,
-        allowTaint: false,
-        backgroundColor: "transparent",
-        logging: false,
+        backgroundColor: null,
       });
-
-      // 📌 메모리 사용량 최적화를 위한 크기 조절
-      const dataUrl = canvas.toDataURL("image/png", 0.5);
-
+      const dataUrl = canvas.toDataURL("image/png", 1.0);
       const img = new Image();
-      img.crossOrigin = "anonymous";
 
+      img.src = dataUrl;
       img.onload = async () => {
-        if (!fabricCanvasRef.current) return;
-
         const canvas = fabricCanvasRef.current;
-        const bgImage = new fabric.Image(img, {
-          originX: "left",
-          originY: "top",
-          crossOrigin: "anonymous",
-        });
+        if (canvas) {
+          const bgImage = new fabric.Image(img, {
+            originX: "left",
+            originY: "top",
+            crossOrigin: "anonymous",
+          });
 
-        const canvasAspectRatio = canvas.width! / canvas.height!;
-        const imageAspectRatio = img.width / img.height;
+          const canvasAspectRatio = canvas.width! / canvas.height!;
+          const imageAspectRatio = img.width / img.height;
 
-        // 📌 모바일에서 비율 조절 시 더 부드럽게 맞춤
-        if (imageAspectRatio > canvasAspectRatio) {
-          bgImage.scaleToWidth(canvas.width!);
-        } else {
-          bgImage.scaleToHeight(canvas.height!);
+          if (imageAspectRatio > canvasAspectRatio) {
+            bgImage.scaleToWidth(canvas.width!);
+          } else {
+            bgImage.scaleToHeight(canvas.height!);
+          }
+
+          canvas.backgroundImage = bgImage;
+          canvas.renderAll();
         }
-
-        canvas.backgroundImage = bgImage;
-        canvas.renderAll();
+        // setImg(img);
       };
-
-      img.onerror = (error) => {
-        console.error("이미지 로드 오류:", error);
-        lightyToast.error("이미지 로드에 실패했습니다");
-      };
-
-      // 📌 로드 대기 시간을 추가해 모바일에서의 실패 확률 줄이기
-      setTimeout(() => {
-        img.src = dataUrl;
-      }, 100); // 100ms 대기 후 로드 시도
+      setDeco(true);
     } catch (err) {
       console.error("이미지 캡처 오류:", err);
-      lightyToast.error("이미지 캡처에 실패했습니다");
     }
-  }, [croppedImage, ref]);
+  }, []);
 
   const handleAddSticker = async (path: string) => {
-    if (!fabricCanvasRef.current) {
+    if (fabricCanvasRef.current) {
+      const canvas = fabricCanvasRef.current;
+      try {
+        const stickerObj = await fabric.Image.fromURL(path, {
+          crossOrigin: "anonymous",
+        });
+        stickerObj.set({
+          scaleX: 0.25,
+          scaleY: 0.25,
+        });
+
+        canvas.add(stickerObj);
+        canvas.renderAll();
+      } catch (error) {
+        console.error("Error adding sticker:", error);
+      }
+    } else {
       console.error("Canvas reference is not initialized.");
-      return;
-    }
-    const canvas = fabricCanvasRef.current;
-
-    try {
-      const stickerObj = await fabric.Image.fromURL(path, {
-        crossOrigin: "anonymous",
-      });
-      stickerObj.set({
-        scaleX: 0.25,
-        scaleY: 0.25,
-      });
-
-      canvas.add(stickerObj);
-      canvas.renderAll();
-    } catch (error) {
-      console.error("Error adding sticker:", error);
-      lightyToast.error("스티커 추가에 실패했습니다");
     }
   };
 
@@ -220,40 +133,13 @@ export default function DecorateWithStickers() {
         format: "png",
         multiplier: 2,
       });
-
-      if (isReactNativeWebView) {
-        saveImageMobile(uri);
-        return;
-      }
       setImageUri(uri);
       setImageBottomSheetOpen(true);
     }
   };
 
   useEffect(() => {
-    const handleMessage = async (event: MessageEvent<string>) => {
-      let data = event.data;
-      if (typeof event.data !== "string") {
-        data = JSON.stringify(event.data);
-      }
-      const message: { type: string; token: string } = JSON.parse(data);
-
-      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_SUCCESS) {
-        lightyToast.success("포토 카드 저장 완료");
-      }
-      if (message.type === WEBVIEW_EVENT.SAVE_IMAGE_PERMISSION_DENIED) {
-        setIsModalOpen(true);
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, []);
-
-  useEffect(() => {
     const applyCrop = async () => {
-      if (!selectedFeed.imageUrl) return;
-
       try {
         const croppedImageUrl = await cropAndResizeImage(
           selectedFeed.imageUrl as string,
@@ -263,7 +149,6 @@ export default function DecorateWithStickers() {
         setCroppedImage(croppedImageUrl);
       } catch (err) {
         console.error("이미지 자르기 실패:", err);
-        lightyToast.error("이미지 처리에 실패했습니다");
       }
     };
 
@@ -271,14 +156,17 @@ export default function DecorateWithStickers() {
   }, [selectedFeed.imageUrl]);
 
   return (
-    <div className="h-dvh overflow-y-scroll no-scrollbar">
-      {!deco && (
+    <Flex
+      direction="column"
+      className={"extended-container !min-h-dvh h-full pb-[60px] pt-safe-top"}
+    >
+      {deco === false ? (
         <Flex
-          className="min-h-dvh pt-safe-top pb-12"
+          className="!h-dvh pt-[76px] pb-[60px]"
           direction="column"
           justify="space-between"
         >
-          <div className="pt-[76px]">
+          <div>
             <Flex direction="column" className="gap-3 px-6">
               <span className="text-T2">해당 프레임을 선택할까요?</span>
               <span className="text-B3 text-grayscale-500">
@@ -302,7 +190,6 @@ export default function DecorateWithStickers() {
                   width={282}
                   className={styles.frame}
                   src={frames[selectedFrame]}
-                  crossOrigin="anonymous"
                 />
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
@@ -312,7 +199,6 @@ export default function DecorateWithStickers() {
                         alt="Cropped Image"
                         width={230}
                         height={218}
-                        crossOrigin="anonymous"
                       />
                     ) : (
                       <div
@@ -339,7 +225,7 @@ export default function DecorateWithStickers() {
               </div>
             </Flex>
           </div>
-          <div className="mb-safe-bottom">
+          <div className={"mb-safe-bottom"}>
             <BottomButton
               disabled={selectedFrame == null}
               onClick={handleCaptureImage}
@@ -347,46 +233,51 @@ export default function DecorateWithStickers() {
             />
           </div>
         </Flex>
+      ) : (
+        <>
+          <Spacing size={76} />
+          <Flex className="w-full px-6">
+            <span className="text-B4 text-grayscale-500">
+              점선 영역이 이미지 영역이에요!
+            </span>
+          </Flex>
+          <Spacing size={32} />
+        </>
       )}
-      {/* 이 부분이 deco가 false일 때도 렌더링 돼서 아랫 부분에 스크롤 생기고 있었어요. */}
       <Flex
         direction="column"
+        align="center"
+        className="h-full"
         justify="space-between"
-        className="min-h-dvh pt-safe-top pb-12 w-full"
-        style={{ display: deco ? "flex" : "none" }}
       >
-        <Flex
-          className="w-full px-6 pt-[76px]"
-          direction="column"
-          align="center"
-        >
-          <span className="text-B4 text-base-white w-full"></span>
-          <Spacing size={32} />
-          <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
-            <canvas
-              ref={canvasElementRef}
-              id="canvas"
-              style={{
-                width: "282px",
-                height: "372px",
-                backgroundImage: `url(${cardImgUrl})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                touchAction: "none",
-              }}
-            />
-          </div>
-        </Flex>
-        <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
-          <FloatingButton tooltip />
-          <BottomButton
-            label={"이미지 저장"}
-            onClick={() => {
-              handleExport();
+        <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
+          <canvas
+            ref={canvasElementRef}
+            id="canvas"
+            style={{
+              width: "282px",
+              height: "372px",
+              backgroundImage: `url(${cardImgUrl})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           />
         </div>
+        {deco && (
+          <div
+            className={"absolute bottom-[60px] left-0 right-0 mb-safe-bottom"}
+          >
+            <FloatingButton tooltip />
+            <BottomButton
+              label={"이미지 저장"}
+              onClick={() => {
+                handleExport();
+              }}
+            />
+          </div>
+        )}
       </Flex>
+
       {decoBottomSheetState ? (
         <DecoStickerBottomSheet
           handleSticker={handleAddSticker}
@@ -400,17 +291,7 @@ export default function DecorateWithStickers() {
           src={imageUri}
         />
       )}
-
-      {isModalOpen && (
-        <Modal
-          action={() => openSettingsMobile()}
-          onClose={() => setIsModalOpen(false)}
-          content="라이티의 사진 권한을 허용해주세요"
-          left="닫기"
-          right="설정"
-        />
-      )}
-    </div>
+    </Flex>
   );
 }
 
