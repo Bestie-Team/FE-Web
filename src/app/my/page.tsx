@@ -20,6 +20,8 @@ import {
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import { getLogout } from "@/remote/auth";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import { WEBVIEW_EVENT } from "@/webview/types";
+import { deleteUser } from "@/remote/users";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
   return (
@@ -74,6 +76,54 @@ export default function MyPage() {
     }
     logout();
   }, [router, logout]);
+
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent<string>) => {
+      let data = event.data;
+      if (typeof event.data !== "string") {
+        data = JSON.stringify(event.data);
+      }
+      const message: {
+        type: string;
+        token: string;
+        authorizationCode?: string;
+      } = JSON.parse(data);
+
+      if (message.type === WEBVIEW_EVENT.APPLE_LOGIN_SUCCESS) {
+        if (
+          "authorizationCode" in message &&
+          typeof message.authorizationCode === "string"
+        ) {
+          try {
+            const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
+
+            if (deviceId) {
+              await deleteUser({
+                authorizationCode: message.authorizationCode,
+              });
+            }
+
+            localStorage.clear();
+            document.cookie =
+              "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            setTimeout(() => {
+              window.location.href = "/";
+              // 백업 라우팅 방식
+              if (router && router.push) {
+                router.push("/");
+              }
+            }, 100);
+          } catch (error: unknown) {
+            console.log(error);
+          }
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   useEffect(() => {
     const initializeProfileInfo = () => {
