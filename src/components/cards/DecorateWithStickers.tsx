@@ -69,144 +69,62 @@ export default function DecorateWithStickers() {
     };
   }, []);
 
-  const handleCaptureImage = useCallback(
-    async (retryCount = 0) => {
-      setDeco(true);
-      if (ref.current === null || !fabricCanvasRef.current) return;
+  const handleCaptureImage = useCallback(async () => {
+    setDeco(true);
+    if (ref.current === null || !fabricCanvasRef.current) {
+      console.log(ref.current, ref);
+      console.log(fabricCanvasRef.current);
+      return;
+    }
 
-      const MAX_RETRIES = 3;
-      const RETRY_DELAY = 1000;
+    try {
+      const canvas = await html2canvas(ref.current, {
+        scale: 3,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: null,
+        logging: false,
+      });
 
-      // 이미지 로드를 위한 Promise 기반 함수
-      const loadImage = (url: string): Promise<HTMLImageElement> =>
-        new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = "anonymous";
+      const dataUrl = canvas.toDataURL("image/png", 1.0);
 
-          img.onload = () => resolve(img);
-          img.onerror = (error) => reject(error);
-          img.src = url;
-        });
+      const img = new Image();
+      img.crossOrigin = "anonymous";
 
-      try {
-        // 1. 프레임 이미지와 컨텐츠 이미지 로드 대기
-        await loadImage(frames[selectedFrame]);
-        if (croppedImage !== null) {
-          await loadImage(croppedImage);
-        }
-        // 2. 모든 이미지가 로드된 후 html2canvas 실행
-        const canvas = await html2canvas(ref.current, {
-          scale: 3,
-          useCORS: true,
-          allowTaint: false,
-          backgroundColor: null,
-          logging: false,
-        });
+      // img.src = dataUrl;
+      img.onload = async () => {
+        const canvas = fabricCanvasRef.current;
+        if (canvas) {
+          const bgImage = new fabric.Image(img, {
+            originX: "left",
+            originY: "top",
+            crossOrigin: "anonymous",
+          });
 
-        const dataUrl = canvas.toDataURL("image/png", 1.0);
+          const canvasAspectRatio = canvas.width! / canvas.height!;
+          const imageAspectRatio = img.width / img.height;
 
-        // 3. 캔버스에 이미지 적용
-        try {
-          const img = await loadImage(dataUrl);
-          const canvas = fabricCanvasRef.current;
-
-          if (canvas) {
-            const bgImage = new fabric.Image(img, {
-              originX: "left",
-              originY: "top",
-              crossOrigin: "anonymous",
-            });
-
-            const canvasAspectRatio = canvas.width! / canvas.height!;
-            const imageAspectRatio = img.width / img.height;
-
-            if (imageAspectRatio > canvasAspectRatio) {
-              bgImage.scaleToWidth(canvas.width!);
-            } else {
-              bgImage.scaleToHeight(canvas.height!);
-            }
-
-            canvas.backgroundImage = bgImage;
-            canvas.renderAll();
-          }
-        } catch (imgError) {
-          console.error("캔버스 이미지 로드 오류:", imgError);
-          if (retryCount < MAX_RETRIES) {
-            lightyToast.error(
-              `이미지 재시도 중... (${retryCount + 1}/${MAX_RETRIES})`
-            );
-            setTimeout(() => handleCaptureImage(retryCount + 1), RETRY_DELAY);
+          if (imageAspectRatio > canvasAspectRatio) {
+            bgImage.scaleToWidth(canvas.width!);
           } else {
-            lightyToast.error("이미지 로드에 실패했습니다");
+            bgImage.scaleToHeight(canvas.height!);
           }
+
+          canvas.backgroundImage = bgImage;
+          canvas.renderAll();
         }
-      } catch (err) {
-        console.error("이미지 캡처 오류:", err);
-        if (retryCount < MAX_RETRIES) {
-          lightyToast.error(
-            `캡처 재시도 중... (${retryCount + 1}/${MAX_RETRIES})`
-          );
-          setTimeout(() => handleCaptureImage(retryCount + 1), RETRY_DELAY);
-        } else {
-          lightyToast.error("이미지 캡처에 실패했습니다");
-        }
-      }
-    },
-    [selectedFrame, croppedImage]
-  );
+      };
+      img.onerror = (error) => {
+        console.error("이미지 로드 오류:", error);
+        lightyToast.error("이미지 로드에 실패했습니다");
+      };
 
-  // const handleCaptureImage = useCallback(async () => {
-  //   setDeco(true);
-  //   if (ref.current === null || !fabricCanvasRef.current) return;
-
-  //   try {
-  //     const canvas = await html2canvas(ref.current, {
-  //       scale: 3,
-  //       useCORS: true,
-  //       allowTaint: false,
-  //       backgroundColor: null,
-  //       logging: false,
-  //     });
-
-  //     const dataUrl = canvas.toDataURL("image/png", 1.0);
-
-  //     const img = new Image();
-  //     img.crossOrigin = "anonymous";
-
-  //     // img.src = dataUrl;
-  //     img.onload = async () => {
-  //       const canvas = fabricCanvasRef.current;
-  //       if (canvas) {
-  //         const bgImage = new fabric.Image(img, {
-  //           originX: "left",
-  //           originY: "top",
-  //           crossOrigin: "anonymous",
-  //         });
-
-  //         const canvasAspectRatio = canvas.width! / canvas.height!;
-  //         const imageAspectRatio = img.width / img.height;
-
-  //         if (imageAspectRatio > canvasAspectRatio) {
-  //           bgImage.scaleToWidth(canvas.width!);
-  //         } else {
-  //           bgImage.scaleToHeight(canvas.height!);
-  //         }
-
-  //         canvas.backgroundImage = bgImage;
-  //         canvas.renderAll();
-  //       }
-  //     };
-  //     img.onerror = (error) => {
-  //       console.error("이미지 로드 오류:", error);
-  //       lightyToast.error("이미지 로드에 실패했습니다");
-  //     };
-
-  //     img.src = dataUrl;
-  //   } catch (err) {
-  //     console.error("이미지 캡처 오류:", err);
-  //     lightyToast.error("이미지 캡처에 실패했습니다");
-  //   }
-  // }, []);
+      img.src = dataUrl;
+    } catch (err) {
+      console.error("이미지 캡처 오류:", err);
+      lightyToast.error("이미지 캡처에 실패했습니다");
+    }
+  }, [croppedImage, ref.current]);
 
   const handleAddSticker = async (path: string) => {
     if (!fabricCanvasRef.current) {
