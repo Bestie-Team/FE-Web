@@ -137,7 +137,7 @@ export default function DecorateWithStickers() {
     try {
       // 📌 html2canvas 설정 최적화
       const canvas = await html2canvas(ref.current, {
-        scale: Math.min(2, window.devicePixelRatio), // 모바일 최적화: 성능을 고려한 scale 조정
+        scale: Math.min(2, window.devicePixelRatio),
         useCORS: true,
         allowTaint: false,
         backgroundColor: "transparent",
@@ -145,7 +145,7 @@ export default function DecorateWithStickers() {
       });
 
       // 📌 메모리 사용량 최적화를 위한 크기 조절
-      const dataUrl = canvas.toDataURL("image/png", 0.8); // 퀄리티를 0.8로 낮춰서 최적화
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
 
       const img = new Image();
       img.crossOrigin = "anonymous";
