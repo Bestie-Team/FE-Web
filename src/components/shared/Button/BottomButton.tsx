@@ -1,17 +1,24 @@
+import clsx from "clsx";
 import React from "react";
 
 export default function BottomButton({
   onClick,
   disabled,
   label,
+  color,
 }: {
   onClick: () => void;
   disabled?: boolean;
   label: string;
+  color?: string;
 }) {
   return (
     <div className={styles.buttonWrapper}>
-      <button className={styles.button} disabled={disabled} onClick={onClick}>
+      <button
+        className={clsx(styles.button, color)}
+        disabled={disabled}
+        onClick={onClick}
+      >
         {label}
       </button>
     </div>

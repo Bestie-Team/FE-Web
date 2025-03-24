@@ -225,11 +225,12 @@ export default function DecorateWithStickers() {
               </div>
             </Flex>
           </div>
-          <div className={"mb-safe-bottom"}>
+          <div className="mb-safe-bottom">
             <BottomButton
               disabled={selectedFrame == null}
               onClick={handleCaptureImage}
               label="꾸미기 시작"
+              color={selectedFrame == null ? "!bg-grayscale-200" : ""}
             />
           </div>
         </Flex>
