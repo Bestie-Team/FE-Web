@@ -9,7 +9,7 @@ export default function SignupPage() {
   return (
     <div className="flex flex-col gap-6 bg-base-white h-full pt-safe-top">
       <HeaderWithBtn headerLabel="프로필 생성" bgColor="white" />
-      <Spacing size={28} />
+      <Spacing size={76} />
       <div className={styles.container}>
         <LightyIcon width="20" height="20" color={"#0A0A0A"} />
         <div className={styles.greeting}>
