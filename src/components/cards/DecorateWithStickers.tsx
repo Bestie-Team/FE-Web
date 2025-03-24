@@ -145,7 +145,7 @@ export default function DecorateWithStickers() {
       });
 
       // 📌 메모리 사용량 최적화를 위한 크기 조절
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+      const dataUrl = canvas.toDataURL("image/png", 0.5);
 
       const img = new Image();
       img.crossOrigin = "anonymous";
