@@ -10,7 +10,6 @@ import {
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
 import * as fabric from "fabric";
-import { FabricImage, type Canvas, Text } from "fabric";
 import DecoStickerBottomSheet from "../shared/BottomDrawer/DecoStickerBottomSheet";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 import { format } from "date-fns";
@@ -68,7 +67,7 @@ export default function DecorateWithStickers() {
     };
   }, []);
 
-  const handleOriginalCapture = useCallback(async () => {
+  const handleCaptureImage = useCallback(async () => {
     setDeco(true);
     if (ref.current === null || !fabricCanvasRef.current) return;
     if (imageRef.current) {
@@ -82,7 +81,7 @@ export default function DecorateWithStickers() {
       });
       const dataUrl = canvas.toDataURL("image/png", 1.0);
       const img = new Image();
-      img.crossOrigin = "anonymous";
+
       img.src = dataUrl;
       img.onload = async () => {
         const canvas = fabricCanvasRef.current;
@@ -112,124 +111,6 @@ export default function DecorateWithStickers() {
     }
   }, []);
 
-  // 최신 Fabric.js 버전을 위한 수정된 솔루션
-  const handleSimpleCaptureForWebView = useCallback(
-    (
-      setDeco: (value: boolean) => void,
-      fabricCanvasRef: React.MutableRefObject<Canvas | null>,
-      frames: string[],
-      selectedFrame: number,
-      croppedImage: string | null,
-      selectedFeed: any
-    ) => {
-      if (!fabricCanvasRef.current) return;
-
-      setTimeout(() => {
-        setDeco(true);
-
-        // 프레임 이미지 직접 로드
-        FabricImage.fromURL(frames[selectedFrame], {
-          crossOrigin: "anonymous",
-        })
-          .then((frameObj) => {
-            const canvas = fabricCanvasRef.current;
-            if (!canvas) return;
-
-            frameObj.scaleToWidth(canvas.width!);
-            frameObj.scaleToHeight(canvas.height!);
-
-            canvas.backgroundImage = frameObj;
-            canvas.renderAll();
-
-            if (croppedImage) {
-              FabricImage.fromURL(croppedImage, {
-                crossOrigin: "anonymous",
-              })
-                .then((contentObj) => {
-                  // 콘텐츠 이미지 위치 및 크기 조정
-                  contentObj.scaleToWidth(230);
-                  contentObj.set({
-                    left: 26,
-                    top: 77,
-                  });
-
-                  canvas.add(contentObj);
-                  canvas.renderAll();
-
-                  addTextToCanvas(canvas, selectedFeed);
-                })
-                .catch((error) => {
-                  console.error("콘텐츠 이미지 로드 오류:", error);
-                  addTextToCanvas(canvas, selectedFeed);
-                });
-            } else {
-              addTextToCanvas(canvas, selectedFeed);
-            }
-          })
-          .catch((error) => {
-            console.error("프레임 이미지 로드 오류:", error);
-          });
-      }, 500);
-    },
-    []
-  );
-
-  // 텍스트 추가 헬퍼 함수
-  const addTextToCanvas = (canvas: Canvas, feed: any) => {
-    // 이름 텍스트
-    const nameText = new Text(feed.name || "", {
-      left: 26,
-      top: 310,
-      fontFamily: "Arial",
-      fontSize: 14,
-      fill: "black",
-    });
-
-    // 콘텐츠 텍스트
-    const contentText = new Text(feed.content || "", {
-      left: 26,
-      top: 330,
-      fontFamily: "Arial",
-      fontSize: 12,
-      fill: "#666",
-    });
-
-    // 날짜 텍스트
-    const dateText = new Text(format(feed.date.slice(0, 10), "yyyy.MM.dd"), {
-      left: 26,
-      top: 350,
-      fontFamily: "Arial",
-      fontSize: 10,
-      fill: "#999",
-    });
-
-    // 캔버스에 텍스트 추가
-    canvas.add(nameText, contentText, dateText);
-    canvas.renderAll();
-  };
-
-  const handleCaptureImage = useCallback(() => {
-    // 웹뷰 환경 감지
-    const isWebView = isReactNativeWebView;
-    if (isWebView) {
-      // 웹뷰용 방법 사용
-      handleSimpleCaptureForWebView(
-        setDeco,
-        fabricCanvasRef,
-        frames,
-        selectedFrame,
-        croppedImage,
-        selectedFeed
-      );
-    } else {
-      handleOriginalCapture();
-    }
-  }, [
-    isReactNativeWebView,
-    handleSimpleCaptureForWebView,
-    handleOriginalCapture,
-  ]);
-
   const handleAddSticker = async (path: string) => {
     if (fabricCanvasRef.current) {
       const canvas = fabricCanvasRef.current;
@@ -254,21 +135,19 @@ export default function DecorateWithStickers() {
 
   const handleExport = () => {
     if (!stageRef.current) return;
-    setTimeout(() => {
-      if (fabricCanvasRef.current) {
-        const uri = fabricCanvasRef.current.toDataURL({
-          format: "png",
-          multiplier: 2,
-        });
+    if (fabricCanvasRef.current) {
+      const uri = fabricCanvasRef.current.toDataURL({
+        format: "png",
+        multiplier: 2,
+      });
 
-        if (isReactNativeWebView) {
-          saveImageMobile(uri);
-          return;
-        }
-        setImageUri(uri);
-        setImageBottomSheetOpen(true);
+      if (isReactNativeWebView) {
+        saveImageMobile(uri);
+        return;
       }
-    }, 100);
+      setImageUri(uri);
+      setImageBottomSheetOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -396,6 +275,7 @@ export default function DecorateWithStickers() {
           direction="column"
           align="center"
         >
+          <span className="text-B4 text-base-white w-full"></span>
           <Spacing size={32} />
           <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
             <canvas
