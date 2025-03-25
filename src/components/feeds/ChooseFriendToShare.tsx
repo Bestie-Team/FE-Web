@@ -4,14 +4,18 @@ import LightyIcon from "../shared/Icon/LightyIcon";
 import Flex from "../shared/Flex";
 import SelectFriendsContainer from "../friends/SelectFriendsContainer";
 import SelectableSearchedFriendsListContainer from "../friends/SelectableSearchedFriendsListContainer";
+import { useRecoilValue } from "recoil";
+import { friendToRecordAtom } from "@/atoms/record";
+import useDebounce from "@/hooks/debounce";
 
 export default function ChooseFriendToShare({
-  debouncedSearch,
   setStep,
 }: {
-  debouncedSearch: string;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
+  const search = useRecoilValue(friendToRecordAtom);
+  const debouncedSearch = useDebounce(search);
+
   return (
     <div className="max-w-[430px] bg-grayscale-50 min-h-dvh">
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">

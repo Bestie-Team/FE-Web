@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import { useRecoilState, useRecoilValue } from "recoil";
-import useDebounce from "@/hooks/debounce";
-import { friendToRecordAtom, recordStepAtom } from "@/atoms/record";
+import { useRecoilState } from "recoil";
+import { recordStepAtom } from "@/atoms/record";
 import ChoosingKindOfMemory from "../../components/feeds/ChoosingKindOfMemory";
 import ChoosingGatheringToRecord from "@/components/feeds/ChoosingGatheringToRecord";
 import CreatingFeed from "@/components/feeds/CreatingFeed";
@@ -34,8 +33,6 @@ export default function Record() {
   const router = useRouter();
   const [step, setStep] = useRecoilState(recordStepAtom);
   const [add, setAdd] = useState<number>(1);
-  const search = useRecoilValue(friendToRecordAtom);
-  const debouncedSearch = useDebounce(search);
 
   const clickBackBtnHandler = () => {
     if (step === 1) {
@@ -69,7 +66,6 @@ export default function Record() {
         setAdd={setAdd}
         setStep={setStep}
         onNext={() => setStep((prev) => prev + 1)}
-        debouncedSearch={debouncedSearch}
       />
     </div>
   );

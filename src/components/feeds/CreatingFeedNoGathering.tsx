@@ -28,6 +28,9 @@ export default function CreatingFeedNoGathering() {
         queryKey: ["get/feeds/mine"],
       }),
       await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all"],
+      }),
+      await queryClient.invalidateQueries({
         queryKey: ["user/detail"],
       }),
     ]);

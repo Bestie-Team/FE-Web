@@ -20,6 +20,7 @@ export default function ChoosingKindOfMemory({
   }, []);
 
   const { isReactNativeWebView } = useReactNativeWebView();
+
   return (
     <>
       <Flex direction="column" className="pt-5 px-6 gap-4 text-T2">
