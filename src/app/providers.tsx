@@ -54,6 +54,7 @@ const DARK_BACKGROUND_PATHS = [
   "/friends/search",
   "/onboard",
 ] as const;
+
 const NAVBAR_PATHS = [
   "/feed",
   "/gathering",

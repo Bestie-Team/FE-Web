@@ -8,7 +8,7 @@ import ChoosingGatheringToRecord from "@/components/feeds/ChoosingGatheringToRec
 import CreatingFeed from "@/components/feeds/CreatingFeed";
 import CreatingFeedNoGathering from "@/components/feeds/CreatingFeedNoGathering";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
 import FriendToShareSkeleton from "@/components/shared/Skeleton/FriendToShareSkeleton";
@@ -33,15 +33,21 @@ export default function Record() {
   const router = useRouter();
   const [step, setStep] = useRecoilState(recordStepAtom);
   const [add, setAdd] = useState<number>(1);
+  const searchParams = useSearchParams();
+  const from = searchParams?.get("ref");
 
   const clickBackBtnHandler = () => {
     if (step === 1) {
-      setStep(0);
       router.back();
     }
     if (step === 2.5) {
       setStep(step - 1.5);
     } else if (step > 1) {
+      if (from === "gathering") {
+        setStep(1);
+        router.back();
+        return;
+      }
       setStep(step - 1);
     }
   };

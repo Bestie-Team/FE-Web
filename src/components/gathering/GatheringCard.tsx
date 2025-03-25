@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
-import Button from "../shared/Button/Button";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import { Gathering, GatheringInWhichType } from "@/models/gathering";
 import { differenceInCalendarDays, format } from "date-fns";
-import React, { useCallback, useMemo } from "react";
+import React, { MouseEvent, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom, recordStepAtom } from "@/atoms/record";
@@ -30,20 +29,22 @@ export default function GatheringCard({
   const setGatheringId = useSetRecoilState(recordGatheringAtom);
   const setInvitationUrl = useSetRecoilState(gatheringImageUrlAtom);
   const router = useRouter();
-
   const { date, diff } = useMemo(() => {
     const date = new Date(gathering.gatheringDate);
     const diff = differenceInCalendarDays(new Date(), date);
     return { date, diff };
   }, [gathering.gatheringDate]);
 
-  const handleClickGathering = useCallback(() => {
-    setInvitationUrl(gathering.invitationImageUrl);
-
-    setGatheringId(gathering.id);
-    router.push("/record");
-    setStep(3);
-  }, [gathering, setGatheringId, setInvitationUrl, router, setStep]);
+  const handleClickGathering = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+      setInvitationUrl(gathering.invitationImageUrl);
+      setGatheringId(gathering.id);
+      router.push("/record?ref=gathering");
+      setStep(3);
+    },
+    [gathering, setGatheringId, setInvitationUrl, router, setStep]
+  );
 
   const { invitationImageUrl, name } = gathering;
   return (
@@ -86,13 +87,9 @@ export default function GatheringCard({
         </Flex>
       </Flex>
       {pencil || (!gathering.isFeedPosted && ended) ? (
-        <Button
-          name="moveToFeed_button"
-          className={styles.button}
-          onMouseDown={handleClickGathering}
-        >
+        <div className={styles.button} onMouseDown={handleClickGathering}>
           <PencilIcon color="#0A0A0A" />
-        </Button>
+        </div>
       ) : null}
     </div>
   );
