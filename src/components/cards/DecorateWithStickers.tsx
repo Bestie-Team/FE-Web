@@ -244,7 +244,13 @@ export default function DecorateWithStickers() {
                       {selectedFeed.name || ""}
                     </span>
                     <Spacing size={8} />
-                    <span className="text-C5">{selectedFeed.content}</span>
+                    {selectedFeed.content && (
+                      <span className="text-C5">
+                        {selectedFeed.content.length >= 40
+                          ? selectedFeed.content?.slice(0, 40)
+                          : selectedFeed.content}
+                      </span>
+                    )}
                     <Spacing size={12} />
                     <span className={styles.dateWrapper}>
                       {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}

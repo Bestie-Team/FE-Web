@@ -97,7 +97,9 @@ export default function ClickableGatheringSwiperForDeco({
             {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
             <Flex direction="column" className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{gathering?.name}</span>
-              <span className="text-C2 text-grayscale-600">{content}</span>
+              <span className="text-C2 text-grayscale-600 text-ellipsis overflow-hidden whitespace-nowrap">
+                {content}
+              </span>
             </Flex>
             {id === selectedFeedId ? (
               <Flex

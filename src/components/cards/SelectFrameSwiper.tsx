@@ -107,7 +107,9 @@ export default function SelectFrameSwiper() {
                       {selectedFeed.name}
                     </span>
                     <Spacing size={8} />
-                    <span className="text-C5">{selectedFeed.content}</span>
+                    <span className="text-C5 text-ellipsis overflow-hidden whitespace-nowrap">
+                      {selectedFeed.content}
+                    </span>
                     <Spacing size={16} />
                     <span className={styles.dateWrapper}>
                       {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
