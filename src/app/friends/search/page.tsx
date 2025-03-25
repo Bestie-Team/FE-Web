@@ -9,7 +9,6 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Flex from "@/components/shared/Flex";
 import Button from "@/components/shared/Button/Button";
 import UserListContainer from "@/components/users/UserListContainer";
-import clsx from "clsx";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
 import { useRouter } from "next/navigation";
 import handleShare from "@/utils/handleShare";
