@@ -2,7 +2,7 @@ import Flex from "../shared/Flex";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import Spacing from "../shared/Spacing";
 import clsx from "clsx";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
@@ -15,6 +15,10 @@ export default function ChoosingKindOfMemory({
   setAdd: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
 }) {
+  useEffect(() => {
+    setStep(1);
+  }, []);
+
   const { isReactNativeWebView } = useReactNativeWebView();
   return (
     <>

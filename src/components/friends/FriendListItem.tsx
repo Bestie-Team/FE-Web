@@ -73,7 +73,7 @@ export default function FriendListItem({
       )}
       onClick={onClick}
     >
-      <Flex className="w-full">
+      <Flex>
         {!!friendInfo?.profileImageUrl ? (
           <Image
             alt="friendProfile"
@@ -132,7 +132,7 @@ export default function FriendListItem({
 }
 
 const styles = {
-  li: `w-full bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between border`,
+  li: `bg-base-white flex py-[14px] !px-4 rounded-[20px] items-center justify-between border`,
   img: "rounded-full object-cover h-9 w-9",
   name: "text-C2 text-grayscale-400",
   selectBtn:

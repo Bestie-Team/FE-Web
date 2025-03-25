@@ -33,7 +33,7 @@ const DynamicComponents = {
 export default function Record() {
   const router = useRouter();
   const [step, setStep] = useRecoilState(recordStepAtom);
-  const [add, setAdd] = useState<number>(0);
+  const [add, setAdd] = useState<number>(1);
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
 
@@ -44,7 +44,9 @@ export default function Record() {
     }
     if (step === 2.5) {
       setStep(step - 1.5);
-    } else setStep(step - 1);
+    } else if (step > 1) {
+      setStep(step - 1);
+    }
   };
 
   const CurrentStepComponent = DynamicComponents[step] || DynamicComponents[1];

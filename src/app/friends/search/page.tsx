@@ -57,9 +57,7 @@ export default function SearchPage() {
           direction="column"
           align="center"
           justify="center"
-          className={clsx(
-            "h-[calc(100dvh-278px)] gap-5 pt-safe-top pb-safe-bottom"
-          )}
+          className="h-dvh gap-5 pt-safe-top pb-safe-bottom"
         >
           <Flex
             className="pb-5 gap-5 items-center justify-center"
