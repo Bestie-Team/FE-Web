@@ -1,4 +1,5 @@
 import { postFriends } from "@/remote/friends";
+import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useRequestFriend({
@@ -16,5 +17,6 @@ export default function useRequestFriend({
     onSuccess: (data) => {
       onSuccess(data);
     },
+    onError: (error: Error) => lightyToast.error(error.message),
   });
 }

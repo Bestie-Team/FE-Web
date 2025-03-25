@@ -17,7 +17,7 @@ export async function postFriends({ userId }: { userId: string }) {
     return { message: "친구 신청이 완료되었어요!" };
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to friend request");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -33,7 +33,7 @@ export async function deleteFriend({ friendId }: { friendId: string }) {
     return { message: "친구를 삭제했어요" };
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to delete friend");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -61,7 +61,7 @@ export async function getFriends({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("친구 목록 조회에 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -103,7 +103,7 @@ export async function postRejectFriend({ senderId }: { senderId: string }) {
     return { message: "친구 요청을 거절했어요!" };
   } catch (error) {
     console.log(error);
-    throw new Error("친구 요청 거절에 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -136,7 +136,7 @@ export async function getReceivedFriendRequestsList({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("친구 요청 목록 조회에 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -168,7 +168,7 @@ export async function getSentFriendRequestsList({
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("보낸 친구 요청 목록 조회에 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -201,7 +201,7 @@ export async function getSearchFriends({
     if (error instanceof Response && error.status === 400) {
       throw new Error("검색어는 2자 이상 20자 이하만 가능합니다");
     }
-    throw new Error("친구 검색 중 에러가 발생하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -218,6 +218,6 @@ export async function getFriendsRequestTotalCount() {
     return data;
   } catch (error) {
     console.log(error);
-    throw new Error("친구 요청 수 조회에 실패하였습니다");
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
