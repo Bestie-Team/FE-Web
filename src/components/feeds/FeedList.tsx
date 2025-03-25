@@ -52,6 +52,7 @@ export const FeedList: React.FC<FeedListProps> = ({
 
   return (
     <div
+      className="mb-8"
       onClick={(e) => {
         closeDropdown(e);
         closeBox();
