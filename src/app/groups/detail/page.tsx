@@ -64,8 +64,8 @@ export default function GroupDetailPage() {
 
   const handleDeleteSuccess = async () => {
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["groups"] }),
-      queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
+      await queryClient.invalidateQueries({ queryKey: ["groups"] }),
+      await queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
     ]);
     lightyToast.success("그룹 나가기/삭제 성공");
     router.replace("/social");
@@ -80,9 +80,14 @@ export default function GroupDetailPage() {
   };
 
   const reportSuccessHandler = async (data: { message: string }) => {
-    await queryClient.invalidateQueries({
-      queryKey: ["groups"],
-    });
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["groups"],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["user/detail"],
+      }),
+    ]);
     router.replace("/social?tab=group");
     lightyToast.success(data.message);
   };
