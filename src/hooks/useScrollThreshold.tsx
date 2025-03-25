@@ -1,19 +1,35 @@
-import { useState, useEffect } from "react";
+import { RefObject, useEffect, useState } from "react";
 
-export function useScrollThreshold(threshold = 60) {
+export function useAnyScrollThreshold(
+  containerRef?: RefObject<HTMLDivElement>,
+  threshold = 50
+) {
   const [isPastThreshold, setIsPastThreshold] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const target = containerRef?.current || window;
+
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
+      let scrollTop;
+
+      if (target === window) {
+        scrollTop = window.scrollY || document.documentElement.scrollTop;
+      } else {
+        scrollTop = (target as HTMLElement).scrollTop;
+      }
+
+      // console.log("스크롤 위치:", scrollTop); // 디버깅용
       setIsPastThreshold(scrollTop > threshold);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // 초기 상태 설정
+    handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [threshold]);
+    target.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => target.removeEventListener("scroll", handleScroll);
+  }, [containerRef, threshold]);
 
   return isPastThreshold;
 }

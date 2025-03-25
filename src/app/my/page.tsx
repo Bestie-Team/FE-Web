@@ -4,13 +4,18 @@ import MyMainInfo from "@/components/my/MyMainInfo";
 import UserProfile from "@/components/my/UserProfile";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";
-import React, { Suspense, useCallback, useEffect, useState } from "react";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Header from "@/components/shared/Header/Header";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { useScrollThreshold } from "@/hooks/useScrollThreshold";
 import {
   openAskMobile,
   openPrivacyPolicyMobile,
@@ -22,6 +27,7 @@ import { getLogout } from "@/remote/auth";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { deleteUser } from "@/remote/users";
+import { useAnyScrollThreshold } from "@/hooks/useScrollThreshold";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
   return (
@@ -42,7 +48,8 @@ export default function MyPage() {
   const { data: user } = useUserDetail();
   const { logout } = useAuth();
   const router = useRouter();
-  const isPast = useScrollThreshold();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isPast = useAnyScrollThreshold(containerRef);
   const { isReactNativeWebView } = useReactNativeWebView();
 
   const openTermsPage = () => {
@@ -140,7 +147,10 @@ export default function MyPage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-dvh w-full pt-safe-top">
+    <div
+      className="h-dvh overflow-y-scroll no-scrollbar w-full pt-safe-top"
+      ref={containerRef}
+    >
       <MyHeader shadow={isPast} />
       <div>
         <main className="pt-[68px]">
