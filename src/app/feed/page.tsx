@@ -189,7 +189,7 @@ export default function FeedPage() {
                 }
               >
                 <div ref={containerRef_m} className={styles.feedWrapper}>
-                  <div className="pt-safe-top">
+                  <div className="pt-safe-top pb-14">
                     <FeedList
                       feeds={feedMine}
                       userInfo={userInfo}
