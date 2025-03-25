@@ -55,7 +55,7 @@ export default function UploadPhotoSwiper({
       }
       const objectUrl = URL.createObjectURL(file);
       setImages((prev) => [...prev, objectUrl]);
-
+      console.log(ext);
       if (ext === "png" || ext === "jpg" || ext === "jpeg") {
         const convertedFile = await compressImage(file);
         if (setFilesToUpload && convertedFile) {

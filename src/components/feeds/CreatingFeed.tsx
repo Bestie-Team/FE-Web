@@ -51,6 +51,8 @@ export default function CreatingFeed() {
     imageUrls: string[];
     message: string;
   }) => {
+    lightyToast.success("이미지 업로드 성공");
+    console.log(uploadImages);
     setFeedInfo((prev) => ({
       ...prev,
       imageUrls: data.imageUrls,

@@ -19,7 +19,10 @@ export default function useMakeGatheringFeed({
     ],
     mutationFn: async () =>
       await postGatheringFeed({ gatheringFeed: feedRequest }),
-    onSuccess: (data: { message: string }) => onSuccess(data),
+    onSuccess: (data: { message: string }) => {
+      console.log(feedRequest);
+      onSuccess(data);
+    },
     onError: (error) => onError(error),
   });
 }
