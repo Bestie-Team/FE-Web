@@ -114,6 +114,12 @@ export default function FeedPage() {
     [setFeedId]
   );
 
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(Number(selectedTab) - 1);
+    }
+  }, [selectedTab]);
+
   return (
     <div className="h-dvh pb-safe-bottom">
       <ScrollAwareHeader
@@ -126,7 +132,6 @@ export default function FeedPage() {
 
       <div className="h-dvh">
         <Swiper
-          initialSlide={Number(selectedTab) - 1}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
           }}
