@@ -5,7 +5,6 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
 import * as lighty from "lighty-type";
-
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { useSetRecoilState } from "recoil";
 import { friendsToShareAtom } from "@/atoms/record";
@@ -78,7 +77,12 @@ export default function SelectableSearchedFriendsListContainer({
           );
         })}
       </ul>
-      <FixedBottomButton label={getLabel()} onClick={handleSubmitSelection} />
+      <FixedBottomButton
+        label={getLabel()}
+        className="mb-safe-bottom"
+        bgColor="bg-grayscale-50"
+        onClick={handleSubmitSelection}
+      />
     </Flex>
   );
 }
