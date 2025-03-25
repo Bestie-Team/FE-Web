@@ -48,7 +48,7 @@ export default function FeedPage() {
     deleteFeed,
     deleteComment,
     hideFeed,
-    reportFeed,
+    report,
 
     isNewNotification,
     mailCount,
@@ -230,7 +230,7 @@ export default function FeedPage() {
       )}
 
       <FeedModals
-        onReportFeed={reportFeed}
+        onReport={report}
         onDeleteFeed={deleteFeed}
         onDeleteComment={deleteComment}
         onHideFeed={hideFeed}

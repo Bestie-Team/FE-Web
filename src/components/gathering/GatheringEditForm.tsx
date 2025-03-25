@@ -145,11 +145,6 @@ export default function GatheringEditForm({
         />
       </div>
       <CalendarBottomSheet
-        originalDate={
-          gathering.gatheringDate
-            ? formatToKoreanTime(gathering.gatheringDate)
-            : undefined
-        }
         setGatheringToEdit={setGathering}
         onClose={() => setCalendarOpen(false)}
         open={calendarOpen}

@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { gatheringSelectedDateAtom } from "@/atoms/gathering";
 import CalendarSkeleton from "./CalendarSkeleton";
 import Flex from "../Flex";
+import { useState } from "react";
 
 const Calendar = dynamic(() => import("react-calendar"), {
   ssr: false,
@@ -17,13 +18,12 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function LightyCalendar({
-  originalDate,
-}: {
-  originalDate?: string;
-}) {
+export default function LightyCalendar() {
   const [selectedDate, setSelectedDate] = useRecoilState<Value>(
     gatheringSelectedDateAtom
+  );
+  const [activeStartDate, setActiveStartDate] = useState(
+    addDays(new Date(), 1)
   );
 
   return (
@@ -33,7 +33,12 @@ export default function LightyCalendar({
         minDate={addDays(new Date(), 1)}
         onChange={setSelectedDate}
         value={selectedDate}
-        activeStartDate={!!originalDate ? new Date(originalDate) : undefined}
+        activeStartDate={activeStartDate}
+        onActiveStartDateChange={({ activeStartDate }) => {
+          if (activeStartDate) {
+            setActiveStartDate(activeStartDate);
+          }
+        }}
         formatDay={(locale, date) => format(date, "d")}
         prev2Label={null}
         next2Label={null}

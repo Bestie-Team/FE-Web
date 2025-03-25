@@ -41,8 +41,9 @@ export default function GatheringInput({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleComplete = (data: any) => {
-    if (setValue == null) return;
-    if (type === "editAddress" && setEditValue == null) return;
+    if (setValue == null && setEditValue == null) {
+      return;
+    }
 
     let fullAddress = data.address;
     let extraAddress = "";
@@ -57,7 +58,8 @@ export default function GatheringInput({
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
-    if (type === "editAddress" && setEditValue) {
+
+    if (setEditValue && !setValue) {
       setEditValue((prev) => ({ ...prev, address: fullAddress }));
     } else if (setValue) {
       setValue((prev) => ({ ...prev, address: fullAddress }));

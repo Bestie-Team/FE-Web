@@ -38,7 +38,12 @@ export default function EditingFeed() {
     content: feedInfo.content,
     feedId: originalFeedValue?.id || "",
     onSuccess: async (data) => {
-      await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] });
+      await Promise.all([
+        await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
+        await queryClient.invalidateQueries({
+          queryKey: ["get/feeds/all"],
+        }),
+      ]);
       router.replace("/feed");
       lightyToast.success(data.message);
     },

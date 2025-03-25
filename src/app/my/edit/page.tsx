@@ -27,7 +27,7 @@ export default function EditPage() {
   const { mutate: updateImage } = useUpdateProfile({
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
-      Promise.all([
+      await Promise.all([
         await queryClient.invalidateQueries({
           queryKey: ["user/detail"],
         }),
@@ -42,7 +42,7 @@ export default function EditPage() {
   const { mutate: updateId } = useUpdateAccountId({
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
-      Promise.all([
+      await Promise.all([
         await queryClient.invalidateQueries({
           queryKey: ["user/detail"],
         }),

@@ -12,12 +12,10 @@ import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
 import clsx from "clsx";
 
 export default function CalendarBottomSheet({
-  originalDate,
   setGatheringToEdit,
   open = true,
   onClose,
 }: {
-  originalDate?: string;
   setGatheringToEdit?: React.Dispatch<
     React.SetStateAction<Partial<lighty.CreateGatheringRequest>>
   >;
@@ -45,7 +43,6 @@ export default function CalendarBottomSheet({
           selectedTime={selectedTime}
           setAmpm={setAmpm}
           setSelectedTime={setSelectedTime}
-          originalDate={originalDate}
         />
         <Button
           className={buttonStyle}
@@ -55,7 +52,7 @@ export default function CalendarBottomSheet({
               console.log("selectedDate", selectedDate);
               const converted = makeUTC({
                 ampm,
-                date: format(selectedDate.toString(), "yyyy-MM-dd"),
+                date: format(new Date(selectedDate.toString()), "yyyy-MM-dd"),
                 time: selectedTime,
               });
               if (setGatheringToEdit) {

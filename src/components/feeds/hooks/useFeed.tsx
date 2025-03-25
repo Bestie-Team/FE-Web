@@ -80,21 +80,29 @@ export default function useFeed() {
     ]);
   };
 
-  const handleReportFeedSuccess = async () => {
+  const handleReportSuccess = async (feedId: string) => {
     lightyToast.success("신고가 접수되었어요!");
     resetReportInfo();
     await Promise.all([
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/all"],
       }),
+      await queryClient.invalidateQueries({
+        queryKey: ["get/comments", { feedId }],
+      }),
     ]);
   };
 
   const handleDeleteFeedSuccess = async (data: { message: string }) => {
     lightyToast.success(data.message);
-    await queryClient.invalidateQueries({
-      queryKey: ["get/feeds/mine"],
-    });
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/mine"],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["get/feeds/all"],
+      }),
+    ]);
   };
 
   const {
@@ -134,8 +142,8 @@ export default function useFeed() {
     },
   });
 
-  const { mutate: reportFeed } = useReport({
-    onSuccess: handleReportFeedSuccess,
+  const { mutate: report } = useReport({
+    onSuccess: () => handleReportSuccess(feedId),
     onError: () => {
       lightyToast.error("신고 실패");
     },
@@ -159,7 +167,7 @@ export default function useFeed() {
     deleteFeed,
     deleteComment,
     hideFeed,
-    reportFeed,
+    report,
 
     noti,
     isNewNotification,

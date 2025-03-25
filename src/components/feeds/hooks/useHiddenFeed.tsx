@@ -22,7 +22,7 @@ export default function useHiddenFeed() {
 
   const displaySuccessHandler = async (message: string) => {
     lightyToast.success(message);
-    Promise.all([
+    await Promise.all([
       await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
       await queryClient.invalidateQueries({
         queryKey: ["get/feeds/hidden"],

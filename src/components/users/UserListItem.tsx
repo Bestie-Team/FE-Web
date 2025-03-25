@@ -31,7 +31,7 @@ export default function UserListItem({
   const { mutate, isPending } = useRequestFriend({
     userId: userInfo?.id,
     onSuccess: async (data: { message: string }) => {
-      Promise.all([
+      await Promise.all([
         await queryClient.invalidateQueries({
           queryKey: ["users", debouncedSearch],
         }),

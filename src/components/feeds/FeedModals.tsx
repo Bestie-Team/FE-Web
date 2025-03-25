@@ -21,14 +21,14 @@ interface FeedModalsProps {
   onDeleteFeed: () => void;
   onDeleteComment: () => void;
   onHideFeed: () => void;
-  onReportFeed: (reason: ReportContentTypes) => void;
+  onReport: (reason: ReportContentTypes) => void;
 }
 
 export const FeedModals: React.FC<FeedModalsProps> = ({
   onDeleteFeed,
   onDeleteComment,
   onHideFeed,
-  onReportFeed,
+  onReport,
 }) => {
   const [report, setReport] = useRecoilState(reportInfoAtom);
   const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
@@ -42,9 +42,9 @@ export const FeedModals: React.FC<FeedModalsProps> = ({
   };
 
   const handleReport = useCallback(() => {
-    onReportFeed({ ...report });
+    onReport({ ...report });
     setReportModal({ type: null, isOpen: false });
-  }, [report, onReportFeed, setReportModal]);
+  }, [report, setReportModal]);
 
   const modalAction =
     modalState.type === "deleteFeed"

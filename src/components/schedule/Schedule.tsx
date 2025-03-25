@@ -15,7 +15,11 @@ export default function Schedule({
   const upcomingGatherings =
     expectingGatherings
       ?.filter((gathering) => new Date(gathering.gatheringDate) >= today)
-      .reverse() || [];
+      .sort(
+        (a, b) =>
+          new Date(a.gatheringDate).getTime() -
+          new Date(b.gatheringDate).getTime()
+      ) || [];
 
   return (
     <div className="w-full flex flex-col items-center pt-5">

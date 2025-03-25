@@ -14,6 +14,8 @@ import NArrowRightIcon from "../Icon/NArrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { contentsOfTerms } from "@/constants/termsContent";
+import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
+import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
 
 export default function TermsBottomSheet({
   onClose,
@@ -28,6 +30,7 @@ export default function TermsBottomSheet({
   termsAgreements: Record<string, boolean>;
   setTermsAgreements: Dispatch<SetStateAction<Record<string, boolean>>>;
 }) {
+  const { isReactNativeWebView } = useReactNativeWebView();
   const [rotated, setRotated] = useState<Record<string, boolean>>({
     "01": false,
     "02": false,
@@ -50,9 +53,17 @@ export default function TermsBottomSheet({
     []
   );
 
-  const onClickTermsHandler = useCallback(() => {
-    console.log("약관 클릭");
-  }, []);
+  const openTermsPage = () => {
+    if (isReactNativeWebView) {
+      openTermsMobile();
+    }
+  };
+
+  const openPrivacyPolicyPage = () => {
+    if (isReactNativeWebView) {
+      openPrivacyPolicyMobile();
+    }
+  };
 
   return (
     <BottomSheetWrapper onClose={onClose} open={open}>
@@ -76,7 +87,7 @@ export default function TermsBottomSheet({
           {약관목록.map(({ title, id }, idx) => {
             return (
               <Fragment key={id}>
-                <li className={styles.list} onClick={onClickTermsHandler}>
+                <li className={styles.list}>
                   <CheckInCircleIcon
                     width="20"
                     height="20"
@@ -92,17 +103,21 @@ export default function TermsBottomSheet({
                   <span className="flex-grow">{title}</span>
                   <NArrowRightIcon
                     checked={termsAgreements[id]}
-                    onClick={() =>
-                      setRotated((prev) => ({
-                        ...prev,
-                        [id]: !prev[id],
-                      }))
-                    }
+                    onClick={() => {
+                      if (id == "03") {
+                        setRotated((prev) => ({
+                          ...prev,
+                          [id]: !prev[id],
+                        }));
+                      } else if (id === "01") {
+                        openTermsPage();
+                      } else if (id === "02") {
+                        openPrivacyPolicyPage();
+                      }
+                    }}
                     rotate={rotated[id]}
                   />
                 </li>
-                {id === "01" && rotated[id] && contentsOfTerms[idx].contents}
-                {id === "02" && rotated[id] && contentsOfTerms[idx].contents}
                 {id === "03" && rotated[id] && contentsOfTerms[idx].contents}
                 {idx < 약관목록.length - 1 ? <Spacing size={20} /> : null}
               </Fragment>
