@@ -68,6 +68,7 @@ export default function FeedForm<
       <Spacing size={8} />
       <Flex direction="column" className={styles.textareaWrapper}>
         <textarea
+          maxLength={150}
           value={content}
           inputMode="text"
           placeholder="해당 약속에는 어떤 소중한 추억이 있었나요? 그날의 추억에 대해 글로 작성해 보세요."
