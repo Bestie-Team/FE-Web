@@ -43,6 +43,11 @@ export default function SelectableSearchedFriendsListContainer({
     action?.();
   };
 
+  const getLabel = () => {
+    if (clickedItems.length == 0) return "공유 없이 시작하기";
+    return `${clickedItems.length}명 선택 완료`;
+  };
+
   return (
     <Flex
       direction="column"
@@ -51,9 +56,10 @@ export default function SelectableSearchedFriendsListContainer({
         backgroundColor: "#F4F4F4",
       }}
     >
-      <span className="text-T4" id="selectableFriendList">{`친구 ${
+      <span className="text-T5" id="selectableFriendList">{`친구 ${
         searchedFriends ? searchedFriends.length : 0
       }`}</span>
+      <Spacing size={12} />
       <ul aria-labelledby="selectableFriendList">
         {searchedFriends.map((friendItem, idx) => {
           return (
@@ -72,10 +78,7 @@ export default function SelectableSearchedFriendsListContainer({
           );
         })}
       </ul>
-      <FixedBottomButton
-        label={"공유없이 시작하기"}
-        onClick={handleSubmitSelection}
-      />
+      <FixedBottomButton label={getLabel()} onClick={handleSubmitSelection} />
     </Flex>
   );
 }
