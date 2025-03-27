@@ -46,7 +46,7 @@ export default function MyPage() {
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
   const { data: user } = useUserDetail();
-  const { logout } = useAuth();
+  const { logout, setUserDeleted } = useAuth();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const isPast = useAnyScrollThreshold(containerRef);
@@ -116,13 +116,7 @@ export default function MyPage() {
             document.cookie =
               "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-            setTimeout(() => {
-              window.location.href = "/";
-              // 백업 라우팅 방식
-              if (router && router.push) {
-                router.push("/");
-              }
-            }, 100);
+            setUserDeleted(true);
           } catch (error: unknown) {
             console.log(error);
           }
