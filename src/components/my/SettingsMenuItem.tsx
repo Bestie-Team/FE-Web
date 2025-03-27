@@ -5,10 +5,11 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
 import { lightyToast } from "@/utils/toast";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { appleLoginMobile } from "@/webview/actions";
+import { useAuth } from "../shared/providers/AuthProvider";
 
 export default function SettingsMenuItem({
   list,
@@ -19,10 +20,11 @@ export default function SettingsMenuItem({
   link: { href: string; target?: string };
   user: string[];
 }) {
-  const router = useRouter();
+  // const router = useRouter();
   const { data: userInfo } = useUserDetail();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setUserDeleted } = useAuth();
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
@@ -41,20 +43,20 @@ export default function SettingsMenuItem({
       localStorage.clear();
       document.cookie =
         "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-      setTimeout(() => {
-        // Next.js router를 우선 사용하고, 실패할 경우 window.location 사용
-        try {
-          if (router && typeof router.push === "function") {
-            router.push("/");
-          } else {
-            window.location.href = "/";
-          }
-        } catch (redirectError) {
-          console.log("리다이렉트 오류:", redirectError);
-          window.location.href = "/";
-        }
-      }, 300);
+      setUserDeleted(true);
+      // setTimeout(() => {
+      //   // Next.js router를 우선 사용하고, 실패할 경우 window.location 사용
+      //   try {
+      //     if (router && typeof router.push === "function") {
+      //       router.push("/");
+      //     } else {
+      //       window.location.href = "/";
+      //     }
+      //   } catch (redirectError) {
+      //     console.log("리다이렉트 오류:", redirectError);
+      //     window.location.href = "/";
+      //   }
+      // }, 300);
     } catch (error) {
       console.log(error);
       lightyToast.error("accountdeletion error");
