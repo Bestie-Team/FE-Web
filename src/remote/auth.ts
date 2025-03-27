@@ -186,7 +186,7 @@ export async function getLogout(deviceId: string) {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
     const targetUrl = `${baseUrl}/auth/logout`;
-    const response = await fetch(targetUrl, {
+    const response = await fetchWithAuth(targetUrl, {
       method: "DELETE",
       credentials: "include",
       headers: {
