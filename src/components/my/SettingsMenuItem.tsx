@@ -43,14 +43,18 @@ export default function SettingsMenuItem({
         "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
       setTimeout(() => {
-        window.location.href = "/";
-        console.log("settime");
-        // 백업 라우팅 방식
-        if (router && router.push) {
-          console.log("settime");
-          router.push("/");
+        // Next.js router를 우선 사용하고, 실패할 경우 window.location 사용
+        try {
+          if (router && typeof router.push === "function") {
+            router.push("/");
+          } else {
+            window.location.href = "/";
+          }
+        } catch (redirectError) {
+          console.log("리다이렉트 오류:", redirectError);
+          window.location.href = "/";
         }
-      }, 100);
+      }, 300);
     } catch (error) {
       console.log(error);
       lightyToast.error("accountdeletion error");
