@@ -44,8 +44,10 @@ export default function SettingsMenuItem({
 
       setTimeout(() => {
         window.location.href = "/";
+        console.log("settime");
         // 백업 라우팅 방식
         if (router && router.push) {
+          console.log("settime");
           router.push("/");
         }
       }, 100);

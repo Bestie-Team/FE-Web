@@ -109,7 +109,6 @@ export async function deleteUser(body?: { authorizationCode?: string }) {
     }
   } catch (error) {
     console.log(error);
-    lightyToast.error("탈퇴 실패");
-    throw error;
+    throw new Error("탈퇴 실패");
   }
 }
