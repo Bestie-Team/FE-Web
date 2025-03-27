@@ -79,9 +79,11 @@ export default function MyPage() {
   const handleLogout = useCallback(async () => {
     const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
     if (deviceId) {
-      await getLogout(deviceId);
+      const loggedout = await getLogout(deviceId);
+      if (loggedout) {
+        logout();
+      }
     }
-    logout();
   }, [router, logout]);
 
   useEffect(() => {
