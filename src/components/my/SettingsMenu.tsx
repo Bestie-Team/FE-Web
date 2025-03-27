@@ -81,13 +81,11 @@ const settings = [
         title: "문의하기",
         info: null,
         link: { href: "" },
-        // link: { href: "https://forms.gle/jNXBCFiiK2ZCo3eZA", target: "_blank" },
       },
       {
         title: "건의하기",
         info: null,
         link: { href: "" },
-        // link: { href: "https://forms.gle/YCbp9AYf3YamubP77", target: "_blank" },
       },
     ],
   },
