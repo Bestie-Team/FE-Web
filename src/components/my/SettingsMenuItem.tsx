@@ -5,7 +5,6 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
 import { lightyToast } from "@/utils/toast";
-// import { useRouter } from "next/navigation";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { appleLoginMobile } from "@/webview/actions";
@@ -20,11 +19,10 @@ export default function SettingsMenuItem({
   link: { href: string; target?: string };
   user: string[];
 }) {
-  // const router = useRouter();
   const { data: userInfo } = useUserDetail();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { setUserDeleted } = useAuth();
+  const { logout } = useAuth();
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
@@ -39,24 +37,10 @@ export default function SettingsMenuItem({
     setLoading(true);
 
     try {
-      await deleteUser();
-      localStorage.clear();
-      document.cookie =
-        "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      setUserDeleted(true);
-      // setTimeout(() => {
-      //   // Next.js router를 우선 사용하고, 실패할 경우 window.location 사용
-      //   try {
-      //     if (router && typeof router.push === "function") {
-      //       router.push("/");
-      //     } else {
-      //       window.location.href = "/";
-      //     }
-      //   } catch (redirectError) {
-      //     console.log("리다이렉트 오류:", redirectError);
-      //     window.location.href = "/";
-      //   }
-      // }, 300);
+      const deleted = await deleteUser();
+      if (deleted) {
+        logout();
+      }
     } catch (error) {
       console.log(error);
       lightyToast.error("accountdeletion error");

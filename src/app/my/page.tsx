@@ -46,7 +46,7 @@ export default function MyPage() {
     { profileImageUrl: string; accountId: string } | undefined
   >(undefined);
   const { data: user } = useUserDetail();
-  const { logout, setUserDeleted } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const isPast = useAnyScrollThreshold(containerRef);
@@ -105,18 +105,14 @@ export default function MyPage() {
         ) {
           try {
             const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
-
             if (deviceId) {
-              await deleteUser({
+              const deleted = await deleteUser({
                 authorizationCode: message.authorizationCode,
               });
+              if (deleted) {
+                logout();
+              }
             }
-
-            localStorage.clear();
-            document.cookie =
-              "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-            setUserDeleted(true);
           } catch (error: unknown) {
             console.log(error);
           }
