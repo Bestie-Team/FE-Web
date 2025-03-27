@@ -172,8 +172,6 @@ export async function getUserAuth() {
     const targetUrl = `${baseUrl}/users/profile`;
     const response = await fetchWithAuth(targetUrl, {
       method: "GET",
-      cache: "force-cache",
-      headers: { "Cache-Control": "public, max-age=3600 * 24000" },
     });
     const data: lighty.UserProfileResponse = await response.json();
     return data;
