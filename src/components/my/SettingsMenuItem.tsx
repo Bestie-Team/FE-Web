@@ -5,7 +5,6 @@ import Link from "next/link";
 import Modal from "../shared/Modal/Modal";
 import { deleteUser } from "@/remote/users";
 import { lightyToast } from "@/utils/toast";
-import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { appleLoginMobile } from "@/webview/actions";
 import { useAuth } from "../shared/providers/AuthProvider";
@@ -20,7 +19,6 @@ export default function SettingsMenuItem({
   user: string[];
 }) {
   const { data: userInfo } = useUserDetail();
-  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { logout } = useAuth();
   const handleClick = () => {
@@ -34,7 +32,6 @@ export default function SettingsMenuItem({
       appleLoginMobile();
       return;
     }
-    setLoading(true);
 
     try {
       const deleted = await deleteUser();
@@ -44,8 +41,6 @@ export default function SettingsMenuItem({
     } catch (error) {
       console.log(error);
       lightyToast.error("accountdeletion error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -63,7 +58,6 @@ export default function SettingsMenuItem({
           })}
         </Flex>
       </li>
-      {loading && <DotSpinnerSmall />}
       {isModalOpen ? (
         <Modal
           action={accountDelete}
