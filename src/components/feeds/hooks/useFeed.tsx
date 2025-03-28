@@ -116,6 +116,7 @@ export default function useFeed() {
     loadMore: loadMore_mine,
     isFetching: isFetching_mine,
   } = useFeedMine({ ...queryParams, enabled: !!token });
+
   const { data: noti = [] } = useNotification();
 
   const isNewNotification = noti.filter((n) => n.readAt == null);

@@ -52,13 +52,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
     }
   };
 
-  let response;
-  try {
-    response = await fetchFn();
-  } catch (e) {
-    console.error("Fetch failed:", e);
-    throw new Error("Failed to fetch data");
-  }
+  let response = await fetchFn();
 
   if (!response) {
     throw new Error("No response received");
@@ -75,8 +69,6 @@ export const fetchWithAuth = async (url: string, options: RequestInit) => {
         throw new Error("Failed to fetch data after token refresh");
       }
     } else {
-      // 토큰 갱신 실패 - 로그인 페이지로 리디렉션하지만 오류도 반환
-      // 리디렉션은 컴포넌트에서 처리하도록 변경
       throw new Error("Authentication failed");
     }
   }
