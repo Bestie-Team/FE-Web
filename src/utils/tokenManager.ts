@@ -37,7 +37,6 @@ export async function refreshAccessToken() {
     return null;
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
-    // localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     return null;
   }
 }

@@ -125,8 +125,6 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
       ...(profileImageUrl && { profileImageUrl }),
     });
 
-    window.location.href = "/onboard";
-
     return { message: "회원가입을 축하합니다" };
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));

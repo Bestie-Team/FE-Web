@@ -97,9 +97,7 @@ export default function ClickableGatheringSwiperForDeco({
             {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
             <Flex direction="column" className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{gathering?.name}</span>
-              <span className="text-C2 text-grayscale-600 text-ellipsis overflow-hidden whitespace-nowrap">
-                {content}
-              </span>
+              <span className={styles.content}>{content}</span>
             </Flex>
             {id === selectedFeedId ? (
               <Flex
@@ -119,13 +117,13 @@ export default function ClickableGatheringSwiperForDeco({
 
 const styles = {
   swiperContainer: "relative w-full bg-gray-50",
-
   slide:
     "relative !h-[320px] my-auto shadow-custom rounded-[20px] overflow-hidden",
   image: "slide-img object-cover w-[270px] h-[320px]",
 
   gatheringInfoWrapper:
     "gap-[6px] bg-base-white w-full absolute bottom-[-2px] px-5 pt-3 pb-6 rounded-b-[20px] z-10",
-
   checkWrapper: "absolute rounded-[20px] inset-0 bg-[#00000080] pb-[79px]",
+  content:
+    "text-C2 text-grayscale-600 text-ellipsis overflow-hidden whitespace-nowrap",
 };

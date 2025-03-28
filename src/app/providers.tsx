@@ -15,7 +15,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { usePathname } from "next/navigation";
 import { ToastContainer, Zoom } from "react-toastify";
 import clsx from "clsx";
-import { GA_ID } from "./lib/gtm";
+import { GA_ID } from "../lib/gtm/gtm";
 import useMaze from "@/hooks/useMaze";
 import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";

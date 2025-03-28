@@ -14,6 +14,8 @@ import { getIdAvailability } from "@/remote/users";
 import validateForm from "@/utils/validateSignupForm";
 import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
 import { 약관목록 } from "@/constants/terms";
+import DotSpinner from "./shared/Spinner/DotSpinner";
+import { useRouter } from "next/navigation";
 
 export type Provider = "GOOGLE" | "KAKAO" | "APPLE";
 
@@ -28,10 +30,10 @@ const INITIAL_FORM_STATE: RegisterRequestType = {
 };
 
 export default function SignupForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [formValues, setFormValues] =
     useState<RegisterRequestType>(INITIAL_FORM_STATE);
-  const [oauthData, setOauthData] = useState<lighty.LoginFailResponse>();
   const [idNotAvailable, setIdNotAvailable] = useState(false);
   const { isReactNativeWebView } = useReactNativeWebView();
   const [termsAgreements, setTermsAgreements] = useState(() => {
@@ -40,6 +42,7 @@ export default function SignupForm() {
       {}
     );
   });
+  const router = useRouter();
 
   const handleAccountIdChange = useCallback(async (value: string) => {
     if (value.length <= 40) {
@@ -64,16 +67,25 @@ export default function SignupForm() {
   );
 
   const { mutate } = useSignup({
-    ...formValues,
-    email: oauthData?.email || "",
-    provider: oauthData?.provider as Provider,
+    formValues,
     termsOfServiceConsent: true,
-    privacyPolicyConsent: termsAgreements["03"],
-    onSuccess: useCallback((data) => {
+    privacyPolicyConsent: true,
+    onSuccess: (data) => {
       lightyToast.success(data.message);
-    }, []),
+      setIsLoading(false);
+      router.replace("/onboard");
+    },
+    onError: (error: Error) => {
+      lightyToast.error(error.message);
+      setIsLoading(false);
+      router.replace("/");
+    },
   });
 
+  const handleSignup = () => {
+    setIsLoading(true);
+    mutate();
+  };
   const errors = useMemo(() => validateForm(formValues), [formValues]);
   const isValidate = useMemo(() => Object.keys(errors).length === 0, [errors]);
 
@@ -99,8 +111,12 @@ export default function SignupForm() {
     if (session) {
       try {
         const user_info: lighty.LoginFailResponse = JSON.parse(session);
-        setOauthData(user_info);
-        setFormValues((prev) => ({ ...prev, name: user_info.name }));
+        setFormValues((prev) => ({
+          ...prev,
+          name: user_info.name,
+          provider: user_info.provider,
+          email: user_info.email,
+        }));
       } catch (error) {
         console.error("Failed to parse OAuth data:", error);
       }
@@ -168,8 +184,18 @@ export default function SignupForm() {
           termsAgreements={termsAgreements}
           setTermsAgreements={setTermsAgreements}
           onClose={() => setModalOpen(false)}
-          handleSignup={mutate}
+          handleSignup={handleSignup}
         />
+      )}
+      {isLoading && (
+        <div
+          style={{
+            zIndex: 300,
+          }}
+          className="absolute inset-0 bg-grayscale-900 bg-opacity-50 flex justify-center items-center"
+        >
+          <DotSpinner />
+        </div>
       )}
     </Flex>
   );

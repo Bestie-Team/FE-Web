@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextLayout, { NextProvider } from "./providers";
-import { GA_ID } from "./lib/gtm";
+import { GA_ID } from "../lib/gtm/gtm";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { AuthProvider } from "@/components/shared/providers/AuthProvider";
 import { ProtectedRoute } from "@/components/ProtectedRoute";

@@ -11,33 +11,23 @@ export interface SignupType {
 }
 
 export default function useSignup({
-  email,
-  name,
-  accountId,
-  profileImageUrl,
-  provider,
+  formValues,
   termsOfServiceConsent,
   privacyPolicyConsent,
   onSuccess,
+  onError,
 }: {
-  email: string;
-  name: string;
-  accountId: string;
-  profileImageUrl: File | string | null;
-  provider: lighty.Provider;
+  formValues: SignupType;
   termsOfServiceConsent: boolean;
   privacyPolicyConsent: boolean;
   onSuccess: (data: { message: string }) => void;
+  onError: (error: Error) => void;
 }) {
   return useMutation({
-    mutationKey: ["register", email, provider],
+    mutationKey: ["register", formValues.email, formValues.provider],
     mutationFn: () =>
       registerUser({
-        email,
-        name,
-        accountId,
-        profileImageUrl,
-        provider,
+        ...formValues,
         termsOfServiceConsent,
         privacyPolicyConsent,
       }),
@@ -46,5 +36,6 @@ export default function useSignup({
         onSuccess(data);
       }
     },
+    onError: (error: Error) => onError(error),
   });
 }

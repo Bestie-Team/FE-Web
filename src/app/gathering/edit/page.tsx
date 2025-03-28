@@ -26,12 +26,18 @@ export default function GatheringEditPage() {
     address: originalGatheringValue?.address || "",
   };
 
-  useEffect(() => {
-    if (!originalGatheringValue) {
-      router.replace("/gathering");
-      lightyToast.error("약속 정보를 찾을 수 없습니다.");
-    }
-  }, [originalGatheringValue, router]);
+  const editSuccessHandler = async (data: { message: string }) => {
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["gatherings/all"],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["gathering/detail", selectedGatheringId],
+      }),
+    ]);
+    router.replace("/gathering");
+    lightyToast.success(data.message);
+  };
 
   const [gatheringInfo, setGatheringInfo] =
     useState<Partial<lighty.CreateGatheringRequest>>(INITIAL_FORM_STATE);
@@ -39,22 +45,18 @@ export default function GatheringEditPage() {
   const { mutate: editingFeed, isPending } = useEditGathering({
     gathering: gatheringInfo,
     gatheringId: selectedGatheringId || "",
-    onSuccess: async (data) => {
-      Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: ["gatherings/all"],
-        }),
-        await queryClient.invalidateQueries({
-          queryKey: ["gathering/detail", selectedGatheringId],
-        }),
-      ]);
-      router.replace("/gathering");
-      lightyToast.success(data.message);
-    },
+    onSuccess: editSuccessHandler,
     onError: (error) => {
       lightyToast.error(error.message);
     },
   });
+
+  useEffect(() => {
+    if (!originalGatheringValue) {
+      router.replace("/gathering");
+      lightyToast.error("약속 정보를 찾을 수 없습니다.");
+    }
+  }, [originalGatheringValue, router]);
 
   if (!originalGatheringValue || originalGatheringValue == null) return null;
 

@@ -22,6 +22,7 @@ export default function SettingsMenuItem({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { logout } = useAuth();
   const router = useRouter();
+
   const handleClick = () => {
     if (list.title === "탈퇴하기") {
       setIsModalOpen(true);
