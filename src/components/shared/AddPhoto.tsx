@@ -7,7 +7,7 @@ import PlusIcon from "./Icon/PlusIcon";
 import { compressImage } from "@/utils/compress";
 import { lightyToast } from "@/utils/toast";
 import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
-import OptimizedImage from "./OptimizedImage";
+import Image from "next/image";
 
 export interface RegisterRequestType {
   email: string;
@@ -112,7 +112,7 @@ export default function AddPhoto({
           className={imageWrapperStyle}
         >
           {imageUrl || image ? (
-            <OptimizedImage
+            <Image
               loading="eager"
               src={imageUrl || image || ""}
               alt="upload_image"
