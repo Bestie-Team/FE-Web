@@ -51,7 +51,6 @@ function cleanupCache() {
 
 export async function GET(request: NextRequest) {
   try {
-    // URL에서 쿼리 파라미터 가져오기
     const { searchParams } = new URL(request.url);
     const imageUrl = searchParams.get("url");
 
@@ -62,7 +61,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // 캐시 키 생성
     const cacheKey = createCacheKey(imageUrl, searchParams);
 
     // 캐시에서 이미지 확인
@@ -78,7 +76,6 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // 변환 옵션 파싱 - 더 효율적인 기본값 사용
     const width = Number.parseInt(searchParams.get("width") || "0");
     const height = Number.parseInt(searchParams.get("height") || "0");
     const quality = Number.parseInt(searchParams.get("quality") || "80"); // 기본 품질 낮춤
@@ -87,7 +84,6 @@ export async function GET(request: NextRequest) {
     const fit = searchParams.get("fit") || "cover";
     const withoutEnlargement = searchParams.get("noEnlarge") !== "false";
 
-    // 이미지 가져오기
     const imageResponse = await fetch(imageUrl);
 
     if (!imageResponse.ok) {

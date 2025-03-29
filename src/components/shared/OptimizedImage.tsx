@@ -28,7 +28,6 @@ export default function OptimizedImage({
   onLoad,
 }: OptimizedImageProps) {
   const [imageSrc, setImageSrc] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -37,7 +36,6 @@ export default function OptimizedImage({
     // 이미 최적화 API URL인 경우 그대로 사용
     if (src.startsWith("/api/resize") || src.startsWith("/api/optimize")) {
       setImageSrc(src);
-      setIsLoading(false);
       return;
     }
 
@@ -46,7 +44,6 @@ export default function OptimizedImage({
       src
     )}&width=${width}&height=${height}&quality=${quality}&effort=${effort}`;
     setImageSrc(optimizedSrc);
-    setIsLoading(false);
   }, [src, width, height, quality, effort]);
 
   if (error) {
@@ -57,21 +54,9 @@ export default function OptimizedImage({
 
   return (
     <>
-      {isLoading && (
-        <div
-          className="flex items-center justify-center bg-gray-100 rounded-md"
-          style={{
-            width: `${width}px`,
-            height: `${height}px`,
-            maxWidth: "100%",
-          }}
-        >
-          <div className="animate-spin h-8 w-8 border-4 border-primary border-r-transparent rounded-full"></div>
-        </div>
-      )}
       {imageSrc && (
         <img
-          style={{ ...style, display: isLoading ? "none" : "block" }}
+          style={style}
           loading={loading}
           src={imageSrc || "/placeholder.svg"}
           alt={alt}

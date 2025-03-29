@@ -59,9 +59,9 @@ export default function Gathering({
           </>
         )}
       </div>
-      <Spacing size={120} />
+      <Spacing size={160} />
     </div>
   );
 }
 const gatheringSkeleton =
-  "overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full animate-pulse";
+  "overflow-hidden rounded-2xl aspect-square bg-[#F4F4F4] w-full h-full";
