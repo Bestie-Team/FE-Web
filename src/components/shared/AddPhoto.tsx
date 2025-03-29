@@ -1,5 +1,4 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
-import Image from "next/image";
 import * as lighty from "lighty-type";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
@@ -8,6 +7,7 @@ import PlusIcon from "./Icon/PlusIcon";
 import { compressImage } from "@/utils/compress";
 import { lightyToast } from "@/utils/toast";
 import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
+import OptimizedImage from "./OptimizedImage";
 
 export interface RegisterRequestType {
   email: string;
@@ -112,8 +112,7 @@ export default function AddPhoto({
           className={imageWrapperStyle}
         >
           {imageUrl || image ? (
-            <Image
-              priority
+            <OptimizedImage
               src={imageUrl || image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}

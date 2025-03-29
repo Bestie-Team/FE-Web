@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import * as lighty from "lighty-type";
@@ -8,6 +7,7 @@ import LightyIcon from "../shared/Icon/LightyIcon";
 import { Lighty } from "@/constants/images";
 import clsx from "clsx";
 import { forwardRef, MouseEvent } from "react";
+import OptimizedImage from "../shared/OptimizedImage";
 
 interface InfoBarProps {
   withMembers: lighty.User[];
@@ -61,7 +61,7 @@ function WriterInfo({ writer }: { writer: lighty.User }) {
   return (
     <Flex className="gap-[6px]">
       {!!writer.profileImageUrl ? (
-        <Image
+        <OptimizedImage
           loading="eager"
           src={writer.profileImageUrl}
           width={36}
@@ -127,7 +127,7 @@ export function FriendsInfoContainer({
     >
       {friendInfo.map((info, i) => (
         <Flex align="center" className="gap-[2px]" key={info.name}>
-          <Image
+          <OptimizedImage
             alt={`friend${i}`}
             width={24}
             height={24}

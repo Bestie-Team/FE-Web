@@ -1,7 +1,7 @@
-import Image from "next/image";
 import "swiper/css";
 import Flex from "./Flex";
 import * as lighty from "lighty-type";
+import OptimizedImage from "./OptimizedImage";
 
 export default function MemberContainer({
   members,
@@ -18,7 +18,7 @@ export default function MemberContainer({
           className={styles.memberWrapper}
         >
           <div className={styles.image}>
-            <Image
+            <OptimizedImage
               src={
                 profileImageUrl
                   ? profileImageUrl

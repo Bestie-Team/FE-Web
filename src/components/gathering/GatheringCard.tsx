@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Flex from "../shared/Flex";
 import PencilIcon from "../shared/Icon/PencilIcon";
 import { Gathering, GatheringInWhichType } from "@/models/gathering";
@@ -9,6 +8,7 @@ import { useSetRecoilState } from "recoil";
 import { recordGatheringAtom, recordStepAtom } from "@/atoms/record";
 import { gatheringImageUrlAtom } from "@/atoms/gathering";
 import clsx from "clsx";
+import OptimizedImage from "../shared/OptimizedImage";
 
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty.jpg";
 
@@ -17,7 +17,6 @@ export default function GatheringCard({
   gathering,
   where,
   ended,
-  tabIndex,
 }: {
   pencil?: boolean;
   gathering: Gathering;
@@ -56,8 +55,8 @@ export default function GatheringCard({
         router.push(`/gathering/detail?id=${gathering.id}?tab=2`);
       }}
     >
-      <Image
-        priority={tabIndex < 6}
+      <OptimizedImage
+        loading="eager"
         style={{
           transformOrigin: "center center",
           transitionDuration: "50ms",

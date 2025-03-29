@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
@@ -6,6 +5,7 @@ import clsx from "clsx";
 import * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import LightyIcon from "../shared/Icon/LightyIcon";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function GroupContainer({
   group,
@@ -27,7 +27,7 @@ export default function GroupContainer({
       <Flex direction="column" className="flex-grow gap-3">
         <Flex align="center" className="gap-3">
           {!!groupImageUrl ? (
-            <Image
+            <OptimizedImage
               alt="leaderImg"
               width={48}
               height={48}

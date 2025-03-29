@@ -1,4 +1,3 @@
-import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
@@ -6,6 +5,7 @@ import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Feed } from "@/models/feed";
 import { useState } from "react";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function ClickableGatheringSwiperForDeco({
   feed,
@@ -79,9 +79,8 @@ export default function ClickableGatheringSwiperForDeco({
             className={clsx(styles.slide, idx === 0 && "ml-5")}
             key={`feed${id}`}
           >
-            <Image
+            <OptimizedImage
               loading="eager"
-              priority={idx === 0 || idx === 1}
               src={images[0]}
               alt={`feed${idx + 1}`}
               className={clsx(

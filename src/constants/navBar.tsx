@@ -2,7 +2,7 @@ import CalendarIcon from "@/components/shared/Icon/CalendarIcon";
 import FeedIcon from "@/components/shared/Icon/FeedIcon";
 import LightyLogoForNavBar from "@/components/shared/Icon/LightyLogoForNavBar";
 import UserIcon from "@/components/shared/Icon/UserIcon";
-import Image from "next/image";
+import OptimizedImage from "@/components/shared/OptimizedImage";
 
 const DEFAULT_IMAGE = "https://cdn.lighty.today/lighty_square.png";
 
@@ -46,7 +46,7 @@ const NAV_ITEMS: NavItem[] = [
     href: "/my",
     name: "my",
     icon: (isActive: boolean, src?: string) => (
-      <Image
+      <OptimizedImage
         className={`w-6 h-6 box-content border-[1.7px] rounded-full object-cover ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
@@ -14,6 +13,7 @@ import { lightyToast } from "@/utils/toast";
 import { useAuth } from "../shared/providers/AuthProvider";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import FriendOption from "../shared/FriendOption";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function FriendListItem({
   senderId,
@@ -75,7 +75,7 @@ export default function FriendListItem({
     >
       <Flex>
         {!!friendInfo?.profileImageUrl ? (
-          <Image
+          <OptimizedImage
             alt="friendProfile"
             src={
               (friendInfo?.profileImageUrl && friendInfo?.profileImageUrl) || ""

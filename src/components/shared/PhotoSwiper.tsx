@@ -1,10 +1,10 @@
-import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
+import Image from "next/image";
 
 const PhotoSwiper = memo(
   ({ feed, percent = 1.077 }: { feed: Feed; percent?: number }) => {

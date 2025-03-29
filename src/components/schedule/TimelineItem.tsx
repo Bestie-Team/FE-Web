@@ -2,11 +2,11 @@ import React from "react";
 import Flex from "../shared/Flex";
 import TimelineButton from "../shared/Icon/TimelineButton";
 import Spacing from "../shared/Spacing";
-import Image from "next/image";
 import { Gathering } from "@/models/gathering";
 import { formatToDisplay } from "@/utils/makeUTC";
 import { differenceInCalendarDays } from "date-fns";
 import { useRouter } from "next/navigation";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function TimelineItem({
   upcomingGathering,
@@ -44,7 +44,7 @@ export default function TimelineItem({
           </div>
         </Flex>
       </Flex>
-      <Image
+      <OptimizedImage
         alt="timelineImage"
         src={upcomingGathering.invitationImageUrl}
         width={56}

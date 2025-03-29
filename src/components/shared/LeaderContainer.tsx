@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Flex from "./Flex";
 import Button from "./Button/Button";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
+import OptimizedImage from "./OptimizedImage";
 
 export default function LeaderContainer({ leader }: { leader: lighty.User }) {
   const { name, accountId, profileImageUrl } = leader!;
@@ -14,7 +14,7 @@ export default function LeaderContainer({ leader }: { leader: lighty.User }) {
     >
       <Flex align="center" className="gap-2">
         {!!profileImageUrl ? (
-          <Image
+          <OptimizedImage
             alt="leader"
             src={profileImageUrl}
             width={36}

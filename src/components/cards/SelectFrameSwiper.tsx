@@ -14,6 +14,7 @@ import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import Image from "next/image";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
@@ -91,7 +92,7 @@ export default function SelectFrameSwiper() {
               <div ref={ref} className={clsx(styles.frameWrapper)}>
                 <Flex direction="column" className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
-                    <Image
+                    <OptimizedImage
                       src={`${selectedFeed.imageUrl}`}
                       width={230}
                       height={230}
