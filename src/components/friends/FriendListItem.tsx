@@ -76,6 +76,7 @@ export default function FriendListItem({
       <Flex>
         {!!friendInfo?.profileImageUrl ? (
           <OptimizedImage
+            loading="eager"
             alt="friendProfile"
             src={
               (friendInfo?.profileImageUrl && friendInfo?.profileImageUrl) || ""

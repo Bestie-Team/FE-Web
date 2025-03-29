@@ -113,6 +113,7 @@ export default function AddPhoto({
         >
           {imageUrl || image ? (
             <OptimizedImage
+              loading="eager"
               src={imageUrl || image || ""}
               alt="upload_image"
               width={small ? 64 : 74.67}

@@ -16,6 +16,7 @@ export default function LeaderContainer({ leader }: { leader: lighty.User }) {
         {!!profileImageUrl ? (
           <OptimizedImage
             alt="leader"
+            loading="eager"
             src={profileImageUrl}
             width={36}
             height={36}

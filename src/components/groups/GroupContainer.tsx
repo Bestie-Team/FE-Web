@@ -28,6 +28,7 @@ export default function GroupContainer({
         <Flex align="center" className="gap-3">
           {!!groupImageUrl ? (
             <OptimizedImage
+              loading="eager"
               alt="leaderImg"
               width={48}
               height={48}

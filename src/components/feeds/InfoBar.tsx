@@ -128,6 +128,7 @@ export function FriendsInfoContainer({
       {friendInfo.map((info, i) => (
         <Flex align="center" className="gap-[2px]" key={info.name}>
           <OptimizedImage
+            loading="eager"
             alt={`friend${i}`}
             width={24}
             height={24}

@@ -47,6 +47,7 @@ const NAV_ITEMS: NavItem[] = [
     name: "my",
     icon: (isActive: boolean, src?: string) => (
       <OptimizedImage
+        loading="eager"
         className={`w-6 h-6 box-content border-[1.7px] rounded-full object-cover ${
           isActive ? "border-grayscale-900" : "border-none"
         }`}

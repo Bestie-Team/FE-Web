@@ -27,6 +27,7 @@ export default function MemberContainer({
               alt={`gatheringMember${idx + 1}`}
               width={40}
               height={40}
+              loading="eager"
               className="w-10 h-10 object-cover"
             />
           </div>

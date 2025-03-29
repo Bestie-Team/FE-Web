@@ -93,6 +93,7 @@ export default function SelectFrameSwiper() {
                 <Flex direction="column" className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     <OptimizedImage
+                      loading="eager"
                       src={`${selectedFeed.imageUrl}`}
                       width={230}
                       height={230}
