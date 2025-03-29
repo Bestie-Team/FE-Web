@@ -4,13 +4,11 @@ import { useKakaoAuth } from "@/hooks/useKakaoQuery";
 import { postLogin } from "@/remote/auth";
 import { useEffect, useState } from "react";
 import type { KakaoAuthResponse } from "@/models/user";
-import { useRouter } from "next/navigation";
 
 export default function KakaoPage() {
   const [authCode, setAuthCode] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
   const { data: tokenInfo, error: authError } = useKakaoAuth({
     auth_code: authCode,
     client_id: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY!,
@@ -42,7 +40,6 @@ export default function KakaoPage() {
         accessToken: tokenInfo.access_token,
         provider: "kakao",
       });
-      router.push("/feed");
     } catch (error) {
       setError("로그인 실패");
       console.log(error);
