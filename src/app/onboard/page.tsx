@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -22,12 +22,6 @@ export default function OnBoardCardSlider() {
 
   const handleNextClick = async () => {
     if (isLastSlide) {
-      const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-      const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
-      if (!!token && !!userInfo) {
-        setToken(token);
-        setUserInfo(JSON.parse(userInfo));
-      }
       router.push("/feed?ref=signup");
       return;
     }
@@ -35,6 +29,15 @@ export default function OnBoardCardSlider() {
       swiperRef.current.slideNext();
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+    if (!!token && !!userInfo) {
+      setToken(token);
+      setUserInfo(JSON.parse(userInfo));
+    }
+  }, []);
 
   return (
     <div className="relative max-w-[430px] w-full h-dvh min-h-[400px] bg-grayscale-50 pt-safe-top">
