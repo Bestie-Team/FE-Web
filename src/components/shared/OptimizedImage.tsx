@@ -48,7 +48,17 @@ export default function OptimizedImage({
 
   if (error) {
     return (
-      <div className="text-red-500">이미지를 불러올 수 없습니다: {error}</div>
+      <img
+        style={style}
+        loading={loading}
+        width={width}
+        height={height}
+        src={src || "/placeholder.svg"}
+        alt={alt}
+        className={className}
+        onError={() => setError("이미지 로딩 실패")}
+        onLoad={onLoad}
+      />
     );
   }
 
