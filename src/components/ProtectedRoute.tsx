@@ -30,7 +30,8 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
       !pathname.includes("oauth") &&
       !pathname.includes("google") &&
       !pathname.includes("apple") &&
-      !pathname.includes("/signup")
+      !pathname.includes("/signup") &&
+      !pathname.includes("/onboard")
     ) {
       router.replace("/");
     } else if (
