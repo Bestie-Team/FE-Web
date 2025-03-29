@@ -44,7 +44,6 @@ export async function postLogin({
       accountId: data.accountId,
       profileImageUrl: data.profileImageUrl,
     });
-    window.location.href = "/feed";
     return data;
   }
 
@@ -119,7 +118,6 @@ export async function registerUser(RegisterRequest: RegisterRequestType) {
           token: data.accessToken,
         });
     }
-
     storeAuthData(data.accessToken, {
       accountId: data.accountId,
       ...(profileImageUrl && { profileImageUrl }),

@@ -9,20 +9,28 @@ import { Navigation, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import Flex from "@/components/shared/Flex";
 import type { Swiper as SwiperType } from "swiper";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function OnBoardCardSlider() {
+  const { setToken, setUserInfo } = useAuth();
   const nextButtonRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const [buttonText, setButtonText] = useState("다음");
   const [isLastSlide, setIsLastSlide] = useState(false);
   const router = useRouter();
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (isLastSlide) {
+      const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+      const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+      if (!!token && !!userInfo) {
+        setToken(token);
+        setUserInfo(JSON.parse(userInfo));
+      }
       router.push("/feed?ref=signup");
       return;
     }
-
     if (swiperRef.current) {
       swiperRef.current.slideNext();
     }

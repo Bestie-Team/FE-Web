@@ -145,7 +145,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const login = (userInfo: lighty.LoginResponse) => {
+  const login = (userInfo: {
+    accessToken: string;
+    accountId: string;
+    profileImageUrl: string | null;
+  }) => {
     localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, userInfo.accessToken);
 
     const userInfoData = {

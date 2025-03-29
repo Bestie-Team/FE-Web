@@ -15,18 +15,21 @@ import {
 } from "@/webview/actions";
 import Tooltip from "./shared/Tooltip/Tooltip";
 import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
+import { useRouter } from "next/navigation";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
 
 export default function LogIn() {
   const { login } = useAuth();
   const { isReactNativeWebView } = useReactNativeWebView();
+  const router = useRouter();
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
       try {
         const userInfo = await postLogin({ accessToken, provider });
         if (userInfo) login(userInfo);
+        router.push("/feed");
       } catch (error) {
         console.error(error);
         lightyToast.error("로그인에 실패했어요");
