@@ -11,6 +11,7 @@ export default function BottomSheetWrapper({
   bar = true,
   bright = false,
   isClosing = false,
+  handleAnimationEnd,
 }: {
   open?: boolean;
   onClose: () => void;
@@ -18,6 +19,7 @@ export default function BottomSheetWrapper({
   bar?: boolean;
   bright?: boolean;
   isClosing?: boolean;
+  handleAnimationEnd?: () => void;
 }) {
   const handleBackdropClick = () => {
     onClose();
@@ -34,6 +36,7 @@ export default function BottomSheetWrapper({
           containerStyle,
           `${isClosing ? "animate-slideOut" : "animate-slideIn"}`
         )}
+        onAnimationEnd={handleAnimationEnd}
       >
         <Flex direction="column" className="pb-safe-bottom">
           <Flex justify="center" className="pt-[6px] pb-[18px]">

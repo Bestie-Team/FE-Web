@@ -43,9 +43,19 @@ export default function MemoriesBottomSheet({
       setIsNavigating(false);
     }, 50);
   };
+  const handleAnimationEnd = () => {
+    if (isClosing) {
+      onClose();
+    }
+  };
 
   return (
-    <BottomSheetWrapper onClose={onClose} open={open} isClosing={isClosing}>
+    <BottomSheetWrapper
+      onClose={() => setIsClosing(true)}
+      open={open}
+      isClosing={isClosing}
+      handleAnimationEnd={handleAnimationEnd}
+    >
       <Flex direction="column" className="p-6 pt-1">
         <Text className="text-T3">추억을 만들어볼까요?</Text>
         {actions.map((action) => {
