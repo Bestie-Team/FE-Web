@@ -55,11 +55,12 @@ export default function SearchPage() {
         <Flex
           direction="column"
           align="center"
-          justify="center"
+          // justify="center"
           className="h-dvh gap-5 pt-safe-top pb-safe-bottom"
         >
+          <Spacing size={120} />
           <Flex
-            className="pb-5 gap-5 items-center justify-center"
+            className="h-full pb-5 gap-5 items-center justify-center"
             direction="column"
           >
             <span className="text-B2">
