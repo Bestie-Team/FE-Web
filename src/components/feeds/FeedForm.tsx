@@ -46,8 +46,8 @@ export default function FeedForm<
       <Flex direction="column" className="px-5 pb-0">
         <Spacing size={20} />
         {selectedGathering ? (
-          <Flex className="gap-4">
-            <Flex direction="column" style={{ flexGrow: 1, gap: "8px" }}>
+          <Flex className="gap-4 justify-between">
+            <Flex direction="column" className="max-w-[250px]">
               <span className="text-T2">{selectedGathering?.name}</span>
               <span className="text-C2 text-grayscale-400">
                 {selectedGathering?.description}

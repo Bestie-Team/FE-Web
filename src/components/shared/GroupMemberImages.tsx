@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Flex from "./Flex";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
@@ -32,10 +31,12 @@ export default function GroupMemberImages({
     : memberImages.slice(0, maxLength);
 
   const imageWidthHeight =
-    width && height ? `w-[${width}px] h-[${height}px]` : `w-[28px] h-[28px]`;
+    width && height
+      ? `!w-[${width}px] !h-[${height}px]`
+      : `!w-[28px] !h-[28px]`;
 
   return (
-    <Flex>
+    <div className="flex-none">
       {seenImages?.map((imageUrl, i) => {
         return (
           <React.Fragment key={i}>
@@ -72,7 +73,7 @@ export default function GroupMemberImages({
           className={styles.circle}
         >{`+${memberImages.length - maxLength}`}</div>
       ) : null}
-    </Flex>
+    </div>
   );
 }
 
