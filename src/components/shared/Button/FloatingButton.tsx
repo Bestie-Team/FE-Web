@@ -12,6 +12,7 @@ import { decoBottomSheetStateAtom } from "@/atoms/card";
 
 interface FloatingButtonProps {
   tooltip?: boolean;
+  onClick?: () => void;
 }
 
 type PathConfig = {
@@ -38,7 +39,10 @@ const PATH_CONFIGS: PathConfig[] = [
   },
 ];
 
-const FloatingButton: FC<FloatingButtonProps> = ({ tooltip = false }) => {
+const FloatingButton: FC<FloatingButtonProps> = ({
+  tooltip = false,
+  onClick,
+}) => {
   const pathname = usePathname();
   const getPathConfig = () => {
     return (
@@ -51,6 +55,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({ tooltip = false }) => {
 
   const handleClick = () => {
     setModalOpen(true);
+    onClick?.();
   };
 
   return (

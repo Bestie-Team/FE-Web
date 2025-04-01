@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import Spacing from "../shared/Spacing";
@@ -40,19 +42,6 @@ export default function DecorateWithStickers() {
   const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const { isReactNativeWebView } = useReactNativeWebView();
-
-  const frames = [
-    "https://cdn.lighty.today/frame1.jpeg",
-    "https://cdn.lighty.today/frame2.jpeg",
-    "https://cdn.lighty.today/frame3.jpeg",
-    "https://cdn.lighty.today/frame4.jpeg",
-    "https://cdn.lighty.today/frame5.jpeg",
-    "https://cdn.lighty.today/frame6.jpeg",
-    "https://cdn.lighty.today/frame7.jpeg",
-    "https://cdn.lighty.today/frame8.png",
-    "https://cdn.lighty.today/frame9.png",
-    "https://cdn.lighty.today/frame10.png",
-  ];
 
   useEffect(() => {
     if (canvasElementRef.current && !fabricCanvasRef.current) {
@@ -111,6 +100,39 @@ export default function DecorateWithStickers() {
     }
   }, []);
 
+  // Function to render delete icon with X
+  const renderDeleteIcon = (
+    ctx: CanvasRenderingContext2D,
+    left: number,
+    top: number,
+    _: any,
+    fabricObject: fabric.Object
+  ) => {
+    const size = 20;
+    ctx.save();
+    ctx.translate(left, top);
+    ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle || 0));
+
+    // Draw circle background
+    ctx.fillStyle = "#393939";
+    ctx.beginPath();
+    ctx.arc(0, 0, size / 2, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Draw X
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    // Draw X lines
+    ctx.moveTo(-size / 5, -size / 5);
+    ctx.lineTo(size / 5, size / 5);
+    ctx.moveTo(size / 5, -size / 5);
+    ctx.lineTo(-size / 5, size / 5);
+    ctx.stroke();
+
+    ctx.restore();
+  };
+
   const handleAddSticker = async (path: string) => {
     if (fabricCanvasRef.current) {
       const canvas = fabricCanvasRef.current;
@@ -118,12 +140,40 @@ export default function DecorateWithStickers() {
         const stickerObj = await fabric.Image.fromURL(path, {
           crossOrigin: "anonymous",
         });
+
         stickerObj.set({
-          scaleX: 0.25,
-          scaleY: 0.25,
+          scaleX: 0.24,
+          scaleY: 0.24,
+          cornerSize: 9,
+          cornerColor: "white",
+          cornerStrokeColor: "#AEAEAE",
+          transparentCorners: false,
+          borderColor: "#AEAEAE",
+          borderScaleFactor: 1,
         });
 
+        // Add custom delete control
+        stickerObj.controls = {
+          ...stickerObj.controls,
+          deleteControl: new fabric.Control({
+            x: 0.5,
+            y: -0.5,
+            offsetY: -16,
+            offsetX: 16,
+            cursorStyle: "pointer",
+            render: renderDeleteIcon,
+            mouseUpHandler: (_, transformData) => {
+              const target = transformData.target;
+              const canvas = target.canvas;
+              canvas?.remove(target);
+              canvas?.requestRenderAll();
+              return true;
+            },
+          }),
+        };
+
         canvas.add(stickerObj);
+        canvas.setActiveObject(stickerObj);
         canvas.renderAll();
       } catch (error) {
         console.error("Error adding sticker:", error);
@@ -133,9 +183,44 @@ export default function DecorateWithStickers() {
     }
   };
 
+  // Add event listener to show/hide controls based on selection
+  useEffect(() => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+
+    const handleSelectionCreated = (e: any) => {
+      const activeObj = e.target;
+      if (activeObj) {
+        activeObj.setControlsVisibility({
+          mtr: true, // rotation control
+          deleteControl: true,
+        });
+        canvas.renderAll();
+      }
+    };
+
+    const handleSelectionCleared = () => {
+      canvas.renderAll();
+    };
+
+    canvas.on("selection:created", handleSelectionCreated);
+    canvas.on("selection:updated", handleSelectionCreated);
+    canvas.on("selection:cleared", handleSelectionCleared);
+
+    return () => {
+      canvas.off("selection:created", handleSelectionCreated);
+      canvas.off("selection:updated", handleSelectionCreated);
+      canvas.off("selection:cleared", handleSelectionCleared);
+    };
+  }, [deco]);
+
   const handleExport = () => {
     if (!stageRef.current) return;
     if (fabricCanvasRef.current) {
+      // Deselect any active object before exporting to hide controls
+      fabricCanvasRef.current.discardActiveObject();
+      fabricCanvasRef.current.renderAll();
+
       const uri = fabricCanvasRef.current.toDataURL({
         format: "png",
         multiplier: 2,
@@ -218,13 +303,13 @@ export default function DecorateWithStickers() {
                   height={372}
                   width={282}
                   className={styles.frame}
-                  src={frames[selectedFrame]}
+                  src={frames[selectedFrame] || "/placeholder.svg"}
                 />
                 <div className={styles.cardWrapper}>
                   <div className={styles.imageWrapper}>
                     {croppedImage ? (
                       <img
-                        src={croppedImage}
+                        src={croppedImage || "/placeholder.svg"}
                         alt="Cropped Image"
                         width={230}
                         height={218}
@@ -352,3 +437,15 @@ const styles = {
   textWrapper: "text-T5 ",
   dateWrapper: "text-C5 text-grayscale-500",
 };
+const frames = [
+  "https://cdn.lighty.today/frame1.jpeg",
+  "https://cdn.lighty.today/frame2.jpeg",
+  "https://cdn.lighty.today/frame3.jpeg",
+  "https://cdn.lighty.today/frame4.jpeg",
+  "https://cdn.lighty.today/frame5.jpeg",
+  "https://cdn.lighty.today/frame6.jpeg",
+  "https://cdn.lighty.today/frame7.jpeg",
+  "https://cdn.lighty.today/frame8.png",
+  "https://cdn.lighty.today/frame9.png",
+  "https://cdn.lighty.today/frame10.png",
+];
