@@ -114,7 +114,7 @@ export default function DecorateWithStickers() {
     ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle || 0));
 
     // Draw circle background
-    ctx.fillStyle = "#393939";
+    ctx.fillStyle = "#979797";
     ctx.beginPath();
     ctx.arc(0, 0, size / 2, 0, 2 * Math.PI);
     ctx.fill();
@@ -142,8 +142,8 @@ export default function DecorateWithStickers() {
         });
 
         stickerObj.set({
-          scaleX: 0.24,
-          scaleY: 0.24,
+          scaleX: 0.22,
+          scaleY: 0.22,
           cornerSize: 9,
           cornerColor: "white",
           cornerStrokeColor: "#AEAEAE",

@@ -56,13 +56,7 @@ export default function FeedPage() {
     userInfo,
   } = useFeed();
 
-  const {
-    selectedTab,
-    handleTabClick,
-    handleSlideChange,
-    swiperRef,
-    setSelectedTab,
-  } = useTabs();
+  const { selectedTab, handleTabClick, swiperRef, setSelectedTab } = useTabs();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerRef_m = useRef<HTMLDivElement>(null);
@@ -115,8 +109,11 @@ export default function FeedPage() {
   );
 
   useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(Number(selectedTab) - 1);
+    if (swiperRef.current && typeof swiperRef.current.slideTo === "function") {
+      const targetIndex = Number(selectedTab) - 1;
+      if (swiperRef.current.activeIndex !== targetIndex) {
+        swiperRef.current.slideTo(targetIndex);
+      }
     }
   }, [selectedTab]);
 
@@ -136,7 +133,10 @@ export default function FeedPage() {
             swiperRef.current = swiper;
           }}
           onSlideChange={(swiper) => {
-            handleSlideChange(swiper.activeIndex);
+            const index = swiper.activeIndex;
+            if (selectedTab !== String(index + 1)) {
+              setSelectedTab(String(index + 1) as "1" | "2");
+            }
           }}
           slidesPerView={1}
           spaceBetween={2}
