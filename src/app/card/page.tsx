@@ -5,12 +5,20 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import FramePageSkeleton from "@/components/shared/Skeleton/FramePageSkeleton";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
-import DecorateWithStickers from "@/components/cards/DecorateWithStickers";
+import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {
   ssr: false,
   loading: () => <FramePageSkeleton />,
 });
+
+const DecorateWithStickers = dynamic(
+  () => import("@/components/cards/DecorateWithStickers"),
+  {
+    ssr: false,
+    loading: () => <DotSpinner />,
+  }
+);
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
