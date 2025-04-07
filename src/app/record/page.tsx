@@ -32,9 +32,9 @@ const DynamicComponents = {
 export default function Record() {
   const router = useRouter();
   const [step, setStep] = useRecoilState(recordStepAtom);
-  const [add, setAdd] = useState<number>(1);
   const searchParams = useSearchParams();
   const from = searchParams?.get("ref");
+  const [add, setAdd] = useState<number>(from === "gathering" ? 1 : 0);
 
   const clickBackBtnHandler = () => {
     if (step === 1) {

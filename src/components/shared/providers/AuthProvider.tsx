@@ -11,6 +11,7 @@ import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
 import { useRouter } from "next/navigation";
+import useUserProfile from "@/components/users/hooks/useUserProfile";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -37,6 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [token, setToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
   const [userDeleted, setUserDeleted] = useState(false);
+  const { data } = useUserProfile();
   const router = useRouter();
 
   const initialize = async () => {
@@ -110,14 +112,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
-    if (!!userInfo) {
-      if (typeof window !== "undefined" && userInfo.accountId) {
+    if (!!data) {
+      if (typeof window !== "undefined" && data) {
         window.gtag("config", process.env.NEXT_PUBLIC_GTM_ID || "", {
-          user_id: userInfo.accountId,
+          user_id: data.id,
         });
       }
     }
-  }, [userInfo]);
+  }, [data]);
 
   useEffect(() => {
     initialize();
