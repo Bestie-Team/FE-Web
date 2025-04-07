@@ -24,16 +24,6 @@ export const useScrollRestorationOfRef = (
   // 스크롤 여부 추적
   const isScrolling = useRef(false);
 
-  // const logWithKey = useCallback(
-  //   (message: string, value?: any) => {
-  //     console.log(
-  //       `[ScrollRestoration:${key}] ${message}`,
-  //       value !== undefined ? value : ""
-  //     );
-  //   },
-  //   [key]
-  // );
-
   const saveScrollPosition = useCallback(() => {
     if (ref.current) {
       const scrollTop = ref.current.scrollTop;
@@ -97,7 +87,9 @@ export const useScrollRestorationOfRef = (
       }
       window.removeEventListener("blur", handleBlur);
     };
-  }, [ref, saveScrollPosition]);
+  }, [ref, ref.current, saveScrollPosition]);
+
+  // 위의 useEffect의 의존성에 ref.currentf 추가하니 처음 스크롤은 저장 못하는 문제해결!!!
 
   // 페이지 변경 시 스크롤 위치 복원
   useEffect(() => {

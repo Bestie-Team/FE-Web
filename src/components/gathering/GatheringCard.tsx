@@ -86,8 +86,13 @@ export default function GatheringCard({
         </Flex>
       </Flex>
       {pencil || (!gathering.isFeedPosted && ended) ? (
-        <div className={styles.button} onMouseDown={handleClickGathering}>
-          <PencilIcon color="#0A0A0A" />
+        <div
+          className="z-10 absolute top-0 right-0 p-[10px]"
+          onMouseDown={handleClickGathering}
+        >
+          <div className={styles.button}>
+            <PencilIcon color="#0A0A0A" />
+          </div>
         </div>
       ) : null}
     </div>
@@ -96,15 +101,13 @@ export default function GatheringCard({
 
 const styles = {
   gatheringWrapper:
-    "group relative overflow-hidden rounded-2xl aspect-square cursor-pointer",
-  image:
-    "object-cover object-center group-hover:animate-smaller transition w-[200px] h-[200px]",
+    "relative overflow-hidden rounded-2xl aspect-square cursor-pointer",
+  image: "object-cover object-center transition w-[200px] h-[200px]",
   gradation:
     "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0.9) 100%)",
   textWrapper:
     "z-10 absolute bottom-0 inset-x-0 p-[16px] pt-0 text-base-white gap-1",
   date: "w-full text-C2 text-grayscale-100 gap-1",
 
-  button:
-    "z-10 absolute top-[10px] right-[10px] bg-base-white rounded-[9.6px] p-2 active:bg-grayscale-100",
+  button: "bg-base-white rounded-[9.6px] p-2 active:bg-grayscale-100",
 };
