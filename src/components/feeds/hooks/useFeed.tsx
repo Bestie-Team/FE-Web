@@ -60,9 +60,14 @@ export default function useFeed() {
 
   const handleDeleteCommentSuccess = async () => {
     lightyToast.success("댓글을 삭제했습니다");
-    await queryClient.invalidateQueries({
-      queryKey: ["get/comments", { feedId }],
-    });
+    await Promise.all([
+      await queryClient.invalidateQueries({
+        queryKey: ["get/comments", { feedId }],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["feed/detail", feedId],
+      }),
+    ]);
   };
 
   const handleHideFeedSuccess = async () => {
@@ -89,6 +94,9 @@ export default function useFeed() {
       }),
       await queryClient.invalidateQueries({
         queryKey: ["get/comments", { feedId }],
+      }),
+      await queryClient.invalidateQueries({
+        queryKey: ["feed/detail", feedId],
       }),
     ]);
   };

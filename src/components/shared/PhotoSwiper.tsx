@@ -5,10 +5,12 @@ import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const PhotoSwiper = memo(
   ({ feed, percent = 1.077 }: { feed: Feed; percent?: number }) => {
     const [loaded, setLoaded] = useState(false);
+    const router = useRouter();
     const formattedDate = () => {
       const date = feed.gathering?.gatheringDate
         ? new Date(feed.gathering.gatheringDate)
@@ -18,11 +20,14 @@ const PhotoSwiper = memo(
 
     return (
       <Swiper
+        onClick={() => {
+          router.push(`/feed/detail?id=${feed.id}`);
+        }}
         slidesPerView={percent}
         spaceBetween={12}
         grabCursor={true}
         style={{ paddingLeft: "20px" }}
-        className="custom-swiper w-full"
+        className="custom-swiper w-full cursor-pointer"
         onTouchStart={(swiper, e) => {
           e.stopPropagation();
         }}

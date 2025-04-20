@@ -231,3 +231,15 @@ export async function displayFeed({ feedId }: { feedId: string }) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
+
+/** 피드 상세 조회 */
+export async function getFeedDetail({ feedId }: { feedId: string }) {
+  if (!feedId) return;
+
+  const baseUrl = API_CONFIG.getBaseUrl();
+  const response = await fetchWithAuth(`${baseUrl}/feeds/${feedId}`, {
+    method: "GET",
+  });
+  const data = await response.json();
+  return data;
+}
