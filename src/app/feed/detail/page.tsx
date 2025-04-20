@@ -2,12 +2,9 @@
 
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useSearchParams } from "next/navigation";
-import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { User } from "lighty-type";
 import Flex from "@/components/shared/Flex";
-import dynamic from "next/dynamic";
 import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
-import MODAL_CONFIGS from "@/constants/modal-configs";
 import FeedCard from "@/components/feeds/FeedCard";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
@@ -15,13 +12,14 @@ import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu"
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
-import { selectedFeedIdAtom } from "@/atoms/feed";
-
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
-  ssr: false,
-});
-
-const Report = dynamic(() => import("@/components/shared/Modal/Report/Report"));
+import { bottomSheetStateAtom, selectedFeedIdAtom } from "@/atoms/feed";
+import useFeedDetail from "@/components/feeds/hooks/useFeedDetail";
+import { useCallback } from "react";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import FeedPageSkeleton from "@/components/shared/Skeleton/FeedSkeleton";
+import CommentContainer from "@/components/shared/Comment/CommentContainer";
+import { FeedModals } from "@/components/feeds/FeedModals";
+import useFeed from "@/components/feeds/hooks/useFeed";
 
 export type GroupEditProps = {
   id: string;
@@ -33,14 +31,16 @@ export type GroupEditProps = {
 
 export default function FeedDetailPage() {
   const searchParams = useSearchParams();
+  const { userInfo } = useAuth();
   const id = searchParams.get("id");
-  const [modalState, setModalState] = useRecoilState(modalStateAtom);
-  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
-  const [report, setReport] = useRecoilState(reportInfoAtom);
+  const [bottomSheetState, setBottomSheetState] =
+    useRecoilState(bottomSheetStateAtom);
   const { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox } =
     useFriendsBox();
   const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
-
+  const { data: selectedFeed, isFetching } = useFeedDetail({
+    id: id || "",
+  });
   const {
     btnRef,
     toggleDropdown,
@@ -49,12 +49,18 @@ export default function FeedDetailPage() {
     closeDropdown,
   } = useDropdown();
 
-  const closeModal = () => {
-    setModalState({
-      type: null,
-      isOpen: false,
-    });
-  };
+  const { deleteFeed, deleteComment, hideFeed, report } = useFeed();
+
+  const handleFeedSelect = useCallback(
+    (feedId: string) => {
+      setSelectedFeedId(feedId);
+    },
+    [setSelectedFeedId]
+  );
+
+  if (!selectedFeed) {
+    return <FeedPageSkeleton />;
+  }
 
   return (
     <Flex direction="column" className="w-full min-h-dvh">
@@ -73,60 +79,63 @@ export default function FeedDetailPage() {
               closeBox();
             }}
           >
-            <div key={feed.id} className="relative">
-              <FeedCard feed={feed} onClick={() => onFeedSelect(feed.id)}>
+            <div key={id} className="relative">
+              <FeedCard
+                feed={selectedFeed}
+                onClick={() => {
+                  if (id) {
+                    handleFeedSelect(id);
+                  }
+                }}
+              >
                 <InfoBar
                   ref={fBtnRef}
                   onClick={(e) => {
-                    e.stopPropagation();
-                    toggleBox(feed.id);
+                    if (id) {
+                      e.stopPropagation();
+                      toggleBox(id);
+                    }
                   }}
-                  withMembers={feed.withMembers}
-                  feed={feed}
+                  withMembers={selectedFeed.withMembers}
+                  feed={selectedFeed}
                 />
                 <div className="absolute top-11 right-14" ref={friendsRef}>
-                  {openedBoxId === feed.id && (
+                  {openedBoxId === id && (
                     <FriendsInfoContainer
-                      withMembers={feed.withMembers}
-                      isOpen={openedBoxId === feed.id}
+                      withMembers={selectedFeed.withMembers}
+                      isOpen={openedBoxId === id}
                     />
                   )}
                 </div>
               </FeedCard>
               <div
                 style={{ width: 24, height: 24 }}
-                className="absolute top-5 right-5 cursor-pointer flex justify-center items-center pt-[5.5px] pb-1"
+                className={styles.optionWithDropdownContainer}
               >
                 <div
                   ref={btnRef}
                   onClick={(e) => {
                     e.stopPropagation();
-                    toggleDropdown(feed.id);
-                    setSelectedFeedId(feed.id);
+                    toggleDropdown(selectedFeed.id);
+                    setSelectedFeedId(selectedFeed.id);
                   }}
                 >
                   <OptionsSelectIcon />
                 </div>
-                {openedDropdownId === feed.id && (
+                {openedDropdownId === selectedFeed.id && (
                   <FeedDropdownMenu
-                    feed={feed}
+                    feed={selectedFeed}
                     ref={dropDownRef}
                     menuItems={
                       MENU_CONFIGS[
-                        userInfo === false
-                          ? "hidden"
-                          : feed.writer.accountId === userInfo?.accountId ||
-                            isMine
+                        selectedFeed.writer.accountId === userInfo?.accountId
                           ? "feed_mine"
                           : "feed"
                       ].menuItems
                     }
                     className={
                       MENU_CONFIGS[
-                        userInfo === false
-                          ? "hidden"
-                          : feed.writer.accountId === userInfo?.accountId ||
-                            isMine
+                        selectedFeed.writer.accountId === userInfo?.accountId
                           ? "feed_mine"
                           : "feed"
                       ].className
@@ -139,7 +148,20 @@ export default function FeedDetailPage() {
           </div>
         </div>
       </div>
-      {modalState.isOpen && modalState.type && (
+      {bottomSheetState && id && (
+        <CommentContainer
+          selectedFeedId={id}
+          onClose={() => setBottomSheetState(false)}
+        />
+      )}
+
+      <FeedModals
+        onReport={report}
+        onDeleteFeed={deleteFeed}
+        onDeleteComment={deleteComment}
+        onHideFeed={hideFeed}
+      />
+      {/* {modalState.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}
           content={MODAL_CONFIGS[modalState.type].content}
@@ -159,11 +181,13 @@ export default function FeedDetailPage() {
           }}
           onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
         />
-      )}
+      )} */}
     </Flex>
   );
 }
 
 const styles = {
-  feedWrapper: "h-full overflow-y-scroll no-scrollbar pt-[90px] pb-14",
+  feedWrapper: "h-full overflow-y-scroll no-scrollbar pt-12 pb-14",
+  optionWithDropdownContainer:
+    "absolute top-5 right-5 cursor-pointer flex justify-center items-center pt-[5.5px] pb-1",
 };

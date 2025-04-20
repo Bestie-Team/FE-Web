@@ -133,7 +133,7 @@ export function FriendsInfoContainer({
             width={24}
             height={24}
             src={info.imageUrl ? info.imageUrl : Lighty}
-            className="w-6 h-6 object-cover rounded-full"
+            className="w-6 h-6 object-cover rounded-full border-[0.86px] border-base-white "
           />
           <span className="flex-none text-C2 text-grayscale-600">
             {info.name}

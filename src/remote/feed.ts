@@ -237,7 +237,7 @@ export async function getFeedDetail({ feedId }: { feedId: string }) {
   if (!feedId) return;
 
   const baseUrl = API_CONFIG.getBaseUrl();
-  const response = await fetchWithAuth(`${baseUrl}/feed/${feedId}`, {
+  const response = await fetchWithAuth(`${baseUrl}/feeds/${feedId}`, {
     method: "GET",
   });
   const data = await response.json();
