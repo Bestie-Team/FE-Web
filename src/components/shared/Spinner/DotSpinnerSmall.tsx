@@ -1,12 +1,15 @@
 export default function DotSpinnerSmall({
   width,
   height,
+  className,
 }: {
   width?: number;
   height?: number;
+  className?: string;
 }) {
   return (
     <div
+      className={className}
       style={{
         display: "flex",
         justifyContent: "center",
