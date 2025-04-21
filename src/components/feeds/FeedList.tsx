@@ -11,6 +11,7 @@ import { MENU_CONFIGS } from "@/constants/menu-configs";
 import { useSetRecoilState } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { UserInfoMini } from "../shared/providers/AuthProvider";
+import { FeedSkeleton } from "../shared/Skeleton/FeedSkeleton";
 
 interface FeedListProps {
   feeds: any[];
@@ -125,7 +126,12 @@ export const FeedList: React.FC<FeedListProps> = ({
           </div>
         </div>
       ))}
-      {isFetching && <DotSpinnerSmall />}
+      {isFetching && (
+        <div className="relative">
+          <FeedSkeleton />
+          <DotSpinnerSmall className="absolute top-0 w-full" />
+        </div>
+      )}
     </div>
   );
 };
