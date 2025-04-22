@@ -4,7 +4,7 @@ import PullToRefresh from "react-simple-pull-to-refresh";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import { recordModalAtom } from "@/atoms/modal";
@@ -14,7 +14,7 @@ import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
-import { bottomSheetStateAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom, selectedFeedInfoAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
@@ -24,10 +24,12 @@ import Spacing from "@/components/shared/Spacing";
 import useFeed from "@/components/feeds/hooks/useFeed";
 import { FeedList } from "@/components/feeds/FeedList";
 import { FeedModals } from "@/components/feeds/FeedModals";
+import { Feed } from "@/models/feed";
 
 export default function FeedPage() {
   const [bottomSheetState, setBottomSheetState] =
     useRecoilState(bottomSheetStateAtom);
+  const setFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const {
     feedId,
@@ -102,10 +104,11 @@ export default function FeedPage() {
   });
 
   const handleFeedSelect = useCallback(
-    (feedId: string) => {
+    (feedId: string, feed: Feed) => {
       setFeedId(feedId);
+      setFeedInfo(feed);
     },
-    [setFeedId]
+    [setFeedId, setFeedInfo]
   );
 
   useEffect(() => {

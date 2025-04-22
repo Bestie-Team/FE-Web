@@ -11,6 +11,9 @@ import useFeedComments from "@/components/feeds/hooks/useGetComments";
 import { useQueryClient } from "@tanstack/react-query";
 import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
+import splitMention from "@/utils/splitMention";
+import { useRecoilValue } from "recoil";
+import { selectedFeedInfoAtom } from "@/atoms/feed";
 
 export default function CommentContainer({
   selectedFeedId,
@@ -20,11 +23,12 @@ export default function CommentContainer({
   onClose: () => void;
 }) {
   const queryClient = useQueryClient();
-
+  const feedInfo = useRecoilValue(selectedFeedInfoAtom);
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
 
   const { data: comments } = useFeedComments({ feedId: selectedFeedId });
+  const mentionableUserIds = feedInfo?.withMembers;
 
   const postSuccessHandler = async (data: { message: string }) => {
     const invalidateQueries = async (data: { message: string }) => {
@@ -48,6 +52,9 @@ export default function CommentContainer({
   const { mutate: postComment } = useMakeComment({
     feedId: selectedFeedId,
     content: newComment,
+    mentionedUserId: mentionableUserIds?.find(
+      (user) => user.accountId === splitMention(newComment).mention?.slice(1)
+    )?.id,
     onSuccess: postSuccessHandler,
     onError: (error) => console.log(error),
   });

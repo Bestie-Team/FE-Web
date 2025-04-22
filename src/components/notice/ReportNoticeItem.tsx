@@ -9,7 +9,10 @@ export type NotificationTypes =
   | "GROUP_INVITATION"
   | "FRIEND_REQUEST"
   | "FRIEND_REQUEST_ACCEPTED"
-  | "FEED_COMMENT";
+  | "FEED_COMMENT"
+  | "FEED_COMMENT_MENTIONED"
+  | "FRIEND_FEED_WRITEN"
+  | "GATHERING_FEED_WRITEN";
 
 const NotificationImage: Record<NotificationTypes, string> = {
   GATHERING_INVITATION_RECEIVED: "💌",
@@ -18,12 +21,9 @@ const NotificationImage: Record<NotificationTypes, string> = {
   FRIEND_REQUEST: "👀",
   FRIEND_REQUEST_ACCEPTED: "🙌🏻",
   FEED_COMMENT: "💬",
-};
-
-const LOCATION = {
-  FRIEND_REQUEST: "/friends",
-  GATHERING_INVITATION_RECEIVED: "/invitation",
-  GROUP_INVITATION: "/social?tab=group",
+  FEED_COMMENT_MENTIONED: "💬",
+  FRIEND_FEED_WRITEN: "🌠",
+  GATHERING_FEED_WRITEN: "🌠",
 };
 
 export default function ReportNoticeItem({
@@ -34,6 +34,16 @@ export default function ReportNoticeItem({
   const { title, message, createdAt, type } = notification;
   const date = format(new Date(createdAt), "yy.MM.dd.");
   const router = useRouter();
+
+  const LOCATION = {
+    FRIEND_REQUEST: "/friends",
+    GATHERING_INVITATION_RECEIVED: "/invitation",
+    GROUP_INVITATION: "/social?tab=group",
+    FEED_COMMENT: `/feed/detail?id=${notification.relatedId}`,
+    FEED_COMMENT_MENTIONED: `/feed/detail?id=${notification.relatedId}`,
+    FRIEND_FEED_WRITEN: `/feed/detail?id=${notification.relatedId}`,
+    GATHERING_FEED_WRITEN: `/feed/detail?id=${notification.relatedId}`,
+  };
 
   const handleClick = () => {
     const address = LOCATION[type];

@@ -12,11 +12,12 @@ import { useSetRecoilState } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { UserInfoMini } from "../shared/providers/AuthProvider";
 import { FeedSkeleton } from "../shared/Skeleton/FeedSkeleton";
+import { Feed } from "@/models/feed";
 
 interface FeedListProps {
   feeds: any[];
   userInfo: false | UserInfoMini | null;
-  onFeedSelect: (feedId: string) => void;
+  onFeedSelect: (feedId: string, feed: Feed) => void;
   isFetching: boolean;
   loadMore: () => void;
   isMine?: boolean;
@@ -65,7 +66,12 @@ export const FeedList: React.FC<FeedListProps> = ({
     >
       {feeds.map((feed) => (
         <div key={feed.id} className="relative">
-          <FeedCard feed={feed} onClick={() => onFeedSelect(feed.id)}>
+          <FeedCard
+            feed={feed}
+            onClick={() => {
+              onFeedSelect(feed.id, feed);
+            }}
+          >
             <InfoBar
               ref={fBtnRef}
               onClick={(e) => {

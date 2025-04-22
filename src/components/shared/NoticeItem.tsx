@@ -25,6 +25,10 @@ export default function NoticeItem({
     "FRIEND_REQUEST",
     "GATHERING_INVITATION_RECEIVED",
     "GROUP_INVITATION",
+    "FEED_COMMENT",
+    "FEED_COMMENT_MENTIONED",
+    "FRIEND_FEED_WRITEN",
+    "GATHERING_FEED_WRITEN",
   ].includes(type);
 
   return (

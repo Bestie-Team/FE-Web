@@ -28,9 +28,11 @@ export async function getFeedComments({ feedId }: { feedId: string }) {
 export async function postMakeComment({
   feedId,
   content,
+  mentionedUserId,
 }: {
   feedId: string;
   content: string;
+  mentionedUserId?: string;
 }): Promise<CommentResponse | undefined> {
   const baseUrl = API_CONFIG.getBaseUrl();
   try {
@@ -41,7 +43,7 @@ export async function postMakeComment({
     const response = await fetchWithAuth(targetUrl, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
-      body: JSON.stringify({ feedId, content }),
+      body: JSON.stringify({ feedId, content, mentionedUserId }),
     });
     console.log(response);
     return { message: "피드 댓글을 성공적으로 작성하였습니다" };
