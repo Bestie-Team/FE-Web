@@ -15,7 +15,10 @@ export default function NoticeContainer() {
 
   notifications?.forEach((notification) => {
     const isToday =
-      new Date(notification.createdAt).getDate() === new Date().getDate();
+      new Date(notification.createdAt).getDate() === new Date().getDate() &&
+      new Date(notification.createdAt).getFullYear() ===
+        new Date().getFullYear() &&
+      new Date(notification.createdAt).getDay() === new Date().getDay();
     if (isToday) {
       today.push(notification);
     } else {
@@ -32,7 +35,10 @@ export default function NoticeContainer() {
   if (notifications && notifications.length < 1) return <NoNotification />;
 
   return (
-    <div ref={containerRef} className="pt-safe-top gap-10 px-5 pb-10">
+    <div
+      ref={containerRef}
+      className="pt-safe-top gap-10 px-5 pb-10 bg-grayscale-50 h-full overflow-y-scroll"
+    >
       <div className="flex flex-col gap-5 pt-[60px]">
         {today.length > 0 && (
           <Flex direction="column" className="gap-3">
