@@ -20,7 +20,7 @@ import useGroup from "../groups/hooks/useGroups";
 import FullPageLoader from "../shared/FullPageLoader";
 import { lightyToast } from "@/utils/toast";
 import dynamic from "next/dynamic";
-import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "../layout/Header/HeaderWithBtn";
 
 const AddFriendsSlider = dynamic(() => import("../groups/AddFriendsSlider"), {
   ssr: false,

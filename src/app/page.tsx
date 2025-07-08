@@ -1,7 +1,7 @@
 "use client";
 import LogIn from "@/components/LogIn";
 import Flex from "@/components/shared/Flex";
-import LargeLightyLogo from "@/components/shared/Icon/LargeLightyLogo";
+import { LargeLightyLogo } from "@/components/shared/Icon/LargeLightyLogo";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";

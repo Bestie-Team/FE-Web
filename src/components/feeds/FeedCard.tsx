@@ -3,19 +3,18 @@ import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
 import { Feed } from "@/models/feed";
+import React from "react";
 
-export default function FeedCard({
-  feed,
-  children,
-  onClick,
-}: {
+interface FeedCardProps {
   feed: Feed;
   children: React.ReactNode;
   onClick: () => void;
-}) {
-  const writer = feed?.writer;
+}
 
-  if (!writer) return null;
+export const FeedCard = ({ feed, children, onClick }: FeedCardProps) => {
+  if (!feed?.writer) {
+    return null;
+  }
 
   return (
     <Flex direction="column" className="py-3" onClick={onClick}>
@@ -29,4 +28,6 @@ export default function FeedCard({
       />
     </Flex>
   );
-}
+};
+
+export default React.memo(FeedCard);

@@ -3,6 +3,16 @@ import Dimmed from "../Dimmed";
 import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../Button/Button";
+import React from "react";
+
+interface ModalProps {
+  title?: string;
+  content?: React.ReactNode;
+  onClose: () => void;
+  action?: () => void;
+  left?: string;
+  right?: string;
+}
 
 export default function Modal({
   title,
@@ -11,17 +21,10 @@ export default function Modal({
   left = "취소",
   right,
   onClose,
-}: {
-  title?: string;
-  content?: string;
-  action?: () => void;
-  left?: string;
-  right?: string;
-  onClose: () => void;
-}) {
+}: ModalProps) {
   return (
-    <Dimmed className={styles.dimmed}>
-      <Flex align="center" direction="column" className={styles.modalWrapper}>
+    <ModalWrapper>
+      <Flex align="center" direction="column" className={styles.modalContainer}>
         <div className="text-T3 text-center">{title}</div>
         <Spacing size={12} />
         <div className={styles.content}>{content}</div>
@@ -53,14 +56,18 @@ export default function Modal({
           ) : null}
         </Flex>
       </Flex>
-    </Dimmed>
+    </ModalWrapper>
   );
 }
+
+export const ModalWrapper = ({ children }: { children: React.ReactNode }) => {
+  return <Dimmed className={styles.dimmed}>{children}</Dimmed>;
+};
 
 const styles = {
   dimmed: "flex justify-center items-center z-200",
 
-  modalWrapper:
+  modalContainer:
     "bg-base-white rounded-[20px] w-[268px] pt-[28px] pb-5 px-[30px] z-201",
   button: "w-[104px] py-[14px] rounded-full text-T6",
 

@@ -18,7 +18,7 @@ import GroupDetailContainer from "@/components/groups/GroupDetailContainer";
 import dynamic from "next/dynamic";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
 import useReport from "@/components/report/hooks/useReport";
 import MODAL_CONFIGS from "@/constants/modal-configs";

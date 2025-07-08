@@ -15,7 +15,7 @@ import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { bottomSheetStateAtom, selectedFeedInfoAtom } from "@/atoms/feed";
-import { ScrollAwareHeader } from "@/components/shared/Header/ScrollAwareHeader";
+import { ScrollAwareHeader } from "@/components/layout/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import TabParamHandler from "@/components/shared/TabParamHandler";

@@ -1,20 +1,22 @@
 import clsx from "clsx";
-import React, { ChangeEvent, useState } from "react";
-import EmptySquareIcon from "../Icon/EmptySquareIcon";
+import React, { useState } from "react";
 import Text from "../Text";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
 import ToastError from "../Icon/ToastError";
 import ToastSuccess from "../Icon/ToastSuccess";
 
-interface InputProps {
-  square?: string;
+interface InputProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "onChange" | "value"
+  > {
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: React.ReactNode;
+  helpMessage?: React.ReactNode;
   placeholder?: string;
   name?: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  helpMessage?: React.ReactNode;
   displayLength?: number;
   minLength?: number;
   idNotAvailable?: boolean;
@@ -23,7 +25,6 @@ interface InputProps {
 export default function Input({
   name,
   value,
-  square,
   label,
   helpMessage,
   displayLength,
@@ -41,8 +42,7 @@ export default function Input({
       return <ToastError />;
     }
     if (name == "accountId" && value) {
-      return (helpMessage == "" || helpMessage == undefined) &&
-        value?.length >= 4 ? (
+      return !helpMessage && value?.length >= 4 ? (
         <ToastSuccess />
       ) : (
         <ToastError />
@@ -69,10 +69,10 @@ export default function Input({
         )}
       >
         <input
-          autoComplete="off"
           name={name}
           type="text"
           inputMode="text"
+          autoComplete="off"
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={styles.input}
@@ -83,12 +83,13 @@ export default function Input({
         />
         {displayLength && (
           <span>
-            <span className="text-grayscale-900 text-B4">{`${value?.length}`}</span>
-            <span className="text-grayscale-300 text-B4">{`/${maxLength}`}</span>
+            <span className="text-grayscale-900 text-B4">{`${
+              value?.length || 0
+            }`}</span>
+            <span className="text-grayscale-300 text-B4">{`/${displayLength}`}</span>
           </span>
         )}
         {idCheck()}
-        {square && <EmptySquareIcon width="20" height="20" />}
       </div>
       {helpMessage ? (
         <Text className={styles.helpMessage}>{helpMessage}</Text>

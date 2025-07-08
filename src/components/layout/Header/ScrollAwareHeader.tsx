@@ -1,12 +1,12 @@
-import { DotWithNumberIcon } from "../Icon/DotIcon";
-import MailIcon from "../Icon/MailIcon";
-import NoticeIcon from "../Icon/NoticeIcon";
+import { DotWithNumberIcon } from "../../shared/Icon/DotIcon";
+import MailIcon from "../../shared/Icon/MailIcon";
+import NoticeIcon from "../../shared/Icon/NoticeIcon";
 import { useRouter } from "next/navigation";
 import React from "react";
 import clsx from "clsx";
-import Panel from "../Panel/Panel";
+import Panel from "../../shared/Panel/Panel";
 import type { Notification } from "lighty-type";
-import Header from "./Header";
+import Header from ".";
 
 interface ScrollAwareHeaderProps extends FeedHeaderProps {
   visible: boolean;

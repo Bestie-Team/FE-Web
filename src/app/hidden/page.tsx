@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import Modal from "@/components/shared/Modal/Modal";
 import { bottomSheetStateAtom } from "@/atoms/feed";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import Spacing from "@/components/shared/Spacing";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import MODAL_CONFIGS from "@/constants/modal-configs";

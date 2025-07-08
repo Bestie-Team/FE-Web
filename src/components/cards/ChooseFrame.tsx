@@ -1,8 +1,8 @@
 import { cardFrameAtom } from "@/atoms/card";
-import SelectFrameSwiper from "@/components/cards/SelectFrameSwiper";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { useRecoilValue } from "recoil";
+import SelectFrameSwiper from "./SelectFrameSwiper";
 
 export default function ChooseFrame({ onNext }: { onNext: () => void }) {
   const selectedFrame = useRecoilValue(cardFrameAtom);

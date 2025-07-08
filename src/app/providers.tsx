@@ -21,7 +21,7 @@ import useScrollToTop from "@/hooks/useScrollToTop";
 import dynamic from "next/dynamic";
 import { ReactNativeWebViewProvider } from "@/components/shared/providers/ReactNativeWebViewProvider";
 
-const NavBar = dynamic(() => import("@/components/shared/NavBar"), {
+const NavBar = dynamic(() => import("@/components/layout/NavBar"), {
   ssr: false,
 });
 

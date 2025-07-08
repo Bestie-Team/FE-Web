@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function LargeLightyLogo() {
+export const LargeLightyLogo = () => {
   return (
     <svg
       width="140"
@@ -47,4 +47,4 @@ export default function LargeLightyLogo() {
       </g>
     </svg>
   );
-}
+};

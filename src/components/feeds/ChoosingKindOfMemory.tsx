@@ -6,20 +6,22 @@ import { Dispatch, SetStateAction, useEffect } from "react";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 
+interface ChoosingKindOfMemoryProps {
+  add: number;
+  setAdd: Dispatch<SetStateAction<number>>;
+  setStep: Dispatch<SetStateAction<number>>;
+}
+
 export default function ChoosingKindOfMemory({
   add,
   setAdd,
   setStep,
-}: {
-  add: number;
-  setAdd: Dispatch<SetStateAction<number>>;
-  setStep: Dispatch<SetStateAction<number>>;
-}) {
+}: ChoosingKindOfMemoryProps) {
+  const { isReactNativeWebView } = useReactNativeWebView();
+
   useEffect(() => {
     setStep(1);
   }, []);
-
-  const { isReactNativeWebView } = useReactNativeWebView();
 
   return (
     <>

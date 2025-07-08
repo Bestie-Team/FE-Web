@@ -15,7 +15,7 @@ import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import { useQueryClient } from "@tanstack/react-query";
 import NoInvitation from "@/components/invitation/NoInvitation";
 import InvitationCardSkeleton from "@/components/shared/Skeleton/InvitationCardSkeleton";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 
 export default function InvitationPage() {
   const queryClient = useQueryClient();

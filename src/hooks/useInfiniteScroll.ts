@@ -43,7 +43,7 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
 
 export default useInfiniteScroll;
 
-interface InfiniteScrollRefType {
+interface InfiniteScrollRefProps {
   isFetching: boolean;
   loadMore: () => void;
   targetRef: RefObject<HTMLElement>;
@@ -57,7 +57,7 @@ export const useInfiniteScrollByRef = ({
   targetRef,
   threshold = 300,
   selectedTab,
-}: InfiniteScrollRefType) => {
+}: InfiniteScrollRefProps) => {
   const [page, setPage] = useState(0);
   const isLoadingRef = useRef(false);
 

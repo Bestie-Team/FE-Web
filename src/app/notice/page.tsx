@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import useReadNotification from "@/components/notice/hooks/useReadNotification";
 import Flex from "@/components/shared/Flex";
 import NoticeContainer from "@/components/notice/NoticeContainer";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 
 export default function NoticePage() {
   const queryClient = useQueryClient();

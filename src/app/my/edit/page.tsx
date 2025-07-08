@@ -3,7 +3,7 @@ import useUpdateAccountId from "@/components/my/hooks/usePatchAccountId";
 import useUpdateProfile from "@/components/my/hooks/useUpdateProfile";
 import FixedBottomButton from "@/components/shared/Button/FixedBottomButton";
 import Flex from "@/components/shared/Flex";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import Input from "@/components/shared/Input/Input";
 import ProfileImageDisplay from "@/components/shared/ProfileImageDisplay";
 import Spacing from "@/components/shared/Spacing";

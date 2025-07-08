@@ -10,7 +10,7 @@ import * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 
 export default function EditingFeed() {
   const router = useRouter();

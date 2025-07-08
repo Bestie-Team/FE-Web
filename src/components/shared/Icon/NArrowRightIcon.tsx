@@ -1,4 +1,4 @@
-export default function NArrowRightIcon({
+export default function NarrowRightIcon({
   width,
   height,
   checked,
