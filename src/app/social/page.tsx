@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useRecoilState } from "recoil";
 import { friendsSelectedTabAtom } from "@/atoms/friends";
 import GroupListSkeleton from "@/components/shared/Skeleton/GroupListSkeleton";
-import { SocialHeader } from "@/components/shared/Header/ScrollAwareHeader";
+import { SocialHeader } from "@/components/layout/Header/ScrollAwareHeader";
 import UserFriendsListContainer from "@/components/friends/UserFriendsListContainer";
 
 const Groups = dynamic(() => import("@/components/groups/Group"), {

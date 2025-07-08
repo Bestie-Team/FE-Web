@@ -7,7 +7,7 @@ import ChoosingKindOfMemory from "../../components/feeds/ChoosingKindOfMemory";
 import ChoosingGatheringToRecord from "@/components/feeds/ChoosingGatheringToRecord";
 import CreatingFeed from "@/components/feeds/CreatingFeed";
 import CreatingFeedNoGathering from "@/components/feeds/CreatingFeedNoGathering";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import { useRouter, useSearchParams } from "next/navigation";
 import Spacing from "@/components/shared/Spacing";
 import clsx from "clsx";

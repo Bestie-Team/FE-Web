@@ -6,7 +6,7 @@ import NewGroupForm from "@/components/groups/NewGroupForm";
 import { useSetRecoilState } from "recoil";
 import { newGroupAtom } from "@/atoms/group";
 import { CreateGroupRequest } from "@/models/group";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 
 const InviteFriends = dynamic(
   () => import("@/components/friends/InviteFriends"),

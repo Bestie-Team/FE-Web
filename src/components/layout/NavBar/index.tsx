@@ -1,15 +1,18 @@
 import { useMemo, memo, useEffect, useState, Suspense } from "react";
 import NAV_ITEMS from "@/constants/navBar";
 import { useActiveNavigation } from "@/hooks/useActiveNavigation";
-import { NavLink } from "./NavBar/NavLink";
-import useUserProfile from "../users/hooks/useUserProfile";
+import { NavLink } from "./NavLink";
+import useUserProfile from "../../users/hooks/useUserProfile";
 import dynamic from "next/dynamic";
 import clsx from "clsx";
-import { useReactNativeWebView } from "./providers/ReactNativeWebViewProvider";
+import { useReactNativeWebView } from "../../shared/providers/ReactNativeWebViewProvider";
 
-const FloatingButton = dynamic(() => import("./Button/FloatingButton"), {
-  ssr: false,
-});
+const FloatingButton = dynamic(
+  () => import("../../shared/Button/FloatingButton"),
+  {
+    ssr: false,
+  }
+);
 
 const MemoizedNavLink = memo(NavLink);
 const SHOW_SHEET_PATHS = ["/feed"];

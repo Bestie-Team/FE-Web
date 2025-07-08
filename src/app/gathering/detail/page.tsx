@@ -10,7 +10,7 @@ import useDeleteGathering from "@/components/gathering/hooks/useDeleteGathering"
 import GatheringDetail from "@/components/gathering/GatheringDetail";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import dynamic from "next/dynamic";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import handleShare from "@/utils/handleShare";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import ShareIcon from "@/components/shared/Icon/ShareIcon";

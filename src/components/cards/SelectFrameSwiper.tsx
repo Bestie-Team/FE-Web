@@ -20,7 +20,6 @@ export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
   const [selectedFrame, setSelectedFrame] = useRecoilState(cardFrameAtom);
   const ref = useRef<HTMLDivElement>(null);
-
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,9 +37,10 @@ export default function SelectFrameSwiper() {
   ];
 
   useEffect(() => {
-    onChangeFrame(0);
-  }, []);
-
+    if (selectedFrame == null) {
+      onChangeFrame(0);
+    }
+  }, [selectedFrame]);
   const onChangeFrame = (id: number) => {
     setSelectedFrame(id);
   };

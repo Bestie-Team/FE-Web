@@ -6,7 +6,7 @@ import { SetterOrUpdater } from "recoil";
 import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCard";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
-import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "../layout/Header/HeaderWithBtn";
 import { Dispatch, SetStateAction } from "react";
 
 export default function MakingInvitation({

@@ -11,7 +11,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Header from "@/components/shared/Header/Header";
+import Header from "@/components/layout/Header";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";

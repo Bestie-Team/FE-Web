@@ -11,15 +11,17 @@ import CloseIcon from "../shared/Icon/CloseIcon";
 import { compressImage } from "@/utils/compress";
 import PhotoSelectBottomSheet from "../shared/BottomDrawer/PhotoSelectBottomSheet";
 
+interface UploadPhotoSwiperProps {
+  feedInfoToEdit?: { content: string; imageUrls: string[] };
+  filesToUpload: File[];
+  setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
+}
+
 export default function UploadPhotoSwiper({
   feedInfoToEdit,
   filesToUpload,
   setFilesToUpload,
-}: {
-  feedInfoToEdit?: { content: string; imageUrls: string[] };
-  filesToUpload: File[];
-  setFilesToUpload: React.Dispatch<React.SetStateAction<File[]>>;
-}) {
+}: UploadPhotoSwiperProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [selectOpen, setSelectOpen] = useState(false);

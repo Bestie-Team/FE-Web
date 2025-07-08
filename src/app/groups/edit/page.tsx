@@ -17,7 +17,7 @@ import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
 import * as lighty from "lighty-type";
 import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import { useQueryClient } from "@tanstack/react-query";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { postGroupMember } from "@/remote/group";

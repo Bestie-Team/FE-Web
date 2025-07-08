@@ -6,23 +6,24 @@ import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Gathering } from "@/models/gathering";
 
+interface Props {
+  gathering: Gathering[];
+  onImageClick?: (gatheringId: string) => void;
+  selectedGatheringId: string;
+}
+
 export default function BigClickableGatheringSwiper({
   gathering,
   onImageClick,
   selectedGatheringId,
-}: {
-  gathering: Gathering[];
-  onImageClick?: (gatheringId: string) => void;
-  selectedGatheringId: string;
-}) {
+}: Props) {
   const handleGatheringClick = (id: string) => {
-    if (onImageClick) {
-      if (selectedGatheringId === id) {
-        onImageClick("");
-        return;
-      }
-      onImageClick(id);
-    } else return;
+    if (!onImageClick) return;
+    if (selectedGatheringId === id) {
+      onImageClick("");
+      return;
+    }
+    onImageClick(id);
   };
 
   return (
@@ -40,8 +41,8 @@ export default function BigClickableGatheringSwiper({
             key={`gathering${id}`}
           >
             <Image
-              src={`${invitationImageUrl}`}
-              alt={`gathering${idx + 1}`}
+              src={invitationImageUrl}
+              alt={`Invitation image of ${name}`}
               className={styles.image}
               width={270}
               height={320}

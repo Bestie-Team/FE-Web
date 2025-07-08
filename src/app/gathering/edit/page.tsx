@@ -10,7 +10,7 @@ import GatheringEditForm from "@/components/gathering/GatheringEditForm";
 import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 
 export default function GatheringEditPage() {
   const router = useRouter();
