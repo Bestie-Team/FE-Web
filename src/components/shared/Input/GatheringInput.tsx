@@ -78,7 +78,7 @@ export default function GatheringInput({
         </>
       )}
       <div
-        onMouseDown={() => {
+        onClick={() => {
           if (type === "address" || type === "editAddress") {
             setAddressSearch(1);
           }
@@ -86,16 +86,16 @@ export default function GatheringInput({
             onClick();
           }
         }}
-        onClick={onClick}
+        tabIndex={0}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        {...props}
         className={clsx(
           styles.inputWrapper,
           isFocused
             ? "border-grayscale-700"
             : "border-grayscale-10 whitespace-pre-wrap"
         )}
+        {...props}
       >
         {value}
       </div>

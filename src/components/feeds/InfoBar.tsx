@@ -18,6 +18,7 @@ interface FriendInfo {
   name: string;
   imageUrl: string | null;
 }
+
 const InfoBar = forwardRef<HTMLElement, InfoBarProps>(
   ({ withMembers, feed, onClick }, ref) => {
     const friendInfo = withMembers?.map((other) => ({

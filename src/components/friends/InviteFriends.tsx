@@ -3,7 +3,7 @@ import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { Dispatch, SetStateAction } from "react";
 import * as lighty from "lighty-type";
-import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "../layout/Header/HeaderWithBtn";
 
 export default function InviteFriends({
   setStep,

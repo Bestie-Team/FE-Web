@@ -10,7 +10,7 @@ import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../Button/Button";
 import CheckInCircleIcon from "../Icon/CheckInCircleIcon";
-import NArrowRightIcon from "../Icon/NArrowRightIcon";
+import NArrowRightIcon from "../Icon/NarrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { contentsOfTerms } from "@/constants/termsContent";

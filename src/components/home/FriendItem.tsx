@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/Icon/PlusIcon";
 import { GroupInfoResponse } from "@/models/group";
 import * as lighty from "lighty-type";
 import LightyIcon from "../shared/Icon/LightyIcon";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function FriendItem({
   friendInfo,
@@ -20,7 +20,7 @@ export default function FriendItem({
     >
       <div className="p-[6px] w-14 h-14 box-content">
         {!!friendInfo?.profileImageUrl || !!groupInfo?.imageUrl ? (
-          <Image
+          <OptimizedImage
             alt="friendImage"
             src={friendInfo?.profileImageUrl || groupInfo?.imageUrl || ""}
             className="rounded-full object-cover w-14 h-14 border-[1.2px] border-grayscale-100"

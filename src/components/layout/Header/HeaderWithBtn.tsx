@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import ArrowLeftIcon from "../Icon/ArrowLeftIcon";
-import Spacing from "../Spacing";
-import Flex from "../Flex";
+import ArrowLeftIcon from "../../shared/Icon/ArrowLeftIcon";
+import Spacing from "../../shared/Spacing";
+import Flex from "../../shared/Flex";
 
 export default function HeaderWithBtn({
   icon,

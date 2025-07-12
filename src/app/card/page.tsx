@@ -4,7 +4,7 @@ import ChoosingGatheringToDecorate from "@/components/cards/ChoosingGatheringToD
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import FramePageSkeleton from "@/components/shared/Skeleton/FramePageSkeleton";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 
 const ChooseFrame = dynamic(() => import("@/components/cards/ChooseFrame"), {

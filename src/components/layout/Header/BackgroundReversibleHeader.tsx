@@ -1,13 +1,13 @@
 import { isIntersectingAtom } from "@/atoms/scroll";
 import { useRouter } from "next/navigation";
 import { useRecoilValue } from "recoil";
-import LightyIcon from "../Icon/LightyIcon";
-import Spacing from "../Spacing";
-import LightyLetterLogo from "../Icon/LightyLetterLogo";
-import Flex from "../Flex";
-import MailIcon from "../Icon/MailIcon";
-import { DotIcon } from "../Icon/DotIcon";
-import NoticeIcon from "../Icon/NoticeIcon";
+import LightyIcon from "../../shared/Icon/LightyIcon";
+import Spacing from "../../shared/Spacing";
+import LightyLetterLogo from "../../shared/Icon/LightyLetterLogo";
+import Flex from "../../shared/Flex";
+import MailIcon from "../../shared/Icon/MailIcon";
+import { DotIcon } from "../../shared/Icon/DotIcon";
+import NoticeIcon from "../../shared/Icon/NoticeIcon";
 
 export default function BackgroundReversibleHeader() {
   const router = useRouter();

@@ -65,8 +65,8 @@ export default function GatheringCard({
         src={!invitationImageUrl ? DEFAULT_IMAGE : invitationImageUrl}
         className={clsx(styles.image, "scale-110")}
         alt={name}
-        width={168}
-        height={168}
+        width={200}
+        height={200}
       />
       <div
         style={{

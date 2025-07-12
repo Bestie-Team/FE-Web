@@ -2,7 +2,6 @@ import { useRecoilState } from "recoil";
 import Flex from "../shared/Flex";
 import LightyLogo from "../shared/Icon/LightyLogo";
 import Spacing from "../shared/Spacing";
-import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
 import useFeedMine from "../feeds/hooks/useFeedMine";
 import { cardSelectedFeedAtom } from "@/atoms/card";
 import { maxDate, minDate } from "@/constants/time";
@@ -10,16 +9,17 @@ import { Feed } from "@/models/feed";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { NoFeedToMakeCard } from "../feeds/NoFeed";
+import ClickableGatheringSwiperForDeco from "./ClickableGatheringSwiperForDeco";
 
 export default function ChoosingGatheringToDecorate({
   onNext,
 }: {
   onNext: () => void;
 }) {
+  const router = useRouter();
   const [selectedFeed, setSelectedFeed] = useRecoilState<
     Partial<Feed> & { name: string; imageUrl: string; date: string }
   >(cardSelectedFeedAtom);
-  const router = useRouter();
 
   const { data } = useFeedMine({
     order: "DESC",

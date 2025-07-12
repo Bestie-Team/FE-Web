@@ -4,7 +4,7 @@ import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { HEART_LETTER } from "@/constants/images";
-import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "../layout/Header/HeaderWithBtn";
 
 export default function StepToInvitation({
   setStep,

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Flex from "../Flex";
+import Flex from "../../shared/Flex";
 
 export default function Header({
   px = "px-5",

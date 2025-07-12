@@ -4,7 +4,7 @@ import Image from "next/image";
 import CheckSpinner from "../shared/Spinner/CheckSpinner";
 import { HEART_LETTER } from "@/constants/images";
 import DotSpinner from "../shared/Spinner/DotSpinner";
-import HeaderWithBtn from "../shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "../layout/Header/HeaderWithBtn";
 
 export default function EditGatheringStatus({
   isPending,

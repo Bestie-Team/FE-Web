@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
@@ -14,6 +13,7 @@ import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
 import { lightyToast } from "@/utils/toast";
 import { FriendRequestStatus } from "./UserListContainer";
 import LightyIcon from "../shared/Icon/LightyIcon";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function UserListItem({
   userInfo,
@@ -52,7 +52,7 @@ export default function UserListItem({
       )}
     >
       {!!userInfo?.profileImageUrl ? (
-        <Image
+        <OptimizedImage
           alt="friendProfile"
           src={userInfo?.profileImageUrl ? userInfo.profileImageUrl : ""}
           width={36}

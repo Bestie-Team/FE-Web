@@ -1,18 +1,20 @@
 import clsx from "clsx";
 
+interface DimmedProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  isClosing?: boolean;
+  className?: string;
+  bright?: boolean;
+}
+
 function Dimmed({
   children,
   onClick,
   isClosing,
   className,
   bright,
-}: {
-  children: React.ReactNode;
-  onClick?: () => void;
-  isClosing?: boolean;
-  className?: string;
-  bright?: boolean;
-}) {
+}: DimmedProps) {
   return (
     <div
       data-testid="dimmed-backdrop"

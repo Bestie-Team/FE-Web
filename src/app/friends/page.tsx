@@ -1,6 +1,6 @@
 "use client";
 import SentReceivedFriendRequestsList from "@/components/friends/SentReceivedFriendRequestsList";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import { useRouter } from "next/navigation";
 
 export default function FriendsPage() {

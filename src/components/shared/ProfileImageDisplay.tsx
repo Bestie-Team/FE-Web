@@ -1,5 +1,4 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
-import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import usePostProfileImage from "../my/hooks/usePostProfileImage";
 import PhotoIcon from "./Icon/PhotoIcon";
@@ -8,6 +7,7 @@ import clsx from "clsx";
 import { lightyToast } from "@/utils/toast";
 import { compressImage } from "@/utils/compress";
 import PhotoSelectBottomSheet from "./BottomDrawer/PhotoSelectBottomSheet";
+import OptimizedImage from "./OptimizedImage";
 
 export default function ProfileImageDisplay({
   userImage,
@@ -111,8 +111,7 @@ export default function ProfileImageDisplay({
           className={imageWrapperStyle}
         >
           {newImage ? (
-            <Image
-              priority
+            <OptimizedImage
               src={newImage}
               alt="upload_image"
               width={small ? 64 : 74.67}

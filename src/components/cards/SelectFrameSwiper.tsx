@@ -13,14 +13,12 @@ import { frames } from "@/constants/photoCard";
 import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
-import Image from "next/image";
 import OptimizedImage from "../shared/OptimizedImage";
 
 export default function SelectFrameSwiper() {
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
   const [selectedFrame, setSelectedFrame] = useRecoilState(cardFrameAtom);
   const ref = useRef<HTMLDivElement>(null);
-
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,9 +36,10 @@ export default function SelectFrameSwiper() {
   ];
 
   useEffect(() => {
-    onChangeFrame(0);
-  }, []);
-
+    if (selectedFrame == null) {
+      onChangeFrame(0);
+    }
+  }, [selectedFrame]);
   const onChangeFrame = (id: number) => {
     setSelectedFrame(id);
   };
@@ -118,7 +117,7 @@ export default function SelectFrameSwiper() {
                     </span>
                   </Flex>
                 </Flex>
-                <Image
+                <OptimizedImage
                   loading="eager"
                   src={`${frame}`}
                   width={282}

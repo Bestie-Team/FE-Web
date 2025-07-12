@@ -7,11 +7,7 @@ import { Feed } from "@/models/feed";
 import { useState } from "react";
 import OptimizedImage from "../shared/OptimizedImage";
 
-export default function ClickableGatheringSwiperForDeco({
-  feed,
-  onImageClick,
-  selectedFeedId,
-}: {
+interface Props {
   feed: Feed[];
   onImageClick?: (feedInfo: {
     id: string;
@@ -21,8 +17,14 @@ export default function ClickableGatheringSwiperForDeco({
     date: string;
   }) => void;
   selectedFeedId: string | null;
-}) {
-  const [isLoaded, setIsLoaded] = useState(false);
+}
+
+export default function ClickableGatheringSwiperForDeco({
+  feed,
+  onImageClick,
+  selectedFeedId,
+}: Props) {
+  const [loadedMap, setLoadedMap] = useState<Record<string, boolean>>({});
   const handleGatheringClick = ({
     id,
     name,
@@ -36,25 +38,28 @@ export default function ClickableGatheringSwiperForDeco({
     imageUrl: string;
     date: string;
   }) => {
-    if (onImageClick) {
-      if (selectedFeedId === id) {
-        onImageClick({
-          id: "",
-          name: "",
-          content: "",
-          imageUrl: "",
-          date: "",
-        });
-        return;
-      }
+    if (!onImageClick) return;
+    if (selectedFeedId === id) {
       onImageClick({
-        id,
-        name,
-        content,
-        imageUrl,
-        date,
+        id: "",
+        name: "",
+        content: "",
+        imageUrl: "",
+        date: "",
       });
-    } else return;
+      return;
+    }
+    onImageClick({
+      id,
+      name,
+      content,
+      imageUrl,
+      date,
+    });
+  };
+
+  const handleImageLoad = (id: string) => {
+    setLoadedMap((prev) => ({ ...prev, [id]: true }));
   };
 
   return (
@@ -77,23 +82,30 @@ export default function ClickableGatheringSwiperForDeco({
               })
             }
             className={clsx(styles.slide, idx === 0 && "ml-5")}
-            key={`feed${id}`}
+            key={id}
           >
-            <OptimizedImage
-              loading="eager"
-              src={images[0]}
-              alt={`feed${idx + 1}`}
-              className={clsx(
-                styles.image,
-                `transition-opacity duration-75 ${
-                  isLoaded ? "opacity-100" : "opacity-0"
-                }`
-              )}
-              width={270}
-              height={320}
-              onLoad={() => setIsLoaded(true)}
-            />
-            {!isLoaded && <div className="absolute bg-grayscale-10 h-full" />}
+            {images[0] ? (
+              <OptimizedImage
+                loading={idx === 0 ? "eager" : undefined}
+                src={images[0]}
+                alt={`image of ${
+                  gathering?.name || "feed"
+                } created at ${createdAt}`}
+                className={clsx(
+                  styles.image,
+                  "transition-opacity duration-75",
+                  loadedMap[id] ? "opacity-100" : "opacity-0"
+                )}
+                width={270}
+                height={320}
+                onLoad={() => handleImageLoad(id)}
+              />
+            ) : (
+              <div className="w-[270px] h-[320px] bg-grayscale-100" />
+            )}
+            {!loadedMap[id] && (
+              <div className="absolute bg-grayscale-10 h-full" />
+            )}
             <Flex direction="column" className={styles.gatheringInfoWrapper}>
               <span className="text-T3">{gathering?.name}</span>
               <span className={styles.content}>{content}</span>

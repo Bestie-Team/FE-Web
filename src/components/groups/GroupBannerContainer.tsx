@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
-import Image from "next/image";
 import { Lighty } from "@/constants/images";
 import clsx from "clsx";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function GroupBannerContainer({
   imageUrl,
@@ -14,17 +14,14 @@ export default function GroupBannerContainer({
 }) {
   return (
     <>
-      <Image
-        priority
+      <OptimizedImage
         alt="groupImage"
         src={imageUrl ? imageUrl : Lighty}
         width={500}
         height={380}
         className={clsx(
-          "h-[380px] w-[500px] object-cover",
-          `transition-opacity duration-75 ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          }`
+          "h-[380px] w-[500px] object-cover transition-opacity duration-75",
+          isLoaded ? "opacity-100" : "opacity-0"
         )}
         onLoad={() => setIsLoaded(true)}
       />

@@ -1,9 +1,9 @@
-import Image from "next/image";
 import clsx from "clsx";
 import * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
 import React from "react";
 import Flex from "./Flex";
+import OptimizedImage from "./OptimizedImage";
 
 export default function GroupMemberImages({
   members,
@@ -42,7 +42,8 @@ export default function GroupMemberImages({
         return (
           <React.Fragment key={i}>
             {!!imageUrl ? (
-              <Image
+              <OptimizedImage
+                loading="eager"
                 key={`group${i}`}
                 style={{ marginLeft: i !== 0 ? `-${gap}px` : 0 }}
                 src={imageUrl}

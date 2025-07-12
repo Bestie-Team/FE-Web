@@ -1,28 +1,29 @@
-import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Gathering } from "@/models/gathering";
+import OptimizedImage from "../shared/OptimizedImage";
+
+interface Props {
+  gathering: Gathering[];
+  onImageClick?: (gatheringId: string) => void;
+  selectedGatheringId: string;
+}
 
 export default function BigClickableGatheringSwiper({
   gathering,
   onImageClick,
   selectedGatheringId,
-}: {
-  gathering: Gathering[];
-  onImageClick?: (gatheringId: string) => void;
-  selectedGatheringId: string;
-}) {
+}: Props) {
   const handleGatheringClick = (id: string) => {
-    if (onImageClick) {
-      if (selectedGatheringId === id) {
-        onImageClick("");
-        return;
-      }
-      onImageClick(id);
-    } else return;
+    if (!onImageClick) return;
+    if (selectedGatheringId === id) {
+      onImageClick("");
+      return;
+    }
+    onImageClick(id);
   };
 
   return (
@@ -39,9 +40,9 @@ export default function BigClickableGatheringSwiper({
             className={clsx(styles.slide, idx === 0 && "ml-5")}
             key={`gathering${id}`}
           >
-            <Image
-              src={`${invitationImageUrl}`}
-              alt={`gathering${idx + 1}`}
+            <OptimizedImage
+              src={invitationImageUrl}
+              alt={`Invitation image of ${name}`}
               className={styles.image}
               width={270}
               height={320}

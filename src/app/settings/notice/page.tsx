@@ -1,7 +1,7 @@
 "use client";
 import ToggleButton from "@/components/shared/Button/ToggleButton";
 import Flex from "@/components/shared/Flex";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import Modal from "@/components/shared/Modal/Modal";
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import Spacing from "@/components/shared/Spacing";

@@ -4,7 +4,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { useSearchParams } from "next/navigation";
 import { User } from "lighty-type";
 import Flex from "@/components/shared/Flex";
-import HeaderWithBtn from "@/components/shared/Header/HeaderWithBtn";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import FeedCard from "@/components/feeds/FeedCard";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";

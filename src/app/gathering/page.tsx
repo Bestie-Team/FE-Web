@@ -16,7 +16,7 @@ import Gathering from "@/components/gathering/Gathering";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import dynamic from "next/dynamic";
 import TabParamHandler from "@/components/shared/TabParamHandler";
-import { GatheringHeader } from "@/components/shared/Header/ScrollAwareHeader";
+import { GatheringHeader } from "@/components/layout/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import useGatheringAll from "@/components/gathering/hooks/useGatheringAll";
 import Spacing from "@/components/shared/Spacing";
