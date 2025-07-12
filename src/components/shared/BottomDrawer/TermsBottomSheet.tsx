@@ -10,12 +10,12 @@ import Flex from "../Flex";
 import Spacing from "../Spacing";
 import Button from "../Button/Button";
 import CheckInCircleIcon from "../Icon/CheckInCircleIcon";
-import NArrowRightIcon from "../Icon/NarrowRightIcon";
 import { 약관목록 } from "../../../constants/terms";
 import BottomSheetWrapper from "./shared/BottomSheetWrapper";
 import { contentsOfTerms } from "@/constants/termsContent";
 import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
 import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
+import NarrowRightIcon from "../Icon/NArrowRightIcon";
 
 export default function TermsBottomSheet({
   onClose,
@@ -101,7 +101,7 @@ export default function TermsBottomSheet({
                   />
                   <Spacing direction="horizontal" size={12} />
                   <span className="flex-grow">{title}</span>
-                  <NArrowRightIcon
+                  <NarrowRightIcon
                     checked={termsAgreements[id]}
                     onClick={() => {
                       if (id == "03") {
