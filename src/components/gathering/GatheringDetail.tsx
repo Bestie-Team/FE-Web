@@ -5,7 +5,6 @@ import LightyInfoContainer from "../shared/LightyInfoContainer";
 import FeedIcon from "../shared/Icon/FeedIcon";
 import Flex from "../shared/Flex";
 import CalendarIcon from "../shared/Icon/CalendarIcon";
-import Image from "next/image";
 import MapPinIcon from "../shared/Icon/MapPinIcon";
 import UserIcon from "../shared/Icon/UserIcon";
 import MemberContainer from "../shared/MembersContainer";
@@ -14,6 +13,7 @@ import { GatheringDetailResponse } from "@/models/gathering";
 import { MAP } from "@/constants/images";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
+import OptimizedImage from "../shared/OptimizedImage";
 
 export default function GatheringDetail({
   selectedGathering,
@@ -59,7 +59,7 @@ export default function GatheringDetail({
           <Flex className={styles.contentWrapper} align="center">
             <span className="text-T5 flex-grow">{address}</span>
             <Spacing size={8} direction="horizontal" />
-            <Image
+            <OptimizedImage
               className="rounded-[10.8px] w-9 h-9 object-cover"
               alt="mapIcon"
               width={36}

@@ -4,8 +4,8 @@ import { formatToDisplay } from "@/utils/makeUTC";
 import { Feed } from "@/models/feed";
 import { Lighty } from "@/constants/images";
 import { memo, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import OptimizedImage from "./OptimizedImage";
 
 const PhotoSwiper = memo(
   ({ feed, percent = 1.077 }: { feed: Feed; percent?: number }) => {
@@ -28,13 +28,13 @@ const PhotoSwiper = memo(
         grabCursor={true}
         style={{ paddingLeft: "20px" }}
         className="custom-swiper w-full cursor-pointer"
-        onTouchStart={(swiper, e) => {
+        onTouchStart={(_, e) => {
           e.stopPropagation();
         }}
-        onTouchMove={(swiper, e) => {
+        onTouchMove={(_, e) => {
           e.stopPropagation();
         }}
-        onTouchEnd={(swiper, e) => {
+        onTouchEnd={(_, e) => {
           e.stopPropagation();
         }}
       >
@@ -46,10 +46,10 @@ const PhotoSwiper = memo(
             {loaded === false && (
               <div className="absolute inset-0 rounded-2xl bg-grayscale-50" />
             )}
-            <Image
-              loading="eager"
+            <OptimizedImage
+              loading={idx === 0 ? "eager" : undefined}
               src={image ? image : Lighty}
-              alt={`Feed image ${idx + 1}`}
+              alt={`feed image ${idx + 1}`}
               className={styles.image}
               width={340}
               height={360}

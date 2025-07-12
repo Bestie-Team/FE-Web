@@ -13,7 +13,6 @@ import { frames } from "@/constants/photoCard";
 import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
-import Image from "next/image";
 import OptimizedImage from "../shared/OptimizedImage";
 
 export default function SelectFrameSwiper() {
@@ -118,7 +117,7 @@ export default function SelectFrameSwiper() {
                     </span>
                   </Flex>
                 </Flex>
-                <Image
+                <OptimizedImage
                   loading="eager"
                   src={`${frame}`}
                   width={282}

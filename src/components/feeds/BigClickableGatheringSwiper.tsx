@@ -1,10 +1,10 @@
-import Image from "next/image";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import clsx from "clsx";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import Flex from "../shared/Flex";
 import { Gathering } from "@/models/gathering";
+import OptimizedImage from "../shared/OptimizedImage";
 
 interface Props {
   gathering: Gathering[];
@@ -40,7 +40,7 @@ export default function BigClickableGatheringSwiper({
             className={clsx(styles.slide, idx === 0 && "ml-5")}
             key={`gathering${id}`}
           >
-            <Image
+            <OptimizedImage
               src={invitationImageUrl}
               alt={`Invitation image of ${name}`}
               className={styles.image}

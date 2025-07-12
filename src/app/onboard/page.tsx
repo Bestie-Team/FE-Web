@@ -4,13 +4,13 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import Flex from "@/components/shared/Flex";
 import type { Swiper as SwiperType } from "swiper";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import STORAGE_KEYS from "@/constants/storageKeys";
+import OptimizedImage from "@/components/shared/OptimizedImage";
 
 export default function OnBoardCardSlider() {
   const { setToken, setUserInfo } = useAuth();
@@ -74,7 +74,7 @@ export default function OnBoardCardSlider() {
                 </span>
                 {description}
               </Flex>
-              <Image
+              <OptimizedImage
                 alt={`${title} 이미지`}
                 src={imageUrl || "/placeholder.svg"}
                 width={390}

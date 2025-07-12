@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
+import { useMemo } from "react";
 interface OptimizedImageProps {
   src: string;
   alt: string;
@@ -21,60 +20,37 @@ export default function OptimizedImage({
   width = 800,
   height = 600,
   quality = 80,
-  effort = 4,
+  effort = 5,
   className = "",
-  loading,
+  loading = "lazy",
   style,
   onLoad,
 }: OptimizedImageProps) {
-  const [imageSrc, setImageSrc] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!src) return;
-
-    // 이미 최적화 API URL인 경우 그대로 사용
-    if (src.startsWith("/api/resize") || src.startsWith("/api/optimize")) {
-      setImageSrc(src);
-      return;
-    }
-
-    // 외부 URL인 경우 최적화 API를 통해 처리
-    const optimizedSrc = `/api/resize?url=${encodeURIComponent(
-      src
-    )}&width=${width}&height=${height}&quality=${quality}&effort=${effort}`;
-    setImageSrc(optimizedSrc);
-  }, [src, width, height, quality, effort]);
-
-  if (error) {
-    return (
-      <img
-        style={style}
-        loading={loading}
-        width={width}
-        height={height}
-        src={src || "/placeholder.svg"}
-        alt={alt}
-        className={className}
-        onError={() => setError("이미지 로딩 실패")}
-        onLoad={onLoad}
-      />
-    );
-  }
+  const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
+  console.log("devicePixelRatio", devicePixelRatio);
+  const optimizedSrc = useMemo(() => {
+    if (!src) return "/placeholder.png";
+    if (src.startsWith("/api/resize")) return src;
+    return `/api/resize?url=${encodeURIComponent(src)}&width=${Math.round(
+      width * dpr
+    )}&height=${Math.round(height * dpr)}&quality=${quality}&effort=${effort}`;
+  }, [src, width, height, quality, effort, dpr]);
 
   return (
-    <>
-      {imageSrc && (
-        <img
-          style={style}
-          loading={loading}
-          src={imageSrc || "/placeholder.svg"}
-          alt={alt}
-          className={className}
-          onError={() => setError("이미지 로딩 실패")}
-          onLoad={onLoad}
-        />
-      )}
-    </>
+    <img
+      style={style}
+      loading={loading}
+      width={width}
+      height={height}
+      srcSet={`${optimizedSrc}&dpr=1 1x, ${optimizedSrc}&dpr=2 2x, ${optimizedSrc}&dpr=3 3x`}
+      sizes={`${width}px`}
+      src={optimizedSrc}
+      alt={alt}
+      className={className}
+      onLoad={onLoad}
+      onError={(e) => {
+        (e.target as HTMLImageElement).src = "/placeholder.png";
+      }}
+    />
   );
 }

@@ -86,16 +86,15 @@ export default function ClickableGatheringSwiperForDeco({
           >
             {images[0] ? (
               <OptimizedImage
-                loading="eager"
+                loading={idx === 0 ? "eager" : undefined}
                 src={images[0]}
-                alt={`Image of ${
+                alt={`image of ${
                   gathering?.name || "feed"
                 } created at ${createdAt}`}
                 className={clsx(
                   styles.image,
-                  `transition-opacity duration-75 ${
-                    loadedMap[id] ? "opacity-100" : "opacity-0"
-                  }`
+                  "transition-opacity duration-75",
+                  loadedMap[id] ? "opacity-100" : "opacity-0"
                 )}
                 width={270}
                 height={320}
