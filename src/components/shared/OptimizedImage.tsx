@@ -27,7 +27,6 @@ export default function OptimizedImage({
   onLoad,
 }: OptimizedImageProps) {
   const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
-  console.log("devicePixelRatio", devicePixelRatio);
   const optimizedSrc = useMemo(() => {
     if (!src) return "/placeholder.png";
     if (src.startsWith("/api/resize")) return src;

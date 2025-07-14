@@ -18,8 +18,8 @@ import { useCallback } from "react";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import FeedPageSkeleton from "@/components/shared/Skeleton/FeedSkeleton";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { FeedModals } from "@/components/feeds/FeedModals";
 import useFeed from "@/components/feeds/hooks/useFeed";
+import FeedModals from "@/components/feeds/FeedModals";
 
 export type GroupEditProps = {
   id: string;
@@ -154,34 +154,12 @@ export default function FeedDetailPage() {
           onClose={() => setBottomSheetState(false)}
         />
       )}
-
       <FeedModals
         onReport={report}
-        onDeleteFeed={deleteFeed}
-        onDeleteComment={deleteComment}
-        onHideFeed={hideFeed}
+        deleteFeed={deleteFeed}
+        deleteComment={deleteComment}
+        hideFeed={hideFeed}
       />
-      {/* {modalState.isOpen && modalState.type && (
-        <Modal
-          title={MODAL_CONFIGS[modalState.type].title}
-          content={MODAL_CONFIGS[modalState.type].content}
-          left={MODAL_CONFIGS[modalState.type].leftButton}
-          right={MODAL_CONFIGS[modalState.type].rightButton}
-          //   action={modalAction}
-          onClose={closeModal}
-        />
-      )}
-      {reportModal.isOpen && (
-        <Report
-          type={reportModal.type}
-          report={report}
-          setReport={setReport}
-          handleReport={() => {
-            setReportModal((prev) => ({ ...prev, isOpen: false }));
-          }}
-          onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
-        />
-      )} */}
     </Flex>
   );
 }

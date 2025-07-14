@@ -121,7 +121,7 @@ export default function useFeed() {
 
   const {
     data: feedMine,
-    loadMore: loadMore_mine,
+    loadMore: loadMoreMine,
     isFetching: isFetching_mine,
   } = useFeedMine({ ...queryParams, enabled: !!token });
 
@@ -157,6 +157,7 @@ export default function useFeed() {
       lightyToast.error("신고 실패");
     },
   });
+
   return {
     feedId,
     setFeedId,
@@ -168,7 +169,7 @@ export default function useFeed() {
     isFetching_mine,
 
     loadMore,
-    loadMore_mine,
+    loadMoreMine,
 
     handleRefreshAll,
     handleRefreshMine,

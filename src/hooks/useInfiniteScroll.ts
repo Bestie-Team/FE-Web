@@ -6,6 +6,9 @@ interface InfiniteScrollType {
   loadMore: () => void;
 }
 
+/**
+ * 브라우저 전체 스크롤에 기반한 무한 스크롤 Hook
+ */
 const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
   const [page, setPage] = useState(0);
 
@@ -13,13 +16,9 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
     const documentHeight = document.documentElement.scrollHeight;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
-    // console.log(
-    //   documentHeight,
-    //   scrollTop,
-    //   windowHeight,
-    //   documentHeight - (scrollTop + windowHeight)
-    // );
-    if (documentHeight - (scrollTop + windowHeight) < 360 && !isFetching) {
+    const remainingScroll = documentHeight - (scrollTop + windowHeight);
+
+    if (remainingScroll < 360 && !isFetching) {
       setPage((prev) => prev + 1);
     }
   }, [isFetching]);
@@ -28,7 +27,6 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
 
   useEffect(() => {
     document.addEventListener("scroll", debouncedScroll);
-
     return () => {
       document.removeEventListener("scroll", debouncedScroll);
     };
@@ -38,7 +36,7 @@ const useInfiniteScroll = ({ isFetching, loadMore }: InfiniteScrollType) => {
     if (page > 0) {
       loadMore();
     }
-  }, [page]);
+  }, [page, loadMore]);
 };
 
 export default useInfiniteScroll;
@@ -51,22 +49,23 @@ interface InfiniteScrollRefProps {
   selectedTab?: string;
 }
 
+/**
+ * 특정 DOM 요소 기준 스크롤에 기반한 무한 스크롤 Hook
+ */
 export const useInfiniteScrollByRef = ({
   isFetching,
   loadMore,
   targetRef,
-  threshold = 300,
+  threshold = 3000,
   selectedTab,
 }: InfiniteScrollRefProps) => {
   const [page, setPage] = useState(0);
   const isLoadingRef = useRef(false);
 
   const checkScrollPosition = useCallback(() => {
-    if (!targetRef.current || isFetching || isLoadingRef.current) {
-      return;
-    }
+    const element = targetRef.current;
 
-    if (!targetRef.current || isFetching || isLoadingRef.current) {
+    if (!element || isFetching || isLoadingRef.current) {
       console.log("스크롤 체크 중단:", {
         refExists: !!targetRef.current,
         isFetching,
@@ -75,7 +74,6 @@ export const useInfiniteScrollByRef = ({
       return;
     }
 
-    const element = targetRef.current;
     const elementHeight = element.scrollHeight;
     const scrollTop = element.scrollTop;
     const clientHeight = element.clientHeight;
@@ -90,7 +88,6 @@ export const useInfiniteScrollByRef = ({
     // });
 
     if (remainingScroll < threshold) {
-      // console.log("무한 스크롤 트리거됨!");
       isLoadingRef.current = true;
       setPage((prev) => prev + 1);
     }
@@ -100,7 +97,6 @@ export const useInfiniteScrollByRef = ({
 
   useEffect(() => {
     const element = targetRef.current;
-
     if (!element) return;
 
     element.addEventListener("scroll", debouncedScroll);

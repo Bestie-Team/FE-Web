@@ -1,6 +1,5 @@
 import type React from "react";
-import { useRef } from "react";
-import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
+// import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import FeedCard from "@/components/feeds/FeedCard";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
@@ -19,7 +18,6 @@ interface FeedListProps {
   userInfo: false | UserInfoMini | null;
   onFeedSelect: (feedId: string, feed: Feed) => void;
   isFetching: boolean;
-  loadMore: () => void;
   isMine?: boolean;
 }
 
@@ -28,11 +26,9 @@ export const FeedList: React.FC<FeedListProps> = ({
   userInfo,
   onFeedSelect,
   isFetching,
-  loadMore,
   isMine = false,
 }) => {
   const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const {
     btnRef,
@@ -44,13 +40,6 @@ export const FeedList: React.FC<FeedListProps> = ({
 
   const { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox } =
     useFriendsBox();
-
-  useInfiniteScrollByRef({
-    isFetching,
-    loadMore,
-    targetRef: containerRef,
-    selectedTab: isMine ? "2" : "1",
-  });
 
   return (
     <div
