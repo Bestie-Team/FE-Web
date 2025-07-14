@@ -47,6 +47,7 @@ export default function Report({
             className={styles.reportTextarea}
             value={report.reason}
             onChange={(e) =>
+              setReport &&
               setReport((prev) => ({ ...prev, reason: e.target.value }))
             }
           />

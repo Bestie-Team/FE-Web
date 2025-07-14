@@ -1,61 +1,54 @@
-import type React from "react";
-import { useCallback } from "react";
-import { useRecoilState } from "recoil";
-import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
-import type { ReportContentTypes } from "@/components/report/hooks/useReport";
+import Modal from "@/components/shared/Modal/Modal";
+import Report from "@/components/shared/Modal/Report/Report";
 import MODAL_CONFIGS from "@/constants/modal-configs";
-import dynamic from "next/dynamic";
 
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
-  ssr: false,
-});
-
-const Report = dynamic(
-  () => import("@/components/shared/Modal/Report/Report"),
-  {
-    ssr: false,
-  }
-);
-
-interface FeedModalsProps {
-  onDeleteFeed: () => void;
-  onDeleteComment: () => void;
-  onHideFeed: () => void;
-  onReport: (reason: ReportContentTypes) => void;
+interface Props {
+  onReport: (r: any) => void;
+  deleteComment: () => void;
+  modalState?: any;
+  reportModalOpen?: any;
+  reportContent?: any;
+  setModalState?: (v: any) => void;
+  setReportContent?: (v: any) => void;
+  setReportModalOpen?: (v: any) => void;
+  displayFeed?: () => void;
+  deleteFeed?: () => void;
+  hideFeed?: () => void;
 }
 
-export const FeedModals: React.FC<FeedModalsProps> = ({
-  onDeleteFeed,
-  onDeleteComment,
-  onHideFeed,
+export default function FeedModals({
   onReport,
-}) => {
-  const [report, setReport] = useRecoilState(reportInfoAtom);
-  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
-  const [modalState, setModalState] = useRecoilState(modalStateAtom);
+  deleteComment,
+  modalState,
+  reportModalOpen,
+  reportContent,
+  setModalState,
+  setReportContent,
+  setReportModalOpen,
+  displayFeed,
+  deleteFeed,
+  hideFeed,
+}: Props) {
+  const modalAction =
+    modalState?.type === "deleteFeed"
+      ? deleteFeed
+      : modalState?.type === "hideFeed"
+      ? hideFeed
+      : modalState?.type === "displayFeed"
+      ? displayFeed
+      : deleteComment;
 
   const closeModal = () => {
-    setModalState({
-      type: null,
-      isOpen: false,
-    });
+    if (setModalState)
+      setModalState({
+        type: null,
+        isOpen: false,
+      });
   };
-
-  const handleReport = useCallback(() => {
-    onReport({ ...report });
-    setReportModal({ type: null, isOpen: false });
-  }, [report, setReportModal]);
-
-  const modalAction =
-    modalState.type === "deleteFeed"
-      ? onDeleteFeed
-      : modalState.type === "hideFeed"
-      ? onHideFeed
-      : onDeleteComment;
 
   return (
     <>
-      {modalState.isOpen && modalState.type && (
+      {modalState?.isOpen && modalState.type && (
         <Modal
           title={MODAL_CONFIGS[modalState.type].title}
           content={MODAL_CONFIGS[modalState.type].content}
@@ -65,15 +58,28 @@ export const FeedModals: React.FC<FeedModalsProps> = ({
           onClose={closeModal}
         />
       )}
-      {reportModal.isOpen && (
+      {reportModalOpen?.isOpen && setReportContent && setReportModalOpen && (
         <Report
-          type={reportModal.type}
-          report={report}
-          setReport={setReport}
-          handleReport={handleReport}
-          onClose={() => setReportModal({ type: null, isOpen: false })}
+          type={reportModalOpen.type}
+          report={reportContent}
+          setReport={setReportContent}
+          handleReport={() => {
+            onReport(reportContent);
+            setReportModalOpen((prev: any) => ({
+              ...prev,
+              type: null,
+              isOpen: false,
+            }));
+          }}
+          onClose={() =>
+            setReportModalOpen((prev: any) => ({
+              ...prev,
+              type: null,
+              isOpen: false,
+            }))
+          }
         />
       )}
     </>
   );
-};
+}
