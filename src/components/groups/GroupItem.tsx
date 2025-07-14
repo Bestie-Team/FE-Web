@@ -7,7 +7,7 @@ import GroupMemberImages from "../shared/GroupMemberImages";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import OptimizedImage from "../shared/OptimizedImage";
 
-export default function GroupContainer({
+export default function GroupItem({
   group,
   onClick,
   className,

@@ -22,7 +22,7 @@ import { Feed } from "@/models/feed";
 import { useIntersectionLoadMore } from "@/components/feeds/hooks/useIntersectionLoadMore";
 import { useNotificationListener } from "@/components/feeds/hooks/useNotificationListener";
 import { FeedSwiper } from "@/components/feeds/FeedSwiper";
-import FeedModals from "./FeedModals";
+import ModalWithReport from "../shared/ModalWithReport";
 
 export default function FeedPageContainer() {
   useNotificationListener();
@@ -143,7 +143,7 @@ export default function FeedPageContainer() {
           onClose={() => setBottomSheetState(false)}
         />
       )}
-      <FeedModals
+      <ModalWithReport
         modalState={modalState}
         setModalState={setModalState}
         reportContent={reportContent}

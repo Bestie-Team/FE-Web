@@ -1,10 +1,15 @@
-import Modal from "@/components/shared/Modal/Modal";
-import Report from "@/components/shared/Modal/Report/Report";
 import MODAL_CONFIGS from "@/constants/modal-configs";
+import dynamic from "next/dynamic";
+
+const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
+  ssr: false,
+});
+
+const Report = dynamic(() => import("@/components/shared/Modal/Report/Report"));
 
 interface Props {
   onReport: (r: any) => void;
-  deleteComment: () => void;
+  deleteComment?: () => void;
   modalState?: any;
   reportModalOpen?: any;
   reportContent?: any;
@@ -13,10 +18,13 @@ interface Props {
   setReportModalOpen?: (v: any) => void;
   displayFeed?: () => void;
   deleteFeed?: () => void;
+  deleteFriend?: () => void;
   hideFeed?: () => void;
+  deleteGroup?: () => void;
+  exitGroup?: () => void;
 }
 
-export default function FeedModals({
+export default function ModalWithReport({
   onReport,
   deleteComment,
   modalState,
@@ -27,10 +35,19 @@ export default function FeedModals({
   setReportModalOpen,
   displayFeed,
   deleteFeed,
+  deleteFriend,
   hideFeed,
+  deleteGroup,
+  exitGroup,
 }: Props) {
   const modalAction =
-    modalState?.type === "deleteFeed"
+    modalState.type === "deleteGroup"
+      ? deleteGroup
+      : modalState?.type === "exitGroup"
+      ? exitGroup
+      : modalState?.type === "deleteFriend"
+      ? deleteFriend
+      : modalState?.type === "deleteFeed"
       ? deleteFeed
       : modalState?.type === "hideFeed"
       ? hideFeed

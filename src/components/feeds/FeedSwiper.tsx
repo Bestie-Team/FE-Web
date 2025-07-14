@@ -7,6 +7,7 @@ import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import Spacing from "@/components/shared/Spacing";
 import type { Feed } from "@/models/feed";
 import { FeedList } from "./FeedList";
+import LoadMoreTrigger from "../shared/LoadMoreTrigger";
 
 interface Props {
   feedAll?: Feed[];
@@ -76,7 +77,7 @@ export function FeedSwiper({
                   onFeedSelect={handleFeedSelect}
                   isFetching={isFetching}
                 />
-                <div ref={loadMoreRef} />
+                <LoadMoreTrigger loadMoreRef={loadMoreRef} />
               </div>
             </div>
           </PullToRefresh>
@@ -105,7 +106,7 @@ export function FeedSwiper({
                   isFetching={isFetchingMine}
                   isMine
                 />
-                <div ref={loadMoreMineRef} />
+                <LoadMoreTrigger loadMoreRef={loadMoreMineRef} />
               </div>
             </div>
           </PullToRefresh>
