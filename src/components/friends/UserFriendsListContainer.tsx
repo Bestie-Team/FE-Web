@@ -3,12 +3,10 @@ import { selectedFriendAtom } from "@/atoms/friends";
 import FriendsListContainer from "./FriendsListContainer";
 import useDeleteFriend from "./hooks/useDeleteFriend";
 import { useQueryClient } from "@tanstack/react-query";
-import Modal from "../shared/Modal/Modal";
 import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { lightyToast } from "@/utils/toast";
 import useReport from "../report/hooks/useReport";
 import { useAuth } from "../shared/providers/AuthProvider";
-import Report from "../shared/Modal/Report/Report";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import useFriends from "./hooks/useFriends";
 import Flex from "../shared/Flex";
@@ -16,17 +14,20 @@ import Link from "next/link";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import useFriendsRequestTotalCount from "./hooks/useFriendsRequestCount";
 import SocialPageSkeleton from "../shared/Skeleton/SocialPageSkeleton";
-import MODAL_CONFIGS from "@/constants/modal-configs";
+import ModalWithReport from "../shared/ModalWithReport";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
   const { userInfo } = useAuth();
+
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
-  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
-  const [report, setReport] = useRecoilState(reportInfoAtom);
+  const [reportModalOpen, setReportModalOpen] = useRecoilState(reportModalAtom);
+  const [reportContent, setReportContent] = useRecoilState(reportInfoAtom);
   const selectedFriendId = useRecoilValue(selectedFriendAtom);
+
   const { data: requestCount = { count: 0 }, isFetching: isFetching_c } =
     useFriendsRequestTotalCount();
+
   const {
     data: friends,
     loadMore,
@@ -51,12 +52,6 @@ export default function UserFriendsListContainer() {
     onSuccess: deleteSuccessHandler,
     onError: (error) => lightyToast.error(error.message),
   });
-  const closeModal = () => {
-    setModalState({
-      type: null,
-      isOpen: false,
-    });
-  };
 
   useInfiniteScroll({ isFetching, loadMore });
 
@@ -93,31 +88,20 @@ export default function UserFriendsListContainer() {
         </Link>
       </Flex>
       <FriendsListContainer friends={friends} isFetching={isFetching} />
-      {reportModal.isOpen && (
-        <Report
-          type={reportModal.type}
-          setReport={setReport}
-          report={report}
-          onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
-          handleReport={() => {
-            reportFriend(report);
-            setReportModal((prev) => ({ ...prev, isOpen: false }));
-          }}
-        />
-      )}
-      {modalState.isOpen && modalState.type && (
-        <Modal
-          title={MODAL_CONFIGS[modalState.type].title}
-          content={MODAL_CONFIGS[modalState.type].content}
-          left={MODAL_CONFIGS[modalState.type].leftButton}
-          right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={() => deleteFriend()}
-          onClose={closeModal}
-        />
-      )}
+      <ModalWithReport
+        modalState={modalState}
+        setModalState={setModalState}
+        reportModalOpen={reportModalOpen}
+        setReportModalOpen={setReportModalOpen}
+        setReportContent={setReportContent}
+        reportContent={reportContent}
+        deleteFriend={deleteFriend}
+        onReport={reportFriend}
+      />
     </>
   );
 }
+
 const styles = {
   button:
     "py-2 px-3 bg-grayscale-50 text-T6 rounded-lg cursor-pointer active:bg-grayscale-100 transition duration-75",

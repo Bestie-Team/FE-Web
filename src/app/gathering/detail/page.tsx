@@ -22,6 +22,7 @@ import MODAL_CONFIGS from "@/constants/modal-configs";
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
 });
+
 const GatheringOptions = dynamic(
   () => import("@/components/gathering/GatheringOption"),
   { ssr: false }

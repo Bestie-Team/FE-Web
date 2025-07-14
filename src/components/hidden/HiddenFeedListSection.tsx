@@ -1,6 +1,7 @@
 import Spacing from "@/components/shared/Spacing";
 import { FeedList } from "@/components/feeds/FeedList";
 import { NoFeedHidden } from "@/components/feeds/NoFeed";
+import LoadMoreTrigger from "../shared/LoadMoreTrigger";
 
 interface Props {
   hiddenFeed: any[];
@@ -31,7 +32,7 @@ export default function HiddenFeedListSection({
             isMine={true}
           />
         )}
-        <div ref={loadMoreRef} />
+        <LoadMoreTrigger loadMoreRef={loadMoreRef} />
       </div>
     </>
   );

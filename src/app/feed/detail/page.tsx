@@ -18,8 +18,8 @@ import { useCallback } from "react";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import FeedPageSkeleton from "@/components/shared/Skeleton/FeedSkeleton";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
+import ModalWithReport from "@/components/shared/ModalWithReport";
 import useFeed from "@/components/feeds/hooks/useFeed";
-import FeedModals from "@/components/feeds/FeedModals";
 
 export type GroupEditProps = {
   id: string;
@@ -33,14 +33,18 @@ export default function FeedDetailPage() {
   const searchParams = useSearchParams();
   const { userInfo } = useAuth();
   const id = searchParams.get("id");
+
   const [bottomSheetState, setBottomSheetState] =
     useRecoilState(bottomSheetStateAtom);
+
   const { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox } =
     useFriendsBox();
   const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
+
   const { data: selectedFeed, isFetching } = useFeedDetail({
     id: id || "",
   });
+
   const {
     btnRef,
     toggleDropdown,
@@ -148,13 +152,15 @@ export default function FeedDetailPage() {
           </div>
         </div>
       </div>
+
       {bottomSheetState && id && (
         <CommentContainer
           selectedFeedId={id}
           onClose={() => setBottomSheetState(false)}
         />
       )}
-      <FeedModals
+
+      <ModalWithReport
         onReport={report}
         deleteFeed={deleteFeed}
         deleteComment={deleteComment}

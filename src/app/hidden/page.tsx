@@ -1,17 +1,20 @@
 "use client";
 import { useRecoilState } from "recoil";
+import TabButton from "@/components/shared/Panel/TabButton";
+import { BottomLine } from "@/components/shared/BottomLine";
 import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense } from "react";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { bottomSheetStateAtom } from "@/atoms/feed";
+import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
+import Spacing from "@/components/shared/Spacing";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
+import { FeedList } from "@/components/feeds/FeedList";
 import useHiddenFeed from "@/components/feeds/hooks/useHiddenFeed";
-import FeedModals from "@/components/feeds/FeedModals";
-import HiddenFeedPageHeader from "@/components/hidden/HiddenFeedPageHeader";
-import HiddenFeedListSection from "@/components/hidden/HiddenFeedListSection";
-import { useIntersectionLoadMore } from "@/components/feeds/hooks/useIntersectionLoadMore";
-import { useInView } from "react-intersection-observer";
+import { NoFeedHidden } from "@/components/feeds/NoFeed";
+import ModalWithReport from "@/components/shared/ModalWithReport";
 
-export default function HiddenPage() {
+export default function FeedPage() {
   const {
     hiddenFeed,
     isFetching,
@@ -22,58 +25,69 @@ export default function HiddenPage() {
     handleFeedSelect,
     feedId,
   } = useHiddenFeed();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
   const [reportModalOpen, setReportModalOpen] = useRecoilState(reportModalAtom);
+
   const [reportContent, setReportContent] = useRecoilState(reportInfoAtom);
+
   const [bottomSheetState, setBottomSheetState] =
     useRecoilState(bottomSheetStateAtom);
 
-  const { ref: loadMoreRef, inView } = useInView({
-    threshold: 0.5,
-    root: rootElement ?? undefined,
-  });
-
-  useIntersectionLoadMore({ inView, loadMore });
-
-  useEffect(() => {
-    if (scrollContainerRef.current) setRootElement(scrollContainerRef.current);
-  }, []);
+  useInfiniteScroll({ isFetching, loadMore });
 
   return (
     <div className="min-h-dvh">
-      <HiddenFeedPageHeader />
-
+      <HeaderWithBtn headerLabel="숨김 피드" bgColor="white">
+        <div className={styles.tabContainerStyle}>
+          <div className={styles.tabWrapperStyle}>
+            <TabButton
+              title={`숨김 피드`}
+              onMouseDown={() => {}}
+              current={true}
+              fresh={"never"}
+            />
+            <BottomLine />
+          </div>
+        </div>
+      </HeaderWithBtn>
       <Suspense>
-        <HiddenFeedListSection
-          loadMoreRef={loadMoreRef}
-          scrollContainerRef={scrollContainerRef}
-          hiddenFeed={hiddenFeed}
-          isFetching={isFetching}
-          onFeedSelect={handleFeedSelect}
-        />
+        <Spacing size={96} />
+        <div className="pt-safe-top pb-14">
+          {hiddenFeed && hiddenFeed.length < 1 && <NoFeedHidden />}
+          {hiddenFeed && hiddenFeed.length > 0 && (
+            <FeedList
+              feeds={hiddenFeed}
+              userInfo={false}
+              onFeedSelect={handleFeedSelect}
+              isFetching={isFetching}
+              isMine={true}
+            />
+          )}
+        </div>
       </Suspense>
-
       {bottomSheetState && (
         <CommentContainer
           selectedFeedId={feedId}
           onClose={() => setBottomSheetState(false)}
         />
       )}
-
-      <FeedModals
+      <ModalWithReport
         modalState={modalState}
-        setModalState={setModalState}
         reportModalOpen={reportModalOpen}
         setReportModalOpen={setReportModalOpen}
+        setModalState={setModalState}
         reportContent={reportContent}
         setReportContent={setReportContent}
         displayFeed={displayFeed}
-        deleteComment={deleteComment}
         onReport={reportComment}
+        deleteComment={deleteComment}
       />
     </div>
   );
 }
+
+const styles = {
+  tabContainerStyle: "flex w-full px-5 justify-between items-center",
+  tabWrapperStyle: "w-fit",
+};

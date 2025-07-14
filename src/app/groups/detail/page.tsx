@@ -21,7 +21,7 @@ import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
 import useReport from "@/components/report/hooks/useReport";
-import MODAL_CONFIGS from "@/constants/modal-configs";
+import ModalWithReport from "@/components/shared/ModalWithReport";
 
 const SelectFriendsContainer = dynamic(
   () => import("@/components/friends/SelectFriendsContainer"),
@@ -30,12 +30,6 @@ const SelectFriendsContainer = dynamic(
     loading: () => <DotSpinner />,
   }
 );
-
-const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
-  ssr: false,
-});
-
-const Report = dynamic(() => import("@/components/shared/Modal/Report/Report"));
 
 export type GroupEditProps = {
   id: string;
@@ -52,8 +46,8 @@ export default function GroupDetailPage() {
   const router = useRouter();
   const { userInfo } = useAuth();
   const [modalState, setModalState] = useRecoilState(modalStateAtom);
-  const [reportModal, setReportModal] = useRecoilState(reportModalAtom);
-  const [report, setReport] = useRecoilState(reportInfoAtom);
+  const [reportModalOpen, setReportModalOpen] = useRecoilState(reportModalAtom);
+  const [reportContent, setReportContent] = useRecoilState(reportInfoAtom);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedFriends, setSelectedFriends] =
     useRecoilState(selectedFriendsAtom);
@@ -147,16 +141,6 @@ export default function GroupDetailPage() {
   const { accountId } = groupDetail.owner;
   const isOwner = accountId === userInfo?.accountId;
 
-  const closeModal = () => {
-    setModalState({
-      type: null,
-      isOpen: false,
-    });
-  };
-
-  const modalAction =
-    modalState.type === "deleteGroup" ? () => deleteGroup() : () => exitGroup();
-
   return (
     <Flex direction="column" className="w-full min-h-dvh">
       <HeaderWithBtn
@@ -169,28 +153,17 @@ export default function GroupDetailPage() {
         isLoaded={isLoaded}
         setIsLoaded={setIsLoaded}
       />
-      {modalState.isOpen && modalState.type && (
-        <Modal
-          title={MODAL_CONFIGS[modalState.type].title}
-          content={MODAL_CONFIGS[modalState.type].content}
-          left={MODAL_CONFIGS[modalState.type].leftButton}
-          right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={modalAction}
-          onClose={closeModal}
-        />
-      )}
-      {reportModal.isOpen && (
-        <Report
-          type={reportModal.type}
-          report={report}
-          setReport={setReport}
-          handleReport={() => {
-            reportGroup(report);
-            setReportModal((prev) => ({ ...prev, isOpen: false }));
-          }}
-          onClose={() => setReportModal((prev) => ({ ...prev, isOpen: false }))}
-        />
-      )}
+      <ModalWithReport
+        modalState={modalState}
+        setModalState={setModalState}
+        deleteGroup={deleteGroup}
+        exitGroup={exitGroup}
+        onReport={reportGroup}
+        reportModalOpen={reportModalOpen}
+        setReportModalOpen={setReportModalOpen}
+        reportContent={reportContent}
+        setReportContent={setReportContent}
+      />
     </Flex>
   );
 }
