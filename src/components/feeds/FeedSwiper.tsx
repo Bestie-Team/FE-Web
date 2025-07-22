@@ -14,8 +14,8 @@ interface Props {
   feedMine?: Feed[];
   isFetching: boolean;
   isFetchingMine: boolean;
-  handleRefreshAll: () => Promise<boolean>;
-  handleRefreshMine: () => Promise<boolean>;
+  handleAll: () => Promise<boolean>;
+  handleMine: () => Promise<boolean>;
   loadMoreRef: (node?: Element | null) => void;
   loadMoreMineRef: (node?: Element | null) => void;
   handleFeedSelect: (id: string, feed: Feed) => void;
@@ -36,8 +36,8 @@ export function FeedSwiper({
   feedMine,
   isFetching,
   isFetchingMine,
-  handleRefreshAll,
-  handleRefreshMine,
+  handleAll,
+  handleMine,
   loadMoreRef,
   loadMoreMineRef,
   handleFeedSelect,
@@ -65,7 +65,7 @@ export function FeedSwiper({
       {feedAll && feedAll.length > 0 && (
         <SwiperSlide>
           <PullToRefresh
-            onRefresh={handleRefreshAll}
+            onRefresh={handleAll}
             pullingContent={<></>}
             refreshingContent={<RefreshingUI />}
           >
@@ -93,7 +93,7 @@ export function FeedSwiper({
       {feedMine && feedMine.length > 0 && (
         <SwiperSlide>
           <PullToRefresh
-            onRefresh={handleRefreshMine}
+            onRefresh={handleMine}
             pullingContent={<></>}
             refreshingContent={<RefreshingUI />}
           >

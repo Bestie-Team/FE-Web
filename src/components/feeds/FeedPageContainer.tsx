@@ -116,8 +116,8 @@ export default function FeedPageContainer() {
         feedMine={feedMine}
         isFetching={isFetching}
         isFetchingMine={isFetching_mine}
-        handleRefreshAll={handleRefreshAll}
-        handleRefreshMine={handleRefreshMine}
+        handleAll={handleRefreshAll}
+        handleMine={handleRefreshMine}
         loadMoreRef={loadMoreRef}
         loadMoreMineRef={loadMoreMineRef}
         handleFeedSelect={handleFeedSelect}

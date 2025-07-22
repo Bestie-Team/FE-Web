@@ -1,4 +1,4 @@
-import { API_CONFIG, fetchWithAuth } from "./shared";
+import { apiClient } from "./api";
 import { ReportRequestInterface } from "@/models/report";
 
 /** 신고 생성 */
@@ -8,17 +8,6 @@ export async function postReport({
 }: {
   report: ReportRequestInterface;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/reports`;
-
-  try {
-    await fetchWithAuth(targetUrl, {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(report),
-    });
-    return { message: "신고를 완료하였습니다." };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.post(`/reports`, report);
+  return { message: "신고를 완료하였습니다." };
 }

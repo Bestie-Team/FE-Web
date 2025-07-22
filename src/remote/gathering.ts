@@ -1,10 +1,13 @@
 import * as lighty from "lighty-type";
-import { API_CONFIG, fetchWithAuth } from "./shared";
+
 import { GatheringDetailResponse } from "@/models/gathering";
+import { apiClient } from "./api";
+
 interface DateIdCursor {
   createdAt: string;
   id: string;
 }
+
 type PaginationParams = {
   cursor: DateIdCursor | null;
   limit: number;
@@ -19,19 +22,18 @@ export async function getGatherings({
   minDate,
   maxDate,
 }: PaginationParams) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings?cursor=${encodeURIComponent(
-        JSON.stringify(cursor)
-      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
-      { method: "GET" }
-    );
-    const data: lighty.GatheringListResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const { data } = await apiClient.get<lighty.GatheringListResponse>(
+    "/gatherings",
+    {
+      params: {
+        cursor: JSON.stringify(cursor),
+        limit,
+        minDate,
+        maxDate,
+      },
+    }
+  );
+  return data;
 }
 
 /** 완료된 약속 목록 조회 */
@@ -41,19 +43,18 @@ export async function getGatheringsEnded({
   minDate,
   maxDate,
 }: PaginationParams) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/ended?cursor=${encodeURIComponent(
-        JSON.stringify(cursor)
-      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
-      { method: "GET" }
-    );
-    const data: lighty.EndedGatheringsListResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const { data } = await apiClient.get<lighty.EndedGatheringsListResponse>(
+    "/gatherings/ended",
+    {
+      params: {
+        cursor: JSON.stringify(cursor),
+        limit,
+        minDate,
+        maxDate,
+      },
+    }
+  );
+  return data;
 }
 
 /** 피드를 아직 작성하지 않은 약속 목록 조회 */
@@ -61,19 +62,16 @@ export async function getGatheringNoFeed({
   cursor,
   limit,
 }: Partial<PaginationParams>) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/no-feed?cursor=${encodeURIComponent(
-        JSON.stringify(cursor)
-      )}&limit=${limit}`,
-      { method: "GET" }
-    );
-    const data: lighty.GatheringListResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const { data } = await apiClient.get<lighty.GatheringListResponse>(
+    "/gatherings/no-feed",
+    {
+      params: {
+        cursor: JSON.stringify(cursor),
+        limit,
+      },
+    }
+  );
+  return data;
 }
 
 /** 모든 약속 목록 조회 */
@@ -83,19 +81,18 @@ export async function getGatheringAll({
   minDate,
   maxDate,
 }: Partial<PaginationParams>) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/all?cursor=${encodeURIComponent(
-        JSON.stringify(cursor)
-      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
-      { method: "GET" }
-    );
-    const data: lighty.GatheringListResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const { data } = await apiClient.get<lighty.GatheringListResponse>(
+    "/gatherings/all",
+    {
+      params: {
+        cursor: JSON.stringify(cursor),
+        limit,
+        minDate,
+        maxDate,
+      },
+    }
+  );
+  return data;
 }
 
 /** 약속 상세 조회 */
@@ -106,11 +103,9 @@ export async function getGatheringDetail({
 }) {
   if (!gatheringId) return;
 
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const response = await fetchWithAuth(`${baseUrl}/gatherings/${gatheringId}`, {
-    method: "GET",
-  });
-  const data: GatheringDetailResponse = await response.json();
+  const { data } = await apiClient.get<GatheringDetailResponse>(
+    `/gatherings/${gatheringId}`
+  );
   return data;
 }
 
@@ -120,49 +115,27 @@ export async function postGathering({
 }: {
   gathering: lighty.CreateGatheringRequest;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-
-  try {
-    const response = await fetchWithAuth(`${baseUrl}/gatherings`, {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify(gathering),
-    });
-    console.log(response);
-    return { message: "초대장을 성공적으로 발송하였습니다" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const { data } = await apiClient.post("/gatherings", gathering);
+  console.log(data);
+  return { message: "초대장을 성공적으로 발송하였습니다" };
 }
 
 /** 약속 초대장 이미지 업로드 */
 export async function postGatheringInvitationImage({ file }: { file: File }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
   const formData = new FormData();
-
   formData.append("file", file);
 
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/invitation/image`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
-    if (!response.ok) {
-      if (response.status === 400) {
-        throw new Error("업로드 가능한 형식의 이미지가 아닙니다");
-      }
-      throw new Error("약속 초대장 이미지 업로드에 실패하였습니다");
+  const { data } = await apiClient.post(
+    "/gatherings/invitation/image",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
+  );
 
-    const data = await response.json();
-    return { ...data, message: "이미지를 성공적으로 업로드하였습니다" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  return { ...data, message: "이미지를 성공적으로 업로드하였습니다" };
 }
 
 /** 피드 수정 */
@@ -173,19 +146,8 @@ export async function patchGathering({
   gatheringId: string;
   gathering: Partial<lighty.CreateGatheringRequest>;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/gatherings/${gatheringId}`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gathering),
-    });
-
-    return { message: "약속 수정 완료" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.patch(`/gatherings/${gatheringId}`, gathering);
+  return { message: "약속 수정 완료" };
 }
 
 /** 약속 초대 수락 */
@@ -196,19 +158,8 @@ export async function postAcceptGatheringInvitation({
   invitationId: string;
   gatheringId: string;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-
-  try {
-    await fetchWithAuth(`${baseUrl}/gatherings/accept`, {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({ invitationId, gatheringId }),
-    });
-
-    return { message: "약속을 수락하였습니다" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.post("/gatherings/accept", { invitationId, gatheringId });
+  return { message: "약속을 수락하였습니다" };
 }
 
 /** 약속 초대 거절 */
@@ -217,19 +168,8 @@ export async function postRejectGatheringInvitation({
 }: {
   invitationId: string;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-
-  try {
-    await fetchWithAuth(`${baseUrl}/gatherings/reject`, {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({ invitationId }),
-    });
-
-    return { message: "약속을 성공적으로 거절하였습니다" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.post("/gatherings/reject", { invitationId });
+  return { message: "약속을 성공적으로 거절하였습니다" };
 }
 
 /** 받은 약속 초대 목록 조회 */
@@ -239,21 +179,19 @@ export async function getReceivedInvitationToGatheringList({
   minDate,
   maxDate,
 }: PaginationParams) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/invitations/received?cursor=${encodeURIComponent(
-        JSON.stringify(cursor)
-      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
-      { method: "GET" }
+  const { data } =
+    await apiClient.get<lighty.ReceivedGatheringInvitationListResponse>(
+      "/gatherings/invitations/received",
+      {
+        params: {
+          cursor: JSON.stringify(cursor),
+          limit,
+          minDate,
+          maxDate,
+        },
+      }
     );
-    const data: lighty.ReceivedGatheringInvitationListResponse =
-      await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  return data;
 }
 
 /** 보낸 약속 초대 목록 조회 */
@@ -263,21 +201,19 @@ export async function getSentInvitationToGatheringList({
   minDate,
   maxDate,
 }: PaginationParams) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-
-  try {
-    const response = await fetchWithAuth(
-      `${baseUrl}/gatherings/invitations/sent?cursor=${encodeURIComponent(
-        JSON.stringify(cursor)
-      )}&limit=${limit}&minDate=${minDate}&maxDate=${maxDate}`,
-      { method: "GET" }
+  const { data } =
+    await apiClient.get<lighty.SentGatheringInvitationListResponse>(
+      "/gatherings/invitations/sent",
+      {
+        params: {
+          cursor: JSON.stringify(cursor),
+          limit,
+          minDate,
+          maxDate,
+        },
+      }
     );
-    const data: lighty.SentGatheringInvitationListResponse =
-      await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  return data;
 }
 
 /** 모임 삭제 (약속장) */
@@ -286,14 +222,8 @@ export async function deleteGathering({
 }: {
   gatheringId: string;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/gatherings/${gatheringId}`;
-    await fetchWithAuth(targetUrl, { method: "DELETE" });
-    return {
-      message: "약속을 성공적으로 삭제하였습니다",
-    };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.delete(`/gatherings/${gatheringId}`);
+  return {
+    message: "약속을 성공적으로 삭제하였습니다",
+  };
 }
