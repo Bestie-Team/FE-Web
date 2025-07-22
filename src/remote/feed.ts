@@ -1,5 +1,5 @@
 import * as lighty from "lighty-type";
-import { API_CONFIG, fetchWithAuth } from "./shared";
+import { apiClient } from "./api";
 import { FeedResponse } from "@/models/feed";
 
 // 응답 타입 정의
@@ -8,7 +8,6 @@ export type FeedSuccessResponse = {
 };
 
 /** 모든 피드 목록 조회 */
-/** 첫 커서는 현재 날짜 */
 export async function getFeedAll({
   order,
   minDate,
@@ -22,26 +21,19 @@ export async function getFeedAll({
   limit: number;
   cursor: { createdAt: string; id: string };
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/feeds?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
-      JSON.stringify(cursor)
-    )}&limit=${limit}`;
-
-    const response = await fetchWithAuth(targetUrl, {
-      method: "GET",
-    });
-
-    const data: FeedResponse = await response.json();
-
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const response = await apiClient.get<FeedResponse>("/feeds", {
+    params: {
+      order,
+      minDate,
+      maxDate,
+      cursor: JSON.stringify(cursor),
+      limit,
+    },
+  });
+  return response.data;
 }
 
 /** 자신이 작성한 피드 목록 조회 */
-/** 첫 커서는 현재 날짜 */
 export async function getFeedMine({
   cursor,
   order,
@@ -55,21 +47,16 @@ export async function getFeedMine({
   maxDate: string;
   limit: number;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/feeds/my?order=${order}&minDate=${minDate}&maxDate=${maxDate}&cursor=${encodeURIComponent(
-      JSON.stringify(cursor)
-    )}&limit=${limit}`;
-
-    const response = await fetchWithAuth(targetUrl, {
-      method: "GET",
-    });
-    const data: FeedResponse = await response.json();
-
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const response = await apiClient.get<FeedResponse>("/feeds/my", {
+    params: {
+      order,
+      minDate,
+      maxDate,
+      cursor: JSON.stringify(cursor),
+      limit,
+    },
+  });
+  return response.data;
 }
 
 /** 숨긴 피드 조회 */
@@ -80,43 +67,33 @@ export async function getFeedHidden({
   cursor: { createdAt: string; id: string };
   limit: number;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-
-  try {
-    const targetUrl = `${baseUrl}/feeds/blocked?cursor=${encodeURIComponent(
-      JSON.stringify(cursor)
-    )}&limit=${limit}`;
-
-    const response = await fetchWithAuth(targetUrl, {
-      method: "GET",
-    });
-    const data: FeedResponse = await response.json();
-
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const response = await apiClient.get<FeedResponse>("/feeds/blocked", {
+    params: {
+      cursor: JSON.stringify(cursor),
+      limit,
+    },
+  });
+  return response.data;
 }
 
 /** 약속 피드 사진 업로드 생성 */
 export async function uploadFeedImages({ files }: { files: File[] }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i]);
-    }
-    const targetUrl = `${baseUrl}/feeds/images`;
-    const response = await fetchWithAuth(targetUrl, {
-      method: "POST",
-      body: formData,
-    });
-
-    const data: lighty.UploadImageListResponse = await response.json();
-    return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
+  const formData = new FormData();
+  for (let i = 0; i < files.length; i++) {
+    formData.append("files", files[i]);
   }
+
+  const { data } = await apiClient.post<lighty.UploadImageListResponse>(
+    "/feeds/images",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return { ...data, message: "이미지를 성공적으로 업로드하였습니다." };
 }
 
 /** 약속 피드 생성 */
@@ -125,23 +102,8 @@ export async function postGatheringFeed({
 }: {
   gatheringFeed: lighty.CreateGatheringFeedRequest;
 }): Promise<{ message: string }> {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/gatherings`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gatheringFeed),
-    });
-    return { message: "약속 피드 작성 완료" };
-  } catch (error) {
-    console.log(error);
-    throw new Error(
-      error instanceof Error
-        ? "시간을 올바르게 설정해주세요"
-        : "시간을 올바르게 설정해주세요"
-    );
-  }
+  await apiClient.post("/feeds/gatherings", gatheringFeed);
+  return { message: "약속 피드 작성 완료" };
 }
 
 /** 친구 피드 생성 */
@@ -150,18 +112,8 @@ export async function postFriendsFeed({
 }: {
   friendsFeed: lighty.CreateFriendFeedRequest;
 }): Promise<{ message: string }> {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/friends`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(friendsFeed),
-    });
-    return { message: "친구 피드 작성 완료" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.post("/feeds/friends", friendsFeed);
+  return { message: "친구 피드 작성 완료" };
 }
 
 /** 피드 수정 */
@@ -172,74 +124,32 @@ export async function patchFeed({
   content: string;
   feedId: string;
 }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/${feedId}`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content }),
-    });
-
-    return { message: "피드 수정 완료" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.patch(`/feeds/${feedId}`, { content });
+  return { message: "피드 수정 완료" };
 }
 
 /** 피드 삭제 */
 export async function deleteFeed({ feedId }: { feedId: string }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/${feedId}`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "DELETE",
-    });
-
-    return { message: "피드를 성공적으로 삭제하였습니다" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.delete(`/feeds/${feedId}`);
+  return { message: "피드를 성공적으로 삭제하였습니다" };
 }
 
 /** 피드 숨김 */
 export async function hideFeed({ feedId }: { feedId: string }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/${feedId}/block`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "POST",
-    });
-
-    return { message: "피드를 성공적으로 숨겼어요" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.post(`/feeds/${feedId}/block`);
+  return { message: "피드를 성공적으로 숨겼어요" };
 }
 
 /** 피드 숨김 해제 */
 export async function displayFeed({ feedId }: { feedId: string }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const targetUrl = `${baseUrl}/feeds/${feedId}/block`;
-  try {
-    await fetchWithAuth(targetUrl, {
-      method: "DELETE",
-    });
-
-    return { message: "피드 숨김을 해제했어요" };
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  await apiClient.delete(`/feeds/${feedId}/block`);
+  return { message: "피드 숨김을 해제했어요" };
 }
 
 /** 피드 상세 조회 */
 export async function getFeedDetail({ feedId }: { feedId: string }) {
   if (!feedId) return;
 
-  const baseUrl = API_CONFIG.getBaseUrl();
-  const response = await fetchWithAuth(`${baseUrl}/feeds/${feedId}`, {
-    method: "GET",
-  });
-  const data = await response.json();
+  const { data } = await apiClient.get(`/feeds/${feedId}`);
   return data;
 }

@@ -1,162 +1,122 @@
-import { API_CONFIG, fetchWithAuth } from "./shared";
+import { apiClient } from "./api";
 
+interface ImageUploadResponse {
+  imageUrl: string;
+}
+
+interface MessageResponse {
+  message: string;
+}
+
+interface ProfileUpdateResponse {
+  success: true;
+  message: string;
+  imageUrl: string;
+}
+
+/** 토큰과 함께 프로필 이미지 업로드 */
 export async function postProfileImageWithToken({
   file,
   token,
 }: {
   file: File;
   token: string;
-}) {
-  try {
-    const baseUrl = API_CONFIG.getBaseUrl();
-    const targetUrl = `${baseUrl}/users/profile/image`;
-
-    if (!file || !file) {
-      throw new Error("이미지 파일을 선택해주세요");
-    }
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const response = await fetch(targetUrl, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      method: "POST",
-      body: formData,
-    });
-    const data: { imageUrl: string } = await response.json();
-    return { imageUrl: data.imageUrl };
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "프로필 이미지 업로드중 문제 발생"
-    );
+}): Promise<ImageUploadResponse> {
+  if (!file) {
+    throw new Error("이미지 파일을 선택해주세요");
   }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const { data } = await apiClient.post("/users/profile/image", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return { imageUrl: data.imageUrl };
 }
 
-export async function postProfileImage({ file }: { file: File }) {
-  try {
-    const baseUrl = API_CONFIG.getBaseUrl();
-    const targetUrl = `${baseUrl}/users/profile/image`;
-
-    if (!file || !file) {
-      throw new Error("이미지 파일을 선택해주세요");
-    }
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const response = await fetchWithAuth(targetUrl, {
-      method: "POST",
-      body: formData,
-    });
-
-    const data: { imageUrl: string } = await response.json();
-    return { imageUrl: data.imageUrl };
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "프로필 이미지 업로드중 문제 발생"
-    );
+/** 프로필 이미지 업로드 */
+export async function postProfileImage({
+  file,
+}: {
+  file: File;
+}): Promise<ImageUploadResponse> {
+  if (!file) {
+    throw new Error("이미지 파일을 선택해주세요");
   }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const { data } = await apiClient.post("/users/profile/image", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return { imageUrl: data.imageUrl };
 }
 
-export async function patchProfileImage(profileImageUrl: string) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/users/profile/image`;
+/** 프로필 이미지 URL 업데이트 */
+export async function patchProfileImage(
+  profileImageUrl: string
+): Promise<MessageResponse> {
+  await apiClient.patch("/users/profile/image", {
+    profileImageUrl,
+  });
 
-    await fetchWithAuth(targetUrl, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ profileImageUrl }),
-    });
-
-    return { message: "프로필 이미지가 성공적으로 업데이트되었습니다" };
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "프로필 이미지 업데이트 요청에 실패했습니다"
-    );
-  }
+  return { message: "프로필 이미지가 성공적으로 업데이트되었습니다" };
 }
 
+/** 토큰과 함께 프로필 이미지 URL 업데이트 */
 export async function patchProfileImageWithToken({
   profileImageUrl,
   token,
 }: {
   profileImageUrl: string;
   token: string;
-}) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/users/profile/image`;
-
-    await fetch(targetUrl, {
-      method: "PATCH",
+}): Promise<MessageResponse> {
+  await apiClient.patch(
+    "/users/profile/image",
+    { profileImageUrl },
+    {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ profileImageUrl }),
-    });
+    }
+  );
 
-    return { message: "프로필 이미지가 성공적으로 업데이트되었습니다" };
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "프로필 이미지 업데이트 요청에 실패했습니다"
-    );
-  }
+  return { message: "프로필 이미지가 성공적으로 업데이트되었습니다" };
 }
 
-export async function patchProfileAccountId(accountId: { accountId: string }) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/users/account-id`;
+/** 프로필 계정 ID 업데이트 */
+export async function patchProfileAccountId(accountId: {
+  accountId: string;
+}): Promise<MessageResponse> {
+  await apiClient.patch("/users/account-id", accountId);
 
-    await fetchWithAuth(targetUrl, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(accountId),
-    });
-
-    return { message: "프로필이 성공적으로 업데이트되었습니다" };
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "프로필 이미지 업데이트 요청에 실패했습니다"
-    );
-  }
+  return { message: "프로필이 성공적으로 업데이트되었습니다" };
 }
 
-export async function updateProfileImage(imageFile: { file: File }) {
-  try {
-    const { imageUrl } = await postProfileImage({ file: imageFile.file });
-    console.log("Image uploaded successfully:", imageUrl);
+/** 프로필 이미지 전체 업데이트 프로세스 */
+export async function updateProfileImage(imageFile: {
+  file: File;
+}): Promise<ProfileUpdateResponse> {
+  // 1. 이미지 업로드
+  const { imageUrl } = await postProfileImage({ file: imageFile.file });
+  console.log("Image uploaded successfully:", imageUrl);
 
-    const updateResponse = await patchProfileImage(imageUrl);
-    console.log(updateResponse.message);
+  // 2. 프로필 이미지 URL 업데이트
+  const { message } = await patchProfileImage(imageUrl);
+  console.log(message);
 
-    return {
-      success: true,
-      message: "프로필 이미지가 성공적으로 업로드 및 업데이트되었습니다",
-      imageUrl,
-    };
-  } catch (error) {
-    console.error("Error during profile image update process:", error);
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "프로필 이미지 업로드 및 업데이트 중 문제가 발생했습니다"
-    );
-  }
+  return {
+    success: true,
+    message: "프로필 이미지가 성공적으로 업로드 및 업데이트되었습니다",
+    imageUrl,
+  };
 }

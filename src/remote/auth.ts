@@ -4,11 +4,12 @@ import {
   postProfileImageWithToken,
 } from "./profile";
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { API_CONFIG, fetchWithAuth } from "./shared";
+import { API_CONFIG } from "./shared";
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
 import { Providers } from "@/constants/oAuthButtons";
 import { KakaoAuthResponse } from "@/models/user";
 import { v4 as uuidv4 } from "uuid";
+import { apiClient } from "./api";
 
 const storeAuthData = (accessToken: string, userInfo: object) => {
   localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
@@ -164,34 +165,21 @@ export async function getKakaoToken({
 
 /** 회원 정보 조회 */
 export async function getUserAuth() {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/users/profile`;
-    const response = await fetchWithAuth(targetUrl, {
-      method: "GET",
-    });
-    const data: lighty.UserProfileResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
-  }
+  const response: lighty.UserProfileResponse = await apiClient.get(
+    "/users/profile"
+  );
+  return response;
 }
 
 export async function getLogout(deviceId: string) {
-  const baseUrl = API_CONFIG.getBaseUrl();
-  try {
-    const targetUrl = `${baseUrl}/auth/logout`;
-    const response = await fetchWithAuth(targetUrl, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Device-Id": deviceId,
-      },
-    });
-    if (response.status === 204) {
-      return "로그아웃";
-    }
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : String(error));
+  const response = await apiClient.delete("/auth/logout", {
+    headers: {
+      "Device-Id": deviceId,
+    },
+    withCredentials: true,
+  });
+
+  if (response.status === 204) {
+    return "로그아웃";
   }
 }
