@@ -41,7 +41,7 @@ export default function ModalWithReport({
   exitGroup,
 }: Props) {
   const modalAction =
-    modalState.type === "deleteGroup"
+    modalState?.type === "deleteGroup"
       ? deleteGroup
       : modalState?.type === "exitGroup"
       ? exitGroup

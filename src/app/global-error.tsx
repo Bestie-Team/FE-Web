@@ -3,6 +3,7 @@
 import Flex from "@/components/shared/Flex";
 import AlarmIcon from "@/components/shared/Icon/AlarmIcon";
 import Spacing from "@/components/shared/Spacing";
+import { lightyToast } from "@/utils/toast";
 
 // Error boundaries must be Client Components
 
@@ -13,7 +14,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  console.log(error);
+  lightyToast.error(error.message);
   return (
     // global-error must include html and body tags
     <html>
