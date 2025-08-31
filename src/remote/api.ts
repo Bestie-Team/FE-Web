@@ -39,7 +39,9 @@ const createApiClient = (): AxiosInstance => {
             // 토큰 갱신 실패 시 로그아웃 처리
             localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
             localStorage.removeItem(STORAGE_KEYS.USER_INFO);
-            window.location.href = "/";
+            if (window.location.pathname !== "/") {
+              window.location.href = "/";
+            }
             return Promise.reject(
               new Error("토큰 갱신 실패 후 로그아웃됩니다.")
             );
