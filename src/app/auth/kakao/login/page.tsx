@@ -1,11 +1,15 @@
 "use client";
 
 import { useKakaoAuth } from "@/hooks/useKakaoQuery";
-import { postLogin } from "@/remote/auth";
 import { useEffect, useState } from "react";
 import type { KakaoAuthResponse } from "@/models/user";
+import { useSearchParams } from "next/navigation";
+import { useLogin } from "@/hooks/useLogin";
+import { lightyToast } from "@/utils/toast";
 
-export default function KakaoPage() {
+export default function Page() {
+  const searchParams = useSearchParams();
+  const { login } = useLogin();
   const [authCode, setAuthCode] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,34 +19,44 @@ export default function KakaoPage() {
     redirect_uri: process.env.NEXT_PUBLIC_REDIRECT_URI!,
   });
 
+  // 1 URL에서 인증 코드 추출
   useEffect(() => {
-    const code = new URL(window.location.href).searchParams?.get("code");
-    if (code) {
-      setAuthCode(code);
-    } else {
-      setError("No auth code found in URL");
-      setIsLoading(false);
-    }
+    extractAuthCodeFromUrl();
   }, []);
 
+  // 2 인증 후 응답 처리
   useEffect(() => {
     if (authError) {
-      setError("카카오 auth 에러");
-      setIsLoading(false);
+      handleAuthError();
     } else if (tokenInfo) {
       handleLogin(tokenInfo);
     }
-  }, [tokenInfo, authError]);
+  }, [authError, tokenInfo]);
+
+  const extractAuthCodeFromUrl = () => {
+    const code = searchParams?.get("code");
+    if (!code) {
+      setError("URL에서 인증 코드를 찾을 수 없습니다.");
+      setIsLoading(false);
+      return;
+    }
+    setAuthCode(code);
+  };
+
+  const handleAuthError = () => {
+    setError("카카오 인증 중 오류가 발생했습니다.");
+    setIsLoading(false);
+  };
 
   const handleLogin = async (tokenInfo: KakaoAuthResponse) => {
     try {
-      await postLogin({
+      await login({
         accessToken: tokenInfo.access_token,
         provider: "kakao",
       });
-    } catch (error) {
-      setError("로그인 실패");
-      console.log(error);
+    } catch (e) {
+      lightyToast.error((e as Error).message);
+      setError("로그인 요청에 실패했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +74,7 @@ export default function KakaoPage() {
 
   return (
     <div className="text-base-white text-center pt-5">
-      Authentication successful. Redirecting...
+      인증에 성공했습니다. 리디렉션 중입니다...
     </div>
   );
 }

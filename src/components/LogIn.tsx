@@ -1,4 +1,5 @@
 "use client";
+import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
 import Button from "./shared/Button/Button";
 import clsx from "clsx";
 import oAuthButtons, { Providers } from "@/constants/oAuthButtons";
@@ -13,20 +14,27 @@ import {
   googleLoginMobile,
   kakaoLoginMobile,
 } from "@/webview/actions";
+import { v4 as uuidv4 } from "uuid";
 import Tooltip from "./shared/Tooltip/Tooltip";
-import { useReactNativeWebView } from "./shared/providers/ReactNativeWebViewProvider";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
 
 export default function LogIn() {
   const { login } = useAuth();
   const { isReactNativeWebView } = useReactNativeWebView();
+  const uuid = uuidv4();
+  localStorage.setItem(STORAGE_KEYS.DEVICE_ID, uuid);
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
       try {
-        const userInfo = await postLogin({ accessToken, provider });
-        if (userInfo) login(userInfo);
+        const { data } = await postLogin({
+          accessToken,
+          provider,
+          deviceId: uuid,
+        });
+        if (data) login(data);
       } catch (error) {
         console.error(error);
         lightyToast.error("로그인에 실패했어요");

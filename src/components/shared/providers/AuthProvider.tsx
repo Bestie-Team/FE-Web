@@ -13,6 +13,11 @@ import * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
 import { useRouter } from "next/navigation";
 import useUserProfile from "@/components/users/hooks/useUserProfile";
+import {
+  clearAuthStorage,
+  getStoredAuth,
+  saveAuthToStorage,
+} from "@/utils/authStorage";
 
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
@@ -32,26 +37,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const getStoredAuth = async () => {
-  if (typeof window === "undefined") return null;
-
-  await new Promise((resolve) => setTimeout(resolve, 300));
-
-  for (let i = 0; i < 3; i++) {
-    const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    if (token) {
-      const userInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
-      return {
-        token,
-        userInfo: userInfo ? JSON.parse(userInfo) : null,
-      };
-    }
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
-
-  return null;
-};
-
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -63,12 +48,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const router = useRouter();
 
   const logout = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-    sessionStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-    sessionStorage.removeItem(STORAGE_KEYS.USER_INFO);
-    localStorage.removeItem(STORAGE_KEYS.USER_INFO);
-    document.cookie =
-      "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    clearAuthStorage();
     setToken(null);
     setUserInfo(null);
     router.push("/");
@@ -118,18 +98,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   }, [userDeleted, validateAndSetAuth]);
 
-  useEffect(() => {
-    initialize();
-  }, [initialize]);
-
-  useEffect(() => {
-    if (userProfile && typeof window !== "undefined") {
-      window.gtag("config", process.env.NEXT_PUBLIC_GTM_ID || "", {
-        user_id: userProfile.id,
-      });
-    }
-  }, [userProfile]);
-
   const updateUserInfo = async (): Promise<void> => {
     try {
       const user = await getUserAuth();
@@ -151,14 +119,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = (loginInfo: lighty.LoginResponse) => {
     const { accessToken, accountId, profileImageUrl } = loginInfo;
-    localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-
     const userInfoData = { accountId, profileImageUrl };
-    localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfoData));
 
+    saveAuthToStorage(accessToken, userInfoData);
     setToken(accessToken);
     setUserInfo(userInfoData);
   };
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
+  useEffect(() => {
+    if (userProfile && typeof window !== "undefined") {
+      window.gtag("config", process.env.NEXT_PUBLIC_GTM_ID || "", {
+        user_id: userProfile.id,
+      });
+    }
+  }, [userProfile]);
 
   const contextValue = {
     token,
