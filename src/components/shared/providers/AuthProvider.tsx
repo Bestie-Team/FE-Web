@@ -11,7 +11,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
 import * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useUserProfile from "@/components/users/hooks/useUserProfile";
 import {
   clearAuthStorage,
@@ -46,13 +46,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [userDeleted, setUserDeleted] = useState(false);
   const { data: userProfile } = useUserProfile();
   const router = useRouter();
+  const pathname = usePathname();
 
   const logout = useCallback(() => {
     clearAuthStorage();
     setToken(null);
     setUserInfo(null);
-    router.push("/");
-  }, [router]);
+    if (pathname !== "/") {
+      router.push("/");
+    }
+  }, [router, pathname]);
 
   const validateAndSetAuth = useCallback(
     async (storedToken: string, storedUserInfo: UserInfoMini | null) => {
@@ -74,16 +77,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           );
           setUserInfo(newUserInfo);
         } else {
-          logout();
+          console.warn("인증 실패: 사용자 정보 없음");
+          // 바로 logout하지 않고 안전하게 처리
+          setToken(null);
+          setUserInfo(null);
         }
       } catch (error) {
         console.error("사용자 정보 조회 실패:", error);
-        logout();
+        // 네트워크 불안정 시 무한 루프 방지
+        setToken(null);
+        setUserInfo(null);
       }
     },
-    [logout]
+    []
   );
-
   const initialize = useCallback(async () => {
     if (userDeleted) return;
 
