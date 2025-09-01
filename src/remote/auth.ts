@@ -13,7 +13,7 @@ import { apiClient } from "./api";
 
 export const storeAuthData = (accessToken: string, userInfo: object) => {
   localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, accessToken);
-  sessionStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
+  localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
 };
 
 export async function postLogin({

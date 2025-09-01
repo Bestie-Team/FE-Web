@@ -24,15 +24,13 @@ export const saveAuthToStorage = (
   token: string,
   userInfo: { accountId: string; profileImageUrl: string | null }
 ) => {
-  localStorage.setItem("auth_token", token);
-  localStorage.setItem("user_info", JSON.stringify(userInfo));
+  localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
+  localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
 };
 
 export const clearAuthStorage = () => {
-  localStorage.removeItem("auth_token");
-  localStorage.removeItem("user_info");
-  sessionStorage.removeItem("auth_token");
-  sessionStorage.removeItem("user_info");
+  localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+  localStorage.removeItem(STORAGE_KEYS.USER_INFO);
   document.cookie =
     "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };

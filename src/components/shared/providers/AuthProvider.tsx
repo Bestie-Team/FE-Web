@@ -20,7 +20,6 @@ import {
 export type UserInfoMini = Pick<UserInfo, "accountId" | "profileImageUrl">;
 
 interface AuthContextType {
-  token: string | null;
   userInfo: UserInfoMini | null;
   login: (userInfo: lighty.LoginResponse) => void;
   logout: () => void;
@@ -29,7 +28,6 @@ interface AuthContextType {
   updateUserInfo: () => Promise<void>;
   userDeleted: boolean;
   setUserDeleted: React.Dispatch<React.SetStateAction<boolean>>;
-  setToken: React.Dispatch<React.SetStateAction<string | null>>;
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfoMini | null>>;
 }
 
@@ -38,15 +36,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [userDeleted, setUserDeleted] = useState(false);
   const { data: userProfile } = useUserProfile();
 
   const logout = useCallback(() => {
     clearAuthStorage();
-    setToken(null);
     setUserInfo(null);
   }, []);
 
@@ -54,12 +50,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoading(true);
     try {
       const storedAuth = await getStoredAuth();
-      if (!storedAuth?.token) return;
 
-      setToken(storedAuth.token);
-      setUserInfo(storedAuth.userInfo);
+      if (!storedAuth?.token) {
+        logout();
+        return;
+      }
 
-      try {
+      const hasUserInfo =
+        storedAuth.userInfo && Object.keys(storedAuth.userInfo).length > 0;
+
+      if (hasUserInfo) {
+        // 로컬 정보가 있으면 일단 상태로 세팅
+        setUserInfo(storedAuth.userInfo);
+      }
+
+      // userInfo가 없거나 빈 객체면 서버에서 가져오기
+      if (!hasUserInfo) {
         const user = await getUserAuth();
         if (user) {
           const newUserInfo = {
@@ -74,21 +80,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         } else {
           logout();
         }
-      } catch (err) {
-        logout();
-        console.error("Auth 검증 실패:", err);
       }
     } catch (err) {
-      console.error("초기화 실패:", err);
+      console.error("Auth 초기화 실패:", err);
+      logout();
     } finally {
       setIsLoading(false);
     }
   }, [logout]);
 
   const updateUserInfo = useCallback(async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-
       const user = await getUserAuth();
       if (!user) {
         logout();
@@ -112,7 +115,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const { accessToken, accountId, profileImageUrl } = loginInfo;
     const userInfoData = { accountId, profileImageUrl };
     saveAuthToStorage(accessToken, userInfoData);
-    setToken(accessToken);
     setUserInfo(userInfoData);
   }, []);
 
@@ -135,16 +137,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AuthContext.Provider
       value={{
-        token,
         userInfo,
         login,
         logout,
-        isAuthenticated: !!token && !!userInfo,
+        isAuthenticated: !!userInfo && Object.keys(userInfo).length > 0,
         isLoading,
         updateUserInfo,
         userDeleted,
         setUserDeleted,
-        setToken,
         setUserInfo,
       }}
     >

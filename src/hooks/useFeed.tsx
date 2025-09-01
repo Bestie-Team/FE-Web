@@ -30,7 +30,7 @@ export default function useFeed() {
   const resetReportInfo = useResetRecoilState(reportInfoAtom);
   const [feedId, setFeedId] = useRecoilState(selectedFeedIdAtom);
   const commentId = useRecoilValue(selectedCommentIdAtom);
-  const { token, userInfo } = useAuth();
+  const { userInfo, isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
   const queryParams = useMemo(
@@ -59,14 +59,14 @@ export default function useFeed() {
     data: feedAll,
     loadMore,
     isFetching,
-  } = useFeedAll({ ...queryParams, enabled: !!token });
+  } = useFeedAll({ ...queryParams, enabled: !!isAuthenticated });
   const {
     data: feedMine,
     loadMore: loadMoreMine,
     isFetching: isFetchingMine,
   } = useFeedMine({
     ...queryParams,
-    enabled: !!token,
+    enabled: !!isAuthenticated,
   });
 
   // Notifications

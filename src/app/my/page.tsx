@@ -28,6 +28,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { deleteUser } from "@/remote/users";
 import { useAnyScrollThreshold } from "@/hooks/useScrollThreshold";
+import { refreshAccessToken } from "@/utils/tokenManager";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
   return (
@@ -152,6 +153,12 @@ export default function MyPage() {
               userAccountId={profileInfo?.accountId}
               userName={user.name}
             />
+            <button
+              className="bg-blue p-2"
+              onClick={() => refreshAccessToken()}
+            >
+              갱신
+            </button>
             <Spacing size={12} />
             <MyMainInfo
               groupCount={user.groupCount}

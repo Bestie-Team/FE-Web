@@ -13,7 +13,7 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import OptimizedImage from "@/components/shared/OptimizedImage";
 
 export default function OnBoardCardSlider() {
-  const { setToken, setUserInfo } = useAuth();
+  const { setUserInfo } = useAuth();
   const nextButtonRef = useRef<HTMLDivElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const [buttonText, setButtonText] = useState("다음");
@@ -32,9 +32,8 @@ export default function OnBoardCardSlider() {
 
   useEffect(() => {
     const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    const userInfo = sessionStorage.getItem(STORAGE_KEYS.USER_INFO);
+    const userInfo = localStorage.getItem(STORAGE_KEYS.USER_INFO);
     if (!!token && !!userInfo) {
-      setToken(token);
       setUserInfo(JSON.parse(userInfo));
     }
   }, []);
