@@ -12,12 +12,19 @@ export function useNotificationListener() {
         typeof event.data === "string"
           ? event.data
           : JSON.stringify(event.data);
-      const message: { type: string; notificationToken: string | null } =
-        JSON.parse(data);
+
+      let message: { type: string; notificationToken: string | null } | null =
+        null;
+      try {
+        message = JSON.parse(data);
+      } catch (error) {
+        console.error("Invalid message data:", data, error);
+        return;
+      }
 
       if (
-        message.type === WEBVIEW_EVENT.AGREE_NOTIFICATION_PERMISSION &&
-        message.notificationToken
+        message?.type === WEBVIEW_EVENT.AGREE_NOTIFICATION_PERMISSION &&
+        message?.notificationToken
       ) {
         patchNotificationToken({ token: message.notificationToken });
       }

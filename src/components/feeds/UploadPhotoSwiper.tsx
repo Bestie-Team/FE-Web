@@ -29,123 +29,111 @@ export default function UploadPhotoSwiper({
     feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
   );
 
-  const maxImages = 5;
+  const MAX_IMAGES = 5;
 
-  const getFileExt = (fileName: string) => {
+  const isSupportedImageExt = (fileName: string) => {
     const ext = fileName.split(".").pop()?.toLowerCase();
-    if (ext === "jpg" || ext === "png" || ext === "jpeg" || ext === "webp") {
-      return ext;
-    }
-    return null;
+    return ext && ["jpg", "jpeg", "png", "webp"].includes(ext) ? ext : null;
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
+    if (!file) return;
 
-    if (filesToUpload.length === maxImages) {
-      lightyToast.error(`최대 ${maxImages}장까지만 업로드 가능합니다.`);
+    if (filesToUpload.length >= MAX_IMAGES) {
+      lightyToast.error(`최대 ${MAX_IMAGES}장까지만 업로드 가능합니다.`);
       return;
     }
 
-    if (file) {
-      const ext = getFileExt(file.name);
-      if (!ext) {
-        lightyToast.error(
-          "지원되지 않는 파일 형식입니다. (jpg, png, jpeg, webp 형식만 가능)"
-        );
-        return null;
-      }
-      const objectUrl = URL.createObjectURL(file);
-      setImages((prev) => [...prev, objectUrl]);
-      console.log(ext);
-      if (ext === "png" || ext === "jpg" || ext === "jpeg") {
-        const convertedFile = await compressImage(file);
-        if (setFilesToUpload && convertedFile) {
-          setFilesToUpload((prev) =>
-            prev ? [...prev, convertedFile] : [convertedFile]
-          );
-        }
-      } else {
-        if (setFilesToUpload) {
-          setFilesToUpload((prev) => (prev ? [...prev, file] : [file]));
-        }
-      }
-      return () => URL.revokeObjectURL(objectUrl);
+    const ext = isSupportedImageExt(file.name);
+    if (!ext) {
+      lightyToast.error(
+        "지원되지 않는 파일 형식입니다. (jpg, png, jpeg, webp)"
+      );
+      return;
     }
+
+    const objectUrl = URL.createObjectURL(file);
+    setImages((prev) => [...prev, objectUrl]);
+
+    const processedFile = ["jpg", "jpeg", "png"].includes(ext)
+      ? await compressImage(file)
+      : file;
+
+    if (processedFile) {
+      setFilesToUpload((prev) => [...prev, processedFile]);
+    }
+
+    return () => URL.revokeObjectURL(objectUrl);
   };
 
-  const handleImageDelete = (num: number) => {
+  const handleImageDelete = (index: number) => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-
-    setFilesToUpload((prev) => prev.filter((_, index) => index !== num));
-    setImages((prev) => prev.filter((_, index) => index !== num));
+    setFilesToUpload((prev) => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
+
+  const renderAddButtonSlide = () => (
+    <SwiperSlide className={styles.slide}>
+      <div className="bg-grayscale-10 w-full h-[250px] rounded-[20px] border border-dashed border-grayscale-200" />
+      <div className={styles.inputWrapper} onClick={() => setSelectOpen(true)}>
+        <Flex direction="column" align="center">
+          <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
+          <Spacing size={6} />
+          <span className="text-T6">
+            <span className="text-grayscale-300">사진</span>
+            <span className="text-grayscale-900">{` ${images.length}`}</span>
+            <span className="text-grayscale-300">/5</span>
+          </span>
+        </Flex>
+      </div>
+    </SwiperSlide>
+  );
+
+  const renderImageSlide = (imageUrl: string, idx: number) => (
+    <SwiperSlide
+      key={`${imageUrl}${idx}`}
+      className={clsx(styles.uploadedImageWrapper, idx === 0 && "ml-5")}
+    >
+      <Image
+        src={imageUrl}
+        alt={`${idx + 1}번째 이미지`}
+        width={270}
+        height={320}
+        className={clsx(styles.uploadedImage, feedInfoToEdit && "opacity-65")}
+      />
+      {!feedInfoToEdit && (
+        <button
+          onClick={() => handleImageDelete(idx)}
+          className={styles.iconContainer}
+        >
+          <CloseIcon width="18" height="18" />
+        </button>
+      )}
+    </SwiperSlide>
+  );
 
   return (
     <div className="relative w-full">
       <Swiper
         slidesPerView={1.59}
         spaceBetween={12}
-        grabCursor={true}
-        className="custom-swiper w-full h-[250px] "
+        grabCursor
+        className="custom-swiper w-full h-[250px]"
       >
-        {feedInfoToEdit ? null : (
-          <SwiperSlide className={styles.slide}>
-            <>
-              <div className="bg-grayscale-10 w-full h-[250px] rounded-[20px] border-[1px] border-dashed border-grayscale-200" />
-              <div
-                className={styles.inputWrapper}
-                onClick={() => setSelectOpen(true)}
-              >
-                <Flex direction="column" align="center">
-                  <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
-                  <Spacing size={6} />
-                  <span>
-                    <span className="text-T6 text-grayscale-300">사진</span>
-                    <span className="text-T6 text-grayscale-900">{` ${images.length}`}</span>
-                    <span className="text-T6 text-grayscale-300">/5</span>
-                  </span>
-                </Flex>
-                {/* </label> */}
-              </div>
-            </>
-          </SwiperSlide>
-        )}
-        {images.map((imageUrl, idx) => (
-          <SwiperSlide
-            className={clsx(styles.uploadedImageWrapper, idx === 0 && "ml-5")}
-            key={`${imageUrl}${idx}`}
-          >
-            <Image
-              src={imageUrl}
-              alt={`${idx + 1}번째 이미지`}
-              className={clsx(
-                styles.uploadedImage,
-                feedInfoToEdit ? "opacity-65" : ""
-              )}
-              width={270}
-              height={320}
-            />
-            {!feedInfoToEdit && (
-              <button
-                onClick={() => handleImageDelete(idx)}
-                className={styles.iconContainer}
-              >
-                <CloseIcon width="18" height="18" />
-              </button>
-            )}
-          </SwiperSlide>
-        ))}
+        {!feedInfoToEdit && renderAddButtonSlide()}
+        {images.map(renderImageSlide)}
         <SwiperSlide>
           <div className="w-1" />
         </SwiperSlide>
       </Swiper>
+
       {selectOpen && (
         <PhotoSelectBottomSheet
           onClose={() => setSelectOpen(false)}
-          handleImageUpload={(e) => handleImageUpload(e)}
+          handleImageUpload={handleImageUpload}
           fileInputRef={fileInputRef}
           cameraInputRef={cameraInputRef}
         />
