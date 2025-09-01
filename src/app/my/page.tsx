@@ -28,7 +28,6 @@ import STORAGE_KEYS from "@/constants/storageKeys";
 import { WEBVIEW_EVENT } from "@/webview/types";
 import { deleteUser } from "@/remote/users";
 import { useAnyScrollThreshold } from "@/hooks/useScrollThreshold";
-import { refreshAccessToken } from "@/utils/tokenManager";
 
 const MyHeader = React.memo(({ shadow }: { shadow: boolean }) => {
   return (
