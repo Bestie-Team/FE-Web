@@ -153,12 +153,6 @@ export default function MyPage() {
               userAccountId={profileInfo?.accountId}
               userName={user.name}
             />
-            <button
-              className="bg-blue p-2"
-              onClick={() => refreshAccessToken()}
-            >
-              갱신
-            </button>
             <Spacing size={12} />
             <MyMainInfo
               groupCount={user.groupCount}
