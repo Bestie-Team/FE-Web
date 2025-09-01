@@ -21,12 +21,25 @@ export async function refreshAccessToken() {
       },
     });
     if (!response.ok) {
-      if (response.status === 401) {
-        localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-        localStorage.removeItem(STORAGE_KEYS.USER_INFO);
+      localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.USER_INFO);
+      if (
+        response.status === 401 ||
+        response.status === 403 ||
+        response.status === 500
+      ) {
+        if (window.location.pathname !== "/") {
+          window.location.href = "/";
+          console.log(
+            `토큰 갱신에 실패했습니다. at refreshing token ${response.status} ${window.location.href}`
+          );
+        }
+      } else {
+        console.log(`토큰 갱신에 실패했습니다. ${response.status}`);
       }
       return null;
     }
+
     const data: { accessToken: string } = await response.json();
     const { accessToken } = data;
 
