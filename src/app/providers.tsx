@@ -75,7 +75,7 @@ const NextLayout = ({ children }: Props) => {
   const showNavBar = isPathEqual(pathname, NAVBAR_PATHS);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
       window.gtag("config", GA_ID || "", {
         page_path: pathname,
       });
