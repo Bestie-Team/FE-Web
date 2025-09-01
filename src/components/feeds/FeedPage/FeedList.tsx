@@ -9,8 +9,8 @@ import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
 import { MENU_CONFIGS } from "@/constants/menu-configs";
 import { useSetRecoilState } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
-import { UserInfoMini } from "../shared/providers/AuthProvider";
-import { FeedSkeleton } from "../shared/Skeleton/FeedSkeleton";
+import { UserInfoMini } from "../../shared/providers/AuthProvider";
+import { FeedSkeleton } from "../../shared/Skeleton/FeedSkeleton";
 import { Feed } from "@/models/feed";
 
 interface FeedListProps {

@@ -9,7 +9,7 @@ import { bottomSheetStateAtom } from "@/atoms/feed";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import Spacing from "@/components/shared/Spacing";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { FeedList } from "@/components/feeds/FeedList";
+import { FeedList } from "@/components/feeds/FeedPage/FeedList";
 import useHiddenFeed from "@/components/feeds/hooks/useHiddenFeed";
 import { NoFeedHidden } from "@/components/feeds/NoFeed";
 import ModalWithReport from "@/components/shared/ModalWithReport";

@@ -1,12 +1,9 @@
 import dynamic from "next/dynamic";
 
-const FeedPageContainer = dynamic(
-  () => import("@/components/feeds/FeedPageContainer"),
-  {
-    ssr: false,
-  }
-);
+const FeedPage = dynamic(() => import("@/components/feeds/FeedPage/FeedPage"), {
+  ssr: false,
+});
 
-export default function FeedPage() {
-  return <FeedPageContainer />;
+export default function Page() {
+  return <FeedPage />;
 }

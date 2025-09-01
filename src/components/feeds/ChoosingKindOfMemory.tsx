@@ -75,7 +75,7 @@ const Item = ({
     <Flex
       onClick={onClick}
       className={clsx(
-        "bg-base-white rounded-2xl px-4 py-5 gap-3 cursor-pointer border-[1px] border-grayscale-100",
+        "bg-base-white rounded-2xl px-4 py-5 gap-3 cursor-pointer border-[1px] border-grayscale-100 transition-colors duration-300 ease-in-out",
         clicked && "border-[1px] border-grayscale-900"
       )}
     >

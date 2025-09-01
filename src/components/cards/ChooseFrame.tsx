@@ -24,8 +24,8 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
       </div>
       <div className={styles.buttonWrapper}>
         <button
-          disabled={selectedFrame == null}
           className={styles.button}
+          disabled={selectedFrame == null}
           onClick={() => {
             onNext();
           }}
@@ -38,6 +38,6 @@ export default function ChooseFrame({ onNext }: { onNext: () => void }) {
 }
 
 const styles = {
-  button: `mb-safe-bottom bg-grayscale-900 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
+  button: `mb-safe-bottom bg-grayscale-900 active:bg-grayscale-700 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
   buttonWrapper: `w-full px-5 pt-3 mb-safe-bottom animate-slide-up will-change-transform pb-14`,
 };

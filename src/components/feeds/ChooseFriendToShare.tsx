@@ -8,13 +8,18 @@ import { useRecoilValue } from "recoil";
 import { friendToRecordAtom } from "@/atoms/record";
 import useDebounce from "@/hooks/debounce";
 
-export default function ChooseFriendToShare({
-  setStep,
-}: {
+interface Props {
   setStep: Dispatch<SetStateAction<number>>;
-}) {
+}
+
+export default function ChooseFriendToShare({ setStep }: Props) {
   const search = useRecoilValue(friendToRecordAtom);
   const debouncedSearch = useDebounce(search);
+
+  const listContainerClass =
+    "!px-0 !h-[calc(100dvh-288px)] overflow-y-scroll no-scrollbar";
+
+  const hasSearch = Boolean(debouncedSearch);
 
   return (
     <div className="max-w-[430px] bg-grayscale-50 min-h-dvh">
@@ -24,20 +29,22 @@ export default function ChooseFriendToShare({
         <span className="text-B3 text-grayscale-500 mb-4">
           공유하고 싶은 친구에게만 작성된 피드가 보여요.
         </span>
+
         <SearchInput
           placeholder="이름/아이디로 검색하기"
           type="record"
           className="!bg-base-white placeholder:!text-grayscale-300 placeholder:!font-[500]"
         />
-        {debouncedSearch !== "" && debouncedSearch.length > 0 ? (
+
+        {hasSearch ? (
           <SelectableSearchedFriendsListContainer
-            className="!px-0 !h-[calc(100dvh-288px)] overflow-y-scroll no-scrollbar"
+            className={listContainerClass}
             debouncedSearch={debouncedSearch}
             action={() => setStep(3.5)}
           />
         ) : (
           <SelectFriendsContainer
-            className="!px-0 !h-[calc(100dvh-288px)] overflow-y-scroll no-scrollbar"
+            className={listContainerClass}
             paddingTop={0}
             type="record"
             setStep={setStep}

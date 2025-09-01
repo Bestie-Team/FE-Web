@@ -17,14 +17,14 @@ import { bottomSheetStateAtom, selectedFeedInfoAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/layout/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import TabParamHandler from "@/components/shared/TabParamHandler";
-import useFeed from "@/components/feeds/hooks/useFeed";
+import useFeed from "@/hooks/useFeed";
 import { Feed } from "@/models/feed";
 import { useIntersectionLoadMore } from "@/components/feeds/hooks/useIntersectionLoadMore";
 import { useNotificationListener } from "@/components/feeds/hooks/useNotificationListener";
-import { FeedSwiper } from "@/components/feeds/FeedSwiper";
-import ModalWithReport from "../shared/ModalWithReport";
+import { FeedSwiper } from "@/components/feeds/FeedPage/FeedSwiper";
+import ModalWithReport from "../../shared/ModalWithReport";
 
-export default function FeedPageContainer() {
+export default function FeedPage() {
   useNotificationListener();
 
   const [reportContent, setReportContent] = useRecoilState(reportInfoAtom);
@@ -42,7 +42,7 @@ export default function FeedPageContainer() {
     feedAll,
     feedMine,
     isFetching,
-    isFetching_mine,
+    isFetchingMine,
     loadMore,
     loadMoreMine,
     handleRefreshAll,
@@ -115,7 +115,7 @@ export default function FeedPageContainer() {
         feedAll={feedAll}
         feedMine={feedMine}
         isFetching={isFetching}
-        isFetchingMine={isFetching_mine}
+        isFetchingMine={isFetchingMine}
         handleAll={handleRefreshAll}
         handleMine={handleRefreshMine}
         loadMoreRef={loadMoreRef}

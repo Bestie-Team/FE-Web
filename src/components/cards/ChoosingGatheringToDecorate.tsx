@@ -107,6 +107,6 @@ export default function ChoosingGatheringToDecorate({
 }
 
 const styles = {
-  button: `bg-grayscale-900 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
+  button: `bg-grayscale-900 active:bg-grayscale-700 w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`,
   buttonWrapper: `w-full px-5 pt-3 animate-slide-up will-change-transform pb-16`,
 };

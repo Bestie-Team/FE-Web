@@ -73,7 +73,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({
         name="floating_button"
         onClick={handleClick}
         data-testid="plus-circle-button"
-        className="bg-grayscale-900 mb-safe-bottom rounded-full w-14 h-14 flex items-center justify-center absolute bottom-[86px] right-[16px] z-10 shadow-lg transition-transform cursor-pointer active:animate-shrink-grow-less"
+        className="bg-grayscale-900 mb-safe-bottom rounded-full w-14 h-14 flex items-center justify-center absolute bottom-[86px] right-[16px] z-10 shadow-lg transition cursor-pointer active:animate-shrink-grow-less duration-300 ease-in-out"
         type="button"
       >
         {pathname.startsWith("/card") ? (

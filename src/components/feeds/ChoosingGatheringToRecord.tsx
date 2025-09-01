@@ -4,32 +4,29 @@ import LightyLogo from "../shared/Icon/LightyLogo";
 import Spacing from "../shared/Spacing";
 import { recordGatheringAtom } from "@/atoms/record";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import BigClickableGatheringSwiper from "./BigClickableGatheringSwiper";
 import useGatheringNoFeeds from "../gathering/hooks/useGatheringNoFeed";
 import NoGatheringToRecord from "../gathering/NoGatheringToRecord";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
+import SelectableGatheringSwiper from "./SelectableGatheringSwiper";
 
 export default function ChoosingGatheringToRecord({
   onNext,
 }: {
   onNext: (gatheringId: string) => void;
 }) {
-  const { data: gathering_noFeed } = useGatheringNoFeeds({
-    limit: 30,
-  });
+  const { data: gathering_noFeed } = useGatheringNoFeeds({ limit: 30 });
   const [selectedGatheringId, setSelectedGatheringId] =
     useRecoilState(recordGatheringAtom);
-  const handleImageClick = (gatheringId: string) => {
-    setSelectedGatheringId(gatheringId);
-  };
   const { isReactNativeWebView } = useReactNativeWebView();
+
+  const handleImageClick = (gatheringId: string) =>
+    setSelectedGatheringId(gatheringId);
+
+  const paddingX = { paddingLeft: 24, paddingRight: 24 };
 
   return (
     <>
-      <Flex
-        direction="column"
-        style={{ paddingLeft: "24px", paddingRight: "24px" }}
-      >
+      <Flex direction="column" style={paddingX}>
         <Spacing size={28} />
         <LightyLogo />
         <Spacing size={16} />
@@ -41,14 +38,16 @@ export default function ChoosingGatheringToRecord({
           작성한 기록은 약속에 참여한 이들만 볼 수 있어요
         </span>
       </Flex>
+
       <Spacing size={40} />
-      {!gathering_noFeed || gathering_noFeed.length < 1 ? (
-        <Flex style={{ paddingLeft: "24px", paddingRight: "24px" }}>
+
+      {!gathering_noFeed?.length ? (
+        <Flex style={paddingX}>
           <NoGatheringToRecord />
         </Flex>
       ) : (
         <>
-          <BigClickableGatheringSwiper
+          <SelectableGatheringSwiper
             gathering={gathering_noFeed}
             onImageClick={handleImageClick}
             selectedGatheringId={selectedGatheringId}
@@ -56,11 +55,9 @@ export default function ChoosingGatheringToRecord({
           <FixedBottomButton
             className={isReactNativeWebView ? "mb-safe-bottom" : ""}
             bgColor="#f4f4f4"
-            disabled={selectedGatheringId === null}
-            label={"기록 시작하기"}
-            onClick={() => {
-              onNext("1");
-            }}
+            disabled={!selectedGatheringId}
+            label="기록 시작하기"
+            onClick={() => selectedGatheringId && onNext(selectedGatheringId)}
           />
         </>
       )}

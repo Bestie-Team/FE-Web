@@ -65,7 +65,7 @@ const FixedBottomButton: React.FC<FixedBottomButtonProps> = ({
   );
 };
 
-const buttonStyle = `w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full`;
+const buttonStyle = `w-full py-[18px] flex justify-center text-[14px] leading-[16.8px] tracking-[-0.28px] font-[600] text-base-white rounded-full hover:bg-grayscale-700 active:bg-grayscale-700`;
 const buttonWrapperStyle = `max-w-[430px] w-full px-5 pb-[10px] pt-3 animate-slide-up will-change-transform`;
 
 export default FixedBottomButton;

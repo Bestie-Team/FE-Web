@@ -19,7 +19,7 @@ import { useAuth } from "@/components/shared/providers/AuthProvider";
 import FeedPageSkeleton from "@/components/shared/Skeleton/FeedSkeleton";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
 import ModalWithReport from "@/components/shared/ModalWithReport";
-import useFeed from "@/components/feeds/hooks/useFeed";
+import useFeed from "@/hooks/useFeed";
 
 export type GroupEditProps = {
   id: string;

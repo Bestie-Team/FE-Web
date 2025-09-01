@@ -1,5 +1,5 @@
 import Spacing from "@/components/shared/Spacing";
-import { FeedList } from "@/components/feeds/FeedList";
+import { FeedList } from "@/components/feeds/FeedPage/FeedList";
 import { NoFeedHidden } from "@/components/feeds/NoFeed";
 import LoadMoreTrigger from "../shared/LoadMoreTrigger";
 
