@@ -6,24 +6,11 @@ import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import { openPrivacyPolicyMobile, openTermsMobile } from "@/webview/actions";
-import { useRouter } from "next/navigation";
-import { Suspense, useEffect, useMemo } from "react";
+import { Suspense } from "react";
 
-export default function SignInPage() {
-  const { token, userInfo } = useAuth();
+export default function Page() {
+  const { isAuthenticated } = useAuth();
   const { isReactNativeWebView } = useReactNativeWebView();
-
-  const isAuthenticated = useMemo(
-    () => !!token && !!userInfo,
-    [token, userInfo]
-  );
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/feed");
-    }
-  }, [isAuthenticated]);
 
   const openTermsPage = () => {
     if (isReactNativeWebView) {
@@ -37,51 +24,49 @@ export default function SignInPage() {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <Flex
-        direction="column"
-        justify="space-between"
-        className={styles.splashContainer}
-      >
-        <Flex direction="column" className={styles.centerWrapper}>
-          <Flex direction="column" align="center" className="gap-1">
-            <div className="text-B3 text-base-white mt-[200px]">
-              소중한 당신의 추억을 빛내줄
-            </div>
-            <LargeLightyLogo />
-          </Flex>
-          <LightyIcon width="22.4" height="22.4" />
+  if (isAuthenticated) return null;
+
+  return (
+    <Flex
+      direction="column"
+      justify="space-between"
+      className={styles.splashContainer}
+    >
+      <Flex direction="column" className={styles.centerWrapper}>
+        <Flex direction="column" align="center" className="gap-1">
+          <div className="text-B3 text-base-white mt-[200px]">
+            소중한 당신의 추억을 빛내줄
+          </div>
+          <LargeLightyLogo />
         </Flex>
-        <Flex direction="column" className={styles.buttonContainer}>
-          <Flex
-            direction="column"
-            justify="center"
-            align="center"
-            className={styles.loginButtonWrapper}
-          >
-            <Suspense>
-              <LogIn />
-            </Suspense>
-            <div className={styles.textWrapper}>
-              <span>가입 시</span>
-              <span className={styles.text} onClick={openTermsPage}>
-                이용약관
-              </span>
-              <span>및 </span>
-              <span className={styles.text} onClick={openPrivacyPolicyPage}>
-                개인정보처리방침
-              </span>
-              <span>에 동의하게 됩니다.</span>
-            </div>
-          </Flex>
+        <LightyIcon width="22.4" height="22.4" />
+      </Flex>
+
+      <Flex direction="column" className={styles.buttonContainer}>
+        <Flex
+          direction="column"
+          justify="center"
+          align="center"
+          className={styles.loginButtonWrapper}
+        >
+          <Suspense>
+            <LogIn />
+          </Suspense>
+          <div className={styles.textWrapper}>
+            <span>가입 시</span>
+            <span className={styles.text} onClick={openTermsPage}>
+              이용약관
+            </span>
+            <span>및 </span>
+            <span className={styles.text} onClick={openPrivacyPolicyPage}>
+              개인정보처리방침
+            </span>
+            <span>에 동의하게 됩니다.</span>
+          </div>
         </Flex>
       </Flex>
-    );
-  } else {
-    router.push("/feed");
-    return null;
-  }
+    </Flex>
+  );
 }
 
 const styles = {

@@ -23,16 +23,24 @@ const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=co
 export default function LogIn() {
   const { login } = useAuth();
   const { isReactNativeWebView } = useReactNativeWebView();
-  const uuid = uuidv4();
-  localStorage.setItem(STORAGE_KEYS.DEVICE_ID, uuid);
+
+  useEffect(() => {
+    const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
+    if (!deviceId) {
+      const uuid = uuidv4();
+      localStorage.setItem(STORAGE_KEYS.DEVICE_ID, uuid);
+    }
+  }, []);
 
   const handleLoginSuccess = useCallback(
     async (accessToken: string, provider: Providers) => {
       try {
+        const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID) ?? "";
+
         const { data } = await postLogin({
           accessToken,
           provider,
-          deviceId: uuid,
+          deviceId,
         });
         if (data) login(data);
       } catch (error) {
