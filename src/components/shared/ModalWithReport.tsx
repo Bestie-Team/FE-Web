@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 const Modal = dynamic(() => import("@/components/shared/Modal/Modal"), {
   ssr: false,
 });
-
 const Report = dynamic(() => import("@/components/shared/Modal/Report/Report"));
 
 interface Props {
@@ -24,44 +23,41 @@ interface Props {
   exitGroup?: () => void;
 }
 
-export default function ModalWithReport({
-  onReport,
-  deleteComment,
-  modalState,
-  reportModalOpen,
-  reportContent,
-  setModalState,
-  setReportContent,
-  setReportModalOpen,
-  displayFeed,
-  deleteFeed,
-  deleteFriend,
-  hideFeed,
-  deleteGroup,
-  exitGroup,
-}: Props) {
-  const modalAction =
-    modalState?.type === "deleteGroup"
-      ? deleteGroup
-      : modalState?.type === "exitGroup"
-      ? exitGroup
-      : modalState?.type === "deleteFriend"
-      ? deleteFriend
-      : modalState?.type === "deleteFeed"
-      ? deleteFeed
-      : modalState?.type === "hideFeed"
-      ? hideFeed
-      : modalState?.type === "displayFeed"
-      ? displayFeed
-      : deleteComment;
+export default function ModalWithReport(props: Props) {
+  const {
+    onReport,
+    deleteComment,
+    modalState,
+    reportModalOpen,
+    reportContent,
+    setModalState,
+    setReportContent,
+    setReportModalOpen,
+    displayFeed,
+    deleteFeed,
+    deleteFriend,
+    hideFeed,
+    deleteGroup,
+    exitGroup,
+  } = props;
 
-  const closeModal = () => {
-    if (setModalState)
-      setModalState({
-        type: null,
-        isOpen: false,
-      });
+  const modalActions: Record<string, (() => void) | undefined> = {
+    deleteGroup,
+    exitGroup,
+    deleteFriend,
+    deleteFeed,
+    hideFeed,
+    displayFeed,
+    deleteComment,
   };
+
+  const closeModal = () => setModalState?.({ type: null, isOpen: false });
+  const closeReportModal = () =>
+    setReportModalOpen?.((prev: any) => ({
+      ...prev,
+      type: null,
+      isOpen: false,
+    }));
 
   return (
     <>
@@ -71,10 +67,11 @@ export default function ModalWithReport({
           content={MODAL_CONFIGS[modalState.type].content}
           left={MODAL_CONFIGS[modalState.type].leftButton}
           right={MODAL_CONFIGS[modalState.type].rightButton}
-          action={modalAction}
+          action={modalActions[modalState.type]}
           onClose={closeModal}
         />
       )}
+
       {reportModalOpen?.isOpen && setReportContent && setReportModalOpen && (
         <Report
           type={reportModalOpen.type}
@@ -82,19 +79,9 @@ export default function ModalWithReport({
           setReport={setReportContent}
           handleReport={() => {
             onReport(reportContent);
-            setReportModalOpen((prev: any) => ({
-              ...prev,
-              type: null,
-              isOpen: false,
-            }));
+            closeReportModal();
           }}
-          onClose={() =>
-            setReportModalOpen((prev: any) => ({
-              ...prev,
-              type: null,
-              isOpen: false,
-            }))
-          }
+          onClose={closeReportModal}
         />
       )}
     </>
