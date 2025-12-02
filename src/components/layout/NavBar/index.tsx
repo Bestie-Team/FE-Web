@@ -19,7 +19,7 @@ const SHOW_SHEET_PATHS = ["/feed"];
 
 const NavBar = () => {
   const { data: user } = useUserProfile();
-  const { setActiveBtn, pathname, activeBtn } = useActiveNavigation();
+  const { pathname, activeBtn } = useActiveNavigation();
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
   const { isReactNativeWebView } = useReactNativeWebView();
   const showSheetButton = useMemo(() => {
@@ -34,7 +34,7 @@ const NavBar = () => {
   const onMouseDownHandler = (idx: number) => {
     if (activeBtn === idx) {
       window.location.reload();
-    } else setActiveBtn(idx);
+    }
   };
 
   const items = NAV_ITEMS.map((item, idx) => (
@@ -42,7 +42,7 @@ const NavBar = () => {
       name={item.name}
       key={item.href}
       href={item.href}
-      isActive={pathname === item.href}
+      isActive={activeBtn === idx}
       onMouseDown={() => onMouseDownHandler(idx)}
       icon={item.icon}
       profileImageUrl={profileImageUrl}
