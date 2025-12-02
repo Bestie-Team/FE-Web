@@ -14,7 +14,6 @@ import React, {
 import Header from "@/components/layout/Header";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
-import { useRouter } from "next/navigation";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import {
   openAskMobile,
@@ -47,7 +46,6 @@ export default function MyPage() {
   >(undefined);
   const { data: user } = useUserDetail();
   const { logout } = useAuth();
-  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const isPast = useAnyScrollThreshold(containerRef);
   const { isReactNativeWebView } = useReactNativeWebView();
@@ -78,25 +76,46 @@ export default function MyPage() {
 
   const handleLogout = useCallback(async () => {
     const deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
-    if (deviceId) {
-      const loggedout = await getLogout(deviceId);
-      if (loggedout) {
-        logout();
+    try {
+      if (deviceId) {
+        await getLogout(deviceId);
       }
+    } catch (error) {
+      console.error("로그아웃 실패", error);
+    } finally {
+      logout();
     }
-  }, [router, logout]);
+  }, [logout]);
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent<string>) => {
+      const trustedOrigin = window.location.origin;
+      const isNativeMessage =
+        event.origin === "null" || event.origin === "file://";
+      if (
+        event.origin &&
+        event.origin !== trustedOrigin &&
+        !(isReactNativeWebView && isNativeMessage)
+      ) {
+        return;
+      }
+
       let data = event.data;
       if (typeof event.data !== "string") {
         data = JSON.stringify(event.data);
       }
-      const message: {
-        type: string;
-        token: string;
+      let message: {
+        type?: string;
+        token?: string;
         authorizationCode?: string;
-      } = JSON.parse(data);
+      };
+      try {
+        message = JSON.parse(data);
+      } catch (error) {
+        console.error("잘못된 메시지 포맷", error);
+        return;
+      }
+      if (!message?.type) return;
 
       if (message.type === WEBVIEW_EVENT.APPLE_LOGIN_SUCCESS) {
         if (
@@ -122,7 +141,7 @@ export default function MyPage() {
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [isReactNativeWebView, logout]);
 
   useEffect(() => {
     const initializeProfileInfo = () => {
