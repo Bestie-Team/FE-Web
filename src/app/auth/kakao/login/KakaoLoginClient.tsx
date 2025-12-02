@@ -6,6 +6,7 @@ import type { KakaoAuthResponse } from "@/models/user";
 import { useSearchParams } from "next/navigation";
 import { useLogin } from "@/hooks/useLogin";
 import { lightyToast } from "@/utils/toast";
+import STORAGE_KEYS from "@/constants/storageKeys";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -35,11 +36,23 @@ export default function Page() {
 
   const extractAuthCodeFromUrl = () => {
     const code = searchParams?.get("code");
+    const returnedState = searchParams?.get("state");
+    const storedState = sessionStorage.getItem(STORAGE_KEYS.KAKAO_STATE);
+
     if (!code) {
+      sessionStorage.removeItem(STORAGE_KEYS.KAKAO_STATE);
       setError("URL에서 인증 코드를 찾을 수 없습니다.");
       setIsLoading(false);
       return;
     }
+    if (!returnedState || !storedState || returnedState !== storedState) {
+      sessionStorage.removeItem(STORAGE_KEYS.KAKAO_STATE);
+      setError("유효하지 않은 인증 요청입니다.");
+      setIsLoading(false);
+      return;
+    }
+
+    sessionStorage.removeItem(STORAGE_KEYS.KAKAO_STATE);
     setAuthCode(code);
   };
 

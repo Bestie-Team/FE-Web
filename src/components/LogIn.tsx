@@ -18,7 +18,8 @@ import { v4 as uuidv4 } from "uuid";
 import Tooltip from "./shared/Tooltip/Tooltip";
 import STORAGE_KEYS from "@/constants/storageKeys";
 
-const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account`;
+const buildKakaoAuthUrl = (state: string) =>
+  `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&prompt=select_account&state=${state}`;
 
 export default function LogIn() {
   const { login } = useAuth();
@@ -66,10 +67,12 @@ export default function LogIn() {
       }
     }
     if (provider === "kakao") {
+      const state = uuidv4();
+      sessionStorage.setItem(STORAGE_KEYS.KAKAO_STATE, state);
       if (isReactNativeWebView && window.ReactNativeWebView) {
         kakaoLoginMobile();
       } else {
-        window.location.href = KAKAO_AUTH_URL;
+        window.location.href = buildKakaoAuthUrl(state);
       }
     }
     if (provider === "apple" && isReactNativeWebView) {
@@ -79,11 +82,29 @@ export default function LogIn() {
 
   useEffect(() => {
     const handleMessage = async (event: MessageEvent<string>) => {
+      const trustedOrigin = window.location.origin;
+      const isNativeMessage =
+        event.origin === "null" || event.origin === "file://";
+      if (
+        event.origin &&
+        event.origin !== trustedOrigin &&
+        !(isReactNativeWebView && isNativeMessage)
+      ) {
+        return;
+      }
+
       let data = event.data;
       if (typeof event.data !== "string") {
         data = JSON.stringify(event.data);
       }
-      const message: { type: string; token: string } = JSON.parse(data);
+      let message: { type?: string; token?: string };
+      try {
+        message = JSON.parse(data);
+      } catch (error) {
+        console.error("잘못된 로그인 메시지 포맷", error);
+        return;
+      }
+      if (!message?.type || typeof message.token !== "string") return;
 
       if (message.type === WEBVIEW_EVENT.GOOGLE_LOGIN_SUCCESS) {
         handleLoginSuccess(message.token, "google");
@@ -98,7 +119,7 @@ export default function LogIn() {
 
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [handleLoginSuccess]);
+  }, [handleLoginSuccess, isReactNativeWebView]);
 
   return (
     <>
