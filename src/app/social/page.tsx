@@ -18,14 +18,15 @@ export default function FriendsAndGroups() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
+  const tabParam = searchParams?.get("tab");
 
   useEffect(() => {
-    const tabParam = searchParams?.get("tab");
     if (tabParam) {
       setSelectedTab(tabParam === "group" ? "2" : "1");
       router.replace("/social");
     }
-  }, [searchParams, setSelectedTab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="h-dvh pt-safe-top pb-safe-bottom">

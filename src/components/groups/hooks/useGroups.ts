@@ -6,7 +6,14 @@ import { useCallback } from "react";
 
 export default function useGroup({ limit = 6 }: { limit?: number }) {
   const router = useRouter();
-  const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetching,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
     queryKey: ["groups"],
     queryFn: ({ pageParam: cursor }) =>
       getGroups({
@@ -36,5 +43,12 @@ export default function useGroup({ limit = 6 }: { limit?: number }) {
   }, [fetchNextPage, hasNextPage, isFetching]);
 
   const groups = data?.pages.map(({ groups }) => groups).flat();
-  return { data: groups, loadMore, isFetching, hasNextPage };
+  return {
+    data: groups,
+    loadMore,
+    isFetching,
+    isFetchingNextPage,
+    isLoading,
+    hasNextPage,
+  };
 }

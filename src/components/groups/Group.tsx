@@ -45,7 +45,13 @@ export default function Groups() {
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
 
   const { data: detail } = useUserDetail();
-  const { data: groups, isFetching, loadMore } = useGroup({ limit: 6 });
+  const {
+    data: groups,
+    isLoading,
+    isFetchingNextPage,
+    loadMore,
+    isFetching,
+  } = useGroup({ limit: 6 });
 
   const { restoreScrollPosition } = useScrollRestorationOfRef(
     "social-scroll-tab",
@@ -70,7 +76,8 @@ export default function Groups() {
   const handleItemClick = (groupId: string) => {
     router.push(`/groups/detail?id=${groupId}`);
   };
-
+  console.log(isFetching, "fetching");
+  console.log(isFetchingNextPage, "fetching");
   return (
     <div
       ref={scrollContainerRef}
@@ -89,8 +96,8 @@ export default function Groups() {
 
       {groups && <GroupList groups={groups} onItemClick={handleItemClick} />}
 
-      {isFetching && <GroupListSkeleton />}
-      {inView && <GroupSkeleton />}
+      {!groups && isLoading && <GroupListSkeleton />}
+      {inView && isFetchingNextPage && <GroupSkeleton />}
 
       <LoadMoreTrigger loadMoreRef={loadMoreRef} />
     </div>

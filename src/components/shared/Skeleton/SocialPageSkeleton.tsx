@@ -9,7 +9,7 @@ import Flex from "../Flex";
 export default function SocialPageSkeleton() {
   return (
     <>
-      <div className={"pt-safe-top w-full bg-base-white fixed px-5 mt-12"}>
+      <div className={"pt-safe-top w-full bg-base-white fixed px-5"}>
         <Flex justify="space-between" className={tabContainerStyle}>
           <div className={tabWrapperStyle}>
             <div className={"flex"}>
