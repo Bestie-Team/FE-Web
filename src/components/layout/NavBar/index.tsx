@@ -65,10 +65,13 @@ const NavBar = () => {
     return null;
   }
 
+  const navLabel = "하단 내비게이션";
+
   return (
     <Suspense>
       <nav
         style={{ zIndex: 99 }}
+        aria-label={navLabel}
         className={clsx(
           `
         fixed left-0 right-0 bottom-0 bg-base-white w-full max-w-[430px]
@@ -77,7 +80,13 @@ const NavBar = () => {
           isReactNativeWebView ? "!pb-safe-bottom" : ""
         )}
       >
-        {items}
+        <ul className="flex w-full justify-between" aria-label={`${navLabel} 목록`}>
+          {items.map((item, idx) => (
+            <li key={NAV_ITEMS[idx].href} className="list-none">
+              {item}
+            </li>
+          ))}
+        </ul>
         {shouldShowFloatingButton && <FloatingButton tooltip={tooltip} />}
       </nav>
     </Suspense>

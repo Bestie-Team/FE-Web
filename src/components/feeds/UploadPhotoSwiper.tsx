@@ -78,7 +78,12 @@ export default function UploadPhotoSwiper({
   const renderAddButtonSlide = () => (
     <SwiperSlide className={styles.slide}>
       <div className="bg-grayscale-10 w-full h-[250px] rounded-[20px] border border-dashed border-grayscale-200" />
-      <div className={styles.inputWrapper} onClick={() => setSelectOpen(true)}>
+      <button
+        type="button"
+        aria-label="사진 추가"
+        className={styles.inputWrapper}
+        onClick={() => setSelectOpen(true)}
+      >
         <Flex direction="column" align="center">
           <PlusCircleButtonSmall className="w-[25.2px] h-[25.2px]" />
           <Spacing size={6} />
@@ -88,7 +93,7 @@ export default function UploadPhotoSwiper({
             <span className="text-grayscale-300">/5</span>
           </span>
         </Flex>
-      </div>
+      </button>
     </SwiperSlide>
   );
 
@@ -106,6 +111,8 @@ export default function UploadPhotoSwiper({
       />
       {!feedInfoToEdit && (
         <button
+          type="button"
+          aria-label={`${idx + 1}번째 이미지 삭제`}
           onClick={() => handleImageDelete(idx)}
           className={styles.iconContainer}
         >
@@ -144,7 +151,8 @@ export default function UploadPhotoSwiper({
 
 const styles = {
   slide: "ml-[20px] relative h-[250px] !w-[240px] rounded-2xl overflow-hidden",
-  inputWrapper: "absolute inset-0 flex items-center justify-center",
+  inputWrapper:
+    "absolute inset-0 flex items-center justify-center bg-transparent border-0 appearance-none cursor-pointer",
   uploadedImageWrapper:
     "relative h-[250px] !w-[240px] rounded-2xl overflow-hidden object-cover",
   uploadedImage: "slide-img object-cover !w-[240px] h-[250px]",

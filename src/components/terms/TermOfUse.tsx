@@ -17,12 +17,14 @@ export default function TermOfUse({ label, onClick }: TermOfUseProps) {
       className={containerStyle}
     >
       <Flex align="center" className="h-12 gap-[6px]">
-        <div
+        <button
+          type="button"
+          aria-label="약관 닫기"
           onClick={onClick}
-          className="pl-[17px] py-[10px] pr-[3px] cursor-pointer"
+          className="pl-[17px] py-[10px] pr-[3px] cursor-pointer bg-transparent border-0"
         >
           <CloseIcon2 color="#0A0A0A" />
-        </div>
+        </button>
         <span className="text-T3">{label}</span>
       </Flex>
     </div>

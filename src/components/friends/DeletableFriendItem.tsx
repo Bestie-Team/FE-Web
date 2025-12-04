@@ -17,6 +17,9 @@ export default function DeletableFriendItem({
   groupInfo,
   onClickDelete,
 }: Props) {
+  const deleteTargetName =
+    friendInfo?.name ?? groupInfo?.groupName ?? friendInfo?.accountId ?? "친구";
+
   return (
     <Flex direction="column" className={style.container}>
       <div className="relative p-[6px]">
@@ -38,7 +41,10 @@ export default function DeletableFriendItem({
             <CheckIcon width="28" height="28" />
           </div>
         </div>
-        <DeleteButton onClick={onClickDelete} />
+        <DeleteButton
+          ariaLabel={`${deleteTargetName} 삭제`}
+          onClick={onClickDelete}
+        />
       </div>
       <Flex direction="column" align="center">
         <span className="text-T6">
@@ -52,11 +58,22 @@ export default function DeletableFriendItem({
   );
 }
 
-function DeleteButton({ onClick }: { onClick: () => void }) {
+function DeleteButton({
+  onClick,
+  ariaLabel,
+}: {
+  onClick: () => void;
+  ariaLabel: string;
+}) {
   return (
-    <div className={style.btnContainer} onClick={onClick}>
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      className={style.btnContainer}
+      onClick={onClick}
+    >
       <CloseIcon width="13.33" height="13.33" />
-    </div>
+    </button>
   );
 }
 

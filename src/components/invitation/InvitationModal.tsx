@@ -55,14 +55,16 @@ export default function InvitationModal({
         align="center"
         style={{ width: "330px" }}
       >
-        <CloseIcon
-          width="32"
-          height="32"
-          className="self-end cursor-pointer"
+        <button
+          type="button"
+          aria-label="초대 모달 닫기"
+          className="self-end cursor-pointer p-1 bg-transparent border-0"
           onClick={() => {
             onClickClose(false);
           }}
-        />
+        >
+          <CloseIcon width="32" height="32" />
+        </button>
         <Spacing size={8} />
         <VerticalInvitationCard invitation={selectedInvitation} />
         {selectedTab === "1" ? (

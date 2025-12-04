@@ -1,7 +1,7 @@
 import { usePathname } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import type { RecoilState } from "recoil";
-import type { FC } from "react";
+import { useMemo, type FC } from "react";
 
 import { gatheringModalStateAtom } from "@/atoms/gathering";
 import { recordModalAtom } from "@/atoms/modal";
@@ -13,6 +13,7 @@ import { decoBottomSheetStateAtom } from "@/atoms/card";
 interface FloatingButtonProps {
   tooltip?: boolean;
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 type PathConfig = {
@@ -42,15 +43,22 @@ const PATH_CONFIGS: PathConfig[] = [
 const FloatingButton: FC<FloatingButtonProps> = ({
   tooltip = false,
   onClick,
+  ariaLabel,
 }) => {
   const pathname = usePathname();
-  const getPathConfig = () => {
-    return (
-      PATH_CONFIGS.find((config) => pathname === config.path) ?? PATH_CONFIGS[0]
-    );
-  };
+  const currentConfig = useMemo(
+    () =>
+      PATH_CONFIGS.find((config) => pathname === config.path) ?? PATH_CONFIGS[0],
+    [pathname]
+  );
+  const isCardRoute = pathname.startsWith("/card");
+  const shouldShowTooltip = tooltip && Boolean(currentConfig.tooltipText);
+  const tooltipId = shouldShowTooltip ? "floating-button-tooltip" : undefined;
+  const resolvedAriaLabel =
+    ariaLabel ??
+    currentConfig.tooltipText ??
+    (isCardRoute ? "스티커 꾸미기 열기" : "새 항목 추가");
 
-  const currentConfig = getPathConfig();
   const setModalOpen = useSetRecoilState(currentConfig.modalAtom);
 
   const handleClick = () => {
@@ -60,11 +68,12 @@ const FloatingButton: FC<FloatingButtonProps> = ({
 
   return (
     <>
-      {tooltip && currentConfig.tooltipText && (
+      {shouldShowTooltip && (
         <div className="absolute bottom-[92px] right-[84px] z-14 mb-safe-bottom">
           <Tooltip
             direction="right"
             closeButton={true}
+            id={tooltipId}
             title={currentConfig.tooltipText}
           />
         </div>
@@ -75,12 +84,17 @@ const FloatingButton: FC<FloatingButtonProps> = ({
         data-testid="plus-circle-button"
         className="bg-grayscale-900 mb-safe-bottom rounded-full w-14 h-14 flex items-center justify-center absolute bottom-[86px] right-[16px] z-10 shadow-lg transition cursor-pointer active:animate-shrink-grow-less duration-300 ease-in-out"
         type="button"
+        aria-label={resolvedAriaLabel}
+        aria-haspopup="dialog"
+        aria-describedby={tooltipId}
       >
-        {pathname.startsWith("/card") ? (
-          <LightyDeco />
-        ) : (
-          <PlusIcon width="23.3" height="23.3" />
-        )}
+        <span aria-hidden="true">
+          {isCardRoute ? (
+            <LightyDeco />
+          ) : (
+            <PlusIcon width="23.3" height="23.3" />
+          )}
+        </span>
       </button>
     </>
   );

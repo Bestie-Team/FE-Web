@@ -8,7 +8,9 @@ export default function Tooltip({
   color,
   title,
   closeButton,
+  id,
 }: {
+  id?: string;
   direction: "top" | "bottom" | "left" | "right" | "topLeft" | "topRight";
   className?: string;
   color?: string;
@@ -22,17 +24,23 @@ export default function Tooltip({
   };
   return (
     <div
+      id={id}
+      role="tooltip"
       className={clsx(tooltipWrapperStyle, className, closeClicked && "hidden")}
       style={{ backgroundColor: color }}
     >
-      <span className="flex-none">{title}</span>
+      <span className="flex-none" id={id ? `${id}-label` : undefined}>
+        {title}
+      </span>
       {closeButton && (
-        <CloseIcon
+        <button
+          type="button"
+          aria-label="툴팁 닫기"
           onClick={onButtonClick}
-          className="flex-none cursor-pointer"
-          width="16"
-          height="16"
-        />
+          className="flex-none cursor-pointer bg-transparent border-0 p-[2px]"
+        >
+          <CloseIcon width="16" height="16" />
+        </button>
       )}
       {direction === "bottom" && <BottomDirIcon color={color} />}
       {direction === "top" && <TopDirIcon color={color} />}

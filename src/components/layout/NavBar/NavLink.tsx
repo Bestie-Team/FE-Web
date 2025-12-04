@@ -19,7 +19,8 @@ export const NavLink = ({
 }: NavLinkProps) => {
   return (
     <Link
-      aria-label={`move to ${name} page`}
+      aria-label={`${name} 페이지로 이동`}
+      aria-current={isActive ? "page" : undefined}
       href={href}
       onMouseDown={(e) => {
         e.stopPropagation();

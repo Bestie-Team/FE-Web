@@ -1,27 +1,42 @@
 import clsx from "clsx";
 import PlusIcon from "../Icon/PlusIcon";
 
+type PlusCircleButtonProps = {
+  onClick?: () => void;
+  className?: string;
+  style?: { bottom: string; right: string };
+  icon?: React.ReactNode;
+  /**
+   * 아이콘만 있을 때, 스크린 리더에게 읽어줄 라벨
+   * ex) "항목 추가", "새 투표 만들기"
+   */
+  ariaLabel?: string;
+  disabled?: boolean;
+};
+
 export default function BottomSheetOpenButton({
   style,
   className,
   onClick,
+  ariaLabel = "바텀시트열기",
   icon,
-}: {
-  className?: string;
-  style?: { bottom: string; right: string };
-  onClick?: () => void;
-  icon?: React.ReactNode;
-}) {
+  disabled = false,
+}: PlusCircleButtonProps) {
   return (
-    <div
+    <button
+      type="button"
       data-testid="plus-circle-button"
       style={style}
       className={clsx(PlusButtonStyle, className)}
       onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      // 터치에서 클릭 딜레이 / 더블 탭 확대 방지 때문에 쓰는 거라면 유지,
+      // 아니라면 제거 권장
       onTouchStart={(e) => e.preventDefault()}
     >
-      {icon ? icon : <PlusIcon width="23.3" height="23.3" />}
-    </div>
+      {icon ?? <PlusIcon width="23.3" height="23.3" />}
+    </button>
   );
 }
 

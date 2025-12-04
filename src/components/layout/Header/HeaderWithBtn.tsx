@@ -39,6 +39,8 @@ export default function HeaderWithBtn({
       <Flex align="center" className="w-full gap-[6px] h-12 pl-0 pr-5">
         <button
           className={"w-10 h-10 py-[10px] pl-[17px] pr-[3px] cursor-pointer"}
+          aria-label="뒤로가기"
+          type="button"
           onClick={() => {
             if (onClickBackBtn) {
               onClickBackBtn();

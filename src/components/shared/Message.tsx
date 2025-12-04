@@ -7,7 +7,14 @@ export default function Message({ onClose }: { onClose: () => void }) {
     <Flex className={styles.messageContainer}>
       <PencilIcon color="#0A0A0A" />
       <span className={styles.text}>기록으로 약속의 추억을 간직해보세요!</span>
-      <CloseIcon onClick={() => onClose()} color="#AEAEAE" />
+      <button
+        type="button"
+        aria-label="메시지 닫기"
+        className="p-1 cursor-pointer bg-transparent border-0"
+        onClick={() => onClose()}
+      >
+        <CloseIcon color="#AEAEAE" />
+      </button>
     </Flex>
   );
 }
