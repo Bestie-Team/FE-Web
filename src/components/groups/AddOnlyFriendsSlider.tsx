@@ -2,35 +2,16 @@ import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import { AddFriendItem } from "../home/FriendItem";
 import { useRecoilValue } from "recoil";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import * as lighty from "lighty-type";
-import { selectedFriendsAtom } from "@/atoms/friends";
+import React from "react";
+import { groupMemberCandidatesSelector } from "@/atoms/group";
 import UnDeletableFriendItem from "../friends/UnDeletableFriendItem";
 
 export default function AddOnlyFriendsSlider({
   setStep,
-  groupMembers,
 }: {
-  setGroupMemberIds?: Dispatch<SetStateAction<string[]>>;
   setStep?: (step: number) => void;
-  groupMembers: lighty.User[] | null;
 }) {
-  const selected = useRecoilValue(selectedFriendsAtom);
-  const [finalMembers, setFinalMembers] = useState<lighty.User[]>([]);
-
-  useEffect(() => {
-    if (groupMembers !== null) {
-      setFinalMembers(groupMembers);
-    }
-  }, [groupMembers]);
-
-  useEffect(() => {
-    if (selected !== null) {
-      setFinalMembers((prev: lighty.User[] | []) => {
-        return prev ? [...prev, ...selected] : selected || [];
-      });
-    }
-  }, [selected]);
+  const finalMembers = useRecoilValue(groupMemberCandidatesSelector);
 
   return (
     <div className="w-full">

@@ -1,8 +1,11 @@
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import { AddFriendItem } from "../home/FriendItem";
-import { selectedFriendsAtom } from "@/atoms/friends";
-import { SetterOrUpdater, useRecoilState } from "recoil";
+import {
+  selectedFriendIdsSelector,
+  selectedFriendsAtom,
+} from "@/atoms/friends";
+import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil";
 import DeletableFriendItem from "../friends/DeletableFriendItem";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import * as lighty from "lighty-type";
@@ -22,6 +25,7 @@ export default function AddFriendsSlider({
   const [friends, setFriends] = useRecoilState<lighty.User[] | null>(
     selectedFriendsAtom
   );
+  const selectedFriendIds = useRecoilValue(selectedFriendIdsSelector);
   const onClickDelete = (friend: lighty.User) => {
     const changedFriends = friends?.filter(
       (friendItem) => friendItem.id !== friend.id
@@ -32,21 +36,18 @@ export default function AddFriendsSlider({
   };
 
   useEffect(() => {
-    const friendIds = friends
-      ? friends.map((friendItem) => friendItem.id)
-      : undefined;
     if (type === "group" && setGroup) {
       setGroup((prev: CreateGroupRequest) => ({
         ...prev,
-        friendIds: friendIds ? friendIds : null,
+        friendIds: selectedFriendIds,
       }));
     } else if (type === "gathering" && setGathering) {
       setGathering((prev: lighty.CreateGatheringRequest) => ({
         ...prev,
-        friendIds: friendIds ? friendIds : null,
+        friendIds: selectedFriendIds,
       }));
     }
-  }, [friends]);
+  }, [selectedFriendIds, setGathering, setGroup, type]);
 
   return (
     <div className="w-full">

@@ -6,20 +6,27 @@ import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import { useQueryClient } from "@tanstack/react-query";
 import useMakeFriendsFeed from "./hooks/useMakeFriendsFeed";
 import { useRecoilValue } from "recoil";
-import { friendsToShareAtom } from "@/atoms/record";
+import { friendsToShareIdsSelector } from "@/atoms/record";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 
 export default function CreatingFeedNoGathering() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const friendsToShare = useRecoilValue(friendsToShareAtom);
+  const friendIdsToShare = useRecoilValue(friendsToShareIdsSelector);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
   const [feedInfo, setFeedInfo] = useState<lighty.CreateFriendFeedRequest>({
-    friendIds: friendsToShare.map((friend) => friend.id),
+    friendIds: friendIdsToShare,
     imageUrls: [],
     content: "",
   });
+
+  useEffect(() => {
+    setFeedInfo((prev) => ({
+      ...prev,
+      friendIds: friendIdsToShare,
+    }));
+  }, [friendIdsToShare]);
 
   const handleFeedSuccess = async () => {
     router.replace("/feed");

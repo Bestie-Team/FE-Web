@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 import * as lighty from "lighty-type";
 
 export const friendsSelectedTabAtom = atom<"1" | "2">({
@@ -9,6 +9,19 @@ export const friendsSelectedTabAtom = atom<"1" | "2">({
 export const selectedFriendsAtom = atom<lighty.User[] | null>({
   key: "friends/selectedFriends",
   default: null,
+});
+
+export const selectedFriendIdsSelector = selector<string[] | null>({
+  key: "friends/selectedIds",
+  get: ({ get }) => {
+    const selectedFriends = get(selectedFriendsAtom);
+
+    if (!selectedFriends || selectedFriends.length === 0) {
+      return null;
+    }
+
+    return selectedFriends.map((friend) => friend.id);
+  },
 });
 
 export const userSearchAtom = atom<string>({

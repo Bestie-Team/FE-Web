@@ -126,7 +126,7 @@ export default function GroupEditPage() {
             <span>그룹 친구</span>
           </Flex>
           <Spacing size={8} />
-          <AddOnlyFriendsSlider setStep={setStep} groupMembers={groupMembers} />
+          <AddOnlyFriendsSlider setStep={setStep} />
         </form>
         <FixedBottomButton
           label={"수정 완료"}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useRecoilValue } from "recoil";
 import useDeleteGroup from "@/components/groups/hooks/useDeleteGroup";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -16,7 +16,7 @@ import GroupOptions from "@/components/groups/GroupOptions";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import GroupDetailContainer from "@/components/groups/GroupDetailContainer";
 import dynamic from "next/dynamic";
-import { selectedFriendsAtom } from "@/atoms/friends";
+import { selectedFriendsAtom, selectedFriendIdsSelector } from "@/atoms/friends";
 import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
@@ -49,8 +49,8 @@ export default function GroupDetailPage() {
   const [reportModalOpen, setReportModalOpen] = useRecoilState(reportModalAtom);
   const [reportContent, setReportContent] = useRecoilState(reportInfoAtom);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [selectedFriends, setSelectedFriends] =
-    useRecoilState(selectedFriendsAtom);
+  const [, setSelectedFriends] = useRecoilState(selectedFriendsAtom);
+  const selectedFriendIds = useRecoilValue(selectedFriendIdsSelector);
   const reset = useResetRecoilState(selectedFriendsAtom);
   const { data: groupDetail } = useGroupDetail(id ? id : "");
 
@@ -98,10 +98,7 @@ export default function GroupDetailPage() {
 
   const { mutate: addMember } = useAddGroupMember({
     groupId: id || "",
-    friendIds:
-      selectedFriends && selectedFriends.length > 0
-        ? selectedFriends?.map((friend) => friend.id)
-        : null,
+    friendIds: selectedFriendIds,
     onSuccess: addMemberSuccessHandler,
   });
 
