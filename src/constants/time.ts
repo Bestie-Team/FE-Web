@@ -26,13 +26,13 @@ export const TIMES = [
 ];
 
 export const minDate = () => {
-  const date = new Date("2025-01-01");
+  const date = new Date("2025-12-30");
   date.setTime(date.getTime() - 9 * 60 * 60 * 1000);
   return date.toISOString();
 };
 
 export const maxDate = () => {
-  const date = new Date("2026-01-01");
+  const date = new Date("2027-01-01");
   date.setTime(date.getTime() - 9 * 60 * 60 * 1000);
   return date.toISOString();
 };
