@@ -2,11 +2,12 @@ import Spacing from "@/components/shared/Spacing";
 import { FeedList } from "@/components/feeds/FeedPage/FeedList";
 import { NoFeedHidden } from "@/components/feeds/NoFeed";
 import LoadMoreTrigger from "../shared/LoadMoreTrigger";
+import type { Feed } from "@/models/feed";
 
 interface Props {
   hiddenFeed: any[];
   isFetching: boolean;
-  onFeedSelect: (feedId: string) => void;
+  onFeedSelect: (feed: Feed) => void;
   loadMoreRef: (node?: Element | null) => void;
   scrollContainerRef: React.RefObject<HTMLDivElement>;
 }

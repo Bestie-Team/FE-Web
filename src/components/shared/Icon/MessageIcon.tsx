@@ -1,20 +1,16 @@
 export default function MessageIcon({
   width,
   height,
-  onClick,
 }: {
   width?: string;
   height?: string;
-  onClick?: () => void;
 }) {
   return (
     <svg
-      style={{
-        cursor: "pointer",
-      }}
       width={width ?? "16"}
       height={height ?? "16"}
-      onClick={onClick}
+      aria-hidden="true"
+      focusable="false"
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

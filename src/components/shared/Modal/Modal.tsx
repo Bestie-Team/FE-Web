@@ -22,9 +22,18 @@ export default function Modal({
   right,
   onClose,
 }: ModalProps) {
+  const ariaLabel =
+    typeof title === "string" && title.trim().length > 0 ? title : "Dialog";
   return (
     <ModalWrapper>
-      <Flex align="center" direction="column" className={styles.modalContainer}>
+      <Flex
+        align="center"
+        direction="column"
+        role="dialog"
+        aria-modal="true"
+        aria-label={ariaLabel}
+        className={styles.modalContainer}
+      >
         <div className="text-T3 text-center">{title}</div>
         <Spacing size={12} />
         <div className={styles.content}>{content}</div>

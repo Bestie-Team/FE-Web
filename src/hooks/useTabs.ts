@@ -4,7 +4,7 @@ import {
   invitationTabState,
 } from "@/atoms/tab";
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { Swiper as SwiperType } from "swiper";
 
@@ -26,19 +26,25 @@ export const useTabs = () => {
 
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const handleSlideChange = (index: number) => {
-    setSelectedTab(String(index + 1) as "1" | "2");
-  };
+  const handleSlideChange = useCallback(
+    (index: number) => {
+      setSelectedTab(String(index + 1) as "1" | "2");
+    },
+    [setSelectedTab]
+  );
 
-  const handleTabClick = (tabName: "1" | "2") => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(Number(tabName) - 1);
-    }
+  const handleTabClick = useCallback(
+    (tabName: "1" | "2") => {
+      if (swiperRef.current) {
+        swiperRef.current.slideTo(Number(tabName) - 1);
+      }
 
-    setTimeout(() => {
-      setSelectedTab(tabName);
-    }, 300);
-  };
+      setTimeout(() => {
+        setSelectedTab(tabName);
+      }, 300);
+    },
+    [setSelectedTab]
+  );
 
   return {
     selectedTab,

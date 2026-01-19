@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useCallback, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import PullToRefresh from "react-simple-pull-to-refresh";
+import dynamic from "next/dynamic";
 import FeedForDisplay from "@/components/feeds/FeedForDisplay";
 import NoFeed from "@/components/feeds/NoFeed";
 import DotSpinnerSmall from "@/components/shared/Spinner/DotSpinnerSmall";
@@ -8,6 +10,11 @@ import Spacing from "@/components/shared/Spacing";
 import { FeedList } from "./FeedList";
 import LoadMoreTrigger from "../../shared/LoadMoreTrigger";
 import type { Feed } from "@/models/feed";
+
+const PullToRefresh = dynamic(
+  () => import("react-simple-pull-to-refresh").then((mod) => mod.default),
+  { ssr: false }
+);
 
 interface FeedSwiperProps {
   feedAll?: Feed[];
@@ -18,7 +25,7 @@ interface FeedSwiperProps {
   handleMine: () => Promise<boolean>;
   loadMoreRef: (node?: Element | null) => void;
   loadMoreMineRef: (node?: Element | null) => void;
-  handleFeedSelect: (id: string, feed: Feed) => void;
+  handleFeedSelect: (feed: Feed) => void;
   userInfo: any;
   swiperRef: React.MutableRefObject<any>;
   selectedTab: "1" | "2";
@@ -39,12 +46,12 @@ interface FeedSlideProps {
   loadMoreRef: (node?: Element | null) => void;
   scrollRef: React.RefObject<HTMLDivElement>;
   userInfo: any;
-  handleFeedSelect: (id: string, feed: Feed) => void;
+  handleFeedSelect: (feed: Feed) => void;
   isMine?: boolean;
   emptyComponent?: React.ReactNode;
 }
 
-function FeedSlide({
+const FeedSlide = React.memo(function FeedSlide({
   feeds,
   isFetching,
   onRefresh,
@@ -83,9 +90,11 @@ function FeedSlide({
       </div>
     </PullToRefresh>
   );
-}
+});
 
-export function FeedSwiper({
+FeedSlide.displayName = "FeedSlide";
+
+const FeedSwiperComponent = ({
   feedAll,
   feedMine,
   isFetching,
@@ -101,15 +110,27 @@ export function FeedSwiper({
   setSelectedTab,
   scrollContainerRef,
   scrollContainerRefMine,
-}: FeedSwiperProps) {
+}: FeedSwiperProps) => {
+  const emptyAll = useMemo(() => <FeedForDisplay />, []);
+  const emptyMine = useMemo(() => <NoFeed />, []);
+  const handleSwiper = useCallback(
+    (swiper: React.MutableRefObject<any>["current"]) => {
+      swiperRef.current = swiper;
+    },
+    [swiperRef]
+  );
+  const handleSlideChange = useCallback(
+    (swiper: { activeIndex: number }) => {
+      const index = swiper.activeIndex;
+      const tab = (index + 1).toString() as "1" | "2";
+      if (selectedTab !== tab) setSelectedTab(tab);
+    },
+    [selectedTab, setSelectedTab]
+  );
   return (
     <Swiper
-      onSwiper={(swiper) => (swiperRef.current = swiper)}
-      onSlideChange={(swiper) => {
-        const index = swiper.activeIndex;
-        const tab = (index + 1).toString() as "1" | "2";
-        if (selectedTab !== tab) setSelectedTab(tab);
-      }}
+      onSwiper={handleSwiper}
+      onSlideChange={handleSlideChange}
       slidesPerView={1}
       spaceBetween={2}
       direction="horizontal"
@@ -124,7 +145,7 @@ export function FeedSwiper({
           scrollRef={scrollContainerRef}
           userInfo={userInfo}
           handleFeedSelect={handleFeedSelect}
-          emptyComponent={<FeedForDisplay />}
+          emptyComponent={emptyAll}
         />
       </SwiperSlide>
 
@@ -138,12 +159,14 @@ export function FeedSwiper({
           userInfo={userInfo}
           handleFeedSelect={handleFeedSelect}
           isMine
-          emptyComponent={<NoFeed />}
+          emptyComponent={emptyMine}
         />
       </SwiperSlide>
     </Swiper>
   );
-}
+};
+
+export const FeedSwiper = React.memo(FeedSwiperComponent);
 
 function RefreshingUI() {
   return (

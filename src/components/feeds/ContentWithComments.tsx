@@ -17,20 +17,18 @@ export default function ContentWithComments({
       <div className={styles.content}>{content}</div>
       <Spacing size={4} />
       <Flex align="center">
-        <MessageIcon
+        <button
+          type="button"
+          aria-label={`댓글 ${commentCount}개 보기`}
           onClick={() => {
             setBottomSheetState(true);
           }}
-        />
-        <Spacing direction="horizontal" size={2} />
-        <span
-          onClick={() => {
-            setBottomSheetState(true);
-          }}
-          className="text-B4 text-grayscale-600 cursor-pointer"
+          className="flex items-center bg-transparent border-0 p-0 cursor-pointer"
         >
-          {commentCount}
-        </span>
+          <MessageIcon />
+          <Spacing direction="horizontal" size={2} />
+          <span className="text-B4 text-grayscale-600">{commentCount}</span>
+        </button>
       </Flex>
     </div>
   );

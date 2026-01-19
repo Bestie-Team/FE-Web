@@ -5,7 +5,7 @@ import Flex from "../Flex";
 
 export type PanelLength = "short" | "medium" | "long" | "longer";
 
-export default function Panel({
+function Panel({
   title1,
   title2,
   long,
@@ -50,6 +50,8 @@ export default function Panel({
     </Flex>
   );
 }
+
+export default React.memo(Panel);
 
 const tabContainerStyle = "max-w-[430px] w-full flex items-center";
 const tabWrapperStyle = "relative flex gap-4";

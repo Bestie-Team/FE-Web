@@ -51,17 +51,17 @@ export function useFriendsBox() {
   /**친구 정보 컨테이너 */
   const fBtnRef = useRef<HTMLButtonElement>(null);
 
-  const handleClickOutside = (event: globalThis.MouseEvent) => {
+  const handleClickOutside = useCallback((event: globalThis.MouseEvent) => {
     const target = event.target as Node | null;
     if (fBtnRef.current?.contains(target)) return;
     if (friendsRef.current && !friendsRef.current.contains(target)) {
       setOpenedBoxId(null);
     }
-  };
+  }, []);
 
-  const closeBox = () => {
+  const closeBox = useCallback(() => {
     setOpenedBoxId(null);
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside, {
@@ -72,9 +72,9 @@ export function useFriendsBox() {
     };
   }, []);
 
-  const toggleBox = (boxId: string) => {
-    setOpenedBoxId(openedBoxId === boxId ? null : boxId);
-  };
+  const toggleBox = useCallback((boxId: string) => {
+    setOpenedBoxId((prevId) => (prevId === boxId ? null : boxId));
+  }, []);
 
   return { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox };
 }
@@ -84,13 +84,13 @@ export function useDropdownWithNoId() {
   const ref = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  const handleClickOutside = (event: globalThis.MouseEvent) => {
+  const handleClickOutside = useCallback((event: globalThis.MouseEvent) => {
     const target = event.target as Node | null;
     if (btnRef.current?.contains(target)) return;
     if (ref.current && !ref.current.contains(target)) {
       setOpened(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside, {
@@ -101,9 +101,9 @@ export function useDropdownWithNoId() {
     };
   }, []);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = useCallback(() => {
     setOpened((prev) => !prev);
-  };
+  }, []);
 
   return { opened, ref, btnRef, toggleDropdown };
 }

@@ -80,8 +80,8 @@ export default function FeedPage() {
   useIntersectionLoadMore({ inView, inViewMine, loadMore, loadMoreMine });
 
   const handleFeedSelect = useCallback(
-    (feedId: string, feed: Feed) => {
-      setFeedId(feedId);
+    (feed: Feed) => {
+      setFeedId(feed.id);
       setFeedInfo(feed);
     },
     [setFeedId, setFeedInfo]
@@ -102,12 +102,34 @@ export default function FeedPage() {
       setRootElement_m(scrollContainerRef_m.current);
   }, []);
 
+  useEffect(() => {
+    const onNavReselect = (event: Event) => {
+      const customEvent = event as CustomEvent<{ href?: string }>;
+      if (customEvent.detail?.href !== "/feed") return;
+
+      const targetRef =
+        selectedTab === "1" ? scrollContainerRef : scrollContainerRef_m;
+      targetRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.addEventListener(
+      "lighty:navigation-reselect",
+      onNavReselect as EventListener
+    );
+    return () => {
+      window.removeEventListener(
+        "lighty:navigation-reselect",
+        onNavReselect as EventListener
+      );
+    };
+  }, [selectedTab]);
+
   return (
     <div className="h-dvh pb-safe-bottom">
       <ScrollAwareHeader
         visible={visible}
-        mailCount={mailCount}
-        isNewNotification={isNewNotification}
+        mailCount={mailCount.length}
+        isNewNotification={isNewNotification.length}
         selectedTab={selectedTab}
         handleTabClick={handleTabClick}
       />

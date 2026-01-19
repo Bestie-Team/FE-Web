@@ -1,3 +1,4 @@
+import React from "react";
 import clsx from "clsx";
 import { DotIcon } from "../Icon/DotIcon";
 
@@ -8,7 +9,7 @@ type Props = {
   current: boolean;
   fresh?: boolean | "never"; // 빨간아이콘
 };
-export default function TabButton({
+function TabButton({
   title,
   current,
   onMouseDown,
@@ -29,5 +30,7 @@ export default function TabButton({
     </div>
   );
 }
+
+export default React.memo(TabButton);
 
 const textStyle = "h-[39px] pt-[10px] pb-2 flex items-center text-T4";

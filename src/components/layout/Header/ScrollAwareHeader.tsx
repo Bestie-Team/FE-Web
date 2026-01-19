@@ -1,11 +1,12 @@
+"use client";
+
 import { DotWithNumberIcon } from "../../shared/Icon/DotIcon";
 import MailIcon from "../../shared/Icon/MailIcon";
 import NoticeIcon from "../../shared/Icon/NoticeIcon";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import clsx from "clsx";
 import Panel from "../../shared/Panel/Panel";
-import type { Notification } from "lighty-type";
 import Header from ".";
 
 interface ScrollAwareHeaderProps extends FeedHeaderProps {
@@ -20,10 +21,10 @@ interface HeaderProps {
 
 interface FeedHeaderProps {
   className?: string;
-  mailCount: Notification[];
+  mailCount: number;
   selectedTab: "1" | "2";
   handleTabClick: (tab: "1" | "2") => void;
-  isNewNotification: Notification[];
+  isNewNotification: number;
 }
 
 const IconButton = ({
@@ -57,31 +58,39 @@ const FeedHeader = React.memo(
     isNewNotification,
   }: FeedHeaderProps) => {
     const router = useRouter();
+    const handleInvitationClick = useCallback(() => {
+      router.push("/invitation");
+    }, [router]);
+    const handleNoticeClick = useCallback(() => {
+      router.push("/notice");
+    }, [router]);
+    const headerIcon = useMemo(
+      () => (
+        <div className="flex items-center gap-1">
+          <IconButton onClick={handleInvitationClick}>
+            <MailIcon
+              className="relative"
+              width="24"
+              height="24"
+              color="#0A0A0A"
+            />
+            {mailCount >= 1 && <DotWithNumberIcon count={mailCount} />}
+          </IconButton>
+          <IconButton onClick={handleNoticeClick}>
+            <NoticeIcon color="#0A0A0A" />
+            {isNewNotification >= 1 && (
+              <DotWithNumberIcon count={isNewNotification} />
+            )}
+          </IconButton>
+        </div>
+      ),
+      [handleInvitationClick, handleNoticeClick, mailCount, isNewNotification]
+    );
     return (
       <Header
         className={className}
         headerLabel="추억 피드"
-        icon={
-          <div className="flex items-center gap-1">
-            <IconButton onClick={() => router.push("/invitation")}>
-              <MailIcon
-                className="relative"
-                width="24"
-                height="24"
-                color="#0A0A0A"
-              />
-              {mailCount.length >= 1 && (
-                <DotWithNumberIcon count={mailCount.length} />
-              )}
-            </IconButton>
-            <IconButton onClick={() => router.push("/notice")}>
-              <NoticeIcon color="#0A0A0A" />
-              {isNewNotification.length >= 1 && (
-                <DotWithNumberIcon count={isNewNotification.length} />
-              )}
-            </IconButton>
-          </div>
-        }
+        icon={headerIcon}
       >
         <div id="filter">
           <Panel

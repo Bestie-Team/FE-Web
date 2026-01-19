@@ -1,7 +1,6 @@
 import React, {
   Dispatch,
   Fragment,
-  MouseEvent,
   SetStateAction,
   useCallback,
   useState,
@@ -41,17 +40,14 @@ export default function TermsBottomSheet({
     (isChecked) => isChecked
   );
 
-  const handleAllCheck = useCallback(
-    (_: MouseEvent<HTMLElement>, checked: boolean) => {
-      setTermsAgreements((prevTerms) => {
-        return Object.keys(prevTerms).reduce(
-          (prev, key) => ({ ...prev, [key]: checked }),
-          {}
-        );
-      });
-    },
-    []
-  );
+  const handleAllCheck = useCallback((checked: boolean) => {
+    setTermsAgreements((prevTerms) => {
+      return Object.keys(prevTerms).reduce(
+        (prev, key) => ({ ...prev, [key]: checked }),
+        {}
+      );
+    });
+  }, []);
 
   const openTermsPage = () => {
     if (isReactNativeWebView) {
@@ -66,43 +62,60 @@ export default function TermsBottomSheet({
   };
 
   return (
-    <BottomSheetWrapper onClose={onClose} open={open}>
+    <BottomSheetWrapper onClose={onClose} open={open} ariaLabel="약관 동의">
       <Flex direction="column" className="p-6 pt-2 pb-8">
         <Flex direction="column" className="text-T3">
           <span>서비스 이용을 위해</span>
           <Spacing size={7} />
           <span>약관 동의를 진행해 주세요</span>
           <Spacing size={24} />
-          <div
-            onClick={(e) => handleAllCheck(e, !isAllChecked)}
-            className={
-              "text-B3 p-4 rounded-full border flex items-center border-[#D8D8D8]"
-            }
-          >
+          <label className="text-B3 p-4 rounded-full border flex items-center border-[#D8D8D8] cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isAllChecked}
+              onChange={(e) => handleAllCheck(e.target.checked)}
+              className="sr-only"
+            />
             <CheckInCircleIcon width="20" height="20" checked={isAllChecked} />
             <Spacing direction="horizontal" size={12} />
             <span>전체 동의</span>
-          </div>
+          </label>
           <Spacing size={24} />
           {약관목록.map(({ title, id }, idx) => {
+            const isExpandable = id === "03";
+            const detailLabel = isExpandable
+              ? rotated[id]
+                ? `${title} 닫기`
+                : `${title} 열기`
+              : `${title} 자세히 보기`;
             return (
               <Fragment key={id}>
                 <li className={styles.list}>
-                  <CheckInCircleIcon
-                    width="20"
-                    height="20"
-                    checked={termsAgreements[id]}
-                    onClick={() => {
-                      setTermsAgreements((prevTerms) => ({
-                        ...prevTerms,
-                        [id]: !termsAgreements[id],
-                      }));
-                    }}
-                  />
-                  <Spacing direction="horizontal" size={12} />
-                  <span className="flex-grow">{title}</span>
-                  <NarrowRightIcon
-                    checked={termsAgreements[id]}
+                  <label className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      checked={termsAgreements[id]}
+                      onChange={(e) => {
+                        setTermsAgreements((prevTerms) => ({
+                          ...prevTerms,
+                          [id]: e.target.checked,
+                        }));
+                      }}
+                      className="sr-only"
+                    />
+                    <CheckInCircleIcon
+                      width="20"
+                      height="20"
+                      checked={termsAgreements[id]}
+                    />
+                    <Spacing direction="horizontal" size={12} />
+                    <span className="flex-grow">{title}</span>
+                  </label>
+                  <button
+                    type="button"
+                    aria-label={detailLabel}
+                    aria-expanded={isExpandable ? rotated[id] : undefined}
+                    className={styles.iconButton}
                     onClick={() => {
                       if (id == "03") {
                         setRotated((prev) => ({
@@ -115,8 +128,12 @@ export default function TermsBottomSheet({
                         openPrivacyPolicyPage();
                       }
                     }}
-                    rotate={rotated[id]}
-                  />
+                  >
+                    <NarrowRightIcon
+                      checked={termsAgreements[id]}
+                      rotate={rotated[id]}
+                    />
+                  </button>
                 </li>
                 {id === "03" && rotated[id] && contentsOfTerms[idx].contents}
                 {idx < 약관목록.length - 1 ? <Spacing size={20} /> : null}
@@ -144,5 +161,7 @@ const styles = {
   button:
     "rounded-full text-[14px] font-[600] py-[18px] w-full text-base-white",
   buttonWrapper: "pt-3 pb-[10px] px-5",
-  list: "text-B3 flex items-center px-3 cursor-pointer",
+  list: "text-B3 flex items-center px-3",
+  checkboxLabel: "flex items-center flex-grow cursor-pointer",
+  iconButton: "p-1 bg-transparent border-0",
 };

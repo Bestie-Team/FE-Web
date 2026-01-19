@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import { useCallback } from "react";
+import type { Feed } from "@/models/feed";
 
 export default function useHiddenFeed() {
   const queryClient = useQueryClient();
@@ -23,9 +24,9 @@ export default function useHiddenFeed() {
   const displaySuccessHandler = async (message: string) => {
     lightyToast.success(message);
     await Promise.all([
-      await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
-      await queryClient.invalidateQueries({ queryKey: ["get/feeds/all"] }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
+      queryClient.invalidateQueries({ queryKey: ["get/feeds/all"] }),
+      queryClient.invalidateQueries({
         queryKey: ["get/feeds/hidden"],
       }),
     ]);
@@ -59,8 +60,8 @@ export default function useHiddenFeed() {
   });
 
   const handleFeedSelect = useCallback(
-    (feedId: string) => {
-      setFeedId(feedId);
+    (feed: Feed) => {
+      setFeedId(feed.id);
     },
     [setFeedId]
   );

@@ -2,18 +2,17 @@ export default function NarrowRightIcon({
   width,
   height,
   checked,
-  onClick,
   rotate,
 }: {
   width?: string;
   height?: string;
   checked?: boolean;
-  onClick?: () => void;
   rotate?: boolean;
 }) {
   return (
     <svg
-      onClick={onClick}
+      aria-hidden="true"
+      focusable="false"
       width={width ?? "16"}
       height={height ?? "16"}
       style={{

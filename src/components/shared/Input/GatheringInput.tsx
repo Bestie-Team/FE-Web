@@ -1,9 +1,11 @@
+"use client";
+
 import clsx from "clsx";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import Spacing from "../Spacing";
 import Flex from "../Flex";
-import DaumPostcodeEmbed from "react-daum-postcode";
+import dynamic from "next/dynamic";
 import { SetterOrUpdater } from "recoil";
 import SearchIcon from "../Icon/SearchIcon";
 import PencilIcon from "../Icon/PencilIcon";
@@ -11,6 +13,18 @@ import Button from "../Button/Button";
 import Input from "./Input";
 import BottomSheetWrapper from "../BottomDrawer/shared/BottomSheetWrapper";
 import ActionItem from "../BottomDrawer/ActionItem";
+
+const DaumPostcodeEmbed = dynamic(
+  () => import("react-daum-postcode").then((mod) => mod.default),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="px-6 py-10 text-center text-B3 text-grayscale-500">
+        Loading...
+      </div>
+    ),
+  }
+);
 
 interface GatheringInputProps {
   type: "date" | "address" | "editAddress";
@@ -38,6 +52,14 @@ export default function GatheringInput({
   const handleBlur = () => setIsFocused(false);
   const [writtenAddress, setWrittenAddress] = useState("");
   const [addressSearch, setAddressSearch] = useState<number>(0);
+  const handleOpen = () => {
+    if (type === "address" || type === "editAddress") {
+      setAddressSearch(1);
+    }
+    if (onClick) {
+      onClick();
+    }
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleComplete = (data: any) => {
@@ -77,16 +99,15 @@ export default function GatheringInput({
           <Spacing size={8} />
         </>
       )}
-      <div
-        onClick={() => {
-          if (type === "address" || type === "editAddress") {
-            setAddressSearch(1);
-          }
-          if (onClick) {
-            onClick();
-          }
-        }}
-        tabIndex={0}
+      <button
+        type="button"
+        onClick={handleOpen}
+        aria-haspopup="dialog"
+        aria-expanded={
+          type === "address" || type === "editAddress"
+            ? addressSearch > 0
+            : undefined
+        }
         onFocus={handleFocus}
         onBlur={handleBlur}
         className={clsx(
@@ -98,7 +119,7 @@ export default function GatheringInput({
         {...props}
       >
         {value}
-      </div>
+      </button>
       {addressSearch > 0 && (
         <BottomSheetWrapper
           onClose={() => {

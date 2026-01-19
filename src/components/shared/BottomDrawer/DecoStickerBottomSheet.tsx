@@ -45,7 +45,7 @@ export default function DecoStickerBottomSheet({
     <BottomSheetWrapper bar onClose={onClose} open={open} bright={true}>
       <Flex direction="column" className="p-6 pt-1" align="center">
         <div>
-          <Flex role="tablist" aria-label="스티커 종류">
+          <div role="tablist" aria-label="스티커 종류" className="flex">
             {decoKinds.map((kind) => (
               <button
                 type="button"
@@ -64,7 +64,7 @@ export default function DecoStickerBottomSheet({
                 {kind}
               </button>
             ))}
-          </Flex>
+          </div>
           <Spacing size={16} />
           <div className={styles.wrapper}>
             {!!selectedStickers

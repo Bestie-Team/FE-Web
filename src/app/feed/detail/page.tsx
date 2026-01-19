@@ -6,6 +6,7 @@ import type { User } from "lighty-type";
 import Flex from "@/components/shared/Flex";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import FeedCard from "@/components/feeds/FeedCard";
+import type { Feed } from "@/models/feed";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
 import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu";
@@ -56,8 +57,8 @@ export default function FeedDetailPage() {
   const { deleteFeed, deleteComment, hideFeed, report } = useFeed();
 
   const handleFeedSelect = useCallback(
-    (feedId: string) => {
-      setSelectedFeedId(feedId);
+    (feed: Feed) => {
+      setSelectedFeedId(feed.id);
     },
     [setSelectedFeedId]
   );
@@ -86,11 +87,7 @@ export default function FeedDetailPage() {
             <div key={id} className="relative">
               <FeedCard
                 feed={selectedFeed}
-                onClick={() => {
-                  if (id) {
-                    handleFeedSelect(id);
-                  }
-                }}
+                onSelect={handleFeedSelect}
               >
                 <InfoBar
                   ref={fBtnRef}

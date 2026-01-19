@@ -1,4 +1,4 @@
-import type React from "react";
+import React, { useCallback } from "react";
 // import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import FeedCard from "@/components/feeds/FeedCard";
@@ -16,12 +16,12 @@ import { Feed } from "@/models/feed";
 interface FeedListProps {
   feeds: any[];
   userInfo: false | UserInfoMini | null;
-  onFeedSelect: (feedId: string, feed: Feed) => void;
+  onFeedSelect: (_: Feed) => void;
   isFetching: boolean;
   isMine?: boolean;
 }
 
-export const FeedList: React.FC<FeedListProps> = ({
+const FeedListComponent: React.FC<FeedListProps> = ({
   feeds,
   userInfo,
   onFeedSelect,
@@ -41,32 +41,43 @@ export const FeedList: React.FC<FeedListProps> = ({
   const { openedBoxId, friendsRef, fBtnRef, toggleBox, closeBox } =
     useFriendsBox();
 
+  const handleListClick = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      closeDropdown(e);
+      closeBox();
+    },
+    [closeDropdown, closeBox]
+  );
+
+  const handleToggleBox = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, feedId: string) => {
+      e.stopPropagation();
+      toggleBox(feedId);
+    },
+    [toggleBox]
+  );
+
+  const handleOpenMenu = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>, feedId: string) => {
+      e.stopPropagation();
+      toggleDropdown(feedId);
+      setSelectedFeedId(feedId);
+    },
+    [setSelectedFeedId, toggleDropdown]
+  );
+
   return (
     <div
       className="mb-8"
-      onClick={(e) => {
-        closeDropdown(e);
-        closeBox();
-      }}
-      onMouseDown={(e) => {
-        closeDropdown(e);
-        closeBox();
-      }}
+      onClick={handleListClick}
+      onMouseDown={handleListClick}
     >
       {feeds.map((feed) => (
         <div key={feed.id} className="relative">
-          <FeedCard
-            feed={feed}
-            onClick={() => {
-              onFeedSelect(feed.id, feed);
-            }}
-          >
+          <FeedCard feed={feed} onSelect={onFeedSelect}>
             <InfoBar
               ref={fBtnRef}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleBox(feed.id);
-              }}
+              onClick={(e) => handleToggleBox(e, feed.id)}
               withMembers={feed.withMembers}
               feed={feed}
             />
@@ -90,11 +101,7 @@ export const FeedList: React.FC<FeedListProps> = ({
               aria-label="피드 옵션"
               aria-haspopup="menu"
               aria-expanded={openedDropdownId === feed.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleDropdown(feed.id);
-                setSelectedFeedId(feed.id);
-              }}
+              onClick={(e) => handleOpenMenu(e, feed.id)}
               className="flex justify-center items-center bg-transparent border-0 p-0"
             >
               <OptionsSelectIcon />
@@ -135,3 +142,5 @@ export const FeedList: React.FC<FeedListProps> = ({
     </div>
   );
 };
+
+export const FeedList = React.memo(FeedListComponent);

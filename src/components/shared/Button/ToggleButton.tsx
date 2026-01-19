@@ -3,28 +3,35 @@ import clsx from "clsx";
 const ToggleButton = ({
   isOn,
   setIsOn,
+  ariaLabel = "Toggle",
 }: {
   isOn: boolean;
   setIsOn: React.Dispatch<React.SetStateAction<boolean>>;
+  ariaLabel?: string;
 }) => {
   return (
-    <div
+    <button
+      type="button"
+      role="switch"
+      aria-checked={isOn}
+      aria-label={ariaLabel}
+      onClick={() => setIsOn((prev) => !prev)}
       className={clsx(
         styles.tabWrapper,
         isOn ? "bg-grayscale-800" : "bg-grayscale-50"
       )}
     >
-      <div
+      <span
+        aria-hidden="true"
         style={{
           boxShadow: "0px 3px 8px 0px #00000026",
         }}
-        onClick={() => setIsOn((prev) => !prev)}
         className={clsx(
           styles.button,
           isOn === true ? "translate-x-7" : "translate-x-0"
         )}
       />
-    </div>
+    </button>
   );
 };
 

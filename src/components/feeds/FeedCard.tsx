@@ -1,23 +1,37 @@
-import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
 import { Feed } from "@/models/feed";
-import React from "react";
+import React, { useCallback } from "react";
 
 interface FeedCardProps {
   feed: Feed;
   children: React.ReactNode;
-  onClick: () => void;
+  onSelect: (feed: Feed) => void;
 }
 
-export const FeedCard = ({ feed, children, onClick }: FeedCardProps) => {
+export const FeedCard = ({ feed, children, onSelect }: FeedCardProps) => {
+  const handleSelect = useCallback(() => {
+    onSelect(feed);
+  }, [feed, onSelect]);
+
   if (!feed?.writer) {
     return null;
   }
 
   return (
-    <Flex direction="column" className="py-3" onClick={onClick}>
+    <div
+      role="button"
+      tabIndex={0}
+      className="flex flex-col py-3"
+      onClick={handleSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleSelect();
+        }
+      }}
+    >
       {children}
       <Spacing size={12} />
       <PhotoSwiper feed={feed} />
@@ -26,7 +40,7 @@ export const FeedCard = ({ feed, children, onClick }: FeedCardProps) => {
         content={feed.content}
         commentCount={feed.commentCount}
       />
-    </Flex>
+    </div>
   );
 };
 

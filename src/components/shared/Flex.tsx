@@ -1,7 +1,10 @@
 import React, { MouseEvent, TouchEvent } from "react";
 
-interface FlexProps {
-  id?: string;
+interface FlexProps
+  extends Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    "onClick" | "onMouseDown" | "onTouchStart"
+  > {
   align?: "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
   justify?:
     | "flex-start"
@@ -11,27 +14,24 @@ interface FlexProps {
     | "space-around"
     | "space-evenly";
   direction?: "row" | "row-reverse" | "column" | "column-reverse";
-  style?: React.CSSProperties;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
   onMouseDown?: (e: MouseEvent<HTMLDivElement>) => void;
   onTouchStart?: (e: TouchEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
-  className?: string;
   ref?: React.LegacyRef<HTMLDivElement>;
 }
 
 const Flex: React.FC<FlexProps> = ({
-  id,
   align,
   justify,
   direction,
-  className,
   style,
   children,
   onClick,
   onMouseDown,
   onTouchStart,
   ref,
+  ...rest
 }) => {
   const flexStyle: React.CSSProperties = {
     display: "flex",
@@ -43,13 +43,12 @@ const Flex: React.FC<FlexProps> = ({
 
   return (
     <div
-      id={id}
       ref={ref}
       onClick={onClick}
       onMouseDown={onMouseDown}
       onTouchStart={onTouchStart}
       style={flexStyle}
-      className={className}
+      {...rest}
     >
       {children}
     </div>

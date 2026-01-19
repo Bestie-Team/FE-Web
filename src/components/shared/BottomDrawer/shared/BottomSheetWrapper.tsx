@@ -12,6 +12,7 @@ export default function BottomSheetWrapper({
   bright = false,
   isClosing = false,
   handleAnimationEnd,
+  ariaLabel = "Dialog",
 }: {
   open?: boolean;
   onClose: () => void;
@@ -20,6 +21,7 @@ export default function BottomSheetWrapper({
   bright?: boolean;
   isClosing?: boolean;
   handleAnimationEnd?: () => void;
+  ariaLabel?: string;
 }) {
   const handleBackdropClick = () => {
     onClose();
@@ -32,6 +34,10 @@ export default function BottomSheetWrapper({
       <div
         data-testid="bottom-sheet-wrapper"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={ariaLabel}
+        tabIndex={-1}
         className={clsx(
           containerStyle,
           `${isClosing ? "animate-slideOut" : "animate-slideIn"}`
