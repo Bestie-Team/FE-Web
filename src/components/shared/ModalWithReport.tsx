@@ -49,6 +49,7 @@ export default function ModalWithReport(props: Props) {
     hideFeed,
     displayFeed,
     deleteComment,
+    deleteFeedComment: deleteComment,
   };
 
   const closeModal = () => setModalState?.({ type: null, isOpen: false });
