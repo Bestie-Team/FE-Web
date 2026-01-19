@@ -11,6 +11,7 @@ import { SuccessResponse } from "@/models/response";
 import { VerticalInvitationCard } from "./VerticalInvitationCard";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function InvitationModal({
   selectedTab,
@@ -27,7 +28,7 @@ export default function InvitationModal({
     invitationId: selectedInvitation?.id || "",
     onSuccess: async (data: SuccessResponse) => {
       await queryClient.invalidateQueries({
-        queryKey: ["received", "gathering/invitation"],
+        queryKey: queryKeys.gathering.invitations.received(),
       });
       lightyToast.success(data.message);
       onClickClose(false);
@@ -38,7 +39,7 @@ export default function InvitationModal({
     invitationId: selectedInvitation?.id || "",
     onSuccess: async (data: SuccessResponse) => {
       await queryClient.invalidateQueries({
-        queryKey: ["received", "gathering/invitation"],
+        queryKey: queryKeys.gathering.invitations.received(),
       });
       lightyToast.success(data.message);
       onClickClose(false);

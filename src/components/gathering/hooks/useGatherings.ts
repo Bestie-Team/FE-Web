@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 const uuid = uuidv4();
+import { queryKeys } from "@/lib/queryKeys";
 
 /** 첫 커서는 minDate */
 export default function useGatherings({
@@ -16,7 +17,7 @@ export default function useGatherings({
 }) {
   const defaultCursor = { createdAt: maxDate, id: uuid };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["gatherings", minDate, maxDate],
+    queryKey: queryKeys.gathering.list(minDate, maxDate),
     queryFn: ({ pageParam: cursor }) =>
       getGatherings({
         cursor: cursor,

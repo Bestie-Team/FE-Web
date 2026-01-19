@@ -16,6 +16,7 @@ import useMakeGroup from "./hooks/useMakeGroup";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import MakingGroupSuccess from "./MakingGroupSuccess";
 import { selectedFriendsAtom } from "@/atoms/friends";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function NewGroupForm({
   step,
@@ -33,10 +34,10 @@ export default function NewGroupForm({
     setStep(0);
     await Promise.all([
       queryClient.invalidateQueries({
-        queryKey: ["groups"],
+        queryKey: queryKeys.group.list(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
+        queryKey: queryKeys.user.detail(),
       }),
     ]);
     lightyToast.success(data.message);

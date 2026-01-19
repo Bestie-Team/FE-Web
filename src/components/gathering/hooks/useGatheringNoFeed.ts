@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import type * as lighty from "lighty-type";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { queryKeys } from "@/lib/queryKeys";
 
 const uuid = uuidv4();
 
@@ -11,7 +12,7 @@ export default function useGatheringNoFeeds({ limit }: { limit: number }) {
   const cursor = { createdAt: new Date().toISOString(), id: uuid };
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["gatherings/no-feed"],
+    queryKey: queryKeys.gathering.noFeed(),
     queryFn: async ({
       pageParam: cursor,
     }): Promise<lighty.GatheringListResponse> =>

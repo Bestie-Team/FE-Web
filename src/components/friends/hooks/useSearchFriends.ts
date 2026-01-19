@@ -2,6 +2,7 @@ import { getSearchFriends } from "@/remote/friends";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type * as lighty from "lighty-type";
 import { useCallback } from "react";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useSearchFriends({
   search,
@@ -11,7 +12,7 @@ export default function useSearchFriends({
   enabled: boolean;
 }) {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["friends", { search, enabled }],
+    queryKey: queryKeys.friends.search(search),
     queryFn: ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getSearchFriends({ ...pageParam, limit: 10, search });
     },

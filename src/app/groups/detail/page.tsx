@@ -22,6 +22,7 @@ import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import DetailSkeleton from "@/components/shared/Skeleton/DetailSkeleton";
 import useReport from "@/components/report/hooks/useReport";
 import ModalWithReport from "@/components/shared/ModalWithReport";
+import { queryKeys } from "@/lib/queryKeys";
 
 const SelectFriendsContainer = dynamic(
   () => import("@/components/friends/SelectFriendsContainer"),
@@ -58,8 +59,8 @@ export default function GroupDetailPage() {
 
   const handleDeleteSuccess = async () => {
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["groups"] }),
-      queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.group.list() }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.user.detail() }),
     ]);
     lightyToast.success("그룹 나가기/삭제 성공");
     router.replace("/social");
@@ -67,7 +68,7 @@ export default function GroupDetailPage() {
 
   const addMemberSuccessHandler = async (data: { message: string }) => {
     await queryClient.invalidateQueries({
-      queryKey: ["groups"],
+      queryKey: queryKeys.group.list(),
     });
     lightyToast.success(data.message);
     setSelectedFriends([]);
@@ -76,10 +77,10 @@ export default function GroupDetailPage() {
   const reportSuccessHandler = async (data: { message: string }) => {
     await Promise.all([
       queryClient.invalidateQueries({
-        queryKey: ["groups"],
+        queryKey: queryKeys.group.list(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
+        queryKey: queryKeys.user.detail(),
       }),
     ]);
     router.replace("/social?tab=group");

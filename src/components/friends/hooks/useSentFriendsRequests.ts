@@ -1,5 +1,6 @@
 import { getSentFriendRequestsList } from "@/remote/friends";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useSentFriendsRequests({
   name,
@@ -11,7 +12,7 @@ export default function useSentFriendsRequests({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["sent", "friendsRequests"],
+    queryKey: queryKeys.friends.requests.sent({ name, accountId, limit }),
     queryFn: () => {
       return getSentFriendRequestsList({ name, accountId, limit });
     },

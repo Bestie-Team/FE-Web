@@ -1,9 +1,10 @@
 import { getFeedComments } from "@/remote/feed-comment";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useFeedComments({ feedId }: { feedId: string }) {
   return useQuery({
-    queryKey: ["get/comments", { feedId }],
+    queryKey: queryKeys.feed.comments(feedId),
     queryFn: () => getFeedComments({ feedId }),
     refetchOnWindowFocus: "always",
     staleTime: 60 * 1000,

@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 import { useCallback, useMemo } from "react";
 import { FeedResponse } from "@/models/feed";
+import { queryKeys } from "@/lib/queryKeys";
 
 const uuid = uuidv4();
 export default function useFeedMine({
@@ -23,7 +24,7 @@ export default function useFeedMine({
     id: uuid,
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["get/feeds/mine"],
+    queryKey: queryKeys.feed.mine(),
     queryFn: async ({ pageParam: cursor }): Promise<FeedResponse> =>
       getFeedMine({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,

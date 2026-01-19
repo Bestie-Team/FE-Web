@@ -16,6 +16,7 @@ import { lightyToast } from "@/utils/toast";
 import { useAuth } from "../shared/providers/AuthProvider";
 import useAcceptFriendRequest from "./hooks/useAcceptFriendRequest";
 import useRejectFriendRequest from "./hooks/useRejectFriendRequest";
+import { queryKeys } from "@/lib/queryKeys";
 
 interface FriendListItemProps {
   senderId?: string;
@@ -41,10 +42,10 @@ export default function FriendListItem({
   const invalidateFriendQueries = async () => {
     await Promise.all([
       queryClient.invalidateQueries({
-        queryKey: ["sentAndReceived", "friendsRequests", { accountId: "a" }],
+        queryKey: queryKeys.friends.requests.root(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["friends", userInfo?.accountId],
+        queryKey: queryKeys.friends.list(userInfo?.accountId ?? ""),
       }),
     ]);
   };
@@ -61,7 +62,7 @@ export default function FriendListItem({
     senderId,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["sentAndReceived", "friendsRequests", { accountId: "a" }],
+        queryKey: queryKeys.friends.requests.root(),
       }),
   });
 

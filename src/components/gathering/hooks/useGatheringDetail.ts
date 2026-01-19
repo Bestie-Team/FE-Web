@@ -2,11 +2,12 @@ import { getGatheringDetail } from "@/remote/gathering";
 import { lightyToast } from "@/utils/toast";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useGatheringDetail({ id }: { id: string }) {
   const router = useRouter();
   return useQuery({
-    queryKey: ["gathering/detail", id],
+    queryKey: queryKeys.gathering.detail(id),
     queryFn: () => getGatheringDetail({ gatheringId: id }),
     enabled: !!id,
     retry: (failureCount, error) => {

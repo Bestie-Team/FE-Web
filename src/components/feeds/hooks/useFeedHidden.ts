@@ -3,6 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FeedResponse } from "@/models/feed";
+import { queryKeys } from "@/lib/queryKeys";
 
 const uuid = uuidv4();
 
@@ -12,7 +13,7 @@ export default function useFeedHidden({ limit }: { limit: number }) {
     id: uuid,
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["get/feeds/hidden"],
+    queryKey: queryKeys.feed.hidden(),
     queryFn: async ({ pageParam }): Promise<FeedResponse> =>
       getFeedHidden({ cursor: pageParam, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,

@@ -1,5 +1,6 @@
 import { getReceivedFriendRequestsList } from "@/remote/friends";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useReceivedFriendsRequests({
   name,
@@ -11,7 +12,7 @@ export default function useReceivedFriendsRequests({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["received", "friendsRequests", { accountId, limit }],
+    queryKey: queryKeys.friends.requests.received({ name, accountId, limit }),
     queryFn: () => {
       return getReceivedFriendRequestsList({ name, accountId, limit });
     },

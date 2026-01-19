@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { selectedCommentIdAtom } from "@/atoms/comment";
 import { useCallback } from "react";
+import { queryKeys } from "@/lib/queryKeys";
 import type { Feed } from "@/models/feed";
 
 export default function useHiddenFeed() {
@@ -24,10 +25,10 @@ export default function useHiddenFeed() {
   const displaySuccessHandler = async (message: string) => {
     lightyToast.success(message);
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
-      queryClient.invalidateQueries({ queryKey: ["get/feeds/all"] }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.mine() }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.all() }),
       queryClient.invalidateQueries({
-        queryKey: ["get/feeds/hidden"],
+        queryKey: queryKeys.feed.hidden(),
       }),
     ]);
   };
@@ -42,7 +43,7 @@ export default function useHiddenFeed() {
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
       await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId }],
+        queryKey: queryKeys.feed.comments(feedId),
       });
     },
   });
@@ -51,7 +52,7 @@ export default function useHiddenFeed() {
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
       await queryClient.invalidateQueries({
-        queryKey: ["get/comments", { feedId }],
+        queryKey: queryKeys.feed.comments(feedId),
       });
     },
     onError: (e) => {

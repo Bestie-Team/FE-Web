@@ -25,6 +25,7 @@ import {
   handleHideFeedSuccess,
   handleReportSuccess,
 } from "@/utils/feedHandlers";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useFeed() {
   const resetReportInfo = useResetRecoilState(reportInfoAtom);
@@ -98,8 +99,8 @@ export default function useFeed() {
     loadMore,
     loadMoreMine,
 
-    handleRefreshAll: () => handleRefresh(queryClient, ["get/feeds/all"]),
-    handleRefreshMine: () => handleRefresh(queryClient, ["get/feeds/mine"]),
+    handleRefreshAll: () => handleRefresh(queryClient, queryKeys.feed.all()),
+    handleRefreshMine: () => handleRefresh(queryClient, queryKeys.feed.mine()),
 
     deleteFeed,
     deleteComment,

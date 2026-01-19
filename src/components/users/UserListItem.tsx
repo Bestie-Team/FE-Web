@@ -14,6 +14,7 @@ import { lightyToast } from "@/utils/toast";
 import { FriendRequestStatus } from "./UserListContainer";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import OptimizedImage from "../shared/OptimizedImage";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function UserListItem({
   userInfo,
@@ -33,10 +34,10 @@ export default function UserListItem({
     onSuccess: async (data: { message: string }) => {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["users", debouncedSearch],
+          queryKey: queryKeys.user.search(debouncedSearch),
         }),
         queryClient.invalidateQueries({
-          queryKey: ["sentAndReceived", "friendsRequests", { accountId: "a" }],
+          queryKey: queryKeys.friends.requests.root(),
         }),
       ]);
 

@@ -4,6 +4,7 @@ import type * as lighty from "lighty-type";
 import { getGatheringAll } from "@/remote/gathering";
 import { useCallback } from "react";
 import { maxDate, minDate } from "@/constants/time";
+import { queryKeys } from "@/lib/queryKeys";
 
 const uuid = uuidv4();
 
@@ -11,7 +12,7 @@ export default function useGatheringAll() {
   const cursor = { createdAt: minDate(), id: uuid };
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["gatherings/all"],
+    queryKey: queryKeys.gathering.all(),
     queryFn: async ({
       pageParam: cursor,
     }): Promise<lighty.GatheringListResponse> =>

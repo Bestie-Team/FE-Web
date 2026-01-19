@@ -10,6 +10,7 @@ import useUploadFeedImages from "./hooks/useUploadFeedImages";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { queryKeys } from "@/lib/queryKeys";
 
 const initialFeedInfo: lighty.CreateGatheringFeedRequest = {
   gatheringId: "",
@@ -31,16 +32,16 @@ export default function CreatingFeed() {
     router.replace("/feed");
     await Promise.all([
       queryClient.invalidateQueries({
-        queryKey: ["gatherings/no-feed"],
+        queryKey: queryKeys.gathering.noFeed(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine"],
+        queryKey: queryKeys.feed.mine(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
+        queryKey: queryKeys.feed.all(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
+        queryKey: queryKeys.user.detail(),
       }),
     ]);
 

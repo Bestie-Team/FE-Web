@@ -4,11 +4,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import type * as lighty from "lighty-type";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { queryKeys } from "@/lib/queryKeys";
 
 function useFriends({ userId }: { userId?: string }) {
   const router = useRouter();
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["friends", userId],
+    queryKey: queryKeys.friends.list(userId ?? ""),
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getFriends({ ...pageParam, limit: 10 });
     },
@@ -47,7 +48,7 @@ export default useFriends;
 
 export function useFriendsAll({ userId }: { userId: string }) {
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["friends/all", { accountId: "aaaa", limit: 100 }, userId],
+    queryKey: queryKeys.friends.all(userId),
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getFriends({ ...pageParam, limit: 100 });
     },

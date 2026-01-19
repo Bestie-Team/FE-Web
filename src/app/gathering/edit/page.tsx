@@ -11,6 +11,7 @@ import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function GatheringEditPage() {
   const router = useRouter();
@@ -29,10 +30,10 @@ export default function GatheringEditPage() {
   const editSuccessHandler = async (data: { message: string }) => {
     await Promise.all([
       queryClient.invalidateQueries({
-        queryKey: ["gatherings/all"],
+        queryKey: queryKeys.gathering.all(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["gathering/detail", selectedGatheringId],
+        queryKey: queryKeys.gathering.detail(selectedGatheringId ?? ""),
       }),
     ]);
     router.replace("/gathering");

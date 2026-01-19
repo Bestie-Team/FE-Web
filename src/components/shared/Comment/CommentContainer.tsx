@@ -15,6 +15,7 @@ import splitMention from "@/utils/splitMention";
 import { useRecoilValue } from "recoil";
 import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { logger } from "@/utils/logger";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function CommentContainer({
   selectedFeedId,
@@ -35,13 +36,13 @@ export default function CommentContainer({
     const invalidateQueries = async (data: { message: string }) => {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["get/comments", { feedId: selectedFeedId }],
+          queryKey: queryKeys.feed.comments(selectedFeedId),
         }),
         queryClient.invalidateQueries({
-          queryKey: ["get/feeds/all"],
+          queryKey: queryKeys.feed.all(),
         }),
         queryClient.invalidateQueries({
-          queryKey: ["get/feeds/mine"],
+          queryKey: queryKeys.feed.mine(),
         }),
       ]);
       logger.debug("Comment created", data);

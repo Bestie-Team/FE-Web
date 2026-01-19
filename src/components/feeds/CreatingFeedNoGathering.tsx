@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { friendsToShareIdsSelector } from "@/atoms/record";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "../shared/Spinner/DotSpinner";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function CreatingFeedNoGathering() {
   const queryClient = useQueryClient();
@@ -32,13 +33,13 @@ export default function CreatingFeedNoGathering() {
     router.replace("/feed");
     await Promise.all([
       queryClient.invalidateQueries({
-        queryKey: ["get/feeds/mine"],
+        queryKey: queryKeys.feed.mine(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["get/feeds/all"],
+        queryKey: queryKeys.feed.all(),
       }),
       queryClient.invalidateQueries({
-        queryKey: ["user/detail"],
+        queryKey: queryKeys.user.detail(),
       }),
     ]);
   };

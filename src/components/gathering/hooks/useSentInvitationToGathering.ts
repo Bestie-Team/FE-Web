@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import type * as lighty from "lighty-type";
 import { v4 as uuidv4 } from "uuid";
 import { maxDate, minDate } from "@/constants/time";
+import { queryKeys } from "@/lib/queryKeys";
 
 const uuid = uuidv4();
 
@@ -11,7 +12,7 @@ export default function useSentInvitationToGathering() {
   const defaultCursor = { createdAt: new Date().toISOString(), id: uuid };
 
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["sent", "gathering/invitation"],
+    queryKey: queryKeys.gathering.invitations.sent(),
     queryFn: async ({
       pageParam: cursor,
     }): Promise<lighty.SentGatheringInvitationListResponse> => {

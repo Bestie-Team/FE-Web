@@ -3,6 +3,7 @@ import { lightyToast } from "@/utils/toast";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useGroup({ limit = 6 }: { limit?: number }) {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function useGroup({ limit = 6 }: { limit?: number }) {
     isFetchingNextPage,
     isLoading,
   } = useInfiniteQuery({
-    queryKey: ["groups"],
+    queryKey: queryKeys.group.list(),
     queryFn: ({ pageParam: cursor }) =>
       getGroups({
         cursor: cursor === null ? new Date().toISOString() : cursor,

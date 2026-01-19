@@ -1,5 +1,6 @@
 import { getIdAvailability } from "@/remote/users";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useIdAvailability({
   accountId,
@@ -7,7 +8,7 @@ export default function useIdAvailability({
   accountId: string;
 }) {
   return useQuery({
-    queryKey: ["signup/accountId"],
+    queryKey: queryKeys.user.idAvailability(accountId),
     queryFn: () => getIdAvailability({ accountId }),
     enabled: accountId.length > 3,
     staleTime: 600 * 1000,

@@ -1,5 +1,6 @@
 import { getKakaoToken } from "@/remote/auth";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 export const useKakaoAuth = ({
   client_id,
@@ -11,7 +12,7 @@ export const useKakaoAuth = ({
   auth_code: string;
 }) => {
   return useQuery({
-    queryKey: ["auth/kakaoToken", client_id, redirect_uri, auth_code],
+    queryKey: queryKeys.auth.kakaoToken(client_id, redirect_uri, auth_code),
     queryFn: () =>
       getKakaoToken({
         client_id: client_id ?? "",

@@ -21,6 +21,7 @@ import useGatheringAll from "@/components/gathering/hooks/useGatheringAll";
 import Spacing from "@/components/shared/Spacing";
 import NoGathering from "@/components/gathering/NoGathering";
 import { useScrollRestorationOfRef } from "@/hooks/useScrollRestorationOfRef";
+import { queryKeys } from "@/lib/queryKeys";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
@@ -77,10 +78,10 @@ export default function GatheringPage() {
     try {
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["gatherings/all"],
+          queryKey: queryKeys.gathering.all(),
         }),
         queryClient.invalidateQueries({
-          queryKey: ["gatherings/ended"],
+          queryKey: queryKeys.gathering.ended(),
         }),
       ]);
       return true;

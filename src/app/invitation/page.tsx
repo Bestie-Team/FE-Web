@@ -18,6 +18,7 @@ import InvitationCardSkeleton from "@/components/shared/Skeleton/InvitationCardS
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import type * as lighty from "lighty-type";
 import type { InfiniteData } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function InvitationPage() {
   const queryClient = useQueryClient();
@@ -56,7 +57,7 @@ export default function InvitationPage() {
     onSuccess: () => {
       const now = new Date().toISOString();
       queryClient.setQueryData(
-        ["notification"],
+        queryKeys.notification.list(),
         (
           old:
             | InfiniteData<lighty.NotificationListResponse>

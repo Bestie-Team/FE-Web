@@ -14,6 +14,7 @@ import Link from "next/link";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import useFriendsRequestTotalCount from "./hooks/useFriendsRequestCount";
 import ModalWithReport from "../shared/ModalWithReport";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function UserFriendsListContainer() {
   const queryClient = useQueryClient();
@@ -38,7 +39,7 @@ export default function UserFriendsListContainer() {
   const deleteSuccessHandler = async (data: { message: string }) => {
     lightyToast.success(data.message);
     await queryClient.invalidateQueries({
-      queryKey: ["friends", userInfo?.accountId],
+      queryKey: queryKeys.friends.list(userInfo?.accountId ?? ""),
     });
   };
 

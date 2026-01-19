@@ -12,6 +12,7 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { lightyToast } from "@/utils/toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { Suspense, useState } from "react";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function EditPage() {
   const { data } = useUserDetail();
@@ -29,10 +30,10 @@ export default function EditPage() {
       lightyToast.success(data.message);
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["user/detail"],
+          queryKey: queryKeys.user.detail(),
         }),
         queryClient.invalidateQueries({
-          queryKey: ["user/profile/alarm"],
+          queryKey: queryKeys.user.profile(),
         }),
       ]);
     },
@@ -44,10 +45,10 @@ export default function EditPage() {
       lightyToast.success(data.message);
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ["user/detail"],
+          queryKey: queryKeys.user.detail(),
         }),
         queryClient.invalidateQueries({
-          queryKey: ["groups"],
+          queryKey: queryKeys.group.list(),
         }),
       ]);
     },

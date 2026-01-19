@@ -3,6 +3,7 @@ import {
   getSentFriendRequestsList,
   getReceivedFriendRequestsList,
 } from "@/remote/friends";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useSentAndReceivedFriendsRequests({
   name,
@@ -14,7 +15,7 @@ export default function useSentAndReceivedFriendsRequests({
   limit: number;
 }) {
   return useQuery({
-    queryKey: ["sentAndReceived", "friendsRequests", { accountId }],
+    queryKey: queryKeys.friends.requests.sentAndReceived({ name, accountId, limit }),
     queryFn: async () => {
       const [sentResponse, receivedResponse] = await Promise.all([
         getSentFriendRequestsList({ name, accountId, limit }),

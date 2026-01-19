@@ -12,6 +12,7 @@ import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import { logger } from "@/utils/logger";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function EditingFeed() {
   const router = useRouter();
@@ -40,9 +41,9 @@ export default function EditingFeed() {
     feedId: originalFeedValue?.id || "",
     onSuccess: async (data) => {
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
+        queryClient.invalidateQueries({ queryKey: queryKeys.feed.mine() }),
         queryClient.invalidateQueries({
-          queryKey: ["get/feeds/all"],
+          queryKey: queryKeys.feed.all(),
         }),
       ]);
       router.replace("/feed");

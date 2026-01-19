@@ -4,6 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { getGatheringsEnded } from "@/remote/gathering";
+import { queryKeys } from "@/lib/queryKeys";
 
 const uuid = uuidv4();
 
@@ -11,7 +12,7 @@ const uuid = uuidv4();
 export default function useGatheringEnded({ limit }: { limit: number }) {
   const cursor = { createdAt: maxDate(), id: uuid };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["gatherings/ended"],
+    queryKey: queryKeys.gathering.ended(),
     queryFn: async ({
       pageParam: cursor,
     }): Promise<lighty.EndedGatheringsListResponse> => {

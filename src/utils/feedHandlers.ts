@@ -1,5 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+import { queryKeys } from "@/lib/queryKeys";
 
 export const successToast = (msg: string) => lightyToast.success(msg);
 export const errorToast = (msg: string) => lightyToast.error(msg);
@@ -9,8 +10,8 @@ export const handleDeleteCommentSuccess =
   (queryClient: QueryClient, feedId: string) => async () => {
     successToast("댓글을 삭제했습니다");
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["get/comments", { feedId }] }),
-      queryClient.invalidateQueries({ queryKey: ["feed/detail", feedId] }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.comments(feedId) }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.detail(feedId) }),
     ]);
   };
 
@@ -18,9 +19,9 @@ export const handleDeleteCommentSuccess =
 export const handleHideFeedSuccess = (queryClient: QueryClient) => async () => {
   successToast("피드를 숨겼어요");
   await Promise.all([
-    queryClient.invalidateQueries({ queryKey: ["get/feeds/hidden"] }),
-    queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
-    queryClient.invalidateQueries({ queryKey: ["get/feeds/all"] }),
+    queryClient.invalidateQueries({ queryKey: queryKeys.feed.hidden() }),
+    queryClient.invalidateQueries({ queryKey: queryKeys.feed.mine() }),
+    queryClient.invalidateQueries({ queryKey: queryKeys.feed.all() }),
   ]);
 };
 
@@ -31,9 +32,9 @@ export const handleReportSuccess =
     successToast("신고가 접수되었어요!");
     resetReportInfo();
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["get/feeds/all"] }),
-      queryClient.invalidateQueries({ queryKey: ["get/comments", { feedId }] }),
-      queryClient.invalidateQueries({ queryKey: ["feed/detail", feedId] }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.all() }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.comments(feedId) }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.detail(feedId) }),
     ]);
   };
 
@@ -42,7 +43,7 @@ export const handleDeleteFeedSuccess =
   (queryClient: QueryClient) => async (data: { message: string }) => {
     successToast(data.message);
     await Promise.all([
-      queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
-      queryClient.invalidateQueries({ queryKey: ["get/feeds/all"] }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.mine() }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.feed.all() }),
     ]);
   };

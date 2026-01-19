@@ -22,6 +22,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { postGroupMember } from "@/remote/group";
 import { logger } from "@/utils/logger";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function GroupEditPage() {
   const queryClient = useQueryClient();
@@ -54,7 +55,7 @@ export default function GroupEditPage() {
       }
     }
     await queryClient.invalidateQueries({
-      queryKey: ["groups"],
+      queryKey: queryKeys.group.list(),
     });
     lightyToast.success(data.message);
   };

@@ -2,12 +2,13 @@ import { getGroup } from "@/remote/group";
 import { lightyToast } from "@/utils/toast";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { queryKeys } from "@/lib/queryKeys";
 
 export const useGroupDetail = (id: string) => {
   const router = useRouter();
 
   return useQuery({
-    queryKey: ["group/detail", id],
+    queryKey: queryKeys.group.detail(id),
     queryFn: () => getGroup(id),
     enabled: !!id,
     retry: (failureCount, error) => {

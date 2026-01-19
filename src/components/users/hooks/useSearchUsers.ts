@@ -2,6 +2,7 @@ import type * as lighty from "lighty-type";
 import { getSearchUsers } from "@/remote/users";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useSearchUsers({
   search,
@@ -16,7 +17,7 @@ export default function useSearchUsers({
     fetchNextPage,
     isFetching,
   } = useInfiniteQuery({
-    queryKey: ["users", search],
+    queryKey: queryKeys.user.search(search),
     queryFn: ({ pageParam }): Promise<lighty.SearchUserResponse> =>
       getSearchUsers({ ...pageParam, limit: 9, search }),
     getNextPageParam: (lastPage) => {

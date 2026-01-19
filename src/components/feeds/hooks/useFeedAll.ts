@@ -4,6 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 const uuid = uuidv4();
 import { FeedResponse } from "@/models/feed";
+import { queryKeys } from "@/lib/queryKeys";
 
 export default function useFeedAll({
   order,
@@ -23,7 +24,7 @@ export default function useFeedAll({
     id: uuid,
   };
   const { data, hasNextPage, fetchNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ["get/feeds/all"],
+    queryKey: queryKeys.feed.all(),
     queryFn: async ({ pageParam: cursor }): Promise<FeedResponse> =>
       getFeedAll({ cursor, order, minDate, maxDate, limit }),
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
