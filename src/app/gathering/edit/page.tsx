@@ -1,15 +1,15 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
 import type * as lighty from "lighty-type";
-import useEditGathering from "@/components/gathering/hooks/useEditGathering";
-import { lightyToast } from "@/utils/toast";
+import useEditGathering from "@/features/gathering/components/hooks/useEditGathering";
+import { lightyToast } from "@/shared/utils/toast";
 import { useRouter, useSearchParams } from "next/navigation";
-import GatheringEditForm from "@/components/gathering/GatheringEditForm";
-import EditGatheringStatus from "@/components/gathering/EditGatheringStatus";
+import GatheringEditForm from "@/features/gathering/components/GatheringEditForm";
+import EditGatheringStatus from "@/features/gathering/components/EditGatheringStatus";
 import { useQueryClient } from "@tanstack/react-query";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
-import useGatheringDetail from "@/components/gathering/hooks/useGatheringDetail";
+import DotSpinner from "@/shared/components/Spinner/DotSpinner";
+import HeaderWithBtn from "@/shared/layout/Header/HeaderWithBtn";
+import useGatheringDetail from "@/features/gathering/components/hooks/useGatheringDetail";
 import { queryKeys } from "@/lib/queryKeys";
 
 export default function GatheringEditPage() {

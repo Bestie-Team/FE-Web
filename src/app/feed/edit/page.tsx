@@ -1,16 +1,16 @@
 "use client";
 import { Suspense, useEffect, useRef, useState } from "react";
-import FeedForm from "@/components/feeds/FeedForm";
-import useEditFeed from "@/components/feeds/hooks/useEditFeed";
-import useFeedDetail from "@/components/feeds/hooks/useFeedDetail";
+import FeedForm from "@/features/feed/components/FeedForm";
+import useEditFeed from "@/features/feed/components/hooks/useEditFeed";
+import useFeedDetail from "@/features/feed/components/hooks/useFeedDetail";
 import { useRouter, useSearchParams } from "next/navigation";
-import FullPageLoader from "@/components/shared/FullPageLoader";
+import FullPageLoader from "@/shared/components/FullPageLoader";
 import type * as lighty from "lighty-type";
-import { lightyToast } from "@/utils/toast";
-import DotSpinner from "@/components/shared/Spinner/DotSpinner";
+import { lightyToast } from "@/shared/utils/toast";
+import DotSpinner from "@/shared/components/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
-import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
-import { logger } from "@/utils/logger";
+import HeaderWithBtn from "@/shared/layout/Header/HeaderWithBtn";
+import { logger } from "@/shared/utils/logger";
 import { queryKeys } from "@/lib/queryKeys";
 
 export default function EditingFeed() {
