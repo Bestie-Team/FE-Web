@@ -34,7 +34,10 @@ const BaseButton = ({
       style={{
         backgroundColor: disabled ? "#D8D8D8" : color,
       }}
-      className={clsx("cursor-pointer", className)}
+      className={clsx(
+        "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-900",
+        className
+      )}
       disabled={disabled}
       onClick={handleClick}
       onMouseDown={onMouseDown}

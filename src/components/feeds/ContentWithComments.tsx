@@ -1,17 +1,20 @@
-import { bottomSheetStateAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom, selectedFeedIdAtom } from "@/atoms/feed";
 import Flex from "../shared/Flex";
 import MessageIcon from "../shared/Icon/MessageIcon";
 import Spacing from "../shared/Spacing";
 import { useSetRecoilState } from "recoil";
 
 export default function ContentWithComments({
+  feedId,
   content,
   commentCount,
 }: {
+  feedId: string;
   content: string;
   commentCount: number;
 }) {
   const setBottomSheetState = useSetRecoilState(bottomSheetStateAtom);
+  const setSelectedFeedId = useSetRecoilState(selectedFeedIdAtom);
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>{content}</div>
@@ -21,9 +24,10 @@ export default function ContentWithComments({
           type="button"
           aria-label={`댓글 ${commentCount}개 보기`}
           onClick={() => {
+            setSelectedFeedId(feedId);
             setBottomSheetState(true);
           }}
-          className="flex items-center bg-transparent border-0 p-0 cursor-pointer"
+          className="flex items-center bg-transparent border-0 p-0 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-900"
         >
           <MessageIcon />
           <Spacing direction="horizontal" size={2} />

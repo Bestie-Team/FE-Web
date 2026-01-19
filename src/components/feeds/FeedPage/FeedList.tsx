@@ -11,12 +11,10 @@ import { useSetRecoilState } from "recoil";
 import { selectedFeedIdAtom } from "@/atoms/feed";
 import { UserInfoMini } from "../../shared/providers/AuthProvider";
 import { FeedSkeleton } from "../../shared/Skeleton/FeedSkeleton";
-import { Feed } from "@/models/feed";
 
 interface FeedListProps {
   feeds: any[];
   userInfo: false | UserInfoMini | null;
-  onFeedSelect: (_: Feed) => void;
   isFetching: boolean;
   isMine?: boolean;
 }
@@ -24,7 +22,6 @@ interface FeedListProps {
 const FeedListComponent: React.FC<FeedListProps> = ({
   feeds,
   userInfo,
-  onFeedSelect,
   isFetching,
   isMine = false,
 }) => {
@@ -74,7 +71,7 @@ const FeedListComponent: React.FC<FeedListProps> = ({
     >
       {feeds.map((feed) => (
         <div key={feed.id} className="relative">
-          <FeedCard feed={feed} onSelect={onFeedSelect}>
+          <FeedCard feed={feed}>
             <InfoBar
               ref={fBtnRef}
               onClick={(e) => handleToggleBox(e, feed.id)}
@@ -102,7 +99,7 @@ const FeedListComponent: React.FC<FeedListProps> = ({
               aria-haspopup="menu"
               aria-expanded={openedDropdownId === feed.id}
               onClick={(e) => handleOpenMenu(e, feed.id)}
-              className="flex justify-center items-center bg-transparent border-0 p-0"
+              className="flex justify-center items-center bg-transparent border-0 p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-900"
             >
               <OptionsSelectIcon />
             </button>

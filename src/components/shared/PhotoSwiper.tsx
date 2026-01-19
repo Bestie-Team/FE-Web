@@ -23,11 +23,20 @@ const PhotoSwiper = memo(
         onClick={() => {
           router.push(`/feed/detail?id=${feed.id}`);
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            router.push(`/feed/detail?id=${feed.id}`);
+          }
+        }}
         slidesPerView={percent}
         spaceBetween={12}
         grabCursor={true}
         style={{ paddingLeft: "20px" }}
-        className="custom-swiper w-full cursor-pointer"
+        className="custom-swiper w-full cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-900"
+        role="link"
+        aria-label="피드 상세 보기"
+        tabIndex={0}
         onTouchStart={(_, e) => {
           e.stopPropagation();
         }}

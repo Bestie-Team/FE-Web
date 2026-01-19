@@ -6,7 +6,6 @@ import type { User } from "lighty-type";
 import Flex from "@/components/shared/Flex";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import FeedCard from "@/components/feeds/FeedCard";
-import type { Feed } from "@/models/feed";
 import InfoBar, { FriendsInfoContainer } from "@/components/feeds/InfoBar";
 import OptionsSelectIcon from "@/components/shared/Icon/OptionsSelectIcon";
 import FeedDropdownMenu from "@/components/shared/DropDownMenu/FeedDropDownMenu";
@@ -15,7 +14,6 @@ import { MENU_CONFIGS } from "@/constants/menu-configs";
 import { useDropdown, useFriendsBox } from "@/hooks/useDropdown";
 import { bottomSheetStateAtom, selectedFeedIdAtom } from "@/atoms/feed";
 import useFeedDetail from "@/components/feeds/hooks/useFeedDetail";
-import { useCallback } from "react";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import FeedPageSkeleton from "@/components/shared/Skeleton/FeedSkeleton";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
@@ -56,13 +54,6 @@ export default function FeedDetailPage() {
 
   const { deleteFeed, deleteComment, hideFeed, report } = useFeed();
 
-  const handleFeedSelect = useCallback(
-    (feed: Feed) => {
-      setSelectedFeedId(feed.id);
-    },
-    [setSelectedFeedId]
-  );
-
   if (!selectedFeed) {
     return <FeedPageSkeleton />;
   }
@@ -85,10 +76,7 @@ export default function FeedDetailPage() {
             }}
           >
             <div key={id} className="relative">
-              <FeedCard
-                feed={selectedFeed}
-                onSelect={handleFeedSelect}
-              >
+              <FeedCard feed={selectedFeed}>
                 <InfoBar
                   ref={fBtnRef}
                   onClick={(e) => {
@@ -124,7 +112,7 @@ export default function FeedDetailPage() {
                     toggleDropdown(selectedFeed.id);
                     setSelectedFeedId(selectedFeed.id);
                   }}
-                  className="flex justify-center items-center bg-transparent border-0 p-0"
+                  className="flex justify-center items-center bg-transparent border-0 p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-900"
                 >
                   <OptionsSelectIcon />
                 </button>

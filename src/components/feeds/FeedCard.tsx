@@ -2,45 +2,30 @@ import Spacing from "../shared/Spacing";
 import ContentWithComments from "./ContentWithComments";
 import PhotoSwiper from "../shared/PhotoSwiper";
 import { Feed } from "@/models/feed";
-import React, { useCallback } from "react";
+import React from "react";
 
 interface FeedCardProps {
   feed: Feed;
   children: React.ReactNode;
-  onSelect: (feed: Feed) => void;
 }
 
-export const FeedCard = ({ feed, children, onSelect }: FeedCardProps) => {
-  const handleSelect = useCallback(() => {
-    onSelect(feed);
-  }, [feed, onSelect]);
-
+export const FeedCard = ({ feed, children }: FeedCardProps) => {
   if (!feed?.writer) {
     return null;
   }
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      className="flex flex-col py-3"
-      onClick={handleSelect}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleSelect();
-        }
-      }}
-    >
+    <article className="flex flex-col py-3">
       {children}
       <Spacing size={12} />
       <PhotoSwiper feed={feed} />
       <Spacing size={8} />
       <ContentWithComments
+        feedId={feed.id}
         content={feed.content}
         commentCount={feed.commentCount}
       />
-    </div>
+    </article>
   );
 };
 

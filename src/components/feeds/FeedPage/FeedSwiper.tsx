@@ -25,7 +25,6 @@ interface FeedSwiperProps {
   handleMine: () => Promise<boolean>;
   loadMoreRef: (node?: Element | null) => void;
   loadMoreMineRef: (node?: Element | null) => void;
-  handleFeedSelect: (feed: Feed) => void;
   userInfo: any;
   swiperRef: React.MutableRefObject<any>;
   selectedTab: "1" | "2";
@@ -46,7 +45,6 @@ interface FeedSlideProps {
   loadMoreRef: (node?: Element | null) => void;
   scrollRef: React.RefObject<HTMLDivElement>;
   userInfo: any;
-  handleFeedSelect: (feed: Feed) => void;
   isMine?: boolean;
   emptyComponent?: React.ReactNode;
 }
@@ -58,7 +56,6 @@ const FeedSlide = React.memo(function FeedSlide({
   loadMoreRef,
   scrollRef,
   userInfo,
-  handleFeedSelect,
   isMine,
   emptyComponent,
 }: FeedSlideProps) {
@@ -81,7 +78,6 @@ const FeedSlide = React.memo(function FeedSlide({
           <FeedList
             feeds={feeds}
             userInfo={userInfo}
-            onFeedSelect={handleFeedSelect}
             isFetching={isFetching}
             isMine={isMine}
           />
@@ -103,7 +99,6 @@ const FeedSwiperComponent = ({
   handleMine,
   loadMoreRef,
   loadMoreMineRef,
-  handleFeedSelect,
   userInfo,
   swiperRef,
   selectedTab,
@@ -144,7 +139,6 @@ const FeedSwiperComponent = ({
           loadMoreRef={loadMoreRef}
           scrollRef={scrollContainerRef}
           userInfo={userInfo}
-          handleFeedSelect={handleFeedSelect}
           emptyComponent={emptyAll}
         />
       </SwiperSlide>
@@ -157,7 +151,6 @@ const FeedSwiperComponent = ({
           loadMoreRef={loadMoreMineRef}
           scrollRef={scrollContainerRefMine}
           userInfo={userInfo}
-          handleFeedSelect={handleFeedSelect}
           isMine
           emptyComponent={emptyMine}
         />

@@ -2,12 +2,10 @@ import Spacing from "@/components/shared/Spacing";
 import { FeedList } from "@/components/feeds/FeedPage/FeedList";
 import { NoFeedHidden } from "@/components/feeds/NoFeed";
 import LoadMoreTrigger from "../shared/LoadMoreTrigger";
-import type { Feed } from "@/models/feed";
 
 interface Props {
   hiddenFeed: any[];
   isFetching: boolean;
-  onFeedSelect: (feed: Feed) => void;
   loadMoreRef: (node?: Element | null) => void;
   scrollContainerRef: React.RefObject<HTMLDivElement>;
 }
@@ -15,7 +13,6 @@ interface Props {
 export default function HiddenFeedListSection({
   hiddenFeed,
   isFetching,
-  onFeedSelect,
   loadMoreRef,
   scrollContainerRef,
 }: Props) {
@@ -28,7 +25,6 @@ export default function HiddenFeedListSection({
           <FeedList
             feeds={hiddenFeed}
             userInfo={false}
-            onFeedSelect={onFeedSelect}
             isFetching={isFetching}
             isMine={true}
           />

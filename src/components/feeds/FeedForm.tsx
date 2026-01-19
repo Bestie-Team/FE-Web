@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useId } from "react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import UploadPhotoSwiper from "./UploadPhotoSwiper";
@@ -34,6 +34,8 @@ export default function FeedForm<
   feedInfoToEdit,
 }: FeedFormProps<T>) {
   const content = feedInfo?.content || feedInfoToEdit?.content || "";
+  const contentId = useId();
+  const countId = `${contentId}-count`;
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (setFeedInfo) {
       setFeedInfo((prev) => ({ ...prev, content: e.target.value }));
@@ -69,13 +71,16 @@ export default function FeedForm<
       <Flex direction="column" className={styles.textareaWrapper}>
         <textarea
           maxLength={150}
+          id={contentId}
           value={content}
           inputMode="text"
+          aria-label="피드 내용"
+          aria-describedby={countId}
           placeholder="해당 약속에는 어떤 소중한 추억이 있었나요? 그날의 추억에 대해 글로 작성해 보세요."
           onChange={handleTextChange}
           className={styles.recordTextarea}
         />
-        <div className="text-right">
+        <div className="text-right" id={countId}>
           <span className="text-grayscale-900 text-B3">{`${
             feedInfo ? feedInfo.content?.length : feedInfoToEdit?.content.length
           }`}</span>
@@ -113,5 +118,5 @@ const styles = {
   textareaWrapper: "px-[28px] py-4 pb-[98px] gap-3",
 
   recordTextarea:
-    "h-[186.29px] leading-[22.86px] w-[114.29%] tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none transform origin-top-left scale-[0.875]",
+    "h-[186.29px] leading-[22.86px] w-[114.29%] tracking-[-0.48px] text-grayscale-900 placeholder:text-grayscale-400 resize-none focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-700 transform origin-top-left scale-[0.875]",
 };

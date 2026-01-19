@@ -59,6 +59,8 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
       >
         <ul
           className={styles.wrapper}
+          role="menu"
+          aria-label="피드 옵션 메뉴"
           style={{
             boxShadow: styles.shadow,
           }}
@@ -66,24 +68,41 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
           {menuItems.map((menuItem, index) => {
             return (
               <React.Fragment key={`${menuItem}${index}`}>
-                <li
-                  style={{
-                    backgroundColor: isHovered === index ? "#f4f4f4" : "white",
-                  }}
-                  onMouseEnter={() => setIsHovered(index)}
-                  onMouseLeave={() => setIsHovered(false)}
-                  className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left ${
-                    menuItem.includes("삭제") && "text-point-red50"
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    clickedMenuItemHandler(menuItem);
-                  }}
-                >
-                  {menuItem}
+                <li role="none">
+                  <button
+                    type="button"
+                    role="menuitem"
+                    style={{
+                      backgroundColor:
+                        isHovered === index ? "#f4f4f4" : "white",
+                    }}
+                    onMouseEnter={() => setIsHovered(index)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onFocus={() => setIsHovered(index)}
+                    onBlur={() => setIsHovered(false)}
+                    className={`text-B4 w-[131px] rounded-lg px-4 py-[10px] text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grayscale-900 ${
+                      menuItem.includes("삭제") && "text-point-red50"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      clickedMenuItemHandler(menuItem);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        clickedMenuItemHandler(menuItem);
+                      }
+                    }}
+                  >
+                    {menuItem}
+                  </button>
                 </li>
                 {index < menuItems.length - 1 ? (
-                  <div className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]" />
+                  <div
+                    role="separator"
+                    aria-hidden="true"
+                    className="w-[99px] h-[1px] bg-grayscale-50 mb-[6px]"
+                  />
                 ) : null}
               </React.Fragment>
             );

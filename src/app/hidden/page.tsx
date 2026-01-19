@@ -22,7 +22,6 @@ export default function FeedPage() {
     displayFeed,
     reportComment,
     deleteComment,
-    handleFeedSelect,
     feedId,
   } = useHiddenFeed();
 
@@ -59,7 +58,6 @@ export default function FeedPage() {
             <FeedList
               feeds={hiddenFeed}
               userInfo={false}
-              onFeedSelect={handleFeedSelect}
               isFetching={isFetching}
               isMine={true}
             />

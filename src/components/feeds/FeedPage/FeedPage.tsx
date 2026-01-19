@@ -1,9 +1,9 @@
 "use client";
-import React, { useEffect, useRef, useCallback, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import CommentContainer from "@/components/shared/Comment/CommentContainer";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import MemoriesBottomSheet from "@/components/shared/BottomDrawer/MemoriesBottomSheet";
 import {
   modalStateAtom,
@@ -18,7 +18,6 @@ import { ScrollAwareHeader } from "@/components/layout/Header/ScrollAwareHeader"
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import TabParamHandler from "@/components/shared/TabParamHandler";
 import useFeed from "@/hooks/useFeed";
-import { Feed } from "@/models/feed";
 import { useIntersectionLoadMore } from "@/components/feeds/hooks/useIntersectionLoadMore";
 import { useNotificationListener } from "@/components/feeds/hooks/useNotificationListener";
 import { FeedSwiper } from "@/components/feeds/FeedPage/FeedSwiper";
@@ -37,7 +36,6 @@ export default function FeedPage() {
 
   const {
     feedId,
-    setFeedId,
     feedAll,
     feedMine,
     isFetching,
@@ -77,13 +75,6 @@ export default function FeedPage() {
   });
 
   useIntersectionLoadMore({ inView, inViewMine, loadMore, loadMoreMine });
-
-  const handleFeedSelect = useCallback(
-    (feed: Feed) => {
-      setFeedId(feed.id);
-    },
-    [setFeedId]
-  );
 
   useEffect(() => {
     if (swiperRef.current && typeof swiperRef.current.slideTo === "function") {
@@ -140,7 +131,6 @@ export default function FeedPage() {
         handleMine={handleRefreshMine}
         loadMoreRef={loadMoreRef}
         loadMoreMineRef={loadMoreMineRef}
-        handleFeedSelect={handleFeedSelect}
         userInfo={userInfo}
         swiperRef={swiperRef}
         selectedTab={selectedTab}
