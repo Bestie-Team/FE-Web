@@ -14,6 +14,7 @@ import CommentItem from "./CommentItem";
 import splitMention from "@/utils/splitMention";
 import { useRecoilValue } from "recoil";
 import { selectedFeedInfoAtom } from "@/atoms/feed";
+import { logger } from "@/utils/logger";
 
 export default function CommentContainer({
   selectedFeedId,
@@ -43,7 +44,7 @@ export default function CommentContainer({
           queryKey: ["get/feeds/mine"],
         }),
       ]);
-      console.log(data);
+      logger.debug("Comment created", data);
     };
     invalidateQueries(data);
     setNewComment("");
@@ -56,7 +57,7 @@ export default function CommentContainer({
       (user) => user.accountId === splitMention(newComment).mention?.slice(1)
     )?.id,
     onSuccess: postSuccessHandler,
-    onError: (error) => console.log(error),
+    onError: (error) => logger.error("Failed to create comment", error),
   });
 
   const handleAnimationEnd = () => {

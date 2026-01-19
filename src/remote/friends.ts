@@ -1,19 +1,17 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { apiClient } from "./api";
 
 /** 친구 요청 */
 export async function postFriends({ userId }: { userId: string }) {
-  const response = await apiClient.post("/friends", { userId });
-  console.log(response);
+  await apiClient.post("/friends", { userId });
   return { message: "친구 신청이 완료되었어요!" };
 }
 
 /** 친구 삭제 */
 export async function deleteFriend({ friendId }: { friendId: string }) {
-  const response = await apiClient.delete("/friends", {
+  await apiClient.delete("/friends", {
     params: { userId: friendId },
   });
-  console.log(response);
   return { message: "친구를 삭제했어요" };
 }
 

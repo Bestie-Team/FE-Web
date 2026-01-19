@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Flex from "../shared/Flex";
 import { PlusCircleButtonSmall } from "../shared/Button/BottomSheetOpenButton";
 import Spacing from "../shared/Spacing";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { lightyToast } from "@/utils/toast";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import { compressImage } from "@/utils/compress";
@@ -24,6 +24,7 @@ export default function UploadPhotoSwiper({
 }: UploadPhotoSwiperProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+  const createdObjectUrlsRef = useRef<Set<string>>(new Set());
   const [selectOpen, setSelectOpen] = useState(false);
   const [images, setImages] = useState<string[]>(
     feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
@@ -54,26 +55,38 @@ export default function UploadPhotoSwiper({
     }
 
     const objectUrl = URL.createObjectURL(file);
+    createdObjectUrlsRef.current.add(objectUrl);
     setImages((prev) => [...prev, objectUrl]);
 
     const processedFile = ["jpg", "jpeg", "png"].includes(ext)
       ? await compressImage(file)
       : file;
 
-    if (processedFile) {
-      setFilesToUpload((prev) => [...prev, processedFile]);
-    }
-
-    return () => URL.revokeObjectURL(objectUrl);
+    setFilesToUpload((prev) => [...prev, processedFile]);
   };
 
   const handleImageDelete = (index: number) => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+    setImages((prev) => {
+      const url = prev[index];
+      if (url && createdObjectUrlsRef.current.has(url)) {
+        URL.revokeObjectURL(url);
+        createdObjectUrlsRef.current.delete(url);
+      }
+      return prev.filter((_, i) => i !== index);
+    });
     setFilesToUpload((prev) => prev.filter((_, i) => i !== index));
-    setImages((prev) => prev.filter((_, i) => i !== index));
   };
+
+  useEffect(() => {
+    const urls = createdObjectUrlsRef.current;
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+      urls.clear();
+    };
+  }, []);
 
   const renderAddButtonSlide = () => (
     <SwiperSlide className={styles.slide}>

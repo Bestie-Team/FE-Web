@@ -1,7 +1,7 @@
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { SetterOrUpdater } from "recoil";
 import UploadableVerticalInvitationCard from "../invitation/VerticalInvitationCard";
 import { useAuth } from "../shared/providers/AuthProvider";

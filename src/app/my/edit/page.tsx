@@ -28,10 +28,10 @@ export default function EditPage() {
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
       await Promise.all([
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["user/detail"],
         }),
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["user/profile/alarm"],
         }),
       ]);
@@ -43,10 +43,10 @@ export default function EditPage() {
     onSuccess: async (data: { message: string }) => {
       lightyToast.success(data.message);
       await Promise.all([
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["user/detail"],
         }),
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["groups"],
         }),
       ]);

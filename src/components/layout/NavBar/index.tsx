@@ -33,7 +33,12 @@ const NavBar = () => {
 
   const onMouseDownHandler = (idx: number) => {
     if (activeBtn === idx) {
-      window.location.reload();
+      window.dispatchEvent(
+        new CustomEvent("lighty:navigation-reselect", {
+          detail: { href: NAV_ITEMS[idx].href },
+        })
+      );
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 

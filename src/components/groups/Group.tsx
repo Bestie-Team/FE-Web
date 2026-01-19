@@ -3,7 +3,7 @@ import useGroup from "@/components/groups/hooks/useGroups";
 import Flex from "@/components/shared/Flex";
 import Spacing from "@/components/shared/Spacing";
 import { useRouter } from "next/navigation";
-import { Group } from "lighty-type";
+import type { Group } from "lighty-type";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import Link from "next/link";
 import GroupSkeleton from "../shared/Skeleton/GroupSkeleton";
@@ -50,7 +50,6 @@ export default function Groups() {
     isLoading,
     isFetchingNextPage,
     loadMore,
-    isFetching,
   } = useGroup({ limit: 6 });
 
   const { restoreScrollPosition } = useScrollRestorationOfRef(
@@ -76,8 +75,6 @@ export default function Groups() {
   const handleItemClick = (groupId: string) => {
     router.push(`/groups/detail?id=${groupId}`);
   };
-  console.log(isFetching, "fetching");
-  console.log(isFetchingNextPage, "fetching");
   return (
     <div
       ref={scrollContainerRef}

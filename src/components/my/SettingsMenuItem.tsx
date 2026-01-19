@@ -8,6 +8,7 @@ import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { appleLoginMobile } from "@/webview/actions";
 import { useAuth } from "../shared/providers/AuthProvider";
 import { useRouter } from "next/navigation";
+import { logger } from "@/utils/logger";
 
 export default function SettingsMenuItem({
   list,
@@ -45,7 +46,7 @@ export default function SettingsMenuItem({
         logout();
       }
     } catch (error) {
-      console.log(error);
+      logger.error("account deletion error", error);
       lightyToast.error("accountdeletion error");
     }
   };

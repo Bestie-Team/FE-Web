@@ -108,11 +108,9 @@ export async function updateProfileImage(imageFile: {
 }): Promise<ProfileUpdateResponse> {
   // 1. 이미지 업로드
   const { imageUrl } = await postProfileImage({ file: imageFile.file });
-  console.log("Image uploaded successfully:", imageUrl);
 
   // 2. 프로필 이미지 URL 업데이트
-  const { message } = await patchProfileImage(imageUrl);
-  console.log(message);
+  await patchProfileImage(imageUrl);
 
   return {
     success: true,

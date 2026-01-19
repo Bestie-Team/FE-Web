@@ -1,4 +1,3 @@
-"use client";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import LightyIcon from "@/components/shared/Icon/LightyIcon";
 import Spacing from "@/components/shared/Spacing";

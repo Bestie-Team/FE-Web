@@ -1,6 +1,6 @@
 import { registerUser } from "@/remote/auth";
 import { useMutation } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 export interface SignupType {
   email: string;

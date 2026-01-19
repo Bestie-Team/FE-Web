@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import html2canvas from "html2canvas";
 import Spacing from "../shared/Spacing";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -11,7 +10,6 @@ import {
   decoBottomSheetStateAtom,
 } from "@/atoms/card";
 import Flex from "../shared/Flex";
-import * as fabric from "fabric";
 import DecoStickerBottomSheet from "../shared/BottomDrawer/DecoStickerBottomSheet";
 import cropAndResizeImage from "@/utils/cropAndResizeImage";
 import { format } from "date-fns";
@@ -20,9 +18,17 @@ import BottomButton from "../shared/Button/BottomButton";
 import PhotoSaveBottomSheet from "../shared/BottomDrawer/PhotoSaveBottomSheet";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";
 import { openSettingsMobile, saveImageMobile } from "@/webview/actions";
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { WEBVIEW_EVENT } from "@/webview/types/events";
 import { lightyToast } from "@/utils/toast";
 import Modal from "../shared/Modal/Modal";
+import { logger } from "@/utils/logger";
+import { useHtml2CanvasCapture } from "@/hooks/useHtml2CanvasCapture";
+import { useFabricStickerCanvas } from "@/hooks/useFabricStickerCanvas";
+
+const CARD_WIDTH = 282;
+const CARD_HEIGHT = 372;
+const CROP_WIDTH = 230;
+const CROP_HEIGHT = 250;
 
 export default function DecorateWithStickers() {
   const [decoBottomSheetState, setDecoBottomSheetState] = useRecoilState(
@@ -32,207 +38,90 @@ export default function DecorateWithStickers() {
   const [imageBottomSheetOpen, setImageBottomSheetOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
-  const imageRef = React.useRef<HTMLImageElement | null>(null);
   const selectedFrame = useRecoilValue(cardFrameAtom);
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
-  const stageRef = React.useRef<HTMLDivElement | null>(null);
+  const frameUrl = frames[selectedFrame] || "";
   const [deco, setDeco] = useState<boolean>(false);
   const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
-  const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
-  const canvasElementRef = useRef<HTMLCanvasElement | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const { isReactNativeWebView } = useReactNativeWebView();
 
-  useEffect(() => {
-    if (canvasElementRef.current && !fabricCanvasRef.current) {
-      fabricCanvasRef.current = new fabric.Canvas(canvasElementRef.current, {
-        width: 282,
-        height: 372,
-      });
-    }
-    return () => {
-      fabricCanvasRef.current?.dispose();
-      fabricCanvasRef.current = null;
-    };
-  }, []);
+  const getCaptureTarget = useCallback(() => previewRef.current, []);
 
-  const handleCaptureImage = useCallback(async () => {
+  const {
+    dataUrl: capturedCardUrl,
+    isCapturing,
+    error: captureError,
+    capture: captureCard,
+    reset: resetCapture,
+  } = useHtml2CanvasCapture(getCaptureTarget, {
+    scale: 3,
+    useCORS: true,
+    backgroundColor: null,
+  });
+
+  const {
+    isReady: isFabricReady,
+    setBackgroundFromDataUrl,
+    addSticker,
+    exportPng,
+    dispose,
+  } = useFabricStickerCanvas({
+    canvasRef,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
+  });
+
+  useEffect(() => {
+    if (!deco) {
+      dispose();
+      resetCapture();
+    }
+  }, [deco, dispose, resetCapture]);
+
+  useEffect(() => {
+    if (!deco || !capturedCardUrl) return;
+    setBackgroundFromDataUrl(capturedCardUrl).catch((e) => {
+      logger.error("setBackgroundFromDataUrl failed", e);
+      lightyToast.error("이미지 불러오기에 실패했어요");
+    });
+  }, [capturedCardUrl, deco, setBackgroundFromDataUrl]);
+
+  const handleStartDecorate = useCallback(async () => {
+    const url = await captureCard();
+    if (!url) {
+      lightyToast.error("이미지 캡처에 실패했어요");
+      return;
+    }
     setDeco(true);
-    if (ref.current === null || !fabricCanvasRef.current) return;
-    if (imageRef.current) {
-      console.log("resize");
-    }
-    try {
-      const canvas = await html2canvas(ref.current, {
-        scale: 3,
-        useCORS: true,
-        backgroundColor: null,
-      });
-      const dataUrl = canvas.toDataURL("image/png", 1.0);
-      const img = new Image();
+  }, [captureCard]);
 
-      img.src = dataUrl;
-      img.onload = async () => {
-        const canvas = fabricCanvasRef.current;
-        if (canvas) {
-          const bgImage = new fabric.Image(img, {
-            originX: "left",
-            originY: "top",
-            crossOrigin: "anonymous",
-          });
-
-          const canvasAspectRatio = canvas.width! / canvas.height!;
-          const imageAspectRatio = img.width / img.height;
-
-          if (imageAspectRatio > canvasAspectRatio) {
-            bgImage.scaleToWidth(canvas.width!);
-          } else {
-            bgImage.scaleToHeight(canvas.height!);
-          }
-
-          canvas.backgroundImage = bgImage;
-          canvas.renderAll();
-        }
-        // setImg(img);
-      };
-    } catch (err) {
-      console.error("이미지 캡처 오류:", err);
-    }
-  }, []);
-
-  // Function to render delete icon with X
-  const renderDeleteIcon = (
-    ctx: CanvasRenderingContext2D,
-    left: number,
-    top: number,
-    _: any,
-    fabricObject: fabric.Object
-  ) => {
-    const size = 20;
-    ctx.save();
-    ctx.translate(left, top);
-    ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle || 0));
-
-    // Draw circle background
-    ctx.fillStyle = "#979797";
-    ctx.beginPath();
-    ctx.arc(0, 0, size / 2, 0, 2 * Math.PI);
-    ctx.fill();
-
-    // Draw X
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    // Draw X lines
-    ctx.moveTo(-size / 5, -size / 5);
-    ctx.lineTo(size / 5, size / 5);
-    ctx.moveTo(size / 5, -size / 5);
-    ctx.lineTo(-size / 5, size / 5);
-    ctx.stroke();
-
-    ctx.restore();
-  };
-
-  const handleAddSticker = async (path: string) => {
-    if (fabricCanvasRef.current) {
-      const canvas = fabricCanvasRef.current;
+  const handleAddSticker = useCallback(
+    async (path: string) => {
       try {
-        const stickerObj = await fabric.Image.fromURL(path, {
-          crossOrigin: "anonymous",
-        });
-
-        stickerObj.set({
-          scaleX: 0.22,
-          scaleY: 0.22,
-          cornerSize: 9,
-          cornerColor: "white",
-          cornerStrokeColor: "#AEAEAE",
-          transparentCorners: false,
-          borderColor: "#AEAEAE",
-          borderScaleFactor: 1,
-        });
-
-        // Add custom delete control
-        stickerObj.controls = {
-          ...stickerObj.controls,
-          deleteControl: new fabric.Control({
-            x: 0.5,
-            y: -0.5,
-            offsetY: -16,
-            offsetX: 16,
-            cursorStyle: "pointer",
-            render: renderDeleteIcon,
-            mouseUpHandler: (_, transformData) => {
-              const target = transformData.target;
-              const canvas = target.canvas;
-              canvas?.remove(target);
-              canvas?.requestRenderAll();
-              return true;
-            },
-          }),
-        };
-
-        canvas.add(stickerObj);
-        canvas.setActiveObject(stickerObj);
-        canvas.renderAll();
-      } catch (error) {
-        console.error("Error adding sticker:", error);
+        await addSticker(path);
+      } catch (e) {
+        logger.error("addSticker failed", e);
+        lightyToast.error("스티커 추가에 실패했어요");
       }
-    } else {
-      console.error("Canvas reference is not initialized.");
-    }
-  };
-
-  // Add event listener to show/hide controls based on selection
-  useEffect(() => {
-    const canvas = fabricCanvasRef.current;
-    if (!canvas) return;
-
-    const handleSelectionCreated = (e: any) => {
-      const activeObj = e.target;
-      if (activeObj) {
-        activeObj.setControlsVisibility({
-          mtr: true, // rotation control
-          deleteControl: true,
-        });
-        canvas.renderAll();
-      }
-    };
-
-    const handleSelectionCleared = () => {
-      canvas.renderAll();
-    };
-
-    canvas.on("selection:created", handleSelectionCreated);
-    canvas.on("selection:updated", handleSelectionCreated);
-    canvas.on("selection:cleared", handleSelectionCleared);
-
-    return () => {
-      canvas.off("selection:created", handleSelectionCreated);
-      canvas.off("selection:updated", handleSelectionCreated);
-      canvas.off("selection:cleared", handleSelectionCleared);
-    };
-  }, [deco]);
+    },
+    [addSticker]
+  );
 
   const handleExport = () => {
-    if (!stageRef.current) return;
-    if (fabricCanvasRef.current) {
-      // Deselect any active object before exporting to hide controls
-      fabricCanvasRef.current.discardActiveObject();
-      fabricCanvasRef.current.renderAll();
-
-      const uri = fabricCanvasRef.current.toDataURL({
-        format: "png",
-        multiplier: 2,
-      });
-
-      if (isReactNativeWebView) {
-        saveImageMobile(uri);
-        return;
-      }
-      setImageUri(uri);
-      setImageBottomSheetOpen(true);
+    const uri = exportPng(2);
+    if (!uri) {
+      lightyToast.error("이미지 생성에 실패했어요");
+      return;
     }
+
+    if (isReactNativeWebView) {
+      saveImageMobile(uri);
+      return;
+    }
+    setImageUri(uri);
+    setImageBottomSheetOpen(true);
   };
 
   useEffect(() => {
@@ -260,12 +149,12 @@ export default function DecorateWithStickers() {
       try {
         const croppedImageUrl = await cropAndResizeImage(
           selectedFeed.imageUrl as string,
-          230, // 원하는 너비
-          250 // 원하는 높이
+          CROP_WIDTH,
+          CROP_HEIGHT
         );
         setCroppedImage(croppedImageUrl);
       } catch (err) {
-        console.error("이미지 자르기 실패:", err);
+        logger.error("cropAndResizeImage failed", err);
       }
     };
 
@@ -294,15 +183,16 @@ export default function DecorateWithStickers() {
               className={styles.cardContainer}
             >
               <div
-                ref={ref}
+                ref={previewRef}
                 id="card"
                 className="relative rounded-[20px] w-full"
               >
                 <img
                   alt="frame"
-                  height={372}
-                  width={282}
+                  height={CARD_HEIGHT}
+                  width={CARD_WIDTH}
                   className={styles.frame}
+                  crossOrigin="anonymous"
                   src={frames[selectedFrame] || "/placeholder.svg"}
                 />
                 <div className={styles.cardWrapper}>
@@ -311,7 +201,7 @@ export default function DecorateWithStickers() {
                       <img
                         src={croppedImage || "/placeholder.svg"}
                         alt="Cropped Image"
-                        width={230}
+                        width={CROP_WIDTH}
                         height={218}
                       />
                     ) : (
@@ -319,7 +209,7 @@ export default function DecorateWithStickers() {
                         style={{
                           backgroundColor: "#AEAEAE",
                           height: 218,
-                          width: 230,
+                          width: CROP_WIDTH,
                         }}
                       />
                     )}
@@ -347,10 +237,15 @@ export default function DecorateWithStickers() {
           </div>
           <div className="mb-safe-bottom">
             <BottomButton
-              disabled={selectedFrame == null}
-              onClick={handleCaptureImage}
-              label="꾸미기 시작"
+              disabled={selectedFrame == null || isCapturing}
+              onClick={handleStartDecorate}
+              label={isCapturing ? "이미지 생성중..." : "꾸미기 시작"}
             />
+            {captureError && (
+              <div className="px-6 pt-3 text-C5 text-red-500">
+                이미지 생성에 실패했어요. 다시 시도해주세요.
+              </div>
+            )}
           </div>
         </Flex>
       )}
@@ -370,27 +265,38 @@ export default function DecorateWithStickers() {
             점선 영역이 이미지 영역이에요!
           </span>
           <Spacing size={32} />
-          <div style={{ width: "282px", height: "372px" }} ref={stageRef}>
+          <div
+            style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+            className="relative"
+          >
+            {capturedCardUrl && (
+              <img
+                src={capturedCardUrl}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover rounded-[20px] pointer-events-none"
+              />
+            )}
             <canvas
-              ref={canvasElementRef}
+              ref={canvasRef}
               id="canvas"
               style={{
-                width: "282px",
-                height: "372px",
-                backgroundImage: `url(${cardImgUrl})`,
+                width: `${CARD_WIDTH}px`,
+                height: `${CARD_HEIGHT}px`,
+                backgroundImage: capturedCardUrl
+                  ? "none"
+                  : `url(${cardImgUrl || frameUrl})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
               }}
             />
           </div>
-        </Flex>
-        <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
-          <FloatingButton tooltip />
-          <BottomButton
+	        </Flex>
+	        <div className="relative mx-auto max-w-[430px] w-full mb-safe-bottom">
+	          <FloatingButton tooltip />
+	          <BottomButton
             label={"이미지 저장"}
-            onClick={() => {
-              handleExport();
-            }}
+            onClick={handleExport}
+            disabled={!isFabricReady}
           />
         </div>
       </Flex>

@@ -6,6 +6,9 @@
 // });
 
 const nextConfig = {
+  experimental: {
+    optimizePackageImports: ["date-fns"],
+  },
   images: {
     unoptimized: true,
     formats: ["image/webp"],

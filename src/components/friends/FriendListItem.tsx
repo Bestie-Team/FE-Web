@@ -10,7 +10,7 @@ import DotSpinner from "../shared/Spinner/DotSpinner";
 import OptimizedImage from "../shared/OptimizedImage";
 import FriendOption from "../shared/FriendOption";
 
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { selectedFriendAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";
 import { useAuth } from "../shared/providers/AuthProvider";

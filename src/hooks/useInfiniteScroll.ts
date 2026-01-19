@@ -1,5 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import useDebounce from "./debounceForScroll";
+import { logger } from "@/utils/logger";
 
 interface InfiniteScrollType {
   isFetching: boolean;
@@ -66,7 +67,7 @@ export const useInfiniteScrollByRef = ({
     const element = targetRef.current;
 
     if (!element || isFetching || isLoadingRef.current) {
-      console.log("스크롤 체크 중단:", {
+      logger.debug("스크롤 체크 중단:", {
         refExists: !!targetRef.current,
         isFetching,
         isLoading: isLoadingRef.current,
@@ -91,7 +92,7 @@ export const useInfiniteScrollByRef = ({
       isLoadingRef.current = true;
       setPage((prev) => prev + 1);
     }
-  }, [isFetching, targetRef, threshold, selectedTab]);
+  }, [isFetching, targetRef, threshold]);
 
   const debouncedScroll = useDebounce(checkScrollPosition, 300);
 
@@ -117,4 +118,9 @@ export const useInfiniteScrollByRef = ({
       isLoadingRef.current = false;
     }
   }, [isFetching]);
+
+  useEffect(() => {
+    setPage(0);
+    isLoadingRef.current = false;
+  }, [selectedTab]);
 };

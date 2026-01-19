@@ -1,5 +1,6 @@
 import { displayFeed } from "@/remote/feed";
 import { useMutation } from "@tanstack/react-query";
+import { logger } from "@/utils/logger";
 
 export default function useDisplayFeed({
   feedId,
@@ -12,6 +13,6 @@ export default function useDisplayFeed({
     mutationKey: ["display/feed", feedId],
     mutationFn: async () => await displayFeed({ feedId }),
     onSuccess: (data: { message: string }) => onSuccess(data.message),
-    onError: (error) => console.log(error),
+    onError: (error) => logger.error("Failed to display feed", error),
   });
 }

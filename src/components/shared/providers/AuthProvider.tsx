@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { UserInfo } from "@/models/user";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { getUserAuth } from "@/remote/auth";
 import useUserProfile from "@/components/users/hooks/useUserProfile";
 import {
@@ -25,6 +25,7 @@ interface AuthContextType {
   logout: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
+  isInitialized: boolean;
   updateUserInfo: () => Promise<void>;
   userDeleted: boolean;
   setUserDeleted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,60 +37,59 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
+  const [token, setToken] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+  });
+  const [userInfo, setUserInfo] = useState<UserInfoMini | null>(() => {
+    if (typeof window === "undefined") return null;
+    const raw = localStorage.getItem(STORAGE_KEYS.USER_INFO);
+    if (!raw) return null;
+    try {
+      const parsed = JSON.parse(raw) as Partial<UserInfoMini> | null;
+      if (!parsed?.accountId) return null;
+      return {
+        accountId: parsed.accountId,
+        profileImageUrl: parsed.profileImageUrl ?? null,
+      };
+    } catch {
+      return null;
+    }
+  });
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(
+    () => typeof window !== "undefined"
+  );
   const [userDeleted, setUserDeleted] = useState(false);
-  const { data: userProfile } = useUserProfile();
+  const { data: userProfile } = useUserProfile({ enabled: !!token });
 
   const logout = useCallback(() => {
     clearAuthStorage();
+    setToken(null);
     setUserInfo(null);
   }, []);
 
-  const initialize = useCallback(async () => {
-    setIsLoading(true);
+  const readStoredUserInfo = useCallback((): UserInfoMini | null => {
+    if (typeof window === "undefined") return null;
+    const raw = localStorage.getItem(STORAGE_KEYS.USER_INFO);
+    if (!raw) return null;
     try {
-      const storedAuth = await getStoredAuth();
-
-      if (!storedAuth?.token) {
-        logout();
-        return;
-      }
-
-      const hasUserInfo =
-        storedAuth.userInfo && Object.keys(storedAuth.userInfo).length > 0;
-
-      if (hasUserInfo) {
-        // 로컬 정보가 있으면 일단 상태로 세팅
-        setUserInfo(storedAuth.userInfo);
-      }
-
-      // userInfo가 없거나 빈 객체면 서버에서 가져오기
-      if (!hasUserInfo) {
-        const user = await getUserAuth();
-        if (user) {
-          const newUserInfo = {
-            accountId: user.accountId,
-            profileImageUrl: user.profileImageUrl,
-          };
-          localStorage.setItem(
-            STORAGE_KEYS.USER_INFO,
-            JSON.stringify(newUserInfo)
-          );
-          setUserInfo(newUserInfo);
-        } else {
-          logout();
-        }
-      }
-    } catch (err) {
-      console.error("Auth 초기화 실패:", err);
-      logout();
-    } finally {
-      setIsLoading(false);
+      const parsed = JSON.parse(raw) as Partial<UserInfoMini> | null;
+      if (!parsed?.accountId) return null;
+      return {
+        accountId: parsed.accountId,
+        profileImageUrl: parsed.profileImageUrl ?? null,
+      };
+    } catch {
+      return null;
     }
-  }, [logout]);
+  }, []);
 
   const updateUserInfo = useCallback(async () => {
+    if (!token) {
+      logout();
+      return;
+    }
     setIsLoading(true);
     try {
       const user = await getUserAuth();
@@ -109,18 +109,67 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } finally {
       setIsLoading(false);
     }
-  }, [logout]);
+  }, [logout, token]);
 
   const login = useCallback((loginInfo: lighty.LoginResponse) => {
     const { accessToken, accountId, profileImageUrl } = loginInfo;
     const userInfoData = { accountId, profileImageUrl };
     saveAuthToStorage(accessToken, userInfoData);
+    setToken(accessToken);
     setUserInfo(userInfoData);
+    setIsInitialized(true);
   }, []);
 
   useEffect(() => {
-    initialize();
-  }, [initialize]);
+    setIsInitialized(true);
+
+    const storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+    setToken(storedToken);
+    setUserInfo(readStoredUserInfo());
+
+    if (storedToken) return;
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const storedAuth = await getStoredAuth();
+        if (cancelled) return;
+        if (!storedAuth?.token) return;
+        setToken(storedAuth.token);
+        if (storedAuth.userInfo) {
+          setUserInfo(storedAuth.userInfo);
+        }
+      } catch (err) {
+        console.error("Auth 초기화 실패:", err);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [readStoredUserInfo]);
+
+  useEffect(() => {
+    const syncFromStorage = () => {
+      setToken(localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN));
+      setUserInfo(readStoredUserInfo());
+    };
+
+    window.addEventListener("lighty:auth-changed", syncFromStorage);
+    window.addEventListener("storage", syncFromStorage);
+    return () => {
+      window.removeEventListener("lighty:auth-changed", syncFromStorage);
+      window.removeEventListener("storage", syncFromStorage);
+    };
+  }, [readStoredUserInfo]);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    if (!token) return;
+    if (userInfo?.accountId) return;
+
+    void updateUserInfo();
+  }, [isInitialized, token, updateUserInfo, userInfo?.accountId]);
 
   useEffect(() => {
     if (
@@ -140,8 +189,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         userInfo,
         login,
         logout,
-        isAuthenticated: !!userInfo && Object.keys(userInfo).length > 0,
+        isAuthenticated: !!token,
         isLoading,
+        isInitialized,
         updateUserInfo,
         userDeleted,
         setUserDeleted,

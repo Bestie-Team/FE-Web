@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 import { GatheringDetailResponse } from "@/models/gathering";
 import { apiClient } from "./api";
@@ -115,8 +115,7 @@ export async function postGathering({
 }: {
   gathering: lighty.CreateGatheringRequest;
 }) {
-  const { data } = await apiClient.post("/gatherings", gathering);
-  console.log(data);
+  await apiClient.post("/gatherings", gathering);
   return { message: "초대장을 성공적으로 발송하였습니다" };
 }
 

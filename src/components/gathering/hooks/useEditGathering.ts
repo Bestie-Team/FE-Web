@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { patchGathering } from "@/remote/gathering";
 import { useMutation } from "@tanstack/react-query";
 

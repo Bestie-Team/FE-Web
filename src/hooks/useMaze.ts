@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { logger } from "@/utils/logger";
 
 export default function useMaze() {
   useEffect(() => {
@@ -8,7 +9,7 @@ export default function useMaze() {
         try {
           t = m.sessionStorage.getItem("maze-us");
         } catch (err) {
-          console.log(err);
+          logger.debug(err);
         }
 
         if (!t) {
@@ -16,7 +17,7 @@ export default function useMaze() {
           try {
             m.sessionStorage.setItem("maze-us", String(t));
           } catch (err) {
-            console.log(err);
+            logger.debug(err);
           }
         }
 

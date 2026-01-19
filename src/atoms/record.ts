@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { atom, selector } from "recoil";
 
 export const recordGatheringAtom = atom<string>({

@@ -1,6 +1,6 @@
 import { getSearchFriends } from "@/remote/friends";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { useCallback } from "react";
 
 export default function useSearchFriends({

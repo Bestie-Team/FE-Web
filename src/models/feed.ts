@@ -1,5 +1,5 @@
 import { FeedGathering } from "./gathering";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 export interface Feed {
   id: string;

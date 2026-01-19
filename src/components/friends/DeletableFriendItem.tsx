@@ -3,7 +3,7 @@ import Flex from "../shared/Flex";
 import { GroupInfoResponse } from "@/models/group";
 import CloseIcon from "../shared/Icon/CloseIcon";
 import CheckIcon from "../shared/Icon/CheckIcon";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import LightyIcon from "../shared/Icon/LightyIcon";
 
 interface Props {

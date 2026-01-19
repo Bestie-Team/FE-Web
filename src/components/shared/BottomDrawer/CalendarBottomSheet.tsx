@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Button from "../Button/Button";
 import CalendarWithTime from "../Calender/CalendarWithTime";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import Flex from "../Flex";
 import { gatheringSelectedDateAtom, newGatheringInfo } from "@/atoms/gathering";
 import { format } from "date-fns";
@@ -49,7 +49,6 @@ export default function CalendarBottomSheet({
           disabled={selectedDate == null}
           onClick={() => {
             if (selectedDate !== null) {
-              console.log("selectedDate", selectedDate);
               const converted = makeUTC({
                 ampm,
                 date: format(new Date(selectedDate.toString()), "yyyy-MM-dd"),
@@ -66,7 +65,6 @@ export default function CalendarBottomSheet({
                   gatheringDate: converted,
                 }));
               }
-              console.log(converted, "ISOtime");
             }
             onClose();
           }}

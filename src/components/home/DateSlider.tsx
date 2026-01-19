@@ -6,7 +6,7 @@ import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import DateItem from "./DateItem";
 import { getDate, getDay } from "date-fns";
 import Link from "next/link";
-import { Gathering } from "lighty-type";
+import type { Gathering } from "lighty-type";
 
 export default function DateSlider({
   this_week,

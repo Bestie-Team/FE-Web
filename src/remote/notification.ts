@@ -1,5 +1,5 @@
 import { apiClient } from "./api";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 /**첫 번째 커서: { createdAt: 현재 날짜, id: uuid 아무 값이나 } */
 export async function getNotification({

@@ -1,8 +1,10 @@
-export const dynamic = "force-dynamic";
-
 import { type NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 import { createHash } from "crypto";
+import { logger } from "@/utils/logger";
+import { LRUCache } from "lru-cache";
+
+export const dynamic = "force-dynamic";
 
 // sharp 글로벌 설정
 sharp.cache({
@@ -13,17 +15,71 @@ sharp.concurrency(2);
 sharp.simd(true);
 
 // 메모리 캐시 설정
-const imageCache = new Map<
-  string,
-  { buffer: Buffer; contentType: string; timestamp: number }
->();
-
 const CACHE_TTL = 1800000;
 const MAX_CACHE_SIZE = 30;
 // const MAX_CACHE_MEMORY = 20 * 1024 * 1024;
 
-// 캐시 키 생성함수
+const imageCache = new LRUCache<
+  string,
+  { buffer: Buffer; contentType: string }
+>({
+  max: MAX_CACHE_SIZE,
+  ttl: CACHE_TTL,
+  updateAgeOnGet: true,
+});
 
+const DEFAULT_ALLOWED_HOSTS = ["cdn.lighty.today"];
+const ALLOWED_FITS = new Set<keyof sharp.FitEnum>([
+  "cover",
+  "contain",
+  "fill",
+  "inside",
+  "outside",
+]);
+
+function getAllowedHosts() {
+  const hosts = new Set(DEFAULT_ALLOWED_HOSTS);
+
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (backendUrl) {
+    try {
+      hosts.add(new URL(backendUrl).hostname);
+    } catch {
+      // ignore
+    }
+  }
+
+  const raw = process.env.IMAGE_RESIZE_ALLOWED_HOSTS;
+  if (raw) {
+    for (const host of raw.split(",")) {
+      const trimmed = host.trim();
+      if (trimmed) hosts.add(trimmed);
+    }
+  }
+
+  return Array.from(hosts);
+}
+
+function parseAndValidateImageUrl(rawUrl: string): URL | null {
+  let url: URL;
+  try {
+    url = new URL(rawUrl);
+  } catch {
+    return null;
+  }
+
+  const isProd = process.env.NODE_ENV === "production";
+  if (url.protocol !== "https:" && (isProd || url.protocol !== "http:")) {
+    return null;
+  }
+
+  const allowedHosts = getAllowedHosts();
+  if (!allowedHosts.includes(url.hostname)) return null;
+
+  return url;
+}
+
+// 캐시 키 생성함수
 function createCacheKey(url: string, params: URLSearchParams): string {
   // 모바일에서 중요한 파라미터만 캐시 키에 포함
   const essentialParams = ["width", "height", "format", "fit", "quality"];
@@ -39,30 +95,6 @@ function createCacheKey(url: string, params: URLSearchParams): string {
     .update(url + filteredParams.toString())
     .digest("hex");
 }
-// 캐시 정리 함수 (메모리 관리)
-
-function cleanupCache() {
-  const now = Date.now();
-  const keysToDelete: string[] = [];
-
-  for (const [key, value] of Array.from(imageCache.entries())) {
-    if (now - value.timestamp > CACHE_TTL) {
-      imageCache.delete(key);
-    }
-  }
-  keysToDelete.forEach((key) => imageCache.delete(key));
-
-  if (imageCache.size > MAX_CACHE_SIZE) {
-    const sorted = Array.from(imageCache.entries()).sort(
-      (a, b) => a[1].timestamp - b[1].timestamp
-    );
-    for (let i = 0; i < imageCache.size - MAX_CACHE_SIZE; i++) {
-      imageCache.delete(sorted[i][0]);
-    }
-  }
-}
-
-setInterval(cleanupCache, 600000);
 
 export async function GET(request: NextRequest) {
   try {
@@ -73,6 +105,14 @@ export async function GET(request: NextRequest) {
     if (!imageUrl) {
       return NextResponse.json(
         { error: "이미지 URL이 제공되지 않았습니다" },
+        { status: 400 }
+      );
+    }
+
+    const parsedUrl = parseAndValidateImageUrl(imageUrl);
+    if (!parsedUrl) {
+      return NextResponse.json(
+        { error: "허용되지 않은 이미지 URL입니다" },
         { status: 400 }
       );
     }
@@ -94,34 +134,45 @@ export async function GET(request: NextRequest) {
     // 파라미터 파싱 및 검증 (모바일 제한)
     // 모바일 화면 크기 고려한 최대 크기 제한
 
+    const parseIntOr = (value: string | null, fallback: number) => {
+      const parsed = Number.parseInt(value ?? "");
+      return Number.isFinite(parsed) ? parsed : fallback;
+    };
+
     const width = Math.min(
-      Number.parseInt(searchParams.get("width") || "0"),
+      Math.max(0, parseIntOr(searchParams.get("width"), 0)),
       1080 // 모바일: 1080p 제한
     );
     const height = Math.min(
-      Number.parseInt(searchParams.get("height") || "0"),
+      Math.max(0, parseIntOr(searchParams.get("height"), 0)),
       1920 // 모바일: 1920p 제한
     );
 
     const quality = Math.min(
-      Number.parseInt(searchParams.get("quality") || "75"), // 모바일: 기본 75
+      Math.max(1, parseIntOr(searchParams.get("quality"), 75)), // 모바일: 기본 75
       90 // 모바일: 최대 90
     );
 
     const effort = Math.min(
-      Number.parseInt(searchParams.get("effort") || "3"), // 모바일: 기본 3
+      Math.max(0, parseIntOr(searchParams.get("effort"), 3)), // 모바일: 기본 3
       4 // 모바일: 최대 4
     );
 
-    const format = searchParams.get("format") || "webp"; // 모바일: WebP 기본
-    const fit = (searchParams.get("fit") || "cover") as keyof sharp.FitEnum;
+    const formatParam = searchParams.get("format") || "webp"; // 모바일: WebP 기본
+    const format = formatParam === "avif" ? "avif" : "webp";
+
+    const fitParam = (searchParams.get("fit") ||
+      "cover") as keyof sharp.FitEnum;
+    const fit: keyof sharp.FitEnum = ALLOWED_FITS.has(fitParam)
+      ? fitParam
+      : "cover";
 
     // 9. 이미지 다운로드 (타임아웃 및 에러 처리)
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000); // 모바일: 8초 제한
 
     try {
-      const res = await fetch(imageUrl, {
+      const res = await fetch(parsedUrl.toString(), {
         signal: controller.signal,
         headers: {
           "User-Agent":
@@ -153,9 +204,11 @@ export async function GET(request: NextRequest) {
       const metadata = await pipeline.metadata();
 
       // 원본이 이미 작으면 리사이징 스킵
+      const originalWidth = metadata.width ?? 0;
+      const originalHeight = metadata.height ?? 0;
       const needsResize =
-        (width > 0 && metadata.width! > width) ||
-        (height > 0 && metadata.height! > height);
+        (width > 0 && originalWidth > width) ||
+        (height > 0 && originalHeight > height);
 
       if (needsResize) {
         pipeline = pipeline.resize({
@@ -214,7 +267,6 @@ export async function GET(request: NextRequest) {
         imageCache.set(cacheKey, {
           buffer: output,
           contentType,
-          timestamp: Date.now(),
         });
       }
 
@@ -231,6 +283,10 @@ export async function GET(request: NextRequest) {
       clearTimeout(timeoutId);
     }
   } catch (err) {
-    console.error("이미지 최적화 오류:", err);
+    logger.error("이미지 최적화 오류:", err);
+    return NextResponse.json(
+      { error: "이미지 최적화 중 오류가 발생했습니다" },
+      { status: 500 }
+    );
   }
 }

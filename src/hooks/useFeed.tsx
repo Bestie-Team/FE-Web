@@ -17,7 +17,7 @@ import useDeleteFeed from "@/components/feeds/hooks/useDeleteFeed";
 import useDeleteComment from "@/components/feeds/hooks/useDeleteComment";
 import useHideFeed from "@/components/feeds/hooks/useHideFeed";
 
-import { errorToast, invalidateQueries } from "@/utils/feedUtils";
+import { errorToast, handleRefresh } from "@/utils/feedUtils";
 
 import {
   handleDeleteCommentSuccess,
@@ -42,17 +42,6 @@ export default function useFeed() {
     }),
     []
   );
-
-  const handleRefresh = async (key: string) => {
-    try {
-      await invalidateQueries(queryClient, [key]);
-      return true;
-    } catch (error) {
-      console.error("Refresh failed:", error);
-      errorToast("새로고침에 실패했어요");
-      return false;
-    }
-  };
 
   // Feed 데이터
   const {
@@ -109,8 +98,8 @@ export default function useFeed() {
     loadMore,
     loadMoreMine,
 
-    handleRefreshAll: () => handleRefresh("get/feeds/all"),
-    handleRefreshMine: () => handleRefresh("get/feeds/mine"),
+    handleRefreshAll: () => handleRefresh(queryClient, ["get/feeds/all"]),
+    handleRefreshMine: () => handleRefresh(queryClient, ["get/feeds/mine"]),
 
     deleteFeed,
     deleteComment,

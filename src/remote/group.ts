@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { apiClient } from "./api";
 import { CreateGroupRequest, UpdateGroupRequest } from "@/models/group";
 
@@ -53,24 +53,21 @@ export async function postGroupMember({
   groupId: string;
   userIds: string[] | null;
 }) {
-  const { data } = await apiClient.post(`/groups/${groupId}/members`, {
+  await apiClient.post(`/groups/${groupId}/members`, {
     userIds,
   });
-  console.log(data);
   return { message: "그룹원을 성공적으로 추가하였습니다" };
 }
 
 /** 그룹 나가기 */
 export async function deleteGroupMember({ groupId }: { groupId: string }) {
-  const { data } = await apiClient.delete(`/groups/${groupId}/members`);
-  console.log(data);
+  await apiClient.delete(`/groups/${groupId}/members`);
   return { message: "그룹에서 성공적으로 나갔습니다" };
 }
 
 /** 그룹 삭제 (그룹장) */
 export async function deleteGroup({ groupId }: { groupId: string }) {
-  const { data } = await apiClient.delete(`/groups/${groupId}`);
-  console.log(data);
+  await apiClient.delete(`/groups/${groupId}`);
   return {
     message: "그룹을 성공적으로 삭제하였습니다",
   };
@@ -78,8 +75,7 @@ export async function deleteGroup({ groupId }: { groupId: string }) {
 
 /** 그룹 나가기 (그룹원) */
 export async function exitGroup({ groupId }: { groupId: string }) {
-  const { data } = await apiClient.delete(`/groups/${groupId}/members`);
-  console.log(data);
+  await apiClient.delete(`/groups/${groupId}/members`);
   return {
     message: "그룹을 성공적으로 나갔습니다",
   };

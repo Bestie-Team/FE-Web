@@ -1,7 +1,7 @@
 import { postGathering } from "@/remote/gathering";
 import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 export default function useMakeGathering({
   gathering,

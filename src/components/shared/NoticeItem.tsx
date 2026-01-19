@@ -1,4 +1,4 @@
-import { NotificationTypes } from "lighty-type";
+import type { NotificationTypes } from "lighty-type";
 import Flex from "./Flex";
 import ArrowRightIcon from "./Icon/ArrowRightIcon";
 import Spacing from "./Spacing";

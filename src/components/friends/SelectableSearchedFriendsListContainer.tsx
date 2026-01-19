@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 import useSearchFriends from "./hooks/useSearchFriends";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";

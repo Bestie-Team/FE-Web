@@ -1,7 +1,7 @@
 import Flex from "../shared/Flex";
 import { SetterOrUpdater } from "recoil";
 import SelectableGroupItem from "./SelectableGroupItem";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 export default function AddGroupSlider({
   group_data,

@@ -10,7 +10,7 @@ import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import useExitGroup from "@/components/groups/hooks/useExitGroup";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
-import { User } from "lighty-type";
+import type { User } from "lighty-type";
 import Flex from "@/components/shared/Flex";
 import GroupOptions from "@/components/groups/GroupOptions";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
@@ -58,8 +58,8 @@ export default function GroupDetailPage() {
 
   const handleDeleteSuccess = async () => {
     await Promise.all([
-      await queryClient.invalidateQueries({ queryKey: ["groups"] }),
-      await queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
+      queryClient.invalidateQueries({ queryKey: ["groups"] }),
+      queryClient.invalidateQueries({ queryKey: ["user/detail"] }),
     ]);
     lightyToast.success("그룹 나가기/삭제 성공");
     router.replace("/social");
@@ -75,10 +75,10 @@ export default function GroupDetailPage() {
 
   const reportSuccessHandler = async (data: { message: string }) => {
     await Promise.all([
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["groups"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["user/detail"],
       }),
     ]);

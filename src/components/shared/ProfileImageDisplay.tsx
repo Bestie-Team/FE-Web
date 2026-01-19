@@ -29,7 +29,6 @@ export default function ProfileImageDisplay({
   const [newImage, setNewImage] = useState<string>(userImage ? userImage : "");
   const { mutate } = usePostProfileImage({
     onSuccess: async (imageUrl) => {
-      console.log("프로필 사진 업로드 성공", imageUrl);
       setUserImage((prev) => ({ ...prev, profileImageUrl: imageUrl }));
     },
   });
@@ -57,17 +56,15 @@ export default function ProfileImageDisplay({
       let imageUrl: string | null = null;
 
       try {
-        if (ext) {
-          const convertedFile = await compressImage(inputFile);
-          if (!convertedFile) return;
-          imageUrl = URL.createObjectURL(convertedFile);
-        } else {
-          imageUrl = URL.createObjectURL(inputFile);
-        }
+        const processedFile = ["jpg", "jpeg", "png"].includes(ext)
+          ? await compressImage(inputFile)
+          : inputFile;
+
+        imageUrl = URL.createObjectURL(processedFile);
 
         setNewImage(imageUrl);
 
-        mutate({ file: inputFile });
+        mutate({ file: processedFile });
       } catch (error) {
         console.error("Error processing file:", error);
         lightyToast.error("파일 처리 중 오류가 발생했습니다.");

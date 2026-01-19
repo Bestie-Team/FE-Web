@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { atom } from "recoil";
 
 export const gatheringModalStateAtom = atom<boolean>({

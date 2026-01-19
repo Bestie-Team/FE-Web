@@ -26,6 +26,9 @@ export const saveAuthToStorage = (
 ) => {
   localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, token);
   localStorage.setItem(STORAGE_KEYS.USER_INFO, JSON.stringify(userInfo));
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("lighty:auth-changed"));
+  }
 };
 
 export const clearAuthStorage = () => {
@@ -33,4 +36,7 @@ export const clearAuthStorage = () => {
   localStorage.removeItem(STORAGE_KEYS.USER_INFO);
   document.cookie =
     "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("lighty:auth-changed"));
+  }
 };

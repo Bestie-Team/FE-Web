@@ -3,7 +3,7 @@ import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
 import Button from "../shared/Button/Button";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import useRequestFriend from "../friends/hooks/useRequestFriend";
 import { useQueryClient } from "@tanstack/react-query";
 import { userSearchAtom } from "@/atoms/friends";
@@ -32,10 +32,10 @@ export default function UserListItem({
     userId: userInfo?.id,
     onSuccess: async (data: { message: string }) => {
       await Promise.all([
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["users", debouncedSearch],
         }),
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({
           queryKey: ["sentAndReceived", "friendsRequests", { accountId: "a" }],
         }),
       ]);

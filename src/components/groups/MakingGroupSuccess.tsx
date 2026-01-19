@@ -6,7 +6,7 @@ import NewGroupContainer from "./NewGroupContainer";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import FullPageLoader from "../shared/FullPageLoader";
 import { CreateGroupRequest } from "@/models/group";
-import Header from "../layout/Header";
+import Header from "../layout/Header/Header";
 
 export default function MakingGroupSuccess({
   group,

@@ -8,7 +8,7 @@ import PencilIcon from "../shared/Icon/PencilIcon";
 import Flex from "../shared/Flex";
 import UserIcon from "../shared/Icon/UserIcon";
 import MemberContainer from "../shared/MembersContainer";
-import { GroupDetailResponse } from "lighty-type";
+import type { GroupDetailResponse } from "lighty-type";
 
 export default function GroupDetailContainer({
   groupDetail,

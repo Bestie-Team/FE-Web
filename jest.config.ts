@@ -153,8 +153,9 @@ const config: Config.InitialOptions = {
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
-  // The test environment that will be used for testing
-  testEnvironment: "jsdom",
+  // Jest 28+ no longer ships `jest-environment-jsdom` by default.
+  // Use a lightweight custom JSDOM environment backed by the already-installed `jsdom` package.
+  testEnvironment: "<rootDir>/jest.environment.jsdom.cjs",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -201,7 +202,7 @@ const config: Config.InitialOptions = {
   // watchPathIgnorePatterns: [],
 
   // Whether to use watchman for file crawling
-  // watchman: true,
+  watchman: false,
 };
 
 export default createJestConfig(config);

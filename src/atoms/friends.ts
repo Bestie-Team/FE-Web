@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 export const friendsSelectedTabAtom = atom<"1" | "2">({
   key: "friends/selectedTab",

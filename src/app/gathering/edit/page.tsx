@@ -1,7 +1,7 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import useEditGathering from "@/components/gathering/hooks/useEditGathering";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
@@ -28,10 +28,10 @@ export default function GatheringEditPage() {
 
   const editSuccessHandler = async (data: { message: string }) => {
     await Promise.all([
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["gatherings/all"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["gathering/detail", selectedGatheringId],
       }),
     ]);

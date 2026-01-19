@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import ArrowLeftIcon from "../../shared/Icon/ArrowLeftIcon";
 import Spacing from "../../shared/Spacing";

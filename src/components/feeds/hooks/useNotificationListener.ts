@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { WEBVIEW_EVENT } from "@/webview/types/events";
 
 export function useNotificationListener() {
   useEffect(() => {

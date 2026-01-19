@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { newGatheringInfo } from "@/atoms/gathering";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { lightyToast } from "@/utils/toast";

@@ -63,7 +63,6 @@ export default function AddGroupPhoto({
 
       if (ext === "png" || ext === "jpg" || ext === "jpeg") {
         const convertedFile = await compressImage(file);
-        console.log("converted", convertedFile);
         setGroupImageFile(convertedFile);
         return;
       } else {

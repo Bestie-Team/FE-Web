@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { ko } from "date-fns/locale";
+import { ko } from "date-fns/locale/ko";
 
 export default function makeUTC({
   ampm,

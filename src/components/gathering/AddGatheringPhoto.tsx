@@ -5,7 +5,7 @@ import PhotoIcon from "../shared/Icon/PhotoIcon";
 import Spacing from "../shared/Spacing";
 import { SetterOrUpdater } from "recoil";
 import useUploadInvitationImage from "./hooks/useUploadInvitationImage";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "../shared/Spinner/DotSpinner";
 import { compressImage } from "@/utils/compress";
@@ -26,7 +26,6 @@ export default function AddGatheringPhoto({
   const { mutate: uploadInvitationImage } = useUploadInvitationImage({
     file: gatheringImageFile as File,
     onSuccess: (data: { imageUrl: string; message: string }) => {
-      console.log(data.imageUrl);
       setImage((prev) => ({ ...prev, invitationImageUrl: data.imageUrl }));
     },
     onError: (error: Error) => lightyToast.error(error.message),
@@ -55,7 +54,6 @@ export default function AddGatheringPhoto({
 
       if (ext === "png" || ext === "jpg" || ext === "jpeg") {
         const convertedFile = await compressImage(file);
-        console.log("converted", convertedFile);
         setGatheringImageFile(convertedFile);
         return;
       } else {

@@ -1,6 +1,7 @@
 import { postProfileImage } from "@/remote/profile";
 import { lightyToast } from "@/utils/toast";
 import { useMutation } from "@tanstack/react-query";
+import { logger } from "@/utils/logger";
 
 export default function usePostProfileImage({
   onSuccess,
@@ -12,7 +13,7 @@ export default function usePostProfileImage({
     mutationFn: async ({ file }: { file: File | null }) => {
       if (file == null) throw new Error("업로드할 파일이 없습니다.");
       else {
-        console.log(file);
+        logger.debug("Uploading profile image", file);
         return await postProfileImage({ file });
       }
     },

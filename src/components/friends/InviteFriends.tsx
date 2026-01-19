@@ -2,7 +2,7 @@ import SelectFriendsContainer from "@/components/friends/SelectFriendsContainer"
 import SearchInput from "@/components/shared/Input/SearchBar";
 import Spacing from "@/components/shared/Spacing";
 import { Dispatch, SetStateAction } from "react";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import HeaderWithBtn from "../layout/Header/HeaderWithBtn";
 
 export default function InviteFriends({

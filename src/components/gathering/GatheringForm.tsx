@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import Input from "../shared/Input/Input";
 import FeedIcon from "../shared/Icon/FeedIcon";

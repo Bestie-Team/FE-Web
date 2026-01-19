@@ -8,6 +8,7 @@ export default function useGatheringDetail({ id }: { id: string }) {
   return useQuery({
     queryKey: ["gathering/detail", id],
     queryFn: () => getGatheringDetail({ gatheringId: id }),
+    enabled: !!id,
     retry: (failureCount, error) => {
       if (failureCount === 7) {
         return false;

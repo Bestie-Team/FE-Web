@@ -1,7 +1,7 @@
 import { getFriends } from "@/remote/friends";
 import { lightyToast } from "@/utils/toast";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
@@ -12,6 +12,7 @@ function useFriends({ userId }: { userId?: string }) {
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getFriends({ ...pageParam, limit: 10 });
     },
+    enabled: !!userId,
     retry: (failureCount, error) => {
       if (failureCount === 10) {
         return false;
@@ -50,6 +51,7 @@ export function useFriendsAll({ userId }: { userId: string }) {
     queryFn: async ({ pageParam }): Promise<lighty.FriendListResponse> => {
       return getFriends({ ...pageParam, limit: 100 });
     },
+    enabled: !!userId,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: {
       name: "가",

@@ -1,5 +1,5 @@
 import { addDays, format, getDate } from "date-fns";
-import { ko } from "date-fns/locale";
+import { ko } from "date-fns/locale/ko";
 
 export default function getNext7Days() {
   const today = new Date();

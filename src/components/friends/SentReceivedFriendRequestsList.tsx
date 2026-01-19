@@ -3,7 +3,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import FriendListItem from "./FriendListItem";
 import DotSpinner from "../shared/Spinner/DotSpinner";
-import { User } from "lighty-type";
+import type { User } from "lighty-type";
 import useSentAndReceivedFriendsRequests from "./hooks/useSentAndReceivedFriendsRequests";
 interface Request {
   sender: User;

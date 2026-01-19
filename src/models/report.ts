@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 
 export interface ReportRequestInterface {
   reportedId: string;

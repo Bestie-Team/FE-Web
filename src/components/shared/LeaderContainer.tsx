@@ -1,6 +1,6 @@
 import Flex from "./Flex";
 import Button from "./Button/Button";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
 import OptimizedImage from "./OptimizedImage";
 

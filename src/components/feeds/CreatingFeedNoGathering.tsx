@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { useRouter } from "next/navigation";
 import FeedForm from "./FeedForm";
 import useUploadFeedImages from "./hooks/useUploadFeedImages";
@@ -31,13 +31,13 @@ export default function CreatingFeedNoGathering() {
   const handleFeedSuccess = async () => {
     router.replace("/feed");
     await Promise.all([
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["get/feeds/mine"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["get/feeds/all"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["user/detail"],
       }),
     ]);
@@ -55,7 +55,6 @@ export default function CreatingFeedNoGathering() {
     files: filesToUpload,
     gatheringId: "",
     onSuccess: (data: { imageUrls: string[]; message: string }) => {
-      console.log("FeedImageUploaded", data);
       if (setFeedInfo) {
         setFeedInfo((prev) => ({
           ...(prev as lighty.CreateFriendFeedRequest),

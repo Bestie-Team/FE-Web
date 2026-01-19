@@ -15,12 +15,13 @@ import { UpdateGroupRequest } from "@/models/group";
 import useUpdateGroup from "@/components/groups/hooks/useUpdateGroup";
 import { lightyToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import AddOnlyFriendsSlider from "@/components/groups/AddOnlyFriendsSlider";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import { useQueryClient } from "@tanstack/react-query";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { postGroupMember } from "@/remote/group";
+import { logger } from "@/utils/logger";
 
 export default function GroupEditPage() {
   const queryClient = useQueryClient();
@@ -49,7 +50,7 @@ export default function GroupEditPage() {
         });
       } catch (e) {
         lightyToast.error("그룹원 추가 실패");
-        console.log(e);
+        logger.error("Failed to add group members", e);
       }
     }
     await queryClient.invalidateQueries({

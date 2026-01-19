@@ -1,19 +1,24 @@
 import { QueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
+import type { QueryKey } from "@tanstack/react-query";
+import { logger } from "@/utils/logger";
 
 // 여러 쿼리를 invalidate
-export async function invalidateQueries(queryClient: QueryClient, keys: any[]) {
+export async function invalidateQueries(
+  queryClient: QueryClient,
+  keys: QueryKey[]
+) {
   await Promise.all(
     keys.map((key) => queryClient.invalidateQueries({ queryKey: key }))
   );
 }
 
-export async function handleRefresh(queryClient: QueryClient, key: string) {
+export async function handleRefresh(queryClient: QueryClient, key: QueryKey) {
   try {
     await invalidateQueries(queryClient, [key]);
     return true;
   } catch (error) {
-    console.error("Refresh failed:", error);
+    logger.error("Refresh failed:", error);
     lightyToast.error("새로고침에 실패했어요");
     return false;
   }

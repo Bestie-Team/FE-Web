@@ -6,11 +6,12 @@ import useEditFeed from "@/components/feeds/hooks/useEditFeed";
 import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import FullPageLoader from "@/components/shared/FullPageLoader";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
 import { useQueryClient } from "@tanstack/react-query";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
+import { logger } from "@/utils/logger";
 
 export default function EditingFeed() {
   const router = useRouter();
@@ -39,8 +40,8 @@ export default function EditingFeed() {
     feedId: originalFeedValue?.id || "",
     onSuccess: async (data) => {
       await Promise.all([
-        await queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
-        await queryClient.invalidateQueries({
+        queryClient.invalidateQueries({ queryKey: ["get/feeds/mine"] }),
+        queryClient.invalidateQueries({
           queryKey: ["get/feeds/all"],
         }),
       ]);
@@ -48,8 +49,8 @@ export default function EditingFeed() {
       lightyToast.success(data.message);
     },
     onError: (error) => {
-      console.log(error);
-      console.log(originalFeedValue?.id);
+      logger.error("Failed to edit feed", { error, feedId: originalFeedValue?.id });
+      lightyToast.error("피드 수정에 실패했어요");
     },
   });
 

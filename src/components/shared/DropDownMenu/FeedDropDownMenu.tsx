@@ -23,7 +23,6 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
     const setFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
 
     const handleModalOpen = (type: ModalType) => {
-      console.log(`Opening modal of type: ${type} for feed: ${feed.id}`);
       setModalOpen({
         type,
         isOpen: true,
@@ -31,7 +30,6 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
     };
 
     const clickedMenuItemHandler = (item: string) => {
-      console.log(`Clicked menu item: ${item}`);
       if (item.includes("삭제")) {
         setFeedId(feed.id);
         handleModalOpen("deleteFeed");
@@ -80,7 +78,6 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log(`Clicked menu item: ${menuItem}`);
                     clickedMenuItemHandler(menuItem);
                   }}
                 >

@@ -1,6 +1,7 @@
 import { postGatheringFeed } from "@/remote/feed";
 import { useMutation } from "@tanstack/react-query";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
+import { logger } from "@/utils/logger";
 
 export default function useMakeGatheringFeed({
   feedRequest,
@@ -20,7 +21,7 @@ export default function useMakeGatheringFeed({
     mutationFn: async () =>
       await postGatheringFeed({ gatheringFeed: feedRequest }),
     onSuccess: (data: { message: string }) => {
-      console.log(feedRequest);
+      logger.debug("Feed created", feedRequest);
       onSuccess(data);
     },
     onError: (error) => onError(error),

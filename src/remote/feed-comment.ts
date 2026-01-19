@@ -1,5 +1,5 @@
 import { apiClient } from "./api";
-import { FeedCommentResponse } from "lighty-type";
+import type { FeedCommentResponse } from "lighty-type";
 interface CommentResponse {
   message: string;
 }

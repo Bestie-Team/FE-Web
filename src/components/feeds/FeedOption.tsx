@@ -15,7 +15,6 @@ export default function FeedOption({ feed, type }: OptionsProps) {
   const { openedDropdownId, dropDownRef } = useDropdown();
   const { userInfo } = useAuth();
   const isMe = feed.writer.accountId === userInfo?.accountId;
-  console.log(feed.writer.accountId, userInfo?.accountId);
   return (
     <>
       <OptionsSelectIcon />

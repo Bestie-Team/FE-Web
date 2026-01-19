@@ -6,7 +6,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
 import { selectedFriendsAtom } from "@/atoms/friends";
 import { gatheringModalStateAtom } from "@/atoms/gathering";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import useFriends from "./hooks/useFriends";
 import Modal from "../shared/Modal/Modal";
 import { friendsToShareAtom } from "@/atoms/record";
@@ -107,8 +107,6 @@ export default function SelectFriendsContainer({
     } else if (type === "groupEdit") {
       handleSubmitSelectionToGroupEdit();
     } else handleSubmitSelection();
-
-    console.log(exceptFriends);
   };
 
   const getLabel = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import SettingsMenuItem from "./SettingsMenuItem";
-import { UserDetailResponse } from "lighty-type";
+import type { UserDetailResponse } from "lighty-type";
 
 export interface SettingsItem {
   title: string;

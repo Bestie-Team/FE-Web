@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { recordGatheringAtom } from "@/atoms/record";
 import { useRouter } from "next/navigation";
 import useGatheringDetail from "../gathering/hooks/useGatheringDetail";
@@ -30,16 +30,16 @@ export default function CreatingFeed() {
   const handleFeedSuccess = async (data: { message: string }) => {
     router.replace("/feed");
     await Promise.all([
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["gatherings/no-feed"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["get/feeds/mine"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["get/feeds/all"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["user/detail"],
       }),
     ]);
@@ -52,7 +52,6 @@ export default function CreatingFeed() {
     message: string;
   }) => {
     lightyToast.success("이미지 업로드 성공");
-    console.log(uploadImages);
     setFeedInfo((prev) => ({
       ...prev,
       imageUrls: data.imageUrls,

@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import {
   patchProfileImageWithToken,
   postProfileImageWithToken,
@@ -143,10 +143,10 @@ export async function getKakaoToken({
 
 /** 회원 정보 조회 */
 export async function getUserAuth() {
-  const response: lighty.UserProfileResponse = await apiClient.get(
+  const { data } = await apiClient.get<lighty.UserProfileResponse>(
     "/users/profile"
   );
-  return response;
+  return data;
 }
 
 export async function getLogout(deviceId: string) {

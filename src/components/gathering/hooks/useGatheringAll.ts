@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { getGatheringAll } from "@/remote/gathering";
 import { useCallback } from "react";
 import { maxDate, minDate } from "@/constants/time";

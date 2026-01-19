@@ -1,6 +1,6 @@
 import "swiper/css";
 import Flex from "./Flex";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import OptimizedImage from "./OptimizedImage";
 
 export default function MemberContainer({

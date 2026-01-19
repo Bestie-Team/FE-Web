@@ -3,7 +3,7 @@ import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import UploadPhotoSwiper from "./UploadPhotoSwiper";
 import FixedBottomButton from "../shared/Button/FixedBottomButton";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { GatheringDetailResponse } from "@/models/gathering";
 import { Feed } from "@/models/feed";
 import { useReactNativeWebView } from "../shared/providers/ReactNativeWebViewProvider";

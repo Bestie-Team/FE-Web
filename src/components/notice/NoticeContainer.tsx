@@ -1,4 +1,4 @@
-import { Notification } from "lighty-type";
+import type { Notification } from "lighty-type";
 import Flex from "../shared/Flex";
 import useNotification from "./hooks/useNotification";
 import ReportNoticeItem from "./ReportNoticeItem";

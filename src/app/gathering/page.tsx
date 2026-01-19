@@ -8,7 +8,6 @@ import clsx from "clsx";
 import { useTabs } from "@/hooks/useTabs";
 import useGatheringEnded from "@/components/gathering/hooks/useGatheringEnded";
 import { useInfiniteScrollByRef } from "@/hooks/useInfiniteScroll";
-import PullToRefresh from "react-simple-pull-to-refresh";
 import { useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import Schedule from "@/components/schedule/Schedule";
@@ -25,6 +24,11 @@ import { useScrollRestorationOfRef } from "@/hooks/useScrollRestorationOfRef";
 
 const MemoriesBottomSheet = dynamic(
   () => import("@/components/shared/BottomDrawer/MemoriesBottomSheet"),
+  { ssr: false }
+);
+
+const PullToRefresh = dynamic(
+  () => import("react-simple-pull-to-refresh").then((mod) => mod.default),
   { ssr: false }
 );
 

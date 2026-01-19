@@ -1,4 +1,4 @@
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";

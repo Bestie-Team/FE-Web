@@ -8,7 +8,7 @@ import CameraIcon from "../Icon/CameraIcon";
 import ArrowRightIcon from "../Icon/ArrowRightIcon";
 import { useReactNativeWebView } from "../providers/ReactNativeWebViewProvider";
 import { requestCameraPermission } from "@/webview/actions";
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { WEBVIEW_EVENT } from "@/webview/types/events";
 import Modal from "../Modal/Modal";
 
 export default function PhotoSelectBottomSheet({

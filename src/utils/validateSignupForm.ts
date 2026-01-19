@@ -1,6 +1,8 @@
 import { RegisterRequestType } from "@/components/shared/AddPhoto";
 import { Provider } from "@/components/SignupForm";
-import validator from "validator";
+import isAlpha from "validator/lib/isAlpha";
+import isEmpty from "validator/lib/isEmpty";
+import isLowercase from "validator/lib/isLowercase";
 
 const validateForm = (formValues: RegisterRequestType) => {
   const errors: Partial<{
@@ -11,15 +13,15 @@ const validateForm = (formValues: RegisterRequestType) => {
     provider: Provider;
   }> = {};
 
-  if (!validator.isEmpty(formValues.accountId)) {
+  if (!isEmpty(formValues.accountId)) {
     if (formValues.accountId.length <= 3) {
       errors.accountId = "아이디는 4글자 이상 입력해주세요.";
     }
-    if (!validator.isLowercase(formValues.accountId)) {
+    if (!isLowercase(formValues.accountId)) {
       errors.accountId = "소문자만 입력 가능합니다.";
     }
     if (
-      !validator.isAlpha(formValues.accountId) &&
+      !isAlpha(formValues.accountId) &&
       /[^\w\s_]/.test(formValues.accountId)
     ) {
       errors.accountId = "영문을 필수로 입력해주세요";

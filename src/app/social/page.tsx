@@ -19,20 +19,19 @@ export default function FriendsAndGroups() {
   const searchParams = useSearchParams();
   const [selectedTab, setSelectedTab] = useRecoilState(friendsSelectedTabAtom);
   const tabParam = searchParams?.get("tab");
+  const derivedTab = tabParam ? (tabParam === "group" ? "2" : "1") : selectedTab;
 
   useEffect(() => {
-    if (tabParam) {
-      setSelectedTab(tabParam === "group" ? "2" : "1");
-      router.replace("/social");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!tabParam) return;
+    setSelectedTab(tabParam === "group" ? "2" : "1");
+    router.replace("/social");
+  }, [router, setSelectedTab, tabParam]);
 
   return (
     <div className="h-dvh pt-safe-top pb-safe-bottom">
-      <SocialHeader selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <SocialHeader selectedTab={derivedTab} setSelectedTab={setSelectedTab} />
       <div className="pt-[87px] pb-16">
-        {selectedTab === "1" ? <UserFriendsListContainer /> : <Groups />}
+        {derivedTab === "1" ? <UserFriendsListContainer /> : <Groups />}
       </div>
     </div>
   );

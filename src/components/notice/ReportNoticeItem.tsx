@@ -1,6 +1,6 @@
 import React from "react";
 import NoticeItem from "../shared/NoticeItem";
-import { Notification } from "lighty-type";
+import type { Notification } from "lighty-type";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 export type NotificationTypes =

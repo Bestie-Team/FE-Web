@@ -1,7 +1,7 @@
 import { getSentInvitationToGatheringList } from "@/remote/gathering";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { v4 as uuidv4 } from "uuid";
 import { maxDate, minDate } from "@/constants/time";
 

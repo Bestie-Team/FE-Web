@@ -32,10 +32,10 @@ export default function NewGroupForm({
   const makeGroupSuccessHandler = async (data: { message: string }) => {
     setStep(0);
     await Promise.all([
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["groups"],
       }),
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ["user/detail"],
       }),
     ]);

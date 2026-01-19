@@ -2,7 +2,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import clsx from "clsx";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import GroupMemberImages from "../shared/GroupMemberImages";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import OptimizedImage from "../shared/OptimizedImage";

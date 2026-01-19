@@ -8,42 +8,43 @@ import { useAuth } from "./shared/providers/AuthProvider";
 import { clearAuthStorage } from "@/utils/authStorage";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isLoading, userInfo, updateUserInfo, isAuthenticated } = useAuth();
+  const { isInitialized, isAuthenticated } = useAuth();
 
   const router = useRouter();
   const pathname = usePathname();
 
+  const isPublicRoute =
+    pathname === "/" ||
+    pathname.includes("kakao") ||
+    pathname.includes("oauth") ||
+    pathname.includes("google") ||
+    pathname.includes("apple") ||
+    pathname.includes("/signup") ||
+    pathname.includes("/onboard");
+
   useEffect(() => {
-    if (!isLoading && isAuthenticated && pathname === "/") {
+    if (isInitialized && isAuthenticated && pathname === "/") {
       router.replace("/feed");
     }
-  }, [pathname, router, isAuthenticated, isLoading]);
+  }, [pathname, router, isAuthenticated, isInitialized]);
 
   // ✅ 인증 실패 시 "/"로 보냄
   useEffect(() => {
     if (
-      !isLoading &&
+      isInitialized &&
       !isAuthenticated &&
-      pathname !== "/" &&
-      !pathname.includes("kakao") &&
-      !pathname.includes("oauth") &&
-      !pathname.includes("google") &&
-      !pathname.includes("apple") &&
-      !pathname.includes("/signup") &&
-      !pathname.includes("/onboard")
+      !isPublicRoute
     ) {
       clearAuthStorage();
       router.replace("/");
     }
-  }, [isAuthenticated, router, pathname, isLoading]);
+  }, [isAuthenticated, router, isPublicRoute, isInitialized]);
 
-  useEffect(() => {
-    if (!userInfo || Object.keys(userInfo).length === 0) {
-      updateUserInfo();
-    }
-  }, []);
+  if (!isInitialized && !isPublicRoute) {
+    return <DotSpinner />;
+  }
 
-  if (isLoading && pathname !== "/") {
+  if (isInitialized && !isAuthenticated && !isPublicRoute) {
     return <DotSpinner />;
   }
 

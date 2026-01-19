@@ -1,3 +1,5 @@
+import { logger } from "@/utils/logger";
+
 type WindowWithDataLayer = Window & {
   dataLayer: Record<string, any>[];
 };
@@ -13,7 +15,7 @@ export const pageview = (url: string) => {
       page: url,
     });
   } else {
-    console.log({
+    logger.debug({
       event: "pageview",
       page: url,
     });

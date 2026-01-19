@@ -1,5 +1,5 @@
 import React from "react";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import Spacing from "../shared/Spacing";
 import UserListItem from "./UserListItem";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";

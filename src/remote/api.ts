@@ -3,8 +3,13 @@ import { API_CONFIG } from "./shared";
 import { refreshAccessToken } from "@/utils/tokenManager";
 import STORAGE_KEYS from "@/constants/storageKeys";
 import { saveAuthToStorage, clearAuthStorage } from "@/utils/authStorage";
+import { logger } from "@/utils/logger";
 
 let refreshingPromise: Promise<string | null> | null = null;
+
+type RetriableRequestConfig = NonNullable<AxiosError["config"]> & {
+  _retry?: boolean;
+};
 
 const createApiClient = (): AxiosInstance => {
   const apiClient = axios.create({
@@ -25,7 +30,8 @@ const createApiClient = (): AxiosInstance => {
   apiClient.interceptors.response.use(
     (response) => response,
     async (error: AxiosError) => {
-      const originalRequest = error.config as any;
+      const originalRequest = error.config as RetriableRequestConfig | undefined;
+      if (!originalRequest) return Promise.reject(error);
 
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
@@ -50,7 +56,7 @@ const createApiClient = (): AxiosInstance => {
                   return null;
                 }
               } catch (refreshError) {
-                console.error("Token refresh failed:", refreshError);
+                logger.error("Token refresh failed:", refreshError);
                 clearAuthStorage();
                 return null;
               } finally {
@@ -68,7 +74,7 @@ const createApiClient = (): AxiosInstance => {
           return Promise.reject(error);
         } catch (refreshError) {
           clearAuthStorage();
-          console.error("Refresh process failed:", refreshError);
+          logger.error("Refresh process failed:", refreshError);
           return Promise.reject(refreshError);
         }
       }

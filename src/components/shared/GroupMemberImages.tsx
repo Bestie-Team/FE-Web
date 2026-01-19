@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import LightyIcon from "./Icon/LightyIcon";
 import React from "react";
 import Flex from "./Flex";

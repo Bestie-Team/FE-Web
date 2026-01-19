@@ -8,7 +8,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "./shared/providers/AuthProvider";
 import { lightyToast } from "@/utils/toast";
 import { useCallback, useEffect } from "react";
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { WEBVIEW_EVENT } from "@/webview/types/events";
 import {
   appleLoginMobile,
   googleLoginMobile,

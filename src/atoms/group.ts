@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 import { CreateGroupRequest, UpdateGroupRequest } from "@/models/group";
-import { Group, User } from "lighty-type";
+import type { Group, User } from "lighty-type";
 import { selectedFriendsAtom } from "@/atoms/friends";
 
 export const newGroupAtom = atom<CreateGroupRequest>({

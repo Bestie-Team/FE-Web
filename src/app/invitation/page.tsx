@@ -16,6 +16,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import NoInvitation from "@/components/invitation/NoInvitation";
 import InvitationCardSkeleton from "@/components/shared/Skeleton/InvitationCardSkeleton";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
+import type * as lighty from "lighty-type";
+import type { InfiniteData } from "@tanstack/react-query";
 
 export default function InvitationPage() {
   const queryClient = useQueryClient();
@@ -51,8 +53,28 @@ export default function InvitationPage() {
   });
 
   const { mutate: read } = useReadNotification({
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["notification"] });
+    onSuccess: () => {
+      const now = new Date().toISOString();
+      queryClient.setQueryData(
+        ["notification"],
+        (
+          old:
+            | InfiniteData<lighty.NotificationListResponse>
+            | undefined
+            | null
+        ) => {
+          if (!old) return old;
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              notifications: page.notifications.map((n) =>
+                n.readAt ? n : { ...n, readAt: now }
+              ),
+            })),
+          };
+        }
+      );
     },
   });
 

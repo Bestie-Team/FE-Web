@@ -1,6 +1,6 @@
 "use client";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import AddPhoto, { RegisterRequestType } from "./shared/AddPhoto";
 import Input from "./shared/Input/Input";
 import FixedBottomButton from "./shared/Button/FixedBottomButton";
