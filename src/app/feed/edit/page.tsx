@@ -1,10 +1,9 @@
 "use client";
 import { Suspense, useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
 import FeedForm from "@/components/feeds/FeedForm";
 import useEditFeed from "@/components/feeds/hooks/useEditFeed";
-import { selectedFeedInfoAtom } from "@/atoms/feed";
-import { useRouter } from "next/navigation";
+import useFeedDetail from "@/components/feeds/hooks/useFeedDetail";
+import { useRouter, useSearchParams } from "next/navigation";
 import FullPageLoader from "@/components/shared/FullPageLoader";
 import type * as lighty from "lighty-type";
 import { lightyToast } from "@/utils/toast";
@@ -16,29 +15,40 @@ import { queryKeys } from "@/lib/queryKeys";
 
 export default function EditingFeed() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasInitializedRef = useRef(false);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-  const originalFeedValue = useRecoilValue(selectedFeedInfoAtom);
+  const feedId = searchParams.get("id") ?? "";
+  const { data: originalFeedValue } = useFeedDetail({ id: feedId });
 
   useEffect(() => {
-    if (!originalFeedValue) {
+    if (!feedId) {
       router.replace("/feed");
       lightyToast.error("피드 정보를 찾을 수 없습니다.");
     }
-  }, [originalFeedValue, router]);
+  }, [feedId, router]);
 
-  const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>(
-    () => ({
-      gatheringId: originalFeedValue?.gathering?.id || "",
-      content: originalFeedValue?.content || "",
-      imageUrls: originalFeedValue?.images || [],
-    })
-  );
+  const [feedInfo, setFeedInfo] = useState<lighty.CreateGatheringFeedRequest>({
+    gatheringId: "",
+    content: "",
+    imageUrls: [],
+  });
+
+  useEffect(() => {
+    if (!originalFeedValue || hasInitializedRef.current) return;
+    setFeedInfo({
+      gatheringId: originalFeedValue.gathering?.id || "",
+      content: originalFeedValue.content || "",
+      imageUrls: originalFeedValue.images || [],
+    });
+    hasInitializedRef.current = true;
+  }, [originalFeedValue]);
 
   const { mutate: editingFeed, isPending } = useEditFeed({
     content: feedInfo.content,
-    feedId: originalFeedValue?.id || "",
+    feedId,
     onSuccess: async (data) => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.feed.mine() }),
@@ -50,13 +60,17 @@ export default function EditingFeed() {
       lightyToast.success(data.message);
     },
     onError: (error) => {
-      logger.error("Failed to edit feed", { error, feedId: originalFeedValue?.id });
+      logger.error("Failed to edit feed", { error, feedId });
       lightyToast.error("피드 수정에 실패했어요");
     },
   });
 
-  if (!originalFeedValue) {
+  if (!feedId) {
     return null;
+  }
+
+  if (!originalFeedValue) {
+    return <DotSpinner />;
   }
 
   return (

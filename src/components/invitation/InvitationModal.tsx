@@ -4,14 +4,30 @@ import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import Button from "../shared/Button/Button";
 import { useRecoilValue } from "recoil";
-import { selectedInvitationAtom } from "@/atoms/invitation";
+import { selectedInvitationIdAtom } from "@/atoms/invitation";
 import useAcceptInvitationToGathering from "../gathering/hooks/useAcceptInvitationToGathering";
 import useRejectInvitationToGathering from "../gathering/hooks/useRejectInvitationToGathering";
 import { SuccessResponse } from "@/models/response";
 import { VerticalInvitationCard } from "./VerticalInvitationCard";
-import { useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { lightyToast } from "@/utils/toast";
 import { queryKeys } from "@/lib/queryKeys";
+import type * as lighty from "lighty-type";
+import type { GatheringInvitation } from "@/models/gathering";
+
+type ReceivedInvitation =
+  lighty.ReceivedGatheringInvitationListResponse["invitations"][number];
+type SentInvitation =
+  lighty.SentGatheringInvitationListResponse["invitations"][number];
+type Invitation = ReceivedInvitation | SentInvitation;
+
+const hasInvitationId = (
+  invitation: Invitation
+): invitation is ReceivedInvitation =>
+  "id" in invitation && typeof invitation.id === "string";
+
+const getInvitationId = (invitation: Invitation) =>
+  hasInvitationId(invitation) ? invitation.id : invitation.gatheringId;
 
 export default function InvitationModal({
   selectedTab,
@@ -21,11 +37,43 @@ export default function InvitationModal({
   onClickClose: (value: boolean) => void;
 }) {
   const queryClient = useQueryClient();
-  const selectedInvitation = useRecoilValue(selectedInvitationAtom);
+  const selectedInvitationId = useRecoilValue(selectedInvitationIdAtom);
+  const receivedData = queryClient.getQueryData<
+    InfiniteData<lighty.ReceivedGatheringInvitationListResponse>
+  >(queryKeys.gathering.invitations.received());
+  const sentData = queryClient.getQueryData<
+    InfiniteData<lighty.SentGatheringInvitationListResponse>
+  >(queryKeys.gathering.invitations.sent());
+
+  const selectedInvitationList =
+    selectedTab === "1" ? receivedData : sentData;
+  const selectedInvitation: Invitation | undefined = selectedInvitationList?.pages
+    .map((page) => page.invitations)
+    .flat()
+    .find((invitation) => {
+      return getInvitationId(invitation) === selectedInvitationId;
+    });
+
+  const invitationForCard: GatheringInvitation | null = selectedInvitation
+    ? {
+        id: getInvitationId(selectedInvitation),
+        name: selectedInvitation.name,
+        description: selectedInvitation.description,
+        sender: selectedInvitation.sender,
+        createdAt: selectedInvitation.createdAt,
+        gatheringDate: selectedInvitation.gatheringDate,
+        invitation_image_url: selectedInvitation.invitation_image_url,
+        address: selectedInvitation.address,
+        groupName: selectedInvitation.groupName,
+      }
+    : null;
 
   const { mutate: accept } = useAcceptInvitationToGathering({
     gatheringId: selectedInvitation?.gatheringId || "",
-    invitationId: selectedInvitation?.id || "",
+    invitationId:
+      selectedInvitation && hasInvitationId(selectedInvitation)
+        ? selectedInvitation.id
+        : "",
     onSuccess: async (data: SuccessResponse) => {
       await queryClient.invalidateQueries({
         queryKey: queryKeys.gathering.invitations.received(),
@@ -36,7 +84,10 @@ export default function InvitationModal({
   });
 
   const { mutate: reject } = useRejectInvitationToGathering({
-    invitationId: selectedInvitation?.id || "",
+    invitationId:
+      selectedInvitation && hasInvitationId(selectedInvitation)
+        ? selectedInvitation.id
+        : "",
     onSuccess: async (data: SuccessResponse) => {
       await queryClient.invalidateQueries({
         queryKey: queryKeys.gathering.invitations.received(),
@@ -46,7 +97,7 @@ export default function InvitationModal({
     },
   });
 
-  if (!selectedInvitation) return;
+  if (!selectedInvitation || !invitationForCard) return null;
 
   return (
     <Dimmed className={styles.dimmed}>
@@ -67,7 +118,7 @@ export default function InvitationModal({
           <CloseIcon width="32" height="32" />
         </button>
         <Spacing size={8} />
-        <VerticalInvitationCard invitation={selectedInvitation} />
+        <VerticalInvitationCard invitation={invitationForCard} />
         {selectedTab === "1" ? (
           <>
             <Spacing size={16} />

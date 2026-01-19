@@ -8,12 +8,11 @@ import Button from "../Button/Button";
 import ArrowUpIcon from "../Icon/ArrowUpIcon";
 import useMakeComment from "@/components/feeds/hooks/useMakeComment";
 import useFeedComments from "@/components/feeds/hooks/useGetComments";
+import useFeedDetail from "@/components/feeds/hooks/useFeedDetail";
 import { useQueryClient } from "@tanstack/react-query";
 import RectIcon from "../Icon/RectIcon";
 import CommentItem from "./CommentItem";
 import splitMention from "@/utils/splitMention";
-import { useRecoilValue } from "recoil";
-import { selectedFeedInfoAtom } from "@/atoms/feed";
 import { logger } from "@/utils/logger";
 import { queryKeys } from "@/lib/queryKeys";
 
@@ -25,12 +24,12 @@ export default function CommentContainer({
   onClose: () => void;
 }) {
   const queryClient = useQueryClient();
-  const feedInfo = useRecoilValue(selectedFeedInfoAtom);
   const [isClosing, setIsClosing] = useState(false);
   const [newComment, setNewComment] = useState("");
 
   const { data: comments } = useFeedComments({ feedId: selectedFeedId });
-  const mentionableUserIds = feedInfo?.withMembers;
+  const { data: feedDetail } = useFeedDetail({ id: selectedFeedId });
+  const mentionableUserIds = feedDetail?.withMembers;
 
   const postSuccessHandler = async (data: { message: string }) => {
     const invalidateQueries = async (data: { message: string }) => {

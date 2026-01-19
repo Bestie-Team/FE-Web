@@ -13,7 +13,7 @@ import {
 } from "@/atoms/modal";
 import { useInView } from "react-intersection-observer";
 import { useTabs } from "@/hooks/useTabs";
-import { bottomSheetStateAtom, selectedFeedInfoAtom } from "@/atoms/feed";
+import { bottomSheetStateAtom } from "@/atoms/feed";
 import { ScrollAwareHeader } from "@/components/layout/Header/ScrollAwareHeader";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import TabParamHandler from "@/components/shared/TabParamHandler";
@@ -34,7 +34,6 @@ export default function FeedPage() {
   const [recordModalOpen, setRecordModalOpen] = useRecoilState(recordModalAtom);
   const [bottomSheetState, setBottomSheetState] =
     useRecoilState(bottomSheetStateAtom);
-  const setFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
 
   const {
     feedId,
@@ -82,9 +81,8 @@ export default function FeedPage() {
   const handleFeedSelect = useCallback(
     (feed: Feed) => {
       setFeedId(feed.id);
-      setFeedInfo(feed);
     },
-    [setFeedId, setFeedInfo]
+    [setFeedId]
   );
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
 import { useRouter } from "next/navigation";
-import { originalGroupMembersAtom, selectedGroupAtom } from "@/atoms/group";
 import { GroupEditProps } from "@/app/groups/detail/page";
 
 interface GroupDropdownMenuProps {
@@ -19,9 +18,7 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
     const [isHovered, setIsHovered] = useState<number | boolean>(false);
     const setModal = useSetRecoilState(modalStateAtom);
     const setReportModal = useSetRecoilState(reportModalAtom);
-    const setGroup = useSetRecoilState(selectedGroupAtom);
     const setReport = useSetRecoilState(reportInfoAtom);
-    const setOriginalGroupMembers = useSetRecoilState(originalGroupMembersAtom);
 
     const clickedMenuItemHandler = (menuItem: string) => {
       if (menuItem.includes("삭제")) {
@@ -29,16 +26,7 @@ const GroupDropdownMenu = forwardRef<HTMLElement, GroupDropdownMenuProps>(
       } else if (menuItem.includes("나가기")) {
         setModal({ type: "exitGroup", isOpen: true });
       } else if (menuItem.includes("수정")) {
-        setGroup({
-          groupId: group.id,
-          name: group.name,
-          description: group.description,
-          groupImageUrl: group.groupImageUrl,
-        });
-        if (group.members) {
-          setOriginalGroupMembers([...group.members]);
-        }
-        router.push(`/groups/edit`);
+        router.push(`/groups/edit?id=${group.id}`);
       } else if (menuItem.includes("신고")) {
         setReport((prev) => ({
           ...prev,

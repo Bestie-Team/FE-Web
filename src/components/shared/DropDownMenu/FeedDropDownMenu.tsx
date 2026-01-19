@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { modalStateAtom, reportInfoAtom, reportModalAtom } from "@/atoms/modal";
-import { selectedFeedIdAtom, selectedFeedInfoAtom } from "@/atoms/feed";
+import { selectedFeedIdAtom } from "@/atoms/feed";
 import { useRouter } from "next/navigation";
 import { Feed } from "@/models/feed";
 import { ModalType } from "@/models/modal";
@@ -20,7 +20,6 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
     const setModalOpen = useSetRecoilState(modalStateAtom);
     const setFeedId = useSetRecoilState(selectedFeedIdAtom);
     const setReport = useSetRecoilState(reportInfoAtom);
-    const setFeedInfo = useSetRecoilState(selectedFeedInfoAtom);
 
     const handleModalOpen = (type: ModalType) => {
       setModalOpen({
@@ -34,10 +33,10 @@ const FeedDropdownMenu = forwardRef<HTMLElement, FeedDropdownMenuProps>(
         setFeedId(feed.id);
         handleModalOpen("deleteFeed");
       } else if (item.includes("수정")) {
-        setFeedInfo(feed);
-        router.push("/feed/edit");
+        setFeedId(feed.id);
+        router.push(`/feed/edit?id=${feed.id}`);
       } else if (item.includes("숨기기")) {
-        setFeedInfo(feed);
+        setFeedId(feed.id);
         handleModalOpen("hideFeed");
       } else if (item.includes("신고")) {
         setFeedId(feed.id);

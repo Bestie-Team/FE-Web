@@ -30,6 +30,11 @@ export default function UploadPhotoSwiper({
     feedInfoToEdit?.imageUrls ? feedInfoToEdit.imageUrls : []
   );
 
+  useEffect(() => {
+    if (!feedInfoToEdit) return;
+    setImages(feedInfoToEdit.imageUrls ?? []);
+  }, [feedInfoToEdit]);
+
   const MAX_IMAGES = 5;
 
   const isSupportedImageExt = (fileName: string) => {

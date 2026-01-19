@@ -3,7 +3,6 @@ import Flex from "../Flex";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
 import { modalStateAtom } from "@/atoms/modal";
-import { selectedGatheringInfoAtom } from "@/atoms/gathering";
 import { useRouter } from "next/navigation";
 import { GatheringDetailResponse } from "@/models/gathering";
 
@@ -21,7 +20,6 @@ const GatheringDropdownMenu = forwardRef<
 
   const [isHovered, setIsHovered] = useState<number | boolean>(false);
 
-  const setGatheringInfo = useSetRecoilState(selectedGatheringInfoAtom);
   const setOpenModal = useSetRecoilState(modalStateAtom);
 
   const clickedMenuItemHandler = (item: string) => {
@@ -29,8 +27,7 @@ const GatheringDropdownMenu = forwardRef<
       setOpenModal({ type: "deleteGathering", isOpen: true });
     }
     if (item.includes("수정하기") && gathering) {
-      setGatheringInfo(gathering);
-      router.push(`/gathering/edit`);
+      router.push(`/gathering/edit?id=${gathering.id}`);
     }
   };
 

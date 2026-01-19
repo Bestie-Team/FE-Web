@@ -3,20 +3,28 @@ import Button from "../shared/Button/Button";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import { useSetRecoilState } from "recoil";
-import { selectedInvitationAtom } from "@/atoms/invitation";
+import { selectedInvitationIdAtom } from "@/atoms/invitation";
 import { differenceInCalendarDays } from "date-fns";
-import { ReceivedGatheringInvitation } from "@/models/gathering";
 import { useState } from "react";
 import { INVITATION } from "@/constants/images";
+
+type InvitationItem = {
+  id?: string;
+  gatheringId: string;
+  name: string;
+  description: string;
+  sender: string;
+  createdAt: string;
+};
 
 export default function InvitationCard({
   invitation,
   onClickOpen,
 }: {
-  invitation: Omit<ReceivedGatheringInvitation, "id">;
+  invitation: InvitationItem;
   onClickOpen: (value: boolean) => void;
 }) {
-  const setSelectedInvitation = useSetRecoilState(selectedInvitationAtom);
+  const setSelectedInvitationId = useSetRecoilState(selectedInvitationIdAtom);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const { name, description, sender, createdAt } = invitation;
@@ -63,9 +71,8 @@ export default function InvitationCard({
             </Flex>
             <Button
               onClick={() => {
-                setSelectedInvitation(
-                  invitation as ReceivedGatheringInvitation
-                );
+                const invitationId = invitation.id ?? invitation.gatheringId;
+                setSelectedInvitationId(invitationId);
                 onClickOpen(true);
               }}
               color="#0A0A0A"
