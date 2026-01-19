@@ -54,13 +54,21 @@ export default function Page() {
           </Suspense>
           <div className={styles.textWrapper}>
             <span>가입 시</span>
-            <span className={styles.text} onClick={openTermsPage}>
+            <button
+              type="button"
+              className={`${styles.text} bg-transparent border-0 p-0`}
+              onClick={openTermsPage}
+            >
               이용약관
-            </span>
+            </button>
             <span>및 </span>
-            <span className={styles.text} onClick={openPrivacyPolicyPage}>
+            <button
+              type="button"
+              className={`${styles.text} bg-transparent border-0 p-0`}
+              onClick={openPrivacyPolicyPage}
+            >
               개인정보처리방침
-            </span>
+            </button>
             <span>에 동의하게 됩니다.</span>
           </div>
         </Flex>

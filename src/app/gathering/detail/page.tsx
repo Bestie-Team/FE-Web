@@ -89,12 +89,14 @@ export default function GatheringDetailPage() {
         bgColor={!isIntersecting ? "white" : ""}
         icon={
           <div className={"flex gap-[14px]"}>
-            <div
-              className="cursor-pointer"
+            <button
+              type="button"
+              aria-label="약속 공유"
+              className="cursor-pointer bg-transparent border-0 p-0"
               onClick={() => handleShare(sharingData)}
             >
               <ShareIcon />
-            </div>
+            </button>
             {userInfo?.accountId === hostUser.accountId && (
               <GatheringOptions
                 type={

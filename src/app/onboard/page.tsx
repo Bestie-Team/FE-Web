@@ -14,7 +14,7 @@ import OptimizedImage from "@/components/shared/OptimizedImage";
 
 export default function OnBoardCardSlider() {
   const { setUserInfo } = useAuth();
-  const nextButtonRef = useRef<HTMLDivElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const [buttonText, setButtonText] = useState("다음");
   const [isLastSlide, setIsLastSlide] = useState(false);
@@ -91,13 +91,14 @@ export default function OnBoardCardSlider() {
           zIndex: 20,
         }}
       >
-        <div
+        <button
+          type="button"
           ref={nextButtonRef}
           className={styles.button}
           onClick={handleNextClick}
         >
           {buttonText}
-        </div>
+        </button>
       </div>
     </div>
   );
@@ -185,5 +186,5 @@ const styles = {
   buttonWrapper:
     "absolute bottom-0 bg-base-white w-full px-5 py-3 font-[600] text-base text-center leading-[16.8px] pb-safe-bottom",
   button:
-    "rounded-full bg-grayscale-900 py-[18px] w-full text-base-white cursor-pointer",
+    "rounded-full bg-grayscale-900 py-[18px] w-full text-base-white cursor-pointer border-0",
 };

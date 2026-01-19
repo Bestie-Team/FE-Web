@@ -84,16 +84,21 @@ export const FeedList: React.FC<FeedListProps> = ({
             style={{ width: 24, height: 24 }}
             className="absolute top-5 right-5 cursor-pointer flex justify-center items-center pt-[5.5px] pb-1"
           >
-            <div
+            <button
+              type="button"
               ref={btnRef}
+              aria-label="피드 옵션"
+              aria-haspopup="menu"
+              aria-expanded={openedDropdownId === feed.id}
               onClick={(e) => {
                 e.stopPropagation();
                 toggleDropdown(feed.id);
                 setSelectedFeedId(feed.id);
               }}
+              className="flex justify-center items-center bg-transparent border-0 p-0"
             >
               <OptionsSelectIcon />
-            </div>
+            </button>
             {openedDropdownId === feed.id && (
               <FeedDropdownMenu
                 feed={feed}

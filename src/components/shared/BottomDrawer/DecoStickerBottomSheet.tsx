@@ -45,9 +45,13 @@ export default function DecoStickerBottomSheet({
     <BottomSheetWrapper bar onClose={onClose} open={open} bright={true}>
       <Flex direction="column" className="p-6 pt-1" align="center">
         <div>
-          <Flex>
+          <Flex role="tablist" aria-label="스티커 종류">
             {decoKinds.map((kind) => (
-              <span
+              <button
+                type="button"
+                role="tab"
+                aria-selected={selectedKind === kind}
+                tabIndex={selectedKind === kind ? 0 : -1}
                 className={clsx(
                   styles.stickerKind,
                   selectedKind === kind
@@ -58,7 +62,7 @@ export default function DecoStickerBottomSheet({
                 onClick={() => setSelectedKind(kind)}
               >
                 {kind}
-              </span>
+              </button>
             ))}
           </Flex>
           <Spacing size={16} />
@@ -71,22 +75,28 @@ export default function DecoStickerBottomSheet({
                     align="center"
                     className={styles.box}
                   >
-                    <Image
-                      src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
-                      loading={idx < 2 ? "eager" : "lazy"}
-                      className={clsx(
-                        "cursor-pointer w-16 h-16 object-cover",
-                        selectedKind === "이모지" ? "p-3" : ""
-                      )}
+                    <button
+                      type="button"
+                      aria-label={`${selectedKind} 스티커 ${idx + 1} 선택`}
                       onClick={() =>
                         handleSticker(
                           `https://cdn.lighty.today/${selectedStickers.path}/${sticker}`
                         )
                       }
-                      alt={`sticker${idx}`}
-                      width={64}
-                      height={64}
-                    />
+                      className="w-16 h-16 object-cover bg-transparent border-0 p-0"
+                    >
+                      <Image
+                        src={`https://cdn.lighty.today/${selectedStickers.path}/${sticker}`}
+                        loading={idx < 2 ? "eager" : "lazy"}
+                        className={clsx(
+                          "w-16 h-16 object-cover",
+                          selectedKind === "이모지" ? "p-3" : ""
+                        )}
+                        alt={`sticker${idx}`}
+                        width={64}
+                        height={64}
+                      />
+                    </button>
                     {/* {(selectedKind === "스위츠" ||
                       selectedKind === "파스텔" ||
                       selectedKind === "빈티지") && (
@@ -116,7 +126,7 @@ export default function DecoStickerBottomSheet({
 const styles = {
   blurWrapper:
     "flex flex-col !bg-[#00000020] justify-center items-center p-6 rounded-2xl gap-3 opacity-50",
-  stickerKind: "py-2 px-3 text-B2 cursor-pointer",
+  stickerKind: "py-2 px-3 text-B2 cursor-pointer bg-transparent border-0",
   wrapper: "relative grid grid-cols-4 grid-rows-3 gap-5 w-fit",
   box: "bg-grayscale-50 rounded-xl w-16 h-16",
 };

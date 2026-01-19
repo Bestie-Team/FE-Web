@@ -7,7 +7,7 @@ import { useReactNativeWebView } from "@/components/shared/providers/ReactNative
 import Spacing from "@/components/shared/Spacing";
 import { patchNotificationToken } from "@/remote/users";
 import { requestNotificationPermission } from "@/webview/actions";
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { WEBVIEW_EVENT } from "@/webview/types/events";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -82,7 +82,7 @@ function SettingItem({
   setIsOn,
 }: {
   isOn: boolean;
-  setIsOn: () => void;
+  setIsOn: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <Flex className="p-5" justify="space-between" align="center">
@@ -92,7 +92,11 @@ function SettingItem({
           초대장, 친구 신청, 그룹 초대 알림
         </span>
       </Flex>
-      <ToggleButton isOn={isOn} setIsOn={setIsOn} />
+      <ToggleButton
+        isOn={isOn}
+        setIsOn={setIsOn}
+        ariaLabel="서비스 소식 알림"
+      />
     </Flex>
   );
 }

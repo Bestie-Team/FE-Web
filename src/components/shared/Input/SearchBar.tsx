@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import SearchIcon from "../Icon/SearchIcon";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
@@ -21,6 +21,8 @@ export default function SearchInput({
   const setFriendToRecord = useSetRecoilState(friendToRecordAtom);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
+  const inputId = useId();
+  const labelText = placeholder || "검색";
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (type === "users") {
@@ -41,8 +43,12 @@ export default function SearchInput({
         isFocused ? "border-grayscale-900" : "border-grayscale-100"
       )}
     >
+      <label className="sr-only" htmlFor={inputId}>
+        {labelText}
+      </label>
       <SearchIcon />
       <input
+        id={inputId}
         inputMode="search"
         enterKeyHint="search"
         value={inputValue}

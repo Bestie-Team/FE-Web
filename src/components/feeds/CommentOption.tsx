@@ -17,7 +17,9 @@ export default function CommentOption({ commentId, type }: OptionsProps) {
     useDropdown();
 
   return (
-    <div
+    <button
+      type="button"
+      aria-label="댓글 옵션"
       ref={btnRef}
       data-testid="options-icon"
       onClick={() => {
@@ -32,7 +34,7 @@ export default function CommentOption({ commentId, type }: OptionsProps) {
         opacity: 1,
         zIndex: 10,
       }}
-      className="relative cursor-pointer flex justify-center items-center"
+      className="relative cursor-pointer flex justify-center items-center bg-transparent border-0 p-0"
     >
       <OptionsSelectIconXSmall />
       {openedDropdownId && (
@@ -42,6 +44,6 @@ export default function CommentOption({ commentId, type }: OptionsProps) {
           items={MENU_CONFIGS[type].items}
         />
       )}
-    </div>
+    </button>
   );
 }

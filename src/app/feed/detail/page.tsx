@@ -2,7 +2,7 @@
 
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useSearchParams } from "next/navigation";
-import { User } from "lighty-type";
+import type { User } from "lighty-type";
 import Flex from "@/components/shared/Flex";
 import HeaderWithBtn from "@/components/layout/Header/HeaderWithBtn";
 import FeedCard from "@/components/feeds/FeedCard";
@@ -116,16 +116,21 @@ export default function FeedDetailPage() {
                 style={{ width: 24, height: 24 }}
                 className={styles.optionWithDropdownContainer}
               >
-                <div
+                <button
+                  type="button"
                   ref={btnRef}
+                  aria-label="피드 옵션"
+                  aria-haspopup="menu"
+                  aria-expanded={openedDropdownId === selectedFeed.id}
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleDropdown(selectedFeed.id);
                     setSelectedFeedId(selectedFeed.id);
                   }}
+                  className="flex justify-center items-center bg-transparent border-0 p-0"
                 >
                   <OptionsSelectIcon />
-                </div>
+                </button>
                 {openedDropdownId === selectedFeed.id && (
                   <FeedDropdownMenu
                     feed={selectedFeed}

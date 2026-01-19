@@ -50,7 +50,8 @@ export default function MyMainInfo({
     <Flex className="py-0 px-5 gap-[14px]" justify="center">
       {boxes.map((box, idx) => {
         return (
-          <div
+          <button
+            type="button"
             key={idx}
             className={boxStyle}
             onClick={() => onClickHandler(box)}
@@ -62,7 +63,7 @@ export default function MyMainInfo({
             </span>
             <Spacing size={8} />
             <span className="text-T4">{box.value}</span>
-          </div>
+          </button>
         );
       })}
     </Flex>
@@ -70,4 +71,4 @@ export default function MyMainInfo({
 }
 
 const boxStyle =
-  "cursor-pointer items-center flex flex-col min-w-[100px] py-4 px-6 bg-grayscale-10 rounded-[20px] active:bg-grayscale-50";
+  "cursor-pointer items-center flex flex-col min-w-[100px] py-4 px-6 bg-grayscale-10 rounded-[20px] active:bg-grayscale-50 border-0";

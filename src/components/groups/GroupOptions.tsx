@@ -17,15 +17,19 @@ export default function GroupOptions({
     : ["그룹 나가기", "그룹 신고하기"];
 
   return (
-    <div
+    <button
+      type="button"
       ref={btnRef}
       test-id="options-icon"
+      aria-label="그룹 옵션"
+      aria-haspopup="menu"
+      aria-expanded={opened}
       onClick={toggleDropdown}
       style={{
         width: "24px",
         height: "24px",
       }}
-      className={styles.container}
+      className={`${styles.container} bg-transparent border-0 p-0`}
     >
       <OptionsSelectIcon color="white" />
       {opened && (
@@ -36,7 +40,7 @@ export default function GroupOptions({
           className={styles.menu}
         />
       )}
-    </div>
+    </button>
   );
 }
 

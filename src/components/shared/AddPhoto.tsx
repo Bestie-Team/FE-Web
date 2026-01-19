@@ -1,5 +1,5 @@
 import { PlusCircleButtonSmall } from "./Button/BottomSheetOpenButton";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import EmptyLogoIcon from "./Icon/EmptyLogoIcon";
@@ -58,21 +58,18 @@ export default function AddPhoto({
       let imageUrl: string | null = null;
 
       try {
-        if (ext) {
-          const convertedFile = await compressImage(inputFile);
-          console.log(convertedFile);
-          if (!convertedFile) return;
-          imageUrl = URL.createObjectURL(convertedFile);
-        } else {
-          imageUrl = URL.createObjectURL(inputFile);
-        }
+        const processedFile = ["jpg", "jpeg", "png"].includes(ext)
+          ? await compressImage(inputFile)
+          : inputFile;
+
+        imageUrl = URL.createObjectURL(processedFile);
 
         setImage(imageUrl);
 
         if (setImageUrl) {
           setImageUrl((prev) => ({
             ...prev,
-            profileImageUrl: inputFile,
+            profileImageUrl: processedFile,
           }));
         }
       } catch (error) {
@@ -92,16 +89,20 @@ export default function AddPhoto({
 
   return (
     <>
-      <div
+      <button
+        type="button"
         style={{
           width: small ? `72px` : "84px",
           height: small ? `72px` : "84px",
           padding: small ? "4px" : "4.67px",
         }}
         onClick={() => setSelectOpen(true)}
+        disabled={!uploadable}
+        aria-label={uploadable ? "사진 선택" : "사진 선택 불가"}
         className={clsx(
           uploadContainerStyle,
-          uploadable ? "cursor-pointer" : ""
+          uploadable ? "cursor-pointer" : "cursor-default",
+          "bg-transparent border-0"
         )}
       >
         <div
@@ -153,7 +154,7 @@ export default function AddPhoto({
             <EmptyLogoIcon width="13.71" height="13.71" color="white" />
           )}
         </div>
-      </div>
+      </button>
       {selectOpen && uploadable && (
         <PhotoSelectBottomSheet
           onClose={() => setSelectOpen(false)}

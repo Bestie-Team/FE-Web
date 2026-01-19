@@ -11,7 +11,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/Header/Header";
 import useUserDetail from "@/components/users/hooks/useUserDetail";
 import { useAuth } from "@/components/shared/providers/AuthProvider";
 import DotSpinner from "@/components/shared/Spinner/DotSpinner";
@@ -24,7 +24,8 @@ import {
 import { useReactNativeWebView } from "@/components/shared/providers/ReactNativeWebViewProvider";
 import { getLogout } from "@/remote/auth";
 import STORAGE_KEYS from "@/constants/storageKeys";
-import { WEBVIEW_EVENT } from "@/webview/types";
+import { WEBVIEW_EVENT } from "@/webview/types/events";
+import { logger } from "@/utils/logger";
 import { deleteUser } from "@/remote/users";
 import { useAnyScrollThreshold } from "@/hooks/useScrollThreshold";
 
@@ -133,7 +134,7 @@ export default function MyPage() {
               }
             }
           } catch (error: unknown) {
-            console.log(error);
+            logger.error("Account deletion failed", error);
           }
         }
       }
@@ -186,15 +187,23 @@ export default function MyPage() {
             openSuggestPageFn={openSuggestPage}
           />
           <footer className={styles.termsWrapper}>
-            <span
+            <button
+              type="button"
               onClick={openTermsPage}
-              className={clsx("mr-[13px]", styles.letter)}
+              className={clsx(
+                "mr-[13px] bg-transparent border-0 p-0",
+                styles.letter
+              )}
             >
               <ins>이용약관</ins>
-            </span>
-            <span onClick={openPrivacyPolicyPage} className={styles.letter}>
+            </button>
+            <button
+              type="button"
+              onClick={openPrivacyPolicyPage}
+              className={clsx("bg-transparent border-0 p-0", styles.letter)}
+            >
               <ins>개인 정보 처리방침</ins>
-            </span>
+            </button>
           </footer>
           <Spacing size={120} />
         </main>

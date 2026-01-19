@@ -1,5 +1,5 @@
 import { newGatheringInfo } from "@/atoms/gathering";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
 import { GatheringType } from "@/models/gathering";
@@ -14,7 +14,7 @@ const AnimatedTabButton = () => {
   ];
 
   return (
-    <div className={styles.tabWrapper}>
+    <div className={styles.tabWrapper} role="tablist" aria-label="약속 종류">
       <div
         role="presentation"
         style={{
@@ -30,8 +30,12 @@ const AnimatedTabButton = () => {
 
       <div className="relative flex">
         {tabs.map((tab) => (
-          <div
+          <button
+            type="button"
             key={tab.id}
+            role="tab"
+            aria-selected={selectedGathering.type === tab.id}
+            tabIndex={selectedGathering.type === tab.id ? 0 : -1}
             onClick={() =>
               setSelectedGathering((prev) => ({
                 ...prev,
@@ -40,13 +44,14 @@ const AnimatedTabButton = () => {
             }
             className={clsx(
               styles.button,
+              "bg-transparent border-0",
               selectedGathering.type === tab.id
                 ? "text-grayscale-900"
                 : "text-grayscale-500 active:text-grayscale-700"
             )}
           >
             {tab.label}
-          </div>
+          </button>
         ))}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import CheckIcon from "../shared/Icon/CheckIcon";
 import clsx from "clsx";
 import LightyIcon from "../shared/Icon/LightyIcon";
@@ -24,10 +24,14 @@ export default function SelectableGroupItem({
       justify="space-between"
     >
       <div className={style.wrapper}>
-        <div
+        <button
+          type="button"
           onClick={onClickGroup}
+          aria-pressed={clicked}
+          aria-label={`${groupInfo?.name || "그룹"} 선택`}
           className={clsx(
-            clicked ? style.clickedCircleWrapper : style.circleWrapper
+            clicked ? style.clickedCircleWrapper : style.circleWrapper,
+            "bg-transparent border-0 p-0"
           )}
         >
           {!!groupInfo?.groupImageUrl ? (
@@ -53,7 +57,7 @@ export default function SelectableGroupItem({
               <CheckIcon width="28" height="28" />
             </div>
           ) : null}
-        </div>
+        </button>
       </div>
       <Flex direction="column" align="center" className="w-[70px]">
         <Spacing size={2} />

@@ -2,7 +2,7 @@ import Flex from "../shared/Flex";
 import Spacing from "../shared/Spacing";
 import PlusIcon from "../shared/Icon/PlusIcon";
 import { GroupInfoResponse } from "@/models/group";
-import * as lighty from "lighty-type";
+import type * as lighty from "lighty-type";
 import LightyIcon from "../shared/Icon/LightyIcon";
 import OptimizedImage from "../shared/OptimizedImage";
 
@@ -53,7 +53,12 @@ export function AddFriendItem({ onClick }: { onClick?: () => void }) {
   };
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
-      <div className="p-[6px]" onClick={onClickHandler}>
+      <button
+        type="button"
+        aria-label="친구 추가"
+        className="p-[6px] bg-transparent border-0"
+        onClick={onClickHandler}
+      >
         <div className={iconWrapperStyle}>
           <PlusIcon
             width="20"
@@ -62,7 +67,7 @@ export function AddFriendItem({ onClick }: { onClick?: () => void }) {
             className="absolute left-[17.5px] top-[17px]"
           />
         </div>
-      </div>
+      </button>
       <Spacing size={2} />
       <Flex direction="column" align="center">
         <span className="text-T6">친구 추가</span>
@@ -75,7 +80,12 @@ export function AddFriendItem({ onClick }: { onClick?: () => void }) {
 export function SeeMoreItem({ onClick }: { onClick: () => void }) {
   return (
     <Flex direction="column" style={{ width: "fit-content", flexShrink: 0 }}>
-      <div className="p-[6px]" onClick={onClick}>
+      <button
+        type="button"
+        aria-label="더 보기"
+        className="p-[6px] bg-transparent border-0"
+        onClick={onClick}
+      >
         <div className={iconWrapperStyle}>
           <PlusIcon
             width="20"
@@ -84,7 +94,7 @@ export function SeeMoreItem({ onClick }: { onClick: () => void }) {
             className="absolute left-[17.5px] top-[17px]"
           />
         </div>
-      </div>
+      </button>
       <Spacing size={2} />
       <Flex direction="column" align="center">
         <span className="text-T6">더 보기</span>
