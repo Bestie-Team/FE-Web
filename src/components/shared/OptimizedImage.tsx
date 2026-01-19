@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 interface OptimizedImageProps {
   src: string;
   alt: string;
@@ -26,7 +26,12 @@ export default function OptimizedImage({
   style,
   onLoad,
 }: OptimizedImageProps) {
-  const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
+  const [dpr, setDpr] = useState(1);
+
+  useEffect(() => {
+    setDpr(window.devicePixelRatio || 1);
+  }, []);
+
   const optimizedSrc = useMemo(() => {
     if (!src) return "/placeholder.png";
     if (src.startsWith("/api/resize")) return src;

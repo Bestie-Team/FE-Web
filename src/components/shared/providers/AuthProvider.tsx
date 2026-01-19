@@ -37,29 +37,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [token, setToken] = useState<string | null>(() => {
-    if (typeof window === "undefined") return null;
-    return localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-  });
-  const [userInfo, setUserInfo] = useState<UserInfoMini | null>(() => {
-    if (typeof window === "undefined") return null;
-    const raw = localStorage.getItem(STORAGE_KEYS.USER_INFO);
-    if (!raw) return null;
-    try {
-      const parsed = JSON.parse(raw) as Partial<UserInfoMini> | null;
-      if (!parsed?.accountId) return null;
-      return {
-        accountId: parsed.accountId,
-        profileImageUrl: parsed.profileImageUrl ?? null,
-      };
-    } catch {
-      return null;
-    }
-  });
+  const [token, setToken] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfoMini | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(
-    () => typeof window !== "undefined"
-  );
+  const [isInitialized, setIsInitialized] = useState(false);
   const [userDeleted, setUserDeleted] = useState(false);
   const { data: userProfile } = useUserProfile({ enabled: !!token });
 
@@ -121,16 +102,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    setIsInitialized(true);
-
-    const storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-    setToken(storedToken);
-    setUserInfo(readStoredUserInfo());
-
-    if (storedToken) return;
-
     let cancelled = false;
-    (async () => {
+    const initializeAuth = async () => {
+      const storedToken = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+      setToken(storedToken);
+      setUserInfo(readStoredUserInfo());
+
+      if (storedToken) {
+        setIsInitialized(true);
+        return;
+      }
+
       try {
         const storedAuth = await getStoredAuth();
         if (cancelled) return;
@@ -141,8 +123,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       } catch (err) {
         console.error("Auth 초기화 실패:", err);
+      } finally {
+        if (!cancelled) {
+          setIsInitialized(true);
+        }
       }
-    })();
+    };
+
+    void initializeAuth();
 
     return () => {
       cancelled = true;
