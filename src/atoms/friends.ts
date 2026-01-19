@@ -1,14 +1,12 @@
 import { atom, selector } from "recoil";
-import type * as lighty from "lighty-type";
-
 export const friendsSelectedTabAtom = atom<"1" | "2">({
   key: "friends/selectedTab",
   default: "1",
 });
 
-export const selectedFriendsAtom = atom<lighty.User[] | null>({
+export const selectedFriendsAtom = atom<string[]>({
   key: "friends/selectedFriends",
-  default: null,
+  default: [],
 });
 
 export const selectedFriendIdsSelector = selector<string[] | null>({
@@ -16,11 +14,11 @@ export const selectedFriendIdsSelector = selector<string[] | null>({
   get: ({ get }) => {
     const selectedFriends = get(selectedFriendsAtom);
 
-    if (!selectedFriends || selectedFriends.length === 0) {
+    if (selectedFriends.length === 0) {
       return null;
     }
 
-    return selectedFriends.map((friend) => friend.id);
+    return selectedFriends;
   },
 });
 

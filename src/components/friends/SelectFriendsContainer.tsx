@@ -32,12 +32,8 @@ export default function SelectFriendsContainer({
   const [isModalOpen, setIsModalOpen] = useRecoilState(gatheringModalStateAtom);
   const [countModal, setCountModal] = useState(false);
   const [clickedItems, setClickedItems] = useState<number[]>([]);
-  const setFriendsToAdd = useSetRecoilState<lighty.User[] | null>(
-    selectedFriendsAtom
-  );
-  const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
-    friendsToShareAtom
-  );
+  const setFriendsToAdd = useSetRecoilState<string[]>(selectedFriendsAtom);
+  const setFriendsToShare = useSetRecoilState<string[]>(friendsToShareAtom);
 
   const { data: friends } = useFriends({ userId: userInfo?.accountId || "" });
 
@@ -75,27 +71,25 @@ export default function SelectFriendsContainer({
   if (!friends) return;
 
   const handleSubmitSelection = () => {
-    const clickedFriends = clickedItems.map((idx) => friends[idx]);
-    setFriendsToAdd(clickedFriends);
+    const clickedFriendIds = clickedItems.map((idx) => friends[idx].id);
+    setFriendsToAdd(clickedFriendIds);
     action?.();
   };
   const handleSubmitSelectionToShare = () => {
-    const clickedFriends = clickedItems.map((idx) => friends[idx]);
-    setFriendsToShare(clickedFriends);
+    const clickedFriendIds = clickedItems.map((idx) => friends[idx].id);
+    setFriendsToShare(clickedFriendIds);
     setStep?.(3.5);
   };
   const handleSubmitSelectionToNew = () => {
-    const clickedFriends = clickedItems.map((idx) => friends[idx]);
-    setFriendsToAdd(clickedFriends);
+    const clickedFriendIds = clickedItems.map((idx) => friends[idx].id);
+    setFriendsToAdd(clickedFriendIds);
     setStep?.(1);
   };
   const handleSubmitSelectionToGroupEdit = () => {
-    const clickedFriends = clickedItems.map((idx) => friends[idx]);
+    const clickedFriendIds = clickedItems.map((idx) => friends[idx].id);
     const except = exceptFriends?.map((friend) => friend.id);
-    const newFriends = clickedFriends.filter(
-      (friend) => !except?.includes(friend.id)
-    );
-    setFriendsToAdd(newFriends);
+    const newFriendIds = clickedFriendIds.filter((id) => !except?.includes(id));
+    setFriendsToAdd(newFriendIds);
     setStep?.(1);
   };
 

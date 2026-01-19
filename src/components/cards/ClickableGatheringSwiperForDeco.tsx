@@ -9,13 +9,7 @@ import OptimizedImage from "../shared/OptimizedImage";
 
 interface Props {
   feed: Feed[];
-  onImageClick?: (feedInfo: {
-    id: string;
-    name: string;
-    content: string;
-    imageUrl: string;
-    date: string;
-  }) => void;
+  onImageClick?: (id: string) => void;
   selectedFeedId: string | null;
 }
 
@@ -25,37 +19,13 @@ export default function ClickableGatheringSwiperForDeco({
   selectedFeedId,
 }: Props) {
   const [loadedMap, setLoadedMap] = useState<Record<string, boolean>>({});
-  const handleGatheringClick = ({
-    id,
-    name,
-    content,
-    imageUrl,
-    date,
-  }: {
-    id: string;
-    name: string;
-    content: string;
-    imageUrl: string;
-    date: string;
-  }) => {
+  const handleGatheringClick = (id: string) => {
     if (!onImageClick) return;
     if (selectedFeedId === id) {
-      onImageClick({
-        id: "",
-        name: "",
-        content: "",
-        imageUrl: "",
-        date: "",
-      });
+      onImageClick("");
       return;
     }
-    onImageClick({
-      id,
-      name,
-      content,
-      imageUrl,
-      date,
-    });
+    onImageClick(id);
   };
 
   const handleImageLoad = (id: string) => {
@@ -72,15 +42,7 @@ export default function ClickableGatheringSwiperForDeco({
       >
         {feed.map(({ gathering, id, content, images, createdAt }, idx) => (
           <SwiperSlide
-            onClick={() =>
-              handleGatheringClick({
-                id,
-                name: gathering?.name || "",
-                content: content || "",
-                imageUrl: images[0] || "",
-                date: gathering?.gatheringDate || createdAt,
-              })
-            }
+            onClick={() => handleGatheringClick(id)}
             className={clsx(styles.slide, idx === 0 && "ml-5")}
             key={id}
           >

@@ -1,15 +1,14 @@
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import { AddFriendItem } from "../home/FriendItem";
-import {
-  selectedFriendIdsSelector,
-  selectedFriendsAtom,
-} from "@/atoms/friends";
-import { SetterOrUpdater, useRecoilState, useRecoilValue } from "recoil";
+import { selectedFriendsAtom } from "@/atoms/friends";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import DeletableFriendItem from "../friends/DeletableFriendItem";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import type * as lighty from "lighty-type";
 import { CreateGroupRequest } from "@/models/group";
+import { useAuth } from "../shared/providers/AuthProvider";
+import useFriends from "../friends/hooks/useFriends";
 
 export default function AddFriendsSlider({
   type,
@@ -22,29 +21,38 @@ export default function AddFriendsSlider({
   setGroup?: Dispatch<SetStateAction<CreateGroupRequest>>;
   setStep?: (step: number) => void;
 }) {
-  const [friends, setFriends] = useRecoilState<lighty.User[] | null>(
+  const { userInfo } = useAuth();
+  const { data: allFriends } = useFriends({
+    userId: userInfo?.accountId ?? "",
+  });
+  const [selectedFriendIds, setSelectedFriendIds] = useRecoilState<string[]>(
     selectedFriendsAtom
   );
-  const selectedFriendIds = useRecoilValue(selectedFriendIdsSelector);
-  const onClickDelete = (friend: lighty.User) => {
-    const changedFriends = friends?.filter(
-      (friendItem) => friendItem.id !== friend.id
-    );
-    if (changedFriends) {
-      setFriends(changedFriends);
+  const selectedFriends = useMemo(() => {
+    if (!allFriends || !selectedFriendIds || selectedFriendIds.length === 0) {
+      return [];
     }
+    const selectedSet = new Set(selectedFriendIds);
+    return allFriends.filter((friend) => selectedSet.has(friend.id));
+  }, [allFriends, selectedFriendIds]);
+  const onClickDelete = (friend: lighty.User) => {
+    setSelectedFriendIds((prev) => prev.filter((id) => id !== friend.id));
   };
 
   useEffect(() => {
+    const selectedIdsOrNull =
+      selectedFriendIds && selectedFriendIds.length > 0
+        ? selectedFriendIds
+        : null;
     if (type === "group" && setGroup) {
       setGroup((prev: CreateGroupRequest) => ({
         ...prev,
-        friendIds: selectedFriendIds,
+        friendIds: selectedIdsOrNull,
       }));
     } else if (type === "gathering" && setGathering) {
       setGathering((prev: lighty.CreateGatheringRequest) => ({
         ...prev,
-        friendIds: selectedFriendIds,
+        friendIds: selectedIdsOrNull,
       }));
     }
   }, [selectedFriendIds, setGathering, setGroup, type]);
@@ -59,8 +67,8 @@ export default function AddFriendsSlider({
             }
           }}
         />
-        {friends
-          ? friends.map((friend, i) => {
+        {selectedFriends.length > 0
+          ? selectedFriends.map((friend, i) => {
               return (
                 <React.Fragment key={`friendItem${i}`}>
                   <DeletableFriendItem

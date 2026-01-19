@@ -5,7 +5,6 @@ import Spacing from "../shared/Spacing";
 import useFeedMine from "../feeds/hooks/useFeedMine";
 import { cardSelectedFeedAtom } from "@/atoms/card";
 import { maxDate, minDate } from "@/constants/time";
-import { Feed } from "@/models/feed";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import { NoFeedToMakeCard } from "../feeds/NoFeed";
@@ -17,9 +16,8 @@ export default function ChoosingGatheringToDecorate({
   onNext: () => void;
 }) {
   const router = useRouter();
-  const [selectedFeed, setSelectedFeed] = useRecoilState<
-    Partial<Feed> & { name: string; imageUrl: string; date: string }
-  >(cardSelectedFeedAtom);
+  const [selectedFeedId, setSelectedFeedId] =
+    useRecoilState(cardSelectedFeedAtom);
 
   const { data } = useFeedMine({
     order: "DESC",
@@ -28,20 +26,8 @@ export default function ChoosingGatheringToDecorate({
     limit: 20,
   });
 
-  const handleImageClick = (feedInfo: {
-    id: string;
-    name: string;
-    content: string;
-    imageUrl: string;
-    date: string;
-  }) => {
-    setSelectedFeed(
-      feedInfo as Partial<Feed> & {
-        imageUrl: string;
-        name: string;
-        date: string;
-      }
-    );
+  const handleImageClick = (id: string) => {
+    setSelectedFeedId((prev) => (prev === id ? "" : id));
   };
 
   const feeds = data;
@@ -69,17 +55,16 @@ export default function ChoosingGatheringToDecorate({
         {!feeds || feeds.length < 1 ? (
           <NoFeedToMakeCard />
         ) : (
-          <ClickableGatheringSwiperForDeco
-            feed={feeds}
-            onImageClick={handleImageClick}
-            selectedFeedId={selectedFeed?.id || null}
-          />
+            <ClickableGatheringSwiperForDeco
+              feed={feeds}
+              onImageClick={handleImageClick}
+              selectedFeedId={selectedFeedId || null}
+            />
         )}
       </Flex>
       <div className={styles.buttonWrapper}>
         {feeds && feeds.length < 1 ? (
           <button
-            disabled={selectedFeed == null}
             className={styles.button}
             onClick={() => {
               router.push("/record");
@@ -91,9 +76,9 @@ export default function ChoosingGatheringToDecorate({
           <button
             className={clsx(
               styles.button,
-              selectedFeed.id === "" && "!bg-grayscale-200"
+              selectedFeedId === "" && "!bg-grayscale-200"
             )}
-            disabled={selectedFeed.id === ""}
+            disabled={selectedFeedId === ""}
             onClick={() => {
               onNext();
             }}

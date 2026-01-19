@@ -1,4 +1,3 @@
-import { Feed } from "@/models/feed";
 import { atom } from "recoil";
 
 export const cardImageUrlAtom = atom<string>({
@@ -11,17 +10,9 @@ export const cardFrameAtom = atom<number>({
   default: 0,
 });
 
-export const cardSelectedFeedAtom = atom<
-  Partial<Feed> & { name: string; imageUrl: string; date: string }
->({
+export const cardSelectedFeedAtom = atom<string>({
   key: "card/feed",
-  default: {
-    id: "",
-    name: "",
-    content: "",
-    imageUrl: "",
-    date: "",
-  },
+  default: "",
 });
 
 export const decoBottomSheetStateAtom = atom<boolean>({

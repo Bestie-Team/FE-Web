@@ -1,4 +1,3 @@
-import type * as lighty from "lighty-type";
 import { atom, selector } from "recoil";
 
 export const recordGatheringAtom = atom<string>({
@@ -16,7 +15,7 @@ export const recordStepAtom = atom<number>({
   default: 1,
 });
 
-export const friendsToShareAtom = atom<lighty.User[]>({
+export const friendsToShareAtom = atom<string[]>({
   key: "records/friends",
   default: [],
 });
@@ -26,10 +25,10 @@ export const friendsToShareIdsSelector = selector<string[]>({
   get: ({ get }) => {
     const friendsToShare = get(friendsToShareAtom);
 
-    if (!friendsToShare || friendsToShare.length === 0) {
+    if (friendsToShare.length === 0) {
       return [];
     }
 
-    return friendsToShare.map((friend) => friend.id);
+    return friendsToShare;
   },
 });

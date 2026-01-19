@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Spacing from "../shared/Spacing";
 import Flex from "../shared/Flex";
 import clsx from "clsx";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { NavigationOptions } from "swiper/types";
 import { cardFrameAtom, cardSelectedFeedAtom } from "@/atoms/card";
@@ -14,9 +14,11 @@ import { format } from "date-fns";
 import ArrowLeftIcon from "../shared/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "../shared/Icon/ArrowRightIcon";
 import OptimizedImage from "../shared/OptimizedImage";
+import useFeedDetail from "../feeds/hooks/useFeedDetail";
 
 export default function SelectFrameSwiper() {
-  const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
+  const selectedFeedId = useRecoilValue(cardSelectedFeedAtom);
+  const { data: selectedFeed } = useFeedDetail({ id: selectedFeedId });
   const [selectedFrame, setSelectedFrame] = useRecoilState(cardFrameAtom);
   const ref = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLDivElement | null>(null);
@@ -40,6 +42,17 @@ export default function SelectFrameSwiper() {
       onChangeFrame(0);
     }
   }, [selectedFrame]);
+
+  const selectedFeedInfo = useMemo(() => {
+    if (!selectedFeed) return null;
+    return {
+      imageUrl: selectedFeed.images?.[0] ?? "",
+      name: selectedFeed.gathering?.name ?? "",
+      content: selectedFeed.content ?? "",
+      date:
+        selectedFeed.gathering?.gatheringDate ?? selectedFeed.createdAt ?? "",
+    };
+  }, [selectedFeed]);
   const onChangeFrame = (id: number) => {
     setSelectedFrame(id);
   };
@@ -93,7 +106,7 @@ export default function SelectFrameSwiper() {
                   <div className={styles.imageWrapper}>
                     <OptimizedImage
                       loading="eager"
-                      src={`${selectedFeed.imageUrl}`}
+                      src={selectedFeedInfo?.imageUrl ?? ""}
                       width={230}
                       height={230}
                       style={{
@@ -105,15 +118,20 @@ export default function SelectFrameSwiper() {
                   </div>
                   <Flex direction="column" className="px-5 py-[15px]">
                     <span className={styles.textWrapper}>
-                      {selectedFeed.name}
+                      {selectedFeedInfo?.name ?? ""}
                     </span>
                     <Spacing size={8} />
                     <span className="text-C5 text-ellipsis overflow-hidden whitespace-nowrap">
-                      {selectedFeed.content}
+                      {selectedFeedInfo?.content ?? ""}
                     </span>
                     <Spacing size={16} />
                     <span className={styles.dateWrapper}>
-                      {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
+                      {selectedFeedInfo?.date
+                        ? format(
+                            selectedFeedInfo.date.slice(0, 10),
+                            "yyyy.MM.dd"
+                          )
+                        : ""}
                     </span>
                   </Flex>
                 </Flex>

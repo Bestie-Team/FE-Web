@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Spacing from "../shared/Spacing";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -24,6 +24,7 @@ import Modal from "../shared/Modal/Modal";
 import { logger } from "@/utils/logger";
 import { useHtml2CanvasCapture } from "@/hooks/useHtml2CanvasCapture";
 import { useFabricStickerCanvas } from "@/hooks/useFabricStickerCanvas";
+import useFeedDetail from "../feeds/hooks/useFeedDetail";
 
 const CARD_WIDTH = 282;
 const CARD_HEIGHT = 372;
@@ -42,10 +43,22 @@ export default function DecorateWithStickers() {
   const cardImgUrl = useRecoilValue(cardImageUrlAtom);
   const frameUrl = frames[selectedFrame] || "";
   const [deco, setDeco] = useState<boolean>(false);
-  const selectedFeed = useRecoilValue(cardSelectedFeedAtom);
+  const selectedFeedId = useRecoilValue(cardSelectedFeedAtom);
+  const { data: selectedFeed } = useFeedDetail({ id: selectedFeedId });
   const previewRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { isReactNativeWebView } = useReactNativeWebView();
+
+  const selectedFeedInfo = useMemo(() => {
+    if (!selectedFeed) return null;
+    return {
+      imageUrl: selectedFeed.images?.[0] ?? "",
+      name: selectedFeed.gathering?.name ?? "",
+      content: selectedFeed.content ?? "",
+      date:
+        selectedFeed.gathering?.gatheringDate ?? selectedFeed.createdAt ?? "",
+    };
+  }, [selectedFeed]);
 
   const getCaptureTarget = useCallback(() => previewRef.current, []);
 
@@ -147,8 +160,12 @@ export default function DecorateWithStickers() {
   useEffect(() => {
     const applyCrop = async () => {
       try {
+        if (!selectedFeedInfo?.imageUrl) {
+          setCroppedImage(null);
+          return;
+        }
         const croppedImageUrl = await cropAndResizeImage(
-          selectedFeed.imageUrl as string,
+          selectedFeedInfo.imageUrl,
           CROP_WIDTH,
           CROP_HEIGHT
         );
@@ -159,7 +176,7 @@ export default function DecorateWithStickers() {
     };
 
     applyCrop();
-  }, [selectedFeed.imageUrl]);
+  }, [selectedFeedInfo?.imageUrl]);
 
   return (
     <div className="h-dvh overflow-y-scroll no-scrollbar">
@@ -216,19 +233,24 @@ export default function DecorateWithStickers() {
                   </div>
                   <Flex direction="column" className="px-5 py-1 pb-5 h-[100px]">
                     <span className={styles.textWrapper}>
-                      {selectedFeed.name || ""}
+                      {selectedFeedInfo?.name ?? ""}
                     </span>
                     <Spacing size={8} />
-                    {selectedFeed.content && (
+                    {selectedFeedInfo?.content && (
                       <span className="text-C5">
-                        {selectedFeed.content.length >= 40
-                          ? selectedFeed.content?.slice(0, 40)
-                          : selectedFeed.content}
+                        {selectedFeedInfo.content.length >= 40
+                          ? selectedFeedInfo.content.slice(0, 40)
+                          : selectedFeedInfo.content}
                       </span>
                     )}
                     <Spacing size={12} />
                     <span className={styles.dateWrapper}>
-                      {format(selectedFeed.date.slice(0, 10), "yyyy.MM.dd")}
+                      {selectedFeedInfo?.date
+                        ? format(
+                            selectedFeedInfo.date.slice(0, 10),
+                            "yyyy.MM.dd"
+                          )
+                        : ""}
                     </span>
                   </Flex>
                 </div>

@@ -23,16 +23,22 @@ import { postGroupMember } from "@/remote/group";
 import { logger } from "@/utils/logger";
 import { queryKeys } from "@/lib/queryKeys";
 import { useGroupDetail } from "@/components/groups/hooks/useGroupDetail";
+import { useAuth } from "@/components/shared/providers/AuthProvider";
+import useFriends from "@/components/friends/hooks/useFriends";
 
 export default function GroupEditPage() {
   const queryClient = useQueryClient();
-  const friendsToAdd = useRecoilValue(selectedFriendsAtom);
+  const friendIdsToAdd = useRecoilValue(selectedFriendsAtom);
   const [step, setStep] = useState(1);
   const router = useRouter();
   const searchParams = useSearchParams();
   const groupId = searchParams.get("id") ?? "";
   const hasInitializedRef = useRef(false);
   const { data: groupDetail } = useGroupDetail(groupId);
+  const { userInfo } = useAuth();
+  const { data: allFriends } = useFriends({
+    userId: userInfo?.accountId ?? "",
+  });
   const [groupInfo, setGroupInfo] = useState<UpdateGroupRequest>({
     groupId,
     name: "",
@@ -60,20 +66,26 @@ export default function GroupEditPage() {
     hasInitializedRef.current = true;
   }, [groupDetail]);
 
+  const friendsToAdd = useMemo(() => {
+    if (!allFriends || friendIdsToAdd.length === 0) return [];
+    const selectedSet = new Set(friendIdsToAdd);
+    return allFriends.filter((friend) => selectedSet.has(friend.id));
+  }, [allFriends, friendIdsToAdd]);
+
   const memberCandidates = useMemo(() => {
-    const original = originalMembers;
-    const added = friendsToAdd ?? [];
     const merged = new Map<string, lighty.User>();
-    [...original, ...added].forEach((member) => merged.set(member.id, member));
+    [...originalMembers, ...friendsToAdd].forEach((member) =>
+      merged.set(member.id, member)
+    );
     return Array.from(merged.values());
   }, [friendsToAdd, originalMembers]);
 
   const updateSuccessHandler = async (data: { message: string }) => {
-    if (friendsToAdd !== null && friendsToAdd.length > 0) {
+    if (friendIdsToAdd.length > 0) {
       try {
         await postGroupMember({
           groupId: groupInfo.groupId,
-          userIds: friendsToAdd.map((friend) => friend.id),
+          userIds: friendIdsToAdd,
         });
       } catch (e) {
         lightyToast.error("그룹원 추가 실패");

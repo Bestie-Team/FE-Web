@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import clsx from "clsx";
 import { useSetRecoilState } from "recoil";
-import type * as lighty from "lighty-type";
 
 import useSearchFriends from "./hooks/useSearchFriends";
 import DotSpinnerSmall from "../shared/Spinner/DotSpinnerSmall";
@@ -23,9 +22,7 @@ export default function SelectableSearchedFriendsListContainer({
   action,
 }: SelectableSearchedFriendsListContainerProps) {
   const [clickedItems, setClickedItems] = useState<number[]>([]);
-  const setFriendsToShare = useSetRecoilState<lighty.User[] | []>(
-    friendsToShareAtom
-  );
+  const setFriendsToShare = useSetRecoilState<string[]>(friendsToShareAtom);
 
   const { data: searchedFriends, isFetching } = useSearchFriends({
     search: debouncedSearch,
@@ -40,8 +37,8 @@ export default function SelectableSearchedFriendsListContainer({
 
   const handleSubmitSelection = useCallback(() => {
     if (!searchedFriends) return;
-    const clickedFriends = clickedItems.map((idx) => searchedFriends[idx]);
-    setFriendsToShare(clickedFriends);
+    const clickedFriendIds = clickedItems.map((idx) => searchedFriends[idx].id);
+    setFriendsToShare(clickedFriendIds);
     action?.();
   }, [clickedItems, searchedFriends, setFriendsToShare, action]);
 
