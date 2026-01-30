@@ -2,6 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ReactElement } from "react";
+import { RecoilRoot } from "recoil";
+import { AuthProvider } from "@/shared/components/providers/AuthProvider";
 
 const createTestRenderer = async (component: ReactElement) => {
   const queryClient = new QueryClient({
@@ -17,9 +19,13 @@ const createTestRenderer = async (component: ReactElement) => {
   return {
     user,
     ...render(
-      <QueryClientProvider client={queryClient}>
-        {component}
-      </QueryClientProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            {component}
+          </AuthProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
     ),
   };
 };
