@@ -1,0 +1,25 @@
+import { UserInfo } from "@/entities/user";
+
+export interface GroupInfoResponse {
+  id: string;
+  groupName: string;
+  imageUrl: string;
+  description: string;
+  groupLeader: UserInfo;
+  members: UserInfo[];
+  gatheringCount: number;
+}
+
+export interface CreateGroupRequest {
+  readonly name: string;
+  readonly description: string;
+  readonly friendIds: string[] | null;
+  readonly groupImageUrl: string;
+}
+
+export interface UpdateGroupRequest {
+  groupId: string;
+  name: string;
+  description: string;
+  groupImageUrl: string;
+}
