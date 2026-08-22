@@ -25,7 +25,13 @@ const NavBar = dynamic(() => import("@/shared/layout/NavBar"), {
   ssr: false,
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
 
 export const NextProvider = ({ children }: Props) => {
   useMaze();
