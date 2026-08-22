@@ -87,7 +87,7 @@ const styles = {
   centerWrapper: "gap-[26px] items-center text-base-white",
 
   splashContainer:
-    "mx-auto w-full min-h-dvh bg-cover bg-center bg-no-repeat h-screen bg-[url('https://cdn.lighty.today/bg.png')]",
+    "mx-auto w-full min-h-dvh bg-cover bg-center bg-no-repeat h-screen bg-[url('/background.png')]",
 
   text: "border-b-[1px] border-b-grayscale-10",
 };

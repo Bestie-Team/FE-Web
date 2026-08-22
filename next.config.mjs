@@ -5,18 +5,26 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig = {
   experimental: {
     optimizePackageImports: ["date-fns"],
   },
   images: {
-    unoptimized: true,
     formats: ["image/webp"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.lighty.today",
       },
+      {
+        protocol: "https",
+        hostname: "api.lighty.today",
+      },
+      ...(isProd
+        ? []
+        : [{ protocol: "http", hostname: "localhost", port: "8000" }]),
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
