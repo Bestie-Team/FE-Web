@@ -43,9 +43,9 @@ export default function RootLayout({
           className="fixed left-0 right-0 bottom-0 mx-auto flex justify-center z-10"
           id="root-portal"
         ></div>
+        <GoogleAnalytics gaId={GA_ID || ""} />
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || ""} />
       </body>
-      <GoogleAnalytics gaId={GA_ID || ""} />
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || ""} />
     </html>
   );
 }
