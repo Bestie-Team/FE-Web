@@ -12,10 +12,13 @@ import HeaderWithBtn from "@/shared/layout/Header/HeaderWithBtn";
 import type * as lighty from "lighty-type";
 import type { InfiniteData } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/queryKeys";
-import InvitationSwiper from "@/features/invitation/components/InvitationSwiper";
-
 const InvitationModal = dynamic(
   () => import("@/features/invitation/components/InvitationModal"),
+  { ssr: false }
+);
+
+const InvitationSwiper = dynamic(
+  () => import("@/features/invitation/components/InvitationSwiper"),
   { ssr: false }
 );
 
